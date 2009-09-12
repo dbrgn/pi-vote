@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-# SharpDevelop 3.1.0.4077
+# SharpDevelop 3.1.0.4545
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirate.PiVote", "Common\Pirate.PiVote.csproj", "{3A570D23-A292-4B5C-A62E-C7295888EAA0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirate.PiVote.Server", "Server\Pirate.PiVote.Server.csproj", "{1E0041B0-4239-44E7-89C4-7D4868554C5A}"
