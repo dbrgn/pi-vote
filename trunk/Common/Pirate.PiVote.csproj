@@ -46,6 +46,7 @@
     <Compile Include="Crypto\Server.cs" />
     <Compile Include="Crypto\Voter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilitiy\IEnumerableExtensions.cs" />
     <Compile Include="Utilitiy\SystemExtensions.cs" />
     <Compile Include="Utilitiy\Tools.cs" />
   </ItemGroup>

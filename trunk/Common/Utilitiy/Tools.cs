@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Pirate.PiVote
+namespace Pirate.PiVote.Utility
 {
     /// <summary>
     /// Description of Tools.
