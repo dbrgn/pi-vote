@@ -18,9 +18,6 @@ namespace Pirate.PiVote.Client
     {
         static void Main()
         {
-          new Pirate.PiVote.Crypto.Test().Do();
-          return;
-
             Application.Init ();
             
             // Set up a button object.
