@@ -31,7 +31,7 @@ namespace Pirate.PiVote.Crypto
 
       for (int i = 0; i < 10000; i++)
       {
-        if (More(prime, safePrime) == 10)
+        if (SingleTest(prime, safePrime) == 10)
         {
           good++;
         }
@@ -81,7 +81,7 @@ namespace Pirate.PiVote.Crypto
       return i;
     }
 
-    private int More(BigInt prime, BigInt safePrime)
+    private int SingleTest(BigInt prime, BigInt safePrime)
     {
       Parameters parameters = new Parameters(prime, safePrime, 3, 5);
       Authority[] auths = new Authority[5];
@@ -146,45 +146,58 @@ namespace Pirate.PiVote.Crypto
         privateKey = (privateKey + a.Z);
       }
 
-      BigInt x0 = auths[0].x;
-      BigInt x1 = auths[1].x;
-      BigInt x2 = auths[2].x;
-      BigInt x3 = auths[3].x;
-      BigInt x4 = auths[4].x;
+      Authority a0 = auths[0];
+      Authority a1 = auths[1];
+      Authority a2 = auths[2];
+      Authority a3 = auths[3];
+      Authority a4 = auths[4];
 
+      List<BigInt> partialDeciphers0 = new List<BigInt>();
+      partialDeciphers0.Add(a0.PartialDecipher(sum, 4, 1));
+      partialDeciphers0.Add(a1.PartialDecipher(sum, -6, 1));
+      partialDeciphers0.Add(a2.PartialDecipher(sum, 4, 1));
+      partialDeciphers0.Add(a3.PartialDecipher(sum, -1, 1));
+      int v0 = sum.Decrypt(partialDeciphers0, parameters);
 
-      //full private key is a linear combo of authority private keys
-      //BigInt privateKey2 = (x0 * 3 - x1 * 3 + x2);
-      //sum.Decrypt(privateKey2);
+      List<BigInt> partialDeciphers1 = new List<BigInt>();
+      partialDeciphers1.Add(a0.PartialDecipher(sum, 15, 4));
+      partialDeciphers1.Add(a1.PartialDecipher(sum, -5, 1));
+      partialDeciphers1.Add(a2.PartialDecipher(sum, 5, 2));
+      partialDeciphers1.Add(a4.PartialDecipher(sum, -1, 4));
+      int v1 = sum.Decrypt(partialDeciphers1, parameters);
 
-      Vote s0 = sum.Clone();
-      s0.Decrypt(x0 * 4);
-      s0.Decrypt(x1 * -6);
-      s0.Decrypt(x2 * 4);
-      s0.Decrypt(x3 * -1);
-      int v0 = s0.Result(parameters);
+      List<BigInt> partialDeciphers2 = new List<BigInt>();
+      partialDeciphers2.Add(a0.PartialDecipher(sum, 10, 3));
+      partialDeciphers2.Add(a1.PartialDecipher(sum, -10, 3));
+      partialDeciphers2.Add(a3.PartialDecipher(sum, 5, 3));
+      partialDeciphers2.Add(a4.PartialDecipher(sum, -2, 3));
+      int v2 = sum.Decrypt(partialDeciphers2, parameters);
 
-      Vote s1 = sum.Clone();
-      s1.Decrypt(x0 * 15 / 4);
-      s1.Decrypt(x1 * -5);
-      s1.Decrypt(x2 * 5 / 2);
-      s1.Decrypt(x4 * -1 / 4);
-      int v1 = s1.Result(parameters) ;
+      List<BigInt> partialDeciphers3 = new List<BigInt>();
+      partialDeciphers3.Add(a0.PartialDecipher(sum, 5, 2));
+      partialDeciphers3.Add(a2.PartialDecipher(sum, -5, 1));
+      partialDeciphers3.Add(a3.PartialDecipher(sum, 5, 1));
+      partialDeciphers3.Add(a4.PartialDecipher(sum, -3, 2));
+      int v3 = sum.Decrypt(partialDeciphers3, parameters);
 
-      Vote s2 = sum.Clone();
-      s2.Decrypt(x0 * 10 / 3);
-      s2.Decrypt(x1 * -10 / 3);
-      s2.Decrypt(x3 * 5 / 3);
-      s2.Decrypt(x4 * -2 / 3);
-      int v2 = s2.Result(parameters);
+      List<BigInt> partialDeciphers4 = new List<BigInt>();
+      partialDeciphers4.Add(a1.PartialDecipher(sum, 10, 1));
+      partialDeciphers4.Add(a2.PartialDecipher(sum, -20, 1));
+      partialDeciphers4.Add(a3.PartialDecipher(sum, 15, 1));
+      partialDeciphers4.Add(a4.PartialDecipher(sum, -4, 1));
+      int v4 = sum.Decrypt(partialDeciphers4, parameters);
 
-      BigInt r0 = (x0 * 10).Remainder(3);
-      BigInt r1 = (x1 * -10).Remainder(3);
-      BigInt r3 = (x3 * 5).Remainder(3);
-      BigInt r4 = (x4 * -2).Remainder(3);
-      BigInt rx = r0 + r1 + r3 + r4;
-      
-      return v0;
+      if (v0 == v1 &&
+          v0 == v2 &&
+          v0 == v3 &&
+          v0 == v4)
+      {
+        return v0;
+      }
+      else
+      {
+        return -1;
+      }
     }
   }
 }

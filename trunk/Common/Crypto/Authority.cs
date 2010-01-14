@@ -112,6 +112,11 @@ namespace Pirate.PiVote.Crypto
       return this.f.Evaluate(new BigInt(authorithyIndex), this.parameters.P);
     }
 
+    public BigInt PartialDecipher(Vote vote, int multiply, int divide)
+    {
+      return vote.HalfKey.PowerMod(this.x * 3 * 4 * multiply / divide, this.parameters.P);
+    }
+
     /// <summary>
     /// Verify the sharing of the secret.
     /// </summary>

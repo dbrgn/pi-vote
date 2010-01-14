@@ -45,7 +45,7 @@ namespace Pirate.PiVote.Crypto
       P = parameters.P;
       BigInt r = parameters.Random();
       HalfKey = parameters.G.PowerMod(r, P);
-      Ciphertext = (publicKey.PowerMod(r, P) * parameters.F.PowerMod(vote, P)).Mod(P);
+      Ciphertext = (publicKey.PowerMod(r * 3 * 4, P) * parameters.F.PowerMod(vote, P)).Mod(P);
     }
 
     /// <summary>
@@ -84,13 +84,24 @@ namespace Pirate.PiVote.Crypto
       Ciphertext = Ciphertext.DivideMod(voteEncryptionKey, P);
     }
 
-    public int Result(Parameters parameters)
+    public int Decrypt(IEnumerable<BigInt> partialDeciphers, Parameters parameters)
+    {
+      if (partialDeciphers.Count() != parameters.Thereshold + 1)
+        throw new ArgumentException("Wrong number of partial deciphers.");
+
+      BigInt votePower = Ciphertext;
+      partialDeciphers.Foreach(partialDecipher => votePower = votePower.DivideMod(partialDecipher, P));
+
+      return Result(votePower, parameters);
+    }
+
+    private int Result(BigInt votePower, Parameters parameters)
     {
       int sumOfVotes = 0;
-      while (parameters.F.PowerMod(new BigInt(sumOfVotes), P) != Ciphertext)
+      while (parameters.F.PowerMod(new BigInt(sumOfVotes), P) != votePower)
       {
         sumOfVotes++;
-        if (sumOfVotes > 100)
+        if (sumOfVotes > 10000)
           return -1;
       }
 
