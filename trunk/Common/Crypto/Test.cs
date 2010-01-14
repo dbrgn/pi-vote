@@ -83,17 +83,17 @@ namespace Pirate.PiVote.Crypto
 
     private int More(BigInt prime, BigInt safePrime)
     {
-      Parameters parameters = new Parameters(prime, safePrime);
+      Parameters parameters = new Parameters(prime, safePrime, 3, 5);
       Authority[] auths = new Authority[5];
 
-      for (int aI = 0; aI < 5; aI++)
+      for (int aI = 0; aI < parameters.AuthorityCount; aI++)
       {
         auths[aI] = new Authority(aI + 1, parameters);
       }
 
       foreach (Authority a in auths)
       {
-        a.CreatePolynomial(2);
+        a.CreatePolynomial(parameters.Thereshold);
       }
 
       foreach (Authority a in auths)
@@ -106,7 +106,7 @@ namespace Pirate.PiVote.Crypto
           shares.Add(b.S(a.Index));
           As.Add(new List<BigInt>());
 
-          for (int l = 0; l <= 2; l++)
+          for (int l = 0; l <= parameters.Thereshold; l++)
           {
             As[As.Count - 1].Add(b.A(l));
           }
@@ -151,18 +151,40 @@ namespace Pirate.PiVote.Crypto
       BigInt x2 = auths[2].x;
       BigInt x3 = auths[3].x;
       BigInt x4 = auths[4].x;
-      
+
+
       //full private key is a linear combo of authority private keys
       //BigInt privateKey2 = (x0 * 3 - x1 * 3 + x2);
       //sum.Decrypt(privateKey2);
 
-      sum.Decrypt(x0 * 3);
-      sum.Decrypt(x1 * -3);
-      sum.Decrypt(x2);
-      
-      int votum0 = sum.Result(parameters);
+      Vote s0 = sum.Clone();
+      s0.Decrypt(x0 * 4);
+      s0.Decrypt(x1 * -6);
+      s0.Decrypt(x2 * 4);
+      s0.Decrypt(x3 * -1);
+      int v0 = s0.Result(parameters);
 
-      return votum0;
+      Vote s1 = sum.Clone();
+      s1.Decrypt(x0 * 15 / 4);
+      s1.Decrypt(x1 * -5);
+      s1.Decrypt(x2 * 5 / 2);
+      s1.Decrypt(x4 * -1 / 4);
+      int v1 = s1.Result(parameters) ;
+
+      Vote s2 = sum.Clone();
+      s2.Decrypt(x0 * 10 / 3);
+      s2.Decrypt(x1 * -10 / 3);
+      s2.Decrypt(x3 * 5 / 3);
+      s2.Decrypt(x4 * -2 / 3);
+      int v2 = s2.Result(parameters);
+
+      BigInt r0 = (x0 * 10).Remainder(3);
+      BigInt r1 = (x1 * -10).Remainder(3);
+      BigInt r3 = (x3 * 5).Remainder(3);
+      BigInt r4 = (x4 * -2).Remainder(3);
+      BigInt rx = r0 + r1 + r3 + r4;
+      
+      return v0;
     }
   }
 }

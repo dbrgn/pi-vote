@@ -60,6 +60,13 @@ namespace Pirate.PiVote.Crypto
       Ciphertext = (a.Ciphertext * b.Ciphertext).Mod(P);
     }
 
+    public Vote(BigInt halfKey, BigInt ciphertext, BigInt p)
+    {
+      HalfKey = halfKey;
+      Ciphertext = ciphertext;
+      P = p;
+    }
+
     /// <summary>
     /// Add two votes to a new one.
     /// </summary>
@@ -83,9 +90,16 @@ namespace Pirate.PiVote.Crypto
       while (parameters.F.PowerMod(new BigInt(sumOfVotes), P) != Ciphertext)
       {
         sumOfVotes++;
+        if (sumOfVotes > 100)
+          return -1;
       }
 
       return sumOfVotes;
+    }
+
+    public Vote Clone()
+    {
+      return new Vote(HalfKey.Clone(), Ciphertext.Clone(), P);
     }
   }
 }

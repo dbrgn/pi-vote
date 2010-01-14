@@ -39,7 +39,11 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public BigInt F { get; set; }
 
-    public Parameters(BigInt prime, BigInt safePrime)
+    public int Thereshold { get; set; }
+
+    public int AuthorityCount { get; set; }
+
+    public Parameters(BigInt prime, BigInt safePrime, int thereshold, int authorityCount)
     {
       Q = prime;
       P = safePrime;
@@ -49,6 +53,9 @@ namespace Pirate.PiVote.Crypto
 
       G = r0.PowerMod(Q, P);
       F = G.PowerMod(r1, P);
+
+      Thereshold = thereshold;
+      AuthorityCount = authorityCount;
     }
 
     public BigInt Random()
