@@ -66,7 +66,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="x">Evaluate the polynom at x.</param>
     /// <returns>Evaluated value of the polynom.</returns>
-    public BigInt Evaluate(BigInt x)
+    public BigInt Evaluate(BigInt x, BigInt p)
     {
       BigInt value = new BigInt(0);
 
@@ -74,6 +74,7 @@ namespace Pirate.PiVote.Crypto
       {
         value += coefficients[coefficientIndex] * x.Power(coefficientIndex);
       }
+      value = value.Mod(p);
 
       return value;
     }

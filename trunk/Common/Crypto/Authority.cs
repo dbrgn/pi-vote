@@ -109,7 +109,7 @@ namespace Pirate.PiVote.Crypto
     /// <returns>A share of the secret.</returns>
     public BigInt S(int authorithyIndex)
     {
-      return this.f.Evaluate(new BigInt(authorithyIndex));
+      return this.f.Evaluate(new BigInt(authorithyIndex), this.parameters.P);
     }
 
     /// <summary>
