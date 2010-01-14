@@ -140,53 +140,34 @@ namespace Pirate.PiVote.Crypto
         sum += v;
       }
 
-      BigInt privateKey = new BigInt(0);
-      foreach (Authority a in auths)
-      {
-        privateKey = (privateKey + a.Z);
-      }
+      List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
+      auths.Foreach(authority => partialDeciphers.AddRange(authority.PartialDeciphers(sum)));
 
-      Authority a0 = auths[0];
-      Authority a1 = auths[1];
-      Authority a2 = auths[2];
-      Authority a3 = auths[3];
-      Authority a4 = auths[4];
-
-      List<BigInt> partialDeciphers0 = new List<BigInt>();
-      partialDeciphers0.Add(a0.PartialDecipher(sum, 4, 1));
-      partialDeciphers0.Add(a1.PartialDecipher(sum, -6, 1));
-      partialDeciphers0.Add(a2.PartialDecipher(sum, 4, 1));
-      partialDeciphers0.Add(a3.PartialDecipher(sum, -1, 1));
+      IEnumerable<BigInt> partialDeciphers0 = partialDeciphers
+        .Where(partialDecipher => partialDecipher.Index == 1)
+        .Select(partialDecipher => partialDecipher.Value);
       int v0 = sum.Decrypt(partialDeciphers0, parameters);
 
-      List<BigInt> partialDeciphers1 = new List<BigInt>();
-      partialDeciphers1.Add(a0.PartialDecipher(sum, 15, 4));
-      partialDeciphers1.Add(a1.PartialDecipher(sum, -5, 1));
-      partialDeciphers1.Add(a2.PartialDecipher(sum, 5, 2));
-      partialDeciphers1.Add(a4.PartialDecipher(sum, -1, 4));
+      IEnumerable<BigInt> partialDeciphers1 = partialDeciphers
+        .Where(partialDecipher => partialDecipher.Index == 1)
+        .Select(partialDecipher => partialDecipher.Value);
       int v1 = sum.Decrypt(partialDeciphers1, parameters);
 
-      List<BigInt> partialDeciphers2 = new List<BigInt>();
-      partialDeciphers2.Add(a0.PartialDecipher(sum, 10, 3));
-      partialDeciphers2.Add(a1.PartialDecipher(sum, -10, 3));
-      partialDeciphers2.Add(a3.PartialDecipher(sum, 5, 3));
-      partialDeciphers2.Add(a4.PartialDecipher(sum, -2, 3));
+      IEnumerable<BigInt> partialDeciphers2 = partialDeciphers
+        .Where(partialDecipher => partialDecipher.Index == 1)
+        .Select(partialDecipher => partialDecipher.Value);
       int v2 = sum.Decrypt(partialDeciphers2, parameters);
 
-      List<BigInt> partialDeciphers3 = new List<BigInt>();
-      partialDeciphers3.Add(a0.PartialDecipher(sum, 5, 2));
-      partialDeciphers3.Add(a2.PartialDecipher(sum, -5, 1));
-      partialDeciphers3.Add(a3.PartialDecipher(sum, 5, 1));
-      partialDeciphers3.Add(a4.PartialDecipher(sum, -3, 2));
+      IEnumerable<BigInt> partialDeciphers3 = partialDeciphers
+        .Where(partialDecipher => partialDecipher.Index == 1)
+        .Select(partialDecipher => partialDecipher.Value);
       int v3 = sum.Decrypt(partialDeciphers3, parameters);
 
-      List<BigInt> partialDeciphers4 = new List<BigInt>();
-      partialDeciphers4.Add(a1.PartialDecipher(sum, 10, 1));
-      partialDeciphers4.Add(a2.PartialDecipher(sum, -20, 1));
-      partialDeciphers4.Add(a3.PartialDecipher(sum, 15, 1));
-      partialDeciphers4.Add(a4.PartialDecipher(sum, -4, 1));
+      IEnumerable<BigInt> partialDeciphers4 = partialDeciphers
+        .Where(partialDecipher => partialDecipher.Index == 1)
+        .Select(partialDecipher => partialDecipher.Value);
       int v4 = sum.Decrypt(partialDeciphers4, parameters);
-
+      
       if (v0 == v1 &&
           v0 == v2 &&
           v0 == v3 &&

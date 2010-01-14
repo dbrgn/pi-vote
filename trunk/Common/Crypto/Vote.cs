@@ -28,6 +28,12 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public BigInt Ciphertext { get; private set; }
 
+    /// <summary>
+    /// Prime number defining the modular arithmetic.
+    /// </summary>
+    /// <remarks>
+    /// Not to be serialized with the vote.
+    /// </remarks>
     public BigInt P { get; private set; }
 
     /// <summary>
@@ -78,12 +84,12 @@ namespace Pirate.PiVote.Crypto
       return new Vote(a, b);
     }
 
-    public void Decrypt(BigInt privateKey)
-    {
-      BigInt voteEncryptionKey = HalfKey.PowerMod(privateKey, P);
-      Ciphertext = Ciphertext.DivideMod(voteEncryptionKey, P);
-    }
-
+    /// <summary>
+    /// Decrypts a vote from partial deciphers.
+    /// </summary>
+    /// <param name="partialDeciphers">Partial deciphers from t+1 authorities.</param>
+    /// <param name="parameters">Cryptographic parameters.</param>
+    /// <returns>Result of the vote.</returns>
     public int Decrypt(IEnumerable<BigInt> partialDeciphers, Parameters parameters)
     {
       if (partialDeciphers.Count() != parameters.Thereshold + 1)
@@ -95,10 +101,16 @@ namespace Pirate.PiVote.Crypto
       return Result(votePower, parameters);
     }
 
-    private int Result(BigInt votePower, Parameters parameters)
+    /// <summary>
+    /// Calculates the result of the vote.
+    /// </summary>
+    /// <param name="votePower">Vote value equal to F^vote.</param>
+    /// <param name="parameters">Cryptographic parameters.</param>
+    /// <returns>Result of the vote.</returns>
+    private static int Result(BigInt votePower, Parameters parameters)
     {
       int sumOfVotes = 0;
-      while (parameters.F.PowerMod(new BigInt(sumOfVotes), P) != votePower)
+      while (parameters.F.PowerMod(new BigInt(sumOfVotes), parameters.P) != votePower)
       {
         sumOfVotes++;
         if (sumOfVotes > 10000)
@@ -108,6 +120,10 @@ namespace Pirate.PiVote.Crypto
       return sumOfVotes;
     }
 
+    /// <summary>
+    /// Clones a vote.
+    /// </summary>
+    /// <returns>Close of this vote.</returns>
     public Vote Clone()
     {
       return new Vote(HalfKey.Clone(), Ciphertext.Clone(), P);

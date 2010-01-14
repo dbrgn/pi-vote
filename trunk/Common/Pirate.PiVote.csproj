@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Crypto\Authority.cs" />
     <Compile Include="Crypto\Parameters.cs" />
+    <Compile Include="Crypto\PartialDecipher.cs" />
     <Compile Include="Crypto\Polynomial.cs" />
     <Compile Include="Crypto\Server.cs" />
     <Compile Include="Crypto\Test.cs" />
