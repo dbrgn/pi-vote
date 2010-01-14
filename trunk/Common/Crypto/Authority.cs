@@ -35,7 +35,7 @@ namespace Pirate.PiVote.Crypto
     /// <remarks>
     /// What the hell shall we do with this???
     /// </remarks>
-    private BigInt x;
+    public BigInt x;
 
     /// <summary>
     /// Index of this authority.

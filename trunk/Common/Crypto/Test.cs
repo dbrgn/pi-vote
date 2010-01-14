@@ -20,8 +20,70 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public void Do()
     {
-      BigInt prime = new BigInt("5393");
-      Parameters parameters = new Parameters(prime);
+      //BigInt prime = FindSafePrime();
+      //BigInt prime = FindPrime();
+      BigInt prime = new BigInt("500000000000000000037883");
+      BigInt safePrime = new BigInt("1000000000000000000059533");
+
+      int good = 0;
+      int bad = 0;
+      int fail = 0;
+
+      for (int i = 0; i < 10000; i++)
+      {
+        if (More(prime, safePrime) == 10)
+        {
+          good++;
+        }
+        else
+        {
+          bad++;
+        }
+      }
+
+      System.Diagnostics.Debug.WriteLine(good.ToString() + " good, " + bad.ToString() + " bad, " + fail.ToString() + " fail");
+    }
+
+    private BigInt FindPrime()
+    {
+      BigInt i = new BigInt("500000000000000000000000");
+
+      while (true)
+      {
+        while (!i.IsProbablyPrimeRabinMiller(1000))
+        {
+          i++;
+        }
+
+        System.Diagnostics.Debug.WriteLine(i);
+        i++;
+      }
+
+      return i;
+    }
+
+    private BigInt FindSafePrime()
+    {
+      BigInt i = new BigInt("1000000000000000000000000");
+
+      while (true)
+      {
+        while (!i.IsProbablyPrimeRabinMiller(1000) ||
+               !(2 * i + 1).IsProbablyPrimeRabinMiller(1000))
+        {
+          i++;
+        }
+
+        System.Diagnostics.Debug.WriteLine(i);
+        i++;
+      }
+
+      return i;
+    }
+
+    private int More(BigInt prime, BigInt safePrime)
+    {
+      Parameters parameters = new Parameters(prime, safePrime);
       Authority[] auths = new Authority[5];
 
       for (int aI = 0; aI < 5; aI++)
@@ -84,9 +146,15 @@ namespace Pirate.PiVote.Crypto
         privateKey = (privateKey + a.Z);
       }
 
+      BigInt x0 = auths[0].x;
+      BigInt x1 = auths[1].x;
+      BigInt x2 = auths[2].x;
+      BigInt x3 = auths[3].x;
+      BigInt x4 = auths[4].x;
+      BigInt privateKey2 = (x0 * 3 - x1 * 3 + x2);
+
       int votum = sum.Decrypt(parameters, privateKey);
-      if (votum != 10)
-        throw new Exception("bad tally");
+      return votum;
     }
   }
 }

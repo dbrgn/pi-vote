@@ -39,13 +39,16 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public BigInt F { get; set; }
 
-    public Parameters(BigInt prime)
+    public Parameters(BigInt prime, BigInt safePrime)
     {
       Q = prime;
-      P = Q * 2 + 1;
+      P = safePrime;
+
       BigInt r0 = Random();
+      BigInt r1 = Random();
+
       G = r0.PowerMod(Q, P);
-      F = G.PowerMod(Random(), P);
+      F = G.PowerMod(r1, P);
     }
 
     public BigInt Random()

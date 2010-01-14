@@ -28,6 +28,8 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public BigInt Ciphertext { get; private set; }
 
+    public BigInt P { get; private set; }
+
     /// <summary>
     /// Creates a new encrypted vote.
     /// </summary>
@@ -40,9 +42,10 @@ namespace Pirate.PiVote.Crypto
     /// <param name="publicKey">Public key of the authorities.</param>
     public Vote(int vote, Parameters parameters, BigInt publicKey)
     {
+      P = parameters.P;
       BigInt r = parameters.Random();
-      HalfKey = parameters.G.PowerMod(r, parameters.P);
-      Ciphertext = publicKey.PowerMod(r, parameters.P) * parameters.F.PowerMod(new BigInt(vote), parameters.P);
+      HalfKey = parameters.G.PowerMod(r, P);
+      Ciphertext = (publicKey.PowerMod(r, P) * parameters.F.PowerMod(new BigInt(vote), P)).Mod(P);
     }
 
     /// <summary>
@@ -52,8 +55,9 @@ namespace Pirate.PiVote.Crypto
     /// <param name="b">Another vote.</param>
     public Vote(Vote a, Vote b)
     {
-      HalfKey = (a.HalfKey * b.HalfKey);
-      Ciphertext = a.Ciphertext * b.Ciphertext;
+      P = a.P;
+      HalfKey = (a.HalfKey * b.HalfKey).Mod(P);
+      Ciphertext = (a.Ciphertext * b.Ciphertext).Mod(P);
     }
 
     /// <summary>
@@ -78,11 +82,11 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Sum of votes.</returns>
     public int Decrypt(Parameters parameters, BigInt privateKey)
     {
-      BigInt voteEncryptionKey = HalfKey.PowerMod(privateKey, parameters.P);
-      BigInt disguisedSumOfVotes = Ciphertext.DivideMod(voteEncryptionKey, parameters.P);
+      BigInt voteEncryptionKey = HalfKey.PowerMod(privateKey, P);
+      BigInt disguisedSumOfVotes= Ciphertext.DivideMod(voteEncryptionKey, P);
 
       int sumOfVotes = 0;
-      while (parameters.F.PowerMod(new BigInt(sumOfVotes), parameters.P) != disguisedSumOfVotes)
+      while (parameters.F.PowerMod(new BigInt(sumOfVotes), P) != disguisedSumOfVotes)
       {
         sumOfVotes++;
       }
