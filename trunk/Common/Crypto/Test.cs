@@ -151,10 +151,18 @@ namespace Pirate.PiVote.Crypto
       BigInt x2 = auths[2].x;
       BigInt x3 = auths[3].x;
       BigInt x4 = auths[4].x;
-      BigInt privateKey2 = (x0 * 3 - x1 * 3 + x2);
+      
+      //full private key is a linear combo of authority private keys
+      //BigInt privateKey2 = (x0 * 3 - x1 * 3 + x2);
+      //sum.Decrypt(privateKey2);
 
-      int votum = sum.Decrypt(parameters, privateKey);
-      return votum;
+      sum.Decrypt(x0 * 3);
+      sum.Decrypt(x1 * -3);
+      sum.Decrypt(x2);
+      
+      int votum0 = sum.Result(parameters);
+
+      return votum0;
     }
   }
 }

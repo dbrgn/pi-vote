@@ -71,22 +71,16 @@ namespace Pirate.PiVote.Crypto
       return new Vote(a, b);
     }
 
-    /// <summary>
-    /// Decrypt a vote from a full public key.
-    /// </summary>
-    /// <remarks>
-    /// Not to be used in release.
-    /// </remarks>
-    /// <param name="parameters">Cryptographic parameters.</param>
-    /// <param name="privateKey">Private key of the voting authorities.</param>
-    /// <returns>Sum of votes.</returns>
-    public int Decrypt(Parameters parameters, BigInt privateKey)
+    public void Decrypt(BigInt privateKey)
     {
       BigInt voteEncryptionKey = HalfKey.PowerMod(privateKey, P);
-      BigInt disguisedSumOfVotes = Ciphertext.DivideMod(voteEncryptionKey, P);
+      Ciphertext = Ciphertext.DivideMod(voteEncryptionKey, P);
+    }
 
+    public int Result(Parameters parameters)
+    {
       int sumOfVotes = 0;
-      while (parameters.F.PowerMod(new BigInt(sumOfVotes), P) != disguisedSumOfVotes)
+      while (parameters.F.PowerMod(new BigInt(sumOfVotes), P) != Ciphertext)
       {
         sumOfVotes++;
       }

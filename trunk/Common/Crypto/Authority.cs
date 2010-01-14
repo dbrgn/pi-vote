@@ -141,7 +141,6 @@ namespace Pirate.PiVote.Crypto
       {
         this.x += share;
       }
-      this.x = this.x.Mod(parameters.P);
     }
   }
 }
