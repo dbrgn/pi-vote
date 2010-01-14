@@ -74,7 +74,6 @@ namespace Pirate.PiVote.Crypto
       {
         value += coefficients[coefficientIndex] * x.Power(coefficientIndex);
       }
-      value = value.Mod(p);
 
       return value;
     }
