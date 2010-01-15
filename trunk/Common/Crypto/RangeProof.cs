@@ -102,6 +102,15 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Wether the proof is valid.</returns>
     public bool Verify(Vote vote, BigInt publicKey, Parameters parameters)
     {
+      if (C != 0 && C != 1)
+        return false;
+
+      if (C0 != 0 && C0 != 1)
+        return false;
+
+      if (C1 != 0 && C1 != 1)
+        return false;
+      
       SHA512Managed sha512 = new SHA512Managed();
       byte[] hash = sha512.ComputeHash(T0.ToByteArray().Concat(T1.ToByteArray()));
       if (C != (((hash[0] & 1) == 1) ? 1 : 0))

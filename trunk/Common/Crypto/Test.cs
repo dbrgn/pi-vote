@@ -29,7 +29,11 @@ namespace Pirate.PiVote.Crypto
 
       for (int i = 0; i < 10000; i++)
       {
-        if (SingleTest(prime, safePrime) == 10)
+        IEnumerable<int> result =SingleTest(prime, safePrime);
+
+        if (result.Count() == 2 &&
+            result.ElementAt(0) == 2 &&
+            result.ElementAt(1) == 4)
         {
           good++;
         }
@@ -42,9 +46,9 @@ namespace Pirate.PiVote.Crypto
       System.Diagnostics.Debug.WriteLine(good.ToString() + " good, " + bad.ToString() + " bad, " + fail.ToString() + " fail");
     }
 
-    private int SingleTest(BigInt prime, BigInt safePrime)
+    private IEnumerable<int> SingleTest(BigInt prime, BigInt safePrime)
     {
-      Parameters parameters = new Parameters(prime, safePrime, 3, 5);
+      Parameters parameters = new Parameters(prime, safePrime, 3, 5, 2, 1, 100);
       Authority[] auths = new Authority[5];
 
       for (int aI = 0; aI < parameters.AuthorityCount; aI++)
@@ -82,63 +86,63 @@ namespace Pirate.PiVote.Crypto
         publicKey = (publicKey * a.Y).Mod(parameters.P);
       }
 
-      List<Vote> votes = new List<Vote>();
-      votes.Add(new Vote(0, parameters, publicKey));
-      votes.Add(new Vote(1, parameters, publicKey));
-      votes.Add(new Vote(2, parameters, publicKey));
-      votes.Add(new Vote(1, parameters, publicKey));
-      votes.Add(new Vote(0, parameters, publicKey));
-      votes.Add(new Vote(1, parameters, publicKey));
-      votes.Add(new Vote(2, parameters, publicKey));
-      votes.Add(new Vote(1, parameters, publicKey));
-      votes.Add(new Vote(2, parameters, publicKey));
-      votes.Add(new Vote(0, parameters, publicKey));
-      votes.Add(new Vote(0, parameters, publicKey));
+      List<Ballot> ballots = new List<Ballot>();
+      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, publicKey));
+      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, publicKey));
+      ballots.Add(new Ballot(new int[] { 1, 0 }, parameters, publicKey));
+      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, publicKey));
+      ballots.Add(new Ballot(new int[] { 1, 0 }, parameters, publicKey));
+      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, publicKey));
 
-      Vote sum = new Vote(0, parameters, publicKey);
-      foreach (Vote v in votes)
+      if (!ballots.All(ballot => ballot.Verify(publicKey, parameters)))
+        throw new Exception("Bad proof.");
+
+      for (int optionIndex = 0; optionIndex < parameters.OptionCount; optionIndex++)
       {
-        sum += v;
-      }
+        IEnumerable<Vote> votes = ballots.Select(ballot => ballot.Votes[optionIndex]);
 
-      List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
-      auths.Foreach(authority => partialDeciphers.AddRange(authority.PartialDeciphers(sum)));
+        Vote sum = null;
+        votes.Foreach(vote => sum = sum == null ? vote : sum + vote);
 
-      IEnumerable<BigInt> partialDeciphers0 = partialDeciphers
-        .Where(partialDecipher => partialDecipher.Index == 1)
-        .Select(partialDecipher => partialDecipher.Value);
-      int v0 = sum.Decrypt(partialDeciphers0, parameters);
+        List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
+        auths.Foreach(authority => partialDeciphers.AddRange(authority.PartialDeciphers(sum)));
 
-      IEnumerable<BigInt> partialDeciphers1 = partialDeciphers
-        .Where(partialDecipher => partialDecipher.Index == 1)
-        .Select(partialDecipher => partialDecipher.Value);
-      int v1 = sum.Decrypt(partialDeciphers1, parameters);
+        IEnumerable<BigInt> partialDeciphers0 = partialDeciphers
+          .Where(partialDecipher => partialDecipher.Index == 1)
+          .Select(partialDecipher => partialDecipher.Value);
+        int v0 = sum.Decrypt(partialDeciphers0, parameters);
 
-      IEnumerable<BigInt> partialDeciphers2 = partialDeciphers
-        .Where(partialDecipher => partialDecipher.Index == 1)
-        .Select(partialDecipher => partialDecipher.Value);
-      int v2 = sum.Decrypt(partialDeciphers2, parameters);
+        IEnumerable<BigInt> partialDeciphers1 = partialDeciphers
+          .Where(partialDecipher => partialDecipher.Index == 1)
+          .Select(partialDecipher => partialDecipher.Value);
+        int v1 = sum.Decrypt(partialDeciphers1, parameters);
 
-      IEnumerable<BigInt> partialDeciphers3 = partialDeciphers
-        .Where(partialDecipher => partialDecipher.Index == 1)
-        .Select(partialDecipher => partialDecipher.Value);
-      int v3 = sum.Decrypt(partialDeciphers3, parameters);
+        IEnumerable<BigInt> partialDeciphers2 = partialDeciphers
+          .Where(partialDecipher => partialDecipher.Index == 1)
+          .Select(partialDecipher => partialDecipher.Value);
+        int v2 = sum.Decrypt(partialDeciphers2, parameters);
 
-      IEnumerable<BigInt> partialDeciphers4 = partialDeciphers
-        .Where(partialDecipher => partialDecipher.Index == 1)
-        .Select(partialDecipher => partialDecipher.Value);
-      int v4 = sum.Decrypt(partialDeciphers4, parameters);
-      
-      if (v0 == v1 &&
-          v0 == v2 &&
-          v0 == v3 &&
-          v0 == v4)
-      {
-        return v0;
-      }
-      else
-      {
-        return -1;
+        IEnumerable<BigInt> partialDeciphers3 = partialDeciphers
+          .Where(partialDecipher => partialDecipher.Index == 1)
+          .Select(partialDecipher => partialDecipher.Value);
+        int v3 = sum.Decrypt(partialDeciphers3, parameters);
+
+        IEnumerable<BigInt> partialDeciphers4 = partialDeciphers
+          .Where(partialDecipher => partialDecipher.Index == 1)
+          .Select(partialDecipher => partialDecipher.Value);
+        int v4 = sum.Decrypt(partialDeciphers4, parameters);
+
+        if (v0 == v1 &&
+            v0 == v2 &&
+            v0 == v3 &&
+            v0 == v4)
+        {
+          yield return v0;
+        }
+        else
+        {
+          throw new Exception("Bad vote.");
+        }
       }
     }
   }

@@ -37,7 +37,7 @@ namespace Pirate.PiVote.Crypto
     public BigInt P { get; private set; }
 
     /// <summary>
-    /// All range proofs for this vote.
+    /// All range proves for this vote.
     /// </summary>
     public List<RangeProof> RangeProves { get; private set; }
 
@@ -48,23 +48,22 @@ namespace Pirate.PiVote.Crypto
     /// Still need non-interactive zero-knowledge proof of vote being 0 or 1.
     /// Still need non-interactive zero-knowledge proof of sum of votes.
     /// </remarks>
-    /// <param name="vote">Actual vote.</param>
+    /// <param name="votum">Actual vote.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <param name="publicKey">Public key of the authorities.</param>
-    public Vote(int vote, Parameters parameters, BigInt publicKey)
+    public Vote(int votum, BigInt nonce, Parameters parameters, BigInt publicKey)
     {
       P = parameters.P;
-      BigInt r = parameters.Random();
-      HalfKey = parameters.G.PowerMod(r, P);
+      HalfKey = parameters.G.PowerMod(nonce, P);
 
       //The 12 magic number is inserted to avoid division remainders when
       //dividing partial deciphers for linear combinations by 2, 3 and 4.
-      Ciphertext = (publicKey.PowerMod(r * 12, P) * parameters.F.PowerMod(vote, P)).Mod(P);
+      Ciphertext = (publicKey.PowerMod(nonce * 12, P) * parameters.F.PowerMod(votum, P)).Mod(P);
 
-      for (int i = 0; i < 1000; i++)
+      this.RangeProves = new List<RangeProof>();
+      for (int proofIndex = 0; proofIndex < parameters.ProofCount; proofIndex++)
       {
-        this.RangeProves = new List<RangeProof>();
-        this.RangeProves.Add(new RangeProof(vote, r * 12, this, publicKey, parameters));
+        this.RangeProves.Add(new RangeProof(votum, nonce * 12, this, publicKey, parameters));
       }
     }
 
@@ -127,7 +126,7 @@ namespace Pirate.PiVote.Crypto
       while (parameters.F.PowerMod(new BigInt(sumOfVotes), parameters.P) != votePower)
       {
         sumOfVotes++;
-        if (sumOfVotes > 10000)
+        if (sumOfVotes > 1000000)
           return -1;
       }
 
@@ -144,14 +143,19 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
-    /// Verifies all range proofs.
+    /// Verifies all range proves.
     /// </summary>
     /// <param name="publicKey">Public key to verify against.</param>
     /// <param name="parameters">Cryptographic Parameters.</param>
     /// <returns>All proves are valid.</returns>
     public bool Verify(BigInt publicKey, Parameters parameters)
     {
-      return RangeProves.All(proof => proof.Verify(this, publicKey, parameters));
+      bool verifies = true;
+
+      verifies &= RangeProves.Count == parameters.ProofCount;
+      verifies &= RangeProves.All(proof => proof.Verify(this, publicKey, parameters));
+
+      return verifies;
     }
   }
 }

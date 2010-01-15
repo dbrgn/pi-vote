@@ -19,31 +19,52 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Prime
     /// </summary>
-    public BigInt Q { get; set; }
+    public BigInt Q { get; private set; }
 
     /// <summary>
     /// Safe Prime
     /// P = 2 * Q + 1
     /// </summary>
-    public BigInt P { get; set; }
+    public BigInt P { get; private set; }
 
     /// <summary>
     /// Order Q element of Zp*
     /// G = a ^ Q mod P where a random
     /// </summary>
-    public BigInt G { get; set; }
+    public BigInt G { get; private set; }
 
     /// <summary>
     /// element of <G>
     /// F = G ^ b mod P where b random
     /// </summary>
-    public BigInt F { get; set; }
+    public BigInt F { get; private set; }
 
-    public int Thereshold { get; set; }
+    /// <summary>
+    /// Number of adversaries that can be tolerated.
+    /// </summary>
+    public int Thereshold { get; private set; }
 
-    public int AuthorityCount { get; set; }
+    /// <summary>
+    /// Number of authorities.
+    /// </summary>
+    public int AuthorityCount { get; private set; }
 
-    public Parameters(BigInt prime, BigInt safePrime, int thereshold, int authorityCount)
+    /// <summary>
+    /// Number of vota each voter may cast.
+    /// </summary>
+    public int MaxVota { get; private set; }
+
+    /// <summary>
+    /// Number of voting options or candidates.
+    /// </summary>
+    public int OptionCount { get; private set; }
+
+    /// <summary>
+    /// Number of proves required to proof a single fact.
+    /// </summary>
+    public int ProofCount { get; private set; }
+
+    public Parameters(BigInt prime, BigInt safePrime, int thereshold, int authorityCount, int optionCount, int maxVota, int proofCount)
     {
       Q = prime;
       P = safePrime;
@@ -56,6 +77,9 @@ namespace Pirate.PiVote.Crypto
 
       Thereshold = thereshold;
       AuthorityCount = authorityCount;
+      OptionCount = optionCount;
+      MaxVota = maxVota;
+      ProofCount = proofCount;
     }
 
     public BigInt Random()
