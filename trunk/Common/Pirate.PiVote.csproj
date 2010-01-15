@@ -42,21 +42,42 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Crypto\Authority.cs" />
-    <Compile Include="Crypto\Ballot.cs" />
-    <Compile Include="Crypto\Proof.cs" />
-    <Compile Include="Crypto\Parameters.cs" />
-    <Compile Include="Crypto\PartialDecipher.cs" />
-    <Compile Include="Crypto\Polynomial.cs" />
-    <Compile Include="Crypto\Prime.cs" />
-    <Compile Include="Crypto\RangeProof.cs" />
-    <Compile Include="Crypto\Server.cs" />
+    <Compile Include="Crypto\Base\Authority.cs" />
+    <Compile Include="Crypto\Base\Ballot.cs" />
+    <Compile Include="Crypto\Base\VerificationValue.cs" />
+    <Compile Include="Crypto\Base\Proof.cs" />
+    <Compile Include="Crypto\Base\Parameters.cs" />
+    <Compile Include="Crypto\Base\PartialDecipher.cs" />
+    <Compile Include="Crypto\Base\Polynomial.cs" />
+    <Compile Include="Crypto\Base\Prime.cs" />
+    <Compile Include="Crypto\Base\RangeProof.cs" />
+    <Compile Include="Crypto\Certificate\Certificate.cs" />
+    <Compile Include="Crypto\Container\AuthorityList.cs" />
+    <Compile Include="Crypto\Container\AllBallotsContainer.cs" />
+    <Compile Include="Crypto\Container\BallotContainer.cs" />
+    <Compile Include="Crypto\Container\AllSharesContainer.cs" />
+    <Compile Include="Crypto\Container\PartialDeciphersContainer.cs" />
+    <Compile Include="Crypto\Container\EncryptedContainer.cs" />
+    <Compile Include="Crypto\Container\VotingContainer.cs" />
+    <Compile Include="Crypto\Container\VotingMaterial.cs" />
+    <Compile Include="Crypto\Container\ShareResponse.cs" />
+    <Compile Include="Crypto\Container\Option.cs" />
+    <Compile Include="Crypto\Container\ParameterContainer.cs" />
+    <Compile Include="Crypto\Container\ShareContainer.cs" />
+    <Compile Include="Crypto\Container\SignedContainer.cs" />
+    <Compile Include="Crypto\Entities\AuthorityEntity.cs" />
+    <Compile Include="Crypto\Entities\ServerEntity.cs" />
+    <Compile Include="Crypto\Base\Share.cs" />
+    <Compile Include="Crypto\Entities\VotingServerEntity.cs" />
     <Compile Include="Crypto\Test.cs" />
-    <Compile Include="Crypto\Vote.cs" />
-    <Compile Include="Crypto\Voter.cs" />
+    <Compile Include="Crypto\Base\Vote.cs" />
+    <Compile Include="Crypto\Entities\VoterEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilitiy\Bytes.cs" />
+    <Compile Include="Utilitiy\DeserializeContext.cs" />
     <Compile Include="Utilitiy\IEnumerableExtensions.cs" />
+    <Compile Include="Utilitiy\Serializable.cs" />
+    <Compile Include="Utilitiy\SerializeContext.cs" />
     <Compile Include="Utilitiy\SystemExtensions.cs" />
     <Compile Include="Utilitiy\Tools.cs" />
   </ItemGroup>

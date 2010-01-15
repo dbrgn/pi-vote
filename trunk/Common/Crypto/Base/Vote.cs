@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Emil.GMP;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
   /// <summary>
   /// Elgamal encrypted vote.
   /// </summary>
-  public class Vote
+  public class Vote : Serializable
   {
     /// <summary>
     /// Diffie-Hellman halfkey.
@@ -31,9 +32,6 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Prime number defining the modular arithmetic.
     /// </summary>
-    /// <remarks>
-    /// Not to be serialized with the vote.
-    /// </remarks>
     public BigInt P { get; private set; }
 
     /// <summary>
@@ -126,7 +124,7 @@ namespace Pirate.PiVote.Crypto
       while (parameters.F.PowerMod(new BigInt(sumOfVotes), parameters.P) != votePower)
       {
         sumOfVotes++;
-        if (sumOfVotes > 1000000)
+        if (sumOfVotes > 1000)
           return -1;
       }
 
@@ -156,6 +154,28 @@ namespace Pirate.PiVote.Crypto
       verifies &= RangeProves.All(proof => proof.Verify(this, publicKey, parameters));
 
       return verifies;
+    }
+
+    public Vote(DeserializeContext context)
+      : base(context)
+    { }
+
+    public override void Serialize(SerializeContext context)
+    {
+      base.Serialize(context);
+      context.Write(HalfKey);
+      context.Write(Ciphertext);
+      context.Write(P);
+      context.WriteList(RangeProves);
+    }
+
+    protected override void Deserialize(DeserializeContext context)
+    {
+      base.Deserialize(context);
+      HalfKey = context.ReadBigInt();
+      Ciphertext = context.ReadBigInt();
+      P = context.ReadBigInt();
+      RangeProves = context.ReadObjectList<RangeProof>();
     }
   }
 }

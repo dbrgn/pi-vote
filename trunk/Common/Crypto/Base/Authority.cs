@@ -22,7 +22,10 @@ namespace Pirate.PiVote.Crypto
     /// Polynomial from the authority.
     /// To be dealt out to the others.
     /// </summary>
-    private Polynomial f;
+    /// <remarks>
+    /// Known as f_i for authority i.
+    /// </remarks>
+    private Polynomial polynomial;
 
     /// <summary>
     /// Cryptographic parameters.
@@ -30,12 +33,13 @@ namespace Pirate.PiVote.Crypto
     private Parameters parameters;
 
     /// <summary>
-    /// Share of total secret.
+    /// Part of total secret.
     /// </summary>
     /// <remarks>
     /// To be linarly combined with the other shares.
+    /// Known as x(i) for authority i.
     /// </remarks>
-    private BigInt x;
+    private BigInt secretKeyPart;
 
     /// <summary>
     /// Index of this authority.
@@ -57,53 +61,65 @@ namespace Pirate.PiVote.Crypto
     /// Create one's own polynomial.
     /// </summary>
     /// <param name="degree">Degress of the polynomial. Equal to the cryptographic thereshold.</param>
-    public void CreatePolynomial(int degree)
+    public void CreatePolynomial()
     {
-      if (this.f != null)
+      if (this.polynomial != null)
         throw new InvalidOperationException("Polynom already created.");
 
-      this.f = new Polynomial();
+      this.polynomial = new Polynomial();
 
-      while (this.f.Degree < degree)
+      while (this.polynomial.Degree < this.parameters.Thereshold)
       {
-        this.f.AddCoefficient(this.parameters.Random());
+        this.polynomial.AddCoefficient(this.parameters.Random());
       }
     }
 
     /// <summary>
     /// Verification value to be published.
     /// </summary>
+    /// <remarks>
+    /// Known as A(i,j) for authority i and value j.
+    /// </remarks>
     /// <param name="index">Index of verification value.</param>
     /// <returns>Verification value.</returns>
-    public BigInt A(int index)
+    public VerificationValue VerificationValue(int index)
     {
-      if (this.f == null)
+      if (this.polynomial == null)
         throw new InvalidOperationException("Polynom not yet created.");
-      if (index < 0 || index > this.f.Degree)
+      if (index < 0 || index > this.polynomial.Degree)
         throw new ArgumentException("Coefficient index out of range.");
 
-      return this.parameters.G.PowerMod(this.f.GetCoefficient(index), this.parameters.P);
+      BigInt value = this.parameters.G.PowerMod(this.polynomial.GetCoefficient(index), this.parameters.P);
+
+      return new VerificationValue(value, Index);
     }
 
     /// <summary>
     /// Public key part.
     /// </summary>
-    public BigInt Y
+    /// <remarks>
+    /// Known as Y(i) for authority i.
+    /// </remarks>
+    public BigInt PublicKeyPart
     {
       get
       {
-        return A(0);
+        return VerificationValue(0).Value;
       }
     }
 
     /// <summary>
     /// Share to hand out to authority by authorithyIndex.
     /// </summary>
+    /// <remarks>
+    /// Known as S(i,j) for authorities i and j.
+    /// </remarks>
     /// <param name="authorithyIndex">Index of the authority for which this share is intended.</param>
     /// <returns>A share of the secret.</returns>
-    public BigInt S(int authorithyIndex)
+    public Share Share(int authorithyIndex)
     {
-      return this.f.Evaluate(new BigInt(authorithyIndex), this.parameters.P);
+      BigInt value = this.polynomial.Evaluate(new BigInt(authorithyIndex), this.parameters.P);
+      return new Share(value, Index, authorithyIndex);
     }
 
     /// <summary>
@@ -115,7 +131,7 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     /// <param name="vote">Vote to partially decipher.</param>
     /// <returns>List of partial deciphers.</returns>
-    public IEnumerable<PartialDecipher> PartialDeciphers(Vote vote)
+    public IEnumerable<PartialDecipher> PartialDeciphers(Vote vote, int optionIndex)
     {
       List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
 
@@ -137,34 +153,34 @@ namespace Pirate.PiVote.Crypto
       switch (Index)
       { 
         case 1:
-          partialDeciphers.Add(new PartialDecipher(2, PartialDecipher(vote, 5, 2)));
-          partialDeciphers.Add(new PartialDecipher(3, PartialDecipher(vote, 10, 3)));
-          partialDeciphers.Add(new PartialDecipher(4, PartialDecipher(vote, 15, 4)));
-          partialDeciphers.Add(new PartialDecipher(5, PartialDecipher(vote, 4, 1)));
+          partialDeciphers.Add(new PartialDecipher(2, optionIndex, PartialDecipher(vote, 5, 2)));
+          partialDeciphers.Add(new PartialDecipher(3, optionIndex, PartialDecipher(vote, 10, 3)));
+          partialDeciphers.Add(new PartialDecipher(4, optionIndex, PartialDecipher(vote, 15, 4)));
+          partialDeciphers.Add(new PartialDecipher(5, optionIndex, PartialDecipher(vote, 4, 1)));
           break;
         case 2:
-          partialDeciphers.Add(new PartialDecipher(1, PartialDecipher(vote, 10, 1)));
-          partialDeciphers.Add(new PartialDecipher(3, PartialDecipher(vote, -10, 3)));
-          partialDeciphers.Add(new PartialDecipher(4, PartialDecipher(vote, -5, 1)));
-          partialDeciphers.Add(new PartialDecipher(5, PartialDecipher(vote, -6, 1)));
+          partialDeciphers.Add(new PartialDecipher(1, optionIndex, PartialDecipher(vote, 10, 1)));
+          partialDeciphers.Add(new PartialDecipher(3, optionIndex, PartialDecipher(vote, -10, 3)));
+          partialDeciphers.Add(new PartialDecipher(4, optionIndex, PartialDecipher(vote, -5, 1)));
+          partialDeciphers.Add(new PartialDecipher(5, optionIndex, PartialDecipher(vote, -6, 1)));
           break;
         case 3:
-          partialDeciphers.Add(new PartialDecipher(1, PartialDecipher(vote, -20, 1)));
-          partialDeciphers.Add(new PartialDecipher(2, PartialDecipher(vote, -5, 1)));
-          partialDeciphers.Add(new PartialDecipher(4, PartialDecipher(vote, 5, 2)));
-          partialDeciphers.Add(new PartialDecipher(5, PartialDecipher(vote, 4, 1)));
+          partialDeciphers.Add(new PartialDecipher(1, optionIndex, PartialDecipher(vote, -20, 1)));
+          partialDeciphers.Add(new PartialDecipher(2, optionIndex, PartialDecipher(vote, -5, 1)));
+          partialDeciphers.Add(new PartialDecipher(4, optionIndex, PartialDecipher(vote, 5, 2)));
+          partialDeciphers.Add(new PartialDecipher(5, optionIndex, PartialDecipher(vote, 4, 1)));
           break;
         case 4:
-          partialDeciphers.Add(new PartialDecipher(1, PartialDecipher(vote, 15, 1)));
-          partialDeciphers.Add(new PartialDecipher(2, PartialDecipher(vote, 5, 1)));
-          partialDeciphers.Add(new PartialDecipher(3, PartialDecipher(vote, 5, 3)));
-          partialDeciphers.Add(new PartialDecipher(5, PartialDecipher(vote, -1, 1)));
+          partialDeciphers.Add(new PartialDecipher(1, optionIndex, PartialDecipher(vote, 15, 1)));
+          partialDeciphers.Add(new PartialDecipher(2, optionIndex, PartialDecipher(vote, 5, 1)));
+          partialDeciphers.Add(new PartialDecipher(3, optionIndex, PartialDecipher(vote, 5, 3)));
+          partialDeciphers.Add(new PartialDecipher(5, optionIndex, PartialDecipher(vote, -1, 1)));
           break;
         case 5:
-          partialDeciphers.Add(new PartialDecipher(1, PartialDecipher(vote, -4, 1)));
-          partialDeciphers.Add(new PartialDecipher(2, PartialDecipher(vote, -3, 2)));
-          partialDeciphers.Add(new PartialDecipher(3, PartialDecipher(vote, -2, 3)));
-          partialDeciphers.Add(new PartialDecipher(4, PartialDecipher(vote, -1, 4)));
+          partialDeciphers.Add(new PartialDecipher(1, optionIndex, PartialDecipher(vote, -4, 1)));
+          partialDeciphers.Add(new PartialDecipher(2, optionIndex, PartialDecipher(vote, -3, 2)));
+          partialDeciphers.Add(new PartialDecipher(3, optionIndex, PartialDecipher(vote, -2, 3)));
+          partialDeciphers.Add(new PartialDecipher(4, optionIndex, PartialDecipher(vote, -1, 4)));
           break;
         default:
           throw new InvalidOperationException("Bad authority index.");
@@ -188,7 +204,7 @@ namespace Pirate.PiVote.Crypto
     {
       //The 12 magic number is inserted to avoid division remainders when
       //dividing partial deciphers for linear combinations by 2, 3 and 4.
-      return vote.HalfKey.PowerMod(this.x * 12 * multiply / divide, this.parameters.P);
+      return vote.HalfKey.PowerMod(this.secretKeyPart * 12 * multiply / divide, this.parameters.P);
     }
 
     /// <summary>
@@ -196,32 +212,40 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="shares">Shares from all authorities.</param>
     /// <param name="As">Verification values.</param>
-    public void VerifySharing(List<BigInt> shares, List<List<BigInt>> As)
+    /// <returns>Was sharing accepted?</returns>
+    public bool VerifySharing(List<Share> shares, List<List<VerificationValue>> As)
     {
       for (int index = 0; index < shares.Count; index++)
       {
         //Check each part of the sharing.
-        BigInt GtoS = this.parameters.G.PowerMod(shares[index], this.parameters.P);
+        Share share = shares[index];
+        if (share.DestinationAuthorityIndex != Index)
+          return false;
+
+        BigInt GtoS = this.parameters.G.PowerMod(shares[index].Value, this.parameters.P);
         BigInt aProduct = new BigInt(1);
-        for (int k = 0; k <= this.f.Degree; k++)
+        for (int k = 0; k <= this.polynomial.Degree; k++)
         {
-          BigInt A = As[index][k];
-          aProduct *= A.PowerMod(new BigInt(Index).PowerMod(new BigInt(k), this.parameters.P), this.parameters.P);
+          VerificationValue verificationValue = As[index][k];
+          if (verificationValue.SourceAuthorityIndex != share.SourceAuthorityIndex)
+            return false;
+
+          aProduct *= verificationValue.Value.PowerMod(new BigInt(Index).PowerMod(new BigInt(k), this.parameters.P), this.parameters.P);
           aProduct = aProduct.Mod(this.parameters.P);
         }
 
         if (GtoS != aProduct)
-        {
-          throw new ArgumentException("Bad sharing.");
-        }
+          return false;
       }
 
       //Compute this authority's secret.
-      this.x = new BigInt(0);
-      foreach (BigInt share in shares)
+      this.secretKeyPart = new BigInt(0);
+      foreach (Share share in shares)
       {
-        this.x += share;
+        this.secretKeyPart += share.Value;
       }
+
+      return true;
     }
   }
 }

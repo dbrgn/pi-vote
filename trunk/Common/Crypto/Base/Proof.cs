@@ -11,13 +11,14 @@ using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 using Emil.GMP;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
   /// <summary>
   /// Non-interactive zero knowledge proof that a vote sum is MaxVota.
   /// </summary>
-  public class Proof
+  public class Proof : Serializable
   {
     /// <summary>
     /// Whitness.
@@ -77,6 +78,26 @@ namespace Pirate.PiVote.Crypto
         return false;
 
       return true;
+    }
+
+    public Proof(DeserializeContext context)
+      : base(context)
+    { }
+
+    public override void Serialize(SerializeContext context)
+    {
+      base.Serialize(context);
+      context.Write(T0);
+      context.Write(C0);
+      context.Write(S0);
+    }
+
+    protected override void Deserialize(DeserializeContext context)
+    {
+      base.Deserialize(context);
+      T0 = context.ReadBigInt();
+      C0 = context.ReadInt32();
+      S0 = context.ReadBigInt();
     }
   }
 }

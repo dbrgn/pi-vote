@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Emil.GMP;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
-  public class Ballot
+  public class Ballot : Serializable
   {
     public List<Vote> Votes { get; private set; }
     public List<Proof> SumProves { get; private set; }
@@ -63,6 +64,24 @@ namespace Pirate.PiVote.Crypto
       verifies &= SumProves.All(sumProof => sumProof.Verify(voteSum, publicKey, parameters));
 
       return verifies;
+    }
+
+    public Ballot(DeserializeContext context)
+      : base(context)
+    { }
+
+    public override void Serialize(SerializeContext context)
+    {
+      base.Serialize(context);
+      context.WriteList(Votes);
+      context.WriteList(SumProves);
+    }
+
+    protected override void Deserialize(DeserializeContext context)
+    {
+      base.Deserialize(context);
+      Votes = context.ReadObjectList<Vote>();
+      SumProves = context.ReadObjectList<Proof>();
     }
   }
 }

@@ -11,13 +11,14 @@ using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 using Emil.GMP;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
   /// <summary>
   /// Non-interactive zero knowledge proof that a vote is in range 0-1.
   /// </summary>
-  public class RangeProof
+  public class RangeProof : Serializable
   {
     /// <summary>
     /// Whitness for votum equals 0.
@@ -128,6 +129,34 @@ namespace Pirate.PiVote.Crypto
         return false;
 
       return true;
+    }
+
+    public RangeProof(DeserializeContext context)
+      : base(context)
+    { }
+
+    public override void Serialize(SerializeContext context)
+    {
+      base.Serialize(context);
+      context.Write(T0);
+      context.Write(T1);
+      context.Write(C);
+      context.Write(C0);
+      context.Write(C1);
+      context.Write(S0);
+      context.Write(S1);
+    }
+
+    protected override void Deserialize(DeserializeContext context)
+    {
+      base.Deserialize(context);
+      T0 = context.ReadBigInt();
+      T1 = context.ReadBigInt();
+      C = context.ReadInt32();
+      C0 = context.ReadInt32();
+      C1 = context.ReadInt32();
+      S0 = context.ReadBigInt();
+      S1 = context.ReadBigInt();
     }
   }
 }

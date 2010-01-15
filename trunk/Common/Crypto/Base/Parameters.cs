@@ -11,10 +11,11 @@ using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
 using Emil.GMP;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
-  public class Parameters
+  public class Parameters : Serializable
   {
     /// <summary>
     /// Prime
@@ -87,6 +88,34 @@ namespace Pirate.PiVote.Crypto
       byte[] data = new byte[P.BitLength / 8 + 1];
       RandomNumberGenerator.Create().GetBytes(data);
       return new BigInt(data).Mod(P);
+    }
+
+    public override void Serialize(SerializeContext context)
+    {
+      base.Serialize(context);
+      context.Write(P);
+      context.Write(Q);
+      context.Write(G);
+      context.Write(F);
+      context.Write(Thereshold);
+      context.Write(AuthorityCount);
+      context.Write(MaxVota);
+      context.Write(OptionCount);
+      context.Write(ProofCount);
+    }
+
+    protected override void Deserialize(DeserializeContext context)
+    {
+      base.Deserialize(context);
+      P = context.ReadBigInt();
+      Q = context.ReadBigInt();
+      G = context.ReadBigInt();
+      F = context.ReadBigInt();
+      Thereshold = context.ReadInt32();
+      AuthorityCount = context.ReadInt32();
+      MaxVota = context.ReadInt32();
+      OptionCount = context.ReadInt32();
+      ProofCount = context.ReadInt32();
     }
   }
 }
