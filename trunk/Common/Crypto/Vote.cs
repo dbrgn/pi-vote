@@ -37,6 +37,11 @@ namespace Pirate.PiVote.Crypto
     public BigInt P { get; private set; }
 
     /// <summary>
+    /// All range proofs for this vote.
+    /// </summary>
+    public List<RangeProof> RangeProves { get; private set; }
+
+    /// <summary>
     /// Creates a new encrypted vote.
     /// </summary>
     /// <remarks>
@@ -55,6 +60,12 @@ namespace Pirate.PiVote.Crypto
       //The 12 magic number is inserted to avoid division remainders when
       //dividing partial deciphers for linear combinations by 2, 3 and 4.
       Ciphertext = (publicKey.PowerMod(r * 12, P) * parameters.F.PowerMod(vote, P)).Mod(P);
+
+      for (int i = 0; i < 1000; i++)
+      {
+        this.RangeProves = new List<RangeProof>();
+        this.RangeProves.Add(new RangeProof(vote, r * 12, this, publicKey, parameters));
+      }
     }
 
     /// <summary>
@@ -130,6 +141,17 @@ namespace Pirate.PiVote.Crypto
     public Vote Clone()
     {
       return new Vote(HalfKey.Clone(), Ciphertext.Clone(), P);
+    }
+
+    /// <summary>
+    /// Verifies all range proofs.
+    /// </summary>
+    /// <param name="publicKey">Public key to verify against.</param>
+    /// <param name="parameters">Cryptographic Parameters.</param>
+    /// <returns>All proves are valid.</returns>
+    public bool Verify(BigInt publicKey, Parameters parameters)
+    {
+      return RangeProves.All(proof => proof.Verify(this, publicKey, parameters));
     }
   }
 }
