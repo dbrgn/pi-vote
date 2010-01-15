@@ -106,9 +106,33 @@ namespace Pirate.PiVote.Crypto
       return this.f.Evaluate(new BigInt(authorithyIndex), this.parameters.P);
     }
 
+    /// <summary>
+    /// Creates all partial deciphers for a vote.
+    /// </summary>
+    /// <remarks>
+    /// Partial deciphers from t+1 authority with the same index are
+    /// to be combined to fully decipher the vote.
+    /// </remarks>
+    /// <param name="vote">Vote to partially decipher.</param>
+    /// <returns>List of partial deciphers.</returns>
     public IEnumerable<PartialDecipher> PartialDeciphers(Vote vote)
     {
       List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
+
+      //The magic numbers for multiply and divide listed here for
+      //each authority index and partial decipher group index
+      //are computed to provide linear combinations of the partial
+      //decipher that yield a full decipher.
+      //
+      //Example for 5 authorities and threshold 3.
+      //f1-f5   polynoms of authorities 1-5
+      //
+      //each autority j has shares f1(j) to f5(j) which expand to
+      //a polynomial of degree 3, namely f1(j) = a0+a1*j+a2*j^2+a3*j^3
+      //these shares are summed as x(j) = f1(j)+f2(j)+f3(j)+f4(j)+f5(j)
+      //
+      //these are then linarly combined to the secret key:
+      //x(1)*4 + x(2)*-6 + x(3)*4 + x(4)*-1 = ... = a0(1)+a0(2)+a0(3)+a(4)+a(5)
 
       switch (Index)
       { 
@@ -149,9 +173,22 @@ namespace Pirate.PiVote.Crypto
       return partialDeciphers;
     }
 
+    /// <summary>
+    /// Partially deciphers a vote.
+    /// </summary>
+    /// <remarks>
+    /// Observes multiply/divide for linear combination with other
+    /// partial deciphers.
+    /// </remarks>
+    /// <param name="vote">Vote to partially decipher.</param>
+    /// <param name="multiply">Linear combination multiplicator.</param>
+    /// <param name="divide">Linear combination dividend.</param>
+    /// <returns>Partial decipher value.</returns>
     private BigInt PartialDecipher(Vote vote, int multiply, int divide)
     {
-      return vote.HalfKey.PowerMod(this.x * 3 * 4 * multiply / divide, this.parameters.P);
+      //The 12 magic number is inserted to avoid division remainders when
+      //dividing partial deciphers for linear combinations by 2, 3 and 4.
+      return vote.HalfKey.PowerMod(this.x * 12 * multiply / divide, this.parameters.P);
     }
 
     /// <summary>

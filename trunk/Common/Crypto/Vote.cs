@@ -51,7 +51,10 @@ namespace Pirate.PiVote.Crypto
       P = parameters.P;
       BigInt r = parameters.Random();
       HalfKey = parameters.G.PowerMod(r, P);
-      Ciphertext = (publicKey.PowerMod(r * 3 * 4, P) * parameters.F.PowerMod(vote, P)).Mod(P);
+
+      //The 12 magic number is inserted to avoid division remainders when
+      //dividing partial deciphers for linear combinations by 2, 3 and 4.
+      Ciphertext = (publicKey.PowerMod(r * 12, P) * parameters.F.PowerMod(vote, P)).Mod(P);
     }
 
     /// <summary>

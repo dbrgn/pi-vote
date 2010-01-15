@@ -20,10 +20,8 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public void Do()
     {
-      //BigInt prime = FindSafePrime();
-      //BigInt prime = FindPrime();
-      BigInt prime = new BigInt("500000000000000000037883");
-      BigInt safePrime = new BigInt("1000000000000000000059533");
+      BigInt prime = Prime.Find(80);
+      BigInt safePrime = Prime.FindSafe(88);
 
       int good = 0;
       int bad = 0;
@@ -42,43 +40,6 @@ namespace Pirate.PiVote.Crypto
       }
 
       System.Diagnostics.Debug.WriteLine(good.ToString() + " good, " + bad.ToString() + " bad, " + fail.ToString() + " fail");
-    }
-
-    private BigInt FindPrime()
-    {
-      BigInt i = new BigInt("500000000000000000000000");
-
-      while (true)
-      {
-        while (!i.IsProbablyPrimeRabinMiller(1000))
-        {
-          i++;
-        }
-
-        System.Diagnostics.Debug.WriteLine(i);
-        i++;
-      }
-
-      return i;
-    }
-
-    private BigInt FindSafePrime()
-    {
-      BigInt i = new BigInt("1000000000000000000000000");
-
-      while (true)
-      {
-        while (!i.IsProbablyPrimeRabinMiller(1000) ||
-               !(2 * i + 1).IsProbablyPrimeRabinMiller(1000))
-        {
-          i++;
-        }
-
-        System.Diagnostics.Debug.WriteLine(i);
-        i++;
-      }
-
-      return i;
     }
 
     private int SingleTest(BigInt prime, BigInt safePrime)
