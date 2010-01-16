@@ -13,14 +13,20 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
-  public class EncryptedContainer : Serializable
+  /// <summary>
+  /// Encrypted serializable object.
+  /// </summary>
+  public class Encrypted : Serializable
   {
+    /// <summary>
+    /// Encrypted data of serializable object.
+    /// </summary>
     public byte[] Data { get; protected set; }
 
-    public EncryptedContainer()
+    public Encrypted()
     { }
 
-    public EncryptedContainer(DeserializeContext context)
+    public Encrypted(DeserializeContext context)
       : base(context)
     { }
 
@@ -37,18 +43,31 @@ namespace Pirate.PiVote.Crypto
     }
   }
 
-  public class EncryptedContainer<TValue> : EncryptedContainer
+  /// <summary>
+  /// Encrypted serializable object.
+  /// </summary>
+  public class Encrypted<TValue> : Encrypted
     where TValue : Serializable
   {
-    public EncryptedContainer(TValue value, Certificate receiverCertificate)
+    /// <summary>
+    /// Encrypts an serializable object.
+    /// </summary>
+    /// <param name="value">Serializable object.</param>
+    /// <param name="receiverCertificate">Certificate of the receiver.</param>
+    public Encrypted(TValue value, Certificate receiverCertificate)
     {
       Data = receiverCertificate.Encrypt(value.ToBinary());
     }
 
-    public EncryptedContainer(DeserializeContext context)
+    public Encrypted(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Decrypt and deserializes data to an object.
+    /// </summary>
+    /// <param name="receiverCertificate">Certificate of the receiver.</param>
+    /// <returns>Data object.</returns>
     public TValue Decrypt(Certificate receiverCertificate)
     {
       return Serializable.FromBinary<TValue>(receiverCertificate.Decrypt(Data));

@@ -13,17 +13,39 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
-  public class BallotContainer : Serializable
+  /// <summary>
+  /// Container for a ballot.
+  /// </summary>
+  public class Envelope : Serializable
   {
+    /// <summary>
+    /// Id of the voting procedure.
+    /// </summary>
     public int VotingId { get; private set; }
 
+    /// <summary>
+    /// Id of the voter.
+    /// </summary>
     public int VoterId { get; private set; }
 
+    /// <summary>
+    /// Full name of the voter.
+    /// </summary>
     public string VoterName { get; private set; }
 
+    /// <summary>
+    /// Casted ballot.
+    /// </summary>
     public Ballot Ballot { get; private set; }
 
-    public BallotContainer(int votingId, int voterId, string voterName, Ballot ballot)
+    /// <summary>
+    /// Create a new envelope for a ballot.
+    /// </summary>
+    /// <param name="votingId">Id of the voting procedure.</param>
+    /// <param name="voterId">Id of the voter.</param>
+    /// <param name="voterName">Full name of the voter.</param>
+    /// <param name="ballot">Casted ballot.</param>
+    public Envelope(int votingId, int voterId, string voterName, Ballot ballot)
     {
       VotingId = votingId;
       VoterId = voterId;
@@ -31,7 +53,7 @@ namespace Pirate.PiVote.Crypto
       Ballot = ballot;
     }
 
-    public BallotContainer(DeserializeContext context)
+    public Envelope(DeserializeContext context)
       : base(context)
     { }
 

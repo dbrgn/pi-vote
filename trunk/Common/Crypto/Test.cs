@@ -18,7 +18,7 @@ namespace Pirate.PiVote.Crypto
   {
     public void Do2()
     {
-      ParameterContainer pc = new ParameterContainer();
+      VotingParameters pc = new VotingParameters();
       pc.AddOption(new Option("Nein", "Dagegen"));
       pc.AddOption(new Option("Ja", "Dafür"));
       pc.Initialize(1);
@@ -139,7 +139,8 @@ namespace Pirate.PiVote.Crypto
 
     private IEnumerable<int> SingleTest(BigInt prime, BigInt safePrime)
     {
-      Parameters parameters = new Parameters(prime, safePrime, 3, 5, 2, 1, 100);
+      Parameters parameters = new Parameters();
+      parameters.InitilizeCrypto(prime, safePrime, 3, 5, 2, 1, 100);
       Authority[] auths = new Authority[5];
 
       for (int aI = 0; aI < parameters.AuthorityCount; aI++)

@@ -13,16 +13,30 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
-  public class SignedContainer : Serializable
+  /// <summary>
+  /// Signed serializable object.
+  /// </summary>
+  public class Signed : Serializable
   {
+    /// <summary>
+    /// Binary data of serializable object.
+    /// </summary>
     public byte[] Data { get; protected set; }
+
+    /// <summary>
+    /// Signature.
+    /// </summary>
     public byte[] Signature { get; protected set; }
+
+    /// <summary>
+    /// Binary data of the certificate.
+    /// </summary>
     public byte[] CertificateData { get; protected set; }
 
-    public SignedContainer()
+    public Signed()
     { }
 
-    public SignedContainer(DeserializeContext context)
+    public Signed(DeserializeContext context)
       : base(context)
     { }
 
@@ -43,30 +57,51 @@ namespace Pirate.PiVote.Crypto
     }
   }
 
-  public class SignedContainer<TValue> : SignedContainer
+  /// <summary>
+  /// Binary data of serializable object.
+  /// </summary>
+  public class Signed<TValue> : Signed
     where TValue : Serializable
   {
-    public SignedContainer(TValue value, Certificate certificate)
+    /// <summary>
+    /// Creates a new signed serialized object.
+    /// </summary>
+    /// <param name="value">Serializable object.</param>
+    /// <param name="certificate">Certificate of the signer.</param>
+    public Signed(TValue value, Certificate certificate)
     {
       Data = value.ToBinary();
       Signature = certificate.Sign(Data);
       CertificateData = certificate.ToBinary();
     }
 
-    public SignedContainer(DeserializeContext context)
+    public Signed(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Verifies the correctnes of the signature.
+    /// </summary>
+    /// <remarks>
+    /// Don't forget to check the identiy of the certificate.
+    /// </remarks>
+    /// <returns></returns>
     public bool Verify()
     {
       return Certificate.Verify(Data, Signature);
     }
 
+    /// <summary>
+    /// Certificate of the signer.
+    /// </summary>
     public Certificate Certificate
     {
       get { return Serializable.FromBinary<Certificate>(CertificateData); }
     }
 
+    /// <summary>
+    /// The serialize object.
+    /// </summary>
     public TValue Value
     {
       get { return Serializable.FromBinary<TValue>(Data); }

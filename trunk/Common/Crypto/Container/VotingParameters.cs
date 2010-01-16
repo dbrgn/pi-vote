@@ -16,12 +16,12 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Contains all parameters of a voting.
   /// </summary>
-  public class ParameterContainer : Serializable
+  public class VotingParameters : Parameters
   {
-    private const int AuthorityCount = 5;
-    private const int Thereshold = 3;
+    private const int StandardAuthorityCount = 5;
+    private const int StandardThereshold = 3;
+    private const int StandardProofCount = 10;
     private const int PrimeBits = 80;
-    private const int ProofCount = 10;
 
     /// <summary>
     /// List of possible options for the voters.
@@ -37,12 +37,7 @@ namespace Pirate.PiVote.Crypto
     /// Name of this voting.
     /// </summary>
     public string VotingName { get; private set; }
-
-    /// <summary>
-    /// Cryptographic parameters.
-    /// </summary>
-    public Parameters Parameters { get; private set; }
-
+    
     /// <summary>
     /// List of possible options for the voters.
     /// </summary>
@@ -54,7 +49,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new voting.
     /// </summary>
-    public ParameterContainer()
+    public VotingParameters()
     {
       this.options = new List<Option>();
     }
@@ -68,7 +63,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="option">An selectable option.</param>
     public void AddOption(Option option)
     {
-      if (Parameters != null)
+      if (P != null)
         throw new InvalidOperationException("Already initialized.");
 
       this.options.Add(option);
@@ -83,10 +78,10 @@ namespace Pirate.PiVote.Crypto
     /// <param name="votesPerVoter">How many votes does each voter have?</param>
     public void Initialize(int votesPerVoter)
     {
-      if (Parameters != null)
+      if (P != null)
         throw new InvalidOperationException("Already initialized.");
 
-      Parameters = new Parameters(
+      InitilizeCrypto(
         Prime.Find(PrimeBits),
         Prime.FindSafe(PrimeBits + 8),
         Thereshold,
@@ -96,7 +91,7 @@ namespace Pirate.PiVote.Crypto
         ProofCount);
     }
 
-    public ParameterContainer(DeserializeContext context)
+    public VotingParameters(DeserializeContext context)
       : base(context)
     { }
 
@@ -105,7 +100,6 @@ namespace Pirate.PiVote.Crypto
       base.Serialize(context);
       context.Write(VotingId);
       context.Write(VotingName);
-      context.Write(Parameters);
       context.WriteList(Options);
     }
 
@@ -114,7 +108,6 @@ namespace Pirate.PiVote.Crypto
       base.Deserialize(context);
       VotingId = context.ReadInt32();
       VotingName = context.ReadString();
-      Parameters = context.ReadObject<Parameters>();
       this.options = context.ReadObjectList<Option>();
     }
   }

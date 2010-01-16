@@ -13,46 +13,70 @@ using Emil.GMP;
 
 namespace Pirate.PiVote.Crypto
 {
+  /// <summary>
+  /// Entity of a voter.
+  /// </summary>
   public class VoterEntity
   {
+    /// <summary>
+    /// Public key of the authorities.
+    /// </summary>
     private BigInt publicKey;
 
-    private ParameterContainer parameters;
+    /// <summary>
+    /// Voting parameters.
+    /// </summary>
+    private VotingParameters parameters;
 
+    /// <summary>
+    /// Id of this voter.
+    /// </summary>
     public int VoterId { get; private set; }
 
+    /// <summary>
+    /// Full name of this voter.
+    /// </summary>
     public string VoterName { get; private set; }
 
-    public Certificate Certificate { get; private set; }
+    /// <summary>
+    /// Private certificate of this voter.
+    /// </summary>
+    private Certificate certificate;
     
     public VoterEntity(int voterId, string voterName)
     {
       VoterId = voterId;
       VoterName = voterName;
-      Certificate = new Certificate();
+      this.certificate = new Certificate();
     }
 
-    public SignedContainer<BallotContainer> Vote(VotingMaterial votingMaterial, IEnumerable<int> vota)
+    /// <summary>
+    /// Cast a vote and pack it in an envelope.
+    /// </summary>
+    /// <param name="votingMaterial">Voting material.</param>
+    /// <param name="vota">List of vota.</param>
+    /// <returns>Signed envelope containing the ballot.</returns>
+    public Signed<Envelope> Vote(VotingMaterial votingMaterial, IEnumerable<int> vota)
     {
       this.parameters = votingMaterial.ParameterContainer;
       bool acceptMaterial = true;
       this.publicKey = new BigInt(1);
 
-      foreach (SignedContainer<ShareResponse> signedShareResponse in votingMaterial.PublicKeyParts)
+      foreach (Signed<ShareResponse> signedShareResponse in votingMaterial.PublicKeyParts)
       {
         acceptMaterial &= signedShareResponse.Verify();
 
         ShareResponse shareResponse = signedShareResponse.Value;
         acceptMaterial &= shareResponse.AcceptShares;
-        this.publicKey = (this.publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.Parameters.P);
+        this.publicKey = (this.publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.P);
       }
 
       if (acceptMaterial)
       {
-        Ballot ballot = new Ballot(vota, votingMaterial.ParameterContainer.Parameters, this.publicKey);
-        BallotContainer ballotContainer = new BallotContainer(votingMaterial.VotingId, VoterId, VoterName, ballot);
+        Ballot ballot = new Ballot(vota, votingMaterial.ParameterContainer, this.publicKey);
+        Envelope ballotContainer = new Envelope(votingMaterial.VotingId, VoterId, VoterName, ballot);
 
-        return new SignedContainer<BallotContainer>(ballotContainer, Certificate);
+        return new Signed<Envelope>(ballotContainer, this.certificate);
       }
       else
       {
@@ -60,22 +84,27 @@ namespace Pirate.PiVote.Crypto
       }
     }
 
+    /// <summary>
+    /// Tally and verify the result.
+    /// </summary>
+    /// <param name="votingContainer">Container of voting procedure.</param>
+    /// <returns>Results for each option.</returns>
     public IEnumerable<int> Result(VotingContainer votingContainer)
     {
-      Vote[] voteSums = new Vote[this.parameters.Parameters.OptionCount];
+      Vote[] voteSums = new Vote[this.parameters.OptionCount];
 
-      foreach (SignedContainer<BallotContainer> signedBallotContainer in votingContainer.Ballots)
+      foreach (Signed<Envelope> signedBallotContainer in votingContainer.Emvelopes)
       {
         bool acceptVote = true;
 
         acceptVote &= signedBallotContainer.Verify();
 
-        BallotContainer ballotContainer = signedBallotContainer.Value;
-        acceptVote &= ballotContainer.Ballot.Verify(this.publicKey, this.parameters.Parameters);
+        Envelope ballotContainer = signedBallotContainer.Value;
+        acceptVote &= ballotContainer.Ballot.Verify(this.publicKey, this.parameters);
 
         if (acceptVote)
         {
-          for (int optionIndex = 0; optionIndex < this.parameters.Parameters.OptionCount; optionIndex++)
+          for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
           {
             voteSums[optionIndex] =
               voteSums[optionIndex] == null ?
@@ -87,55 +116,68 @@ namespace Pirate.PiVote.Crypto
 
       List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
 
-      foreach (SignedContainer<PartialDeciphersContainer> signedPartialDeciphersContainer in votingContainer.PartialDeciphers)
+      foreach (Signed<PartialDecipherList> signedPartialDeciphersContainer in votingContainer.PartialDeciphers)
       {
         if (signedPartialDeciphersContainer.Verify())
         {
-          PartialDeciphersContainer partialDeciphersContainer = signedPartialDeciphersContainer.Value;
+          PartialDecipherList partialDeciphersContainer = signedPartialDeciphersContainer.Value;
           partialDeciphers.AddRange(partialDeciphersContainer.PartialDeciphers);
         }
       }
 
       List<int> results = new List<int>();
 
-      for (int optionIndex = 0; optionIndex < this.parameters.Parameters.OptionCount; optionIndex++)
+      for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
       {
+        List<int> optionResults = new List<int>();
+
         IEnumerable<BigInt> partialDeciphers0 = partialDeciphers
           .Where(partialDecipher => partialDecipher.GroupIndex == 1 && partialDecipher.OptionIndex == optionIndex)
           .Select(partialDecipher => partialDecipher.Value);
-        int v0 = partialDeciphers0.Count() == this.parameters.Parameters.Thereshold + 1 ?
-          voteSums[optionIndex].Decrypt(partialDeciphers0, parameters.Parameters) :
-          -1;
+        if (partialDeciphers0.Count() == this.parameters.Thereshold + 1)
+          optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphers0, parameters));
 
         IEnumerable<BigInt> partialDeciphers1 = partialDeciphers
           .Where(partialDecipher => partialDecipher.GroupIndex == 1 && partialDecipher.OptionIndex == optionIndex)
           .Select(partialDecipher => partialDecipher.Value);
-        int v1 = partialDeciphers1.Count() == this.parameters.Parameters.Thereshold + 1 ?
-          voteSums[optionIndex].Decrypt(partialDeciphers1, parameters.Parameters) :
-          -1;
+        if (partialDeciphers1.Count() == this.parameters.Thereshold + 1)
+          optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphers1, parameters));
 
         IEnumerable<BigInt> partialDeciphers2 = partialDeciphers
           .Where(partialDecipher => partialDecipher.GroupIndex == 1 && partialDecipher.OptionIndex == optionIndex)
           .Select(partialDecipher => partialDecipher.Value);
-        int v2 = partialDeciphers2.Count() == this.parameters.Parameters.Thereshold + 1 ?
-          voteSums[optionIndex].Decrypt(partialDeciphers2, parameters.Parameters) :
-          -1;
+        if (partialDeciphers2.Count() == this.parameters.Thereshold + 1)
+          optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphers2, parameters));
 
         IEnumerable<BigInt> partialDeciphers3 = partialDeciphers
           .Where(partialDecipher => partialDecipher.GroupIndex == 1 && partialDecipher.OptionIndex == optionIndex)
           .Select(partialDecipher => partialDecipher.Value);
-        int v3 = partialDeciphers3.Count() == this.parameters.Parameters.Thereshold + 1 ?
-          voteSums[optionIndex].Decrypt(partialDeciphers3, parameters.Parameters) :
-          -1;
+        if (partialDeciphers3.Count() == this.parameters.Thereshold + 1)
+          optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphers3, parameters));
 
         IEnumerable<BigInt> partialDeciphers4 = partialDeciphers
           .Where(partialDecipher => partialDecipher.GroupIndex == 1 && partialDecipher.OptionIndex == optionIndex)
           .Select(partialDecipher => partialDecipher.Value);
-        int v4 = partialDeciphers4.Count() == this.parameters.Parameters.Thereshold + 1 ?
-          voteSums[optionIndex].Decrypt(partialDeciphers4, parameters.Parameters) :
-          -1;
+        if (partialDeciphers4.Count() == this.parameters.Thereshold + 1)
+          optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphers4, parameters));
 
-        results.Add(v0);
+        if (optionResults.Count > 0)
+        {
+          int firstOptionResult = optionResults[0];
+
+          if (optionResults.All(optionResult => optionResult == firstOptionResult))
+          {
+            results.Add(firstOptionResult);
+          }
+          else
+          {
+            results.Add(-1);
+          }
+        }
+        else
+        {
+          results.Add(-1);
+        }
       }
 
       return results;

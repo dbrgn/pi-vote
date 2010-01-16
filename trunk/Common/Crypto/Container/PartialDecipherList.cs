@@ -14,22 +14,39 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
-  public class PartialDeciphersContainer : Serializable
+  /// <summary>
+  /// List of partial deciphers from an authority.
+  /// </summary>
+  public class PartialDecipherList : Serializable
   {
+    /// <summary>
+    /// Id of voting procedure.
+    /// </summary>
     public int VotingId { get; set; }
 
+    /// <summary>
+    /// Index of issuing authority.
+    /// </summary>
     public int AuthorityIndex { get; set; }
 
+    /// <summary>
+    /// Partial deciphers from authority.
+    /// </summary>
     public List<PartialDecipher> PartialDeciphers { get; set; }
 
-    public PartialDeciphersContainer(int votingId, int authorityIndex)
+    /// <summary>
+    /// Create new list of partial deciphers from an authority.
+    /// </summary>
+    /// <param name="votingId">Id of voting procedure.</param>
+    /// <param name="authorityIndex">Index of issuing authority.</param>
+    public PartialDecipherList(int votingId, int authorityIndex)
     {
       VotingId = votingId;
       AuthorityIndex = authorityIndex;
       PartialDeciphers = new List<PartialDecipher>();
     }
 
-    public PartialDeciphersContainer(DeserializeContext context)
+    public PartialDecipherList(DeserializeContext context)
       : base(context)
     { }
 

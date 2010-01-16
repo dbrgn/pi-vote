@@ -24,12 +24,12 @@ namespace Pirate.PiVote.Crypto
 
   public class VotingServerEntity
   {
-    private ParameterContainer parameters;
+    private VotingParameters parameters;
     private Dictionary<int, Certificate> authorities;
-    private Dictionary<int, SignedContainer<ShareContainer>> shares;
-    private Dictionary<int, SignedContainer<ShareResponse>> responses;
-    private List<SignedContainer<BallotContainer>> ballots;
-    private Dictionary<int, SignedContainer<PartialDeciphersContainer>> partialDeciphers;
+    private Dictionary<int, Signed<SharePart>> shares;
+    private Dictionary<int, Signed<ShareResponse>> responses;
+    private List<Signed<Envelope>> ballots;
+    private Dictionary<int, Signed<PartialDecipherList>> partialDeciphers;
 
     public VotingStatus Status { get; set; }
 
@@ -38,27 +38,27 @@ namespace Pirate.PiVote.Crypto
       get { return this.parameters.VotingId; }
     }
 
-    public VotingServerEntity(ParameterContainer parameters)
+    public VotingServerEntity(VotingParameters parameters)
     {
       if (parameters == null)
         throw new ArgumentNullException("parameters");
 
       this.parameters = parameters;
       this.authorities = new Dictionary<int, Certificate>();
-      this.shares = new Dictionary<int, SignedContainer<ShareContainer>>();
-      this.responses = new Dictionary<int, SignedContainer<ShareResponse>>();
-      this.ballots = new List<SignedContainer<BallotContainer>>();
-      this.partialDeciphers = new Dictionary<int, SignedContainer<PartialDeciphersContainer>>();
+      this.shares = new Dictionary<int, Signed<SharePart>>();
+      this.responses = new Dictionary<int, Signed<ShareResponse>>();
+      this.ballots = new List<Signed<Envelope>>();
+      this.partialDeciphers = new Dictionary<int, Signed<PartialDecipherList>>();
       Status = VotingStatus.New;
     }
 
-    public ParameterContainer Parameters { get { return this.parameters; } }
+    public VotingParameters Parameters { get { return this.parameters; } }
 
     public int AddAuthority(Certificate certificate)
     {
       if (certificate == null)
         throw new ArgumentNullException("certificate");
-      if (this.authorities.Count >= this.parameters.Parameters.AuthorityCount)
+      if (this.authorities.Count >= this.parameters.AuthorityCount)
         throw new InvalidOperationException("Already enough authorities.");
 
       int authorityIndex = this.authorities.Count + 1;
@@ -72,14 +72,14 @@ namespace Pirate.PiVote.Crypto
       get { return new AuthorityList(Id, this.authorities.Values); }
     }
 
-    public void DepositShares(SignedContainer<ShareContainer> shares)
+    public void DepositShares(Signed<SharePart> shares)
     {
       if (shares == null)
         throw new ArgumentNullException("shares");
       if (Status != VotingStatus.New)
         throw new InvalidOperationException("Wrong status for operation.");
 
-      ShareContainer shareContainer = shares.Value;
+      SharePart shareContainer = shares.Value;
 
       if (!this.authorities.ContainsKey(shareContainer.AuthorityIndex))
         throw new ArgumentException("Bad authority index.");
@@ -95,21 +95,21 @@ namespace Pirate.PiVote.Crypto
 
       this.shares.Add(shareContainer.AuthorityIndex, shares);
 
-      if (this.shares.Count == this.parameters.Parameters.AuthorityCount)
+      if (this.shares.Count == this.parameters.AuthorityCount)
       {
         Status = VotingStatus.Sharing;
       }
     }
 
-    public AllSharesContainer GetAllShares()
+    public AllShareParts GetAllShares()
     {
       if (Status != VotingStatus.Sharing)
         throw new InvalidOperationException("Wrong status for operation.");
 
-      return new AllSharesContainer(Id, this.shares.Values);
+      return new AllShareParts(Id, this.shares.Values);
     }
 
-    public void DepositShareResponse(SignedContainer<ShareResponse> response)
+    public void DepositShareResponse(Signed<ShareResponse> response)
     {
       if (response == null)
         throw new ArgumentNullException("shares");
@@ -132,7 +132,7 @@ namespace Pirate.PiVote.Crypto
 
       this.responses.Add(shareResponse.AuthorityIndex, response);
 
-      if (this.responses.Count == this.parameters.Parameters.AuthorityCount)
+      if (this.responses.Count == this.parameters.AuthorityCount)
       {
         if (this.responses.Values.All(r => r.Value.AcceptShares))
         {
@@ -153,7 +153,7 @@ namespace Pirate.PiVote.Crypto
       return new VotingMaterial(Id, this.parameters, this.responses.Values);
     }
 
-    public void Vote(SignedContainer<BallotContainer> ballot)
+    public void Vote(Signed<Envelope> ballot)
     {
       if (Status != VotingStatus.Voting)
         throw new InvalidOperationException("Wrong status for operation.");
@@ -178,38 +178,38 @@ namespace Pirate.PiVote.Crypto
       Status = VotingStatus.Deciphering;
     }
 
-    public AllBallotsContainer GetAllBallots()
+    public AuthorityEnvelopeList GetAllBallots()
     {
       if (Status != VotingStatus.Deciphering)
         throw new InvalidOperationException("Wrong status for operation.");
 
-      return new AllBallotsContainer(Id, this.ballots, new VotingMaterial(Id, this.parameters, this.responses.Values));
+      return new AuthorityEnvelopeList(Id, this.ballots, new VotingMaterial(Id, this.parameters, this.responses.Values));
     }
 
-    public void DepositPartialDecipher(SignedContainer<PartialDeciphersContainer> signedPartialDecipherContainer)
+    public void DepositPartialDecipher(Signed<PartialDecipherList> signedPartialDecipherList)
     {
-      if (signedPartialDecipherContainer == null)
+      if (signedPartialDecipherList == null)
         throw new ArgumentNullException("partialDecipherContainer");
       if (Status != VotingStatus.Deciphering)
         throw new InvalidOperationException("Wrong status for operation.");
 
-      PartialDeciphersContainer partialDecipherContainer = signedPartialDecipherContainer.Value;
+      PartialDecipherList partialDecipherList = signedPartialDecipherList.Value;
 
-      if (!this.authorities.ContainsKey(partialDecipherContainer.AuthorityIndex))
+      if (!this.authorities.ContainsKey(partialDecipherList.AuthorityIndex))
         throw new ArgumentException("Bad authority index.");
 
-      if (!signedPartialDecipherContainer.Verify())
+      if (!signedPartialDecipherList.Verify())
         throw new ArgumentException("Bad signature.");
 
-      if (!signedPartialDecipherContainer.Certificate.IsIdentic(this.authorities[partialDecipherContainer.AuthorityIndex]))
+      if (!signedPartialDecipherList.Certificate.IsIdentic(this.authorities[partialDecipherList.AuthorityIndex]))
         throw new ArgumentException("Not signed by proper authority.");
 
-      if (this.partialDeciphers.ContainsKey(partialDecipherContainer.AuthorityIndex))
+      if (this.partialDeciphers.ContainsKey(partialDecipherList.AuthorityIndex))
         throw new ArgumentException("Authority has already deposited shares.");
 
-      this.partialDeciphers.Add(partialDecipherContainer.AuthorityIndex, signedPartialDecipherContainer);
+      this.partialDeciphers.Add(partialDecipherList.AuthorityIndex, signedPartialDecipherList);
 
-      if (this.partialDeciphers.Count == this.parameters.Parameters.AuthorityCount)
+      if (this.partialDeciphers.Count == this.parameters.AuthorityCount)
       {
         Status = VotingStatus.Finished;
       }
@@ -220,7 +220,7 @@ namespace Pirate.PiVote.Crypto
       if (Status != VotingStatus.Finished)
         throw new InvalidOperationException("Wrong status for operation.");
 
-      return new VotingContainer(Id, this.ballots, this.partialDeciphers.Values);
+      return new VotingContainer(Id, this.parameters, this.ballots, this.partialDeciphers.Values);
     }
   }
 }

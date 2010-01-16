@@ -14,21 +14,43 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
+  /// <summary>
+  /// Full voting.
+  /// </summary>
+  /// <remarks>
+  /// Contains all data needed to tally and verify the voting procedure.
+  /// </remarks>
   public class VotingContainer : Serializable
   {
+    /// <summary>
+    /// Id of the voting procedure.
+    /// </summary>
     public int VotingId { get; private set; }
 
-    public List<SignedContainer<BallotContainer>> Ballots { get; private set; }
+    /// <summary>
+    /// Voting parameters.
+    /// </summary>
+    public VotingParameters Parameters { get; private set; }
 
-    public List<SignedContainer<PartialDeciphersContainer>> PartialDeciphers { get; private set; }
+    /// <summary>
+    /// Envelopes from all voters.
+    /// </summary>
+    public List<Signed<Envelope>> Emvelopes { get; private set; }
+
+    /// <summary>
+    /// Partial deciphers from all authorities.
+    /// </summary>
+    public List<Signed<PartialDecipherList>> PartialDeciphers { get; private set; }
 
     public VotingContainer(int votingId, 
-      IEnumerable<SignedContainer<BallotContainer>> ballots,
-      IEnumerable<SignedContainer<PartialDeciphersContainer>> partialDeciphers)
+      VotingParameters parameters,
+      IEnumerable<Signed<Envelope>> envelopes,
+      IEnumerable<Signed<PartialDecipherList>> partialDeciphers)
     {
       VotingId = votingId;
-      Ballots = new List<SignedContainer<BallotContainer>>(ballots);
-      PartialDeciphers = new List<SignedContainer<PartialDeciphersContainer>>(partialDeciphers);
+      Parameters = parameters;
+      Emvelopes = new List<Signed<Envelope>>(envelopes);
+      PartialDeciphers = new List<Signed<PartialDecipherList>>(partialDeciphers);
     }
 
     public VotingContainer(DeserializeContext context)
@@ -39,7 +61,7 @@ namespace Pirate.PiVote.Crypto
     {
       base.Serialize(context);
       context.Write(VotingId);
-      context.WriteList(Ballots);
+      context.WriteList(Emvelopes);
       context.WriteList(PartialDeciphers);
     }
 
@@ -47,8 +69,8 @@ namespace Pirate.PiVote.Crypto
     {
       base.Deserialize(context);
       VotingId = context.ReadInt32();
-      Ballots = context.ReadObjectList<SignedContainer<BallotContainer>>();
-      PartialDeciphers = context.ReadObjectList<SignedContainer<PartialDeciphersContainer>>();
+      Emvelopes = context.ReadObjectList<Signed<Envelope>>();
+      PartialDeciphers = context.ReadObjectList<Signed<PartialDecipherList>>();
     }
   }
 }

@@ -13,12 +13,30 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
+  /// <summary>
+  /// An option for which voters may vote.
+  /// </summary>
   public class Option : Serializable
   {
+    /// <summary>
+    /// Text of option.
+    /// </summary>
+    /// <example>
+    /// Yes / No / Abstain
+    /// Alice Shepard / Bob Miller
+    /// </example>
     public string Text { get; private set; }
 
+    /// <summary>
+    /// Description of the option.
+    /// </summary>
     public string Description { get; private set; }
 
+    /// <summary>
+    /// Create a new option.
+    /// </summary>
+    /// <param name="text">Text of option.</param>
+    /// <param name="description">Description of option.</param>
     public Option(string text, string description)
     {
       Text = text;

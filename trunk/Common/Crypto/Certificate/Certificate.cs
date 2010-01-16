@@ -46,5 +46,15 @@ namespace Pirate.PiVote.Crypto
     {
       return data;
     }
+
+    public bool HasPrivateKey
+    {
+      get { return true; }
+    }
+
+    public Certificate OnlyPublicPart
+    {
+      get { return this; }
+    }
   }
 }

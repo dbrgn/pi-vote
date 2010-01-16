@@ -65,7 +65,11 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public int ProofCount { get; private set; }
 
-    public Parameters(BigInt prime, BigInt safePrime, int thereshold, int authorityCount, int optionCount, int maxVota, int proofCount)
+    public Parameters()
+    {
+    }
+    
+    public void InitilizeCrypto(BigInt prime, BigInt safePrime, int thereshold, int authorityCount, int optionCount, int maxVota, int proofCount)
     {
       Q = prime;
       P = safePrime;
@@ -89,6 +93,10 @@ namespace Pirate.PiVote.Crypto
       RandomNumberGenerator.Create().GetBytes(data);
       return new BigInt(data).Mod(P);
     }
+
+    public Parameters(DeserializeContext context)
+      : base(context)
+    { }
 
     public override void Serialize(SerializeContext context)
     {

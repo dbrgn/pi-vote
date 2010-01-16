@@ -21,11 +21,11 @@ namespace Pirate.PiVote.Crypto
       this.votings = new Dictionary<int, VotingServerEntity>();
     }
 
-    public void NewVote(SignedContainer<ParameterContainer> signedParameterContainer)
+    public void NewVote(Signed<VotingParameters> signedParameterContainer)
     { 
       //TODO perform authorization.
 
-      ParameterContainer parameterContainer = signedParameterContainer.Value;
+      VotingParameters parameterContainer = signedParameterContainer.Value;
       VotingServerEntity voting = new VotingServerEntity(parameterContainer);
       this.votings.Add(voting.Id, voting);
     }

@@ -13,19 +13,31 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
+  /// <summary>
+  /// All things a voter needs to cast his vote.
+  /// </summary>
   public class VotingMaterial : Serializable
   {
+    /// <summary>
+    /// Id of the voting procedure.
+    /// </summary>
     public int VotingId { get; private set; }
 
-    public ParameterContainer ParameterContainer { get; private set; }
+    /// <summary>
+    /// Defines voting procedure.
+    /// </summary>
+    public VotingParameters ParameterContainer { get; private set; }
 
-    public List<SignedContainer<ShareResponse>> PublicKeyParts { get; private set; }
+    /// <summary>
+    /// Responses that can be combined to a public key.
+    /// </summary>
+    public List<Signed<ShareResponse>> PublicKeyParts { get; private set; }
 
-    public VotingMaterial(int votingId, ParameterContainer parameterContainer, IEnumerable<SignedContainer<ShareResponse>> publicKeyParts)
+    public VotingMaterial(int votingId, VotingParameters parameterContainer, IEnumerable<Signed<ShareResponse>> publicKeyParts)
     {
       VotingId = votingId;
       ParameterContainer = parameterContainer;
-      PublicKeyParts = new List<SignedContainer<ShareResponse>>(publicKeyParts);
+      PublicKeyParts = new List<Signed<ShareResponse>>(publicKeyParts);
     }
 
     public VotingMaterial(DeserializeContext context)
@@ -42,8 +54,8 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      ParameterContainer = context.ReadObject<ParameterContainer>();
-      PublicKeyParts = context.ReadObjectList<SignedContainer<ShareResponse>>();
+      ParameterContainer = context.ReadObject<VotingParameters>();
+      PublicKeyParts = context.ReadObjectList<Signed<ShareResponse>>();
     }
   }
 }

@@ -1,4 +1,5 @@
-﻿/*
+﻿
+/*
  *  <project description>
  * 
  *  Copyright (c) 2008-2009 Stefan Thöni <stefan@savvy.ch> 
@@ -14,9 +15,12 @@ using Pirate.PiVote.Serialization;
 namespace Pirate.PiVote.Crypto
 {
   /// <summary>
-  /// List of all authorities in the voting procedure.
+  /// Assembly of all share parts from all authorities.
   /// </summary>
-  public class AuthorityList : Serializable
+  /// <remarks>
+  /// Used by authorities to verify share parts.
+  /// </remarks>
+  public class AllShareParts : Serializable
   {
     /// <summary>
     /// Id of the voting procedure.
@@ -24,21 +28,22 @@ namespace Pirate.PiVote.Crypto
     public int VotingId { get; private set; }
 
     /// <summary>
-    /// List of all authorities in the voting procedure.
+    /// Share parts from all authorities.
     /// </summary>
-    public List<Certificate> Authorities { get; private set; }
+    public List<Signed<SharePart>> ShareParts { get; private set; }
 
     /// <summary>
-    /// Creates a new list of authorities for a voting procedure.
+    /// Create a new assembly of all share parts.
     /// </summary>
     /// <param name="votingId">Id of the voting procedure.</param>
-    /// <param name="authorities">List of authorities.</param>
-    public AuthorityList(int votingId, IEnumerable<Certificate> authorities)
+    /// <param name="shareParts">Share parts from all authorities.</param>
+    public AllShareParts(int votingId, IEnumerable<Signed<SharePart>> shareParts)
     {
-      Authorities = new List<Certificate>(authorities);
+      VotingId = votingId;
+      ShareParts = new List<Signed<SharePart>>(shareParts);
     }
 
-    public AuthorityList(DeserializeContext context)
+    public AllShareParts(DeserializeContext context)
       : base(context)
     { }
 
@@ -46,14 +51,14 @@ namespace Pirate.PiVote.Crypto
     {
       base.Serialize(context);
       context.Write(VotingId);
-      context.WriteList(Authorities);
+      context.WriteList(ShareParts);
     }
 
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
       VotingId = context.ReadInt32();
-      Authorities = context.ReadObjectList<Certificate>();
+      ShareParts = context.ReadObjectList<Signed<SharePart>>();
     }
   }
 }
