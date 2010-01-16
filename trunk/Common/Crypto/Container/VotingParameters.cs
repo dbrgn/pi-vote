@@ -49,8 +49,10 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new voting.
     /// </summary>
-    public VotingParameters()
+    public VotingParameters(int votingId, string votingName)
     {
+      VotingId = votingId;
+      VotingName = votingName;
       this.options = new List<Option>();
     }
 
@@ -84,11 +86,11 @@ namespace Pirate.PiVote.Crypto
       InitilizeCrypto(
         Prime.Find(PrimeBits),
         Prime.FindSafe(PrimeBits + 8),
-        Thereshold,
-        AuthorityCount,
+        StandardThereshold,
+        StandardAuthorityCount,
         Options.Count(),
         votesPerVoter,
-        ProofCount);
+        StandardProofCount);
     }
 
     public VotingParameters(DeserializeContext context)

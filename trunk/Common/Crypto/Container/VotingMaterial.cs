@@ -21,22 +21,21 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
-    public int VotingId { get; private set; }
+    public int VotingId { get { return Parameters.VotingId; } }
 
     /// <summary>
     /// Defines voting procedure.
     /// </summary>
-    public VotingParameters ParameterContainer { get; private set; }
+    public VotingParameters Parameters { get; private set; }
 
     /// <summary>
     /// Responses that can be combined to a public key.
     /// </summary>
     public List<Signed<ShareResponse>> PublicKeyParts { get; private set; }
 
-    public VotingMaterial(int votingId, VotingParameters parameterContainer, IEnumerable<Signed<ShareResponse>> publicKeyParts)
+    public VotingMaterial(VotingParameters parameters, IEnumerable<Signed<ShareResponse>> publicKeyParts)
     {
-      VotingId = votingId;
-      ParameterContainer = parameterContainer;
+      Parameters = parameters;
       PublicKeyParts = new List<Signed<ShareResponse>>(publicKeyParts);
     }
 
@@ -47,14 +46,14 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(ParameterContainer);
+      context.Write(Parameters);
       context.WriteList(PublicKeyParts);
     }
 
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      ParameterContainer = context.ReadObject<VotingParameters>();
+      Parameters = context.ReadObject<VotingParameters>();
       PublicKeyParts = context.ReadObjectList<Signed<ShareResponse>>();
     }
   }

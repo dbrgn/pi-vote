@@ -66,8 +66,11 @@
     <Compile Include="Crypto\Container\SharePart.cs" />
     <Compile Include="Crypto\Certificate\Signed.cs" />
     <Compile Include="Crypto\Entities\AuthorityEntity.cs" />
+    <Compile Include="Crypto\Result\EnvelopeResult.cs" />
+    <Compile Include="Crypto\Result\OptionResult.cs" />
     <Compile Include="Crypto\Entities\ServerEntity.cs" />
     <Compile Include="Crypto\Base\Share.cs" />
+    <Compile Include="Crypto\Result\VotingResult.cs" />
     <Compile Include="Crypto\Entities\VotingServerEntity.cs" />
     <Compile Include="Crypto\Test.cs" />
     <Compile Include="Crypto\Base\Vote.cs" />

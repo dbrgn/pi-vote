@@ -18,7 +18,7 @@ namespace Pirate.PiVote.Crypto
   {
     public void Do2()
     {
-      VotingParameters pc = new VotingParameters();
+      VotingParameters pc = new VotingParameters(27, "Zufrieden");
       pc.AddOption(new Option("Nein", "Dagegen"));
       pc.AddOption(new Option("Ja", "Dafür"));
       pc.Initialize(1);

@@ -150,7 +150,7 @@ namespace Pirate.PiVote.Crypto
       if (Status != VotingStatus.Voting)
         throw new InvalidOperationException("Wrong status for operation.");
 
-      return new VotingMaterial(Id, this.parameters, this.responses.Values);
+      return new VotingMaterial(this.parameters, this.responses.Values);
     }
 
     public void Vote(Signed<Envelope> ballot)
@@ -183,7 +183,7 @@ namespace Pirate.PiVote.Crypto
       if (Status != VotingStatus.Deciphering)
         throw new InvalidOperationException("Wrong status for operation.");
 
-      return new AuthorityEnvelopeList(Id, this.ballots, new VotingMaterial(Id, this.parameters, this.responses.Values));
+      return new AuthorityEnvelopeList(Id, this.ballots, new VotingMaterial(this.parameters, this.responses.Values));
     }
 
     public void DepositPartialDecipher(Signed<PartialDecipherList> signedPartialDecipherList)
@@ -220,7 +220,9 @@ namespace Pirate.PiVote.Crypto
       if (Status != VotingStatus.Finished)
         throw new InvalidOperationException("Wrong status for operation.");
 
-      return new VotingContainer(Id, this.parameters, this.ballots, this.partialDeciphers.Values);
+      VotingMaterial material = new VotingMaterial(this.parameters, this.responses.Values);
+
+      return new VotingContainer(material, this.ballots, this.partialDeciphers.Values);
     }
   }
 }

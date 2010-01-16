@@ -25,12 +25,17 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
-    public int VotingId { get; private set; }
+    public int VotingId { get { return Material.VotingId; } }
+
+    /// <summary>
+    /// Voting material issued to voters.
+    /// </summary>
+    public VotingMaterial Material { get; private set; }
 
     /// <summary>
     /// Voting parameters.
     /// </summary>
-    public VotingParameters Parameters { get; private set; }
+    public VotingParameters Parameters { get { return Material.Parameters; } }
 
     /// <summary>
     /// Envelopes from all voters.
@@ -42,13 +47,12 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public List<Signed<PartialDecipherList>> PartialDeciphers { get; private set; }
 
-    public VotingContainer(int votingId, 
-      VotingParameters parameters,
+    public VotingContainer(
+      VotingMaterial material, 
       IEnumerable<Signed<Envelope>> envelopes,
       IEnumerable<Signed<PartialDecipherList>> partialDeciphers)
     {
-      VotingId = votingId;
-      Parameters = parameters;
+      Material = material;
       Emvelopes = new List<Signed<Envelope>>(envelopes);
       PartialDeciphers = new List<Signed<PartialDecipherList>>(partialDeciphers);
     }
@@ -60,7 +64,7 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(VotingId);
+      context.Write(Material);
       context.WriteList(Emvelopes);
       context.WriteList(PartialDeciphers);
     }
@@ -68,7 +72,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      VotingId = context.ReadInt32();
+      Material = context.ReadObject<VotingMaterial>();
       Emvelopes = context.ReadObjectList<Signed<Envelope>>();
       PartialDeciphers = context.ReadObjectList<Signed<PartialDecipherList>>();
     }

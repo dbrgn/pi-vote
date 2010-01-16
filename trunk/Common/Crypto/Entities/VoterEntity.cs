@@ -58,7 +58,7 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Signed envelope containing the ballot.</returns>
     public Signed<Envelope> Vote(VotingMaterial votingMaterial, IEnumerable<int> vota)
     {
-      this.parameters = votingMaterial.ParameterContainer;
+      this.parameters = votingMaterial.Parameters;
       bool acceptMaterial = true;
       this.publicKey = new BigInt(1);
 
@@ -73,7 +73,7 @@ namespace Pirate.PiVote.Crypto
 
       if (acceptMaterial)
       {
-        Ballot ballot = new Ballot(vota, votingMaterial.ParameterContainer, this.publicKey);
+        Ballot ballot = new Ballot(vota, votingMaterial.Parameters, this.publicKey);
         Envelope ballotContainer = new Envelope(votingMaterial.VotingId, VoterId, VoterName, ballot);
 
         return new Signed<Envelope>(ballotContainer, this.certificate);
@@ -89,41 +89,13 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="votingContainer">Container of voting procedure.</param>
     /// <returns>Results for each option.</returns>
-    public IEnumerable<int> Result(VotingContainer votingContainer)
+    public VotingResult Result(VotingContainer votingContainer)
     {
-      Vote[] voteSums = new Vote[this.parameters.OptionCount];
+      VotingResult result = new VotingResult(votingContainer.VotingId, votingContainer.Material.Parameters.VotingName);
 
-      foreach (Signed<Envelope> signedBallotContainer in votingContainer.Emvelopes)
-      {
-        bool acceptVote = true;
+      Vote[] voteSums = CalculateBallotSums(votingContainer.Emvelopes, result);
 
-        acceptVote &= signedBallotContainer.Verify();
-
-        Envelope ballotContainer = signedBallotContainer.Value;
-        acceptVote &= ballotContainer.Ballot.Verify(this.publicKey, this.parameters);
-
-        if (acceptVote)
-        {
-          for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
-          {
-            voteSums[optionIndex] =
-              voteSums[optionIndex] == null ?
-              ballotContainer.Ballot.Votes[optionIndex] :
-              voteSums[optionIndex] + ballotContainer.Ballot.Votes[optionIndex];
-          }
-        }
-      }
-
-      List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
-
-      foreach (Signed<PartialDecipherList> signedPartialDeciphersContainer in votingContainer.PartialDeciphers)
-      {
-        if (signedPartialDeciphersContainer.Verify())
-        {
-          PartialDecipherList partialDeciphersContainer = signedPartialDeciphersContainer.Value;
-          partialDeciphers.AddRange(partialDeciphersContainer.PartialDeciphers);
-        }
-      }
+      List<PartialDecipher> partialDeciphers = ListPartialDeciphers(votingContainer.PartialDeciphers);
 
       List<int> results = new List<int>();
 
@@ -131,35 +103,16 @@ namespace Pirate.PiVote.Crypto
       {
         List<int> optionResults = new List<int>();
 
-        IEnumerable<BigInt> partialDeciphers0 = partialDeciphers
-          .Where(partialDecipher => partialDecipher.GroupIndex == 1 && partialDecipher.OptionIndex == optionIndex)
-          .Select(partialDecipher => partialDecipher.Value);
-        if (partialDeciphers0.Count() == this.parameters.Thereshold + 1)
-          optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphers0, parameters));
+        for (int groupIndex = 1; groupIndex < this.parameters.AuthorityCount; groupIndex++)
+        {
+          IEnumerable<BigInt> partialDeciphersByOptionAndGroup = partialDeciphers
+            .Where(partialDecipher => partialDecipher.GroupIndex == groupIndex && partialDecipher.OptionIndex == optionIndex)
+            .Select(partialDecipher => partialDecipher.Value);
+          if (partialDeciphersByOptionAndGroup.Count() == this.parameters.Thereshold + 1)
+            optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphersByOptionAndGroup, parameters));
+        }
 
-        IEnumerable<BigInt> partialDeciphers1 = partialDeciphers
-          .Where(partialDecipher => partialDecipher.GroupIndex == 1 && partialDecipher.OptionIndex == optionIndex)
-          .Select(partialDecipher => partialDecipher.Value);
-        if (partialDeciphers1.Count() == this.parameters.Thereshold + 1)
-          optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphers1, parameters));
-
-        IEnumerable<BigInt> partialDeciphers2 = partialDeciphers
-          .Where(partialDecipher => partialDecipher.GroupIndex == 1 && partialDecipher.OptionIndex == optionIndex)
-          .Select(partialDecipher => partialDecipher.Value);
-        if (partialDeciphers2.Count() == this.parameters.Thereshold + 1)
-          optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphers2, parameters));
-
-        IEnumerable<BigInt> partialDeciphers3 = partialDeciphers
-          .Where(partialDecipher => partialDecipher.GroupIndex == 1 && partialDecipher.OptionIndex == optionIndex)
-          .Select(partialDecipher => partialDecipher.Value);
-        if (partialDeciphers3.Count() == this.parameters.Thereshold + 1)
-          optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphers3, parameters));
-
-        IEnumerable<BigInt> partialDeciphers4 = partialDeciphers
-          .Where(partialDecipher => partialDecipher.GroupIndex == 1 && partialDecipher.OptionIndex == optionIndex)
-          .Select(partialDecipher => partialDecipher.Value);
-        if (partialDeciphers4.Count() == this.parameters.Thereshold + 1)
-          optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphers4, parameters));
+        Option option = votingContainer.Parameters.Options.ElementAt(optionIndex);
 
         if (optionResults.Count > 0)
         {
@@ -167,20 +120,74 @@ namespace Pirate.PiVote.Crypto
 
           if (optionResults.All(optionResult => optionResult == firstOptionResult))
           {
-            results.Add(firstOptionResult);
+            result.Options.Add(new OptionResult(option.Text, option.Description, firstOptionResult));
           }
           else
           {
-            results.Add(-1);
+            result.Options.Add(new OptionResult(option.Text, option.Description, -1));
           }
         }
         else
         {
-          results.Add(-1);
+          result.Options.Add(new OptionResult(option.Text, option.Description, -1));
         }
       }
 
-      return results;
+      return result;
+    }
+
+    /// <summary>
+    /// Lists all valid partail deciphers.
+    /// </summary>
+    /// <param name="signedPartialDeciphers">List of signed partail deciphers.</param>
+    /// <returns>List of partail deciphers.</returns>
+    private static List<PartialDecipher> ListPartialDeciphers(IEnumerable<Signed<PartialDecipherList>> signedPartialDeciphers)
+    {
+      List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
+
+      foreach (Signed<PartialDecipherList> signedPartialDeciphersContainer in signedPartialDeciphers)
+      {
+        if (signedPartialDeciphersContainer.Verify())
+        {
+          PartialDecipherList partialDeciphersContainer = signedPartialDeciphersContainer.Value;
+          partialDeciphers.AddRange(partialDeciphersContainer.PartialDeciphers);
+        }
+      }
+      return partialDeciphers;
+    }
+
+    /// <summary>
+    /// Calculates the sum of all ballots for each option.
+    /// </summary>
+    /// <param name="envelopes">Envelopes from all voters.</param>
+    /// <returns>Sums of ballots.</returns>
+    private Vote[] CalculateBallotSums(IEnumerable<Signed<Envelope>> envelopes, VotingResult result)
+    {
+      Vote[] voteSums = new Vote[this.parameters.OptionCount];
+
+      foreach (Signed<Envelope> signedEnvelope in envelopes)
+      {
+        bool acceptVote = true;
+
+        acceptVote &= signedEnvelope.Verify();
+
+        Envelope envelope = signedEnvelope.Value;
+        acceptVote &= envelope.Ballot.Verify(this.publicKey, this.parameters);
+
+        if (acceptVote)
+        {
+          for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
+          {
+            voteSums[optionIndex] =
+              voteSums[optionIndex] == null ?
+              envelope.Ballot.Votes[optionIndex] :
+              voteSums[optionIndex] + envelope.Ballot.Votes[optionIndex];
+          }
+        }
+
+        result.Voters.Add(new EnvelopeResult(envelope.VoterId, envelope.VoterName, acceptVote));
+      }
+      return voteSums;
     }
   }
 }
