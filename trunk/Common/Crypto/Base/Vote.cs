@@ -159,7 +159,7 @@ namespace Pirate.PiVote.Crypto
       while (parameters.F.PowerMod(new BigInt(sumOfVotes), parameters.P) != votePower)
       {
         sumOfVotes++;
-        if (sumOfVotes > 1000)
+        if (sumOfVotes > 10000)
           return -1;
       }
 

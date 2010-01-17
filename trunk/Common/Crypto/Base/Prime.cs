@@ -20,6 +20,25 @@ namespace Pirate.PiVote.Crypto
   public static class Prime
   {
     /// <summary>
+    /// Low number of rabin-miller tests to perform.
+    /// </summary>
+    /// <remarks>
+    /// Using low number of rabin-miller tests to find safe prime
+    /// and high number of tests to be quite certain of primality.
+    /// </remarks>
+    private const int LowRabinMillerCount = 10;
+
+    /// <summary>
+    /// High number of rabin-miller test to perform.
+    /// </summary>
+    private const int HighRabinMillerCount = 1000;
+
+    /// <summary>
+    /// Create only one random number generator.
+    /// </summary>
+    private static readonly RandomNumberGenerator randomNumberGenerator = RandomNumberGenerator.Create();
+
+    /// <summary>
     /// Finds a prime number.
     /// </summary>
     /// <param name="bitLength">Length in bits. Is rounded up to next byte length.</param>
@@ -31,7 +50,7 @@ namespace Pirate.PiVote.Crypto
 
       BigInt number = RandomNumber(bitLength);
 
-      while (!number.IsProbablyPrimeRabinMiller(1000))
+      while (!number.IsProbablyPrimeRabinMiller(HighRabinMillerCount))
       {
         number = RandomNumber(bitLength);
       }
@@ -50,14 +69,20 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentException("Bit length must be at least 1.");
 
       BigInt number = RandomNumber(bitLength);
+      BigInt safeNumber = 2 * number + 1;
 
-      while (!number.IsProbablyPrimeRabinMiller(1000) ||
-             !(2 * number + 1).IsProbablyPrimeRabinMiller(1000))
+      //Using low number of rabin-miller tests to find safe prime
+      //and high number of tests to be quite certain of primality.
+      while (!number.IsProbablyPrimeRabinMiller(LowRabinMillerCount) ||
+             !safeNumber.IsProbablyPrimeRabinMiller(LowRabinMillerCount) ||
+             !number.IsProbablyPrimeRabinMiller(HighRabinMillerCount) ||
+             !safeNumber.IsProbablyPrimeRabinMiller(HighRabinMillerCount))
       {
         number = RandomNumber(bitLength);
+        safeNumber = 2 * number + 1;
       }
 
-      return number;
+      return safeNumber;
     }
 
     /// <summary>
@@ -72,7 +97,7 @@ namespace Pirate.PiVote.Crypto
 
       int byteLength = (bitLength - 1) / 8 + 1;
       byte[] data = new byte[byteLength];
-      RandomNumberGenerator.Create().GetBytes(data);
+      randomNumberGenerator.GetBytes(data);
       return new BigInt(data);
     }
   }

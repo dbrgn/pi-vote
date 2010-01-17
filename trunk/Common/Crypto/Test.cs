@@ -11,17 +11,28 @@ using System.Linq;
 using System.Text;
 using Emil.GMP;
 using Pirate.PiVote.Serialization;
+using System.Security.Cryptography;
 
 namespace Pirate.PiVote.Crypto
 {
   public class Test
   {
-    public void Do2()
+    /// <summary>
+    /// Voting entity test.
+    /// </summary>
+    /// <remarks>
+    /// Used only during development.
+    /// </remarks>
+    public void EntityTest()
     {
       VotingParameters pc = new VotingParameters(27, "Zufrieden");
       pc.AddOption(new Option("Nein", "Dagegen"));
       pc.AddOption(new Option("Ja", "Dafür"));
       pc.Initialize(1);
+
+      DateTime start = DateTime.Now;
+      Console.WriteLine();
+      Console.Write("Voting begins...");
 
       VotingServerEntity vs = new VotingServerEntity(pc);
 
@@ -85,6 +96,24 @@ namespace Pirate.PiVote.Crypto
       vs.Vote(vote4);
       vs.Vote(vote5);
 
+      for (int i = 1000; i < 1500; i++)
+      {
+        VoterEntity vx = new VoterEntity(i, "Voter " + i.ToString());
+
+        var votex = vx.Vote(vs.GetVotingMaterial(), new int[] { 0, 1 });
+
+        vs.Vote(votex);
+      }
+
+      for (int i = 2000; i < 2500; i++)
+      {
+        VoterEntity vx = new VoterEntity(i, "Voter " + i.ToString());
+
+        var votex = vx.Vote(vs.GetVotingMaterial(), new int[] { 1, 0 });
+
+        vs.Vote(votex);
+      }
+
       vs.EndVote();
 
       var pd1 = a1.PartiallyDecipher(vs.GetAllBallots());
@@ -104,41 +133,22 @@ namespace Pirate.PiVote.Crypto
       var res3 = v3.Result(vs.GetVotingResult());
       var res4 = v4.Result(vs.GetVotingResult());
       var res5 = v5.Result(vs.GetVotingResult());
+
+      TimeSpan duration = DateTime.Now.Subtract(start);
+      Console.WriteLine("Succeded {0}", duration.ToString());
     }
 
     /// <summary>
-    /// Test function. Only for development.
+    /// Crypto base test.
     /// </summary>
-    public void Do()
+    /// <remarks>
+    /// Only used during development.
+    /// </remarks>
+    public void BaseTest()
     {
       BigInt prime = Prime.Find(80);
       BigInt safePrime = Prime.FindSafe(88);
 
-      int good = 0;
-      int bad = 0;
-      int fail = 0;
-
-      for (int i = 0; i < 10000; i++)
-      {
-        IEnumerable<int> result =SingleTest(prime, safePrime);
-
-        if (result.Count() == 2 &&
-            result.ElementAt(0) == 2 &&
-            result.ElementAt(1) == 4)
-        {
-          good++;
-        }
-        else
-        {
-          bad++;
-        }
-      }
-
-      System.Diagnostics.Debug.WriteLine(good.ToString() + " good, " + bad.ToString() + " bad, " + fail.ToString() + " fail");
-    }
-
-    private IEnumerable<int> SingleTest(BigInt prime, BigInt safePrime)
-    {
       Parameters parameters = new Parameters();
       parameters.InitilizeCrypto(prime, safePrime, 3, 5, 2, 1, 100);
       Authority[] auths = new Authority[5];
@@ -229,7 +239,7 @@ namespace Pirate.PiVote.Crypto
             v0 == v3 &&
             v0 == v4)
         {
-          yield return v0;
+          throw new Exception("Everything ok.");
         }
         else
         {

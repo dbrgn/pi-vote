@@ -130,9 +130,16 @@ namespace Pirate.PiVote.Crypto
     /// <returns>New random number.</returns>
     public BigInt Random()
     {
-      byte[] data = new byte[P.BitLength / 8 + 1];
-      RandomNumberGenerator.Create().GetBytes(data);
-      return new BigInt(data).Mod(P);
+      BigInt value = 0;
+
+      while (value < 1)
+      {
+        byte[] data = new byte[P.BitLength / 8 + 1];
+        RandomNumberGenerator.Create().GetBytes(data);
+        value = new BigInt(data).Mod(P);
+      }
+
+      return value;
     }
 
     public Parameters(DeserializeContext context)

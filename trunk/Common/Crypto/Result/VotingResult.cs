@@ -43,7 +43,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Number of invalid ballots.
     /// </summary>
-    public int InvalidBallots { get { return Voters.Where(voter => voter.Valid).Count(); } }
+    public int InvalidBallots { get { return Voters.Where(voter => !voter.Valid).Count(); } }
 
     /// <summary>
     /// Number of valid ballots.

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Emil.GMP;
 using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
@@ -20,8 +21,8 @@ namespace Pirate.PiVote.Crypto
   {
     private const int StandardAuthorityCount = 5;
     private const int StandardThereshold = 3;
-    private const int StandardProofCount = 10;
-    private const int PrimeBits = 80;
+    private const int StandardProofCount = 128;
+    private const int PrimeBits = 1024;
 
     /// <summary>
     /// List of possible options for the voters.
