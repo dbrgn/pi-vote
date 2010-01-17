@@ -39,6 +39,11 @@ namespace Pirate.PiVote.Crypto
     /// <param name="description">Description of option.</param>
     public Option(string text, string description)
     {
+      if (text == null)
+        throw new ArgumentNullException("text");
+      if (description == null)
+        throw new ArgumentNullException("description");
+
       Text = text;
       Description = description;
     }

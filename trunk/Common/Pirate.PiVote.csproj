@@ -79,6 +79,7 @@
     <Compile Include="Utilitiy\Bytes.cs" />
     <Compile Include="Utilitiy\DeserializeContext.cs" />
     <Compile Include="Utilitiy\IEnumerableExtensions.cs" />
+    <Compile Include="Utilitiy\IntegerExtensions.cs" />
     <Compile Include="Utilitiy\Serializable.cs" />
     <Compile Include="Utilitiy\SerializeContext.cs" />
     <Compile Include="Utilitiy\SystemExtensions.cs" />

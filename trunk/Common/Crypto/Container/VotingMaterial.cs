@@ -35,6 +35,11 @@ namespace Pirate.PiVote.Crypto
 
     public VotingMaterial(VotingParameters parameters, IEnumerable<Signed<ShareResponse>> publicKeyParts)
     {
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+      if (publicKeyParts == null)
+        throw new ArgumentNullException("publicKeyParts");
+
       Parameters = parameters;
       PublicKeyParts = new List<Signed<ShareResponse>>(publicKeyParts);
     }

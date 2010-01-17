@@ -14,16 +14,38 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
+  /// <summary>
+  /// Container for all votes from a voter.
+  /// </summary>
   public class Ballot : Serializable
   {
+    /// <summary>
+    /// Votes for each option.
+    /// </summary>
     public List<Vote> Votes { get; private set; }
+
+    /// <summary>
+    /// Proofes of sum of votes cast.
+    /// </summary>
     public List<Proof> SumProves { get; private set; }
 
+    /// <summary>
+    /// Creates a new ballot for a voter.
+    /// </summary>
+    /// <param name="vota">Vota the voter wishes to cast for each option.</param>
+    /// <param name="parameters">Cryptographic parameters.</param>
+    /// <param name="publicKey">Public key of voting authorities.</param>
     public Ballot(IEnumerable<int> vota, Parameters parameters, BigInt publicKey)
     {
+      if (vota == null)
+        throw new ArgumentNullException("vota");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+      if (publicKey == null)
+        throw new ArgumentNullException("publicKey");
       if (vota.Count() != parameters.OptionCount)
         throw new ArgumentException("Bad vota.");
-      if (!vota.All(votum => votum == 0 || votum == 1))
+      if (!vota.All(votum => votum.InRange(0, 1)))
         throw new ArgumentException("Bad vota.");
       if (vota.Sum() != parameters.MaxVota)
         throw new ArgumentException("Bad vota.");
@@ -49,8 +71,22 @@ namespace Pirate.PiVote.Crypto
       }
     }
 
+    /// <summary>
+    /// Verifies the correctness of the ballot.
+    /// </summary>
+    /// <remarks>
+    /// Verifies all proof for sum and range of votes.
+    /// </remarks>
+    /// <param name="publicKey">Public key of the authorities.</param>
+    /// <param name="parameters">Cryptographic parameters.</param>
+    /// <returns>Result of the verification.</returns>
     public bool Verify(BigInt publicKey, Parameters parameters)
     {
+      if (publicKey == null)
+        throw new ArgumentNullException("publicKey");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+
       bool verifies = true;
       Vote voteSum = null;
 

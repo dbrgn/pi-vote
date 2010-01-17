@@ -155,6 +155,8 @@ namespace Pirate.PiVote.Crypto
 
     public void Vote(Signed<Envelope> ballot)
     {
+      if (ballot == null)
+        throw new ArgumentNullException("ballot");
       if (Status != VotingStatus.Voting)
         throw new InvalidOperationException("Wrong status for operation.");
       if (!ballot.Verify())

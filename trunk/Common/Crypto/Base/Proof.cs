@@ -45,6 +45,15 @@ namespace Pirate.PiVote.Crypto
     /// <param name="parameters">Cryptographic Parameters.</param>
     public Proof(BigInt r, Vote vote, BigInt publicKey, Parameters parameters)
     {
+      if (r == null)
+        throw new ArgumentNullException("r");
+      if (vote == null)
+        throw new ArgumentNullException("vote");
+      if (publicKey == null)
+        throw new ArgumentNullException("publicKey");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+
       BigInt r0 = parameters.Random();
 
       T0 = publicKey.PowerMod(r0, parameters.P);
@@ -65,6 +74,13 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Wether the proof is valid.</returns>
     public bool Verify(Vote vote, BigInt publicKey, Parameters parameters)
     {
+      if (vote == null)
+        throw new ArgumentNullException("vote");
+      if (publicKey == null)
+        throw new ArgumentNullException("publicKey");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+
       if (C0 != 0 && C0 != 1)
         return false;
 

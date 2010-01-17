@@ -14,6 +14,9 @@ using Emil.GMP;
 
 namespace Pirate.PiVote.Crypto
 {
+  /// <summary>
+  /// Finds prime numbers.
+  /// </summary>
   public static class Prime
   {
     /// <summary>
@@ -23,6 +26,9 @@ namespace Pirate.PiVote.Crypto
     /// <returns>New prime number.</returns>
     public static BigInt Find(int bitLength)
     {
+      if (bitLength < 1)
+        throw new ArgumentException("Bit length must be at least 1.");
+
       BigInt number = RandomNumber(bitLength);
 
       while (!number.IsProbablyPrimeRabinMiller(1000))
@@ -40,6 +46,9 @@ namespace Pirate.PiVote.Crypto
     /// <returns>New safe prime number.</returns>
     public static BigInt FindSafe(int bitLength)
     {
+      if (bitLength < 1)
+        throw new ArgumentException("Bit length must be at least 1.");
+
       BigInt number = RandomNumber(bitLength);
 
       while (!number.IsProbablyPrimeRabinMiller(1000) ||
@@ -58,6 +67,9 @@ namespace Pirate.PiVote.Crypto
     /// <returns>New random number.</returns>
     private static BigInt RandomNumber(int bitLength)
     {
+      if (bitLength < 1)
+        throw new ArgumentException("Bit length must be at least 1.");
+
       int byteLength = (bitLength - 1) / 8 + 1;
       byte[] data = new byte[byteLength];
       RandomNumberGenerator.Create().GetBytes(data);

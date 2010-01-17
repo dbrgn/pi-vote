@@ -36,6 +36,9 @@ namespace Pirate.PiVote.Crypto
 
     public Share(BigInt value, int sourceAuthorityIndex, int destinationAuthorityIndex)
     {
+      if (value == null)
+        throw new ArgumentNullException("value");
+
       Value = value;
       SourceAuthorityIndex = sourceAuthorityIndex;
       DestinationAuthorityIndex = destinationAuthorityIndex;

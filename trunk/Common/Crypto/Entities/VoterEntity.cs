@@ -58,6 +58,15 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Signed envelope containing the ballot.</returns>
     public Signed<Envelope> Vote(VotingMaterial votingMaterial, IEnumerable<int> vota)
     {
+      if (votingMaterial == null)
+        throw new ArgumentNullException("votingMaterial");
+      if (vota == null)
+        throw new ArgumentNullException("vota");
+      if (vota.Count() != votingMaterial.Parameters.OptionCount)
+        throw new ArgumentException("Bad vota count.");
+      if (!vota.All(votum => votum.InRange(0, 1)))
+        throw new ArgumentException("Votum out of range.");
+      
       this.parameters = votingMaterial.Parameters;
       bool acceptMaterial = true;
       this.publicKey = new BigInt(1);
@@ -91,6 +100,9 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Results for each option.</returns>
     public VotingResult Result(VotingContainer votingContainer)
     {
+      if (votingContainer == null)
+        throw new ArgumentNullException("votingContainer");
+
       VotingResult result = new VotingResult(votingContainer.VotingId, votingContainer.Material.Parameters.VotingName);
 
       Vote[] voteSums = CalculateBallotSums(votingContainer.Emvelopes, result);
@@ -143,6 +155,9 @@ namespace Pirate.PiVote.Crypto
     /// <returns>List of partail deciphers.</returns>
     private static List<PartialDecipher> ListPartialDeciphers(IEnumerable<Signed<PartialDecipherList>> signedPartialDeciphers)
     {
+      if (signedPartialDeciphers == null)
+        throw new ArgumentNullException("signedPartialDeciphers");
+
       List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
 
       foreach (Signed<PartialDecipherList> signedPartialDeciphersContainer in signedPartialDeciphers)
@@ -163,6 +178,11 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Sums of ballots.</returns>
     private Vote[] CalculateBallotSums(IEnumerable<Signed<Envelope>> envelopes, VotingResult result)
     {
+      if (envelopes == null)
+        throw new ArgumentNullException("envelopes");
+      if (result == null)
+        throw new ArgumentNullException("result");
+
       Vote[] voteSums = new Vote[this.parameters.OptionCount];
 
       foreach (Signed<Envelope> signedEnvelope in envelopes)

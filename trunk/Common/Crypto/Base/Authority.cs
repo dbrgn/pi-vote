@@ -53,7 +53,12 @@ namespace Pirate.PiVote.Crypto
     /// <param name="parameters">Cryptographic parameters.</param>
     public Authority(int index, Parameters parameters)
     {
-      this.Index = index;
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+      if (!index.InRange(1, parameters.AuthorityCount))
+        throw new ArgumentException("Index must be in range 1..AuthorityCount.");
+
+      Index = index;
       this.parameters = parameters;
     }
 
@@ -86,7 +91,7 @@ namespace Pirate.PiVote.Crypto
     {
       if (this.polynomial == null)
         throw new InvalidOperationException("Polynom not yet created.");
-      if (index < 0 || index > this.polynomial.Degree)
+      if (!index.InRange(0, this.polynomial.Degree))
         throw new ArgumentException("Coefficient index out of range.");
 
       BigInt value = this.parameters.G.PowerMod(this.polynomial.GetCoefficient(index), this.parameters.P);
@@ -102,10 +107,7 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     public BigInt PublicKeyPart
     {
-      get
-      {
-        return VerificationValue(0).Value;
-      }
+      get { return VerificationValue(0).Value; }
     }
 
     /// <summary>
@@ -118,7 +120,10 @@ namespace Pirate.PiVote.Crypto
     /// <returns>A share of the secret.</returns>
     public Share Share(int authorithyIndex)
     {
-      BigInt value = this.polynomial.Evaluate(new BigInt(authorithyIndex), this.parameters.P);
+      if (!authorithyIndex.InRange(1, parameters.AuthorityCount))
+        throw new ArgumentException("Authority index must be in range 1..AuthorityCount.");
+
+      BigInt value = this.polynomial.Evaluate(new BigInt(authorithyIndex));
       return new Share(value, Index, authorithyIndex);
     }
 
@@ -133,6 +138,11 @@ namespace Pirate.PiVote.Crypto
     /// <returns>List of partial deciphers.</returns>
     public IEnumerable<PartialDecipher> PartialDeciphers(Vote vote, int optionIndex)
     {
+      if (vote == null)
+        throw new ArgumentNullException("vote");
+      if (!optionIndex.InRange(0, parameters.OptionCount - 1))
+        throw new ArgumentException("Option index must be in range 0..OptionCount-1.");
+
       List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
 
       //The magic numbers for multiply and divide listed here for
@@ -202,6 +212,11 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Partial decipher value.</returns>
     private BigInt PartialDecipher(Vote vote, int multiply, int divide)
     {
+      if (vote == null)
+        throw new ArgumentNullException("vote");
+      if (divide == 0)
+        throw new ArgumentException("Divide cannot be 0.");
+
       //The 12 magic number is inserted to avoid division remainders when
       //dividing partial deciphers for linear combinations by 2, 3 and 4.
       return vote.HalfKey.PowerMod(this.secretKeyPart * 12 * multiply / divide, this.parameters.P);
@@ -211,22 +226,40 @@ namespace Pirate.PiVote.Crypto
     /// Verify the sharing of the secret.
     /// </summary>
     /// <param name="shares">Shares from all authorities.</param>
-    /// <param name="As">Verification values.</param>
+    /// <param name="verificationValues">Verification values. Also known as A(i)(j).</param>
     /// <returns>Was sharing accepted?</returns>
-    public bool VerifySharing(List<Share> shares, List<List<VerificationValue>> As)
+    public bool VerifySharing(List<Share> shares, List<List<VerificationValue>> verificationValues)
     {
-      for (int index = 0; index < shares.Count; index++)
+      if (shares == null)
+        throw new ArgumentNullException("shares");
+      if (shares.Any(share => share == null))
+        throw new ArgumentException("No share can be null.");
+      if (shares.Count != this.parameters.AuthorityCount)
+        throw new ArgumentException("Bad share count.");
+
+      if (verificationValues == null)
+        throw new ArgumentNullException("verificationValues");
+      if (verificationValues
+        .Any(verificationValueList => verificationValueList == null || 
+          verificationValues.Any(verificationValue => verificationValue == null)))
+        throw new ArgumentException("No verification value can be null.");
+      if (verificationValues.Count != this.parameters.AuthorityCount)
+        throw new ArgumentException("Bad verifcation value list count.");
+      if (verificationValues.Any(verificationValueList => verificationValueList.Count != this.parameters.Thereshold + 1))
+        throw new ArgumentException("Bad verificaton value count.");
+
+      for (int shareIndex = 0; shareIndex < shares.Count; shareIndex++)
       {
         //Check each part of the sharing.
-        Share share = shares[index];
+        Share share = shares[shareIndex];
         if (share.DestinationAuthorityIndex != Index)
           return false;
 
-        BigInt GtoS = this.parameters.G.PowerMod(shares[index].Value, this.parameters.P);
+        BigInt GtoS = this.parameters.G.PowerMod(shares[shareIndex].Value, this.parameters.P);
         BigInt aProduct = new BigInt(1);
         for (int k = 0; k <= this.polynomial.Degree; k++)
         {
-          VerificationValue verificationValue = As[index][k];
+          VerificationValue verificationValue = verificationValues[shareIndex][k];
           if (verificationValue.SourceAuthorityIndex != share.SourceAuthorityIndex)
             return false;
 

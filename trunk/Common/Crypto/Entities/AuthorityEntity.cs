@@ -58,6 +58,11 @@ namespace Pirate.PiVote.Crypto
     /// <param name="parameters">Voting parameters for the procedure.</param>
     public void Prepare(int index, VotingParameters parameters)
     {
+      if (index < 1)
+        throw new ArgumentException("Index must be at least 1.");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+
       this.parameters = parameters;
       this.authority = new Authority(index, this.parameters);
       this.authority.CreatePolynomial();
@@ -70,6 +75,9 @@ namespace Pirate.PiVote.Crypto
     /// <param name="list">List of authorities.</param>
     public void SetAuthorities(AuthorityList list)
     {
+      if (list == null)
+        throw new ArgumentNullException("list");
+
       for (int index = 0; index < list.Authorities.Count; index++)
       {
         this.authorities.Add(index + 1, list.Authorities[index]);
@@ -106,6 +114,9 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Signed response.</returns>
     public Signed<ShareResponse> VerifyShares(AllShareParts allShareParts)
     {
+      if (allShareParts == null)
+        throw new ArgumentNullException("allShareParts");
+
       List<Share> shares = new List<Share>();
       List<List<VerificationValue>> verificationValuesByAuthority = new List<List<VerificationValue>>();
       bool acceptShares = true;
@@ -144,6 +155,9 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Partial decipher list for all vote sums.</returns>
     public Signed<PartialDecipherList> PartiallyDecipher(AuthorityEnvelopeList envelopeList)
     {
+      if (envelopeList == null)
+        throw new ArgumentNullException("envelopeList");
+
       BigInt publicKey = new BigInt(1);
 
       foreach (Signed<ShareResponse> signedShareResponse in envelopeList.VotingMaterial.PublicKeyParts)

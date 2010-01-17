@@ -51,6 +51,11 @@ namespace Pirate.PiVote.Crypto
     /// <param name="votingMaterial">The voting material.</param>
     public AuthorityEnvelopeList(int votingId, IEnumerable<Signed<Envelope>> envelopes, VotingMaterial votingMaterial)
     {
+      if (envelopes == null)
+        throw new ArgumentNullException("shareParts");
+      if (votingMaterial == null)
+        throw new ArgumentNullException("votingMaterial");
+
       VotingId = votingId;
       Envelopes = new List<Signed<Envelope>>(envelopes);
       VotingMaterial = votingMaterial;

@@ -51,6 +51,15 @@ namespace Pirate.PiVote.Crypto
     /// <param name="publicKey">Public key of the authorities.</param>
     public Vote(int votum, BigInt nonce, Parameters parameters, BigInt publicKey)
     {
+      if (!votum.InRange(0, 1))
+        throw new ArgumentException("Bad votum.");
+      if (nonce == null)
+        throw new ArgumentNullException("nonce");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+      if (publicKey == null)
+        throw new ArgumentNullException("publicKey");
+
       P = parameters.P;
       HalfKey = parameters.G.PowerMod(nonce, P);
 
@@ -72,6 +81,11 @@ namespace Pirate.PiVote.Crypto
     /// <param name="b">Another vote.</param>
     public Vote(Vote a, Vote b)
     {
+      if (a == null)
+        throw new ArgumentNullException("a");
+      if (b == null)
+        throw new ArgumentNullException("b");
+
       P = a.P;
       HalfKey = (a.HalfKey * b.HalfKey).Mod(P);
       Ciphertext = (a.Ciphertext * b.Ciphertext).Mod(P);
@@ -79,6 +93,13 @@ namespace Pirate.PiVote.Crypto
 
     public Vote(BigInt halfKey, BigInt ciphertext, BigInt p)
     {
+      if (halfKey == null)
+        throw new ArgumentNullException("halfKey");
+      if (ciphertext == null)
+        throw new ArgumentNullException("ciphertext");
+      if (p == null)
+        throw new ArgumentNullException("p");
+
       HalfKey = halfKey;
       Ciphertext = ciphertext;
       P = p;
@@ -92,6 +113,11 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Summary vote.</returns>
     public static Vote operator +(Vote a, Vote b)
     {
+      if (a == null)
+        throw new ArgumentNullException("a");
+      if (b == null)
+        throw new ArgumentNullException("b"); 
+      
       return new Vote(a, b);
     }
 
@@ -103,6 +129,10 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Result of the vote.</returns>
     public int Decrypt(IEnumerable<BigInt> partialDeciphers, Parameters parameters)
     {
+      if (partialDeciphers == null)
+        throw new ArgumentNullException("partialDeciphers");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters"); 
       if (partialDeciphers.Count() != parameters.Thereshold + 1)
         throw new ArgumentException("Wrong number of partial deciphers.");
 
@@ -120,6 +150,11 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Result of the vote.</returns>
     private static int Result(BigInt votePower, Parameters parameters)
     {
+      if (votePower == null)
+        throw new ArgumentNullException("votePower");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+      
       int sumOfVotes = 0;
       while (parameters.F.PowerMod(new BigInt(sumOfVotes), parameters.P) != votePower)
       {
@@ -148,6 +183,11 @@ namespace Pirate.PiVote.Crypto
     /// <returns>All proves are valid.</returns>
     public bool Verify(BigInt publicKey, Parameters parameters)
     {
+      if (publicKey == null)
+        throw new ArgumentNullException("publicKey");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+
       bool verifies = true;
 
       verifies &= RangeProves.Count == parameters.ProofCount;

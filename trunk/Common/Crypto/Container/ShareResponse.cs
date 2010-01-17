@@ -56,6 +56,9 @@ namespace Pirate.PiVote.Crypto
     /// <param name="publicKeyPart">Public key part from that authority.</param>
     public ShareResponse(int votingId, int authorityIndex, bool acceptShares, BigInt publicKeyPart)
     {
+      if (publicKeyPart == null)
+        throw new ArgumentNullException("publicKeyPart");
+
       VotingId = votingId;
       AuthorityIndex = authorityIndex;
       AcceptShares = acceptShares;

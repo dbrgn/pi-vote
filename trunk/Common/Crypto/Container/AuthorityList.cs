@@ -35,6 +35,9 @@ namespace Pirate.PiVote.Crypto
     /// <param name="authorities">List of authorities.</param>
     public AuthorityList(int votingId, IEnumerable<Certificate> authorities)
     {
+      if (authorities == null)
+        throw new ArgumentNullException("authorities");
+
       Authorities = new List<Certificate>(authorities);
     }
 

@@ -52,6 +52,13 @@ namespace Pirate.PiVote.Crypto
       IEnumerable<Signed<Envelope>> envelopes,
       IEnumerable<Signed<PartialDecipherList>> partialDeciphers)
     {
+      if (material == null)
+        throw new ArgumentNullException("material");
+      if (envelopes == null)
+        throw new ArgumentNullException("envelopes");
+      if (partialDeciphers == null)
+        throw new ArgumentNullException("partialDeciphers");
+
       Material = material;
       Emvelopes = new List<Signed<Envelope>>(envelopes);
       PartialDeciphers = new List<Signed<PartialDecipherList>>(partialDeciphers);

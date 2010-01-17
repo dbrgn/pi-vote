@@ -56,6 +56,11 @@ namespace Pirate.PiVote.Crypto
     /// <param name="receiverCertificate">Certificate of the receiver.</param>
     public Encrypted(TValue value, Certificate receiverCertificate)
     {
+      if (value == null)
+        throw new ArgumentNullException("value");
+      if (receiverCertificate == null)
+        throw new ArgumentNullException("receiverCertificate");
+
       Data = receiverCertificate.Encrypt(value.ToBinary());
     }
 
@@ -70,6 +75,9 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Data object.</returns>
     public TValue Decrypt(Certificate receiverCertificate)
     {
+      if (receiverCertificate == null)
+        throw new ArgumentNullException("receiverCertificate");
+
       return Serializable.FromBinary<TValue>(receiverCertificate.Decrypt(Data));
     }
   }

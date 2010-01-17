@@ -39,6 +39,9 @@ namespace Pirate.PiVote.Crypto
     /// <param name="shareParts">Share parts from all authorities.</param>
     public AllShareParts(int votingId, IEnumerable<Signed<SharePart>> shareParts)
     {
+      if (shareParts == null)
+        throw new ArgumentNullException("shareParts");
+
       VotingId = votingId;
       ShareParts = new List<Signed<SharePart>>(shareParts);
     }

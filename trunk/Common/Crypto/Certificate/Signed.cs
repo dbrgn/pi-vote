@@ -70,6 +70,11 @@ namespace Pirate.PiVote.Crypto
     /// <param name="certificate">Certificate of the signer.</param>
     public Signed(TValue value, Certificate certificate)
     {
+      if (value == null)
+        throw new ArgumentNullException("value");
+      if (certificate == null)
+        throw new ArgumentNullException("certificate");
+
       Data = value.ToBinary();
       Signature = certificate.Sign(Data);
       CertificateData = certificate.ToBinary();

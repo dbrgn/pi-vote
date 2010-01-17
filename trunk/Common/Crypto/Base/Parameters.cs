@@ -69,8 +69,45 @@ namespace Pirate.PiVote.Crypto
     {
     }
     
-    public void InitilizeCrypto(BigInt prime, BigInt safePrime, int thereshold, int authorityCount, int optionCount, int maxVota, int proofCount)
+    /// <summary>
+    /// Initializes the crypto part of the parameters.
+    /// </summary>
+    /// <remarks>
+    /// Prime must be lower than safePrime.
+    /// </remarks>
+    /// <param name="prime">Prime number p for group Zp*.</param>
+    /// <param name="safePrime">Safe prime for q.</param>
+    /// <param name="thereshold">Maximal tolerable number of compromised authorities.</param>
+    /// <param name="authorityCount">Number of authorities.</param>
+    /// <param name="optionCount">Number of options.</param>
+    /// <param name="maxVota">Maximum number of votes castable by a voter.</param>
+    /// <param name="proofCount">Number of proof required to proof each fact.</param>
+    public void InitilizeCrypto(
+      BigInt prime, 
+      BigInt safePrime, 
+      int thereshold, 
+      int authorityCount, 
+      int optionCount, 
+      int maxVota, 
+      int proofCount)
     {
+      if (prime == null)
+        throw new ArgumentNullException("prime");
+      if (safePrime == null)
+        throw new ArgumentNullException("safePrime");
+      if (prime >= safePrime)
+        throw new ArgumentException("Prime must be smaller than safePrime.");
+      if (thereshold < 1)
+        throw new ArgumentException("Thereshold must be at least 1.");
+      if (authorityCount < 2)
+        throw new ArgumentException("Authority count must be at least 1.");
+      if (thereshold > authorityCount)
+        throw new ArgumentException("Thereshold must be lower or equal to authority count.");
+      if (optionCount < 2)
+        throw new ArgumentException("Option count must be at least 2.");
+      if (maxVota < 1)
+        throw new ArgumentException("Maximum vota number must be at least 1.");
+
       Q = prime;
       P = safePrime;
 
@@ -87,6 +124,10 @@ namespace Pirate.PiVote.Crypto
       ProofCount = proofCount;
     }
 
+    /// <summary>
+    /// Creates a random number in Zp*
+    /// </summary>
+    /// <returns>New random number.</returns>
     public BigInt Random()
     {
       byte[] data = new byte[P.BitLength / 8 + 1];

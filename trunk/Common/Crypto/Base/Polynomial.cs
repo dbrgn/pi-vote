@@ -23,6 +23,9 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     private List<BigInt> coefficients;
 
+    /// <summary>
+    /// Creates a new polynomial.
+    /// </summary>
     public Polynomial()
     {
       this.coefficients = new List<BigInt>();
@@ -36,10 +39,7 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     public int Degree
     {
-      get
-      {
-        return this.coefficients.Count - 1;
-      }
+      get { return this.coefficients.Count - 1; }
     }
 
     /// <summary>
@@ -49,6 +49,9 @@ namespace Pirate.PiVote.Crypto
     /// <returns>A coefficient of the polynom.</returns>
     public BigInt GetCoefficient(int coefficientIndex)
     {
+      if (coefficientIndex < 0 || coefficientIndex >= this.coefficients.Count)
+        throw new ArgumentException("Coeffiction index out of range.");
+
       return this.coefficients[coefficientIndex];
     }
 
@@ -58,6 +61,9 @@ namespace Pirate.PiVote.Crypto
     /// <param name="coefficient">Coefficient to add.</param>
     public void AddCoefficient(BigInt coefficient)
     {
+      if (coefficient == null)
+        throw new ArgumentNullException("coefficient");
+
       this.coefficients.Add(coefficient);
     }
 
@@ -66,8 +72,11 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="x">Evaluate the polynom at x.</param>
     /// <returns>Evaluated value of the polynom.</returns>
-    public BigInt Evaluate(BigInt x, BigInt p)
+    public BigInt Evaluate(BigInt x)
     {
+      if (x == null)
+        throw new ArgumentNullException("x");
+
       BigInt value = new BigInt(0);
 
       for (int coefficientIndex = 0; coefficientIndex < this.coefficients.Count; coefficientIndex++)

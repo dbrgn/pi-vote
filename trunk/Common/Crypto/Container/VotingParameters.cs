@@ -51,6 +51,9 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public VotingParameters(int votingId, string votingName)
     {
+      if (votingName == null)
+        throw new ArgumentNullException("votingName");
+
       VotingId = votingId;
       VotingName = votingName;
       this.options = new List<Option>();
@@ -65,6 +68,8 @@ namespace Pirate.PiVote.Crypto
     /// <param name="option">An selectable option.</param>
     public void AddOption(Option option)
     {
+      if (option == null)
+        throw new ArgumentNullException("option");
       if (P != null)
         throw new InvalidOperationException("Already initialized.");
 

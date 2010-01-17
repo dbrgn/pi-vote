@@ -44,6 +44,9 @@ namespace Pirate.PiVote.Crypto
     /// <param name="value"></param>
     public PartialDecipher(int groupIndex, int optionIndex, BigInt value)
     {
+      if (value == null)
+        throw new ArgumentNullException("value");
+
       GroupIndex = groupIndex;
       OptionIndex = optionIndex;
       Value = value;

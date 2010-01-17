@@ -24,8 +24,16 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public BigInt Value { get; private set; }
 
+    /// <summary>
+    /// Index of the issuing authority.
+    /// </summary>
     public int SourceAuthorityIndex { get; private set; }
 
+    /// <summary>
+    /// Creates a new verification value.
+    /// </summary>
+    /// <param name="value">Value used to verify shares.</param>
+    /// <param name="sourceAuthorityIndex">Index of the issuing authority.</param>
     public VerificationValue(BigInt value, int sourceAuthorityIndex)
     {
       Value = value;

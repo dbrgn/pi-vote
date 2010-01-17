@@ -47,6 +47,11 @@ namespace Pirate.PiVote.Crypto
     /// <param name="ballot">Casted ballot.</param>
     public Envelope(int votingId, int voterId, string voterName, Ballot ballot)
     {
+      if (voterName.IsNullOrEmpty())
+        throw new ArgumentException("Voter name null or empty.");
+      if (ballot == null)
+        throw new ArgumentNullException("ballot");
+
       VotingId = votingId;
       VoterId = voterId;
       VoterName = voterName;
