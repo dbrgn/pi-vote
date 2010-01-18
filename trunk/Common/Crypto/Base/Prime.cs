@@ -86,6 +86,51 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Finds both as prime and a larger safe prime.
+    /// </summary>
+    /// <param name="bitLength">Length in bits of the prime.</param>
+    /// <param name="prime">Random prime number.</param>
+    /// <param name="safePrime">Random safe prime number.</param>
+    public static void FindPrimeAndSafePrime(int bitLength, out BigInt prime, out BigInt safePrime)
+    {
+      //Begin search as a random position.
+      BigInt number = RandomNumber(bitLength);
+
+      //Make it odd.
+      if (number.IsEven)
+        number++;
+
+      //Seek from there.
+      while (!number.IsProbablyPrimeRabinMiller(HighRabinMillerCount))
+      {
+        number += 2;
+      }
+
+      prime = number;
+
+      //Add a small random offset.
+      number += RandomNumber(8);
+
+      //Make it odd.
+      if (number.IsEven)
+        number++;
+
+      //Set safe number accordingly.
+      BigInt safeNumber = 2 * number + 1;
+
+      //Seek from there.
+      while (!number.IsProbablyPrimeRabinMiller(LowRabinMillerCount) ||
+             !safeNumber.IsProbablyPrimeRabinMiller(HighRabinMillerCount) ||
+             !number.IsProbablyPrimeRabinMiller(HighRabinMillerCount))
+      {
+        number += 2;
+        safeNumber = 2 * number + 1;
+      }
+
+      safePrime = safeNumber;
+    }
+
+    /// <summary>
     /// Create a random number.
     /// </summary>
     /// <param name="bitLength">Length in bits. Is rounded up to next byte length.</param>

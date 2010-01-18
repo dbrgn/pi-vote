@@ -22,7 +22,7 @@ namespace Pirate.PiVote.Crypto
     private const int StandardAuthorityCount = 5;
     private const int StandardThereshold = 3;
     private const int StandardProofCount = 128;
-    private const int PrimeBits = 1024;
+    private const int PrimeBits = 2048;
 
     /// <summary>
     /// List of possible options for the voters.
@@ -89,9 +89,13 @@ namespace Pirate.PiVote.Crypto
       if (P != null)
         throw new InvalidOperationException("Already initialized.");
 
+      BigInt prime = null;
+      BigInt safePrime = null;
+      Prime.FindPrimeAndSafePrime(PrimeBits, out prime, out safePrime);
+
       InitilizeCrypto(
-        Prime.Find(PrimeBits),
-        Prime.FindSafe(PrimeBits + 8),
+        prime,
+        safePrime,
         StandardThereshold,
         StandardAuthorityCount,
         Options.Count(),
