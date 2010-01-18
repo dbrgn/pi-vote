@@ -109,7 +109,7 @@ namespace Pirate.PiVote.Crypto
       prime = number;
 
       //Add a small random offset.
-      number += RandomNumber(8);
+      number += RandomNumber(bitLength / 2);
 
       //Make it odd.
       if (number.IsEven)
