@@ -47,7 +47,7 @@ namespace Pirate.PiVote.Crypto
     {
       VoterId = voterId;
       VoterName = voterName;
-      this.certificate = new Certificate();
+      this.certificate = new Certificate(voterName);
     }
 
     /// <summary>

@@ -77,6 +77,8 @@ namespace Pirate.PiVote.Crypto
     {
       if (receiverCertificate == null)
         throw new ArgumentNullException("receiverCertificate");
+      if (!receiverCertificate.HasPrivateKey)
+        throw new ArgumentException("Private key missing.");
 
       return Serializable.FromBinary<TValue>(receiverCertificate.Decrypt(Data));
     }

@@ -74,10 +74,12 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("value");
       if (certificate == null)
         throw new ArgumentNullException("certificate");
+      if (!certificate.HasPrivateKey)
+        throw new ArgumentException("Private key missing.");
 
       Data = value.ToBinary();
       Signature = certificate.Sign(Data);
-      CertificateData = certificate.ToBinary();
+      CertificateData = certificate.OnlyPublicPart.ToBinary();
     }
 
     public Signed(DeserializeContext context)

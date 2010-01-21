@@ -36,11 +36,17 @@ namespace Pirate.PiVote.Crypto
 
       VotingServerEntity vs = new VotingServerEntity(pc);
 
-      AuthorityEntity a1 = new AuthorityEntity();
-      AuthorityEntity a2 = new AuthorityEntity();
-      AuthorityEntity a3 = new AuthorityEntity();
-      AuthorityEntity a4 = new AuthorityEntity();
-      AuthorityEntity a5 = new AuthorityEntity();
+      var a1c = new Certificate("Authority 1");
+      var a2c = new Certificate("Authority 1");
+      var a3c = new Certificate("Authority 1");
+      var a4c = new Certificate("Authority 1");
+      var a5c = new Certificate("Authority 1");
+
+      var a1 = new AuthorityEntity(a1c);
+      var a2 = new AuthorityEntity(a2c);
+      var a3 = new AuthorityEntity(a3c);
+      var a4 = new AuthorityEntity(a4c);
+      var a5 = new AuthorityEntity(a5c);
 
       vs.AddAuthority(a1.Certificate);
       vs.AddAuthority(a2.Certificate);

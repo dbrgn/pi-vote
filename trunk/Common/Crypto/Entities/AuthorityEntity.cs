@@ -46,9 +46,10 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new authority entity.
     /// </summary>
-    public AuthorityEntity()
+    /// <param name="certificate">Certificate of authority.</param>
+    public AuthorityEntity(Certificate certificate)
     {
-      this.certificate = new Certificate();
+      this.certificate = certificate;
     }
 
     /// <summary>
@@ -104,7 +105,7 @@ namespace Pirate.PiVote.Crypto
         shareContainer.VerificationValues.Add(this.authority.VerificationValue(valueIndex));
       }
 
-      return new Signed<SharePart>(shareContainer, Certificate);
+      return new Signed<SharePart>(shareContainer, this.certificate);
     }
 
     /// <summary>
@@ -129,7 +130,7 @@ namespace Pirate.PiVote.Crypto
         acceptShares &= signedShareParrt.Certificate.IsIdentic(this.authorities[sharePart.AuthorityIndex]);
 
         Encrypted<Share> encryptedShare = sharePart.EncryptedShares[this.authority.Index - 1];
-        shares.Add(encryptedShare.Decrypt(Certificate));
+        shares.Add(encryptedShare.Decrypt(this.certificate));
 
         verificationValuesByAuthority.Add(new List<VerificationValue>());
 
@@ -145,7 +146,7 @@ namespace Pirate.PiVote.Crypto
 
       ShareResponse response = new ShareResponse(allShareParts.VotingId, this.authority.Index, acceptShares, publicKeyPart);
 
-      return new Signed<ShareResponse>(response, Certificate);
+      return new Signed<ShareResponse>(response, this.certificate);
     }
 
     /// <summary>
@@ -204,7 +205,7 @@ namespace Pirate.PiVote.Crypto
         partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(voteSums[optionIndex], optionIndex));
       }
 
-      return new Signed<PartialDecipherList>(partialDecipherList, Certificate);
+      return new Signed<PartialDecipherList>(partialDecipherList, this.certificate);
     }
   }
 }
