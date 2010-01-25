@@ -52,6 +52,8 @@
     <Compile Include="Crypto\Base\Prime.cs" />
     <Compile Include="Crypto\Base\RangeProof.cs" />
     <Compile Include="Crypto\Certificate\Certificate.cs" />
+    <Compile Include="Crypto\Certificate\AuthorityCertificate.cs" />
+    <Compile Include="Crypto\Certificate\VoterCertificate.cs" />
     <Compile Include="Crypto\Container\AuthorityList.cs" />
     <Compile Include="Crypto\Container\AuthorityEnvelopeList.cs" />
     <Compile Include="Crypto\Container\Envelope.cs" />

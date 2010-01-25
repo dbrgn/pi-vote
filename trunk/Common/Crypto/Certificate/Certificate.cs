@@ -19,14 +19,11 @@ namespace Pirate.PiVote.Crypto
   {
     public Guid Id { get; private set; }
 
-    public string FullName { get; private set; }
-
     private byte[] Key { get; set; }
 
-    public Certificate(string fullName)
+    public Certificate()
     {
       Id = Guid.NewGuid();
-      FullName = fullName;
 
       RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider();
       rsaProvider.KeySize = 2048;
@@ -40,7 +37,6 @@ namespace Pirate.PiVote.Crypto
     public Certificate(Certificate original, bool onlyPublicPart)
     {
       Id = original.Id;
-      FullName = original.FullName;
 
       if (onlyPublicPart)
       {
@@ -137,7 +133,6 @@ namespace Pirate.PiVote.Crypto
     {
       base.Serialize(context);
       context.Write(Id.ToByteArray());
-      context.Write(FullName);
       context.Write(Key);
     }
 
@@ -145,7 +140,6 @@ namespace Pirate.PiVote.Crypto
     {
       base.Deserialize(context);
       Id = new Guid(context.ReadBytes());
-      FullName = context.ReadString();
       Key = context.ReadBytes();
     }
   }
