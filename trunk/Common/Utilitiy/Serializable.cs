@@ -26,7 +26,8 @@ namespace Pirate.PiVote.Serialization
     }
 
     public virtual void Serialize(SerializeContext context)
-    { 
+    {
+      context.Write(GetType().FullName);
     }
 
     protected virtual void Deserialize(DeserializeContext context)

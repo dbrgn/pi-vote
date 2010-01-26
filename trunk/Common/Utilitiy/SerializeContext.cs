@@ -69,6 +69,11 @@ namespace Pirate.PiVote.Serialization
       this.writer.Write(value);
     }
 
+    public void Write(DateTime value)
+    {
+      Write(value.Ticks);
+    }
+
     public void Write(BigInt value)
     {
       Write(value.ToByteArray());

@@ -16,52 +16,69 @@ using Pirate.PiVote.Serialization;
 namespace Pirate.PiVote.Crypto
 {
   /// <summary>
-  /// Certificate for a voter.
+  /// Certificate of a certificate authority.
   /// </summary>
-  /// <remarks>
-  /// Does not contain the voter's name to keep his identity confidential.
-  /// </remarks>
-  public class VoterCertificate : Certificate
+  public class CACertificate : Certificate
   {
     /// <summary>
-    /// Creates a new voter certificate.
+    /// Full name of the certificate authority.
     /// </summary>
-    public VoterCertificate()
+    public string FullName { get; private set; }
+
+    /// <summary>
+    /// Create a new certificate for a certificate authority.
+    /// </summary>
+    /// <param name="fullName">Full name of the certificate authority.</param>
+    public CACertificate(string fullName)
+      : base()
     {
+      if (fullName == null)
+        throw new ArgumentNullException("fullName");
+
+      FullName = fullName;
     }
 
-    public VoterCertificate(DeserializeContext context)
+    public CACertificate(DeserializeContext context)
       : base(context)
     { }
 
     /// <summary>
-    /// Create a copy of the certificate.
+    /// Creates a copy of the certificate.
     /// </summary>
     /// <param name="original">Original certificate to copy.</param>
     /// <param name="onlyPublicPart">Leave the private key part out?</param>
-    protected VoterCertificate(VoterCertificate original, bool onlyPublicPart)
+    protected CACertificate(CACertificate original, bool onlyPublicPart)
       : base(original, onlyPublicPart)
     {
+      FullName = original.FullName;
     }
 
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+      context.Write(FullName);
     }
 
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+      FullName = context.ReadString();
     }
 
     public override Certificate OnlyPublicPart
     {
-      get { return new VoterCertificate(this, true); }
+      get { return new CACertificate(this, true); }
+    }
+
+    protected override void AddSignatureContent(BinaryWriter writer)
+    {
+      base.AddSignatureContent(writer);
+      writer.Write(FullName);
     }
 
     public override bool IsRootCertificate
     {
-      get { return false; }
+      get { return RootCertificate.Value.IsIdentic(this); }
     }
 
     public override bool CanSignCertificates
@@ -71,7 +88,7 @@ namespace Pirate.PiVote.Crypto
 
     public override byte[] MagicTypeConstant
     {
-      get { return Encoding.UTF8.GetBytes("VoterCertificate"); }
+      get { return Encoding.UTF8.GetBytes("CACertificate"); }
     }
   }
 }

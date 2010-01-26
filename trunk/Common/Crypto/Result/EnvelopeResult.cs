@@ -28,11 +28,6 @@ namespace Pirate.PiVote.Crypto
     public int VoterId { get { return this.voterId; } }
 
     /// <summary>
-    /// Full name of the voter.
-    /// </summary>
-    public string VoterName { get { return this.voterName; } }
-
-    /// <summary>
     /// Was the envelope/ballot from that voter valid?
     /// </summary>
     public bool Valid { get { return this.valid; } }
@@ -41,17 +36,14 @@ namespace Pirate.PiVote.Crypto
     /// Creates a new envelope result.
     /// </summary>
     /// <param name="voterId">Id of the voter.</param>
-    /// <param name="voterName">Full name of the voter.</param>
     /// <param name="valid">Validity of the envelope/ballot.</param>
-    public EnvelopeResult(int voterId, string voterName, bool valid)
+    public EnvelopeResult(int voterId, bool valid)
     {
       this.voterId = voterId;
-      this.voterName = voterName;
       this.valid = valid;
     }
 
     private readonly int voterId;
-    private readonly string voterName;
     private readonly bool valid;
   }
 }

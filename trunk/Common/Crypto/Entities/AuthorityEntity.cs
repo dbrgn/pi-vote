@@ -41,7 +41,10 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Public certificate of this authority.
     /// </summary>
-    public Certificate Certificate { get { return this.certificate.OnlyPublicPart; } }
+    public Certificate Certificate
+    {
+      get { return this.certificate.OnlyPublicPart; }
+    }
 
     /// <summary>
     /// Create a new authority entity.

@@ -25,6 +25,13 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     public void EntityTest()
     {
+      DateTime validUntil = DateTime.Now.AddDays(1);
+      RootCertificate.Create("Root");
+
+      var intermediate = new CACertificate("Intermediate");
+      intermediate.CreateSelfSignature();
+      intermediate.AddSignature(RootCertificate.Value, validUntil);
+
       VotingParameters pc = new VotingParameters(27, "Zufrieden");
       pc.AddOption(new Option("Nein", "Dagegen"));
       pc.AddOption(new Option("Ja", "Dafür"));
@@ -37,10 +44,20 @@ namespace Pirate.PiVote.Crypto
       VotingServerEntity vs = new VotingServerEntity(pc);
 
       var a1c = new AuthorityCertificate("Authority 1");
+      a1c.CreateSelfSignature();
+      a1c.AddSignature(intermediate, validUntil);
       var a2c = new AuthorityCertificate("Authority 2");
+      a2c.CreateSelfSignature();
+      a2c.AddSignature(intermediate, validUntil);
       var a3c = new AuthorityCertificate("Authority 3");
+      a3c.CreateSelfSignature();
+      a3c.AddSignature(intermediate, validUntil);
       var a4c = new AuthorityCertificate("Authority 4");
+      a4c.CreateSelfSignature();
+      a4c.AddSignature(intermediate, validUntil);
       var a5c = new AuthorityCertificate("Authority 5");
+      a5c.CreateSelfSignature();
+      a5c.AddSignature(intermediate, validUntil);
 
       var a1 = new AuthorityEntity(a1c);
       var a2 = new AuthorityEntity(a2c);
@@ -84,36 +101,38 @@ namespace Pirate.PiVote.Crypto
       vs.DepositShareResponse(r4);
       vs.DepositShareResponse(r5);
 
-      VoterEntity v1 = new VoterEntity(11, "Hans");
-      VoterEntity v2 = new VoterEntity(22, "Urs");
-      VoterEntity v3 = new VoterEntity(33, "Käti");
-      VoterEntity v4 = new VoterEntity(44, "Lisi");
-      VoterEntity v5 = new VoterEntity(55, "Dani");
+      var v1c = new VoterCertificate();
+      v1c.CreateSelfSignature();
+      v1c.AddSignature(intermediate, validUntil);
+
+      var v1 = new VoterEntity(11, v1c);
 
       var vote1 = v1.Vote(vs.GetVotingMaterial(), new int[] { 0, 1 });
-      var vote2 = v2.Vote(vs.GetVotingMaterial(), new int[] { 0, 1 });
-      var vote3 = v3.Vote(vs.GetVotingMaterial(), new int[] { 0, 1 });
-      var vote4 = v4.Vote(vs.GetVotingMaterial(), new int[] { 0, 1 });
-      var vote5 = v5.Vote(vs.GetVotingMaterial(), new int[] { 1, 0 });
 
       vs.Vote(vote1);
-      vs.Vote(vote2);
-      vs.Vote(vote3);
-      vs.Vote(vote4);
-      vs.Vote(vote5);
 
-      for (int i = 1000; i < 1500; i++)
+      int voters = 10;
+
+      for (int i = 1000; i < 1000 + voters; i++)
       {
-        VoterEntity vx = new VoterEntity(i, "Voter " + i.ToString());
+        var vc = new VoterCertificate();
+        vc.CreateSelfSignature();
+        vc.AddSignature(intermediate, validUntil);
+
+        var vx = new VoterEntity(i, vc);
 
         var votex = vx.Vote(vs.GetVotingMaterial(), new int[] { 0, 1 });
 
         vs.Vote(votex);
       }
 
-      for (int i = 2000; i < 2500; i++)
+      for (int i = 2000; i < 2000 + voters; i++)
       {
-        VoterEntity vx = new VoterEntity(i, "Voter " + i.ToString());
+        var vc = new VoterCertificate();
+        vc.CreateSelfSignature();
+        vc.AddSignature(intermediate, validUntil);
+
+        var vx = new VoterEntity(i, vc);
 
         var votex = vx.Vote(vs.GetVotingMaterial(), new int[] { 1, 0 });
 
@@ -135,10 +154,6 @@ namespace Pirate.PiVote.Crypto
       vs.DepositPartialDecipher(pd5);
 
       var res1 = v1.Result(vs.GetVotingResult());
-      var res2 = v2.Result(vs.GetVotingResult());
-      var res3 = v3.Result(vs.GetVotingResult());
-      var res4 = v4.Result(vs.GetVotingResult());
-      var res5 = v5.Result(vs.GetVotingResult());
 
       TimeSpan duration = DateTime.Now.Subtract(start);
       Console.WriteLine("Succeded {0}", duration.ToString());

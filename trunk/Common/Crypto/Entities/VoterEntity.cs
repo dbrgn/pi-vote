@@ -34,20 +34,14 @@ namespace Pirate.PiVote.Crypto
     public int VoterId { get; private set; }
 
     /// <summary>
-    /// Full name of this voter.
-    /// </summary>
-    public string VoterName { get; private set; }
-
-    /// <summary>
     /// Private certificate of this voter.
     /// </summary>
     private Certificate certificate;
-    
-    public VoterEntity(int voterId, string voterName)
+
+    public VoterEntity(int voterId, VoterCertificate voterCertificate)
     {
       VoterId = voterId;
-      VoterName = voterName;
-      this.certificate = new Certificate();
+      this.certificate = voterCertificate;
     }
 
     /// <summary>
@@ -83,7 +77,7 @@ namespace Pirate.PiVote.Crypto
       if (acceptMaterial)
       {
         Ballot ballot = new Ballot(vota, votingMaterial.Parameters, this.publicKey);
-        Envelope ballotContainer = new Envelope(votingMaterial.VotingId, VoterId, VoterName, ballot);
+        Envelope ballotContainer = new Envelope(votingMaterial.VotingId, VoterId, ballot);
 
         return new Signed<Envelope>(ballotContainer, this.certificate);
       }
@@ -205,7 +199,7 @@ namespace Pirate.PiVote.Crypto
           }
         }
 
-        result.Voters.Add(new EnvelopeResult(envelope.VoterId, envelope.VoterName, acceptVote));
+        result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));
       }
       return voteSums;
     }

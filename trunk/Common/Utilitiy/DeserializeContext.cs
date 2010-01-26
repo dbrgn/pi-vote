@@ -16,6 +16,8 @@ namespace Pirate.PiVote.Serialization
 {
   public class DeserializeContext
   {
+    private static Dictionary<string, Type> Types = new Dictionary<string, Type>();
+
     private BinaryReader reader;
 
     public DeserializeContext(Stream stream)
@@ -69,6 +71,11 @@ namespace Pirate.PiVote.Serialization
       return this.reader.ReadBytes(count);
     }
 
+    public DateTime ReadDateTime()
+    {
+      return new DateTime(ReadInt64());
+    }
+
     public BigInt ReadBigInt()
     {
       return new BigInt(ReadBytes());
@@ -77,7 +84,20 @@ namespace Pirate.PiVote.Serialization
     public TValue ReadObject<TValue>()
       where TValue : Serializable
     {
-      return (TValue)Activator.CreateInstance(typeof(TValue), new object[] { this }, new object[] { });
+      string typeName = ReadString();
+      Type type = null;
+
+      if (Types.ContainsKey(typeName))
+      {
+        type = Types[typeName];
+      }
+      else
+      {
+        type = Type.GetType(typeName);
+        Types.Add(typeName, type);
+      }
+
+      return (TValue)Activator.CreateInstance(type, new object[] { this }, new object[] { });
     }
 
     public List<TValue> ReadObjectList<TValue>()
