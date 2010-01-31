@@ -43,13 +43,12 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     private Certificate certificate;
 
-    public VoterEntity(int voterId, CACertificate rootCertificate, CACertificate intermediateCertificate, VoterCertificate voterCertificate)
+    public VoterEntity(int voterId, CACertificate rootCertificate, VoterCertificate voterCertificate)
     {
       VoterId = voterId;
       this.certificate = voterCertificate;
       this.certificateStorage = new CertificateStorage();
       this.certificateStorage.AddRoot(rootCertificate);
-      this.certificateStorage.Add(intermediateCertificate);
     }
 
     /// <summary>
@@ -72,6 +71,16 @@ namespace Pirate.PiVote.Crypto
       this.parameters = votingMaterial.Parameters;
       bool acceptMaterial = true;
       this.publicKey = new BigInt(1);
+
+      foreach (Certificate certificate in votingMaterial.Certificates)
+      {
+        this.certificateStorage.Add(certificate);
+      }
+
+      foreach (Signed<RevocationList> signedRevocationList in votingMaterial.RevocationLists)
+      {
+        this.certificateStorage.SetRevocationList(signedRevocationList);
+      }
 
       foreach (Signed<ShareResponse> signedShareResponse in votingMaterial.PublicKeyParts)
       {

@@ -23,6 +23,26 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
+    private readonly int votingId;
+
+    /// <summary>
+    /// Name of the voting procedure.
+    /// </summary>
+    private readonly string votingName;
+
+    /// <summary>
+    /// Results for each option.
+    /// </summary>
+    private readonly List<OptionResult> options;
+
+    /// <summary>
+    /// Participing voters.
+    /// </summary>
+    private readonly List<EnvelopeResult> voters;
+
+    /// <summary>
+    /// Id of the voting procedure.
+    /// </summary>
     public int VotingId { get { return this.votingId; } }
 
     /// <summary>
@@ -58,6 +78,9 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Creates a new voting result.
     /// </summary>
+    /// <remarks>
+    /// Don't forget adding option and envelopes results.
+    /// </remarks>
     /// <param name="id">Id of the voting procedure.</param>
     /// <param name="name">Name of the voting procedure.</param>
     public VotingResult(int votingId, string votingName)
@@ -67,10 +90,5 @@ namespace Pirate.PiVote.Crypto
       this.options = new List<OptionResult>();
       this.voters = new List<EnvelopeResult>();
     }
-
-    private readonly int votingId;
-    private readonly string votingName;
-    private readonly List<OptionResult> options;
-    private readonly List<EnvelopeResult> voters;
   }
 }

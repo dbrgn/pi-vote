@@ -25,6 +25,16 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voter.
     /// </summary>
+    private readonly int voterId;
+
+    /// <summary>
+    /// Was the envelope/ballot from that voter valid?
+    /// </summary>
+    private readonly bool valid;
+
+    /// <summary>
+    /// Id of the voter.
+    /// </summary>
     public int VoterId { get { return this.voterId; } }
 
     /// <summary>
@@ -42,8 +52,5 @@ namespace Pirate.PiVote.Crypto
       this.voterId = voterId;
       this.valid = valid;
     }
-
-    private readonly int voterId;
-    private readonly bool valid;
   }
 }

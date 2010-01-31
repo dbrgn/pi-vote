@@ -33,7 +33,28 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public List<Signed<ShareResponse>> PublicKeyParts { get; private set; }
 
-    public VotingMaterial(VotingParameters parameters, IEnumerable<Signed<ShareResponse>> publicKeyParts)
+    /// <summary>
+    /// Revocation lists of the CA certificates.
+    /// </summary>
+    public List<Signed<RevocationList>> RevocationLists { get; private set; }
+
+    /// <summary>
+    /// Intermediate certificates.
+    /// </summary>
+    public List<Certificate> Certificates { get; private set; }
+
+    /// <summary>
+    /// Createa new voting material.
+    /// </summary>
+    /// <param name="parameters">Voting parameters.</param>
+    /// <param name="publicKeyParts">Parts of the public key form authorities.</param>
+    /// <param name="revocationLists">Certification revocation lists for CAs.</param>
+    /// <param name="certificates">List of intermediate certificates.</param>
+    public VotingMaterial(
+      VotingParameters parameters, 
+      IEnumerable<Signed<ShareResponse>> publicKeyParts,
+      IEnumerable<Signed<RevocationList>> revocationLists,
+      IEnumerable<Certificate> certificates)
     {
       if (parameters == null)
         throw new ArgumentNullException("parameters");
@@ -42,24 +63,42 @@ namespace Pirate.PiVote.Crypto
 
       Parameters = parameters;
       PublicKeyParts = new List<Signed<ShareResponse>>(publicKeyParts);
+      Certificates = new List<Certificate>(certificates);
+      RevocationLists = new List<Signed<RevocationList>>(revocationLists);
     }
 
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
     public VotingMaterial(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
       context.Write(Parameters);
       context.WriteList(PublicKeyParts);
+      context.WriteList(Certificates);
+      context.WriteList(RevocationLists);
     }
 
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
       Parameters = context.ReadObject<VotingParameters>();
       PublicKeyParts = context.ReadObjectList<Signed<ShareResponse>>();
+      Certificates = context.ReadObjectList<Certificate>();
+      RevocationLists = context.ReadObjectList<Signed<RevocationList>>();
     }
   }
 }

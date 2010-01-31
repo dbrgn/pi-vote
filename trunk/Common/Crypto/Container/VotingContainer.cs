@@ -47,6 +47,12 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public List<Signed<PartialDecipherList>> PartialDeciphers { get; private set; }
 
+    /// <summary>
+    /// Creates a voting container.
+    /// </summary>
+    /// <param name="material">Voting material distributed to voters.</param>
+    /// <param name="envelopes">List of envelopes containing ballots.</param>
+    /// <param name="partialDeciphers">Partial deciphers from authorities.</param>
     public VotingContainer(
       VotingMaterial material, 
       IEnumerable<Signed<Envelope>> envelopes,
@@ -64,10 +70,18 @@ namespace Pirate.PiVote.Crypto
       PartialDeciphers = new List<Signed<PartialDecipherList>>(partialDeciphers);
     }
 
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
     public VotingContainer(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
@@ -76,6 +90,10 @@ namespace Pirate.PiVote.Crypto
       context.WriteList(PartialDeciphers);
     }
 
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);

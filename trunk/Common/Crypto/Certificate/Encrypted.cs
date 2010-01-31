@@ -23,19 +23,34 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public byte[] Data { get; protected set; }
 
+    /// <summary>
+    /// Create a new encrypted data piece.
+    /// </summary>
     public Encrypted()
     { }
 
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
     public Encrypted(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
       context.Write(Data);
     }
 
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);

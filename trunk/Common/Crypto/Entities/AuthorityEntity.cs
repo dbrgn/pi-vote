@@ -55,12 +55,11 @@ namespace Pirate.PiVote.Crypto
     /// Create a new authority entity.
     /// </summary>
     /// <param name="certificate">Certificate of authority.</param>
-    public AuthorityEntity(CACertificate rootCertificate, CACertificate intermediateCertificate, AuthorityCertificate certificate)
+    public AuthorityEntity(CACertificate rootCertificate, AuthorityCertificate certificate)
     {
       this.certificate = certificate;
       this.certificateStorage = new CertificateStorage();
       this.certificateStorage.AddRoot(rootCertificate);
-      this.certificateStorage.Add(intermediateCertificate);
     }
 
     /// <summary>
@@ -93,6 +92,16 @@ namespace Pirate.PiVote.Crypto
       for (int index = 0; index < list.Authorities.Count; index++)
       {
         this.authorities.Add(index + 1, list.Authorities[index]);
+      }
+
+      foreach (Certificate certificate in list.Certificates)
+      {
+        this.certificateStorage.Add(certificate);
+      }
+
+      foreach (Signed<RevocationList> signedRevocationList in list.RevocationLists)
+      {
+        this.certificateStorage.SetRevocationList(signedRevocationList);
       }
     }
 

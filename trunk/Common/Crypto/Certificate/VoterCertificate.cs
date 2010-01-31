@@ -30,6 +30,10 @@ namespace Pirate.PiVote.Crypto
     {
     }
 
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
     public VoterCertificate(DeserializeContext context)
       : base(context)
     { }
@@ -44,26 +48,48 @@ namespace Pirate.PiVote.Crypto
     {
     }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
     }
 
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
     }
 
+    /// <summary>
+    /// Returns only the public key part of the certificate.
+    /// </summary>
+    /// <remarks>
+    /// Used to remove the private key.
+    /// </remarks>
     public override Certificate OnlyPublicPart
     {
       get { return new VoterCertificate(this, true); }
     }
 
+    /// <summary>
+    /// Is this certificate allowed to sign others.
+    /// </summary>
     public override bool CanSignCertificates
     {
       get { return false; }
     }
 
+    /// <summary>
+    /// The magic certificate type constant makes sure
+    /// a certificate is never mistaken for another type
+    /// of certificate.
+    /// </summary>
     public override byte[] MagicTypeConstant
     {
       get { return Encoding.UTF8.GetBytes("VoterCertificate"); }

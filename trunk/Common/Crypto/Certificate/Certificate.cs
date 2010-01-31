@@ -63,6 +63,10 @@ namespace Pirate.PiVote.Crypto
       Signatures = new List<Signature>();
     }
 
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
     public Certificate(DeserializeContext context)
       : base(context)
     { }
@@ -150,7 +154,7 @@ namespace Pirate.PiVote.Crypto
     public bool Valid(CertificateStorage certificateStorage)
     {
       return SelfSignatureValid &&
-        (Signatures.Any(signature => signature.Verify(GetSignatureContent(), certificateStorage)) ||
+        (Signatures.Any(signature => signature.Verify(GetSignatureContent(), certificateStorage) && !certificateStorage.IsRevoked(signature.SignerId, Id)) ||
         certificateStorage.IsRootCertificate(this));
     }
 
@@ -246,6 +250,10 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public abstract Certificate OnlyPublicPart { get; }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
@@ -257,6 +265,10 @@ namespace Pirate.PiVote.Crypto
       context.WriteList(Signatures);
     }
 
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);

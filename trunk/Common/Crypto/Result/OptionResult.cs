@@ -23,6 +23,21 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Text of option.
     /// </summary>
+    private readonly string text;
+
+    /// <summary>
+    /// Descrption of option.
+    /// </summary>
+    private readonly string description;
+
+    /// <summary>
+    /// Votes for this option.
+    /// </summary>
+    private readonly int result;
+
+    /// <summary>
+    /// Text of option.
+    /// </summary>
     public string Text { get { return this.text; } }
 
     /// <summary>
@@ -35,15 +50,17 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public int Result { get { return this.result; } }
 
+    /// <summary>
+    /// Creates a new voting option result object.
+    /// </summary>
+    /// <param name="text">Text of option.</param>
+    /// <param name="description">Descrption of option.</param>
+    /// <param name="result">Votes for this option.</param>
     public OptionResult(string text, string description, int result)
     {
       this.text = text;
       this.description = description;
       this.result = result;
     }
-
-    private readonly string text;
-    private readonly string description;
-    private readonly int result;
   }
 }

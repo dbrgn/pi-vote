@@ -65,10 +65,18 @@ namespace Pirate.PiVote.Crypto
       PublicKeyPart = publicKeyPart;
     }
 
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
     public ShareResponse(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
@@ -78,6 +86,10 @@ namespace Pirate.PiVote.Crypto
       context.Write(PublicKeyPart);
     }
 
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);

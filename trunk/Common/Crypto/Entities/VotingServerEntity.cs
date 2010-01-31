@@ -84,7 +84,14 @@ namespace Pirate.PiVote.Crypto
     /// <param name="parameters">Voting parameters.</param>
     /// <param name="rootCertificate">Root certificate.</param>
     /// <param name="intermediateCertificate">Intermediate certificate.</param>
-    public VotingServerEntity(VotingParameters parameters, CACertificate rootCertificate, CACertificate intermediateCertificate)
+    /// /// <param name="rootRevocationList">Certificate revocation list from root.</param>
+    /// /// <param name="intermediateRevocationList">Certificate revocation list from intermediate.</param>
+    public VotingServerEntity(
+      VotingParameters parameters, 
+      CACertificate rootCertificate, 
+      CACertificate intermediateCertificate,
+      Signed<RevocationList> rootRevocationList,
+      Signed<RevocationList> intermediateRevocationList)
     {
       if (parameters == null)
         throw new ArgumentNullException("parameters");
@@ -98,6 +105,8 @@ namespace Pirate.PiVote.Crypto
       this.certificateStorage = new CertificateStorage();
       this.certificateStorage.AddRoot(rootCertificate);
       this.certificateStorage.Add(intermediateCertificate);
+      this.certificateStorage.SetRevocationList(rootRevocationList);
+      this.certificateStorage.SetRevocationList(intermediateRevocationList);
       Status = VotingStatus.New;
     }
 
@@ -129,7 +138,14 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public AuthorityList Authorities
     {
-      get { return new AuthorityList(Id, this.authorities.Values); }
+      get
+      {
+        return new AuthorityList(
+          Id, 
+          this.authorities.Values,
+          this.certificateStorage.Certificates,
+          this.certificateStorage.SignedRevocationLists);
+      }
     }
 
     /// <summary>
@@ -226,7 +242,11 @@ namespace Pirate.PiVote.Crypto
       if (Status != VotingStatus.Voting)
         throw new InvalidOperationException("Wrong status for operation.");
 
-      return new VotingMaterial(this.parameters, this.responses.Values);
+      return new VotingMaterial(
+        this.parameters, 
+        this.responses.Values, 
+        this.certificateStorage.SignedRevocationLists, 
+        this.certificateStorage.Certificates);
     }
 
     /// <summary>
@@ -277,7 +297,13 @@ namespace Pirate.PiVote.Crypto
       if (Status != VotingStatus.Deciphering)
         throw new InvalidOperationException("Wrong status for operation.");
 
-      return new AuthorityEnvelopeList(Id, this.ballots, new VotingMaterial(this.parameters, this.responses.Values));
+      VotingMaterial material = new VotingMaterial(
+        this.parameters,
+        this.responses.Values,
+        this.certificateStorage.SignedRevocationLists,
+        this.certificateStorage.Certificates);
+
+      return new AuthorityEnvelopeList(Id, this.ballots, material);
     }
 
     /// <summary>
@@ -322,7 +348,11 @@ namespace Pirate.PiVote.Crypto
       if (Status != VotingStatus.Finished)
         throw new InvalidOperationException("Wrong status for operation.");
 
-      VotingMaterial material = new VotingMaterial(this.parameters, this.responses.Values);
+      VotingMaterial material = new VotingMaterial(
+        this.parameters,
+        this.responses.Values,
+        this.certificateStorage.SignedRevocationLists,
+        this.certificateStorage.Certificates);
 
       return new VotingContainer(material, this.ballots, this.partialDeciphers.Values);
     }
