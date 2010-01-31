@@ -76,6 +76,11 @@ namespace Pirate.PiVote.Serialization
       return new DateTime(ReadInt64());
     }
 
+    public Guid ReadGuid()
+    {
+      return new Guid(ReadBytes());
+    }
+
     public BigInt ReadBigInt()
     {
       return new BigInt(ReadBytes());

@@ -54,7 +54,7 @@
     <Compile Include="Crypto\Certificate\Certificate.cs" />
     <Compile Include="Crypto\Certificate\AuthorityCertificate.cs" />
     <Compile Include="Crypto\Certificate\CACertificate.cs" />
-    <Compile Include="Crypto\Certificate\RootCertificate.cs" />
+    <Compile Include="Crypto\Certificate\CertificateStorage.cs" />
     <Compile Include="Crypto\Certificate\Signature.cs" />
     <Compile Include="Crypto\Certificate\VoterCertificate.cs" />
     <Compile Include="Crypto\Container\AuthorityList.cs" />

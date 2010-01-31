@@ -131,7 +131,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="data">Data which was signed.</param>
     /// <param name="signature">Signature data.</param>
     /// <returns>Is the signature valid?</returns>
-    public bool Verify(byte[] data, byte[] signature)
+    public bool Verify(byte[] data, byte[] signature, CertificateStorage certificateStorage)
     {
       if (data == null)
         throw new ArgumentNullException("data");
@@ -139,26 +139,20 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("signature");
 
       var rsaProvider = GetRsaProvider();
-      return rsaProvider.VerifyData(data, "SHA256", signature) && Valid;
+      return rsaProvider.VerifyData(data, "SHA256", signature) && Valid(certificateStorage);
     }
 
     /// <summary>
     /// Is the certificate valid?
     /// </summary>
-    public bool Valid
+    /// <param name="certificateStorage">Storage of certificates.</param>
+    /// <returns>Is certificate valid.</returns>
+    public bool Valid(CertificateStorage certificateStorage)
     {
-      get
-      {
-        return SelfSignatureValid && 
-          (Signatures.Any(signature => signature.Verify(GetSignatureContent())) || 
-          IsRootCertificate);
-      }
+      return SelfSignatureValid &&
+        (Signatures.Any(signature => signature.Verify(GetSignatureContent(), certificateStorage)) ||
+        certificateStorage.IsRootCertificate(this));
     }
-
-    /// <summary>
-    /// Is this certificate a preinstalled root certificate?
-    /// </summary>
-    public abstract bool IsRootCertificate { get; }
 
     /// <summary>
     /// This this certificate identic to another one?

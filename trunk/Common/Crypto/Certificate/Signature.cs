@@ -22,9 +22,9 @@ namespace Pirate.PiVote.Crypto
     private static byte[] MagicBytes = Encoding.UTF8.GetBytes("Signature");
 
     /// <summary>
-    /// Certificate of the signer.
+    /// Certificate id of the signer.
     /// </summary>
-    public Certificate Signer { get; private set; }
+    public Guid SignerId { get; private set; }
 
     /// <summary>
     /// Signature data.
@@ -49,7 +49,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="validUntil">This signature is valid until then.</param>
     public Signature(Certificate signer, byte[] objectData, DateTime validUntil)
     {
-      Signer = signer.OnlyPublicPart;
+      SignerId = signer.Id;
       CreationDate = DateTime.Now;
       ValidUntil = validUntil;
       Data = signer.Sign(AssmblySigningData(objectData));
@@ -61,7 +61,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="original">Original signature to copy from.</param>
     public Signature(Signature original)
     {
-      Signer = original.Signer.OnlyPublicPart;
+      SignerId = original.SignerId;
       Data = (byte[])original.Data.Clone();
       CreationDate = original.CreationDate;
       ValidUntil = original.ValidUntil;
@@ -78,13 +78,23 @@ namespace Pirate.PiVote.Crypto
     /// Also check the validity of the signer's certificate.
     /// </remarks>
     /// <param name="objectData">Data to check against.</param>
+    /// <param name="certificateStorage">Storage of certificates.</param>
     /// <returns>Is the signature valid.</returns>
-    public bool Verify(byte[] objectData)
+    public bool Verify(byte[] objectData, CertificateStorage certificateStorage)
     {
-      return
-        Signer.Verify(AssmblySigningData(objectData), Data) &&
-        Signer.Valid &&
-        ValidUntil >= DateTime.Now;
+      if (certificateStorage.Has(SignerId))
+      {
+        Certificate signer = certificateStorage.Get(SignerId);
+
+        return
+          signer.Verify(AssmblySigningData(objectData), Data, certificateStorage) &&
+          signer.Valid(certificateStorage) &&
+          ValidUntil >= DateTime.Now;
+      }
+      else
+      {
+        return false;
+      }
     }
 
     /// <summary>
@@ -98,6 +108,7 @@ namespace Pirate.PiVote.Crypto
       BinaryWriter streamWriter = new BinaryWriter(memoryStream);
       streamWriter.Write(MagicBytes);
       streamWriter.Write(objectData);
+      streamWriter.Write(SignerId.ToByteArray());
       streamWriter.Write(CreationDate.Ticks);
       streamWriter.Write(ValidUntil.Ticks);
       streamWriter.Close();
@@ -109,7 +120,7 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(Signer);
+      context.Write(SignerId);
       context.Write(Data);
       context.Write(CreationDate);
       context.Write(ValidUntil);
@@ -118,7 +129,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      Signer = context.ReadObject<Certificate>();
+      SignerId = context.ReadGuid();
       Data = context.ReadBytes();
       CreationDate = context.ReadDateTime();
       ValidUntil = context.ReadDateTime();

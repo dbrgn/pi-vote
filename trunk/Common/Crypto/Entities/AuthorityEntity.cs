@@ -19,6 +19,11 @@ namespace Pirate.PiVote.Crypto
   public class AuthorityEntity
   {
     /// <summary>
+    /// Storage of certificates.
+    /// </summary>
+    private CertificateStorage certificateStorage;
+
+    /// <summary>
     /// Parameters for the voting.
     /// </summary>
     private VotingParameters parameters;
@@ -50,9 +55,12 @@ namespace Pirate.PiVote.Crypto
     /// Create a new authority entity.
     /// </summary>
     /// <param name="certificate">Certificate of authority.</param>
-    public AuthorityEntity(Certificate certificate)
+    public AuthorityEntity(CACertificate rootCertificate, CACertificate intermediateCertificate, AuthorityCertificate certificate)
     {
       this.certificate = certificate;
+      this.certificateStorage = new CertificateStorage();
+      this.certificateStorage.AddRoot(rootCertificate);
+      this.certificateStorage.Add(intermediateCertificate);
     }
 
     /// <summary>
@@ -129,7 +137,7 @@ namespace Pirate.PiVote.Crypto
       {
         SharePart sharePart = signedShareParrt.Value;
 
-        acceptShares &= signedShareParrt.Verify();
+        acceptShares &= signedShareParrt.Verify(this.certificateStorage);
         acceptShares &= signedShareParrt.Certificate.IsIdentic(this.authorities[sharePart.AuthorityIndex]);
 
         Encrypted<Share> encryptedShare = sharePart.EncryptedShares[this.authority.Index - 1];
@@ -169,7 +177,7 @@ namespace Pirate.PiVote.Crypto
         ShareResponse shareResponse = signedShareResponse.Value;
         bool acceptResponse = true;
         
-        acceptResponse &= signedShareResponse.Verify();
+        acceptResponse &= signedShareResponse.Verify(this.certificateStorage);
         acceptResponse &= signedShareResponse.Certificate.IsIdentic(this.authorities[shareResponse.AuthorityIndex]);
 
         if (!acceptResponse)
@@ -184,7 +192,7 @@ namespace Pirate.PiVote.Crypto
       {
         bool acceptVote = true;
         
-        acceptVote &= signedEnvelope.Verify();
+        acceptVote &= signedEnvelope.Verify(this.certificateStorage);
 
         Envelope envelope = signedEnvelope.Value;
         acceptVote &= envelope.Ballot.Verify(publicKey, this.parameters);

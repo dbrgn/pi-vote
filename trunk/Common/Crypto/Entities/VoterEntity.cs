@@ -19,6 +19,11 @@ namespace Pirate.PiVote.Crypto
   public class VoterEntity
   {
     /// <summary>
+    /// Storage of certificates.
+    /// </summary>
+    private CertificateStorage certificateStorage;
+
+    /// <summary>
     /// Public key of the authorities.
     /// </summary>
     private BigInt publicKey;
@@ -38,10 +43,13 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     private Certificate certificate;
 
-    public VoterEntity(int voterId, VoterCertificate voterCertificate)
+    public VoterEntity(int voterId, CACertificate rootCertificate, CACertificate intermediateCertificate, VoterCertificate voterCertificate)
     {
       VoterId = voterId;
       this.certificate = voterCertificate;
+      this.certificateStorage = new CertificateStorage();
+      this.certificateStorage.AddRoot(rootCertificate);
+      this.certificateStorage.Add(intermediateCertificate);
     }
 
     /// <summary>
@@ -67,7 +75,7 @@ namespace Pirate.PiVote.Crypto
 
       foreach (Signed<ShareResponse> signedShareResponse in votingMaterial.PublicKeyParts)
       {
-        acceptMaterial &= signedShareResponse.Verify();
+        acceptMaterial &= signedShareResponse.Verify(this.certificateStorage);
 
         ShareResponse shareResponse = signedShareResponse.Value;
         acceptMaterial &= shareResponse.AcceptShares;
@@ -147,7 +155,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="signedPartialDeciphers">List of signed partail deciphers.</param>
     /// <returns>List of partail deciphers.</returns>
-    private static List<PartialDecipher> ListPartialDeciphers(IEnumerable<Signed<PartialDecipherList>> signedPartialDeciphers)
+    private List<PartialDecipher> ListPartialDeciphers(IEnumerable<Signed<PartialDecipherList>> signedPartialDeciphers)
     {
       if (signedPartialDeciphers == null)
         throw new ArgumentNullException("signedPartialDeciphers");
@@ -156,7 +164,7 @@ namespace Pirate.PiVote.Crypto
 
       foreach (Signed<PartialDecipherList> signedPartialDeciphersContainer in signedPartialDeciphers)
       {
-        if (signedPartialDeciphersContainer.Verify())
+        if (signedPartialDeciphersContainer.Verify(this.certificateStorage))
         {
           PartialDecipherList partialDeciphersContainer = signedPartialDeciphersContainer.Value;
           partialDeciphers.AddRange(partialDeciphersContainer.PartialDeciphers);
@@ -183,7 +191,7 @@ namespace Pirate.PiVote.Crypto
       {
         bool acceptVote = true;
 
-        acceptVote &= signedEnvelope.Verify();
+        acceptVote &= signedEnvelope.Verify(this.certificateStorage);
 
         Envelope envelope = signedEnvelope.Value;
         acceptVote &= envelope.Ballot.Verify(this.publicKey, this.parameters);

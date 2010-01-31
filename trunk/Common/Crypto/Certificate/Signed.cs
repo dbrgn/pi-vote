@@ -93,9 +93,9 @@ namespace Pirate.PiVote.Crypto
     /// Don't forget to check the identiy of the certificate.
     /// </remarks>
     /// <returns></returns>
-    public bool Verify()
+    public bool Verify(CertificateStorage certificateStorage)
     {
-      return Certificate.Verify(Data, Signature);
+      return Certificate.Verify(Data, Signature, certificateStorage);
     }
 
     /// <summary>

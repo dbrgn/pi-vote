@@ -59,11 +59,6 @@ namespace Pirate.PiVote.Crypto
       get { return new VoterCertificate(this, true); }
     }
 
-    public override bool IsRootCertificate
-    {
-      get { return false; }
-    }
-
     public override bool CanSignCertificates
     {
       get { return false; }

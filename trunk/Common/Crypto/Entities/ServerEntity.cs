@@ -25,9 +25,9 @@ namespace Pirate.PiVote.Crypto
     { 
       //TODO perform authorization.
 
-      VotingParameters parameterContainer = signedParameterContainer.Value;
-      VotingServerEntity voting = new VotingServerEntity(parameterContainer);
-      this.votings.Add(voting.Id, voting);
+      ////VotingParameters parameterContainer = signedParameterContainer.Value;
+      ////VotingServerEntity voting = new VotingServerEntity(parameterContainer);
+      ////this.votings.Add(voting.Id, voting);
     }
   }
 }

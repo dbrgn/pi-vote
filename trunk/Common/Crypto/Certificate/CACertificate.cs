@@ -76,11 +76,6 @@ namespace Pirate.PiVote.Crypto
       writer.Write(FullName);
     }
 
-    public override bool IsRootCertificate
-    {
-      get { return RootCertificate.Value.IsIdentic(this); }
-    }
-
     public override bool CanSignCertificates
     {
       get { return false; }

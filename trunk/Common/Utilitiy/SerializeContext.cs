@@ -74,6 +74,11 @@ namespace Pirate.PiVote.Serialization
       Write(value.Ticks);
     }
 
+    public void Write(Guid value)
+    {
+      Write(value.ToByteArray());
+    }
+
     public void Write(BigInt value)
     {
       Write(value.ToByteArray());

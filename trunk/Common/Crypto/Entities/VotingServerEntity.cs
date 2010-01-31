@@ -12,6 +12,9 @@ using System.Text;
 
 namespace Pirate.PiVote.Crypto
 {
+  /// <summary>
+  /// Status of the voting procedure.
+  /// </summary>
   public enum VotingStatus
   {
     New,
@@ -22,23 +25,66 @@ namespace Pirate.PiVote.Crypto
     Finished,
   }
 
+  /// <summary>
+  /// Entity of the voting server.
+  /// </summary>
   public class VotingServerEntity
   {
+    /// <summary>
+    /// Voting parameters.
+    /// </summary>
     private VotingParameters parameters;
+
+    /// <summary>
+    /// List of authorities.
+    /// </summary>
     private Dictionary<int, Certificate> authorities;
+
+    /// <summary>
+    /// List of share parts from authorities.
+    /// </summary>
     private Dictionary<int, Signed<SharePart>> shares;
+
+    /// <summary>
+    /// List of share responses from authorities.
+    /// </summary>
     private Dictionary<int, Signed<ShareResponse>> responses;
+
+    /// <summary>
+    /// List of ballots from voters.
+    /// </summary>
     private List<Signed<Envelope>> ballots;
+
+    /// <summary>
+    /// List of partial deciphers from authorities.
+    /// </summary>
     private Dictionary<int, Signed<PartialDecipherList>> partialDeciphers;
 
-    public VotingStatus Status { get; set; }
+    /// <summary>
+    /// Storage of certificates.
+    /// </summary>
+    private CertificateStorage certificateStorage;
 
+    /// <summary>
+    /// Status of the voting procedures.
+    /// </summary>
+    public VotingStatus Status { get; private set; }
+
+    /// <summary>
+    /// Id of the voting procedures.
+    /// </summary>
     public int Id
     {
       get { return this.parameters.VotingId; }
     }
 
-    public VotingServerEntity(VotingParameters parameters)
+    /// <summary>
+    /// Create a new voting procedure.
+    /// </summary>
+    /// <param name="parameters">Voting parameters.</param>
+    /// <param name="rootCertificate">Root certificate.</param>
+    /// <param name="intermediateCertificate">Intermediate certificate.</param>
+    public VotingServerEntity(VotingParameters parameters, CACertificate rootCertificate, CACertificate intermediateCertificate)
     {
       if (parameters == null)
         throw new ArgumentNullException("parameters");
@@ -49,11 +95,22 @@ namespace Pirate.PiVote.Crypto
       this.responses = new Dictionary<int, Signed<ShareResponse>>();
       this.ballots = new List<Signed<Envelope>>();
       this.partialDeciphers = new Dictionary<int, Signed<PartialDecipherList>>();
+      this.certificateStorage = new CertificateStorage();
+      this.certificateStorage.AddRoot(rootCertificate);
+      this.certificateStorage.Add(intermediateCertificate);
       Status = VotingStatus.New;
     }
 
+    /// <summary>
+    /// Voting parameters.
+    /// </summary>
     public VotingParameters Parameters { get { return this.parameters; } }
 
+    /// <summary>
+    /// Add an authority.
+    /// </summary>
+    /// <param name="certificate">Authority to be added.</param>
+    /// <returns>Index of the authority.</returns>
     public int AddAuthority(Certificate certificate)
     {
       if (certificate == null)
@@ -67,11 +124,18 @@ namespace Pirate.PiVote.Crypto
       return authorityIndex;
     }
 
+    /// <summary>
+    /// List of authorities.
+    /// </summary>
     public AuthorityList Authorities
     {
       get { return new AuthorityList(Id, this.authorities.Values); }
     }
 
+    /// <summary>
+    /// Deposit a share part from authorities.
+    /// </summary>
+    /// <param name="shares">Share part.</param>
     public void DepositShares(Signed<SharePart> shares)
     {
       if (shares == null)
@@ -84,7 +148,7 @@ namespace Pirate.PiVote.Crypto
       if (!this.authorities.ContainsKey(shareContainer.AuthorityIndex))
         throw new ArgumentException("Bad authority index.");
 
-      if (!shares.Verify())
+      if (!shares.Verify(this.certificateStorage))
         throw new ArgumentException("Bad signature.");
 
       if (!shares.Certificate.IsIdentic(this.authorities[shareContainer.AuthorityIndex]))
@@ -101,6 +165,10 @@ namespace Pirate.PiVote.Crypto
       }
     }
 
+    /// <summary>
+    /// Get all shares from all authorities.
+    /// </summary>
+    /// <returns>All shares list.</returns>
     public AllShareParts GetAllShares()
     {
       if (Status != VotingStatus.Sharing)
@@ -109,6 +177,10 @@ namespace Pirate.PiVote.Crypto
       return new AllShareParts(Id, this.shares.Values);
     }
 
+    /// <summary>
+    /// Deposit share responses from authorities.
+    /// </summary>
+    /// <param name="response">Share response.</param>
     public void DepositShareResponse(Signed<ShareResponse> response)
     {
       if (response == null)
@@ -121,7 +193,7 @@ namespace Pirate.PiVote.Crypto
       if (!this.authorities.ContainsKey(shareResponse.AuthorityIndex))
         throw new ArgumentException("Bad authority index.");
 
-      if (!response.Verify())
+      if (!response.Verify(this.certificateStorage))
         throw new ArgumentException("Bad signature.");
 
       if (!response.Certificate.IsIdentic(this.authorities[shareResponse.AuthorityIndex]))
@@ -145,6 +217,10 @@ namespace Pirate.PiVote.Crypto
       }
     }
 
+    /// <summary>
+    /// Get material for a voter.
+    /// </summary>
+    /// <returns>Material to vote.</returns>
     public VotingMaterial GetVotingMaterial()
     {
       if (Status != VotingStatus.Voting)
@@ -153,13 +229,17 @@ namespace Pirate.PiVote.Crypto
       return new VotingMaterial(this.parameters, this.responses.Values);
     }
 
+    /// <summary>
+    /// Deposit a ballot.
+    /// </summary>
+    /// <param name="ballot">Ballot in signed envleope.</param>
     public void Vote(Signed<Envelope> ballot)
     {
       if (ballot == null)
         throw new ArgumentNullException("ballot");
       if (Status != VotingStatus.Voting)
         throw new InvalidOperationException("Wrong status for operation.");
-      if (!ballot.Verify())
+      if (!ballot.Verify(this.certificateStorage))
         throw new ArgumentException("Bad signature.");
       if (!CanVote(ballot.Certificate))
         throw new ArgumentException("Not allowed to vote.");
@@ -167,11 +247,19 @@ namespace Pirate.PiVote.Crypto
       this.ballots.Add(ballot);
     }
 
+    /// <summary>
+    /// Is this one allowed to vote?
+    /// </summary>
+    /// <param name="certificate">Certificate to check.</param>
+    /// <returns>Can vote?</returns>
     private bool CanVote(Certificate certificate)
     {
-      return true;
+      return certificate is VoterCertificate;
     }
 
+    /// <summary>
+    /// End the voting procedure.
+    /// </summary>
     public void EndVote()
     {
       if (Status != VotingStatus.Voting)
@@ -180,6 +268,10 @@ namespace Pirate.PiVote.Crypto
       Status = VotingStatus.Deciphering;
     }
 
+    /// <summary>
+    /// Get all ballots for authorities to decrypt sum.
+    /// </summary>
+    /// <returns>Ballot list for authorities.</returns>
     public AuthorityEnvelopeList GetAllBallots()
     {
       if (Status != VotingStatus.Deciphering)
@@ -188,6 +280,10 @@ namespace Pirate.PiVote.Crypto
       return new AuthorityEnvelopeList(Id, this.ballots, new VotingMaterial(this.parameters, this.responses.Values));
     }
 
+    /// <summary>
+    /// Deposit partial deciphers from an authority.
+    /// </summary>
+    /// <param name="signedPartialDecipherList">Partial decipher list.</param>
     public void DepositPartialDecipher(Signed<PartialDecipherList> signedPartialDecipherList)
     {
       if (signedPartialDecipherList == null)
@@ -200,7 +296,7 @@ namespace Pirate.PiVote.Crypto
       if (!this.authorities.ContainsKey(partialDecipherList.AuthorityIndex))
         throw new ArgumentException("Bad authority index.");
 
-      if (!signedPartialDecipherList.Verify())
+      if (!signedPartialDecipherList.Verify(this.certificateStorage))
         throw new ArgumentException("Bad signature.");
 
       if (!signedPartialDecipherList.Certificate.IsIdentic(this.authorities[partialDecipherList.AuthorityIndex]))
@@ -217,6 +313,10 @@ namespace Pirate.PiVote.Crypto
       }
     }
 
+    /// <summary>
+    /// Get the voting result.
+    /// </summary>
+    /// <returns>Voting result.</returns>
     public VotingContainer GetVotingResult()
     {
       if (Status != VotingStatus.Finished)
