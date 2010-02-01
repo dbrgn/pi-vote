@@ -87,7 +87,14 @@ namespace Pirate.PiVote.Serialization
     public void Write<TValue>(TValue value)
       where TValue : Serializable
     {
-      value.Serialize(this);
+      if (value == null)
+      {
+        Write(string.Empty);
+      }
+      else
+      {
+        value.Serialize(this);
+      }
     }
 
     public void WriteList<TValue>(IEnumerable<TValue> list)

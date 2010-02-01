@@ -97,16 +97,14 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("safePrime");
       if (prime >= safePrime)
         throw new ArgumentException("Prime must be smaller than safePrime.");
-      if (thereshold < 1)
-        throw new ArgumentException("Thereshold must be at least 1.");
-      if (authorityCount < 2)
-        throw new ArgumentException("Authority count must be at least 1.");
-      if (thereshold > authorityCount)
-        throw new ArgumentException("Thereshold must be lower or equal to authority count.");
+      if (!authorityCount.InRange(3, 23))
+        throw new ArgumentException("Authority count must be in range from 3 to 23.");
+      if (!thereshold.InRange(1, authorityCount - 1))
+        throw new ArgumentException("Thereshold must be in range from 1 to authorityCount - 1.");
       if (optionCount < 2)
         throw new ArgumentException("Option count must be at least 2.");
-      if (maxVota < 1)
-        throw new ArgumentException("Maximum vota number must be at least 1.");
+      if (!maxVota.InRange(1, optionCount))
+        throw new ArgumentException("Maximum vota number must be in range from 1 to optionCount.");
 
       Q = prime;
       P = safePrime;

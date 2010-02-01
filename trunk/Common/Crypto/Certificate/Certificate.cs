@@ -329,18 +329,6 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
-    /// Save certificate to file.
-    /// </summary>
-    /// <param name="fileName">Filename for saving.</param>
-    public void Save(string fileName)
-    {
-      if (fileName == null)
-        throw new ArgumentNullException("fileName");
-
-      File.WriteAllBytes(fileName, ToBinary());
-    }
-
-    /// <summary>
     /// Load certificate from file.
     /// </summary>
     /// <param name="fileName">Filename pointing to a certificate</param>

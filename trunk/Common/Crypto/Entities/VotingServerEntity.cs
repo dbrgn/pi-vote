@@ -87,14 +87,13 @@ namespace Pirate.PiVote.Crypto
     /// /// <param name="rootRevocationList">Certificate revocation list from root.</param>
     /// /// <param name="intermediateRevocationList">Certificate revocation list from intermediate.</param>
     public VotingServerEntity(
-      VotingParameters parameters, 
-      CACertificate rootCertificate, 
-      CACertificate intermediateCertificate,
-      Signed<RevocationList> rootRevocationList,
-      Signed<RevocationList> intermediateRevocationList)
+      VotingParameters parameters,
+      CertificateStorage certificateStorage)
     {
       if (parameters == null)
         throw new ArgumentNullException("parameters");
+      if (certificateStorage == null)
+        throw new ArgumentNullException("certificateStorage");
 
       this.parameters = parameters;
       this.authorities = new Dictionary<int, Certificate>();
@@ -102,11 +101,7 @@ namespace Pirate.PiVote.Crypto
       this.responses = new Dictionary<int, Signed<ShareResponse>>();
       this.ballots = new List<Signed<Envelope>>();
       this.partialDeciphers = new Dictionary<int, Signed<PartialDecipherList>>();
-      this.certificateStorage = new CertificateStorage();
-      this.certificateStorage.AddRoot(rootCertificate);
-      this.certificateStorage.Add(intermediateCertificate);
-      this.certificateStorage.SetRevocationList(rootRevocationList);
-      this.certificateStorage.SetRevocationList(intermediateRevocationList);
+      this.certificateStorage = certificateStorage;
       Status = VotingStatus.New;
     }
 
@@ -114,6 +109,27 @@ namespace Pirate.PiVote.Crypto
     /// Voting parameters.
     /// </summary>
     public VotingParameters Parameters { get { return this.parameters; } }
+
+    /// <summary>
+    /// Get the index of an authority from certificate.
+    /// </summary>
+    /// <param name="certificate">Certificate of the authority.</param>
+    /// <returns>Index of the authority.</returns>
+    public int GetAuthorityIndex(AuthorityCertificate certificate)
+    {
+      if (certificate == null)
+        throw new PiArgumentException(ExceptionCode.ArgumentNull, "Certificate is null.");
+      if (!certificate.Valid(this.certificateStorage))
+        throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Authority certificate invalid."); 
+
+      foreach (KeyValuePair<int, Certificate> authority in this.authorities)
+      {
+        if (authority.Value.IsIdentic(certificate))
+          return authority.Key;
+      }
+
+      throw new PiArgumentException(ExceptionCode.NoAuthorityWithCertificate, "No authority with that certificate."); 
+    }
 
     /// <summary>
     /// Add an authority.

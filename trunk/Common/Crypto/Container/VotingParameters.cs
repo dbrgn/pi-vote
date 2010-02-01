@@ -50,14 +50,25 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new voting.
     /// </summary>
-    public VotingParameters(int votingId, string votingName)
+    public VotingParameters(string votingName)
     {
       if (votingName == null)
         throw new ArgumentNullException("votingName");
 
-      VotingId = votingId;
       VotingName = votingName;
       this.options = new List<Option>();
+    }
+
+    /// <summary>
+    /// Sets the id for this voting.
+    /// </summary>
+    /// <remarks>
+    /// To be used by the voting server.
+    /// </remarks>
+    /// <param name="votingId">Id to be set.</param>
+    public void SetId(int votingId)
+    {
+      VotingId = votingId;
     }
 
     /// <summary>

@@ -18,7 +18,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Stores certificates for validation.
   /// </summary>
-  public class CertificateStorage
+  public class CertificateStorage : Serializable
   {
     /// <summary>
     /// Ids of root certificates.
@@ -59,6 +59,41 @@ namespace Pirate.PiVote.Crypto
       this.revocationLists = new Dictionary<Guid, RevocationList>();
       this.rootCertificateIds = new List<Guid>();
       this.signedRevocationLists = new Dictionary<Guid, Signed<RevocationList>>();
+    }
+
+    public CertificateStorage(DeserializeContext context)
+      : base(context)
+    { }
+
+    public override void Serialize(SerializeContext context)
+    {
+      base.Serialize(context);
+      context.Write(this.rootCertificateIds.Count);
+      this.rootCertificateIds.ForEach(rootCertificateId => context.Write(rootCertificateId));
+      context.WriteList(this.certificates.Values);
+      context.WriteList(this.revocationLists.Values);
+      context.WriteList(this.signedRevocationLists.Values);
+    }
+
+    protected override void Deserialize(DeserializeContext context)
+    {
+      base.Deserialize(context);
+
+      int count = context.ReadInt32();
+      this.rootCertificateIds = new List<Guid>();
+      count.Times(() => this.rootCertificateIds.Add(context.ReadGuid()));
+
+      this.certificates = new Dictionary<Guid,Certificate>();
+      List<Certificate> certificates = context.ReadObjectList<Certificate>();
+      certificates.ForEach(certificate => this.certificates.Add(certificate.Id, certificate));
+
+      this.revocationLists = new Dictionary<Guid,RevocationList>();
+      List<RevocationList> revocationLists = context.ReadObjectList<RevocationList>();
+      revocationLists.ForEach(revocationList => this.revocationLists.Add(revocationList.IssuerId, revocationList));
+
+      this.signedRevocationLists = new Dictionary<Guid,Signed<RevocationList>>();
+      List<Signed<RevocationList>> signedRevocationLists = context.ReadObjectList<Signed<RevocationList>>();
+      signedRevocationLists.ForEach(signedRevocationList => this.signedRevocationLists.Add(signedRevocationList.Certificate.Id, signedRevocationList));
     }
 
     /// <summary>

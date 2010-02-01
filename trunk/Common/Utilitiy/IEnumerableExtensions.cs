@@ -18,6 +18,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace System.Collections.Generic
@@ -58,6 +59,38 @@ namespace System.Collections.Generic
           foreach (T item in list)
           {
             action(item);
+          }
+        }
+
+        public static T MaxOrDefault<T>(this IEnumerable<T> list, T defaultValue)
+        {
+          if (list.Count() > 0)
+          {
+            return list.Max();
+          }
+          else
+          {
+            return defaultValue;
+          }
+        }
+
+        public static T MinOrDefault<T>(this IEnumerable<T> list, T defaultValue)
+        {
+          if (list.Count() > 0)
+          {
+            return list.Min();
+          }
+          else
+          {
+            return defaultValue;
+          }
+        }
+
+        public static void Times(this int number, Action action)
+        {
+          for (int index = 0; index < number; index++)
+          {
+            action();
           }
         }
     }

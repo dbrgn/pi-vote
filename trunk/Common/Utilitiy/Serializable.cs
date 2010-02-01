@@ -50,15 +50,50 @@ namespace Pirate.PiVote.Serialization
     public static TValue FromBinary<TValue>(byte[] data)
       where TValue : Serializable
     {
-      MemoryStream memoryStream = new MemoryStream(data);
-      DeserializeContext context = new DeserializeContext(memoryStream);
+      try
+      {
+        MemoryStream memoryStream = new MemoryStream(data);
+        DeserializeContext context = new DeserializeContext(memoryStream);
 
-      TValue obj = context.ReadObject<TValue>();
+        TValue obj = context.ReadObject<TValue>();
 
-      context.Close();
-      memoryStream.Close();
+        context.Close();
+        memoryStream.Close();
 
-      return obj;
+        return obj;
+      }
+      catch
+      {
+        throw new PiFormatException(ExceptionCode.BadSerializableFormat, "Bad serializable format.");
+      }
+    }
+
+    /// <summary>
+    /// Save object to file.
+    /// </summary>
+    /// <param name="fileName">Filename for saving.</param>
+    public void Save(string fileName)
+    {
+      if (fileName == null)
+        throw new ArgumentNullException("fileName");
+
+      File.WriteAllBytes(fileName, ToBinary());
+    }
+
+    /// <summary>
+    /// Load object from file.
+    /// </summary>
+    /// <param name="fileName">Filename pointing to a certificate</param>
+    /// <returns>Deserialized object.</returns>
+    public static TSerializable Load<TSerializable>(string fileName)
+      where TSerializable : Serializable
+    {
+      if (fileName == null)
+        throw new ArgumentNullException("fileName");
+      if (!File.Exists(fileName))
+        throw new ArgumentException("Certificate file not found.");
+
+      return Serializable.FromBinary<TSerializable>(File.ReadAllBytes(fileName));
     }
   }
 }

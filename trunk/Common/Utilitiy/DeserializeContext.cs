@@ -92,17 +92,24 @@ namespace Pirate.PiVote.Serialization
       string typeName = ReadString();
       Type type = null;
 
-      if (Types.ContainsKey(typeName))
+      if (typeName == string.Empty)
       {
-        type = Types[typeName];
+        return null;
       }
       else
       {
-        type = Type.GetType(typeName);
-        Types.Add(typeName, type);
-      }
+        if (Types.ContainsKey(typeName))
+        {
+          type = Types[typeName];
+        }
+        else
+        {
+          type = Type.GetType(typeName);
+          Types.Add(typeName, type);
+        }
 
-      return (TValue)Activator.CreateInstance(type, new object[] { this }, new object[] { });
+        return (TValue)Activator.CreateInstance(type, new object[] { this }, new object[] { });
+      }
     }
 
     public List<TValue> ReadObjectList<TValue>()

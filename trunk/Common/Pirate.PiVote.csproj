@@ -9,7 +9,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>Full</DebugType>
@@ -17,13 +17,51 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
     <DebugSymbols>False</DebugSymbols>
     <DebugType>None</DebugType>
     <Optimize>True</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>None</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>None</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
@@ -81,7 +119,50 @@
     <Compile Include="Crypto\Test.cs" />
     <Compile Include="Crypto\Base\Vote.cs" />
     <Compile Include="Crypto\Entities\VoterEntity.cs" />
+    <Compile Include="Exception\PiFormatException.cs" />
+    <Compile Include="Exception\PiSecurityException.cs" />
+    <Compile Include="Exception\PiArgumentException.cs" />
+    <Compile Include="Exception\ExceptionCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Exception\PiException.cs" />
+    <Compile Include="Rpc\Generic\RpcServer.cs" />
+    <Compile Include="Rpc\Generic\RpcResponse.cs" />
+    <Compile Include="Rpc\Generic\RpcRequest.cs" />
+    <Compile Include="Rpc\Generic\RpcMessage.cs" />
+    <Compile Include="Rpc\Handlers\IBinaryRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\AuthorityParametersResponse.cs" />
+    <Compile Include="Rpc\Messages\AuthorityParametersRequest.cs" />
+    <Compile Include="Rpc\Messages\AuthorityListResponse.cs" />
+    <Compile Include="Rpc\Messages\AuthorityListRequest.cs" />
+    <Compile Include="Rpc\Messages\AuthoritySetSharesResponse.cs" />
+    <Compile Include="Rpc\Messages\AuthoritySetSharesRequest.cs" />
+    <Compile Include="Rpc\Messages\AuthorityGetAllSharesRequest.cs" />
+    <Compile Include="Rpc\Messages\AuthorityGetAllSharesResponse.cs" />
+    <Compile Include="Rpc\Messages\AuthoritySetShareResponseRequest.cs" />
+    <Compile Include="Rpc\Messages\AuthoritySetShareResponseResponse.cs" />
+    <Compile Include="Rpc\Handlers\AdminRpcProxy.cs" />
+    <Compile Include="Rpc\Handlers\VoterRpcProxy.cs" />
+    <Compile Include="Rpc\Handlers\AuthorityRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\EndVotingRequest.cs" />
+    <Compile Include="Rpc\Messages\EndVotingResponse.cs" />
+    <Compile Include="Rpc\Messages\ListVotingIdsRequest.cs" />
+    <Compile Include="Rpc\Messages\ListVotingIdsResponse.cs" />
+    <Compile Include="Rpc\Messages\GetVotingResultRequest.cs" />
+    <Compile Include="Rpc\Messages\GetVotingResultResponse.cs" />
+    <Compile Include="Rpc\Messages\SetPartialDecipherRequest.cs" />
+    <Compile Include="Rpc\Messages\SetPartialDecipherResponse.cs" />
+    <Compile Include="Rpc\Messages\GetAllBallotsRequest.cs" />
+    <Compile Include="Rpc\Messages\GetAllBallotsResponse.cs" />
+    <Compile Include="Rpc\Messages\SetVoteRequest.cs" />
+    <Compile Include="Rpc\Messages\SetVoteResponse.cs" />
+    <Compile Include="Rpc\Messages\GetVotingMaterialRequest.cs" />
+    <Compile Include="Rpc\Messages\GetVotingMaterialResponse.cs" />
+    <Compile Include="Rpc\Handlers\VotingRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\VotingStatusRequest.cs" />
+    <Compile Include="Rpc\Messages\VotingStatusResponse.cs" />
+    <Compile Include="Rpc\Messages\CreateVotingResponse.cs" />
+    <Compile Include="Rpc\Messages\CreateVotingRequest.cs" />
+    <Compile Include="Rpc\Handlers\VotingRpcServer.cs" />
     <Compile Include="Utilitiy\Bytes.cs" />
     <Compile Include="Utilitiy\DeserializeContext.cs" />
     <Compile Include="Utilitiy\IEnumerableExtensions.cs" />

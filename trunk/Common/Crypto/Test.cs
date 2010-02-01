@@ -37,7 +37,8 @@ namespace Pirate.PiVote.Crypto
       var intCrl = new RevocationList(intermediate.Id, DateTime.Now, validUntil, new List<Guid>());
       var sigIntCrl = new Signed<RevocationList>(intCrl, intermediate);
 
-      VotingParameters pc = new VotingParameters(27, "Zufrieden");
+      VotingParameters pc = new VotingParameters("Zufrieden");
+      pc.SetId(27);
       pc.AddOption(new Option("Nein", "Dagegen"));
       pc.AddOption(new Option("Ja", "Dafür"));
       pc.Initialize(1);
@@ -46,7 +47,12 @@ namespace Pirate.PiVote.Crypto
       Console.WriteLine();
       Console.Write("Voting begins...");
 
-      VotingServerEntity vs = new VotingServerEntity(pc, root, intermediate, sigRootCrl, sigIntCrl);
+      CertificateStorage serverCertStorage = new CertificateStorage();
+      serverCertStorage.AddRoot(root);
+      serverCertStorage.Add(intermediate);
+      serverCertStorage.SetRevocationList(sigRootCrl);
+      serverCertStorage.SetRevocationList(sigIntCrl);
+      VotingServerEntity vs = new VotingServerEntity(pc, serverCertStorage);
 
       var a1c = new AuthorityCertificate("Authority 1");
       a1c.CreateSelfSignature();

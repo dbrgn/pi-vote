@@ -145,5 +145,15 @@ namespace Pirate.PiVote.Crypto
       randomNumberGenerator.GetBytes(data);
       return new BigInt(data);
     }
+
+    /// <summary>
+    /// Is the number a prime?
+    /// </summary>
+    /// <param name="value">Number to test.</param>
+    /// <returns>Is it a prime?</returns>
+    public static bool IsPrime(BigInt number)
+    {
+      return number.IsProbablyPrimeRabinMiller(HighRabinMillerCount);
+    }
   }
 }
