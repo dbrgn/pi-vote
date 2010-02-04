@@ -15,13 +15,13 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class AuthoritySetShareResponseRequest : RpcRequest<VotingRpcServer, AuthoritySetShareResponseResponse>
+  public class PushShareResponseAuthorityRequest : RpcRequest<VotingRpcServer, PushShareResponseAuthorityResponse>
   {
     private int votingId;
 
     private Signed<ShareResponse> signedShareResponse;
 
-    public AuthoritySetShareResponseRequest(
+    public PushShareResponseAuthorityRequest(
       Guid requestId,
       int votingId,
       Signed<ShareResponse> signedShareResponse)
@@ -31,10 +31,18 @@ namespace Pirate.PiVote.Rpc
       this.signedShareResponse = signedShareResponse;
     }
 
-    public AuthoritySetShareResponseRequest(DeserializeContext context)
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
+    public PushShareResponseAuthorityRequest(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
@@ -42,6 +50,10 @@ namespace Pirate.PiVote.Rpc
       context.Write(this.signedShareResponse);
     }
 
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
@@ -49,12 +61,17 @@ namespace Pirate.PiVote.Rpc
       this.signedShareResponse = context.ReadObject<Signed<ShareResponse>>();
     }
 
-    protected override AuthoritySetShareResponseResponse Execute(VotingRpcServer server)
+    /// <summary>
+    /// Executes a RPC request.
+    /// </summary>
+    /// <param name="server">Server to execute the request on.</param>
+    /// <returns>Response to the request.</returns>
+    protected override PushShareResponseAuthorityResponse Execute(VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
       voting.DepositShareResponse(this.signedShareResponse);
 
-      return new AuthoritySetShareResponseResponse(RequestId);
+      return new PushShareResponseAuthorityResponse(RequestId);
     }
   }
 }

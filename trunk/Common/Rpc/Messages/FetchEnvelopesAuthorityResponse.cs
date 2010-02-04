@@ -1,4 +1,5 @@
 ﻿
+
 /*
  *  <project description>
  * 
@@ -10,46 +11,46 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
   /// <summary>
-  /// RPC response message.
+  /// Response to a request to fetch all envelopes.
   /// </summary>
-  public class RpcResponse : RpcMessage
+  public class FetchEnvelopesAuthorityResponse : RpcResponse
   {
     /// <summary>
-    /// Exception throw by the RPC call if any.
+    /// List of all envelopes in the voting.
     /// </summary>
-    public PiException Exception { get; protected set; }
+    public AuthorityEnvelopeList AuthorityEnvelopeList { get; private set; }
 
     /// <summary>
-    /// Creates a new RPC response.
+    /// Creates a new response to a request to fetch all envelopes
     /// </summary>
-    /// <param name="requestId">Id of the request.</param>
-    public RpcResponse(Guid requestId)
+    /// <param name="requestId">Id of thr request.</param>
+    /// <param name="authorityEnvelopeList">List of all envelopes.</param>
+    public FetchEnvelopesAuthorityResponse(Guid requestId, AuthorityEnvelopeList authorityEnvelopeList)
       : base(requestId)
     {
-      Exception = null;
+      AuthorityEnvelopeList = authorityEnvelopeList;
     }
 
     /// <summary>
-    /// Creates a new RPC error response from an ecxception.
+    /// Create a failure response to request.
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
-    /// <param name="exception">Exception to respond with.</param>
-    public RpcResponse(Guid requestId, PiException exception)
-      : base(requestId)
-    {
-      Exception = exception;
-    }
+    /// <param name="exception">Exception that occured when executing the request.</param>
+    public FetchEnvelopesAuthorityResponse(Guid requestId, PiException exception)
+      : base(requestId, exception)
+    { }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public RpcResponse(DeserializeContext context)
+    public FetchEnvelopesAuthorityResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -60,9 +61,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(Exception == null);
-      if (Exception != null)
-        context.Write(Exception.ToBinary());
+      context.Write(AuthorityEnvelopeList);
     }
 
     /// <summary>
@@ -72,7 +71,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      Exception = context.ReadBoolean() ? null : PiException.FromBinary(context.ReadBytes());
+      AuthorityEnvelopeList = context.ReadObject<AuthorityEnvelopeList>();
     }
   }
 }

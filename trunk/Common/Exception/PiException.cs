@@ -15,22 +15,41 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote
 {
+  /// <summary>
+  /// Exception thrown by the PiVote RPC.
+  /// </summary>
   public class PiException : Exception
   {
+    /// <summary>
+    /// Identifiing code of exception.
+    /// </summary>
     public ExceptionCode Code { get; private set; }
 
+    /// <summary>
+    /// Creates an exception from a code and message.
+    /// </summary>
+    /// <param name="code">Identifiing code of exception.</param>
+    /// <param name="message">English debugging message.</param>
     public PiException(ExceptionCode code, string message)
       : base(message)
     {
       Code = code;
     }
 
+    /// <summary>
+    /// Creates an exception containing a standard exception.
+    /// </summary>
+    /// <param name="exception">Exception to be incorporated.</param>
     public PiException(Exception exception)
       : base(exception.Message)
     {
       Code = ExceptionCode.Unknown;
     }
 
+    /// <summary>
+    /// Serializes the exception to binary.
+    /// </summary>
+    /// <returns>Binary data of exception.</returns>
     public byte[] ToBinary()
     {
       MemoryStream stream = new MemoryStream();
@@ -46,6 +65,11 @@ namespace Pirate.PiVote
       return stream.ToArray();
     }
 
+    /// <summary>
+    /// Deserializes an exception from binary data.
+    /// </summary>
+    /// <param name="data">Binary data of exception.</param>
+    /// <returns>An exception.</returns>
     public static PiException FromBinary(byte[] data)
     {
       MemoryStream stream = new MemoryStream(data);

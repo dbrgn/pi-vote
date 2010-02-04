@@ -15,13 +15,13 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class SetPartialDecipherRequest : RpcRequest<VotingRpcServer, SetPartialDecipherResponse>
+  public class PushPartialDecipherAuthorityRequest : RpcRequest<VotingRpcServer, PushPartialDecipherAuthorityResponse>
   {
     private int votingId;
 
     private Signed<PartialDecipherList> signedPartialDecipherList;
 
-    public SetPartialDecipherRequest(
+    public PushPartialDecipherAuthorityRequest(
       Guid requestId,
       int votingId,
       Signed<PartialDecipherList> signedPartialDecipherList)
@@ -31,16 +31,29 @@ namespace Pirate.PiVote.Rpc
       this.signedPartialDecipherList = signedPartialDecipherList;
     }
 
-    public SetPartialDecipherRequest(DeserializeContext context)
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
+    public PushPartialDecipherAuthorityRequest(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
       context.Write(this.votingId);
       context.Write(this.signedPartialDecipherList);
     }
+
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
 
     protected override void Deserialize(DeserializeContext context)
     {
@@ -49,12 +62,17 @@ namespace Pirate.PiVote.Rpc
       this.signedPartialDecipherList = context.ReadObject<Signed<PartialDecipherList>>();
     }
 
-    protected override SetPartialDecipherResponse Execute(VotingRpcServer server)
+    /// <summary>
+    /// Executes a RPC request.
+    /// </summary>
+    /// <param name="server">Server to execute the request on.</param>
+    /// <returns>Response to the request.</returns>
+    protected override PushPartialDecipherAuthorityResponse Execute(VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
       voting.DepositPartialDecipher(this.signedPartialDecipherList);
 
-      return new SetPartialDecipherResponse(RequestId);
+      return new PushPartialDecipherAuthorityResponse(RequestId);
     }
   }
 }

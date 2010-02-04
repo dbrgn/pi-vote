@@ -15,12 +15,12 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class VotingStatusRequest : RpcRequest<VotingRpcServer, VotingStatusResponse>
+  public class FetchVotingMaterialVoterRequest : RpcRequest<VotingRpcServer, FetchVotingMaterialVoterResponse>
   {
     private int votingId;
 
-    public VotingStatusRequest(
-      Guid requestId, 
+    public FetchVotingMaterialVoterRequest(
+      Guid requestId,
       int votingId)
       : base(requestId)
     {
@@ -31,7 +31,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public VotingStatusRequest(DeserializeContext context)
+    public FetchVotingMaterialVoterRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -60,11 +60,11 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override VotingStatusResponse Execute(VotingRpcServer server)
+    protected override FetchVotingMaterialVoterResponse Execute(VotingRpcServer server)
     {
-      VotingServerEntity voting = server.GetVoting(this.votingId);
+      var voting = server.GetVoting(this.votingId);
 
-      return new VotingStatusResponse(RequestId, voting.Status);
+      return new FetchVotingMaterialVoterResponse(RequestId, voting.GetVotingMaterial());
     }
   }
 }

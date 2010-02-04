@@ -14,7 +14,10 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class RpcServer
+  /// <summary>
+  /// RPC server.
+  /// </summary>
+  public abstract class RpcServer
   {
   }
 }

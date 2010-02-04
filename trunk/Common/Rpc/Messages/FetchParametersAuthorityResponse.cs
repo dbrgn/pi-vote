@@ -10,46 +10,53 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
   /// <summary>
-  /// RPC response message.
+  /// Response to the request to fetch voting parameters.
   /// </summary>
-  public class RpcResponse : RpcMessage
+  public class FetchParametersAuthorityResponse : RpcResponse
   {
     /// <summary>
-    /// Exception throw by the RPC call if any.
+    /// Index of the authority.
     /// </summary>
-    public PiException Exception { get; protected set; }
+    public int AuthorityIndex { get; private set; }
 
     /// <summary>
-    /// Creates a new RPC response.
+    /// Parameters of the voting.
+    /// </summary>
+    public VotingParameters VotingParameters { get; private set; }
+
+    /// <summary>
+    /// Create a new response to the request to fetch voting parameters.
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
-    public RpcResponse(Guid requestId)
+    /// <param name="authorityIndex">Index of the authority.</param>
+    /// <param name="votingParameters">Parameters of the voting.</param>
+    public FetchParametersAuthorityResponse(Guid requestId, int authorityIndex, VotingParameters votingParameters)
       : base(requestId)
     {
-      Exception = null;
+      AuthorityIndex = authorityIndex;
+      VotingParameters = votingParameters;
     }
 
     /// <summary>
-    /// Creates a new RPC error response from an ecxception.
+    /// Create a failure response to request.
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
-    /// <param name="exception">Exception to respond with.</param>
-    public RpcResponse(Guid requestId, PiException exception)
-      : base(requestId)
-    {
-      Exception = exception;
-    }
+    /// <param name="exception">Exception that occured when executing the request.</param>
+    public FetchParametersAuthorityResponse(Guid requestId, PiException exception)
+      : base(requestId, exception)
+    { }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public RpcResponse(DeserializeContext context)
+    public FetchParametersAuthorityResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -60,9 +67,8 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(Exception == null);
-      if (Exception != null)
-        context.Write(Exception.ToBinary());
+      context.Write(AuthorityIndex);
+      context.Write(VotingParameters);
     }
 
     /// <summary>
@@ -72,7 +78,8 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      Exception = context.ReadBoolean() ? null : PiException.FromBinary(context.ReadBytes());
+      AuthorityIndex = context.ReadInt32();
+      VotingParameters = context.ReadObject<VotingParameters>();
     }
   }
 }

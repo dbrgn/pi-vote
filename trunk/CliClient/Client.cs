@@ -90,6 +90,19 @@ namespace Pirate.PiVote.CliClient
 
     public void Start()
     {
+      try
+      {
+        Do();
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine(ex.ToString());
+        Console.ReadLine();
+      }
+    }
+
+    private void Do()
+    {
       this.run = true;
 
       while (this.run)

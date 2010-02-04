@@ -25,16 +25,37 @@ namespace Pirate.PiVote.Rpc
       VotingStatus = votingStatus;
     }
 
+    /// <summary>
+    /// Create a failure response to request.
+    /// </summary>
+    /// <param name="requestId">Id of the request.</param>
+    /// <param name="exception">Exception that occured when executing the request.</param>
+    public VotingStatusResponse(Guid requestId, PiException exception)
+      : base(requestId, exception)
+    { }
+
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
     public VotingStatusResponse(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
       context.Write((int)VotingStatus);
     }
 
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);

@@ -1,4 +1,5 @@
 ﻿
+
 /*
  *  <project description>
  * 
@@ -10,46 +11,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  /// <summary>
-  /// RPC response message.
-  /// </summary>
-  public class RpcResponse : RpcMessage
+  public class FetchAllSharesAuthorityResponse : RpcResponse
   {
-    /// <summary>
-    /// Exception throw by the RPC call if any.
-    /// </summary>
-    public PiException Exception { get; protected set; }
+    public AllShareParts AllShareParts { get; private set; }
 
-    /// <summary>
-    /// Creates a new RPC response.
-    /// </summary>
-    /// <param name="requestId">Id of the request.</param>
-    public RpcResponse(Guid requestId)
+    public FetchAllSharesAuthorityResponse(Guid requestId, AllShareParts allShareParts)
       : base(requestId)
     {
-      Exception = null;
+      AllShareParts = allShareParts;
     }
 
     /// <summary>
-    /// Creates a new RPC error response from an ecxception.
+    /// Create a failure response to request.
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
-    /// <param name="exception">Exception to respond with.</param>
-    public RpcResponse(Guid requestId, PiException exception)
-      : base(requestId)
-    {
-      Exception = exception;
-    }
+    /// <param name="exception">Exception that occured when executing the request.</param>
+    public FetchAllSharesAuthorityResponse(Guid requestId, PiException exception)
+      : base(requestId, exception)
+    { }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public RpcResponse(DeserializeContext context)
+    public FetchAllSharesAuthorityResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -60,9 +50,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(Exception == null);
-      if (Exception != null)
-        context.Write(Exception.ToBinary());
+      context.Write(AllShareParts);
     }
 
     /// <summary>
@@ -72,7 +60,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      Exception = context.ReadBoolean() ? null : PiException.FromBinary(context.ReadBytes());
+      AllShareParts = context.ReadObject<AllShareParts>();
     }
   }
 }

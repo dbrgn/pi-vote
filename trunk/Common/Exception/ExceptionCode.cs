@@ -13,6 +13,9 @@ using System.Text;
 
 namespace Pirate.PiVote
 {
+  /// <summary>
+  /// Codes for identifiing exceptions.
+  /// </summary>
   public enum ExceptionCode
   {
     Unknown                       = 0,
@@ -20,6 +23,7 @@ namespace Pirate.PiVote
     ArgumentOutOfRange            = 2,
     BadSerializableFormat         = 3,
     InvalidCertificate            = 4,
+    WrongStatusForOperation       = 5,
 
     AuthorityCountOutOfRange      = 1000001,
     TheresholdOutOfRange          = 1000002,
@@ -33,6 +37,10 @@ namespace Pirate.PiVote
 
     NoVotingWithId                = 2000001,
 
-    NoAuthorityWithCertificate    = 3000001
+    NoAuthorityWithCertificate    = 3000001,
+
+    AlreadyVoted                  = 4000001,
+    VoteSignatureNotValid         = 4000002,
+    NoVoterCertificate            = 4000003
   }
 }

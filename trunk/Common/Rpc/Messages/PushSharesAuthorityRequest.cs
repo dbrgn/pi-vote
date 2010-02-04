@@ -15,13 +15,13 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class AuthoritySetSharesRequest : RpcRequest<VotingRpcServer, AuthoritySetSharesResponse>
+  public class PushSharesAuthorityRequest : RpcRequest<VotingRpcServer, PushSharesAuthorityResponse>
   {
     private int votingId;
 
     private Signed<SharePart> signedSharePart;
 
-    public AuthoritySetSharesRequest(
+    public PushSharesAuthorityRequest(
       Guid requestId,
       int votingId,
       Signed<SharePart> signedSharePart)
@@ -31,10 +31,18 @@ namespace Pirate.PiVote.Rpc
       this.signedSharePart = signedSharePart;
     }
 
-    public AuthoritySetSharesRequest(DeserializeContext context)
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
+    public PushSharesAuthorityRequest(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
@@ -42,6 +50,10 @@ namespace Pirate.PiVote.Rpc
       context.Write(this.signedSharePart);
     }
 
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
@@ -49,12 +61,17 @@ namespace Pirate.PiVote.Rpc
       this.signedSharePart = context.ReadObject<Signed<SharePart>>();
     }
 
-    protected override AuthoritySetSharesResponse Execute(VotingRpcServer server)
+    /// <summary>
+    /// Executes a RPC request.
+    /// </summary>
+    /// <param name="server">Server to execute the request on.</param>
+    /// <returns>Response to the request.</returns>
+    protected override PushSharesAuthorityResponse Execute(VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
       voting.DepositShares(this.signedSharePart);
 
-      return new AuthoritySetSharesResponse(RequestId);
+      return new PushSharesAuthorityResponse(RequestId);
     }
   }
 }

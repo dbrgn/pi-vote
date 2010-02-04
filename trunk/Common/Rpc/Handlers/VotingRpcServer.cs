@@ -15,17 +15,36 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// Voting RPC server.
+  /// </summary>
   public class VotingRpcServer : RpcServer
   {
+    /// <summary>
+    /// List of voting procedures.
+    /// </summary>
     private Dictionary<int, VotingServerEntity> votings;
+
+    /// <summary>
+    /// Storage for certificates.
+    /// </summary>
     private CertificateStorage certificateStorage;
 
+    /// <summary>
+    /// Create the voting server.
+    /// </summary>
+    /// <param name="certificateStorage">Storage for certificates.</param>
     public VotingRpcServer(CertificateStorage certificateStorage)
     {
       this.votings = new Dictionary<int, VotingServerEntity>();
       this.certificateStorage = certificateStorage;
     }
 
+    /// <summary>
+    /// Excecutes a RPC request.
+    /// </summary>
+    /// <param name="requestData">Serialized request data.</param>
+    /// <returns>Serialized response data</returns>
     public byte[] Execute(byte[] requestData)
     {
       RpcRequest<VotingRpcServer> request = Serializable.FromBinary<RpcRequest<VotingRpcServer>>(requestData);

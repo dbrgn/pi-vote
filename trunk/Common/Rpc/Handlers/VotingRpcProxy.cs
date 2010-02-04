@@ -15,10 +15,20 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// Proxy for RPC function calling.
+  /// </summary>
   public class VotingRpcProxy
   {
+    /// <summary>
+    /// Binary RPC proxy.
+    /// </summary>
     private IBinaryRpcProxy binaryProxy;
 
+    /// <summary>
+    /// Creates a new voting proxy.
+    /// </summary>
+    /// <param name="binaryProxy"></param>
     public VotingRpcProxy(IBinaryRpcProxy binaryProxy)
     {
       this.binaryProxy = binaryProxy;
@@ -43,7 +53,7 @@ namespace Pirate.PiVote.Rpc
     protected TResponse Execute<TResponse>(RpcRequest<VotingRpcServer> request)
       where TResponse : RpcResponse
     {
-      byte[] responseData = this.binaryProxy.Execute(request.ToBinary());
+      var responseData = this.binaryProxy.Execute(request.ToBinary());
       var response = Serializable.FromBinary<TResponse>(responseData);
 
       if (response.Exception != null)

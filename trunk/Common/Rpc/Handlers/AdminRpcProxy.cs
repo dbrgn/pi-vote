@@ -15,6 +15,9 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// Proxy for RPC function calling.
+  /// </summary>
   public class AdminRpcProxy : VotingRpcProxy
   {
     public AdminRpcProxy(IBinaryRpcProxy binaryProxy)
@@ -23,16 +26,16 @@ namespace Pirate.PiVote.Rpc
 
     public int CreateVoting(VotingParameters votingParameters, IEnumerable<AuthorityCertificate> authorities)
     {
-      var request = new CreateVotingRequest(Guid.NewGuid(), votingParameters, authorities);
-      var response = Execute<CreateVotingResponse>(request);
+      var request = new CreateVotingAdminRequest(Guid.NewGuid(), votingParameters, authorities);
+      var response = Execute<CreateVotingAdminResponse>(request);
 
       return response.VotingId;
     }
 
     public void EndVoting(int votingId)
     {
-      var request = new EndVotingRequest(Guid.NewGuid(), votingId);
-      var response = Execute<EndVotingResponse>(request);
+      var request = new EndVotingAdminRequest(Guid.NewGuid(), votingId);
+      var response = Execute<EndVotingAdminResponse>(request);
     }
   }
 }

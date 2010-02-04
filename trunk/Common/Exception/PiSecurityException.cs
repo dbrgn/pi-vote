@@ -15,12 +15,24 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote
 {
+  /// <summary>
+  /// Security relevant exception.
+  /// </summary>
   public class PiSecurityException : PiException
   {
+    /// <summary>
+    /// Creates an exception from a code and message.
+    /// </summary>
+    /// <param name="code">Identifiing code of exception.</param>
+    /// <param name="message">English debugging message.</param>
     public PiSecurityException(ExceptionCode code, string message)
       : base(code, message)
     { }
 
+    /// <summary>
+    /// Creates an exception containing a standard exception.
+    /// </summary>
+    /// <param name="exception">Exception to be incorporated.</param>
     public PiSecurityException(Exception exception)
       : base(exception)
     { }

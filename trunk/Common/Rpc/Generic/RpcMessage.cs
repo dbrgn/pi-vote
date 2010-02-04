@@ -14,24 +14,46 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// Message to or from RPC server.
+  /// </summary>
   public abstract class RpcMessage : Serializable
   {
+    /// <summary>
+    /// Id of the request.
+    /// </summary>
     public Guid RequestId { get; private set; }
 
+    /// <summary>
+    /// Creates a new RPC message.
+    /// </summary>
+    /// <param name="requestId">Id of the request.</param>
     public RpcMessage(Guid requestId)
     {
       RequestId = requestId;
     }
 
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
     public RpcMessage(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
     }
 
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);

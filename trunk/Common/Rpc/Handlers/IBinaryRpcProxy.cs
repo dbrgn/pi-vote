@@ -15,6 +15,12 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// Binary RPC proxy.
+  /// </summary>
+  /// <remarks>
+  /// Implemented by web service client.
+  /// </remarks>
   public interface IBinaryRpcProxy
   {
     byte[] Execute(byte[] request);

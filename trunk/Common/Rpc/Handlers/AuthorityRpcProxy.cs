@@ -15,6 +15,9 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// Proxy for RPC function calling.
+  /// </summary>
   public class AuthorityRpcProxy : VotingRpcProxy
   {
     public AuthorityRpcProxy(IBinaryRpcProxy binaryProxy)
@@ -23,50 +26,50 @@ namespace Pirate.PiVote.Rpc
 
     public AllShareParts GetAllShares(int votingId)
     {
-      var request = new AuthorityGetAllSharesRequest(Guid.NewGuid(), votingId);
-      var response = Execute<AuthorityGetAllSharesResponse>(request);
+      var request = new FetchAllSharesAuthorityRequest(Guid.NewGuid(), votingId);
+      var response = Execute<FetchAllSharesAuthorityResponse>(request);
 
       return response.AllShareParts;
     }
 
     public void SetPartailDecipher(int votingId, Signed<PartialDecipherList> signedPartialDecipherList)
     {
-      var request = new SetPartialDecipherRequest(Guid.NewGuid(), votingId, signedPartialDecipherList);
-      var response = Execute<SetPartialDecipherResponse>(request);
+      var request = new PushPartialDecipherAuthorityRequest(Guid.NewGuid(), votingId, signedPartialDecipherList);
+      var response = Execute<PushPartialDecipherAuthorityResponse>(request);
     }
 
     public AuthorityEnvelopeList GetAllBallots(int votingId)
     {
-      var request = new GetAllBallotsRequest(Guid.NewGuid(), votingId);
-      var response = Execute<GetAllBallotsResponse>(request);
+      var request = new FetchEnvelopesAuthorityRequest(Guid.NewGuid(), votingId);
+      var response = Execute<FetchEnvelopesAuthorityResponse>(request);
 
       return response.AuthorityEnvelopeList;
     }
 
     public void SetShareResponse(int votingId, Signed<ShareResponse> signedShareResponse)
     {
-      var request = new AuthoritySetShareResponseRequest(Guid.NewGuid(), votingId, signedShareResponse);
-      var response = Execute<AuthoritySetShareResponseResponse>(request);
+      var request = new PushShareResponseAuthorityRequest(Guid.NewGuid(), votingId, signedShareResponse);
+      var response = Execute<PushShareResponseAuthorityResponse>(request);
     }
 
     public void SetShares(int votingId, Signed<SharePart> signedSharePart)
     {
-      var request = new AuthoritySetSharesRequest(Guid.NewGuid(), votingId, signedSharePart);
-      var response = Execute<AuthoritySetSharesResponse>(request);
+      var request = new PushSharesAuthorityRequest(Guid.NewGuid(), votingId, signedSharePart);
+      var response = Execute<PushSharesAuthorityResponse>(request);
     }
   
     public AuthorityList GetAuthorityList(int votingId)
     {
-      var request = new AuthorityListRequest(Guid.NewGuid(), votingId);
-      var response = Execute<AuthorityListResponse>(request);
+      var request = new FetchListAuthorityRequest(Guid.NewGuid(), votingId);
+      var response = Execute<FetchListAuthorityResponse>(request);
 
       return response.AuthorityList;
     }
 
     public KeyValuePair<int, VotingParameters> GetAuthorityParameters(int votingId, AuthorityCertificate certificate)
     {
-      var request = new AuthorityParametersRequest(Guid.NewGuid(), votingId, certificate);
-      var response = Execute<AuthorityParametersResponse>(request);
+      var request = new FetchParametersAuthorityRequest(Guid.NewGuid(), votingId, certificate);
+      var response = Execute<FetchParametersAuthorityResponse>(request);
 
       return new KeyValuePair<int, VotingParameters>(response.AuthorityIndex, response.VotingParameters);
     }

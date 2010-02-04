@@ -15,23 +15,42 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class VotingStatusRequest : RpcRequest<VotingRpcServer, VotingStatusResponse>
+  /// <summary>
+  /// RPC request to fetch voting parameters.
+  /// </summary>
+  public class FetchParametersAuthorityRequest : RpcRequest<VotingRpcServer, FetchParametersAuthorityResponse>
   {
+    /// <summary>
+    /// Id of the voting.
+    /// </summary>
     private int votingId;
 
-    public VotingStatusRequest(
+    /// <summary>
+    /// Certificate of the authorities.
+    /// </summary>
+    private AuthorityCertificate certificate;
+
+    /// <summary>
+    /// Creates a new request to fetch voting parameters.
+    /// </summary>
+    /// <param name="requestId">Id of the request.</param>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="certificate">Certificate of the authority.</param>
+    public FetchParametersAuthorityRequest(
       Guid requestId, 
-      int votingId)
+      int votingId,
+      AuthorityCertificate certificate)
       : base(requestId)
     {
       this.votingId = votingId;
+      this.certificate = certificate;
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public VotingStatusRequest(DeserializeContext context)
+    public FetchParametersAuthorityRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -43,6 +62,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
       context.Write(this.votingId);
+      context.Write(this.certificate);
     }
 
     /// <summary>
@@ -53,6 +73,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Deserialize(context);
       this.votingId = context.ReadInt32();
+      this.certificate = context.ReadObject<AuthorityCertificate>();
     }
 
     /// <summary>
@@ -60,11 +81,11 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override VotingStatusResponse Execute(VotingRpcServer server)
+    protected override FetchParametersAuthorityResponse Execute(VotingRpcServer server)
     {
       VotingServerEntity voting = server.GetVoting(this.votingId);
 
-      return new VotingStatusResponse(RequestId, voting.Status);
+      return new FetchParametersAuthorityResponse(RequestId, voting.GetAuthorityIndex(this.certificate), voting.Parameters);
     }
   }
 }

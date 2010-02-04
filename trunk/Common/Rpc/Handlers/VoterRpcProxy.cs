@@ -31,14 +31,14 @@ namespace Pirate.PiVote.Rpc
 
     public void SetVote(int votingId, Signed<Envelope> signedEnvelope)
     {
-      var request = new SetVoteRequest(Guid.NewGuid(), votingId, signedEnvelope);
-      var response = Execute<SetVoteResponse>(request);
+      var request = new PushEnvelopeVoterRequest(Guid.NewGuid(), votingId, signedEnvelope);
+      var response = Execute<PushEnvelopeVoterResponse>(request);
     }
 
     public VotingMaterial GetVotingMaterial(int votingId)
     {
-      var request = new GetVotingMaterialRequest(Guid.NewGuid(), votingId);
-      var response = Execute<GetVotingMaterialResponse>(request);
+      var request = new FetchVotingMaterialVoterRequest(Guid.NewGuid(), votingId);
+      var response = Execute<FetchVotingMaterialVoterResponse>(request);
 
       return response.VotingMaterial;
     }

@@ -269,28 +269,20 @@ namespace Pirate.PiVote.Crypto
     /// Deposit a ballot.
     /// </summary>
     /// <param name="ballot">Ballot in signed envleope.</param>
-    public void Vote(Signed<Envelope> ballot)
+    public void Vote(Signed<Envelope> signedEnvelope)
     {
-      if (ballot == null)
+      if (signedEnvelope == null)
         throw new ArgumentNullException("ballot");
       if (Status != VotingStatus.Voting)
-        throw new InvalidOperationException("Wrong status for operation.");
-      if (!ballot.Verify(this.certificateStorage))
-        throw new ArgumentException("Bad signature.");
-      if (!CanVote(ballot.Certificate))
-        throw new ArgumentException("Not allowed to vote.");
+        throw new PiArgumentException(ExceptionCode.WrongStatusForOperation, "Wrong status for operation.");
+      if (!signedEnvelope.Verify(this.certificateStorage))
+        throw new PiArgumentException(ExceptionCode.VoteSignatureNotValid, "Vote signature not valid.");
+      if (!(signedEnvelope.Certificate is VoterCertificate))
+        throw new PiArgumentException(ExceptionCode.NoVoterCertificate, "Not a voter certificate.");
+      if (ballots.Any(envelope => envelope.Certificate.IsIdentic(signedEnvelope.Certificate)))
+        throw new PiArgumentException(ExceptionCode.AlreadyVoted, "Voter has already voted.");
 
-      this.ballots.Add(ballot);
-    }
-
-    /// <summary>
-    /// Is this one allowed to vote?
-    /// </summary>
-    /// <param name="certificate">Certificate to check.</param>
-    /// <returns>Can vote?</returns>
-    private bool CanVote(Certificate certificate)
-    {
-      return certificate is VoterCertificate;
+      this.ballots.Add(signedEnvelope);
     }
 
     /// <summary>

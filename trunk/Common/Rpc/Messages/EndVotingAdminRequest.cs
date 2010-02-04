@@ -11,45 +11,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Pirate.PiVote.Serialization;
+using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
   /// <summary>
-  /// RPC response message.
+  /// RPC request to end a voting procedure.
   /// </summary>
-  public class RpcResponse : RpcMessage
+  public class EndVotingAdminRequest : RpcRequest<VotingRpcServer, EndVotingAdminResponse>
   {
     /// <summary>
-    /// Exception throw by the RPC call if any.
+    /// Id of the voting.
     /// </summary>
-    public PiException Exception { get; protected set; }
+    private int votingId;
 
     /// <summary>
-    /// Creates a new RPC response.
+    /// Creates a request to end voting.
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
-    public RpcResponse(Guid requestId)
+    /// <param name="votingId">Id of the voting.</param>
+    public EndVotingAdminRequest(
+      Guid requestId,
+      int votingId)
       : base(requestId)
     {
-      Exception = null;
-    }
-
-    /// <summary>
-    /// Creates a new RPC error response from an ecxception.
-    /// </summary>
-    /// <param name="requestId">Id of the request.</param>
-    /// <param name="exception">Exception to respond with.</param>
-    public RpcResponse(Guid requestId, PiException exception)
-      : base(requestId)
-    {
-      Exception = exception;
+      this.votingId = votingId;
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public RpcResponse(DeserializeContext context)
+    public EndVotingAdminRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -60,9 +53,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(Exception == null);
-      if (Exception != null)
-        context.Write(Exception.ToBinary());
+      context.Write(this.votingId);
     }
 
     /// <summary>
@@ -72,7 +63,20 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      Exception = context.ReadBoolean() ? null : PiException.FromBinary(context.ReadBytes());
+      this.votingId = context.ReadInt32();
+    }
+
+    /// <summary>
+    /// Executes a RPC request.
+    /// </summary>
+    /// <param name="server">Server to execute the request on.</param>
+    /// <returns>Response to the request.</returns>
+    protected override EndVotingAdminResponse Execute(VotingRpcServer server)
+    {
+      var voting = server.GetVoting(this.votingId);
+      voting.EndVote();
+
+      return new EndVotingAdminResponse(RequestId);
     }
   }
 }
