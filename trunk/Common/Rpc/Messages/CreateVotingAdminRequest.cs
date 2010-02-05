@@ -81,9 +81,12 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override CreateVotingAdminResponse Execute(VotingRpcServer server)
+    protected override CreateVotingAdminResponse Execute(VotingRpcServer server, Certificate signer)
     {
-      int votingId = server.AddVoting(this.votingParameters, this.authorities);
+      if (!(signer is AdminCertificate))
+        throw new PiSecurityException(ExceptionCode.NoAuthorizedAdmin, "No authorized administrator certificate.");
+
+      int votingId = server.CreateVoting(this.votingParameters, this.authorities);
 
       return new CreateVotingAdminResponse(RequestId, votingId);
     }

@@ -47,14 +47,23 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Serialized response data</returns>
     public byte[] Execute(byte[] requestData)
     {
-      RpcRequest<VotingRpcServer> request = Serializable.FromBinary<RpcRequest<VotingRpcServer>>(requestData);
+      var signedRequest = Serializable.FromBinary<Signed<RpcRequest<VotingRpcServer>>>(requestData);
 
-      RpcResponse response = request.TryExecute(this);
+      var request = signedRequest.Value;
+      var valid = signedRequest.Verify(this.certificateStorage);
+      
+      var response = request.TryExecute(this, valid ? signedRequest.Certificate : null);
 
       return response.ToBinary();
     }
 
-    public int AddVoting(VotingParameters votingParameters, IEnumerable<AuthorityCertificate> authorities)
+    /// <summary>
+    /// Creates a new voting.
+    /// </summary>
+    /// <param name="votingParameters">Parameters for the voting.</param>
+    /// <param name="authorities">List of authorities to oversee the voting.</param>
+    /// <returns>Id of the voting.</returns>
+    public int CreateVoting(VotingParameters votingParameters, IEnumerable<AuthorityCertificate> authorities)
     {
       if (votingParameters == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "Voting parameters cannot be null.");
@@ -98,11 +107,20 @@ namespace Pirate.PiVote.Rpc
       return voting.Id;
     }
 
-    public IEnumerable<int> GetVotingIds()
+    /// <summary>
+    /// Fetches the ids of all votings.
+    /// </summary>
+    /// <returns>List of voting ids.</returns>
+    public IEnumerable<int> FetchVotingIds()
     {
       return this.votings.Keys;
     }
 
+    /// <summary>
+    /// Gets a voting from an id.
+    /// </summary>
+    /// <param name="id">Id of the voting.</param>
+    /// <returns>Voting procedure entity.</returns>
     public VotingServerEntity GetVoting(int id)
     {
       if (!this.votings.ContainsKey(id))

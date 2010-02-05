@@ -59,8 +59,9 @@ namespace Pirate.PiVote.Rpc
     /// Executes a RPC request.
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
+    /// <param name="signer">Signer of the RPC request.</param>
     /// <returns>Response to the request.</returns>
-    protected override VotingStatusResponse Execute(VotingRpcServer server)
+    protected override VotingStatusResponse Execute(VotingRpcServer server, Certificate signer)
     {
       VotingServerEntity voting = server.GetVoting(this.votingId);
 

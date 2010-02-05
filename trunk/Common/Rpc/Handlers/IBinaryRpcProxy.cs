@@ -23,6 +23,11 @@ namespace Pirate.PiVote.Rpc
   /// </remarks>
   public interface IBinaryRpcProxy
   {
+    /// <summary>
+    /// Execute a request on an RPC server over some channel.
+    /// </summary>
+    /// <param name="request">Request as serialized binary data.</param>
+    /// <returns>Response as serialized binary data.</returns>
     byte[] Execute(byte[] request);
   }
 }

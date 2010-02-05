@@ -60,7 +60,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override GetVotingResultResponse Execute(VotingRpcServer server)
+    protected override GetVotingResultResponse Execute(VotingRpcServer server, Certificate signer)
     {
       var voting = server.GetVoting(this.votingId);
 

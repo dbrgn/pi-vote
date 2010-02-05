@@ -71,8 +71,11 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override EndVotingAdminResponse Execute(VotingRpcServer server)
+    protected override EndVotingAdminResponse Execute(VotingRpcServer server, Certificate signer)
     {
+      if (!(signer is AdminCertificate))
+        throw new PiSecurityException(ExceptionCode.NoAuthorizedAdmin, "No authorized administrator certificate.");
+
       var voting = server.GetVoting(this.votingId);
       voting.EndVote();
 

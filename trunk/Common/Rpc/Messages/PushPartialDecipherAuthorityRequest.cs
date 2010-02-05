@@ -67,7 +67,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override PushPartialDecipherAuthorityResponse Execute(VotingRpcServer server)
+    protected override PushPartialDecipherAuthorityResponse Execute(VotingRpcServer server, Certificate signer)
     {
       var voting = server.GetVoting(this.votingId);
       voting.DepositPartialDecipher(this.signedPartialDecipherList);

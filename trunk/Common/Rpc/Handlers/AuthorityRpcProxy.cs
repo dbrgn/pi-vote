@@ -20,11 +20,21 @@ namespace Pirate.PiVote.Rpc
   /// </summary>
   public class AuthorityRpcProxy : VotingRpcProxy
   {
-    public AuthorityRpcProxy(IBinaryRpcProxy binaryProxy)
-      : base(binaryProxy)
+    /// <summary>
+    /// Creates a new voting proxy.
+    /// </summary>
+    /// <param name="binaryProxy">Binary RPC proxy.</param>
+    /// <param name="certificate">Certificate of the proxy client entity.</param>
+    public AuthorityRpcProxy(IBinaryRpcProxy binaryProxy, AuthorityCertificate certificate)
+      : base(binaryProxy, certificate)
     { }
 
-    public AllShareParts GetAllShares(int votingId)
+    /// <summary>
+    /// Fetches shares from all authorities.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <returns>All shares from all authorities.</returns>
+    public AllShareParts FetchAllShares(int votingId)
     {
       var request = new FetchAllSharesAuthorityRequest(Guid.NewGuid(), votingId);
       var response = Execute<FetchAllSharesAuthorityResponse>(request);
@@ -32,13 +42,23 @@ namespace Pirate.PiVote.Rpc
       return response.AllShareParts;
     }
 
-    public void SetPartailDecipher(int votingId, Signed<PartialDecipherList> signedPartialDecipherList)
+    /// <summary>
+    /// Pushes partial deciphers from the authority.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="signedPartialDecipherList">Signed list of partial deciphers.</param>
+    public void PushPartailDecipher(int votingId, Signed<PartialDecipherList> signedPartialDecipherList)
     {
       var request = new PushPartialDecipherAuthorityRequest(Guid.NewGuid(), votingId, signedPartialDecipherList);
       var response = Execute<PushPartialDecipherAuthorityResponse>(request);
     }
 
-    public AuthorityEnvelopeList GetAllBallots(int votingId)
+    /// <summary>
+    /// Fetches all envelopes.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <returns>List of all envelopes.</returns>
+    public AuthorityEnvelopeList FetchEnvelopes(int votingId)
     {
       var request = new FetchEnvelopesAuthorityRequest(Guid.NewGuid(), votingId);
       var response = Execute<FetchEnvelopesAuthorityResponse>(request);
@@ -46,19 +66,34 @@ namespace Pirate.PiVote.Rpc
       return response.AuthorityEnvelopeList;
     }
 
-    public void SetShareResponse(int votingId, Signed<ShareResponse> signedShareResponse)
+    /// <summary>
+    /// Pushes this authority's response to the shares.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="signedShareResponse">Signed response to the shares.</param>
+    public void PushShareResponse(int votingId, Signed<ShareResponse> signedShareResponse)
     {
       var request = new PushShareResponseAuthorityRequest(Guid.NewGuid(), votingId, signedShareResponse);
       var response = Execute<PushShareResponseAuthorityResponse>(request);
     }
 
-    public void SetShares(int votingId, Signed<SharePart> signedSharePart)
+    /// <summary>
+    /// Pushes shares from this authority.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="signedSharePart">Signed shares from this authority.</param>
+    public void PushShares(int votingId, Signed<SharePart> signedSharePart)
     {
       var request = new PushSharesAuthorityRequest(Guid.NewGuid(), votingId, signedSharePart);
       var response = Execute<PushSharesAuthorityResponse>(request);
     }
   
-    public AuthorityList GetAuthorityList(int votingId)
+    /// <summary>
+    /// Fetches the list of authorities for the voting.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <returns>List of authorities.</returns>
+    public AuthorityList FetchAuthorityList(int votingId)
     {
       var request = new FetchListAuthorityRequest(Guid.NewGuid(), votingId);
       var response = Execute<FetchListAuthorityResponse>(request);
@@ -66,7 +101,13 @@ namespace Pirate.PiVote.Rpc
       return response.AuthorityList;
     }
 
-    public KeyValuePair<int, VotingParameters> GetAuthorityParameters(int votingId, AuthorityCertificate certificate)
+    /// <summary>
+    /// Fetchs the parameters for the voting.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="certificate">Certificate of the authority.</param>
+    /// <returns>Index of the authority.</returns>
+    public KeyValuePair<int, VotingParameters> FetchParameters(int votingId, AuthorityCertificate certificate)
     {
       var request = new FetchParametersAuthorityRequest(Guid.NewGuid(), votingId, certificate);
       var response = Execute<FetchParametersAuthorityResponse>(request);

@@ -26,16 +26,23 @@ namespace Pirate.PiVote.CliClient
     private List<VoterCertificate> voters;
     private CACertificate root;
     private CACertificate intermediate;
+    private AdminCertificate admin;
     
     public Client()
     {
       this.service = new VoteServiceSoapClient();
 
       this.certs = new CertificateStorage();
+
       this.root = GetCertificate<CACertificate>("Root", null);
       this.certs.AddRoot(this.root.OnlyPublicPart);
+
       this.intermediate = GetCertificate<CACertificate>("Intermediate", root);
       this.certs.Add(this.intermediate.OnlyPublicPart);
+
+      this.admin = GetCertificate<AdminCertificate>("Admin", this.intermediate);
+      this.certs.Add(this.admin.OnlyPublicPart);
+
       this.auths = new List<AuthorityCertificate>();
       for (int i = 0; i < 5; i++)
       {
@@ -44,6 +51,7 @@ namespace Pirate.PiVote.CliClient
         this.auths.Add(auth);
         auth.Valid(this.certs);
       }
+
       this.voters = new List<VoterCertificate>();
       for (int i = 0; i < 10; i++)
       {
@@ -155,7 +163,7 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine("Done");
 
       Console.Write("Requesting server to create voting procedure...");
-      AdminRpcProxy proxy = new AdminRpcProxy(this.service);
+      AdminRpcProxy proxy = new AdminRpcProxy(this.service, this.admin);
       int votingId = proxy.CreateVoting(votingParameters, this.auths.Select(auth => (AuthorityCertificate)auth.OnlyPublicPart));
       Console.WriteLine("Done");
       Console.WriteLine("Voting id is {0}.", votingId);
@@ -184,29 +192,29 @@ namespace Pirate.PiVote.CliClient
       AuthorityEntity auth = new AuthorityEntity((CACertificate)this.root.OnlyPublicPart, cert);
 
       Console.Write("Fetching parameters...");
-      AuthorityRpcProxy proxy = new AuthorityRpcProxy(this.service);
-      var p = proxy.GetAuthorityParameters(votingId, (AuthorityCertificate)cert.OnlyPublicPart);
+      AuthorityRpcProxy proxy = new AuthorityRpcProxy(this.service, cert);
+      var p = proxy.FetchParameters(votingId, (AuthorityCertificate)cert.OnlyPublicPart);
       auth.Prepare(p.Key, p.Value);
       Console.WriteLine("Done");
 
       Console.Write("Fetching authority list...");
-      var al = proxy.GetAuthorityList(votingId);
+      var al = proxy.FetchAuthorityList(votingId);
       auth.SetAuthorities(al);
       Console.WriteLine("Done");
 
       Console.Write("Pushing shares...");
-      proxy.SetShares(votingId, auth.GetShares());
+      proxy.PushShares(votingId, auth.GetShares());
       Console.WriteLine("Done");
 
       Console.Write("Waiting for peers...");
-      while (proxy.GetVotingStatus(votingId) != VotingStatus.Sharing)
+      while (proxy.FetchVotingStatus(votingId) != VotingStatus.Sharing)
       {
         Thread.Sleep(1);
       }
       Console.WriteLine("Done");
 
       Console.Write("Fetching shares...");
-      var shares = proxy.GetAllShares(votingId);
+      var shares = proxy.FetchAllShares(votingId);
       Console.WriteLine("Done");
 
       Console.Write("Verifying shares...");
@@ -214,17 +222,17 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine("Done");
 
       Console.Write("Pushing share response...");
-      proxy.SetShareResponse(votingId, response);
+      proxy.PushShareResponse(votingId, response);
       Console.WriteLine("Done");
 
       Console.Write("Waiting for peers...");
-      while (proxy.GetVotingStatus(votingId) == VotingStatus.Sharing)
+      while (proxy.FetchVotingStatus(votingId) == VotingStatus.Sharing)
       {
         Thread.Sleep(1);
       }
       Console.WriteLine("Done");
 
-      if (proxy.GetVotingStatus(votingId) != VotingStatus.Voting)
+      if (proxy.FetchVotingStatus(votingId) != VotingStatus.Voting)
       {
         Console.WriteLine("Voting aborted.");
         Console.WriteLine();
@@ -234,14 +242,14 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine("Voting begun.");
 
       Console.Write("Waiting for voters...");
-      while (proxy.GetVotingStatus(votingId) != VotingStatus.Deciphering)
+      while (proxy.FetchVotingStatus(votingId) != VotingStatus.Deciphering)
       {
         Thread.Sleep(1);
       }
       Console.WriteLine("Done");
 
       Console.Write("Getting ballots...");
-      var ballots = proxy.GetAllBallots(votingId);
+      var ballots = proxy.FetchEnvelopes(votingId);
       Console.WriteLine("Done");
 
       Console.Write("Calculating partial decipher...");
@@ -249,7 +257,7 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine("Done");
 
       Console.Write("Pushing partial deciphers...");
-      proxy.SetPartailDecipher(votingId, pds);
+      proxy.PushPartailDecipher(votingId, pds);
       Console.WriteLine("Done");
 
       Console.WriteLine("Voting completed.");
@@ -261,15 +269,15 @@ namespace Pirate.PiVote.CliClient
     {
       Console.WriteLine("VoterMode Mode");
 
-      var proxy = new VoterRpcProxy(new VoteServiceSoapClient());
+      Console.Write("Enter voter index 0..9: ");
+      int voterIndex = Convert.ToInt32(Console.ReadLine());
+
+      var proxy = new VoterRpcProxy(new VoteServiceSoapClient(), this.voters[voterIndex]);
       int votingId = 1;
 
       Console.Write("Getting voting material...");
-      var vm = proxy.GetVotingMaterial(votingId);
+      var vm = proxy.FetchVotingMaterial(votingId);
       Console.WriteLine("Done");
-
-      Console.Write("Enter voter index 0..9: ");
-      int voterIndex = Convert.ToInt32(Console.ReadLine());
 
       var voter = new VoterEntity(voterIndex + 1, (CACertificate)this.root.OnlyPublicPart, this.voters[voterIndex]);
 
@@ -293,27 +301,27 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine("Done");
 
       Console.Write("Pusihing envelope...");
-      proxy.SetVote(votingId, envelope);
+      proxy.PushEnvelope(votingId, envelope);
       Console.WriteLine("Done");
 
       Console.WriteLine("Vote is cast!");
 
       Console.Write("Waiting for voters...");
-      while (proxy.GetVotingStatus(votingId) == VotingStatus.Voting)
+      while (proxy.FetchVotingStatus(votingId) == VotingStatus.Voting)
       {
         Thread.Sleep(1);
       }
       Console.WriteLine("Done");
 
       Console.Write("Waiting for deciphering...");
-      while (proxy.GetVotingStatus(votingId) == VotingStatus.Deciphering)
+      while (proxy.FetchVotingStatus(votingId) == VotingStatus.Deciphering)
       {
         Thread.Sleep(1);
       }
       Console.WriteLine("Done");
 
       Console.Write("Fetching result...");
-      var container = proxy.GetVotingResult(votingId);
+      var container = proxy.FetchtVotingResult(votingId);
       Console.WriteLine("Done");
 
       Console.Write("Verifying result...");

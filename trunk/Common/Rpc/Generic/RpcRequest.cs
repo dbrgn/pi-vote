@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Pirate.PiVote.Serialization;
+using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
@@ -55,7 +56,16 @@ namespace Pirate.PiVote.Rpc
       base.Deserialize(context);
     }
 
-    public abstract RpcResponse TryExecute(TRpcServer server);
+    /// <summary>
+    /// Tries to execute a RPC request.
+    /// </summary>
+    /// <remarks>
+    /// May return a request containing an exception rather than a result.
+    /// </remarks>
+    /// <param name="server">Server to execute the request on.</param>
+    /// <param name="signer">Signer of the RPC request.</param>
+    /// <returns>Response to the request.</returns>
+    public abstract RpcResponse TryExecute(TRpcServer server, Certificate signer);
   }
 
   /// <summary>
@@ -108,12 +118,16 @@ namespace Pirate.PiVote.Rpc
     /// May return a request containing an exception rather than a result.
     /// </remarks>
     /// <param name="server">Server to execute the request on.</param>
+    /// <param name="signer">Signer of the RPC request.</param>
     /// <returns>Response to the request.</returns>
-    public override RpcResponse TryExecute(TRpcServer server)
+    public override RpcResponse TryExecute(TRpcServer server, Certificate signer)
     {
       try
       {
-        return Execute(server);
+        if (signer == null)
+          throw new PiSecurityException(ExceptionCode.RequestSignatureInvalid, "Request signature invalid.");
+
+        return Execute(server, signer);
       }
       catch (PiException exception)
       {
@@ -129,7 +143,8 @@ namespace Pirate.PiVote.Rpc
     /// Executes a RPC request.
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
+    /// <param name="signer">Signer of the RPC request.</param>
     /// <returns>Response to the request.</returns>
-    protected abstract TResponse Execute(TRpcServer server);
+    protected abstract TResponse Execute(TRpcServer server, Certificate signer);
   }
 }
