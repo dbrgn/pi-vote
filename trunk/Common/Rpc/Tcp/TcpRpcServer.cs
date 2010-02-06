@@ -18,17 +18,50 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// TCP RPC server.
+  /// </summary>
   public class TcpRpcServer
   {
+    /// <summary>
+    /// Server TCP port.
+    /// </summary>
     private const int Port = 2323;
 
+    /// <summary>
+    /// TCP listener for new connection.
+    /// </summary>
     private TcpListener listener;
+
+    /// <summary>
+    /// Threads that listens for new connections.
+    /// </summary>
     private Thread listenerThread;
-    private Thread workerThread;
+
+    /// <summary>
+    /// Threads that work requests.
+    /// </summary>
+    private List<Thread> workerThreads;
+
+    /// <summary>
+    /// Continue to run the server.
+    /// </summary>
     private bool run;
+
+    /// <summary>
+    /// Connection from RPC clients.
+    /// </summary>
     private Queue<TcpRpcConnection> connections;
+
+    /// <summary>
+    /// The voting RPC server.
+    /// </summary>
     private VotingRpcServer rpcServer;
 
+    /// <summary>
+    /// Create a new TCP RPC server.
+    /// </summary>
+    /// <param name="rpcServer">Voting RPC server.</param>
     public TcpRpcServer(VotingRpcServer rpcServer)
     {
       this.listener = new TcpListener(new IPEndPoint(IPAddress.Any, Port));
@@ -36,6 +69,9 @@ namespace Pirate.PiVote.Rpc
       this.rpcServer = rpcServer;
     }
 
+    /// <summary>
+    /// Start the server and its threads.
+    /// </summary>
     public void Start()
     {
       this.run = true;
@@ -43,17 +79,29 @@ namespace Pirate.PiVote.Rpc
       this.listenerThread = new Thread(Listen);
       this.listenerThread.Start();
 
-      this.workerThread = new Thread(Worker);
-      this.workerThread.Start();
+      this.workerThreads = new List<Thread>();
+
+      for (int threadIndex = 0; threadIndex < 4; threadIndex++)
+      {
+        Thread workerThread = new Thread(Worker);
+        workerThread.Start();
+        this.workerThreads.Add(workerThread);
+      }
     }
 
+    /// <summary>
+    /// Stop the server and its threads.
+    /// </summary>
     public void Stop()
     {
       this.run = false;
       this.listenerThread.Join();
-      this.workerThread.Join();
+      this.workerThreads.ForEach(workerThread => workerThread.Join());
     }
 
+    /// <summary>
+    /// Works RPC requests.
+    /// </summary>
     private void Worker()
     {
       while (this.run)
@@ -75,7 +123,12 @@ namespace Pirate.PiVote.Rpc
             connection.Process();
 
             if (!connection.Overdue)
-              this.connections.Enqueue(connection);
+            {
+              lock (this.connections)
+              {
+                this.connections.Enqueue(connection);
+              }
+            }
           }
           catch
           {
@@ -87,6 +140,9 @@ namespace Pirate.PiVote.Rpc
       }
     }
 
+    /// <summary>
+    /// Listens for connection.
+    /// </summary>
     private void Listen()
     {
       this.listener.Start();
@@ -95,10 +151,11 @@ namespace Pirate.PiVote.Rpc
       {
         if (this.listener.Pending())
         {
+          TcpClient client = this.listener.AcceptTcpClient();
+          TcpRpcConnection connection = new TcpRpcConnection(client, rpcServer);
+
           lock (this.connections)
           {
-            TcpClient client = this.listener.AcceptTcpClient();
-            TcpRpcConnection connection = new TcpRpcConnection(client, rpcServer);
             this.connections.Enqueue(connection);
           }
         }

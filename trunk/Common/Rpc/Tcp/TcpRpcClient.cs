@@ -19,23 +19,49 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// TCP based RPC server.
+  /// </summary>
   public class TcpRpcClient : IBinaryRpcProxy
   {
+    /// <summary>
+    /// Server port.
+    /// </summary>
     private const int Port = 2323;
+
+    /// <summary>
+    /// TCP client.
+    /// </summary>
     private TcpClient client;
+
+    /// <summary>
+    /// TCP client stream.
+    /// </summary>
     private NetworkStream stream;
 
+    /// <summary>
+    /// Creates a new TCP RPC client.
+    /// </summary>
     public TcpRpcClient()
     {
       this.client = new TcpClient();
     }
 
+    /// <summary>
+    /// Connects the client to the server.
+    /// </summary>
+    /// <param name="address">Server IP address.</param>
     public void Connect(IPAddress address)
     {
       this.client.Connect(new IPEndPoint(address, Port));
       this.stream = this.client.GetStream();
     }
 
+    /// <summary>
+    /// Executes a request on the TCP RPC server.
+    /// </summary>
+    /// <param name="requestData">Binary data of the RPC request.</param>
+    /// <returns>Binary data of the RPC response.</returns>
     public byte[] Execute(byte[] requestData)
     {
       BinaryWriter writer = new BinaryWriter(this.stream);

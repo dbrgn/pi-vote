@@ -19,59 +19,111 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// TCP RPC connection on the server side.
+  /// </summary>
   public class TcpRpcConnection
   {
+    /// <summary>
+    /// TCP client.
+    /// </summary>
     private TcpClient client;
-    private int packetLength;
-    private VotingRpcServer rpcServer;
+
+    /// <summary>
+    /// TCP network stream.
+    /// </summary>
     private NetworkStream stream;
-    private DateTime lastActivity;
-    private byte[] buffer;
+
+    /// <summary>
+    /// TCP network stream writer.
+    /// </summary>
     private BinaryWriter writer;
 
+    /// <summary>
+    /// Length of the incoming request.
+    /// </summary>
+    private int messageLength;
+
+    /// <summary>
+    /// Voting RPC server.
+    /// </summary>
+    private VotingRpcServer rpcServer;
+
+    /// <summary>
+    /// Time of last activity on this connection.
+    /// </summary>
+    private DateTime lastActivity;
+
+    /// <summary>
+    /// Buffer for incoming request data.
+    /// </summary>
+    private MemoryBuffer inBuffer;
+
+    /// <summary>
+    /// Buffer for outgoing response data.
+    /// </summary>
+    private MemoryBuffer outBuffer;
+
+    /// <summary>
+    /// Creates a new TCP RPC server connection.
+    /// </summary>
+    /// <param name="client">TCP client.</param>
+    /// <param name="rpcServer">Voting RPC server.</param>
     public TcpRpcConnection(TcpClient client, VotingRpcServer rpcServer)
     {
       this.lastActivity = DateTime.Now;
       this.client = client;
       this.stream = this.client.GetStream();
       this.writer = new BinaryWriter(this.stream);
-      this.packetLength = 0;
+      this.messageLength = 0;
       this.rpcServer = rpcServer;
-      this.buffer = new byte[0];
+      this.inBuffer = new MemoryBuffer(32768);
+      this.outBuffer = new MemoryBuffer(32768);
     }
 
+    /// <summary>
+    /// Work the connection for incoming requests.
+    /// </summary>
     public void Process()
     {
-      int count = this.client.Available;
-
-      if (count > 0)
+      //Read from network and put to inBuffer.
+      if (this.client.Available > 0)
       {
-        byte[] data = new byte[count];
+        byte[] data = new byte[this.client.Available];
         this.stream.Read(data, 0, data.Length);
-        this.buffer = buffer.Concat(data);
+        this.inBuffer.Write(data);
+      }
 
-        if (this.packetLength == 0 && this.buffer.Length >= sizeof(int))
+      //Read message length from inBuffer.
+      if (this.messageLength == 0 && this.inBuffer.Length >= sizeof(int))
+      {
+        this.messageLength = this.inBuffer.ReadInt32();
+      }
+
+      //Read message from inBuffer, execute and write to outBuffer.
+      if (this.messageLength > 0 && this.inBuffer.Length >= this.messageLength)
+      {
+        this.lastActivity = DateTime.Now;
+        byte[] requestPacket = this.inBuffer.ReadBytes(this.messageLength);
+        this.messageLength = 0;
+
+        byte[] responseData = null;
+
+        lock (this.rpcServer)
         {
-          MemoryStream bufferStream = new MemoryStream(buffer);
-          BinaryReader reader = new BinaryReader(bufferStream);
-          this.packetLength = reader.ReadInt32();
-          this.buffer = this.buffer.Part(sizeof(int));
+          responseData = this.rpcServer.Execute(requestPacket);
         }
 
-        if (this.packetLength > 0 && this.buffer.Length >= this.packetLength)
-        {
-          this.lastActivity = DateTime.Now;
+        this.outBuffer.Write(responseData.Length);
+        this.outBuffer.Write(responseData);
+      }
 
-          MemoryStream bufferStream = new MemoryStream(buffer);
-          BinaryReader reader = new BinaryReader(bufferStream);
-          byte[] requestPacket = reader.ReadBytes(this.packetLength);
-          this.buffer = this.buffer.Part(this.packetLength);
-          this.packetLength = 0;
-
-          byte[] responsePacket = this.rpcServer.Execute(requestPacket);
-          this.writer.Write(responsePacket.Length);
-          writer.Write(responsePacket, 0, responsePacket.Length);
-        }
+      //Write from outBuffer to network.
+      if (this.outBuffer.Length > 0)
+      {
+        int sendLength = Math.Min(this.outBuffer.Length, this.client.SendBufferSize);
+        byte[] data = this.outBuffer.ReadBytes(sendLength);
+        this.writer.Write(data);
       }
     }
 
