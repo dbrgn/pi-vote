@@ -164,6 +164,9 @@
     <Compile Include="Rpc\Messages\CreateVotingAdminResponse.cs" />
     <Compile Include="Rpc\Messages\CreateVotingAdminRequest.cs" />
     <Compile Include="Rpc\Handlers\VotingRpcServer.cs" />
+    <Compile Include="Rpc\Tcp\TcpRpcClient.cs" />
+    <Compile Include="Rpc\Tcp\TcpRpcConnection.cs" />
+    <Compile Include="Rpc\Tcp\TcpRpcServer.cs" />
     <Compile Include="Utilitiy\Bytes.cs" />
     <Compile Include="Utilitiy\DeserializeContext.cs" />
     <Compile Include="Utilitiy\IEnumerableExtensions.cs" />

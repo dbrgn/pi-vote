@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.IO;
+using System.Net;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.CliClient.VoteService;
@@ -19,7 +20,7 @@ namespace Pirate.PiVote.CliClient
 {
   public class Client
   {
-    private VoteServiceSoapClient service;
+    private IBinaryRpcProxy client;
     private bool run;
     private CertificateStorage certs;
     private List<AuthorityCertificate> auths;
@@ -30,8 +31,6 @@ namespace Pirate.PiVote.CliClient
     
     public Client()
     {
-      this.service = new VoteServiceSoapClient();
-
       this.certs = new CertificateStorage();
 
       this.root = GetCertificate<CACertificate>("Root", null);
@@ -109,6 +108,13 @@ namespace Pirate.PiVote.CliClient
       }
     }
 
+    private void Connect()
+    {
+      this.client = new TcpRpcClient();
+      ((TcpRpcClient)this.client).Connect(IPAddress.Loopback);
+      //this.client = new VoteServiceSoapClient();
+    }
+
     private void Do()
     {
       this.run = true;
@@ -117,6 +123,8 @@ namespace Pirate.PiVote.CliClient
       {
         Console.Write("Enter command: ");
         string command = Console.ReadLine().ToLower();
+
+        Connect();
 
         switch (command)
         { 
@@ -163,7 +171,7 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine("Done");
 
       Console.Write("Requesting server to create voting procedure...");
-      AdminRpcProxy proxy = new AdminRpcProxy(this.service, this.admin);
+      AdminRpcProxy proxy = new AdminRpcProxy(this.client, this.admin);
       int votingId = proxy.CreateVoting(votingParameters, this.auths.Select(auth => (AuthorityCertificate)auth.OnlyPublicPart));
       Console.WriteLine("Done");
       Console.WriteLine("Voting id is {0}.", votingId);
@@ -192,7 +200,7 @@ namespace Pirate.PiVote.CliClient
       AuthorityEntity auth = new AuthorityEntity((CACertificate)this.root.OnlyPublicPart, cert);
 
       Console.Write("Fetching parameters...");
-      AuthorityRpcProxy proxy = new AuthorityRpcProxy(this.service, cert);
+      AuthorityRpcProxy proxy = new AuthorityRpcProxy(this.client, cert);
       var p = proxy.FetchParameters(votingId, (AuthorityCertificate)cert.OnlyPublicPart);
       auth.Prepare(p.Key, p.Value);
       Console.WriteLine("Done");
@@ -272,7 +280,7 @@ namespace Pirate.PiVote.CliClient
       Console.Write("Enter voter index 0..9: ");
       int voterIndex = Convert.ToInt32(Console.ReadLine());
 
-      var proxy = new VoterRpcProxy(new VoteServiceSoapClient(), this.voters[voterIndex]);
+      var proxy = new VoterRpcProxy(this.client, this.voters[voterIndex]);
       int votingId = 1;
 
       Console.Write("Getting voting material...");
