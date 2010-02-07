@@ -152,11 +152,26 @@ namespace Pirate.PiVote.Crypto
 
       vs.EndVote();
 
-      var pd1 = a1.PartiallyDecipher(vs.GetAllBallots());
-      var pd2 = a2.PartiallyDecipher(vs.GetAllBallots());
-      var pd3 = a3.PartiallyDecipher(vs.GetAllBallots());
-      var pd4 = a4.PartiallyDecipher(vs.GetAllBallots());
-      var pd5 = a5.PartiallyDecipher(vs.GetAllBallots());
+      a1.ResetResult(vs.GetVotingMaterial());
+      a2.ResetResult(vs.GetVotingMaterial());
+      a3.ResetResult(vs.GetVotingMaterial());
+      a4.ResetResult(vs.GetVotingMaterial());
+      a5.ResetResult(vs.GetVotingMaterial());
+
+      for (int envelopeIndex = 0; envelopeIndex < vs.GetEnvelopeCount(); envelopeIndex++)
+      {
+        a1.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
+        a2.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
+        a3.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
+        a4.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
+        a5.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
+      }
+
+      var pd1 = a1.PartiallyDecipher();
+      var pd2 = a2.PartiallyDecipher();
+      var pd3 = a3.PartiallyDecipher();
+      var pd4 = a4.PartiallyDecipher();
+      var pd5 = a5.PartiallyDecipher();
 
       vs.DepositPartialDecipher(pd1);
       vs.DepositPartialDecipher(pd2);
@@ -164,7 +179,19 @@ namespace Pirate.PiVote.Crypto
       vs.DepositPartialDecipher(pd4);
       vs.DepositPartialDecipher(pd5);
 
-      var res1 = v1.Result(vs.GetVotingResult());
+      v1.ResetResult();
+
+      for (int envelopeIndex = 0; envelopeIndex < vs.GetEnvelopeCount(); envelopeIndex++)
+      {
+        v1.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
+      }
+
+      for (int authorityIndex = 1; authorityIndex < vs.Parameters.AuthorityCount + 1; authorityIndex++)
+      {
+        v1.AddPartialDecipher(vs.GetPartialDecipher(authorityIndex));
+      }
+
+      var res1 = v1.Result();
 
       TimeSpan duration = DateTime.Now.Subtract(start);
       Console.WriteLine("Succeded {0}", duration.ToString());

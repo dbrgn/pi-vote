@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Crypto\Base\Authority.cs" />
     <Compile Include="Crypto\Base\Ballot.cs" />
+    <Compile Include="Crypto\Base\ThreadedPrimeGenerator.cs" />
     <Compile Include="Crypto\Base\VerificationValue.cs" />
     <Compile Include="Crypto\Base\Proof.cs" />
     <Compile Include="Crypto\Base\Parameters.cs" />
@@ -98,12 +99,10 @@
     <Compile Include="Crypto\Certificate\Signature.cs" />
     <Compile Include="Crypto\Certificate\VoterCertificate.cs" />
     <Compile Include="Crypto\Container\AuthorityList.cs" />
-    <Compile Include="Crypto\Container\AuthorityEnvelopeList.cs" />
     <Compile Include="Crypto\Container\Envelope.cs" />
     <Compile Include="Crypto\Container\AllShareParts.cs" />
     <Compile Include="Crypto\Container\PartialDecipherList.cs" />
     <Compile Include="Crypto\Certificate\Encrypted.cs" />
-    <Compile Include="Crypto\Container\VotingContainer.cs" />
     <Compile Include="Crypto\Container\VotingMaterial.cs" />
     <Compile Include="Crypto\Container\ShareResponse.cs" />
     <Compile Include="Crypto\Container\Option.cs" />
@@ -131,6 +130,12 @@
     <Compile Include="Rpc\Generic\RpcRequest.cs" />
     <Compile Include="Rpc\Generic\RpcMessage.cs" />
     <Compile Include="Rpc\Handlers\IBinaryRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\FetchEnvelopeCountRequest.cs" />
+    <Compile Include="Rpc\Messages\FetchEnvelopeCountResponse.cs" />
+    <Compile Include="Rpc\Messages\FetchEnvelopeRequest.cs" />
+    <Compile Include="Rpc\Messages\FetchEnvelopeResponse.cs" />
+    <Compile Include="Rpc\Messages\FetchPartialDecipherRequest.cs" />
+    <Compile Include="Rpc\Messages\FetchPartialDecipherResponse.cs" />
     <Compile Include="Rpc\Messages\FetchParametersAuthorityResponse.cs" />
     <Compile Include="Rpc\Messages\FetchParametersAuthorityRequest.cs" />
     <Compile Include="Rpc\Messages\FetchListAuthorityResponse.cs" />
@@ -148,12 +153,8 @@
     <Compile Include="Rpc\Messages\EndVotingAdminResponse.cs" />
     <Compile Include="Rpc\Messages\ListVotingIdsRequest.cs" />
     <Compile Include="Rpc\Messages\ListVotingIdsResponse.cs" />
-    <Compile Include="Rpc\Messages\FetchVotingResultRequest.cs" />
-    <Compile Include="Rpc\Messages\FetchVotingResultResponse.cs" />
     <Compile Include="Rpc\Messages\PushPartialDecipherAuthorityRequest.cs" />
     <Compile Include="Rpc\Messages\PushPartialDecipherAuthorityResponse.cs" />
-    <Compile Include="Rpc\Messages\FetchEnvelopesAuthorityRequest.cs" />
-    <Compile Include="Rpc\Messages\FetchEnvelopesAuthorityResponse.cs" />
     <Compile Include="Rpc\Messages\PushEnvelopeVoterRequest.cs" />
     <Compile Include="Rpc\Messages\PushEnvelopeVoterResponse.cs" />
     <Compile Include="Rpc\Messages\FetchVotingMaterialVoterRequest.cs" />

@@ -44,6 +44,16 @@ namespace Pirate.PiVote.Crypto
     private Certificate certificate;
 
     /// <summary>
+    /// Sums of votes.
+    /// </summary>
+    private Vote[] voteSums;
+
+    /// <summary>
+    /// Calculated public key.
+    /// </summary>
+    private BigInt publicKey;
+
+    /// <summary>
     /// Public certificate of this authority.
     /// </summary>
     public Certificate Certificate
@@ -169,60 +179,59 @@ namespace Pirate.PiVote.Crypto
       return new Signed<ShareResponse>(response, this.certificate);
     }
 
-    /// <summary>
-    /// Partially deciphers the sum of votes.
-    /// </summary>
-    /// <param name="envelopeList">List of envelopes from which to decrypt the sum of votes.</param>
-    /// <returns>Partial decipher list for all vote sums.</returns>
-    public Signed<PartialDecipherList> PartiallyDecipher(AuthorityEnvelopeList envelopeList)
+    public void ResetResult(VotingMaterial votingMaterial)
     {
-      if (envelopeList == null)
-        throw new ArgumentNullException("envelopeList");
+      this.voteSums = new Vote[this.parameters.OptionCount];
 
-      BigInt publicKey = new BigInt(1);
+      this.publicKey = new BigInt(1);
 
-      foreach (Signed<ShareResponse> signedShareResponse in envelopeList.VotingMaterial.PublicKeyParts)
+      foreach (Signed<ShareResponse> signedShareResponse in votingMaterial.PublicKeyParts)
       {
         ShareResponse shareResponse = signedShareResponse.Value;
         bool acceptResponse = true;
-        
+
         acceptResponse &= signedShareResponse.Verify(this.certificateStorage);
         acceptResponse &= signedShareResponse.Certificate.IsIdentic(this.authorities[shareResponse.AuthorityIndex]);
 
         if (!acceptResponse)
-          return null;
+          return;
 
-        publicKey = (publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.P);
+        this.publicKey = (this.publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.P);
       }
+    }
 
-      Vote[] voteSums = new Vote[this.parameters.OptionCount];
+    public void AddVoteToResult(Signed<Envelope> signedEnvelope)
+    {
+      bool acceptVote = true;
 
-      foreach (Signed<Envelope> signedEnvelope in envelopeList.Envelopes)
+      acceptVote &= signedEnvelope.Verify(this.certificateStorage);
+
+      Envelope envelope = signedEnvelope.Value;
+      acceptVote &= envelope.Ballot.Verify(this.publicKey, this.parameters);
+
+      if (acceptVote)
       {
-        bool acceptVote = true;
-        
-        acceptVote &= signedEnvelope.Verify(this.certificateStorage);
-
-        Envelope envelope = signedEnvelope.Value;
-        acceptVote &= envelope.Ballot.Verify(publicKey, this.parameters);
-
-        if (acceptVote)
+        for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
         {
-          for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex ++)
-          {
-            voteSums[optionIndex] =
-              voteSums[optionIndex] == null ?
-              envelope.Ballot.Votes[optionIndex] :
-              voteSums[optionIndex] + envelope.Ballot.Votes[optionIndex];
-          }
+          this.voteSums[optionIndex] =
+            this.voteSums[optionIndex] == null ?
+            envelope.Ballot.Votes[optionIndex] :
+            this.voteSums[optionIndex] + envelope.Ballot.Votes[optionIndex];
         }
       }
-
-      PartialDecipherList partialDecipherList = new PartialDecipherList(envelopeList.VotingId, this.authority.Index);
+    }
+    
+    /// <summary>
+    /// Partially deciphers the sum of votes.
+    /// </summary>
+    /// <returns>Partial decipher list for all vote sums.</returns>
+    public Signed<PartialDecipherList> PartiallyDecipher()
+    {
+      PartialDecipherList partialDecipherList = new PartialDecipherList(this.parameters.VotingId, this.authority.Index);
 
       for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex ++)
       {
-        partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(voteSums[optionIndex], optionIndex));
+        partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(this.voteSums[optionIndex], optionIndex));
       }
 
       return new Signed<PartialDecipherList>(partialDecipherList, this.certificate);

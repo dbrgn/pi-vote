@@ -39,18 +39,5 @@ namespace Pirate.PiVote.Rpc
       var request = new PushEnvelopeVoterRequest(Guid.NewGuid(), votingId, signedEnvelope);
       var response = Execute<PushEnvelopeVoterResponse>(request);
     }
-
-    /// <summary>
-    /// Fetches the voting material.
-    /// </summary>
-    /// <param name="votingId">Id of the voting.</param>
-    /// <returns>Complete voting material.</returns>
-    public VotingMaterial FetchVotingMaterial(int votingId)
-    {
-      var request = new FetchVotingMaterialVoterRequest(Guid.NewGuid(), votingId);
-      var response = Execute<FetchVotingMaterialVoterResponse>(request);
-
-      return response.VotingMaterial;
-    }
   }
 }

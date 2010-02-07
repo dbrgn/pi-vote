@@ -51,9 +51,9 @@ namespace Pirate.PiVote.Crypto
     private Dictionary<int, Signed<ShareResponse>> responses;
 
     /// <summary>
-    /// List of ballots from voters.
+    /// List of singed envelopes from voters.
     /// </summary>
-    private List<Signed<Envelope>> ballots;
+    private List<Signed<Envelope>> signedEnvelopes;
 
     /// <summary>
     /// List of partial deciphers from authorities.
@@ -99,7 +99,7 @@ namespace Pirate.PiVote.Crypto
       this.authorities = new Dictionary<int, Certificate>();
       this.shares = new Dictionary<int, Signed<SharePart>>();
       this.responses = new Dictionary<int, Signed<ShareResponse>>();
-      this.ballots = new List<Signed<Envelope>>();
+      this.signedEnvelopes = new List<Signed<Envelope>>();
       this.partialDeciphers = new Dictionary<int, Signed<PartialDecipherList>>();
       this.certificateStorage = certificateStorage;
       Status = VotingStatus.New;
@@ -255,9 +255,6 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Material to vote.</returns>
     public VotingMaterial GetVotingMaterial()
     {
-      if (Status != VotingStatus.Voting)
-        throw new InvalidOperationException("Wrong status for operation.");
-
       return new VotingMaterial(
         this.parameters, 
         this.responses.Values, 
@@ -279,10 +276,10 @@ namespace Pirate.PiVote.Crypto
         throw new PiArgumentException(ExceptionCode.VoteSignatureNotValid, "Vote signature not valid.");
       if (!(signedEnvelope.Certificate is VoterCertificate))
         throw new PiArgumentException(ExceptionCode.NoVoterCertificate, "Not a voter certificate.");
-      if (ballots.Any(envelope => envelope.Certificate.IsIdentic(signedEnvelope.Certificate)))
+      if (signedEnvelopes.Any(envelope => envelope.Certificate.IsIdentic(signedEnvelope.Certificate)))
         throw new PiArgumentException(ExceptionCode.AlreadyVoted, "Voter has already voted.");
 
-      this.ballots.Add(signedEnvelope);
+      this.signedEnvelopes.Add(signedEnvelope);
     }
 
     /// <summary>
@@ -294,24 +291,6 @@ namespace Pirate.PiVote.Crypto
         throw new InvalidOperationException("Wrong status for operation.");
 
       Status = VotingStatus.Deciphering;
-    }
-
-    /// <summary>
-    /// Get all ballots for authorities to decrypt sum.
-    /// </summary>
-    /// <returns>Ballot list for authorities.</returns>
-    public AuthorityEnvelopeList GetAllBallots()
-    {
-      if (Status != VotingStatus.Deciphering)
-        throw new InvalidOperationException("Wrong status for operation.");
-
-      VotingMaterial material = new VotingMaterial(
-        this.parameters,
-        this.responses.Values,
-        this.certificateStorage.SignedRevocationLists,
-        this.certificateStorage.Certificates);
-
-      return new AuthorityEnvelopeList(Id, this.ballots, material);
     }
 
     /// <summary>
@@ -348,21 +327,38 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
-    /// Get the voting result.
+    /// Get signed envelope.
     /// </summary>
-    /// <returns>Voting result.</returns>
-    public VotingContainer GetVotingResult()
+    /// <param name="envelopeIndex">Index of envelope.</param>
+    /// <returns>Signed envelope.</returns>
+    public Signed<Envelope> GetEnvelope(int envelopeIndex)
     {
-      if (Status != VotingStatus.Finished)
-        throw new InvalidOperationException("Wrong status for operation.");
+      if (!envelopeIndex.InRange(0, this.signedEnvelopes.Count - 1))
+        throw new PiArgumentException(ExceptionCode.ArgumentOutOfRange, "Envelope index out of range.");
 
-      VotingMaterial material = new VotingMaterial(
-        this.parameters,
-        this.responses.Values,
-        this.certificateStorage.SignedRevocationLists,
-        this.certificateStorage.Certificates);
+      return this.signedEnvelopes[envelopeIndex];
+    }
 
-      return new VotingContainer(material, this.ballots, this.partialDeciphers.Values);
+    /// <summary>
+    /// Get partial decipher list.
+    /// </summary>
+    /// <param name="authorityIndex">Index of authority.</param>
+    /// <returns>Partial decipher list.</returns>
+    public Signed<PartialDecipherList> GetPartialDecipher(int authorityIndex)
+    {
+      if (!this.partialDeciphers.ContainsKey(authorityIndex))
+        throw new PiArgumentException(ExceptionCode.ArgumentOutOfRange, "Authority index out of range.");
+
+      return this.partialDeciphers[authorityIndex];
+    }
+
+    /// <summary>
+    /// Get number of envelopes.
+    /// </summary>
+    /// <returns>Envelope count.</returns>
+    public int GetEnvelopeCount()
+    {
+      return this.signedEnvelopes.Count;
     }
   }
 }

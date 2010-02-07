@@ -256,12 +256,19 @@ namespace Pirate.PiVote.CliClient
       }
       Console.WriteLine("Done");
 
-      Console.Write("Getting ballots...");
-      var ballots = proxy.FetchEnvelopes(votingId);
-      Console.WriteLine("Done");
+      Console.Write("Getting envelopes.");
+      var votingMaterial = proxy.FetchVotingMaterial(votingId);
+      int envelopeCount = proxy.FetchEnvelopeCount(votingId);
 
-      Console.Write("Calculating partial decipher...");
-      var pds = auth.PartiallyDecipher(ballots);
+      auth.ResetResult(votingMaterial);
+
+      for (int envelopeIndex = 0; envelopeIndex < envelopeCount; envelopeIndex++)
+      {
+        auth.AddVoteToResult(proxy.FetchEnvelope(votingId, envelopeCount));
+        Console.Write(".");
+      }
+
+      var pds = auth.PartiallyDecipher();
       Console.WriteLine("Done");
 
       Console.Write("Pushing partial deciphers...");
@@ -328,12 +335,23 @@ namespace Pirate.PiVote.CliClient
       }
       Console.WriteLine("Done");
 
-      Console.Write("Fetching result...");
-      var container = proxy.FetchtVotingResult(votingId);
-      Console.WriteLine("Done");
+      Console.Write("Fetching and verifiing result.");
+      int envelopeCount = proxy.FetchEnvelopeCount(votingId);
+      voter.ResetResult();
 
-      Console.Write("Verifying result...");
-      var result = voter.Result(container);
+      for (int envelopeIndex = 0; envelopeIndex < envelopeCount; envelopeIndex++)
+      {
+        voter.AddVoteToResult(proxy.FetchEnvelope(votingId, envelopeIndex));
+        Console.Write(".");
+      }
+
+      for (int authorityIndex = 1; authorityIndex < vm.Parameters.AuthorityCount + 1; authorityIndex++)
+      {
+        voter.AddPartialDecipher(proxy.FetchPartialDecipher(votingId, authorityIndex));
+        Console.Write(".");
+      }
+
+      var result = voter.Result();
       Console.WriteLine("Done");
 
       Console.WriteLine("Result is:");

@@ -54,19 +54,6 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
-    /// Fetches all envelopes.
-    /// </summary>
-    /// <param name="votingId">Id of the voting.</param>
-    /// <returns>List of all envelopes.</returns>
-    public AuthorityEnvelopeList FetchEnvelopes(int votingId)
-    {
-      var request = new FetchEnvelopesAuthorityRequest(Guid.NewGuid(), votingId);
-      var response = Execute<FetchEnvelopesAuthorityResponse>(request);
-
-      return response.AuthorityEnvelopeList;
-    }
-
-    /// <summary>
     /// Pushes this authority's response to the shares.
     /// </summary>
     /// <param name="votingId">Id of the voting.</param>

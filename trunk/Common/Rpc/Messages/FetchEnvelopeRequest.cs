@@ -15,23 +15,26 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class GetVotingResultRequest : RpcRequest<VotingRpcServer, GetVotingResultResponse>
+  public class FetchEnvelopeRequest : RpcRequest<VotingRpcServer, FetchEnvelopeResponse>
   {
     private int votingId;
+    private int evelopeIndex;
 
-    public GetVotingResultRequest(
+    public FetchEnvelopeRequest(
       Guid requestId,
-      int votingId)
+      int votingId,
+      int envelopeIndex)
       : base(requestId)
     {
       this.votingId = votingId;
+      this.evelopeIndex = envelopeIndex;
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public GetVotingResultRequest(DeserializeContext context)
+    public FetchEnvelopeRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -60,11 +63,12 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override GetVotingResultResponse Execute(VotingRpcServer server, Certificate signer)
+    protected override FetchEnvelopeResponse Execute(VotingRpcServer server, Certificate signer)
     {
       var voting = server.GetVoting(this.votingId);
+      var envelope = voting.GetEnvelope(this.evelopeIndex);
 
-      return new GetVotingResultResponse(RequestId, voting.GetVotingResult());
+      return new FetchEnvelopeResponse(RequestId, envelope);
     }
   }
 }

@@ -16,14 +16,14 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class GetVotingResultResponse : RpcResponse
+  public class FetchEnvelopeCountResponse : RpcResponse
   {
-    public VotingContainer VotingContainer { get; private set; }
+    public int EnvelopeCount { get; private set; }
 
-    public GetVotingResultResponse(Guid requestId, VotingContainer votingContainer)
+    public FetchEnvelopeCountResponse(Guid requestId, int envelopeCount)
       : base(requestId)
     {
-      VotingContainer = votingContainer;
+      EnvelopeCount = envelopeCount;
     }
 
     /// <summary>
@@ -31,7 +31,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="exception">Exception that occured when executing the request.</param>
-    public GetVotingResultResponse(Guid requestId, PiException exception)
+    public FetchEnvelopeCountResponse(Guid requestId, PiException exception)
       : base(requestId, exception)
     { }
 
@@ -39,7 +39,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public GetVotingResultResponse(DeserializeContext context)
+    public FetchEnvelopeCountResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -50,7 +50,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(VotingContainer);
+      context.Write(EnvelopeCount);
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      VotingContainer = context.ReadObject<VotingContainer>();
+      EnvelopeCount = context.ReadInt32();
     }
   }
 }

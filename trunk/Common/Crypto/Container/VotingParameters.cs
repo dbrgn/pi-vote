@@ -102,7 +102,11 @@ namespace Pirate.PiVote.Crypto
 
       BigInt prime = null;
       BigInt safePrime = null;
-      Prime.FindPrimeAndSafePrime(PrimeBits, out prime, out safePrime);
+
+      DateTime start = DateTime.Now;
+      Prime.FindPrimeAndSafePrimeThreaded(PrimeBits, out prime, out safePrime);
+      Console.WriteLine(DateTime.Now.Subtract(start).ToString());
+      //Prime.FindPrimeAndSafePrime(PrimeBits, out prime, out safePrime);
 
       InitilizeCrypto(
         prime,

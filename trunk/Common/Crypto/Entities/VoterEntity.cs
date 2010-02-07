@@ -43,6 +43,21 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     private Certificate certificate;
 
+    /// <summary>
+    /// Sum of votes;
+    /// </summary>
+    private Vote[] voteSums;
+
+    /// <summary>
+    /// Result of voting.
+    /// </summary>
+    private VotingResult result;
+
+    /// <summary>
+    /// List of partial deciphers;
+    /// </summary>
+    private List<PartialDecipher> partialDeciphers;
+
     public VoterEntity(int voterId, CACertificate rootCertificate, VoterCertificate voterCertificate)
     {
       VoterId = voterId;
@@ -104,22 +119,47 @@ namespace Pirate.PiVote.Crypto
       }
     }
 
-    /// <summary>
-    /// Tally and verify the result.
-    /// </summary>
-    /// <param name="votingContainer">Container of voting procedure.</param>
-    /// <returns>Results for each option.</returns>
-    public VotingResult Result(VotingContainer votingContainer)
+    public void ResetResult()
     {
-      if (votingContainer == null)
-        throw new ArgumentNullException("votingContainer");
+      this.voteSums = new Vote[this.parameters.OptionCount];
+      this.result = new VotingResult(this.parameters.VotingId, this.parameters.VotingName);
+      this.partialDeciphers = new List<PartialDecipher>();
+    }
 
-      VotingResult result = new VotingResult(votingContainer.VotingId, votingContainer.Material.Parameters.VotingName);
+    public void AddVoteToResult(Signed<Envelope> signedEnvelope)
+    {
+      bool acceptVote = true;
 
-      Vote[] voteSums = CalculateBallotSums(votingContainer.Emvelopes, result);
+      acceptVote &= signedEnvelope.Verify(this.certificateStorage);
 
-      List<PartialDecipher> partialDeciphers = ListPartialDeciphers(votingContainer.PartialDeciphers);
+      Envelope envelope = signedEnvelope.Value;
+      acceptVote &= envelope.Ballot.Verify(this.publicKey, this.parameters);
 
+      if (acceptVote)
+      {
+        for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
+        {
+          this.voteSums[optionIndex] =
+            this.voteSums[optionIndex] == null ?
+            envelope.Ballot.Votes[optionIndex] :
+            this.voteSums[optionIndex] + envelope.Ballot.Votes[optionIndex];
+        }
+      }
+
+      this.result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));
+    }
+
+    public void AddPartialDecipher(Signed<PartialDecipherList> signedPartialDecipherList)
+    {
+      if (signedPartialDecipherList.Verify(this.certificateStorage))
+      {
+        PartialDecipherList partialDeciphersContainer = signedPartialDecipherList.Value;
+        partialDeciphers.AddRange(partialDeciphersContainer.PartialDeciphers);
+      }
+    }
+
+    public VotingResult Result()
+    {
       List<int> results = new List<int>();
 
       for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
@@ -132,10 +172,10 @@ namespace Pirate.PiVote.Crypto
             .Where(partialDecipher => partialDecipher.GroupIndex == groupIndex && partialDecipher.OptionIndex == optionIndex)
             .Select(partialDecipher => partialDecipher.Value);
           if (partialDeciphersByOptionAndGroup.Count() == this.parameters.Thereshold + 1)
-            optionResults.Add(voteSums[optionIndex].Decrypt(partialDeciphersByOptionAndGroup, parameters));
+            optionResults.Add(this.voteSums[optionIndex].Decrypt(partialDeciphersByOptionAndGroup, parameters));
         }
 
-        Option option = votingContainer.Parameters.Options.ElementAt(optionIndex);
+        Option option = this.parameters.Options.ElementAt(optionIndex);
 
         if (optionResults.Count > 0)
         {
@@ -143,82 +183,20 @@ namespace Pirate.PiVote.Crypto
 
           if (optionResults.All(optionResult => optionResult == firstOptionResult))
           {
-            result.Options.Add(new OptionResult(option.Text, option.Description, firstOptionResult));
+            this.result.Options.Add(new OptionResult(option.Text, option.Description, firstOptionResult));
           }
           else
           {
-            result.Options.Add(new OptionResult(option.Text, option.Description, -1));
+            this.result.Options.Add(new OptionResult(option.Text, option.Description, -1));
           }
         }
         else
         {
-          result.Options.Add(new OptionResult(option.Text, option.Description, -1));
+          this.result.Options.Add(new OptionResult(option.Text, option.Description, -1));
         }
       }
 
-      return result;
-    }
-
-    /// <summary>
-    /// Lists all valid partail deciphers.
-    /// </summary>
-    /// <param name="signedPartialDeciphers">List of signed partail deciphers.</param>
-    /// <returns>List of partail deciphers.</returns>
-    private List<PartialDecipher> ListPartialDeciphers(IEnumerable<Signed<PartialDecipherList>> signedPartialDeciphers)
-    {
-      if (signedPartialDeciphers == null)
-        throw new ArgumentNullException("signedPartialDeciphers");
-
-      List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
-
-      foreach (Signed<PartialDecipherList> signedPartialDeciphersContainer in signedPartialDeciphers)
-      {
-        if (signedPartialDeciphersContainer.Verify(this.certificateStorage))
-        {
-          PartialDecipherList partialDeciphersContainer = signedPartialDeciphersContainer.Value;
-          partialDeciphers.AddRange(partialDeciphersContainer.PartialDeciphers);
-        }
-      }
-      return partialDeciphers;
-    }
-
-    /// <summary>
-    /// Calculates the sum of all ballots for each option.
-    /// </summary>
-    /// <param name="envelopes">Envelopes from all voters.</param>
-    /// <returns>Sums of ballots.</returns>
-    private Vote[] CalculateBallotSums(IEnumerable<Signed<Envelope>> envelopes, VotingResult result)
-    {
-      if (envelopes == null)
-        throw new ArgumentNullException("envelopes");
-      if (result == null)
-        throw new ArgumentNullException("result");
-
-      Vote[] voteSums = new Vote[this.parameters.OptionCount];
-
-      foreach (Signed<Envelope> signedEnvelope in envelopes)
-      {
-        bool acceptVote = true;
-
-        acceptVote &= signedEnvelope.Verify(this.certificateStorage);
-
-        Envelope envelope = signedEnvelope.Value;
-        acceptVote &= envelope.Ballot.Verify(this.publicKey, this.parameters);
-
-        if (acceptVote)
-        {
-          for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
-          {
-            voteSums[optionIndex] =
-              voteSums[optionIndex] == null ?
-              envelope.Ballot.Votes[optionIndex] :
-              voteSums[optionIndex] + envelope.Ballot.Votes[optionIndex];
-          }
-        }
-
-        result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));
-      }
-      return voteSums;
+      return this.result;
     }
   }
 }

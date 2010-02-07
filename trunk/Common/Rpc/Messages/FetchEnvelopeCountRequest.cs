@@ -15,25 +15,11 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  /// <summary>
-  /// RPC request by authority to fetch all envelopes.
-  /// </summary>
-  /// <remarks>
-  /// Authorities uses the envelopes to calculate the sum of votes for partial deciphering.
-  /// </remarks>
-  public class FetchEnvelopesAuthorityRequest : RpcRequest<VotingRpcServer, FetchEnvelopesAuthorityResponse>
+  public class FetchEnvelopeCountRequest : RpcRequest<VotingRpcServer, FetchEnvelopeCountResponse>
   {
-    /// <summary>
-    /// Id of the voting.
-    /// </summary>
     private int votingId;
 
-    /// <summary>
-    /// Creates a new request to fetch all envelopes.
-    /// </summary>
-    /// <param name="requestId">Id of the request.</param>
-    /// <param name="votingId">Id of the voting.</param>
-    public FetchEnvelopesAuthorityRequest(
+    public FetchEnvelopeCountRequest(
       Guid requestId,
       int votingId)
       : base(requestId)
@@ -45,7 +31,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchEnvelopesAuthorityRequest(DeserializeContext context)
+    public FetchEnvelopeCountRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -74,11 +60,11 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override FetchEnvelopesAuthorityResponse Execute(VotingRpcServer server, Certificate signer)
+    protected override FetchEnvelopeCountResponse Execute(VotingRpcServer server, Certificate signer)
     {
       var voting = server.GetVoting(this.votingId);
 
-      return new FetchEnvelopesAuthorityResponse(RequestId, voting.GetAllBallots());
+      return new FetchEnvelopeCountResponse(RequestId, voting.GetEnvelopeCount());
     }
   }
 }

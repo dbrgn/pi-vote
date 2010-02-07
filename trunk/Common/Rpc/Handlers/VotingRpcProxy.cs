@@ -42,19 +42,6 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
-    /// Fetches the result of the voting.
-    /// </summary>
-    /// <param name="votingId">Id of the voting.</param>
-    /// <returns>Container with the results of the voting.</returns>
-    public VotingContainer FetchtVotingResult(int votingId)
-    {
-      var request = new GetVotingResultRequest(Guid.NewGuid(), votingId);
-      var response = Execute<GetVotingResultResponse>(request);
-
-      return response.VotingContainer;
-    }
-
-    /// <summary>
     /// Fetches the ids of all voting procedures.
     /// </summary>
     /// <returns>List of ids of voting procedures.</returns>
@@ -96,6 +83,60 @@ namespace Pirate.PiVote.Rpc
         throw response.Exception;
 
       return response;
+    }
+
+    /// <summary>
+    /// Fetches an envelope.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="envelopeIndex">Index of the envelope.</param>
+    /// <returns>Signed envelope.</returns>
+    public Signed<Envelope> FetchEnvelope(int votingId, int envelopeIndex)
+    {
+      var request = new FetchEnvelopeRequest(Guid.NewGuid(), votingId, envelopeIndex);
+      var response = Execute<FetchEnvelopeResponse>(request);
+
+      return response.Envelope;
+    }
+
+    /// <summary>
+    /// Fetches a partial decipher list.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="authorityIndex">Index of the authority.</param>
+    /// <returns>Singed list of partial deciphers.</returns>
+    public Signed<PartialDecipherList> FetchPartialDecipher(int votingId, int authorityIndex)
+    {
+      var request = new FetchPartialDecipherRequest(Guid.NewGuid(), votingId, authorityIndex);
+      var response = Execute<FetchPartialDecipherResponse>(request);
+
+      return response.PartialDecipherList;
+    }
+
+    /// <summary>
+    /// Fetches the envelope count.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <returns>Number of envelopes.</returns>
+    public int FetchEnvelopeCount(int votingId)
+    {
+      var request = new FetchEnvelopeCountRequest(Guid.NewGuid(), votingId);
+      var response = Execute<FetchEnvelopeCountResponse>(request);
+
+      return response.EnvelopeCount;
+    }
+
+    /// <summary>
+    /// Fetches the voting material.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <returns>Complete voting material.</returns>
+    public VotingMaterial FetchVotingMaterial(int votingId)
+    {
+      var request = new FetchVotingMaterialVoterRequest(Guid.NewGuid(), votingId);
+      var response = Execute<FetchVotingMaterialVoterResponse>(request);
+
+      return response.VotingMaterial;
     }
   }
 }

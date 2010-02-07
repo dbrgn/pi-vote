@@ -16,25 +16,14 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  /// <summary>
-  /// Response to a request to fetch all envelopes.
-  /// </summary>
-  public class FetchEnvelopesAuthorityResponse : RpcResponse
+  public class FetchEnvelopeResponse : RpcResponse
   {
-    /// <summary>
-    /// List of all envelopes in the voting.
-    /// </summary>
-    public AuthorityEnvelopeList AuthorityEnvelopeList { get; private set; }
+    public Signed<Envelope> Envelope { get; private set; }
 
-    /// <summary>
-    /// Creates a new response to a request to fetch all envelopes
-    /// </summary>
-    /// <param name="requestId">Id of thr request.</param>
-    /// <param name="authorityEnvelopeList">List of all envelopes.</param>
-    public FetchEnvelopesAuthorityResponse(Guid requestId, AuthorityEnvelopeList authorityEnvelopeList)
+    public FetchEnvelopeResponse(Guid requestId, Signed<Envelope> envelope)
       : base(requestId)
     {
-      AuthorityEnvelopeList = authorityEnvelopeList;
+      Envelope = envelope;
     }
 
     /// <summary>
@@ -42,7 +31,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="exception">Exception that occured when executing the request.</param>
-    public FetchEnvelopesAuthorityResponse(Guid requestId, PiException exception)
+    public FetchEnvelopeResponse(Guid requestId, PiException exception)
       : base(requestId, exception)
     { }
 
@@ -50,7 +39,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchEnvelopesAuthorityResponse(DeserializeContext context)
+    public FetchEnvelopeResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -61,7 +50,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(AuthorityEnvelopeList);
+      context.Write(Envelope);
     }
 
     /// <summary>
@@ -71,7 +60,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      AuthorityEnvelopeList = context.ReadObject<AuthorityEnvelopeList>();
+      Envelope = context.ReadObject<Signed<Envelope>>();
     }
   }
 }

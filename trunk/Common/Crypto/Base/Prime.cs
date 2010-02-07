@@ -91,6 +91,18 @@ namespace Pirate.PiVote.Crypto
     /// <param name="bitLength">Length in bits of the prime.</param>
     /// <param name="prime">Random prime number.</param>
     /// <param name="safePrime">Random safe prime number.</param>
+    public static void FindPrimeAndSafePrimeThreaded(int bitLength, out BigInt prime, out BigInt safePrime)
+    {
+      ThreadedPrimeGenerator generator = new ThreadedPrimeGenerator();
+      generator.FindPrimeAndSafePrime(bitLength, out prime, out safePrime);
+    }
+
+    /// <summary>
+    /// Finds both as prime and a larger safe prime.
+    /// </summary>
+    /// <param name="bitLength">Length in bits of the prime.</param>
+    /// <param name="prime">Random prime number.</param>
+    /// <param name="safePrime">Random safe prime number.</param>
     public static void FindPrimeAndSafePrime(int bitLength, out BigInt prime, out BigInt safePrime)
     {
       //Begin search as a random position.
@@ -135,7 +147,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="bitLength">Length in bits. Is rounded up to next byte length.</param>
     /// <returns>New random number.</returns>
-    private static BigInt RandomNumber(int bitLength)
+    public static BigInt RandomNumber(int bitLength)
     {
       if (bitLength < 1)
         throw new ArgumentException("Bit length must be at least 1.");
