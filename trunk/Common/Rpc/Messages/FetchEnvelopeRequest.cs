@@ -18,7 +18,7 @@ namespace Pirate.PiVote.Rpc
   public class FetchEnvelopeRequest : RpcRequest<VotingRpcServer, FetchEnvelopeResponse>
   {
     private int votingId;
-    private int evelopeIndex;
+    private int envelopeIndex;
 
     public FetchEnvelopeRequest(
       Guid requestId,
@@ -27,7 +27,7 @@ namespace Pirate.PiVote.Rpc
       : base(requestId)
     {
       this.votingId = votingId;
-      this.evelopeIndex = envelopeIndex;
+      this.envelopeIndex = envelopeIndex;
     }
 
     /// <summary>
@@ -46,6 +46,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
       context.Write(this.votingId);
+      context.Write(this.envelopeIndex);
     }
 
     /// <summary>
@@ -56,6 +57,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Deserialize(context);
       this.votingId = context.ReadInt32();
+      this.envelopeIndex = context.ReadInt32();
     }
 
     /// <summary>
@@ -66,7 +68,7 @@ namespace Pirate.PiVote.Rpc
     protected override FetchEnvelopeResponse Execute(VotingRpcServer server, Certificate signer)
     {
       var voting = server.GetVoting(this.votingId);
-      var envelope = voting.GetEnvelope(this.evelopeIndex);
+      var envelope = voting.GetEnvelope(this.envelopeIndex);
 
       return new FetchEnvelopeResponse(RequestId, envelope);
     }

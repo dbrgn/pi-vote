@@ -152,19 +152,19 @@ namespace Pirate.PiVote.Crypto
 
       vs.EndVote();
 
-      a1.ResetResult(vs.GetVotingMaterial());
-      a2.ResetResult(vs.GetVotingMaterial());
-      a3.ResetResult(vs.GetVotingMaterial());
-      a4.ResetResult(vs.GetVotingMaterial());
-      a5.ResetResult(vs.GetVotingMaterial());
+      a1.TallyBegin(vs.GetVotingMaterial());
+      a2.TallyBegin(vs.GetVotingMaterial());
+      a3.TallyBegin(vs.GetVotingMaterial());
+      a4.TallyBegin(vs.GetVotingMaterial());
+      a5.TallyBegin(vs.GetVotingMaterial());
 
       for (int envelopeIndex = 0; envelopeIndex < vs.GetEnvelopeCount(); envelopeIndex++)
       {
-        a1.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
-        a2.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
-        a3.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
-        a4.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
-        a5.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
+        a1.TallyAdd(vs.GetEnvelope(envelopeIndex));
+        a2.TallyAdd(vs.GetEnvelope(envelopeIndex));
+        a3.TallyAdd(vs.GetEnvelope(envelopeIndex));
+        a4.TallyAdd(vs.GetEnvelope(envelopeIndex));
+        a5.TallyAdd(vs.GetEnvelope(envelopeIndex));
       }
 
       var pd1 = a1.PartiallyDecipher();
@@ -179,19 +179,19 @@ namespace Pirate.PiVote.Crypto
       vs.DepositPartialDecipher(pd4);
       vs.DepositPartialDecipher(pd5);
 
-      v1.ResetResult();
+      v1.TallyBegin();
 
       for (int envelopeIndex = 0; envelopeIndex < vs.GetEnvelopeCount(); envelopeIndex++)
       {
-        v1.AddVoteToResult(vs.GetEnvelope(envelopeIndex));
+        v1.TallyAdd(vs.GetEnvelope(envelopeIndex));
       }
 
       for (int authorityIndex = 1; authorityIndex < vs.Parameters.AuthorityCount + 1; authorityIndex++)
       {
-        v1.AddPartialDecipher(vs.GetPartialDecipher(authorityIndex));
+        v1.TallyAddPartialDecipher(vs.GetPartialDecipher(authorityIndex));
       }
 
-      var res1 = v1.Result();
+      var res1 = v1.TallyResult;
 
       TimeSpan duration = DateTime.Now.Subtract(start);
       Console.WriteLine("Succeded {0}", duration.ToString());

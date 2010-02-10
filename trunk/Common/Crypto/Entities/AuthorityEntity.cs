@@ -43,15 +43,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     private Certificate certificate;
 
-    /// <summary>
-    /// Sums of votes.
-    /// </summary>
-    private Vote[] voteSums;
-
-    /// <summary>
-    /// Calculated public key.
-    /// </summary>
-    private BigInt publicKey;
+    private Tally tally;
 
     /// <summary>
     /// Public certificate of this authority.
@@ -179,11 +171,45 @@ namespace Pirate.PiVote.Crypto
       return new Signed<ShareResponse>(response, this.certificate);
     }
 
-    public void ResetResult(VotingMaterial votingMaterial)
+    /// <summary>
+    /// Resets the vote sum.
+    /// </summary>
+    /// <param name="votingMaterial">Voting material.</param>
+    public void TallyBegin(VotingMaterial votingMaterial)
     {
-      this.voteSums = new Vote[this.parameters.OptionCount];
+      if (votingMaterial == null)
+        throw new ArgumentNullException("votingMaterial");
 
-      this.publicKey = new BigInt(1);
+      BigInt publicKey = CalculatePublicKey(votingMaterial);
+
+      this.tally = new Tally(this.parameters, this.certificateStorage, publicKey);
+    }
+
+    /// <summary>
+    /// Adds a vote to the vote sum.
+    /// </summary>
+    /// <param name="signedEnvelope">Signed envelope containing the vote.</param>
+    public void TallyAdd(Signed<Envelope> signedEnvelope)
+    {
+      if (signedEnvelope == null)
+        throw new ArgumentNullException("signedEnvelope");
+      if (this.tally == null)
+        throw new InvalidOperationException("Tally not yet begun.");
+
+      this.tally.Add(signedEnvelope);
+    }
+
+    /// <summary>
+    /// Calculates the public key of the authorities.
+    /// </summary>
+    /// <param name="votingMaterial">Voting material.</param>
+    /// <returns>Public key.</returns>
+    private BigInt CalculatePublicKey(VotingMaterial votingMaterial)
+    {
+      if (votingMaterial == null)
+        throw new ArgumentNullException("votingMaterial");
+
+      BigInt publicKey = new BigInt(1);
 
       foreach (Signed<ShareResponse> signedShareResponse in votingMaterial.PublicKeyParts)
       {
@@ -194,31 +220,12 @@ namespace Pirate.PiVote.Crypto
         acceptResponse &= signedShareResponse.Certificate.IsIdentic(this.authorities[shareResponse.AuthorityIndex]);
 
         if (!acceptResponse)
-          return;
+          throw new Exception("Share response not accepted.");
 
-        this.publicKey = (this.publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.P);
+        publicKey = (publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.P);
       }
-    }
 
-    public void AddVoteToResult(Signed<Envelope> signedEnvelope)
-    {
-      bool acceptVote = true;
-
-      acceptVote &= signedEnvelope.Verify(this.certificateStorage);
-
-      Envelope envelope = signedEnvelope.Value;
-      acceptVote &= envelope.Ballot.Verify(this.publicKey, this.parameters);
-
-      if (acceptVote)
-      {
-        for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
-        {
-          this.voteSums[optionIndex] =
-            this.voteSums[optionIndex] == null ?
-            envelope.Ballot.Votes[optionIndex] :
-            this.voteSums[optionIndex] + envelope.Ballot.Votes[optionIndex];
-        }
-      }
+      return publicKey;
     }
     
     /// <summary>
@@ -227,11 +234,14 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Partial decipher list for all vote sums.</returns>
     public Signed<PartialDecipherList> PartiallyDecipher()
     {
+      if (this.tally == null)
+        throw new InvalidOperationException("Tally not yet begun.");
+
       PartialDecipherList partialDecipherList = new PartialDecipherList(this.parameters.VotingId, this.authority.Index);
 
       for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex ++)
       {
-        partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(this.voteSums[optionIndex], optionIndex));
+        partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(this.tally.VoteSums[optionIndex], optionIndex));
       }
 
       return new Signed<PartialDecipherList>(partialDecipherList, this.certificate);

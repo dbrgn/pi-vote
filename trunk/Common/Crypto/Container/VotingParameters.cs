@@ -22,7 +22,7 @@ namespace Pirate.PiVote.Crypto
     private const int StandardAuthorityCount = 5;
     private const int StandardThereshold = 3;
     private const int StandardProofCount = 128;
-    private const int PrimeBits = 512;
+    private const int PrimeBits = 256;
 
     /// <summary>
     /// List of possible options for the voters.

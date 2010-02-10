@@ -110,6 +110,7 @@
     <Compile Include="Crypto\Container\SharePart.cs" />
     <Compile Include="Crypto\Certificate\Signed.cs" />
     <Compile Include="Crypto\Entities\AuthorityEntity.cs" />
+    <Compile Include="Crypto\Entities\Tally.cs" />
     <Compile Include="Crypto\Result\EnvelopeResult.cs" />
     <Compile Include="Crypto\Result\OptionResult.cs" />
     <Compile Include="Crypto\Entities\ServerEntity.cs" />

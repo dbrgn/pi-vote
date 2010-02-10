@@ -26,12 +26,12 @@ namespace Pirate.PiVote.Crypto
     /// Using low number of rabin-miller tests to find safe prime
     /// and high number of tests to be quite certain of primality.
     /// </remarks>
-    private const int LowRabinMillerCount = 10;
+    private const int LowRabinMillerCount = 2;
 
     /// <summary>
     /// High number of rabin-miller test to perform.
     /// </summary>
-    private const int HighRabinMillerCount = 1000;
+    private const int HighRabinMillerCount = 128;
 
     /// <summary>
     /// Create only one random number generator.

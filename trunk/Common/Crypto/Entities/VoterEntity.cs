@@ -44,19 +44,9 @@ namespace Pirate.PiVote.Crypto
     private Certificate certificate;
 
     /// <summary>
-    /// Sum of votes;
+    /// Tally of voting.
     /// </summary>
-    private Vote[] voteSums;
-
-    /// <summary>
-    /// Result of voting.
-    /// </summary>
-    private VotingResult result;
-
-    /// <summary>
-    /// List of partial deciphers;
-    /// </summary>
-    private List<PartialDecipher> partialDeciphers;
+    private Tally tally;
 
     public VoterEntity(int voterId, CACertificate rootCertificate, VoterCertificate voterCertificate)
     {
@@ -119,84 +109,41 @@ namespace Pirate.PiVote.Crypto
       }
     }
 
-    public void ResetResult()
+    /// <summary>
+    /// Begin summation of votes.
+    /// </summary>
+    public void TallyBegin()
     {
-      this.voteSums = new Vote[this.parameters.OptionCount];
-      this.result = new VotingResult(this.parameters.VotingId, this.parameters.VotingName);
-      this.partialDeciphers = new List<PartialDecipher>();
+      this.tally = new Tally(this.parameters, this.certificateStorage, this.publicKey);
     }
 
-    public void AddVoteToResult(Signed<Envelope> signedEnvelope)
+    /// <summary>
+    /// Add a vote to the sum of votes.
+    /// </summary>
+    /// <param name="signedEnvelope">Signed envelope containing the vote.</param>
+    public void TallyAdd(Signed<Envelope> signedEnvelope)
     {
-      bool acceptVote = true;
-
-      acceptVote &= signedEnvelope.Verify(this.certificateStorage);
-
-      Envelope envelope = signedEnvelope.Value;
-      acceptVote &= envelope.Ballot.Verify(this.publicKey, this.parameters);
-
-      if (acceptVote)
-      {
-        for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
-        {
-          this.voteSums[optionIndex] =
-            this.voteSums[optionIndex] == null ?
-            envelope.Ballot.Votes[optionIndex] :
-            this.voteSums[optionIndex] + envelope.Ballot.Votes[optionIndex];
-        }
-      }
-
-      this.result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));
+      this.tally.Add(signedEnvelope);
     }
 
-    public void AddPartialDecipher(Signed<PartialDecipherList> signedPartialDecipherList)
+    /// <summary>
+    /// Add a partial decipher for deciphering the sum of votes.
+    /// </summary>
+    /// <param name="signedPartialDecipherList">List of partial deciphers.</param>
+    public void TallyAddPartialDecipher(Signed<PartialDecipherList> signedPartialDecipherList)
     {
-      if (signedPartialDecipherList.Verify(this.certificateStorage))
-      {
-        PartialDecipherList partialDeciphersContainer = signedPartialDecipherList.Value;
-        partialDeciphers.AddRange(partialDeciphersContainer.PartialDeciphers);
-      }
+      this.tally.AddPartialDecipher(signedPartialDecipherList);
     }
 
-    public VotingResult Result()
+    /// <summary>
+    /// Result of the voting.
+    /// </summary>
+    public VotingResult TallyResult
     {
-      List<int> results = new List<int>();
-
-      for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
+      get
       {
-        List<int> optionResults = new List<int>();
-
-        for (int groupIndex = 1; groupIndex < this.parameters.AuthorityCount; groupIndex++)
-        {
-          IEnumerable<BigInt> partialDeciphersByOptionAndGroup = partialDeciphers
-            .Where(partialDecipher => partialDecipher.GroupIndex == groupIndex && partialDecipher.OptionIndex == optionIndex)
-            .Select(partialDecipher => partialDecipher.Value);
-          if (partialDeciphersByOptionAndGroup.Count() == this.parameters.Thereshold + 1)
-            optionResults.Add(this.voteSums[optionIndex].Decrypt(partialDeciphersByOptionAndGroup, parameters));
-        }
-
-        Option option = this.parameters.Options.ElementAt(optionIndex);
-
-        if (optionResults.Count > 0)
-        {
-          int firstOptionResult = optionResults[0];
-
-          if (optionResults.All(optionResult => optionResult == firstOptionResult))
-          {
-            this.result.Options.Add(new OptionResult(option.Text, option.Description, firstOptionResult));
-          }
-          else
-          {
-            this.result.Options.Add(new OptionResult(option.Text, option.Description, -1));
-          }
-        }
-        else
-        {
-          this.result.Options.Add(new OptionResult(option.Text, option.Description, -1));
-        }
+        return this.tally.Result;
       }
-
-      return this.result;
     }
   }
 }
