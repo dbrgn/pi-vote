@@ -26,7 +26,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voter.
     /// </summary>
-    public int VoterId { get; private set; }
+    public Guid VoterId { get; private set; }
 
     /// <summary>
     /// Casted ballot.
@@ -39,7 +39,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="votingId">Id of the voting procedure.</param>
     /// <param name="voterId">Id of the voter.</param>
     /// <param name="ballot">Casted ballot.</param>
-    public Envelope(int votingId, int voterId, Ballot ballot)
+    public Envelope(int votingId, Guid voterId, Ballot ballot)
     {
       if (ballot == null)
         throw new ArgumentNullException("ballot");
@@ -77,7 +77,7 @@ namespace Pirate.PiVote.Crypto
     {
       base.Deserialize(context);
       VotingId = context.ReadInt32();
-      VoterId = context.ReadInt32();
+      VoterId = context.ReadGuid();
       Ballot = context.ReadObject<Ballot>();
     }
   }

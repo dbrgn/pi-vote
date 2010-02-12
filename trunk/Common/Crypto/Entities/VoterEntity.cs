@@ -34,24 +34,18 @@ namespace Pirate.PiVote.Crypto
     private VotingParameters parameters;
 
     /// <summary>
-    /// Id of this voter.
-    /// </summary>
-    public int VoterId { get; private set; }
-
-    /// <summary>
     /// Private certificate of this voter.
     /// </summary>
-    private Certificate certificate;
+    public VoterCertificate Certificate { get; private set; }
 
     /// <summary>
     /// Tally of voting.
     /// </summary>
     private Tally tally;
 
-    public VoterEntity(int voterId, CACertificate rootCertificate, VoterCertificate voterCertificate)
+    public VoterEntity(CACertificate rootCertificate, VoterCertificate voterCertificate)
     {
-      VoterId = voterId;
-      this.certificate = voterCertificate;
+      Certificate = voterCertificate;
       this.certificateStorage = new CertificateStorage();
       this.certificateStorage.AddRoot(rootCertificate);
     }
@@ -72,9 +66,41 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentException("Bad vota count.");
       if (!vota.All(votum => votum.InRange(0, 1)))
         throw new ArgumentException("Votum out of range.");
-      
+
+      bool acceptMaterial = SetVotingMaterial(votingMaterial);
+
+      if (acceptMaterial)
+      {
+        Ballot ballot = new Ballot(vota, votingMaterial.Parameters, this.publicKey);
+        Envelope ballotContainer = new Envelope(votingMaterial.VotingId, Certificate.Id, ballot);
+
+        return new Signed<Envelope>(ballotContainer, Certificate);
+      }
+      else
+      {
+        return null;
+      }
+    }
+
+    /// <summary>
+    /// Begin summation of votes.
+    /// </summary>
+    public void TallyBegin(VotingMaterial votingMaterial)
+    {
+      if (votingMaterial == null)
+        throw new ArgumentNullException("votingMaterial");
+
+      if (!SetVotingMaterial(votingMaterial))
+        throw new PiArgumentException(ExceptionCode.BadVotingMaterial, "Bad voting material");
+
+      this.tally = new Tally(this.parameters, this.certificateStorage, this.publicKey);
+    }
+
+    private bool SetVotingMaterial(VotingMaterial votingMaterial)
+    {
       this.parameters = votingMaterial.Parameters;
       bool acceptMaterial = true;
+
       this.publicKey = new BigInt(1);
 
       foreach (Certificate certificate in votingMaterial.Certificates)
@@ -96,25 +122,7 @@ namespace Pirate.PiVote.Crypto
         this.publicKey = (this.publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.P);
       }
 
-      if (acceptMaterial)
-      {
-        Ballot ballot = new Ballot(vota, votingMaterial.Parameters, this.publicKey);
-        Envelope ballotContainer = new Envelope(votingMaterial.VotingId, VoterId, ballot);
-
-        return new Signed<Envelope>(ballotContainer, this.certificate);
-      }
-      else
-      {
-        return null;
-      }
-    }
-
-    /// <summary>
-    /// Begin summation of votes.
-    /// </summary>
-    public void TallyBegin()
-    {
-      this.tally = new Tally(this.parameters, this.certificateStorage, this.publicKey);
+      return acceptMaterial;
     }
 
     /// <summary>

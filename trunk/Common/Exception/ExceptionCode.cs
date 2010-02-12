@@ -26,6 +26,7 @@ namespace Pirate.PiVote
     WrongStatusForOperation       = 5,
     RequestSignatureInvalid       = 6,
     NoAuthorizedAdmin             = 7,
+    BadVotingMaterial             = 8,
 
     AuthorityCountOutOfRange      = 1000001,
     TheresholdOutOfRange          = 1000002,

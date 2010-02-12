@@ -25,7 +25,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voter.
     /// </summary>
-    private readonly int voterId;
+    private readonly Guid voterId;
 
     /// <summary>
     /// Was the envelope/ballot from that voter valid?
@@ -35,7 +35,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voter.
     /// </summary>
-    public int VoterId { get { return this.voterId; } }
+    public Guid VoterId { get { return this.voterId; } }
 
     /// <summary>
     /// Was the envelope/ballot from that voter valid?
@@ -47,7 +47,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="voterId">Id of the voter.</param>
     /// <param name="valid">Validity of the envelope/ballot.</param>
-    public EnvelopeResult(int voterId, bool valid)
+    public EnvelopeResult(Guid voterId, bool valid)
     {
       this.voterId = voterId;
       this.valid = valid;

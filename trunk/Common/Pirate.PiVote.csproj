@@ -126,6 +126,7 @@
     <Compile Include="Exception\ExceptionCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exception\PiException.cs" />
+    <Compile Include="Rpc\Clients\VoterClient.cs" />
     <Compile Include="Rpc\Generic\RpcServer.cs" />
     <Compile Include="Rpc\Generic\RpcResponse.cs" />
     <Compile Include="Rpc\Generic\RpcRequest.cs" />

@@ -116,7 +116,7 @@ namespace Pirate.PiVote.Crypto
       v1c.CreateSelfSignature();
       v1c.AddSignature(intermediate, validUntil);
 
-      var v1 = new VoterEntity(11, root, v1c);
+      var v1 = new VoterEntity(root, v1c);
 
       var vote1 = v1.Vote(vs.GetVotingMaterial(), new int[] { 0, 1 });
 
@@ -130,7 +130,7 @@ namespace Pirate.PiVote.Crypto
         vc.CreateSelfSignature();
         vc.AddSignature(intermediate, validUntil);
 
-        var vx = new VoterEntity(i, root, vc);
+        var vx = new VoterEntity(root, vc);
 
         var votex = vx.Vote(vs.GetVotingMaterial(), new int[] { 0, 1 });
 
@@ -143,7 +143,7 @@ namespace Pirate.PiVote.Crypto
         vc.CreateSelfSignature();
         vc.AddSignature(intermediate, validUntil);
 
-        var vx = new VoterEntity(i, root, vc);
+        var vx = new VoterEntity(root, vc);
 
         var votex = vx.Vote(vs.GetVotingMaterial(), new int[] { 1, 0 });
 
@@ -179,7 +179,7 @@ namespace Pirate.PiVote.Crypto
       vs.DepositPartialDecipher(pd4);
       vs.DepositPartialDecipher(pd5);
 
-      v1.TallyBegin();
+      v1.TallyBegin(vs.GetVotingMaterial());
 
       for (int envelopeIndex = 0; envelopeIndex < vs.GetEnvelopeCount(); envelopeIndex++)
       {

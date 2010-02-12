@@ -57,7 +57,7 @@ namespace Pirate.PiVote.Crypto
       Id = Guid.NewGuid();
 
       RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider();
-      rsaProvider.KeySize = 2048;
+      rsaProvider.KeySize = 4096;
       Key = rsaProvider.ExportCspBlob(true);
 
       Signatures = new List<Signature>();

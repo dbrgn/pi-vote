@@ -83,6 +83,10 @@ namespace Pirate.PiVote.Crypto
     /// <param name="signedEnvelope">Signed envelope from voter.</param>
     public void Add(Signed<Envelope> signedEnvelope)
     {
+#if DEBUG
+      DateTime start = DateTime.Now;
+#endif
+
       if (signedEnvelope == null)
         throw new ArgumentNullException("signedEnvelope");
       if (voteSums == null)
@@ -112,6 +116,10 @@ namespace Pirate.PiVote.Crypto
       }
 
       this.result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));
+
+#if DEBUG
+      Console.WriteLine(DateTime.Now.Subtract(start).ToString());
+#endif
     }
 
     /// <summary>

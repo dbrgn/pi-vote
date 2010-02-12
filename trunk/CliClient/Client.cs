@@ -28,6 +28,7 @@ namespace Pirate.PiVote.CliClient
     private CACertificate root;
     private CACertificate intermediate;
     private AdminCertificate admin;
+    private VoterClient voterClient;
     
     public Client()
     {
@@ -217,7 +218,7 @@ namespace Pirate.PiVote.CliClient
       Console.Write("Waiting for peers...");
       while (proxy.FetchVotingStatus(votingId) != VotingStatus.Sharing)
       {
-        Thread.Sleep(1);
+        Thread.Sleep(1000);
       }
       Console.WriteLine("Done");
 
@@ -236,7 +237,7 @@ namespace Pirate.PiVote.CliClient
       Console.Write("Waiting for peers...");
       while (proxy.FetchVotingStatus(votingId) == VotingStatus.Sharing)
       {
-        Thread.Sleep(1);
+        Thread.Sleep(1000);
       }
       Console.WriteLine("Done");
 
@@ -252,7 +253,7 @@ namespace Pirate.PiVote.CliClient
       Console.Write("Waiting for voters...");
       while (proxy.FetchVotingStatus(votingId) != VotingStatus.Deciphering)
       {
-        Thread.Sleep(1);
+        Thread.Sleep(1000);
       }
       Console.WriteLine("Done");
 
@@ -279,90 +280,116 @@ namespace Pirate.PiVote.CliClient
       Console.ReadLine();
     }
 
-
     private void VoterMode()
     {
-      Console.WriteLine("VoterMode Mode");
+      Console.WriteLine("Voter Mode");
 
       Console.Write("Enter voter index 0..9: ");
       int voterIndex = Convert.ToInt32(Console.ReadLine());
 
-      var proxy = new VoterRpcProxy(this.client, this.voters[voterIndex]);
-      int votingId = 1;
+      this.voterClient = new VoterClient((CACertificate)this.root.OnlyPublicPart, this.voters[voterIndex]);
 
-      Console.Write("Getting voting material...");
-      var vm = proxy.FetchVotingMaterial(votingId);
-      Console.WriteLine("Done");
+      this.voterClient.Connect(IPAddress.Loopback, Connected);
+    }
 
-      var voter = new VoterEntity(voterIndex + 1, (CACertificate)this.root.OnlyPublicPart, this.voters[voterIndex]);
-
-      Console.WriteLine("Vote now!");
-      Console.WriteLine(vm.Parameters.VotingName);
-
-      int index = 0;
-      foreach (Option option in vm.Parameters.Options)
+    private void Connected(Exception exception)
+    {
+      if (exception == null)
       {
-        Console.WriteLine("{0}: {1} / {2}", index, option.Text, option.Description);
-        index++;
+        Console.WriteLine();
+        Console.WriteLine("Connected to voting server.");
+
+        this.voterClient.GetVotingList(VotingList);
       }
-
-      Console.Write("Enter vote: ");
-      int optionIndex = Convert.ToInt32(Console.ReadLine());
-      int[] vota = new int[vm.Parameters.OptionCount];
-      vota[optionIndex] = 1;
-
-      Console.Write("Computing envelope...");
-      var envelope = voter.Vote(vm, vota);
-      Console.WriteLine("Done");
-
-      Console.Write("Pusihing envelope...");
-      proxy.PushEnvelope(votingId, envelope);
-      Console.WriteLine("Done");
-
-      Console.WriteLine("Vote is cast!");
-
-      Console.Write("Waiting for voters...");
-      while (proxy.FetchVotingStatus(votingId) == VotingStatus.Voting)
+      else
       {
-        Thread.Sleep(1);
+        Console.WriteLine(exception.ToString());
       }
-      Console.WriteLine("Done");
+    }
 
-      Console.Write("Waiting for deciphering...");
-      while (proxy.FetchVotingStatus(votingId) == VotingStatus.Deciphering)
+    private void VotingList(IEnumerable<VoterClient.VotingDescriptor> votingList, Exception exception)
+    {
+      if (votingList == null)
       {
-        Thread.Sleep(1);
+        Console.WriteLine(exception.ToString());
       }
-      Console.WriteLine("Done");
-
-      Console.Write("Fetching and verifiing result.");
-      int envelopeCount = proxy.FetchEnvelopeCount(votingId);
-      voter.TallyBegin();
-
-      for (int envelopeIndex = 0; envelopeIndex < envelopeCount; envelopeIndex++)
+      else
       {
-        voter.TallyAdd(proxy.FetchEnvelope(votingId, envelopeIndex));
-        Console.Write(".");
-      }
+        Console.WriteLine("Current votes are:");
 
-      for (int authorityIndex = 1; authorityIndex < vm.Parameters.AuthorityCount + 1; authorityIndex++)
+        foreach (var voting in votingList)
+        {
+          Console.WriteLine("  {0}: {1}, {2}", voting.Id, voting.Name, voting.Status);
+        }
+
+        Console.Write("  Select one: ");
+        int votingIndex = Convert.ToInt32(Console.ReadLine());
+        var selectedVoting = votingList.ElementAt(votingIndex);
+
+        Console.WriteLine();
+
+        switch (selectedVoting.Status)
+        {
+          case VotingStatus.New:
+          case VotingStatus.Deciphering:
+          case VotingStatus.Aborted:
+          case VotingStatus.Sharing:
+            Console.WriteLine("You cant do anything with this voting at the moment.");
+            break;
+          case VotingStatus.Voting:
+            Console.WriteLine("You can now vote.");
+            Console.WriteLine(selectedVoting.Name);
+
+            foreach (var option in selectedVoting.Options)
+            {
+              Console.WriteLine("  {0}, {1}", option.Text, option.Description);
+            }
+
+            Console.Write("  Select one: ");
+            int optionIndex = Convert.ToInt32(Console.ReadLine());
+            this.voterClient.Vote(selectedVoting.Id, optionIndex, VoteCallBack);
+
+            break;
+          case VotingStatus.Finished:
+            Console.WriteLine("Getting result now.");
+            this.voterClient.GetResult(selectedVoting.Id, GetResult);
+            break;
+        }
+      }
+    }
+
+    private void VoteCallBack(Exception exception)
+    {
+      if (exception == null)
       {
-        voter.TallyAddPartialDecipher(proxy.FetchPartialDecipher(votingId, authorityIndex));
-        Console.Write(".");
+        Console.WriteLine();
+        Console.WriteLine("Vote is cast!");
       }
-
-      var result = voter.TallyResult;
-      Console.WriteLine("Done");
-
-      Console.WriteLine("Result is:");
-      Console.WriteLine("Cast votes {0}.", result.TotalBallots);
-      Console.WriteLine("Invalid votes {0}.", result.InvalidBallots);
-      foreach (OptionResult option in result.Options)
+      else
       {
-        Console.WriteLine("{0} / {1} : {2}", option.Text, option.Description, option.Result);
+        Console.WriteLine(exception.ToString());
       }
+    }
 
-      Console.WriteLine();
+    private void GetResult(VotingResult result, Exception exception)
+    {
+      if (result == null)
+      {
+        Console.WriteLine(exception.ToString());
+      }
+      else
+      {
+        Console.WriteLine();
+        Console.WriteLine(result.VotingName);
+        Console.WriteLine("  Total ballots cast: {0}", result.TotalBallots);
+        Console.WriteLine("  Invalid ballots cast: {0}", result.InvalidBallots);
+        Console.WriteLine("  Valid ballots cast: {0}", result.ValidBallots);
+
+        foreach (var option in result.Options)
+        {
+          Console.WriteLine("    {0}: {1}", option.Text, option.Result);
+        }
+      }
     }
   }
 }

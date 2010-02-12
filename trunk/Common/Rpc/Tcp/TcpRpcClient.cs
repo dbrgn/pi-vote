@@ -72,6 +72,8 @@ namespace Pirate.PiVote.Rpc
       int packetLength = reader.ReadInt32();
       byte[] responseData = reader.ReadBytes(packetLength);
 
+      Console.WriteLine("REQUEST {0}, RESPONSE {1}", requestData.Length, responseData.Length);
+
       return responseData;
     }
   }
