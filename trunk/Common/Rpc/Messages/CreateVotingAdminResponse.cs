@@ -20,20 +20,13 @@ namespace Pirate.PiVote.Rpc
   public class CreateVotingAdminResponse : RpcResponse
   {
     /// <summary>
-    /// Id of the newly created voting.
-    /// </summary>
-    public int VotingId { get; private set; }
-
-    /// <summary>
     /// Create a response to a voting creation RPC request.
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="votingId">Id of the newly created voting.</param>
-    public CreateVotingAdminResponse(Guid requestId, int votingId)
+    public CreateVotingAdminResponse(Guid requestId)
       : base(requestId)
-    {
-      VotingId = votingId;
-    }
+    { }
 
     /// <summary>
     /// Create a failure response to request.
@@ -59,7 +52,6 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(VotingId);
     }
 
     /// <summary>
@@ -69,7 +61,6 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      VotingId = context.ReadInt32();
     }
   }
 }

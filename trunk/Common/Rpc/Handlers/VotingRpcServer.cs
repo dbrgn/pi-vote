@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text;
 using Pirate.PiVote.Serialization;
 using Pirate.PiVote.Crypto;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace Pirate.PiVote.Rpc
 {
@@ -21,23 +23,55 @@ namespace Pirate.PiVote.Rpc
   public class VotingRpcServer : RpcServer
   {
     /// <summary>
+    /// MySQL database connection.
+    /// </summary>
+    private MySqlConnection dbConnection;
+    
+    /// <summary>
     /// List of voting procedures.
     /// </summary>
-    private Dictionary<int, VotingServerEntity> votings;
+    private Dictionary<Guid, VotingServerEntity> votings;
 
     /// <summary>
     /// Storage for certificates.
     /// </summary>
-    private CertificateStorage certificateStorage;
+    public DatabaseCertificateStorage CertificateStorage { get; private set; }
 
     /// <summary>
     /// Create the voting server.
     /// </summary>
-    /// <param name="certificateStorage">Storage for certificates.</param>
-    public VotingRpcServer(CertificateStorage certificateStorage)
+    public VotingRpcServer()
     {
-      this.votings = new Dictionary<int, VotingServerEntity>();
-      this.certificateStorage = certificateStorage;
+      this.dbConnection = new MySqlConnection("Server=localhost;Database=PiVote;Uid=pivote;Pwd=alpha123.;");
+      this.dbConnection.Open();
+
+      CertificateStorage = new DatabaseCertificateStorage(this.dbConnection);
+      CertificateStorage.ImportCaIfNeed();
+
+      LoadVotings();
+    }
+
+    /// <summary>
+    /// Load all votings from the database.
+    /// </summary>
+    private void LoadVotings()
+    {
+      this.votings = new Dictionary<Guid, VotingServerEntity>();
+
+      MySqlCommand selectCommand = new MySqlCommand("SELECT Id, Parameters, Status FROM voting", this.dbConnection);
+      MySqlDataReader reader = selectCommand.ExecuteReader();
+
+      while (reader.Read())
+      {
+        Guid id = reader.GetGuid(0);
+        byte[] signedParametersData = reader.GetBlob(1);
+        Signed<VotingParameters> signedParameters = Serializable.FromBinary<Signed<VotingParameters>>(signedParametersData);
+        VotingStatus status = (VotingStatus)reader.GetInt32(0);
+        VotingServerEntity entity = new VotingServerEntity(this.dbConnection, signedParameters, this.CertificateStorage, status);
+        this.votings.Add(id, entity);
+      }
+
+      reader.Close();
     }
 
     /// <summary>
@@ -47,12 +81,8 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Serialized response data</returns>
     public byte[] Execute(byte[] requestData)
     {
-      var signedRequest = Serializable.FromBinary<Signed<RpcRequest<VotingRpcServer>>>(requestData);
-
-      var request = signedRequest.Value;
-      var valid = signedRequest.Verify(this.certificateStorage);
-      
-      var response = request.TryExecute(this, valid ? signedRequest.Certificate : null);
+      var request = Serializable.FromBinary<RpcRequest<VotingRpcServer>>(requestData);
+      var response = request.TryExecute(this);
 
       return response.ToBinary();
     }
@@ -62,13 +92,19 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="votingParameters">Parameters for the voting.</param>
     /// <param name="authorities">List of authorities to oversee the voting.</param>
-    /// <returns>Id of the voting.</returns>
-    public int CreateVoting(VotingParameters votingParameters, IEnumerable<AuthorityCertificate> authorities)
+    public void CreateVoting(Signed<VotingParameters> signedVotingParameters, IEnumerable<AuthorityCertificate> authorities)
     {
-      if (votingParameters == null)
+      if (signedVotingParameters == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "Voting parameters cannot be null.");
       if (authorities == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "Authority list cannot be null.");
+
+      if (!signedVotingParameters.Verify(CertificateStorage))
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Invalid signature.");
+      if (!(signedVotingParameters.Certificate is AdminCertificate))
+        throw new PiSecurityException(ExceptionCode.NoAuthorizedAdmin, "No authorized admin.");
+
+      VotingParameters votingParameters = signedVotingParameters.Value;
 
       if (votingParameters.P == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "P cannot be null.");
@@ -97,21 +133,25 @@ namespace Pirate.PiVote.Rpc
         throw new PiArgumentException(ExceptionCode.OptionCountMismatch, "Option count does not match number of options.");
       if (votingParameters.AuthorityCount != authorities.Count())
         throw new PiArgumentException(ExceptionCode.AuthorityCountMismatch, "Authority count does not match number of provided authorities.");
+      if (!authorities.All(authority => authority.Valid(CertificateStorage)))
+        throw new PiArgumentException(ExceptionCode.AuthorityInvalid, "Authority certificate invalid or not recognized.");
 
-      votingParameters.SetId(votings.Keys.MaxOrDefault(0) + 1);
+      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO voting (Id, Parameters, Status) VALUES (@Id, @Parameters, @Status)", this.dbConnection);
+      insertCommand.Parameters.AddWithValue("@Id", votingParameters.VotingId.ToByteArray());
+      insertCommand.Parameters.AddWithValue("@Parameters", signedVotingParameters.ToBinary());
+      insertCommand.Parameters.AddWithValue("@Status", (int)VotingStatus.New);
+      insertCommand.ExecuteNonQuery();
 
-      VotingServerEntity voting = new VotingServerEntity(votingParameters, this.certificateStorage);
+      VotingServerEntity voting = new VotingServerEntity(this.dbConnection, signedVotingParameters, CertificateStorage);
       authorities.Foreach(authority => voting.AddAuthority(authority));
       this.votings.Add(voting.Id, voting);
-
-      return voting.Id;
     }
 
     /// <summary>
     /// Fetches the ids of all votings.
     /// </summary>
     /// <returns>List of voting ids.</returns>
-    public IEnumerable<int> FetchVotingIds()
+    public IEnumerable<Guid> FetchVotingIds()
     {
       return this.votings.Keys;
     }
@@ -121,12 +161,115 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="id">Id of the voting.</param>
     /// <returns>Voting procedure entity.</returns>
-    public VotingServerEntity GetVoting(int id)
+    public VotingServerEntity GetVoting(Guid id)
     {
       if (!this.votings.ContainsKey(id))
         throw new PiArgumentException(ExceptionCode.NoVotingWithId, "No voting with that id.");
 
       return this.votings[id];
+    }
+
+    /// <summary>
+    /// Set a signature request.
+    /// </summary>
+    /// <remarks>
+    /// Add or replaces a signature request.
+    /// </remarks>
+    /// <param name="signatureRequest">Signed signature request.</param>
+    public void SetSignatureRequest(Signed<SignatureRequest> signatureRequest)
+    {
+      Guid id = signatureRequest.Certificate.Id;
+
+      if (!signatureRequest.VerifySimple())
+        throw new PiArgumentException(ExceptionCode.SignatureRequestInvalid, "Signature request invalid.");
+
+      MySqlCommand replaceCommand = new MySqlCommand("REPLACE INTO signaturerequest (Id, Value) VALUES (@Id, @Value)", this.dbConnection);
+      replaceCommand.Parameters.AddWithValue("@Id", id.ToByteArray());
+      replaceCommand.Parameters.AddWithValue("@Value", signatureRequest.ToBinary());
+      replaceCommand.ExecuteNonQuery();
+    }
+
+    /// <summary>
+    /// Get the list of open signature requests.
+    /// </summary>
+    /// <returns>List of signature request ids.</returns>
+    public List<Guid> GetSignatureRequestList()
+    {
+      MySqlDataReader reader = this.dbConnection
+        .ExecuteReader("SELECT Id FROM signaturerequest WHERE NOT Id IN (SELECT Id FROM signatureresponse)");
+      List<Guid> signatureRequestList = new List<Guid>();
+
+      while (reader.Read())
+      {
+        signatureRequestList.Add(reader.GetGuid(0));
+      }
+
+      reader.Close();
+
+      return signatureRequestList;
+    }
+
+    /// <summary>
+    /// Get a signature request.
+    /// </summary>
+    /// <param name="id">Id of the signature request.</param>
+    /// <returns>Signed signature request.</returns>
+    public Signed<SignatureRequest> GetSignatureRequest(Guid id)
+    {
+      MySqlDataReader reader = this.dbConnection
+        .ExecuteReader("SELECT Value FROM signaturerequest WHERE Id = @Id",
+        "@Id", id.ToByteArray());
+
+      if (reader.Read())
+      {
+        byte[] signatureRequestData = reader.GetBlob(0);
+        reader.Close();
+        return Serializable.FromBinary<Signed<SignatureRequest>>(signatureRequestData);
+      }
+      else
+      {
+        reader.Close();
+        throw new PiArgumentException(ExceptionCode.SignatureRequestNotFound, "Signature request not found.");
+      }
+    }
+
+    /// <summary>
+    /// Get the status and perhaps response regarding as signature request.
+    /// </summary>
+    /// <param name="certificateId">Id of the certificate.</param>
+    /// <param name="signatureResponse">Signed signature response.</param>
+    /// <returns>Status of the signature response.</returns>
+    public SignatureResponseStatus GetSignatureResponseStatus(Guid certificateId, out Signed<SignatureResponse> signatureResponse)
+    {
+      MySqlCommand selectResponseCommand = new MySqlCommand("SELECT Value FROM signatureresponse WHERE Id = @Id", this.dbConnection);
+      selectResponseCommand.Parameters.AddWithValue("@Id", certificateId.ToByteArray());
+      MySqlDataReader selectResponseReader = selectResponseCommand.ExecuteReader();
+
+      if (selectResponseReader.Read())
+      {
+        byte[] signatureResponseData = selectResponseReader.GetBlob(0);
+        selectResponseReader.Close();
+        signatureResponse = Serializable.FromBinary<Signed<SignatureResponse>>(signatureResponseData);
+        return signatureResponse.Value.Status;
+      }
+      else
+      {
+        selectResponseReader.Close();
+
+        MySqlCommand selectRequestCommand = new MySqlCommand("SELECT count(*) FROM signaturerequest WHERE Id = @Id", this.dbConnection);
+        selectRequestCommand.Parameters.AddWithValue("@Id", certificateId.ToByteArray());
+
+        if (selectRequestCommand.ExecuteHasRows())
+        {
+          signatureResponse = null;
+          return SignatureResponseStatus.Pending;
+        }
+        else
+        {
+          signatureResponse = null;
+          return SignatureResponseStatus.Unknown;
+        }
+      }
     }
   }
 }

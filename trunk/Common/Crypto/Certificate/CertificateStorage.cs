@@ -18,7 +18,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Stores certificates for validation.
   /// </summary>
-  public class CertificateStorage : Serializable
+  public class CertificateStorage : Serializable, ICertificateStorage
   {
     /// <summary>
     /// Ids of root certificates.
@@ -33,22 +33,22 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Certificate revocation lists for certificate authorities.
     /// </summary>
-    private Dictionary<Guid, RevocationList> revocationLists;
+    private List<RevocationList> revocationLists;
 
     /// <summary>
     /// Signed certificate revocation lists for certificate authorities.
     /// </summary>
-    private Dictionary<Guid, Signed<RevocationList>> signedRevocationLists;
+    private List<Signed<RevocationList>> signedRevocationLists;
 
     /// <summary>
     /// Signed certificate revocation lists for certificate authorities.
     /// </summary>
-    public IEnumerable<Signed<RevocationList>> SignedRevocationLists { get { return this.signedRevocationLists.Values; } }
+    public IEnumerable<Signed<RevocationList>> SignedRevocationLists { get { return this.signedRevocationLists; } }
 
     /// <summary>
     /// List of certificates.
     /// </summary>
-    public IEnumerable<Certificate> Certificates { get { return this.certificates.Values.Where(certificate => !this.rootCertificateIds.Contains(certificate.Id)); } }
+    public IEnumerable<Certificate> Certificates { get { return this.certificates.Values; } }
 
     /// <summary>
     /// Creates a new certificate storage.
@@ -56,25 +56,37 @@ namespace Pirate.PiVote.Crypto
     public CertificateStorage()
     {
       this.certificates = new Dictionary<Guid, Certificate>();
-      this.revocationLists = new Dictionary<Guid, RevocationList>();
+      this.revocationLists = new List<RevocationList>();
       this.rootCertificateIds = new List<Guid>();
-      this.signedRevocationLists = new Dictionary<Guid, Signed<RevocationList>>();
+      this.signedRevocationLists = new List<Signed<RevocationList>>();
     }
 
+    /// <summary>
+    /// Creates an object by deserializing from binary data.
+    /// </summary>
+    /// <param name="context">Context for deserialization.</param>
     public CertificateStorage(DeserializeContext context)
       : base(context)
     { }
 
+    /// <summary>
+    /// Serializes the object to binary.
+    /// </summary>
+    /// <param name="context">Context for serializable.</param>
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
       context.Write(this.rootCertificateIds.Count);
       this.rootCertificateIds.ForEach(rootCertificateId => context.Write(rootCertificateId));
       context.WriteList(this.certificates.Values);
-      context.WriteList(this.revocationLists.Values);
-      context.WriteList(this.signedRevocationLists.Values);
+      context.WriteList(this.revocationLists);
+      context.WriteList(this.signedRevocationLists);
     }
 
+    /// <summary>
+    /// Deserializes binary data to object.
+    /// </summary>
+    /// <param name="context">Context for deserialization</param>
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
@@ -87,13 +99,8 @@ namespace Pirate.PiVote.Crypto
       List<Certificate> certificates = context.ReadObjectList<Certificate>();
       certificates.ForEach(certificate => this.certificates.Add(certificate.Id, certificate));
 
-      this.revocationLists = new Dictionary<Guid,RevocationList>();
-      List<RevocationList> revocationLists = context.ReadObjectList<RevocationList>();
-      revocationLists.ForEach(revocationList => this.revocationLists.Add(revocationList.IssuerId, revocationList));
-
-      this.signedRevocationLists = new Dictionary<Guid,Signed<RevocationList>>();
-      List<Signed<RevocationList>> signedRevocationLists = context.ReadObjectList<Signed<RevocationList>>();
-      signedRevocationLists.ForEach(signedRevocationList => this.signedRevocationLists.Add(signedRevocationList.Certificate.Id, signedRevocationList));
+      this.revocationLists = context.ReadObjectList<RevocationList>();
+      this.signedRevocationLists = context.ReadObjectList<Signed<RevocationList>>();
     }
 
     /// <summary>
@@ -120,6 +127,19 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Is this CRL in this storage.
+    /// </summary>
+    /// <param name="revocationList">Revocation list in question.</param>
+    /// <returns>Was it already added?</returns>
+    public bool Has(RevocationList revocationList)
+    { 
+      return SignedRevocationLists
+        .Any(other => other.Value.IssuerId == revocationList.IssuerId &&
+                      other.Value.ValidFrom == revocationList.ValidFrom &&
+                      other.Value.ValidUntil == revocationList.ValidUntil);
+    }
+
+    /// <summary>
     /// Add a certificate to the storage.
     /// </summary>
     /// <param name="certificate">Certificate to add.</param>
@@ -127,10 +147,15 @@ namespace Pirate.PiVote.Crypto
     {
       if (certificate == null)
         throw new ArgumentNullException("certificate");
-      if (this.certificates.ContainsKey(certificate.Id))
-        throw new ArgumentException("Certificate already added.");
 
-      this.certificates.Add(certificate.Id, certificate);
+      if (this.certificates.ContainsKey(certificate.Id))
+      {
+        this.certificates[certificate.Id].Merge(certificate);
+      }
+      else
+      {
+        this.certificates.Add(certificate.Id, certificate);
+      }
     }
 
     /// <summary>
@@ -139,8 +164,12 @@ namespace Pirate.PiVote.Crypto
     /// <param name="certificate">Root certificate to add.</param>
     public void AddRoot(Certificate certificate)
     {
-      this.certificates.Add(certificate.Id, certificate);
-      this.rootCertificateIds.Add(certificate.Id);
+      Add(certificate);
+
+      if (!this.rootCertificateIds.Contains(certificate.Id))
+      {
+        this.rootCertificateIds.Add(certificate.Id);
+      }
     }
 
     /// <summary>
@@ -157,7 +186,7 @@ namespace Pirate.PiVote.Crypto
     /// Set a certificate revocation list.
     /// </summary>
     /// <param name="signedRevocationList">Signed certificate revocation list.</param>
-    public void SetRevocationList(Signed<RevocationList> signedRevocationList)
+    public void AddRevocationList(Signed<RevocationList> signedRevocationList)
     {
       RevocationList revocationList = signedRevocationList.Value;
       if (revocationList.IssuerId != signedRevocationList.Certificate.Id)
@@ -165,22 +194,31 @@ namespace Pirate.PiVote.Crypto
       if (!signedRevocationList.Verify(this))
         throw new ArgumentException("Bad signature on revocation list.");
 
-      if (this.revocationLists.ContainsKey(revocationList.IssuerId))
+      if (this.revocationLists
+        .Where(list => list.IssuerId == revocationList.IssuerId &&
+               list.ValidFrom == revocationList.ValidFrom &&
+               list.ValidUntil == revocationList.ValidUntil).Count() < 1)
       {
-        this.revocationLists[revocationList.IssuerId] = revocationList;
+        this.revocationLists.Add(revocationList);
+        this.signedRevocationLists.Add(signedRevocationList);
       }
-      else
-      {
-        this.revocationLists.Add(revocationList.IssuerId, revocationList);
-      }
+    }
 
-      if (this.signedRevocationLists.ContainsKey(revocationList.IssuerId))
+    /// <summary>
+    /// Set a certificate revocation list without checking validity.
+    /// </summary>
+    /// <param name="signedRevocationList">Signed certificate revocation list.</param>
+    private void ForceAddRevocationList(Signed<RevocationList> signedRevocationList)
+    {
+      RevocationList revocationList = signedRevocationList.Value;
+
+      if (this.revocationLists
+        .Where(list => list.IssuerId == revocationList.IssuerId &&
+               list.ValidFrom == revocationList.ValidFrom &&
+               list.ValidUntil == revocationList.ValidUntil).Count() < 1)
       {
-        this.signedRevocationLists[revocationList.IssuerId] = signedRevocationList;
-      }
-      else
-      {
-        this.signedRevocationLists.Add(revocationList.IssuerId, signedRevocationList);
+        this.revocationLists.Add(revocationList);
+        this.signedRevocationLists.Add(signedRevocationList);
       }
     }
 
@@ -190,26 +228,53 @@ namespace Pirate.PiVote.Crypto
     /// <param name="issuerId">Id of the issuer of a signature.</param>
     /// <param name="certificateId">Id of the certificate.</param>
     /// <returns>Is it revoked.</returns>
-    public bool IsRevoked(Guid issuerId, Guid certificateId)
+    public bool IsRevoked(Guid issuerId, Guid certificateId, DateTime date)
     {
-      if (this.revocationLists.ContainsKey(issuerId))
-      {
-        RevocationList revocationList = this.revocationLists[issuerId];
+      RevocationList revocationList = this.revocationLists
+        .Where(list => list.IssuerId == issuerId &&
+               date >= list.ValidFrom &&
+               date <= list.ValidUntil)
+        .FirstOrDefault();
 
-        if (revocationList.ValidFrom < DateTime.Now &&
-            revocationList.ValidUntil > DateTime.Now)
-        {
-          return revocationList.RevokedCertificates.Contains(certificateId);
-        }
-        else
-        {
-          return true;
-        }
-      }
-      else
+      if (revocationList == null)
       {
         return true;
       }
+      else
+      {
+        return revocationList.RevokedCertificates.Contains(certificateId);
+      }
+    }
+
+    /// <summary>
+    /// Adds all certificates and revocation lists from a storage.
+    /// </summary>
+    /// <remarks>
+    /// Does NOT add root certificates.
+    /// </remarks>
+    /// <param name="certificateStorage">Certificate storage to add.</param>
+    public void Add(ICertificateStorage certificateStorage)
+    {
+      certificateStorage.Certificates
+        .Foreach(certificate => Add(certificate));
+      certificateStorage.SignedRevocationLists
+        .Foreach(reveocationList => ForceAddRevocationList(reveocationList));
+    }
+
+    /// <summary>
+    /// Adds only CA certificates and revocation lists from a storage.
+    /// </summary>
+    /// <remarks>
+    /// Does NOT add root certificates.
+    /// </remarks>
+    /// <param name="certificateStorage">Certificate storage to add.</param>
+    public void AddOnlyCA(ICertificateStorage certificateStorage)
+    {
+      certificateStorage.Certificates
+        .Where(certificate => certificate is CACertificate)
+        .Foreach(certificate => Add(certificate));
+      certificateStorage.SignedRevocationLists
+        .Foreach(reveocationList => ForceAddRevocationList(reveocationList));
     }
   }
 }

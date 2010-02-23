@@ -32,12 +32,22 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of this voting.
     /// </summary>
-    public int VotingId { get; private set; }
+    public Guid VotingId { get; private set; }
 
     /// <summary>
     /// Name of this voting.
     /// </summary>
     public string VotingName { get; private set; }
+
+    /// <summary>
+    /// Date at which voting begins.
+    /// </summary>
+    public DateTime VotingBeginDate { get; private set; }
+
+    /// <summary>
+    /// Date a which voting ends.
+    /// </summary>
+    public DateTime VotingEndDate { get; private set; }
     
     /// <summary>
     /// List of possible options for the voters.
@@ -50,25 +60,16 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new voting.
     /// </summary>
-    public VotingParameters(string votingName)
+    public VotingParameters(string votingName, DateTime votingBeginDate, DateTime votingEndDate)
     {
       if (votingName == null)
         throw new ArgumentNullException("votingName");
 
+      VotingId = Guid.NewGuid();
       VotingName = votingName;
+      VotingBeginDate = votingBeginDate;
+      VotingEndDate = votingEndDate;
       this.options = new List<Option>();
-    }
-
-    /// <summary>
-    /// Sets the id for this voting.
-    /// </summary>
-    /// <remarks>
-    /// To be used by the voting server.
-    /// </remarks>
-    /// <param name="votingId">Id to be set.</param>
-    public void SetId(int votingId)
-    {
-      VotingId = votingId;
     }
 
     /// <summary>
@@ -145,7 +146,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      VotingId = context.ReadInt32();
+      VotingId = context.ReadGuid();
       VotingName = context.ReadString();
       this.options = context.ReadObjectList<Option>();
     }

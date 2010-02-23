@@ -23,7 +23,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
-    private readonly int votingId;
+    private readonly Guid votingId;
 
     /// <summary>
     /// Name of the voting procedure.
@@ -43,7 +43,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
-    public int VotingId { get { return this.votingId; } }
+    public Guid VotingId { get { return this.votingId; } }
 
     /// <summary>
     /// Name of the voting procedure.
@@ -83,7 +83,7 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     /// <param name="id">Id of the voting procedure.</param>
     /// <param name="name">Name of the voting procedure.</param>
-    public VotingResult(int votingId, string votingName)
+    public VotingResult(Guid votingId, string votingName)
     {
       this.votingId = votingId;
       this.votingName = votingName;

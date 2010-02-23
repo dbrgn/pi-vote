@@ -93,15 +93,19 @@ namespace Pirate.PiVote.Crypto
         throw new InvalidOperationException("Must call TallyBegin first.");
 
       bool acceptVote = true;
-
-      acceptVote &= signedEnvelope.Verify(this.certificateStorage);
-
-      if (this.countedVoters.Contains(signedEnvelope.Certificate.Id))
-        acceptVote = false;
-      else
-        this.countedVoters.Add(signedEnvelope.Certificate.Id);
-
       Envelope envelope = signedEnvelope.Value;
+
+      //Signature must be valid.
+      acceptVote &= signedEnvelope.Verify(this.certificateStorage, envelope.Date);
+
+      //Voter's vote must not have been counted.
+      acceptVote &= !this.countedVoters.Contains(signedEnvelope.Certificate.Id);
+
+      //Date must be in voting period.
+      acceptVote &= envelope.Date > this.parameters.VotingBeginDate;
+      acceptVote &= envelope.Date < this.parameters.VotingEndDate;
+
+      //Ballot must verify (prooves).
       acceptVote &= envelope.Ballot.Verify(this.publicKey, this.parameters);
 
       if (acceptVote)
@@ -113,6 +117,8 @@ namespace Pirate.PiVote.Crypto
             envelope.Ballot.Votes[optionIndex] :
             this.voteSums[optionIndex] + envelope.Ballot.Votes[optionIndex];
         }
+
+        this.countedVoters.Add(signedEnvelope.Certificate.Id);
       }
 
       this.result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));

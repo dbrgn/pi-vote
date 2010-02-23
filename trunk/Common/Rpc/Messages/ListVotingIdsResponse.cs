@@ -18,12 +18,12 @@ namespace Pirate.PiVote.Rpc
 {
   public class ListVotingIdsResponse : RpcResponse
   {
-    public List<int> VotingIds { get; private set; }
+    public List<Guid> VotingIds { get; private set; }
 
-    public ListVotingIdsResponse(Guid requestId, IEnumerable<int> votingIds)
+    public ListVotingIdsResponse(Guid requestId, IEnumerable<Guid> votingIds)
       : base(requestId)
     {
-      VotingIds = new List<int>(votingIds);
+      VotingIds = new List<Guid>(votingIds);
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
       context.Write(VotingIds.Count);
-      foreach (int votingId in VotingIds)
+      foreach (Guid votingId in VotingIds)
       {
         context.Write(votingId);
       }
@@ -65,10 +65,10 @@ namespace Pirate.PiVote.Rpc
     {
       base.Deserialize(context);
       int count = context.ReadInt32();
-      VotingIds = new List<int>();
+      VotingIds = new List<Guid>();
       for (int index = 0; index < count; index++)
       {
-        VotingIds.Add(context.ReadInt32());
+        VotingIds.Add(context.ReadGuid());
       }
     }
   }

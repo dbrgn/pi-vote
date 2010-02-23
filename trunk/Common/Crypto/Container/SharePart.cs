@@ -21,7 +21,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
-    public int VotingId { get; private set; }
+    public Guid VotingId { get; private set; }
 
     /// <summary>
     /// Index of the issuing authority.
@@ -46,7 +46,7 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     /// <param name="votingId">Id of the voting procedure.</param>
     /// <param name="authorityIndex">Index of the issuing authority.</param>
-    public SharePart(int votingId, int authorityIndex)
+    public SharePart(Guid votingId, int authorityIndex)
     {
       VotingId = votingId;
       AuthorityIndex = authorityIndex;

@@ -37,11 +37,15 @@ namespace Pirate.PiVote.Crypto
       var intCrl = new RevocationList(intermediate.Id, DateTime.Now, validUntil, new List<Guid>());
       var sigIntCrl = new Signed<RevocationList>(intCrl, intermediate);
 
-      VotingParameters pc = new VotingParameters("Zufrieden");
-      pc.SetId(27);
-      pc.AddOption(new Option("Nein", "Dagegen"));
-      pc.AddOption(new Option("Ja", "Dafür"));
-      pc.Initialize(1);
+      var admin = new AdminCertificate("Admin");
+      admin.CreateSelfSignature();
+      admin.AddSignature(intermediate, DateTime.Now.AddDays(1));
+
+      VotingParameters parameters = new VotingParameters("Zufrieden", DateTime.Now, DateTime.Now.AddDays(1));
+      parameters.AddOption(new Option("Nein", "Dagegen"));
+      parameters.AddOption(new Option("Ja", "Dafür"));
+      parameters.Initialize(1);
+      Signed<VotingParameters> signedParameters = new Signed<VotingParameters>(parameters, admin);
 
       DateTime start = DateTime.Now;
       Console.WriteLine();
@@ -50,9 +54,9 @@ namespace Pirate.PiVote.Crypto
       CertificateStorage serverCertStorage = new CertificateStorage();
       serverCertStorage.AddRoot(root);
       serverCertStorage.Add(intermediate);
-      serverCertStorage.SetRevocationList(sigRootCrl);
-      serverCertStorage.SetRevocationList(sigIntCrl);
-      VotingServerEntity vs = new VotingServerEntity(pc, serverCertStorage);
+      serverCertStorage.AddRevocationList(sigRootCrl);
+      serverCertStorage.AddRevocationList(sigIntCrl);
+      VotingServerEntity vs = new VotingServerEntity(null, signedParameters, serverCertStorage);
 
       var a1c = new AuthorityCertificate("Authority 1");
       a1c.CreateSelfSignature();
@@ -88,11 +92,11 @@ namespace Pirate.PiVote.Crypto
       a4.Prepare(4, vs.Parameters);
       a5.Prepare(5, vs.Parameters);
 
-      a1.SetAuthorities(vs.Authorities);
-      a2.SetAuthorities(vs.Authorities);
-      a3.SetAuthorities(vs.Authorities);
-      a4.SetAuthorities(vs.Authorities);
-      a5.SetAuthorities(vs.Authorities);
+      a1.SetAuthorities(vs.AuthorityList);
+      a2.SetAuthorities(vs.AuthorityList);
+      a3.SetAuthorities(vs.AuthorityList);
+      a4.SetAuthorities(vs.AuthorityList);
+      a5.SetAuthorities(vs.AuthorityList);
 
       vs.DepositShares(a1.GetShares());
       vs.DepositShares(a2.GetShares());
@@ -116,7 +120,9 @@ namespace Pirate.PiVote.Crypto
       v1c.CreateSelfSignature();
       v1c.AddSignature(intermediate, validUntil);
 
-      var v1 = new VoterEntity(root, v1c);
+      var cs = new CertificateStorage();
+      cs.AddRoot(root);
+      var v1 = new VoterEntity(cs, v1c);
 
       var vote1 = v1.Vote(vs.GetVotingMaterial(), new int[] { 0, 1 });
 
@@ -130,7 +136,7 @@ namespace Pirate.PiVote.Crypto
         vc.CreateSelfSignature();
         vc.AddSignature(intermediate, validUntil);
 
-        var vx = new VoterEntity(root, vc);
+        var vx = new VoterEntity(cs, vc);
 
         var votex = vx.Vote(vs.GetVotingMaterial(), new int[] { 0, 1 });
 
@@ -143,7 +149,7 @@ namespace Pirate.PiVote.Crypto
         vc.CreateSelfSignature();
         vc.AddSignature(intermediate, validUntil);
 
-        var vx = new VoterEntity(root, vc);
+        var vx = new VoterEntity(cs, vc);
 
         var votex = vx.Vote(vs.GetVotingMaterial(), new int[] { 1, 0 });
 

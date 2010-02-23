@@ -17,13 +17,13 @@ namespace Pirate.PiVote.Rpc
 {
   public class PushEnvelopeVoterRequest : RpcRequest<VotingRpcServer, PushEnvelopeVoterResponse>
   {
-    private int votingId;
+    private Guid votingId;
 
     private Signed<Envelope> signedEnvelope;
 
     public PushEnvelopeVoterRequest(
       Guid requestId,
-      int votingId,
+      Guid votingId,
       Signed<Envelope> signedEnvelope)
       : base(requestId)
     {
@@ -57,7 +57,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.votingId = context.ReadInt32();
+      this.votingId = context.ReadGuid();
       this.signedEnvelope = context.ReadObject<Signed<Envelope>>();
     }
 
@@ -66,7 +66,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override PushEnvelopeVoterResponse Execute(VotingRpcServer server, Certificate signer)
+    protected override PushEnvelopeVoterResponse Execute(VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
       voting.Vote(this.signedEnvelope);

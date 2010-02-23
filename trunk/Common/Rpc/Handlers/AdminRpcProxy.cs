@@ -25,8 +25,8 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="binaryProxy">Binary RPC proxy.</param>
     /// <param name="certificate">Certificate of the proxy client entity.</param>
-    public AdminRpcProxy(IBinaryRpcProxy binaryProxy, AdminCertificate certificate)
-      : base(binaryProxy, certificate)
+    public AdminRpcProxy(IBinaryRpcProxy binaryProxy)
+      : base(binaryProxy)
     { }
 
     /// <summary>
@@ -35,19 +35,17 @@ namespace Pirate.PiVote.Rpc
     /// <param name="votingParameters">Parameters for new voting procedure.</param>
     /// <param name="authorities">List of authorities to oversee new voting procedure.</param>
     /// <returns>Id of the voting procedure.</returns>
-    public int CreateVoting(VotingParameters votingParameters, IEnumerable<AuthorityCertificate> authorities)
+    public void CreateVoting(Signed<VotingParameters> votingParameters, IEnumerable<AuthorityCertificate> authorities)
     {
       var request = new CreateVotingAdminRequest(Guid.NewGuid(), votingParameters, authorities);
       var response = Execute<CreateVotingAdminResponse>(request);
-
-      return response.VotingId;
     }
 
     /// <summary>
     /// Ends a voting procedure.
     /// </summary>
     /// <param name="votingId">Id of the voting procedure.</param>
-    public void EndVoting(int votingId)
+    public void EndVoting(Guid votingId)
     {
       var request = new EndVotingAdminRequest(Guid.NewGuid(), votingId);
       var response = Execute<EndVotingAdminResponse>(request);

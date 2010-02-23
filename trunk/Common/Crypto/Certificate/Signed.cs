@@ -106,15 +106,40 @@ namespace Pirate.PiVote.Crypto
     { }
 
     /// <summary>
+    /// Verifies the correctness of the signature.
+    /// </summary>
+    /// <remarks>
+    /// Don't forget to check the identiy of the certificate.
+    /// </remarks>
+    /// <param name="certificateStorage">Certificate storage to check against.</param>
+    /// <returns>Validity of signature.</returns>
+    public bool Verify(ICertificateStorage certificateStorage)
+    {
+      return Certificate.Verify(Data, Signature, certificateStorage);
+    }
+
+    /// <summary>
+    /// Verifies the correctness of the signature without verifying the certificate itself.
+    /// </summary>
+    /// <param name="certificateStorage">Certificate storage to check against.</param>
+    /// <returns>Validity of signature.</returns>
+    public bool VerifySimple()
+    {
+      return Certificate.VerifySimple(Data, Signature);
+    }
+
+    /// <summary>
     /// Verifies the correctnes of the signature.
     /// </summary>
     /// <remarks>
     /// Don't forget to check the identiy of the certificate.
     /// </remarks>
-    /// <returns></returns>
-    public bool Verify(CertificateStorage certificateStorage)
+    /// <param name="certificateStorage">Certificate storage to check against.</param>
+    /// <param name="date">Date at which the signature must be valid.</param>
+    /// <returns>Validity of signature.</returns>
+    public bool Verify(ICertificateStorage certificateStorage, DateTime date)
     {
-      return Certificate.Verify(Data, Signature, certificateStorage);
+      return Certificate.Verify(Data, Signature, certificateStorage, date);
     }
 
     /// <summary>

@@ -23,7 +23,7 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Id of the voting.
     /// </summary>
-    private int votingId;
+    private Guid votingId;
 
     /// <summary>
     /// Creates a request to end voting.
@@ -32,7 +32,7 @@ namespace Pirate.PiVote.Rpc
     /// <param name="votingId">Id of the voting.</param>
     public EndVotingAdminRequest(
       Guid requestId,
-      int votingId)
+      Guid votingId)
       : base(requestId)
     {
       this.votingId = votingId;
@@ -63,7 +63,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.votingId = context.ReadInt32();
+      this.votingId = context.ReadGuid();
     }
 
     /// <summary>
@@ -71,11 +71,8 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override EndVotingAdminResponse Execute(VotingRpcServer server, Certificate signer)
+    protected override EndVotingAdminResponse Execute(VotingRpcServer server)
     {
-      if (!(signer is AdminCertificate))
-        throw new PiSecurityException(ExceptionCode.NoAuthorizedAdmin, "No authorized administrator certificate.");
-
       var voting = server.GetVoting(this.votingId);
       voting.EndVote();
 

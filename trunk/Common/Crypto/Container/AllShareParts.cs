@@ -25,7 +25,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
-    public int VotingId { get; private set; }
+    public Guid VotingId { get; private set; }
 
     /// <summary>
     /// Share parts from all authorities.
@@ -37,7 +37,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="votingId">Id of the voting procedure.</param>
     /// <param name="shareParts">Share parts from all authorities.</param>
-    public AllShareParts(int votingId, IEnumerable<Signed<SharePart>> shareParts)
+    public AllShareParts(Guid votingId, IEnumerable<Signed<SharePart>> shareParts)
     {
       if (shareParts == null)
         throw new ArgumentNullException("shareParts");
@@ -72,7 +72,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      VotingId = context.ReadInt32();
+      VotingId = context.ReadGuid();
       ShareParts = context.ReadObjectList<Signed<SharePart>>();
     }
   }

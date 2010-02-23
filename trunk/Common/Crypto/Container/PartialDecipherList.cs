@@ -22,7 +22,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of voting procedure.
     /// </summary>
-    public int VotingId { get; set; }
+    public Guid VotingId { get; set; }
 
     /// <summary>
     /// Index of issuing authority.
@@ -39,7 +39,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="votingId">Id of voting procedure.</param>
     /// <param name="authorityIndex">Index of issuing authority.</param>
-    public PartialDecipherList(int votingId, int authorityIndex)
+    public PartialDecipherList(Guid votingId, int authorityIndex)
     {
       VotingId = votingId;
       AuthorityIndex = authorityIndex;
@@ -73,7 +73,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      VotingId = context.ReadInt32();
+      VotingId = context.ReadGuid();
       AuthorityIndex = context.ReadInt32();
       PartialDeciphers = context.ReadObjectList<PartialDecipher>();
     }

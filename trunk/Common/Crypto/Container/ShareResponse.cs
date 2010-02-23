@@ -27,7 +27,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
-    public int VotingId { get; private set; }
+    public Guid VotingId { get; private set; }
 
     /// <summary>
     /// Index of the issuing authority.
@@ -54,7 +54,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="authorityIndex">Index of the issuing authority.</param>
     /// <param name="acceptShares">Does the authority accept all the shares?</param>
     /// <param name="publicKeyPart">Public key part from that authority.</param>
-    public ShareResponse(int votingId, int authorityIndex, bool acceptShares, BigInt publicKeyPart)
+    public ShareResponse(Guid votingId, int authorityIndex, bool acceptShares, BigInt publicKeyPart)
     {
       if (publicKeyPart == null)
         throw new ArgumentNullException("publicKeyPart");
@@ -93,7 +93,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      VotingId = context.ReadInt32();
+      VotingId = context.ReadGuid();
       AuthorityIndex = context.ReadInt32();
       AcceptShares = context.ReadBoolean();
       PublicKeyPart = context.ReadBigInt();

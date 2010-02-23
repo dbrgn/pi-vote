@@ -23,7 +23,7 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Parameters for the new voting.
     /// </summary>
-    private VotingParameters votingParameters;
+    private Signed<VotingParameters> votingParameters;
 
     /// <summary>
     /// List of authorities to oversee the voting.
@@ -38,7 +38,7 @@ namespace Pirate.PiVote.Rpc
     /// <param name="authorities">List of authorities to oversee the voting.</param>
     public CreateVotingAdminRequest(
       Guid requestId, 
-      VotingParameters votingParameters,
+      Signed<VotingParameters> votingParameters,
       IEnumerable<AuthorityCertificate> authorities)
       : base(requestId)
     {
@@ -72,7 +72,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.votingParameters = context.ReadObject<VotingParameters>();
+      this.votingParameters = context.ReadObject<Signed<VotingParameters>>();
       this.authorities = context.ReadObjectList<AuthorityCertificate>();
     }
 
@@ -81,14 +81,11 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override CreateVotingAdminResponse Execute(VotingRpcServer server, Certificate signer)
+    protected override CreateVotingAdminResponse Execute(VotingRpcServer server)
     {
-      if (!(signer is AdminCertificate))
-        throw new PiSecurityException(ExceptionCode.NoAuthorizedAdmin, "No authorized administrator certificate.");
+      server.CreateVoting(this.votingParameters, this.authorities);
 
-      int votingId = server.CreateVoting(this.votingParameters, this.authorities);
-
-      return new CreateVotingAdminResponse(RequestId, votingId);
+      return new CreateVotingAdminResponse(RequestId);
     }
   }
 }

@@ -24,9 +24,8 @@ namespace Pirate.PiVote.Rpc
     /// Creates a new voting proxy.
     /// </summary>
     /// <param name="binaryProxy">Binary RPC proxy.</param>
-    /// <param name="certificate">Certificate of the proxy client entity.</param>
-    public VoterRpcProxy(IBinaryRpcProxy binaryProxy, VoterCertificate certificate)
-      : base(binaryProxy, certificate)
+    public VoterRpcProxy(IBinaryRpcProxy binaryProxy)
+      : base(binaryProxy)
     { }
 
     /// <summary>
@@ -34,7 +33,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="votingId">Id of the voting.</param>
     /// <param name="signedEnvelope">Signed envelope.</param>
-    public void PushEnvelope(int votingId, Signed<Envelope> signedEnvelope)
+    public void PushEnvelope(Guid votingId, Signed<Envelope> signedEnvelope)
     {
       var request = new PushEnvelopeVoterRequest(Guid.NewGuid(), votingId, signedEnvelope);
       var response = Execute<PushEnvelopeVoterResponse>(request);

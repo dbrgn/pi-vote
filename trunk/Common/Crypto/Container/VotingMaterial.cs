@@ -19,29 +19,14 @@ namespace Pirate.PiVote.Crypto
   public class VotingMaterial : Serializable
   {
     /// <summary>
-    /// Id of the voting procedure.
-    /// </summary>
-    public int VotingId { get { return Parameters.VotingId; } }
-
-    /// <summary>
     /// Defines voting procedure.
     /// </summary>
-    public VotingParameters Parameters { get; private set; }
+    public Signed<VotingParameters> Parameters { get; private set; }
 
     /// <summary>
     /// Responses that can be combined to a public key.
     /// </summary>
     public List<Signed<ShareResponse>> PublicKeyParts { get; private set; }
-
-    /// <summary>
-    /// Revocation lists of the CA certificates.
-    /// </summary>
-    public List<Signed<RevocationList>> RevocationLists { get; private set; }
-
-    /// <summary>
-    /// Intermediate certificates.
-    /// </summary>
-    public List<Certificate> Certificates { get; private set; }
 
     /// <summary>
     /// Createa new voting material.
@@ -51,10 +36,8 @@ namespace Pirate.PiVote.Crypto
     /// <param name="revocationLists">Certification revocation lists for CAs.</param>
     /// <param name="certificates">List of intermediate certificates.</param>
     public VotingMaterial(
-      VotingParameters parameters, 
-      IEnumerable<Signed<ShareResponse>> publicKeyParts,
-      IEnumerable<Signed<RevocationList>> revocationLists,
-      IEnumerable<Certificate> certificates)
+      Signed<VotingParameters> parameters, 
+      IEnumerable<Signed<ShareResponse>> publicKeyParts)
     {
       if (parameters == null)
         throw new ArgumentNullException("parameters");
@@ -63,8 +46,6 @@ namespace Pirate.PiVote.Crypto
 
       Parameters = parameters;
       PublicKeyParts = new List<Signed<ShareResponse>>(publicKeyParts);
-      Certificates = new List<Certificate>(certificates);
-      RevocationLists = new List<Signed<RevocationList>>(revocationLists);
     }
 
     /// <summary>
@@ -84,8 +65,6 @@ namespace Pirate.PiVote.Crypto
       base.Serialize(context);
       context.Write(Parameters);
       context.WriteList(PublicKeyParts);
-      context.WriteList(Certificates);
-      context.WriteList(RevocationLists);
     }
 
     /// <summary>
@@ -95,10 +74,34 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      Parameters = context.ReadObject<VotingParameters>();
+      Parameters = context.ReadObject<Signed<VotingParameters>>();
       PublicKeyParts = context.ReadObjectList<Signed<ShareResponse>>();
-      Certificates = context.ReadObjectList<Certificate>();
-      RevocationLists = context.ReadObjectList<Signed<RevocationList>>();
+    }
+
+    /// <summary>
+    /// Is this material valid?
+    /// </summary>
+    /// <remarks>
+    /// Might add some certificates to the storage.
+    /// </remarks>
+    /// <param name="certificateStorage">Certificate storage to check against.</param>
+    /// <returns>Validity of the material.</returns>
+    public bool Valid(CertificateStorage certificateStorage)
+    {
+      bool valid = true;
+      VotingParameters parameters = Parameters.Value;
+
+      valid &= Parameters.Verify(certificateStorage, parameters.VotingBeginDate);
+
+      foreach (Signed<ShareResponse> signedShareResponse in PublicKeyParts)
+      {
+        valid &= signedShareResponse.Verify(certificateStorage, parameters.VotingBeginDate);
+
+        ShareResponse shareResponse = signedShareResponse.Value;
+        valid &= shareResponse.AcceptShares;
+      }
+
+      return valid;
     }
   }
 }

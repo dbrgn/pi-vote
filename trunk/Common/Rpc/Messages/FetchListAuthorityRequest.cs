@@ -23,7 +23,7 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Id of the voting.
     /// </summary>
-    private int votingId;
+    private Guid votingId;
 
     /// <summary>
     /// Create a new request to fetch the list of authorities.
@@ -31,8 +31,8 @@ namespace Pirate.PiVote.Rpc
     /// <param name="requestId">Id of the request.</param>
     /// <param name="votingId">Id of the voting.</param>
     public FetchListAuthorityRequest(
-      Guid requestId, 
-      int votingId)
+      Guid requestId,
+      Guid votingId)
       : base(requestId)
     {
       this.votingId = votingId;
@@ -63,7 +63,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.votingId = context.ReadInt32();
+      this.votingId = context.ReadGuid();
     }
 
     /// <summary>
@@ -71,11 +71,11 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override FetchListAuthorityResponse Execute(VotingRpcServer server, Certificate signer)
+    protected override FetchListAuthorityResponse Execute(VotingRpcServer server)
     {
       VotingServerEntity voting = server.GetVoting(this.votingId);
 
-      return new FetchListAuthorityResponse(RequestId, voting.Authorities);
+      return new FetchListAuthorityResponse(RequestId, voting.AuthorityList);
     }
   }
 }

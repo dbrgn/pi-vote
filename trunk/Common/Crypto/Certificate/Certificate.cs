@@ -33,7 +33,12 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Signatures affixed to the certificate.
     /// </summary>
-    private List<Signature> Signatures { get; set; }
+    private List<Signature> signatures;
+
+    /// <summary>
+    /// Signatures affixed to the certificate.
+    /// </summary>
+    public IEnumerable<Signature> Signatures { get { return this.signatures; } }
 
     /// <summary>
     /// Signature from the certificate itself.
@@ -60,7 +65,7 @@ namespace Pirate.PiVote.Crypto
       rsaProvider.KeySize = 4096;
       Key = rsaProvider.ExportCspBlob(true);
 
-      Signatures = new List<Signature>();
+      this.signatures = new List<Signature>();
     }
 
     /// <summary>
@@ -95,8 +100,8 @@ namespace Pirate.PiVote.Crypto
 
       SelfSignature = original.SelfSignature;
 
-      Signatures = new List<Signature>();
-      original.Signatures.ForEach(signature => Signatures.Add(signature.Clone));
+      this.signatures = new List<Signature>();
+      original.signatures.ForEach(signature => signatures.Add(signature.Clone));
     }
 
     /// <summary>
@@ -135,7 +140,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="data">Data which was signed.</param>
     /// <param name="signature">Signature data.</param>
     /// <returns>Is the signature valid?</returns>
-    public bool Verify(byte[] data, byte[] signature, CertificateStorage certificateStorage)
+    public bool Verify(byte[] data, byte[] signature, ICertificateStorage certificateStorage)
     {
       if (data == null)
         throw new ArgumentNullException("data");
@@ -147,14 +152,63 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Verifies a signature without verifying the certificate itself.
+    /// </summary>
+    /// <param name="data">Data which was signed.</param>
+    /// <param name="signature">Signature data.</param>
+    /// <returns>Is the signature valid?</returns>
+    public bool VerifySimple(byte[] data, byte[] signature)
+    {
+      if (data == null)
+        throw new ArgumentNullException("data");
+      if (signature == null)
+        throw new ArgumentNullException("signature");
+
+      var rsaProvider = GetRsaProvider();
+      return rsaProvider.VerifyData(data, "SHA256", signature);
+    }
+    
+    /// <summary>
+    /// Verifies a signature made with this certificate.
+    /// </summary>
+    /// <remarks>
+    /// Also check the validity of the certificate.
+    /// </remarks>
+    /// <param name="data">Data which was signed.</param>
+    /// <param name="signature">Signature data.</param>
+    /// <param name="date">Date at which the signature must be valid.</param>
+    /// <returns>Is the signature valid?</returns>
+    public bool Verify(byte[] data, byte[] signature, ICertificateStorage certificateStorage, DateTime date)
+    {
+      if (data == null)
+        throw new ArgumentNullException("data");
+      if (signature == null)
+        throw new ArgumentNullException("signature");
+
+      var rsaProvider = GetRsaProvider();
+      return rsaProvider.VerifyData(data, "SHA256", signature) && Valid(certificateStorage, date);
+    }
+
+    /// <summary>
     /// Is the certificate valid?
     /// </summary>
     /// <param name="certificateStorage">Storage of certificates.</param>
     /// <returns>Is certificate valid.</returns>
-    public bool Valid(CertificateStorage certificateStorage)
+    public bool Valid(ICertificateStorage certificateStorage)
+    {
+      return Valid(certificateStorage, DateTime.Now);
+    }
+
+    /// <summary>
+    /// Is the certificate valid?
+    /// </summary>
+    /// <param name="certificateStorage">Storage of certificates.</param>
+    /// <param name="date">Date on which it must be valid.</param>
+    /// <returns>Is certificate valid.</returns>
+    public bool Valid(ICertificateStorage certificateStorage, DateTime date)
     {
       return SelfSignatureValid &&
-        (Signatures.Any(signature => signature.Verify(GetSignatureContent(), certificateStorage) && !certificateStorage.IsRevoked(signature.SignerId, Id)) ||
+        (signatures.Any(signature => signature.Verify(GetSignatureContent(), certificateStorage, date) && !certificateStorage.IsRevoked(signature.SignerId, Id, date)) ||
         certificateStorage.IsRootCertificate(this));
     }
 
@@ -262,7 +316,7 @@ namespace Pirate.PiVote.Crypto
       context.Write(CreationDate);
       context.Write(Key);
       context.Write(SelfSignature);
-      context.WriteList(Signatures);
+      context.WriteList(this.signatures);
     }
 
     /// <summary>
@@ -280,7 +334,7 @@ namespace Pirate.PiVote.Crypto
       CreationDate = context.ReadDateTime();
       Key = context.ReadBytes();
       SelfSignature = context.ReadBytes();
-      Signatures = context.ReadObjectList<Signature>();
+      this.signatures = context.ReadObjectList<Signature>();
     }
 
     /// <summary>
@@ -316,16 +370,34 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
-    /// Add a signature from a certificate.
+    /// Add a signature to the certificate.
     /// </summary>
     /// <param name="signer">Certificate used to sign this one.</param>
-    public void AddSignature(Certificate signer, DateTime validUntil)
+    /// <returns>New signature.</returns>
+    public Signature AddSignature(Certificate signer, DateTime validUntil)
     {
       if (signer == null)
         throw new ArgumentNullException("signer");
 
       Signature signature = new Signature(signer, GetSignatureContent(), validUntil);
-      Signatures.Add(signature);
+      AddSignature(signature);
+
+      return signature;
+    }
+
+    /// <summary>
+    /// Add a signature to the certificate.
+    /// </summary>
+    /// <param name="signature">Signature to add.</param>
+    public void AddSignature(Signature signature)
+    {
+      if (signature == null)
+        throw new ArgumentNullException("signature");
+
+      if (!this.signatures.Any(other => other.SignerId == signature.SignerId))
+      {
+        this.signatures.Add(signature);
+      }
     }
 
     /// <summary>
@@ -364,6 +436,18 @@ namespace Pirate.PiVote.Crypto
         var rsaProvider = GetRsaProvider();
         return rsaProvider.VerifyData(GetSignatureContent(), "SHA256", SelfSignature);
       }
+    }
+
+    /// <summary>
+    /// Adds signatures from certificate. 
+    /// </summary>
+    /// <param name="certificate">Certificate in question.</param>
+    public void Merge(Certificate certificate)
+    {
+      if (!IsIdentic(certificate))
+        throw new ArgumentException("Certificate not identic");
+
+      certificate.Signatures.Foreach(signature => AddSignature(signature));
     }
 
     /// <summary>

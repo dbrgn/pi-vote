@@ -17,12 +17,12 @@ namespace Pirate.PiVote.Rpc
 {
   public class FetchPartialDecipherRequest : RpcRequest<VotingRpcServer, FetchPartialDecipherResponse>
   {
-    private int votingId;
+    private Guid votingId;
     private int authorityIndex;
 
     public FetchPartialDecipherRequest(
       Guid requestId,
-      int votingId,
+      Guid votingId,
       int authorityIndex)
       : base(requestId)
     {
@@ -56,7 +56,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.votingId = context.ReadInt32();
+      this.votingId = context.ReadGuid();
       this.authorityIndex = context.ReadInt32();
     }
 
@@ -65,7 +65,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override FetchPartialDecipherResponse Execute(VotingRpcServer server, Certificate signer)
+    protected override FetchPartialDecipherResponse Execute(VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
       var partialDecipherList = voting.GetPartialDecipher(this.authorityIndex);

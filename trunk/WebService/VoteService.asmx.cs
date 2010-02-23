@@ -32,9 +32,7 @@ namespace Pirate.PiVote.WebService
     {
       if (RpcServer == null)
       {
-        CertificateStorage certificateStorage = null;
-        certificateStorage = Serializable.Load<CertificateStorage>(System.IO.Path.Combine(Context.Request.PhysicalApplicationPath, "all.certs"));
-        RpcServer = new VotingRpcServer(certificateStorage);
+        RpcServer = new VotingRpcServer();
       }
     }
 

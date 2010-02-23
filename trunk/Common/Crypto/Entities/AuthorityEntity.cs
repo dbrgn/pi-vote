@@ -103,7 +103,7 @@ namespace Pirate.PiVote.Crypto
 
       foreach (Signed<RevocationList> signedRevocationList in list.RevocationLists)
       {
-        this.certificateStorage.SetRevocationList(signedRevocationList);
+        this.certificateStorage.AddRevocationList(signedRevocationList);
       }
     }
 

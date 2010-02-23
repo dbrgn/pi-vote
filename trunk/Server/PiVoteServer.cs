@@ -27,9 +27,7 @@ namespace Pirate.PiVote.Server
       Console.WriteLine();
       Console.Write("Loading...");
 
-      CertificateStorage certificateStorage = null;
-      certificateStorage = Serializable.Load<CertificateStorage>("all.certs");
-      RpcServer = new VotingRpcServer(certificateStorage);
+      RpcServer = new VotingRpcServer();
       TcpServer = new TcpRpcServer(RpcServer);
       TcpServer.Start();
 

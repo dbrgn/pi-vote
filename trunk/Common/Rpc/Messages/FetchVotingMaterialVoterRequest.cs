@@ -17,11 +17,11 @@ namespace Pirate.PiVote.Rpc
 {
   public class FetchVotingMaterialVoterRequest : RpcRequest<VotingRpcServer, FetchVotingMaterialVoterResponse>
   {
-    private int votingId;
+    private Guid votingId;
 
     public FetchVotingMaterialVoterRequest(
       Guid requestId,
-      int votingId)
+      Guid votingId)
       : base(requestId)
     {
       this.votingId = votingId;
@@ -52,7 +52,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.votingId = context.ReadInt32();
+      this.votingId = context.ReadGuid();
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override FetchVotingMaterialVoterResponse Execute(VotingRpcServer server, Certificate signer)
+    protected override FetchVotingMaterialVoterResponse Execute(VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
 

@@ -65,7 +65,7 @@ namespace Pirate.PiVote.Rpc
     /// <param name="server">Server to execute the request on.</param>
     /// <param name="signer">Signer of the RPC request.</param>
     /// <returns>Response to the request.</returns>
-    public abstract RpcResponse TryExecute(TRpcServer server, Certificate signer);
+    public abstract RpcResponse TryExecute(TRpcServer server);
   }
 
   /// <summary>
@@ -120,14 +120,11 @@ namespace Pirate.PiVote.Rpc
     /// <param name="server">Server to execute the request on.</param>
     /// <param name="signer">Signer of the RPC request.</param>
     /// <returns>Response to the request.</returns>
-    public override RpcResponse TryExecute(TRpcServer server, Certificate signer)
+    public override RpcResponse TryExecute(TRpcServer server)
     {
       try
       {
-        if (signer == null)
-          throw new PiSecurityException(ExceptionCode.RequestSignatureInvalid, "Request signature invalid.");
-
-        return Execute(server, signer);
+        return Execute(server);
       }
       catch (PiException exception)
       {
@@ -145,6 +142,6 @@ namespace Pirate.PiVote.Rpc
     /// <param name="server">Server to execute the request on.</param>
     /// <param name="signer">Signer of the RPC request.</param>
     /// <returns>Response to the request.</returns>
-    protected abstract TResponse Execute(TRpcServer server, Certificate signer);
+    protected abstract TResponse Execute(TRpcServer server);
   }
 }

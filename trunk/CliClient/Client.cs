@@ -28,7 +28,7 @@ namespace Pirate.PiVote.CliClient
     private CACertificate root;
     private CACertificate intermediate;
     private AdminCertificate admin;
-    private VoterClient voterClient;
+    private VotingClient voterClient;
     
     public Client()
     {
@@ -61,9 +61,9 @@ namespace Pirate.PiVote.CliClient
       }
 
       var rootCrl = new Signed<RevocationList>(new RevocationList(root.Id, DateTime.Now, DateTime.Now.AddYears(1), new List<Guid>()), root);
-      this.certs.SetRevocationList(rootCrl);
+      this.certs.AddRevocationList(rootCrl);
       var intCrl = new Signed<RevocationList>(new RevocationList(intermediate.Id, DateTime.Now, DateTime.Now.AddYears(1), new List<Guid>()), intermediate);
-      this.certs.SetRevocationList(intCrl);
+      this.certs.AddRevocationList(intCrl);
 
       this.certs.Save("all.certs");
     }
@@ -156,7 +156,7 @@ namespace Pirate.PiVote.CliClient
       Console.Write("Enter voting name: ");
       string votingName = Console.ReadLine();
 
-      VotingParameters votingParameters = new VotingParameters(votingName);
+      VotingParameters votingParameters = new VotingParameters(votingName, DateTime.Now, DateTime.Now.AddDays(1));
 
       Console.Write("Enter option name: ");
       string optionName = Console.ReadLine();
@@ -172,16 +172,17 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine("Done");
 
       Console.Write("Requesting server to create voting procedure...");
-      AdminRpcProxy proxy = new AdminRpcProxy(this.client, this.admin);
-      int votingId = proxy.CreateVoting(votingParameters, this.auths.Select(auth => (AuthorityCertificate)auth.OnlyPublicPart));
+      AdminRpcProxy proxy = new AdminRpcProxy(this.client);
+      Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, this.admin);
+      proxy.CreateVoting(signedVotingParameters, this.auths.Select(auth => (AuthorityCertificate)auth.OnlyPublicPart));
       Console.WriteLine("Done");
-      Console.WriteLine("Voting id is {0}.", votingId);
+      Console.WriteLine("Voting id is {0}.", votingParameters.VotingId);
 
       Console.Write("Hit enter to end voting: ");
       Console.ReadLine();
 
       Console.Write("Ending voting...");
-      proxy.EndVoting(votingId);
+      proxy.EndVoting(votingParameters.VotingId);
       Console.WriteLine("Done");
 
       Console.WriteLine();
@@ -196,12 +197,12 @@ namespace Pirate.PiVote.CliClient
       Console.Write("Enter index (0..4): ");
       int index = Convert.ToInt32(Console.ReadLine());
 
-      int votingId = 1;
+      Guid votingId = Guid.NewGuid();
       AuthorityCertificate cert = this.auths[index];
       AuthorityEntity auth = new AuthorityEntity((CACertificate)this.root.OnlyPublicPart, cert);
 
       Console.Write("Fetching parameters...");
-      AuthorityRpcProxy proxy = new AuthorityRpcProxy(this.client, cert);
+      AuthorityRpcProxy proxy = new AuthorityRpcProxy(this.client);
       var p = proxy.FetchParameters(votingId, (AuthorityCertificate)cert.OnlyPublicPart);
       auth.Prepare(p.Key, p.Value);
       Console.WriteLine("Done");
@@ -287,7 +288,10 @@ namespace Pirate.PiVote.CliClient
       Console.Write("Enter voter index 0..9: ");
       int voterIndex = Convert.ToInt32(Console.ReadLine());
 
-      this.voterClient = new VoterClient((CACertificate)this.root.OnlyPublicPart, this.voters[voterIndex]);
+      var certificateStorage = new CertificateStorage();
+      certificateStorage.AddRoot(this.root.OnlyPublicPart);
+      this.voterClient = new VotingClient(certificateStorage);
+      this.voterClient.ActivateVoter(this.voters[voterIndex]);
 
       this.voterClient.Connect(IPAddress.Loopback, Connected);
     }
@@ -307,7 +311,7 @@ namespace Pirate.PiVote.CliClient
       }
     }
 
-    private void VotingList(IEnumerable<VoterClient.VotingDescriptor> votingList, Exception exception)
+    private void VotingList(IEnumerable<VotingClient.VotingDescriptor> votingList, Exception exception)
     {
       if (votingList == null)
       {

@@ -26,26 +26,19 @@ namespace Pirate.PiVote.Rpc
     private IBinaryRpcProxy binaryProxy;
 
     /// <summary>
-    /// Certificate of the proxy client entity.
-    /// </summary>
-    private Certificate certificate;
-
-    /// <summary>
     /// Creates a new voting proxy.
     /// </summary>
     /// <param name="binaryProxy">Binary RPC proxy.</param>
-    /// <param name="certificate">Certificate of the proxy client entity.</param>
-    public VotingRpcProxy(IBinaryRpcProxy binaryProxy, Certificate certificate)
+    public VotingRpcProxy(IBinaryRpcProxy binaryProxy)
     {
       this.binaryProxy = binaryProxy;
-      this.certificate = certificate;
     }
 
     /// <summary>
     /// Fetches the ids of all voting procedures.
     /// </summary>
     /// <returns>List of ids of voting procedures.</returns>
-    public IEnumerable<int> FetchVotingIds()
+    public IEnumerable<Guid> FetchVotingIds()
     {
       var request = new ListVotingIdsRequest(Guid.NewGuid());
       var response = Execute<ListVotingIdsResponse>(request);
@@ -58,7 +51,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="votingId">Id of the voting.</param>
     /// <returns>Status of the voting.</returns>
-    public VotingStatus FetchVotingStatus(int votingId)
+    public VotingStatus FetchVotingStatus(Guid votingId)
     {
       var request = new VotingStatusRequest(Guid.NewGuid(), votingId);
       var response = Execute<VotingStatusResponse>(request);
@@ -75,8 +68,7 @@ namespace Pirate.PiVote.Rpc
     protected TResponse Execute<TResponse>(RpcRequest<VotingRpcServer> request)
       where TResponse : RpcResponse
     {
-      var signedResponse = new Signed<RpcRequest<VotingRpcServer>>(request, this.certificate);
-      var responseData = this.binaryProxy.Execute(signedResponse.ToBinary());
+      var responseData = this.binaryProxy.Execute(request.ToBinary());
       var response = Serializable.FromBinary<TResponse>(responseData);
 
       if (response.Exception != null)
@@ -91,7 +83,7 @@ namespace Pirate.PiVote.Rpc
     /// <param name="votingId">Id of the voting.</param>
     /// <param name="envelopeIndex">Index of the envelope.</param>
     /// <returns>Signed envelope.</returns>
-    public Signed<Envelope> FetchEnvelope(int votingId, int envelopeIndex)
+    public Signed<Envelope> FetchEnvelope(Guid votingId, int envelopeIndex)
     {
       var request = new FetchEnvelopeRequest(Guid.NewGuid(), votingId, envelopeIndex);
       var response = Execute<FetchEnvelopeResponse>(request);
@@ -105,7 +97,7 @@ namespace Pirate.PiVote.Rpc
     /// <param name="votingId">Id of the voting.</param>
     /// <param name="authorityIndex">Index of the authority.</param>
     /// <returns>Singed list of partial deciphers.</returns>
-    public Signed<PartialDecipherList> FetchPartialDecipher(int votingId, int authorityIndex)
+    public Signed<PartialDecipherList> FetchPartialDecipher(Guid votingId, int authorityIndex)
     {
       var request = new FetchPartialDecipherRequest(Guid.NewGuid(), votingId, authorityIndex);
       var response = Execute<FetchPartialDecipherResponse>(request);
@@ -118,7 +110,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="votingId">Id of the voting.</param>
     /// <returns>Number of envelopes.</returns>
-    public int FetchEnvelopeCount(int votingId)
+    public int FetchEnvelopeCount(Guid votingId)
     {
       var request = new FetchEnvelopeCountRequest(Guid.NewGuid(), votingId);
       var response = Execute<FetchEnvelopeCountResponse>(request);
@@ -131,12 +123,49 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="votingId">Id of the voting.</param>
     /// <returns>Complete voting material.</returns>
-    public VotingMaterial FetchVotingMaterial(int votingId)
+    public VotingMaterial FetchVotingMaterial(Guid votingId)
     {
       var request = new FetchVotingMaterialVoterRequest(Guid.NewGuid(), votingId);
       var response = Execute<FetchVotingMaterialVoterResponse>(request);
 
       return response.VotingMaterial;
+    }
+
+    /// <summary>
+    /// Fetches a signature responses or at least it's status.
+    /// </summary>
+    /// <param name="certificateId">Id of the certificate.</param>
+    /// <param name="signatureResponse">Signed signature reponse.</param>
+    /// <returns>Status of the signature response.</returns>
+    public SignatureResponseStatus FetchSignatureResponse(Guid certificateId, out Signed<SignatureResponse> signatureResponse)
+    {
+      var request = new FetchSignatureResponseRequest(Guid.NewGuid(), certificateId);
+      var response = Execute<FetchSignatureResponseResponse>(request);
+
+      signatureResponse = response.SignatureResponse;
+      return response.Status;
+    }
+
+    /// <summary>
+    /// Pushes a signature request to the server.
+    /// </summary>
+    /// <param name="signatureRequest">Signed signature request.</param>
+    public void PushSignatureRequest(Signed<SignatureRequest> signatureRequest)
+    {
+      var request = new PushSignatureRequestRequest(Guid.NewGuid(), signatureRequest);
+      var response = Execute<PushSignatureRequestResponse>(request);
+    }
+
+    /// <summary>
+    /// Pushes a signature request to the server.
+    /// </summary>
+    /// <param name="signatureRequest">Signed signature request.</param>
+    public CertificateStorage FetchCertificateStorage()
+    {
+      var request = new FetchCertificateStorageRequest(Guid.NewGuid());
+      var response = Execute<FetchCertificateStorageResponse>(request);
+
+      return response.CertificateStorage;
     }
   }
 }

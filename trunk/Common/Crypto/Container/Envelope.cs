@@ -21,7 +21,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
-    public int VotingId { get; private set; }
+    public Guid VotingId { get; private set; }
 
     /// <summary>
     /// Id of the voter.
@@ -34,12 +34,17 @@ namespace Pirate.PiVote.Crypto
     public Ballot Ballot { get; private set; }
 
     /// <summary>
+    /// Date this envelope was formed.
+    /// </summary>
+    public DateTime Date { get; private set; }
+
+    /// <summary>
     /// Create a new envelope for a ballot.
     /// </summary>
     /// <param name="votingId">Id of the voting procedure.</param>
     /// <param name="voterId">Id of the voter.</param>
     /// <param name="ballot">Casted ballot.</param>
-    public Envelope(int votingId, Guid voterId, Ballot ballot)
+    public Envelope(Guid votingId, Guid voterId, Ballot ballot)
     {
       if (ballot == null)
         throw new ArgumentNullException("ballot");
@@ -47,6 +52,7 @@ namespace Pirate.PiVote.Crypto
       VotingId = votingId;
       VoterId = voterId;
       Ballot = ballot;
+      Date = DateTime.Now;
     }
 
     /// <summary>
@@ -67,6 +73,7 @@ namespace Pirate.PiVote.Crypto
       context.Write(VotingId);
       context.Write(VoterId);
       context.Write(Ballot);
+      context.Write(Date);
     }
 
     /// <summary>
@@ -76,9 +83,10 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      VotingId = context.ReadInt32();
+      VotingId = context.ReadGuid();
       VoterId = context.ReadGuid();
       Ballot = context.ReadObject<Ballot>();
+      Date = context.ReadDateTime();
     }
   }
 }

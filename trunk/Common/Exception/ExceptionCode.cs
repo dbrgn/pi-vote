@@ -27,6 +27,7 @@ namespace Pirate.PiVote
     RequestSignatureInvalid       = 6,
     NoAuthorizedAdmin             = 7,
     BadVotingMaterial             = 8,
+    InvalidSignature              = 9,
 
     AuthorityCountOutOfRange      = 1000001,
     TheresholdOutOfRange          = 1000002,
@@ -37,6 +38,7 @@ namespace Pirate.PiVote
     PIsNoSafePrime                = 1000007,
     QIsNoPrime                    = 1000008,
     AuthorityCountMismatch        = 1000009,
+    AuthorityInvalid              = 1000010,
 
     NoVotingWithId                = 2000001,
 
@@ -44,6 +46,10 @@ namespace Pirate.PiVote
 
     AlreadyVoted                  = 4000001,
     VoteSignatureNotValid         = 4000002,
-    NoVoterCertificate            = 4000003
+    NoVoterCertificate            = 4000003,
+
+    SignatureRequestInvalid       = 5000001,
+    SignatureRequestResponded     = 5000002,
+    SignatureRequestNotFound      = 5000003
   }
 }
