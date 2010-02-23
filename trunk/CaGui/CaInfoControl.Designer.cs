@@ -40,56 +40,62 @@
       this.caLabel.AutoSize = true;
       this.caLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.caLabel.Location = new System.Drawing.Point(0, 0);
+      this.caLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.caLabel.Name = "caLabel";
-      this.caLabel.Size = new System.Drawing.Size(119, 13);
+      this.caLabel.Size = new System.Drawing.Size(178, 20);
       this.caLabel.TabIndex = 16;
       this.caLabel.Text = "Certificate Authority";
       // 
       // caIdLabel
       // 
       this.caIdLabel.AutoSize = true;
-      this.caIdLabel.Location = new System.Drawing.Point(0, 22);
+      this.caIdLabel.Location = new System.Drawing.Point(0, 34);
+      this.caIdLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.caIdLabel.Name = "caIdLabel";
-      this.caIdLabel.Size = new System.Drawing.Size(19, 13);
+      this.caIdLabel.Size = new System.Drawing.Size(27, 20);
       this.caIdLabel.TabIndex = 15;
       this.caIdLabel.Text = "Id:";
       // 
       // caNameLabel
       // 
       this.caNameLabel.AutoSize = true;
-      this.caNameLabel.Location = new System.Drawing.Point(-3, 48);
+      this.caNameLabel.Location = new System.Drawing.Point(-4, 74);
+      this.caNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.caNameLabel.Name = "caNameLabel";
-      this.caNameLabel.Size = new System.Drawing.Size(38, 13);
+      this.caNameLabel.Size = new System.Drawing.Size(55, 20);
       this.caNameLabel.TabIndex = 14;
       this.caNameLabel.Text = "Name:";
       // 
       // caNameTextBox
       // 
-      this.caNameTextBox.Location = new System.Drawing.Point(75, 45);
+      this.caNameTextBox.Location = new System.Drawing.Point(112, 69);
+      this.caNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.caNameTextBox.Name = "caNameTextBox";
       this.caNameTextBox.ReadOnly = true;
-      this.caNameTextBox.Size = new System.Drawing.Size(300, 20);
+      this.caNameTextBox.Size = new System.Drawing.Size(448, 26);
       this.caNameTextBox.TabIndex = 13;
       // 
       // caIdTextBox
       // 
-      this.caIdTextBox.Location = new System.Drawing.Point(75, 19);
+      this.caIdTextBox.Location = new System.Drawing.Point(112, 29);
+      this.caIdTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.caIdTextBox.Name = "caIdTextBox";
       this.caIdTextBox.ReadOnly = true;
-      this.caIdTextBox.Size = new System.Drawing.Size(300, 20);
+      this.caIdTextBox.Size = new System.Drawing.Size(448, 26);
       this.caIdTextBox.TabIndex = 12;
       // 
       // CaInfoControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.caLabel);
       this.Controls.Add(this.caIdLabel);
       this.Controls.Add(this.caNameLabel);
       this.Controls.Add(this.caNameTextBox);
       this.Controls.Add(this.caIdTextBox);
+      this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.Name = "CaInfoControl";
-      this.Size = new System.Drawing.Size(375, 65);
+      this.Size = new System.Drawing.Size(562, 100);
       this.ResumeLayout(false);
       this.PerformLayout();
 

@@ -44,13 +44,15 @@
       this.signaturesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.importRequestsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.generateRevocationListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+      this.createAdminCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.entryListView = new System.Windows.Forms.ListView();
       this.idColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.typeColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.nameColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.validFromColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.validUntilColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.revokedColumnHeader = new System.Windows.Forms.ColumnHeader();
+      this.statusColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.entryListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.signToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.refuseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,8 +63,6 @@
       this.crlValidFromColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.crlValidUntilColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.revokedCount = new System.Windows.Forms.ColumnHeader();
-      this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-      this.createAdminCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.mainMenu.SuspendLayout();
       this.entryListContextMenu.SuspendLayout();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -77,7 +77,8 @@
             this.signaturesToolStripMenuItem});
       this.mainMenu.Location = new System.Drawing.Point(0, 0);
       this.mainMenu.Name = "mainMenu";
-      this.mainMenu.Size = new System.Drawing.Size(1014, 24);
+      this.mainMenu.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+      this.mainMenu.Size = new System.Drawing.Size(1521, 31);
       this.mainMenu.TabIndex = 0;
       this.mainMenu.Text = "menuStrip1";
       // 
@@ -95,70 +96,70 @@
             this.toolStripMenuItem3,
             this.exportRootCertificateToolStripMenuItem});
       this.selfToolStripMenuItem.Name = "selfToolStripMenuItem";
-      this.selfToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+      this.selfToolStripMenuItem.Size = new System.Drawing.Size(49, 25);
       this.selfToolStripMenuItem.Text = "&Self";
       // 
       // cAPropertiesToolStripMenuItem
       // 
       this.cAPropertiesToolStripMenuItem.Name = "cAPropertiesToolStripMenuItem";
-      this.cAPropertiesToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+      this.cAPropertiesToolStripMenuItem.Size = new System.Drawing.Size(282, 26);
       this.cAPropertiesToolStripMenuItem.Text = "CA &Properties";
       this.cAPropertiesToolStripMenuItem.Click += new System.EventHandler(this.cAPropertiesToolStripMenuItem_Click);
       // 
       // toolStripMenuItem2
       // 
       this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-      this.toolStripMenuItem2.Size = new System.Drawing.Size(202, 6);
+      this.toolStripMenuItem2.Size = new System.Drawing.Size(279, 6);
       // 
       // createToolStripMenuItem
       // 
       this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-      this.createToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+      this.createToolStripMenuItem.Size = new System.Drawing.Size(282, 26);
       this.createToolStripMenuItem.Text = "Create &Certificate";
       this.createToolStripMenuItem.Click += new System.EventHandler(this.createToolStripMenuItem_Click);
       // 
       // signatureRequestToolStripMenuItem
       // 
       this.signatureRequestToolStripMenuItem.Name = "signatureRequestToolStripMenuItem";
-      this.signatureRequestToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+      this.signatureRequestToolStripMenuItem.Size = new System.Drawing.Size(282, 26);
       this.signatureRequestToolStripMenuItem.Text = "Create Signature &Request";
       this.signatureRequestToolStripMenuItem.Click += new System.EventHandler(this.signatureRequestToolStripMenuItem_Click);
       // 
       // signatureResponseToolStripMenuItem
       // 
       this.signatureResponseToolStripMenuItem.Name = "signatureResponseToolStripMenuItem";
-      this.signatureResponseToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+      this.signatureResponseToolStripMenuItem.Size = new System.Drawing.Size(282, 26);
       this.signatureResponseToolStripMenuItem.Text = "Import Signature &Response";
       this.signatureResponseToolStripMenuItem.Click += new System.EventHandler(this.signatureResponseToolStripMenuItem_Click);
       // 
       // toolStripMenuItem1
       // 
       this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-      this.toolStripMenuItem1.Size = new System.Drawing.Size(202, 6);
+      this.toolStripMenuItem1.Size = new System.Drawing.Size(279, 6);
       // 
       // exportPublicKeyToolStripMenuItem
       // 
       this.exportPublicKeyToolStripMenuItem.Name = "exportPublicKeyToolStripMenuItem";
-      this.exportPublicKeyToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+      this.exportPublicKeyToolStripMenuItem.Size = new System.Drawing.Size(282, 26);
       this.exportPublicKeyToolStripMenuItem.Text = "&Export Certificate Storage";
       this.exportPublicKeyToolStripMenuItem.Click += new System.EventHandler(this.exportPublicKeyToolStripMenuItem_Click);
       // 
       // importCertificateStorageToolStripMenuItem
       // 
       this.importCertificateStorageToolStripMenuItem.Name = "importCertificateStorageToolStripMenuItem";
-      this.importCertificateStorageToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+      this.importCertificateStorageToolStripMenuItem.Size = new System.Drawing.Size(282, 26);
       this.importCertificateStorageToolStripMenuItem.Text = "&Import Certificate Storage";
       this.importCertificateStorageToolStripMenuItem.Click += new System.EventHandler(this.importCertificateStorageToolStripMenuItem_Click);
       // 
       // toolStripMenuItem3
       // 
       this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-      this.toolStripMenuItem3.Size = new System.Drawing.Size(202, 6);
+      this.toolStripMenuItem3.Size = new System.Drawing.Size(279, 6);
       // 
       // exportRootCertificateToolStripMenuItem
       // 
       this.exportRootCertificateToolStripMenuItem.Name = "exportRootCertificateToolStripMenuItem";
-      this.exportRootCertificateToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+      this.exportRootCertificateToolStripMenuItem.Size = new System.Drawing.Size(282, 26);
       this.exportRootCertificateToolStripMenuItem.Text = "Export Root &Certificate";
       this.exportRootCertificateToolStripMenuItem.Click += new System.EventHandler(this.exportRootCertificateToolStripMenuItem_Click);
       // 
@@ -170,22 +171,34 @@
             this.toolStripMenuItem4,
             this.createAdminCertificateToolStripMenuItem});
       this.signaturesToolStripMenuItem.Name = "signaturesToolStripMenuItem";
-      this.signaturesToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+      this.signaturesToolStripMenuItem.Size = new System.Drawing.Size(100, 25);
       this.signaturesToolStripMenuItem.Text = "&Signatures";
       // 
       // importRequestsToolStripMenuItem
       // 
       this.importRequestsToolStripMenuItem.Name = "importRequestsToolStripMenuItem";
-      this.importRequestsToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+      this.importRequestsToolStripMenuItem.Size = new System.Drawing.Size(266, 26);
       this.importRequestsToolStripMenuItem.Text = "&Import Requests";
       this.importRequestsToolStripMenuItem.Click += new System.EventHandler(this.importRequestsToolStripMenuItem_Click);
       // 
       // generateRevocationListToolStripMenuItem
       // 
       this.generateRevocationListToolStripMenuItem.Name = "generateRevocationListToolStripMenuItem";
-      this.generateRevocationListToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+      this.generateRevocationListToolStripMenuItem.Size = new System.Drawing.Size(266, 26);
       this.generateRevocationListToolStripMenuItem.Text = "&Generate Revocation List";
       this.generateRevocationListToolStripMenuItem.Click += new System.EventHandler(this.generateRevocationListToolStripMenuItem_Click);
+      // 
+      // toolStripMenuItem4
+      // 
+      this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+      this.toolStripMenuItem4.Size = new System.Drawing.Size(263, 6);
+      // 
+      // createAdminCertificateToolStripMenuItem
+      // 
+      this.createAdminCertificateToolStripMenuItem.Name = "createAdminCertificateToolStripMenuItem";
+      this.createAdminCertificateToolStripMenuItem.Size = new System.Drawing.Size(266, 26);
+      this.createAdminCertificateToolStripMenuItem.Text = "Create &Admin Certificate";
+      this.createAdminCertificateToolStripMenuItem.Click += new System.EventHandler(this.createAdminCertificateToolStripMenuItem_Click);
       // 
       // entryListView
       // 
@@ -195,15 +208,16 @@
             this.nameColumnHeader,
             this.validFromColumnHeader,
             this.validUntilColumnHeader,
-            this.revokedColumnHeader});
+            this.statusColumnHeader});
       this.entryListView.ContextMenuStrip = this.entryListContextMenu;
       this.entryListView.Dock = System.Windows.Forms.DockStyle.Fill;
       this.entryListView.FullRowSelect = true;
       this.entryListView.HideSelection = false;
       this.entryListView.Location = new System.Drawing.Point(0, 0);
+      this.entryListView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.entryListView.MultiSelect = false;
       this.entryListView.Name = "entryListView";
-      this.entryListView.Size = new System.Drawing.Size(1014, 427);
+      this.entryListView.Size = new System.Drawing.Size(1521, 660);
       this.entryListView.TabIndex = 1;
       this.entryListView.UseCompatibleStateImageBehavior = false;
       this.entryListView.View = System.Windows.Forms.View.Details;
@@ -234,9 +248,10 @@
       this.validUntilColumnHeader.Text = "Valid Until";
       this.validUntilColumnHeader.Width = 150;
       // 
-      // revokedColumnHeader
+      // statusColumnHeader
       // 
-      this.revokedColumnHeader.Text = "Revoked";
+      this.statusColumnHeader.Text = "Status";
+      this.statusColumnHeader.Width = 120;
       // 
       // entryListContextMenu
       // 
@@ -246,41 +261,42 @@
             this.exportResponseToolStripMenuItem,
             this.revokeToolStripMenuItem});
       this.entryListContextMenu.Name = "entryListContextMenu";
-      this.entryListContextMenu.Size = new System.Drawing.Size(157, 92);
+      this.entryListContextMenu.Size = new System.Drawing.Size(206, 108);
       this.entryListContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.entryListContextMenu_Opening);
       // 
       // signToolStripMenuItem
       // 
       this.signToolStripMenuItem.Name = "signToolStripMenuItem";
-      this.signToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+      this.signToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
       this.signToolStripMenuItem.Text = "&Sign";
       this.signToolStripMenuItem.Click += new System.EventHandler(this.signToolStripMenuItem_Click);
       // 
       // refuseToolStripMenuItem
       // 
       this.refuseToolStripMenuItem.Name = "refuseToolStripMenuItem";
-      this.refuseToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+      this.refuseToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
       this.refuseToolStripMenuItem.Text = "&Refuse";
       this.refuseToolStripMenuItem.Click += new System.EventHandler(this.refuseToolStripMenuItem_Click);
       // 
       // exportResponseToolStripMenuItem
       // 
       this.exportResponseToolStripMenuItem.Name = "exportResponseToolStripMenuItem";
-      this.exportResponseToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+      this.exportResponseToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
       this.exportResponseToolStripMenuItem.Text = "&Export Response";
       this.exportResponseToolStripMenuItem.Click += new System.EventHandler(this.exportResponseToolStripMenuItem_Click);
       // 
       // revokeToolStripMenuItem
       // 
       this.revokeToolStripMenuItem.Name = "revokeToolStripMenuItem";
-      this.revokeToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+      this.revokeToolStripMenuItem.Size = new System.Drawing.Size(205, 26);
       this.revokeToolStripMenuItem.Text = "&Revoke";
       this.revokeToolStripMenuItem.Click += new System.EventHandler(this.revokeToolStripMenuItem_Click);
       // 
       // splitContainer1
       // 
       this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+      this.splitContainer1.Location = new System.Drawing.Point(0, 31);
+      this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.splitContainer1.Name = "splitContainer1";
       this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
       // 
@@ -291,8 +307,9 @@
       // splitContainer1.Panel2
       // 
       this.splitContainer1.Panel2.Controls.Add(this.crlListView);
-      this.splitContainer1.Size = new System.Drawing.Size(1014, 630);
-      this.splitContainer1.SplitterDistance = 427;
+      this.splitContainer1.Size = new System.Drawing.Size(1521, 975);
+      this.splitContainer1.SplitterDistance = 660;
+      this.splitContainer1.SplitterWidth = 6;
       this.splitContainer1.TabIndex = 2;
       // 
       // crlListView
@@ -306,9 +323,10 @@
       this.crlListView.FullRowSelect = true;
       this.crlListView.HideSelection = false;
       this.crlListView.Location = new System.Drawing.Point(0, 0);
+      this.crlListView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.crlListView.MultiSelect = false;
       this.crlListView.Name = "crlListView";
-      this.crlListView.Size = new System.Drawing.Size(1014, 199);
+      this.crlListView.Size = new System.Drawing.Size(1521, 309);
       this.crlListView.TabIndex = 2;
       this.crlListView.UseCompatibleStateImageBehavior = false;
       this.crlListView.View = System.Windows.Forms.View.Details;
@@ -328,26 +346,15 @@
       this.revokedCount.Text = "# Revoked";
       this.revokedCount.Width = 100;
       // 
-      // toolStripMenuItem4
-      // 
-      this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-      this.toolStripMenuItem4.Size = new System.Drawing.Size(192, 6);
-      // 
-      // createAdminCertificateToolStripMenuItem
-      // 
-      this.createAdminCertificateToolStripMenuItem.Name = "createAdminCertificateToolStripMenuItem";
-      this.createAdminCertificateToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-      this.createAdminCertificateToolStripMenuItem.Text = "Create &Admin Certificate";
-      this.createAdminCertificateToolStripMenuItem.Click += new System.EventHandler(this.createAdminCertificateToolStripMenuItem_Click);
-      // 
       // Master
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1014, 654);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.ClientSize = new System.Drawing.Size(1521, 1006);
       this.Controls.Add(this.splitContainer1);
       this.Controls.Add(this.mainMenu);
       this.MainMenuStrip = this.mainMenu;
+      this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.Name = "Master";
       this.Text = "PiVote Certificate Authority";
       this.Load += new System.EventHandler(this.Master_Load);
@@ -370,7 +377,7 @@
     private System.Windows.Forms.ColumnHeader nameColumnHeader;
     private System.Windows.Forms.ColumnHeader validFromColumnHeader;
     private System.Windows.Forms.ColumnHeader validUntilColumnHeader;
-    private System.Windows.Forms.ColumnHeader revokedColumnHeader;
+    private System.Windows.Forms.ColumnHeader statusColumnHeader;
     private System.Windows.Forms.ToolStripMenuItem selfToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem createToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem signatureRequestToolStripMenuItem;

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2AD39E39-23F3-46A5-83C0-4228B814A85D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -107,30 +107,39 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CaInfoControl.resx">
       <DependentUpon>CaInfoControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CaPropertiesDialog.resx">
       <DependentUpon>CaPropertiesDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateAdminDialog.resx">
       <DependentUpon>CreateAdminDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SignatureInfoControl.resx">
       <DependentUpon>SignatureInfoControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GenerateCrlDialog.resx">
       <DependentUpon>GenerateCrlDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SignDialog.resx">
       <DependentUpon>SignDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RefuseDialog.resx">
       <DependentUpon>RefuseDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateCaDialog.resx">
       <DependentUpon>CreateCaDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Master.resx">
       <DependentUpon>Master.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

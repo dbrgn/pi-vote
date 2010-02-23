@@ -146,17 +146,29 @@ namespace Pirate.PiVote.CaGui
       else
       {
         SignatureResponse response = entry.Response.Value;
-        item.SubItems.Add(response.Signature.ValidFrom.ToString());
-        item.SubItems.Add(response.Signature.ValidUntil.ToString());
-      }
+        switch (response.Status)
+        {
+          case SignatureResponseStatus.Accepted:
+            item.SubItems.Add(response.Signature.ValidFrom.ToString());
+            item.SubItems.Add(response.Signature.ValidUntil.ToString());
 
-      if (entry.Revoked)
-      {
-        item.SubItems.Add("Revoked");
-      }
-      else
-      {
-        item.SubItems.Add(string.Empty);
+            if (entry.Revoked)
+            {
+              item.SubItems.Add("Revoked");
+            }
+            else
+            {
+              item.SubItems.Add("Valid");
+            }
+            break;
+          case SignatureResponseStatus.Declined:
+            item.SubItems.Add("N/A");
+            item.SubItems.Add("N/A");
+            item.SubItems.Add("Refused");
+            break;
+          default:
+            break;
+        }
       }
 
       item.Tag = fileName;
@@ -370,7 +382,8 @@ namespace Pirate.PiVote.CaGui
     {
       if (this.entryListView.SelectedItems.Count > 0)
       {
-        string fileName = (string)this.entryListView.SelectedItems[0].Tag;
+        ListViewItem item = this.entryListView.SelectedItems[0];
+        string fileName = (string)item.Tag;
         CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
 
         SignDialog dialog = new SignDialog();
@@ -382,6 +395,8 @@ namespace Pirate.PiVote.CaGui
         {
           entry.Sign(Certificate, dialog.ValidUntil);
           entry.Save(DataPath(fileName));
+          item.SubItems[3].Text = entry.Response.Value.Signature.ValidFrom.ToString();
+          item.SubItems[4].Text = entry.Response.Value.Signature.ValidUntil.ToString();
 
           SaveFileDialog saveDialog = new SaveFileDialog();
           saveDialog.Title = "Export Signature Response";
@@ -400,7 +415,8 @@ namespace Pirate.PiVote.CaGui
     {
       if (this.entryListView.SelectedItems.Count > 0)
       {
-        string fileName = (string)this.entryListView.SelectedItems[0].Tag;
+        ListViewItem item = this.entryListView.SelectedItems[0];
+        string fileName = (string)item.Tag;
         CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
 
         RefuseDialog dialog = new RefuseDialog();
@@ -412,6 +428,9 @@ namespace Pirate.PiVote.CaGui
         {
           entry.Refuse(Certificate, dialog.Reason);
           entry.Save(DataPath(fileName));
+          item.SubItems[3].Text = "N/A";
+          item.SubItems[4].Text = "N/A";
+          item.SubItems[5].Text = "Refused";
 
           SaveFileDialog saveDialog = new SaveFileDialog();
           saveDialog.Title = "Export Signature Response";
@@ -430,19 +449,21 @@ namespace Pirate.PiVote.CaGui
     {
       if (this.entryListView.SelectedItems.Count > 0)
       {
+        ListViewItem item = this.entryListView.SelectedItems[0];
         string fileName = (string)this.entryListView.SelectedItems[0].Tag;
         CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
 
         string message = string.Format(
           "Do you really want to revoke Id {0}, Type {1}, Name {2}", 
-          (string)this.entryListView.SelectedItems[0].Text, 
-          (string)this.entryListView.SelectedItems[0].SubItems[1].Text,
-          (string)this.entryListView.SelectedItems[0].SubItems[2].Text);
+          (string)item.Text, 
+          (string)item.SubItems[1].Text,
+          (string)item.SubItems[2].Text);
 
         if (MessageBox.Show(message, "Revoke Certificate", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
         {
           entry.Revoke();
           entry.Save(DataPath(fileName));
+          item.SubItems[5].Text = "Revoked";
         }
       }
     }
