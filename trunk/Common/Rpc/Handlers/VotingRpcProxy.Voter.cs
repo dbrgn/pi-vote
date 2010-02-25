@@ -18,16 +18,8 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// Voting RPC proxy.
   /// </summary>
-  public class VoterRpcProxy : VotingRpcProxy
+  public partial class VotingRpcProxy
   {
-    /// <summary>
-    /// Creates a new voting proxy.
-    /// </summary>
-    /// <param name="binaryProxy">Binary RPC proxy.</param>
-    public VoterRpcProxy(IBinaryRpcProxy binaryProxy)
-      : base(binaryProxy)
-    { }
-
     /// <summary>
     /// Pushes the enveope containing the vota from this voter.
     /// </summary>
@@ -35,8 +27,8 @@ namespace Pirate.PiVote.Rpc
     /// <param name="signedEnvelope">Signed envelope.</param>
     public void PushEnvelope(Guid votingId, Signed<Envelope> signedEnvelope)
     {
-      var request = new PushEnvelopeVoterRequest(Guid.NewGuid(), votingId, signedEnvelope);
-      var response = Execute<PushEnvelopeVoterResponse>(request);
+      var request = new PushEnvelopeRequest(Guid.NewGuid(), votingId, signedEnvelope);
+      var response = Execute<PushEnvelopeResponse>(request);
     }
   }
 }

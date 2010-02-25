@@ -16,22 +16,18 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class FetchAllSharesAuthorityResponse : RpcResponse
+  public class PushShareResponseResponse : RpcResponse
   {
-    public AllShareParts AllShareParts { get; private set; }
-
-    public FetchAllSharesAuthorityResponse(Guid requestId, AllShareParts allShareParts)
+    public PushShareResponseResponse(Guid requestId)
       : base(requestId)
-    {
-      AllShareParts = allShareParts;
-    }
+    { }
 
     /// <summary>
     /// Create a failure response to request.
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="exception">Exception that occured when executing the request.</param>
-    public FetchAllSharesAuthorityResponse(Guid requestId, PiException exception)
+    public PushShareResponseResponse(Guid requestId, PiException exception)
       : base(requestId, exception)
     { }
 
@@ -39,7 +35,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchAllSharesAuthorityResponse(DeserializeContext context)
+    public PushShareResponseResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -50,7 +46,6 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(AllShareParts);
     }
 
     /// <summary>
@@ -60,7 +55,6 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      AllShareParts = context.ReadObject<AllShareParts>();
     }
   }
 }

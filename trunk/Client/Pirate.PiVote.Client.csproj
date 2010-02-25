@@ -75,6 +75,18 @@
     <Compile Include="Wizard\AdminChooseItem.Designer.cs">
       <DependentUpon>AdminChooseItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wizard\SetSignatureResponsesItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\SetSignatureResponsesItem.Designer.cs">
+      <DependentUpon>SetSignatureResponsesItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\GetSignatureRequestsItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\GetSignatureRequestsItem.Designer.cs">
+      <DependentUpon>GetSignatureRequestsItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Wizard\CreateRequestItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -124,6 +136,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\AdminChooseItem.resx">
       <DependentUpon>AdminChooseItem.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\SetSignatureResponsesItem.resx">
+      <DependentUpon>SetSignatureResponsesItem.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\GetSignatureRequestsItem.resx">
+      <DependentUpon>GetSignatureRequestsItem.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\CreateRequestItem.resx">

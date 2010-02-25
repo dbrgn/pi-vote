@@ -15,27 +15,34 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class PushPartialDecipherAuthorityRequest : RpcRequest<VotingRpcServer, PushPartialDecipherAuthorityResponse>
+  /// <summary>
+  /// RPC request to end a voting procedure.
+  /// </summary>
+  public class EndVotingRequest : RpcRequest<VotingRpcServer, EndVotingResponse>
   {
+    /// <summary>
+    /// Id of the voting.
+    /// </summary>
     private Guid votingId;
 
-    private Signed<PartialDecipherList> signedPartialDecipherList;
-
-    public PushPartialDecipherAuthorityRequest(
+    /// <summary>
+    /// Creates a request to end voting.
+    /// </summary>
+    /// <param name="requestId">Id of the request.</param>
+    /// <param name="votingId">Id of the voting.</param>
+    public EndVotingRequest(
       Guid requestId,
-      Guid votingId,
-      Signed<PartialDecipherList> signedPartialDecipherList)
+      Guid votingId)
       : base(requestId)
     {
       this.votingId = votingId;
-      this.signedPartialDecipherList = signedPartialDecipherList;
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public PushPartialDecipherAuthorityRequest(DeserializeContext context)
+    public EndVotingRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -47,19 +54,16 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
       context.Write(this.votingId);
-      context.Write(this.signedPartialDecipherList);
     }
 
     /// <summary>
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
       this.votingId = context.ReadGuid();
-      this.signedPartialDecipherList = context.ReadObject<Signed<PartialDecipherList>>();
     }
 
     /// <summary>
@@ -67,12 +71,12 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override PushPartialDecipherAuthorityResponse Execute(VotingRpcServer server)
+    protected override EndVotingResponse Execute(VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
-      voting.DepositPartialDecipher(this.signedPartialDecipherList);
+      voting.EndVote();
 
-      return new PushPartialDecipherAuthorityResponse(RequestId);
+      return new EndVotingResponse(RequestId);
     }
   }
 }

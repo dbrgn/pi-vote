@@ -15,9 +15,9 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class PushEnvelopeVoterResponse : RpcResponse
+  public class PushSharesResponse : RpcResponse
   {
-    public PushEnvelopeVoterResponse(Guid requestId)
+    public PushSharesResponse(Guid requestId)
       : base(requestId)
     { }
 
@@ -26,7 +26,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="exception">Exception that occured when executing the request.</param>
-    public PushEnvelopeVoterResponse(Guid requestId, PiException exception)
+    public PushSharesResponse(Guid requestId, PiException exception)
       : base(requestId, exception)
     { }
 
@@ -34,7 +34,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public PushEnvelopeVoterResponse(DeserializeContext context)
+    public PushSharesResponse(DeserializeContext context)
       : base(context)
     { }
 

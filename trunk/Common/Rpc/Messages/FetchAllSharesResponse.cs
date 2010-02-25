@@ -1,4 +1,5 @@
 ﻿
+
 /*
  *  <project description>
  * 
@@ -15,32 +16,14 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  /// <summary>
-  /// Response to the request to fetch voting parameters.
-  /// </summary>
-  public class FetchParametersAuthorityResponse : RpcResponse
+  public class FetchAllSharesResponse : RpcResponse
   {
-    /// <summary>
-    /// Index of the authority.
-    /// </summary>
-    public int AuthorityIndex { get; private set; }
+    public AllShareParts AllShareParts { get; private set; }
 
-    /// <summary>
-    /// Parameters of the voting.
-    /// </summary>
-    public VotingParameters VotingParameters { get; private set; }
-
-    /// <summary>
-    /// Create a new response to the request to fetch voting parameters.
-    /// </summary>
-    /// <param name="requestId">Id of the request.</param>
-    /// <param name="authorityIndex">Index of the authority.</param>
-    /// <param name="votingParameters">Parameters of the voting.</param>
-    public FetchParametersAuthorityResponse(Guid requestId, int authorityIndex, VotingParameters votingParameters)
+    public FetchAllSharesResponse(Guid requestId, AllShareParts allShareParts)
       : base(requestId)
     {
-      AuthorityIndex = authorityIndex;
-      VotingParameters = votingParameters;
+      AllShareParts = allShareParts;
     }
 
     /// <summary>
@@ -48,7 +31,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="exception">Exception that occured when executing the request.</param>
-    public FetchParametersAuthorityResponse(Guid requestId, PiException exception)
+    public FetchAllSharesResponse(Guid requestId, PiException exception)
       : base(requestId, exception)
     { }
 
@@ -56,7 +39,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchParametersAuthorityResponse(DeserializeContext context)
+    public FetchAllSharesResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -67,8 +50,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(AuthorityIndex);
-      context.Write(VotingParameters);
+      context.Write(AllShareParts);
     }
 
     /// <summary>
@@ -78,8 +60,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      AuthorityIndex = context.ReadInt32();
-      VotingParameters = context.ReadObject<VotingParameters>();
+      AllShareParts = context.ReadObject<AllShareParts>();
     }
   }
 }

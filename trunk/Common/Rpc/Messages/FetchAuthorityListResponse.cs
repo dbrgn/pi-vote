@@ -1,5 +1,4 @@
 ﻿
-
 /*
  *  <project description>
  * 
@@ -16,18 +15,33 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class PushShareResponseAuthorityResponse : RpcResponse
+  /// <summary>
+  /// Response to a request to fetch the list of authorities.
+  /// </summary>
+  public class FetchAuthorityListResponse : RpcResponse
   {
-    public PushShareResponseAuthorityResponse(Guid requestId)
+    /// <summary>
+    /// List of authorities for the voting.
+    /// </summary>
+    public AuthorityList AuthorityList { get; private set; }
+
+    /// <summary>
+    /// Create a response to a request to fetch the list of authorities.
+    /// </summary>
+    /// <param name="requestId">Id of the request.</param>
+    /// <param name="authorityList">List of authorities for the voting.</param>
+    public FetchAuthorityListResponse(Guid requestId, AuthorityList authorityList)
       : base(requestId)
-    { }
+    {
+      AuthorityList = authorityList;
+    }
 
     /// <summary>
     /// Create a failure response to request.
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="exception">Exception that occured when executing the request.</param>
-    public PushShareResponseAuthorityResponse(Guid requestId, PiException exception)
+    public FetchAuthorityListResponse(Guid requestId, PiException exception)
       : base(requestId, exception)
     { }
 
@@ -35,7 +49,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public PushShareResponseAuthorityResponse(DeserializeContext context)
+    public FetchAuthorityListResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -46,6 +60,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+      context.Write(AuthorityList);
     }
 
     /// <summary>
@@ -55,6 +70,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+      AuthorityList = context.ReadObject<AuthorityList>();
     }
   }
 }

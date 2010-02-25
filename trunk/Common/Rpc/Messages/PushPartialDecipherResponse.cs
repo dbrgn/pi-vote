@@ -10,39 +10,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Pirate.PiVote.Serialization;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  /// <summary>
-  /// RPC request to end a voting procedure.
-  /// </summary>
-  public class EndVotingAdminRequest : RpcRequest<VotingRpcServer, EndVotingAdminResponse>
+  public class PushPartialDecipherResponse : RpcResponse
   {
-    /// <summary>
-    /// Id of the voting.
-    /// </summary>
-    private Guid votingId;
+    public PushPartialDecipherResponse(Guid requestId)
+      : base(requestId)
+    { }
 
     /// <summary>
-    /// Creates a request to end voting.
+    /// Create a failure response to request.
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
-    /// <param name="votingId">Id of the voting.</param>
-    public EndVotingAdminRequest(
-      Guid requestId,
-      Guid votingId)
-      : base(requestId)
-    {
-      this.votingId = votingId;
-    }
+    /// <param name="exception">Exception that occured when executing the request.</param>
+    public PushPartialDecipherResponse(Guid requestId, PiException exception)
+      : base(requestId, exception)
+    { }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public EndVotingAdminRequest(DeserializeContext context)
+    public PushPartialDecipherResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -53,7 +45,6 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(this.votingId);
     }
 
     /// <summary>
@@ -63,20 +54,6 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.votingId = context.ReadGuid();
-    }
-
-    /// <summary>
-    /// Executes a RPC request.
-    /// </summary>
-    /// <param name="server">Server to execute the request on.</param>
-    /// <returns>Response to the request.</returns>
-    protected override EndVotingAdminResponse Execute(VotingRpcServer server)
-    {
-      var voting = server.GetVoting(this.votingId);
-      voting.EndVote();
-
-      return new EndVotingAdminResponse(RequestId);
     }
   }
 }

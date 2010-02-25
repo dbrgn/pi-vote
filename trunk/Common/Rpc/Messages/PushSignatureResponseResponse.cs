@@ -10,24 +10,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Pirate.PiVote.Serialization;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class FetchSignatureRequestListRequest : RpcRequest<VotingRpcServer, FetchSignatureRequestListResponse>
+  public class PushSignatureResponseResponse : RpcResponse
   {
-    public FetchSignatureRequestListRequest(
-      Guid requestId)
+    public PushSignatureResponseResponse(Guid requestId)
       : base(requestId)
-    {
-    }
+    { }
+
+    /// <summary>
+    /// Create a failure response to request.
+    /// </summary>
+    /// <param name="requestId">Id of the request.</param>
+    /// <param name="exception">Exception that occured when executing the request.</param>
+    public PushSignatureResponseResponse(Guid requestId, PiException exception)
+      : base(requestId, exception)
+    { }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchSignatureRequestListRequest(DeserializeContext context)
+    public PushSignatureResponseResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -47,18 +54,6 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-    }
-
-    /// <summary>
-    /// Executes a RPC request.
-    /// </summary>
-    /// <param name="server">Server to execute the request on.</param>
-    /// <returns>Response to the request.</returns>
-    protected override FetchSignatureRequestListResponse Execute(VotingRpcServer server)
-    {
-      var signatureRequestList = server.GetSignatureRequestList();
-
-      return new FetchSignatureRequestListResponse(RequestId, signatureRequestList);
     }
   }
 }

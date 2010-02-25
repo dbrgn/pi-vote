@@ -271,5 +271,23 @@ namespace Pirate.PiVote.Rpc
         }
       }
     }
+
+    /// <summary>
+    /// Sets a signature response.
+    /// </summary>
+    /// <param name="signatureRequestId">Id of the corresponding request.</param>
+    /// <param name="signedSignatureResponse">Signed signature response.</param>
+    public void SetSignatureResponse(Signed<SignatureResponse> signedSignatureResponse)
+    {
+      if (!signedSignatureResponse.Verify(CertificateStorage))
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature response has invalid signature.");
+      if (!(signedSignatureResponse.Certificate is CACertificate))
+        throw new PiSecurityException(ExceptionCode.SignatureResponseNotFromCA, "Signature response not from proper CA.");
+      
+      MySqlCommand replaceCommand = new MySqlCommand("REPLACE INTO signatureresponse (Id, Value) VALUES (@Id, @Value)", this.dbConnection);
+      replaceCommand.Parameters.AddWithValue("@Id", signedSignatureResponse.Value.SubjectId.ToByteArray());
+      replaceCommand.Parameters.AddWithValue("@Value", signedSignatureResponse.ToBinary());
+      replaceCommand.ExecuteNonQuery();
+    }
   }
 }

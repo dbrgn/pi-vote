@@ -50,6 +50,8 @@ namespace Pirate.PiVote
 
     SignatureRequestInvalid       = 5000001,
     SignatureRequestResponded     = 5000002,
-    SignatureRequestNotFound      = 5000003
+    SignatureRequestNotFound      = 5000003,
+
+    SignatureResponseNotFromCA    = 6000001
   }
 }

@@ -45,7 +45,7 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Voter RPC proxy.
     /// </summary>
-    private VoterRpcProxy proxy;
+    private VotingRpcProxy proxy;
 
     /// <summary>
     /// Master operation worker thread.
@@ -92,22 +92,25 @@ namespace Pirate.PiVote.Rpc
     {
       while (this.run)
       {
+        Operation operation = null;
+
         lock (this.operations)
         {
           if (this.operations.Count > 0)
           {
-            CurrentOperation = this.operations.Dequeue();
+            operation = this.operations.Dequeue();
           }
         }
 
-        if (CurrentOperation == null)
+        if (operation == null)
         {
           Thread.Sleep(1);
         }
         else
         {
-          CurrentOperation.Execute(this);
-          CurrentOperation = null;
+          CurrentOperation = operation;
+          operation.Execute(this);
+          operation = null;
         }
       }
     }
@@ -199,6 +202,32 @@ namespace Pirate.PiVote.Rpc
       lock (this.operations)
       {
         this.operations.Enqueue(new SetSignatureRequestOperation(signatureRequest, callBack));
+      }
+    }
+
+    /// <summary>
+    /// Send a signature responses to server.
+    /// </summary>
+    /// <param name="fileNames">Names of signature response files.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void SetSignatureResponses(IEnumerable<string> fileNames, SetSignatureResponsesCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new SetSignatureResponsesOperation(fileNames, callBack));
+      }
+    }
+
+    /// <summary>
+    /// Get signature requests from server.
+    /// </summary>
+    /// <param name="fileNames">Names of signature response files.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void GetSignatureRequests(string savePath, GetSignatureRequestsCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new GetSignatureRequestsOperation(savePath, callBack));
       }
     }
   }

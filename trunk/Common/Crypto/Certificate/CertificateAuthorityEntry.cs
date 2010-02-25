@@ -92,7 +92,7 @@ namespace Pirate.PiVote.Crypto
     {
       SignatureRequest request = Request.Value;
       Signature signature = Certificate.AddSignature(caCertificate, validUntil);
-      SignatureResponse response = new SignatureResponse(signature);
+      SignatureResponse response = new SignatureResponse(Request.Certificate.Id, signature);
       Response = new Signed<SignatureResponse>(response, caCertificate);
     }
 
@@ -104,7 +104,7 @@ namespace Pirate.PiVote.Crypto
     public void Refuse(CACertificate caCertificate, string reason)
     {
       SignatureRequest request = Request.Value;
-      SignatureResponse response = new SignatureResponse(reason);
+      SignatureResponse response = new SignatureResponse(Request.Certificate.Id, reason);
       Response = new Signed<SignatureResponse>(response, caCertificate);
     }
 

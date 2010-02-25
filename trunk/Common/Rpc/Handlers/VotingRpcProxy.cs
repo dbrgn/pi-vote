@@ -18,7 +18,7 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// Proxy for RPC function calling.
   /// </summary>
-  public class VotingRpcProxy
+  public partial class VotingRpcProxy
   {
     /// <summary>
     /// Binary RPC proxy.

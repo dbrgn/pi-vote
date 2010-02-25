@@ -16,41 +16,41 @@ using Pirate.PiVote.Crypto;
 namespace Pirate.PiVote.Rpc
 {
   /// <summary>
-  /// RPC request creates a new voting.
+  /// RPC request to fetch voting parameters.
   /// </summary>
-  public class CreateVotingAdminRequest : RpcRequest<VotingRpcServer, CreateVotingAdminResponse>
+  public class FetchParametersRequest : RpcRequest<VotingRpcServer, FetchParametersResponse>
   {
     /// <summary>
-    /// Parameters for the new voting.
+    /// Id of the voting.
     /// </summary>
-    private Signed<VotingParameters> votingParameters;
+    private Guid votingId;
 
     /// <summary>
-    /// List of authorities to oversee the voting.
+    /// Certificate of the authorities.
     /// </summary>
-    private List<AuthorityCertificate> authorities;
+    private AuthorityCertificate certificate;
 
     /// <summary>
-    /// Creates a new voting creation request.
+    /// Creates a new request to fetch voting parameters.
     /// </summary>
-    /// <param name="requestId">Id of this request.</param>
-    /// <param name="votingParameters">Parameters for the new voting.</param>
-    /// <param name="authorities">List of authorities to oversee the voting.</param>
-    public CreateVotingAdminRequest(
-      Guid requestId, 
-      Signed<VotingParameters> votingParameters,
-      IEnumerable<AuthorityCertificate> authorities)
+    /// <param name="requestId">Id of the request.</param>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="certificate">Certificate of the authority.</param>
+    public FetchParametersRequest(
+      Guid requestId,
+      Guid votingId,
+      AuthorityCertificate certificate)
       : base(requestId)
     {
-      this.votingParameters = votingParameters;
-      this.authorities = new List<AuthorityCertificate>(authorities);
+      this.votingId = votingId;
+      this.certificate = certificate;
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public CreateVotingAdminRequest(DeserializeContext context)
+    public FetchParametersRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -61,8 +61,8 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(this.votingParameters);
-      context.WriteList(authorities);
+      context.Write(this.votingId);
+      context.Write(this.certificate);
     }
 
     /// <summary>
@@ -72,8 +72,8 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.votingParameters = context.ReadObject<Signed<VotingParameters>>();
-      this.authorities = context.ReadObjectList<AuthorityCertificate>();
+      this.votingId = context.ReadGuid();
+      this.certificate = context.ReadObject<AuthorityCertificate>();
     }
 
     /// <summary>
@@ -81,11 +81,11 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override CreateVotingAdminResponse Execute(VotingRpcServer server)
+    protected override FetchParametersResponse Execute(VotingRpcServer server)
     {
-      server.CreateVoting(this.votingParameters, this.authorities);
+      VotingServerEntity voting = server.GetVoting(this.votingId);
 
-      return new CreateVotingAdminResponse(RequestId);
+      return new FetchParametersResponse(RequestId, voting.GetAuthorityIndex(this.certificate), voting.Parameters);
     }
   }
 }

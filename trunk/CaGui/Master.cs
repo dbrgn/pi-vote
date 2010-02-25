@@ -142,6 +142,7 @@ namespace Pirate.PiVote.CaGui
       {
         item.SubItems.Add(string.Empty);
         item.SubItems.Add(string.Empty);
+        item.SubItems.Add(string.Empty);
       }
       else
       {
@@ -314,7 +315,7 @@ namespace Pirate.PiVote.CaGui
     private void importRequestsToolStripMenuItem_Click(object sender, EventArgs e)
     {
       OpenFileDialog dialog = new OpenFileDialog();
-      dialog.Title = "Import certificate storage";
+      dialog.Title = "Open Signature Requests";
       dialog.CheckPathExists = true;
       dialog.CheckFileExists = true;
       dialog.Multiselect = true;
@@ -397,6 +398,7 @@ namespace Pirate.PiVote.CaGui
           entry.Save(DataPath(fileName));
           item.SubItems[3].Text = entry.Response.Value.Signature.ValidFrom.ToString();
           item.SubItems[4].Text = entry.Response.Value.Signature.ValidUntil.ToString();
+          item.SubItems[5].Text = "Valid";
 
           SaveFileDialog saveDialog = new SaveFileDialog();
           saveDialog.Title = "Export Signature Response";

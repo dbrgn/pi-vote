@@ -10,14 +10,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class PushSharesAuthorityResponse : RpcResponse
+  /// <summary>
+  /// Response to a voting creation RPC request.
+  /// </summary>
+  public class CreateVotingResponse : RpcResponse
   {
-    public PushSharesAuthorityResponse(Guid requestId)
+    /// <summary>
+    /// Create a response to a voting creation RPC request.
+    /// </summary>
+    /// <param name="requestId">Id of the request.</param>
+    /// <param name="votingId">Id of the newly created voting.</param>
+    public CreateVotingResponse(Guid requestId)
       : base(requestId)
     { }
 
@@ -26,7 +33,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="exception">Exception that occured when executing the request.</param>
-    public PushSharesAuthorityResponse(Guid requestId, PiException exception)
+    public CreateVotingResponse(Guid requestId, PiException exception)
       : base(requestId, exception)
     { }
 
@@ -34,7 +41,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public PushSharesAuthorityResponse(DeserializeContext context)
+    public CreateVotingResponse(DeserializeContext context)
       : base(context)
     { }
 

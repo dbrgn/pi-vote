@@ -20,6 +20,11 @@ namespace Pirate.PiVote.Crypto
   public class SignatureResponse : Serializable
   {
     /// <summary>
+    /// Id of the subject of this signature request response.
+    /// </summary>
+    public Guid SubjectId { get; private set; }
+
+    /// <summary>
     /// Status of the signature request.
     /// </summary>
     public SignatureResponseStatus Status { get; private set; }
@@ -38,8 +43,9 @@ namespace Pirate.PiVote.Crypto
     /// Create an accepting response.
     /// </summary>
     /// <param name="signature">Signature of CA.</param>
-    public SignatureResponse(Signature signature)
+    public SignatureResponse(Guid subjectId, Signature signature)
     {
+      SubjectId = subjectId;
       Status = SignatureResponseStatus.Accepted;
       Signature = signature;
       Reason = string.Empty;
@@ -49,8 +55,9 @@ namespace Pirate.PiVote.Crypto
     /// Create a declining response.
     /// </summary>
     /// <param name="reason">Reason the request was declined.</param>
-    public SignatureResponse(string reason)
+    public SignatureResponse(Guid subjectId, string reason)
     {
+      SubjectId = subjectId;
       Status = SignatureResponseStatus.Declined;
       Signature = null;
       Reason = reason;
@@ -71,6 +78,7 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+      context.Write(SubjectId);
       context.Write((int)Status);
       context.Write(Reason);
       context.Write(Signature);
@@ -83,6 +91,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+      SubjectId = context.ReadGuid();
       Status = (SignatureResponseStatus)context.ReadInt32();
       Reason = context.ReadString();
       Signature = context.ReadObject<Signature>();

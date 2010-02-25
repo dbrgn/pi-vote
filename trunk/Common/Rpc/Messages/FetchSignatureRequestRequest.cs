@@ -15,19 +15,23 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class FetchSignatureRequestListRequest : RpcRequest<VotingRpcServer, FetchSignatureRequestListResponse>
+  public class FetchSignatureRequestRequest : RpcRequest<VotingRpcServer, FetchSignatureRequestResponse>
   {
-    public FetchSignatureRequestListRequest(
-      Guid requestId)
+    private Guid signatureRequestId;
+
+    public FetchSignatureRequestRequest(
+      Guid requestId,
+      Guid signatureRequestId)
       : base(requestId)
     {
+      this.signatureRequestId = signatureRequestId;
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchSignatureRequestListRequest(DeserializeContext context)
+    public FetchSignatureRequestRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -38,6 +42,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+      context.Write(signatureRequestId);
     }
 
     /// <summary>
@@ -47,6 +52,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+      signatureRequestId = context.ReadGuid();
     }
 
     /// <summary>
@@ -54,11 +60,11 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override FetchSignatureRequestListResponse Execute(VotingRpcServer server)
+    protected override FetchSignatureRequestResponse Execute(VotingRpcServer server)
     {
-      var signatureRequestList = server.GetSignatureRequestList();
+      var signatureRequest = server.GetSignatureRequest(this.signatureRequestId);
 
-      return new FetchSignatureRequestListResponse(RequestId, signatureRequestList);
+      return new FetchSignatureRequestResponse(RequestId, signatureRequest);
     }
   }
 }

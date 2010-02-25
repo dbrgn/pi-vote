@@ -28,7 +28,18 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      return null;
+      if (this.setSignatureResponsesRadio.Checked)
+      {
+        return new SetSignatureResponsesItem();
+      }
+      else if (this.getSignatureRequestsRadio.Checked)
+      {
+        return new GetSignatureRequestsItem();
+      }
+      else
+      {
+        return null;
+      }
     }
 
     public override WizardItem Previous()
@@ -46,8 +57,35 @@ namespace Pirate.PiVote.Client
       get { return true; }
     }
 
+    public override bool CanNext
+    {
+      get
+      {
+        return
+          this.getSignatureRequestsRadio.Checked |
+          this.setSignatureResponsesRadio.Checked |
+          this.createVotingRadio.Checked;
+      }
+    }
+
     public override void Begin()
     {
+      OnUpdateWizard();
+    }
+
+    private void getSignatureRequestsRadio_CheckedChanged(object sender, EventArgs e)
+    {
+      OnUpdateWizard();
+    }
+
+    private void setSignatureResponsesRadio_CheckedChanged(object sender, EventArgs e)
+    {
+      OnUpdateWizard();
+    }
+
+    private void createVotingRadio_CheckedChanged(object sender, EventArgs e)
+    {
+      OnUpdateWizard();
     }
   }
 }

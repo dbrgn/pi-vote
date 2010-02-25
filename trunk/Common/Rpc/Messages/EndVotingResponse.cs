@@ -1,4 +1,5 @@
 ﻿
+
 /*
  *  <project description>
  * 
@@ -15,9 +16,16 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class PushPartialDecipherAuthorityResponse : RpcResponse
+  /// <summary>
+  /// Response to a request for ending a voting.
+  /// </summary>
+  public class EndVotingResponse : RpcResponse
   {
-    public PushPartialDecipherAuthorityResponse(Guid requestId)
+    /// <summary>
+    /// Create a response to request to end voting.
+    /// </summary>
+    /// <param name="requestId">Id of the request.</param>
+    public EndVotingResponse(Guid requestId)
       : base(requestId)
     { }
 
@@ -26,7 +34,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="exception">Exception that occured when executing the request.</param>
-    public PushPartialDecipherAuthorityResponse(Guid requestId, PiException exception)
+    public EndVotingResponse(Guid requestId, PiException exception)
       : base(requestId, exception)
     { }
 
@@ -34,7 +42,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public PushPartialDecipherAuthorityResponse(DeserializeContext context)
+    public EndVotingResponse(DeserializeContext context)
       : base(context)
     { }
 

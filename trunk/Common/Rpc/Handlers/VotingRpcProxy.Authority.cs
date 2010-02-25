@@ -18,16 +18,8 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// Proxy for RPC function calling.
   /// </summary>
-  public class AuthorityRpcProxy : VotingRpcProxy
+  public partial class VotingRpcProxy
   {
-    /// <summary>
-    /// Creates a new voting proxy.
-    /// </summary>
-    /// <param name="binaryProxy">Binary RPC proxy.</param>
-    public AuthorityRpcProxy(IBinaryRpcProxy binaryProxy)
-      : base(binaryProxy)
-    { }
-
     /// <summary>
     /// Fetches shares from all authorities.
     /// </summary>
@@ -35,8 +27,8 @@ namespace Pirate.PiVote.Rpc
     /// <returns>All shares from all authorities.</returns>
     public AllShareParts FetchAllShares(Guid votingId)
     {
-      var request = new FetchAllSharesAuthorityRequest(Guid.NewGuid(), votingId);
-      var response = Execute<FetchAllSharesAuthorityResponse>(request);
+      var request = new FetchAllSharesRequest(Guid.NewGuid(), votingId);
+      var response = Execute<FetchAllSharesResponse>(request);
 
       return response.AllShareParts;
     }
@@ -48,8 +40,8 @@ namespace Pirate.PiVote.Rpc
     /// <param name="signedPartialDecipherList">Signed list of partial deciphers.</param>
     public void PushPartailDecipher(Guid votingId, Signed<PartialDecipherList> signedPartialDecipherList)
     {
-      var request = new PushPartialDecipherAuthorityRequest(Guid.NewGuid(), votingId, signedPartialDecipherList);
-      var response = Execute<PushPartialDecipherAuthorityResponse>(request);
+      var request = new PushPartialDecipherRequest(Guid.NewGuid(), votingId, signedPartialDecipherList);
+      var response = Execute<PushPartialDecipherResponse>(request);
     }
 
     /// <summary>
@@ -59,8 +51,8 @@ namespace Pirate.PiVote.Rpc
     /// <param name="signedShareResponse">Signed response to the shares.</param>
     public void PushShareResponse(Guid votingId, Signed<ShareResponse> signedShareResponse)
     {
-      var request = new PushShareResponseAuthorityRequest(Guid.NewGuid(), votingId, signedShareResponse);
-      var response = Execute<PushShareResponseAuthorityResponse>(request);
+      var request = new PushShareResponseRequest(Guid.NewGuid(), votingId, signedShareResponse);
+      var response = Execute<PushShareResponseResponse>(request);
     }
 
     /// <summary>
@@ -70,8 +62,8 @@ namespace Pirate.PiVote.Rpc
     /// <param name="signedSharePart">Signed shares from this authority.</param>
     public void PushShares(Guid votingId, Signed<SharePart> signedSharePart)
     {
-      var request = new PushSharesAuthorityRequest(Guid.NewGuid(), votingId, signedSharePart);
-      var response = Execute<PushSharesAuthorityResponse>(request);
+      var request = new PushSharesRequest(Guid.NewGuid(), votingId, signedSharePart);
+      var response = Execute<PushSharesResponse>(request);
     }
   
     /// <summary>
@@ -81,8 +73,8 @@ namespace Pirate.PiVote.Rpc
     /// <returns>List of authorities.</returns>
     public AuthorityList FetchAuthorityList(Guid votingId)
     {
-      var request = new FetchListAuthorityRequest(Guid.NewGuid(), votingId);
-      var response = Execute<FetchListAuthorityResponse>(request);
+      var request = new FetchAuthorityListRequest(Guid.NewGuid(), votingId);
+      var response = Execute<FetchAuthorityListResponse>(request);
 
       return response.AuthorityList;
     }
@@ -95,8 +87,8 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Index of the authority.</returns>
     public KeyValuePair<int, VotingParameters> FetchParameters(Guid votingId, AuthorityCertificate certificate)
     {
-      var request = new FetchParametersAuthorityRequest(Guid.NewGuid(), votingId, certificate);
-      var response = Execute<FetchParametersAuthorityResponse>(request);
+      var request = new FetchParametersRequest(Guid.NewGuid(), votingId, certificate);
+      var response = Execute<FetchParametersResponse>(request);
 
       return new KeyValuePair<int, VotingParameters>(response.AuthorityIndex, response.VotingParameters);
     }

@@ -52,7 +52,22 @@ namespace Pirate.PiVote.Client
         case CheckStatus.CheckCertificateNeeded:
           return new CreateRequestItem();
         case CheckStatus.CheckCertificateAccepted:
-          return null;
+          if (Status.Certificate is AdminCertificate)
+          {
+            return new AdminChooseItem();
+          }
+          else if (Status.Certificate is VoterCertificate)
+          {
+            return null;
+          }
+          else if (Status.Certificate is AuthorityCertificate)
+          {
+            return null;
+          }
+          else
+          {
+            return null;
+          }
         default:
           return null;
       }

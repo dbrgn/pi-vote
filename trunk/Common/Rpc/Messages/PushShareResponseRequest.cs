@@ -15,42 +15,27 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  /// <summary>
-  /// RPC request to fetch voting parameters.
-  /// </summary>
-  public class FetchParametersAuthorityRequest : RpcRequest<VotingRpcServer, FetchParametersAuthorityResponse>
+  public class PushShareResponseRequest : RpcRequest<VotingRpcServer, PushShareResponseResponse>
   {
-    /// <summary>
-    /// Id of the voting.
-    /// </summary>
     private Guid votingId;
 
-    /// <summary>
-    /// Certificate of the authorities.
-    /// </summary>
-    private AuthorityCertificate certificate;
+    private Signed<ShareResponse> signedShareResponse;
 
-    /// <summary>
-    /// Creates a new request to fetch voting parameters.
-    /// </summary>
-    /// <param name="requestId">Id of the request.</param>
-    /// <param name="votingId">Id of the voting.</param>
-    /// <param name="certificate">Certificate of the authority.</param>
-    public FetchParametersAuthorityRequest(
+    public PushShareResponseRequest(
       Guid requestId,
       Guid votingId,
-      AuthorityCertificate certificate)
+      Signed<ShareResponse> signedShareResponse)
       : base(requestId)
     {
       this.votingId = votingId;
-      this.certificate = certificate;
+      this.signedShareResponse = signedShareResponse;
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchParametersAuthorityRequest(DeserializeContext context)
+    public PushShareResponseRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -62,7 +47,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
       context.Write(this.votingId);
-      context.Write(this.certificate);
+      context.Write(this.signedShareResponse);
     }
 
     /// <summary>
@@ -73,7 +58,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Deserialize(context);
       this.votingId = context.ReadGuid();
-      this.certificate = context.ReadObject<AuthorityCertificate>();
+      this.signedShareResponse = context.ReadObject<Signed<ShareResponse>>();
     }
 
     /// <summary>
@@ -81,11 +66,12 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override FetchParametersAuthorityResponse Execute(VotingRpcServer server)
+    protected override PushShareResponseResponse Execute(VotingRpcServer server)
     {
-      VotingServerEntity voting = server.GetVoting(this.votingId);
+      var voting = server.GetVoting(this.votingId);
+      voting.DepositShareResponse(this.signedShareResponse);
 
-      return new FetchParametersAuthorityResponse(RequestId, voting.GetAuthorityIndex(this.certificate), voting.Parameters);
+      return new PushShareResponseResponse(RequestId);
     }
   }
 }

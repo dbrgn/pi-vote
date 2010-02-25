@@ -15,19 +15,23 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class FetchSignatureRequestListRequest : RpcRequest<VotingRpcServer, FetchSignatureRequestListResponse>
+  public class FetchAllSharesRequest : RpcRequest<VotingRpcServer, FetchAllSharesResponse>
   {
-    public FetchSignatureRequestListRequest(
-      Guid requestId)
+    private Guid votingId;
+
+    public FetchAllSharesRequest(
+      Guid requestId,
+      Guid votingId)
       : base(requestId)
     {
+      this.votingId = votingId;
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchSignatureRequestListRequest(DeserializeContext context)
+    public FetchAllSharesRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -38,6 +42,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+      context.Write(this.votingId);
     }
 
     /// <summary>
@@ -47,6 +52,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+      this.votingId = context.ReadGuid();
     }
 
     /// <summary>
@@ -54,11 +60,11 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override FetchSignatureRequestListResponse Execute(VotingRpcServer server)
+    protected override FetchAllSharesResponse Execute(VotingRpcServer server)
     {
-      var signatureRequestList = server.GetSignatureRequestList();
+      var voting = server.GetVoting(this.votingId); 
 
-      return new FetchSignatureRequestListResponse(RequestId, signatureRequestList);
+      return new FetchAllSharesResponse(RequestId, voting.GetAllShares());
     }
   }
 }

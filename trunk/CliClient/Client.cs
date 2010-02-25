@@ -172,7 +172,7 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine("Done");
 
       Console.Write("Requesting server to create voting procedure...");
-      AdminRpcProxy proxy = new AdminRpcProxy(this.client);
+      VotingRpcProxy proxy = new VotingRpcProxy(this.client);
       Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, this.admin);
       proxy.CreateVoting(signedVotingParameters, this.auths.Select(auth => (AuthorityCertificate)auth.OnlyPublicPart));
       Console.WriteLine("Done");
@@ -202,7 +202,7 @@ namespace Pirate.PiVote.CliClient
       AuthorityEntity auth = new AuthorityEntity((CACertificate)this.root.OnlyPublicPart, cert);
 
       Console.Write("Fetching parameters...");
-      AuthorityRpcProxy proxy = new AuthorityRpcProxy(this.client);
+      VotingRpcProxy proxy = new VotingRpcProxy(this.client);
       var p = proxy.FetchParameters(votingId, (AuthorityCertificate)cert.OnlyPublicPart);
       auth.Prepare(p.Key, p.Value);
       Console.WriteLine("Done");

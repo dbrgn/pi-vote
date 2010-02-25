@@ -16,24 +16,31 @@ using Pirate.PiVote.Serialization;
 namespace Pirate.PiVote.Rpc
 {
   /// <summary>
-  /// Response to a request to fetch the list of authorities.
+  /// Response to the request to fetch voting parameters.
   /// </summary>
-  public class FetchListAuthorityResponse : RpcResponse
+  public class FetchParametersResponse : RpcResponse
   {
     /// <summary>
-    /// List of authorities for the voting.
+    /// Index of the authority.
     /// </summary>
-    public AuthorityList AuthorityList { get; private set; }
+    public int AuthorityIndex { get; private set; }
 
     /// <summary>
-    /// Create a response to a request to fetch the list of authorities.
+    /// Parameters of the voting.
+    /// </summary>
+    public VotingParameters VotingParameters { get; private set; }
+
+    /// <summary>
+    /// Create a new response to the request to fetch voting parameters.
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
-    /// <param name="authorityList">List of authorities for the voting.</param>
-    public FetchListAuthorityResponse(Guid requestId, AuthorityList authorityList)
+    /// <param name="authorityIndex">Index of the authority.</param>
+    /// <param name="votingParameters">Parameters of the voting.</param>
+    public FetchParametersResponse(Guid requestId, int authorityIndex, VotingParameters votingParameters)
       : base(requestId)
     {
-      AuthorityList = authorityList;
+      AuthorityIndex = authorityIndex;
+      VotingParameters = votingParameters;
     }
 
     /// <summary>
@@ -41,7 +48,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="exception">Exception that occured when executing the request.</param>
-    public FetchListAuthorityResponse(Guid requestId, PiException exception)
+    public FetchParametersResponse(Guid requestId, PiException exception)
       : base(requestId, exception)
     { }
 
@@ -49,7 +56,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchListAuthorityResponse(DeserializeContext context)
+    public FetchParametersResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -60,7 +67,8 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(AuthorityList);
+      context.Write(AuthorityIndex);
+      context.Write(VotingParameters);
     }
 
     /// <summary>
@@ -70,7 +78,8 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      AuthorityList = context.ReadObject<AuthorityList>();
+      AuthorityIndex = context.ReadInt32();
+      VotingParameters = context.ReadObject<VotingParameters>();
     }
   }
 }

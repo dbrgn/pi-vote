@@ -15,27 +15,27 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class PushShareResponseAuthorityRequest : RpcRequest<VotingRpcServer, PushShareResponseAuthorityResponse>
+  public class PushEnvelopeRequest : RpcRequest<VotingRpcServer, PushEnvelopeResponse>
   {
     private Guid votingId;
 
-    private Signed<ShareResponse> signedShareResponse;
+    private Signed<Envelope> signedEnvelope;
 
-    public PushShareResponseAuthorityRequest(
+    public PushEnvelopeRequest(
       Guid requestId,
       Guid votingId,
-      Signed<ShareResponse> signedShareResponse)
+      Signed<Envelope> signedEnvelope)
       : base(requestId)
     {
       this.votingId = votingId;
-      this.signedShareResponse = signedShareResponse;
+      this.signedEnvelope = signedEnvelope;
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public PushShareResponseAuthorityRequest(DeserializeContext context)
+    public PushEnvelopeRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -47,7 +47,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
       context.Write(this.votingId);
-      context.Write(this.signedShareResponse);
+      context.Write(this.signedEnvelope);
     }
 
     /// <summary>
@@ -58,7 +58,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Deserialize(context);
       this.votingId = context.ReadGuid();
-      this.signedShareResponse = context.ReadObject<Signed<ShareResponse>>();
+      this.signedEnvelope = context.ReadObject<Signed<Envelope>>();
     }
 
     /// <summary>
@@ -66,12 +66,12 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override PushShareResponseAuthorityResponse Execute(VotingRpcServer server)
+    protected override PushEnvelopeResponse Execute(VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
-      voting.DepositShareResponse(this.signedShareResponse);
+      voting.Vote(this.signedEnvelope);
 
-      return new PushShareResponseAuthorityResponse(RequestId);
+      return new PushEnvelopeResponse(RequestId);
     }
   }
 }

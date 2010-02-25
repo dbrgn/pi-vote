@@ -15,23 +15,27 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class FetchAllSharesAuthorityRequest : RpcRequest<VotingRpcServer, FetchAllSharesAuthorityResponse>
+  public class PushSharesRequest : RpcRequest<VotingRpcServer, PushSharesResponse>
   {
     private Guid votingId;
 
-    public FetchAllSharesAuthorityRequest(
+    private Signed<SharePart> signedSharePart;
+
+    public PushSharesRequest(
       Guid requestId,
-      Guid votingId)
+      Guid votingId,
+      Signed<SharePart> signedSharePart)
       : base(requestId)
     {
       this.votingId = votingId;
+      this.signedSharePart = signedSharePart;
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchAllSharesAuthorityRequest(DeserializeContext context)
+    public PushSharesRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -43,6 +47,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
       context.Write(this.votingId);
+      context.Write(this.signedSharePart);
     }
 
     /// <summary>
@@ -53,6 +58,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Deserialize(context);
       this.votingId = context.ReadGuid();
+      this.signedSharePart = context.ReadObject<Signed<SharePart>>();
     }
 
     /// <summary>
@@ -60,11 +66,12 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override FetchAllSharesAuthorityResponse Execute(VotingRpcServer server)
+    protected override PushSharesResponse Execute(VotingRpcServer server)
     {
-      var voting = server.GetVoting(this.votingId); 
+      var voting = server.GetVoting(this.votingId);
+      voting.DepositShares(this.signedSharePart);
 
-      return new FetchAllSharesAuthorityResponse(RequestId, voting.GetAllShares());
+      return new PushSharesResponse(RequestId);
     }
   }
 }
