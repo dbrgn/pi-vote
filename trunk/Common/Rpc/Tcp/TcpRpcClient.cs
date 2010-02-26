@@ -58,6 +58,19 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Disconnect the client from the server.
+    /// </summary>
+    public void Disconnect()
+    {
+      if (this.client != null)
+      {
+        this.client.Close();
+        this.client = null;
+        this.stream = null;
+      }
+    }
+
+    /// <summary>
     /// Executes a request on the TCP RPC server.
     /// </summary>
     /// <param name="requestData">Binary data of the RPC request.</param>

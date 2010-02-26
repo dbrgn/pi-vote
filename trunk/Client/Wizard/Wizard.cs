@@ -51,6 +51,19 @@ namespace Pirate.PiVote.Client
       SetItem(new StartItem());
     }
 
+    protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+    {
+      base.OnClosing(e);
+
+      if (this.status != null)
+      {
+        if (this.status.VotingClient != null)
+        {
+          this.status.VotingClient.Close();
+        }
+      }
+    }
+
     private void SetItem(WizardItem item)
     {
       if (this.item != null)

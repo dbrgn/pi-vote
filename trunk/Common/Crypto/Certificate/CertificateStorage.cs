@@ -208,7 +208,7 @@ namespace Pirate.PiVote.Crypto
     /// Set a certificate revocation list without checking validity.
     /// </summary>
     /// <param name="signedRevocationList">Signed certificate revocation list.</param>
-    private void ForceAddRevocationList(Signed<RevocationList> signedRevocationList)
+    private void  ForceAddRevocationList(Signed<RevocationList> signedRevocationList)
     {
       RevocationList revocationList = signedRevocationList.Value;
 

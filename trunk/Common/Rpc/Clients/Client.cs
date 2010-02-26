@@ -77,6 +77,16 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Closes the client connection.
+    /// </summary>
+    public void Close()
+    {
+      this.run = false;
+      this.masterThread.Join();
+      this.client.Disconnect();
+    }
+
+    /// <summary>
     /// Enables voter entity.
     /// </summary>
     /// <param name="voterCertificate">Certificate of the voter.</param>

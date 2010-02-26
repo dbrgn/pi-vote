@@ -76,15 +76,6 @@ namespace Pirate.PiVote.CaGui
       {
         AddRevocationList(signedRevocationList.Value);
       }
-
-      this.createToolStripMenuItem.Enabled = Certificate == null;
-      this.signatureRequestToolStripMenuItem.Enabled = Certificate != null;
-      this.signatureResponseToolStripMenuItem.Enabled = Certificate != null;
-      this.generateRevocationListToolStripMenuItem.Enabled = Certificate != null;
-      this.importRequestsToolStripMenuItem.Enabled = Certificate != null;
-      this.exportRootCertificateToolStripMenuItem.Enabled = Certificate != null;
-      this.cAPropertiesToolStripMenuItem.Enabled = Certificate != null;
-      this.createAdminCertificateToolStripMenuItem.Enabled = Certificate != null;
     }
 
     private void AddRevocationList(RevocationList revocationList)
@@ -211,15 +202,6 @@ namespace Pirate.PiVote.CaGui
           }
         }
       }
-
-      this.createToolStripMenuItem.Enabled = Certificate == null;
-      this.signatureRequestToolStripMenuItem.Enabled = Certificate != null;
-      this.signatureResponseToolStripMenuItem.Enabled = Certificate != null;
-      this.generateRevocationListToolStripMenuItem.Enabled = Certificate != null;
-      this.importRequestsToolStripMenuItem.Enabled = Certificate != null;
-      this.exportRootCertificateToolStripMenuItem.Enabled = Certificate != null;
-      this.cAPropertiesToolStripMenuItem.Enabled = Certificate != null;
-      this.createAdminCertificateToolStripMenuItem.Enabled = Certificate != null;
     }
 
     private void entryListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -326,22 +308,34 @@ namespace Pirate.PiVote.CaGui
         foreach (string fileName in dialog.FileNames)
         {
           Signed<SignatureRequest> signedRequest = Serializable.Load<Signed<SignatureRequest>>(fileName);
-          bool alreadyAdded = false;
 
-          foreach (ListViewItem item in this.entryListView.Items)
+          if (signedRequest.VerifySimple())
           {
-            if (item.Text == signedRequest.Certificate.Id.ToString())
+            bool alreadyAdded = false;
+
+            foreach (ListViewItem item in this.entryListView.Items)
             {
-              alreadyAdded = true;
+              if (item.Text == signedRequest.Certificate.Id.ToString())
+              {
+                alreadyAdded = true;
+              }
+            }
+
+            if (!alreadyAdded)
+            {
+              CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
+              string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
+              entry.Save(DataPath(entryFileName));
+              AddEntry(entry, entryFileName);
+            }
+            else
+            {
+              MessageBox.Show("Request in file " + fileName + " is already added.", "CaGui", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
           }
-
-          if (!alreadyAdded)
+          else
           {
-            CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
-            string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
-            entry.Save(DataPath(entryFileName));
-            AddEntry(entry, entryFileName);
+            MessageBox.Show("Request in file " + fileName + " is not valid.", "CaGui", MessageBoxButtons.OK, MessageBoxIcon.Warning);
           }
         }
       }
@@ -472,30 +466,15 @@ namespace Pirate.PiVote.CaGui
 
     private void entryListContextMenu_Opening(object sender, CancelEventArgs e)
     {
-      if (this.entryListView.SelectedItems.Count > 0)
-      {
-        if (this.entryListView.SelectedItems[0].SubItems[3].Text == string.Empty)
-        {
-          this.signToolStripMenuItem.Enabled = true;
-          this.refuseToolStripMenuItem.Enabled = true;
-          this.revokeToolStripMenuItem.Enabled = false;
-          this.exportResponseToolStripMenuItem.Enabled = false;
-        }
-        else
-        {
-          this.signToolStripMenuItem.Enabled = false;
-          this.refuseToolStripMenuItem.Enabled = false;
-          this.revokeToolStripMenuItem.Enabled = true;
-          this.exportResponseToolStripMenuItem.Enabled = true;
-        }
-      }
-      else
-      {
-        this.signToolStripMenuItem.Enabled = false;
-        this.refuseToolStripMenuItem.Enabled = false;
-        this.revokeToolStripMenuItem.Enabled = false;
-        this.exportResponseToolStripMenuItem.Enabled = false;
-      }
+      bool hasRow = this.entryListView.SelectedItems.Count > 0;
+      bool isAnwered = hasRow && this.entryListView.SelectedItems[0].SubItems[3].Text != string.Empty;
+      bool notAnswered = hasRow && this.entryListView.SelectedItems[0].SubItems[3].Text == string.Empty;
+      bool canSign = Certificate != null && Certificate.Valid(CertificateStorage);
+
+      this.signToolStripMenuItem.Enabled = notAnswered && canSign;
+      this.refuseToolStripMenuItem.Enabled = notAnswered && canSign;
+      this.revokeToolStripMenuItem.Enabled = isAnwered && canSign;
+      this.exportResponseToolStripMenuItem.Enabled = isAnwered;
     }
 
     private void exportResponseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -569,6 +548,21 @@ namespace Pirate.PiVote.CaGui
           certificate.Save(saveDialog.FileName);
         }
       }
+    }
+
+    private void mainMenu_MenuActivate(object sender, EventArgs e)
+    {
+      bool haveCertificate = Certificate != null;
+      bool canSign = haveCertificate && Certificate.Valid(CertificateStorage);
+
+      this.createToolStripMenuItem.Enabled = !haveCertificate;
+      this.signatureRequestToolStripMenuItem.Enabled = haveCertificate;
+      this.signatureResponseToolStripMenuItem.Enabled = haveCertificate;
+      this.generateRevocationListToolStripMenuItem.Enabled = canSign;
+      this.importRequestsToolStripMenuItem.Enabled = canSign;
+      this.exportRootCertificateToolStripMenuItem.Enabled = haveCertificate;
+      this.cAPropertiesToolStripMenuItem.Enabled = haveCertificate;
+      this.createAdminCertificateToolStripMenuItem.Enabled = canSign;
     }
   }
 }

@@ -89,10 +89,12 @@ namespace Pirate.PiVote.Rpc
               SubProgress = (double)done / (double)max;
             }
           }
-
-          Progress = 1d;
-          SubText = "No signature request on server.";
-          SubProgress = 1d;
+          else
+          {
+            Progress = 1d;
+            SubText = "No signature request on server.";
+            SubProgress = 1d;
+          }
 
           this.callBack(null);
         }

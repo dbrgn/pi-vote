@@ -81,6 +81,7 @@
       this.mainMenu.Size = new System.Drawing.Size(1521, 31);
       this.mainMenu.TabIndex = 0;
       this.mainMenu.Text = "menuStrip1";
+      this.mainMenu.MenuActivate += new System.EventHandler(this.mainMenu_MenuActivate);
       // 
       // selfToolStripMenuItem
       // 
