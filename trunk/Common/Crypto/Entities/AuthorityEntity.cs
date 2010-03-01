@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using Emil.GMP;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
@@ -43,6 +45,9 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     private Certificate certificate;
 
+    /// <summary>
+    /// Used to tally the voting.
+    /// </summary>
     private Tally tally;
 
     /// <summary>
@@ -57,11 +62,58 @@ namespace Pirate.PiVote.Crypto
     /// Create a new authority entity.
     /// </summary>
     /// <param name="certificate">Certificate of authority.</param>
-    public AuthorityEntity(CACertificate rootCertificate, AuthorityCertificate certificate)
+    public AuthorityEntity(CertificateStorage certificateStorage, AuthorityCertificate certificate)
     {
       this.certificate = certificate;
-      this.certificateStorage = new CertificateStorage();
-      this.certificateStorage.AddRoot(rootCertificate);
+      this.certificateStorage = certificateStorage;
+    }
+
+    /// <summary>
+    /// Creates a new authority entity, loading data from file.
+    /// </summary>
+    /// <param name="certificateStorage">Certificate storage.</param>
+    /// <param name="certificate">Certificate of the authority.</param>
+    /// <param name="authorityFileName">File name to load data from.</param>
+    public AuthorityEntity(CertificateStorage certificateStorage, AuthorityCertificate certificate, string authorityFileName)
+    {
+      this.certificate = certificate;
+      this.certificateStorage = certificateStorage;
+      Load(authorityFileName);
+    }
+
+    /// <summary>
+    /// Save the data of the authority to file.
+    /// </summary>
+    /// <param name="fileName">Name of file to save.</param>
+    public void Save(string fileName)
+    { 
+      FileStream fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+      SerializeContext context = new SerializeContext(fileStream);
+
+      context.Write(this.parameters);
+
+      context.Write(this.authorities.Count);
+      this.authorities.Foreach(pair => { context.Write(pair.Key); context.Write(pair.Value); });
+
+      this.authority.Serialize(context);
+    }
+
+    /// <summary>
+    /// Load data of authority from file.
+    /// </summary>
+    /// <param name="fileName">Name of file to load.</param>
+    private void Load(string fileName)
+    {
+      FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+      DeserializeContext context = new DeserializeContext(fileStream);
+
+      this.parameters = context.ReadObject<VotingParameters>();
+
+      this.authorities = new Dictionary<int,Certificate>();
+      int count = context.ReadInt32();
+      count.Times(() => this.authorities.Add(context.ReadInt32(), context.ReadObject<Certificate>()));
+
+      this.authority = new Authority(context, this.parameters);
     }
 
     /// <summary>

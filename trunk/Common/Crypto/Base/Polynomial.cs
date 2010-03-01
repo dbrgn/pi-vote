@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Emil.GMP;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
   /// <summary>
   /// Integer field polynomial.
   /// </summary>
-  public class Polynomial
+  public class Polynomial : Serializable
   {
     /// <summary>
     /// Coefficients of the polynom.
@@ -29,6 +30,25 @@ namespace Pirate.PiVote.Crypto
     public Polynomial()
     {
       this.coefficients = new List<BigInt>();
+    }
+
+    public Polynomial(DeserializeContext context)
+      : base(context)
+    { }
+
+    public override void Serialize(SerializeContext context)
+    {
+      base.Serialize(context);
+      context.Write(this.coefficients.Count);
+      this.coefficients.ForEach(coefficient => context.Write(coefficient));
+    }
+
+    protected override void Deserialize(DeserializeContext context)
+    {
+      base.Deserialize(context);
+      this.coefficients = new List<BigInt>();
+      int count = context.ReadInt32();
+      count.Times(() => this.coefficients.Add(context.ReadBigInt()));
     }
 
     /// <summary>

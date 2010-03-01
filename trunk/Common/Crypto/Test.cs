@@ -74,11 +74,11 @@ namespace Pirate.PiVote.Crypto
       a5c.CreateSelfSignature();
       a5c.AddSignature(intermediate, validUntil);
 
-      var a1 = new AuthorityEntity(root, a1c);
-      var a2 = new AuthorityEntity(root, a2c);
-      var a3 = new AuthorityEntity(root, a3c);
-      var a4 = new AuthorityEntity(root, a4c);
-      var a5 = new AuthorityEntity(root, a5c);
+      var a1 = new AuthorityEntity(serverCertStorage, a1c);
+      var a2 = new AuthorityEntity(serverCertStorage, a2c);
+      var a3 = new AuthorityEntity(serverCertStorage, a3c);
+      var a4 = new AuthorityEntity(serverCertStorage, a4c);
+      var a5 = new AuthorityEntity(serverCertStorage, a5c);
 
       vs.AddAuthority(a1.Certificate);
       vs.AddAuthority(a2.Certificate);

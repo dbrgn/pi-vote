@@ -138,8 +138,8 @@ namespace Pirate.PiVote.Client
         this.titleBox.Text,
         this.descriptionBox.Text,
         this.questionBox.Text,
-        this.votingFromPicker.Value.Date > DateTime.Now ? this.votingFromPicker.Value.Date : DateTime.Now,
-        this.votingUntilPicker.Value.Date.AddDays(1).AddMinutes(-1));
+        this.votingFromPicker.Value.Date,
+        this.votingUntilPicker.Value.Date);
 
       foreach (ListViewItem item in this.optionListView.Items)
       {

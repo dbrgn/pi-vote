@@ -132,6 +132,7 @@
     <Compile Include="Exception\ExceptionCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exception\PiException.cs" />
+    <Compile Include="Rpc\Clients\CreateSharePart.cs" />
     <Compile Include="Rpc\Clients\GetAuthorityCertificates.cs" />
     <Compile Include="Rpc\Clients\CreateVoting.cs" />
     <Compile Include="Rpc\Clients\SetSignatureResponses.cs" />

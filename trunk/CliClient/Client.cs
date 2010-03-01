@@ -203,7 +203,9 @@ namespace Pirate.PiVote.CliClient
 
       Guid votingId = Guid.NewGuid();
       AuthorityCertificate cert = this.auths[index];
-      AuthorityEntity auth = new AuthorityEntity((CACertificate)this.root.OnlyPublicPart, cert);
+      CertificateStorage certificateStorage = new CertificateStorage();
+      certificateStorage.AddRoot((CACertificate)this.root.OnlyPublicPart);
+      AuthorityEntity auth = new AuthorityEntity(certificateStorage, cert);
 
       Console.Write("Fetching parameters...");
       VotingRpcProxy proxy = new VotingRpcProxy(this.client);

@@ -269,9 +269,10 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Is it revoked.</returns>
     public bool IsRevoked(Guid issuerId, Guid certificateId, DateTime date)
     {
-      MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom <= @Date AND ValidUntil >= @Date", this.dbConnection);
+      MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom <= @FromDate AND ValidUntil >= @UntilDate", this.dbConnection);
       command.Parameters.AddWithValue("@IssuerId", issuerId.ToByteArray());
-      command.Parameters.AddWithValue("@Date", date);
+      command.Parameters.AddWithValue("@FromDate", date.Date);
+      command.Parameters.AddWithValue("@UntilDate", date.Date.AddDays(1));
 
       MySqlDataReader reader = command.ExecuteReader();
       bool isRevoked;

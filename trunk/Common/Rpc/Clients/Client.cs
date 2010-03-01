@@ -33,6 +33,11 @@ namespace Pirate.PiVote.Rpc
     private VoterEntity voterEntity;
 
     /// <summary>
+    /// Authority entity for calculations.
+    /// </summary>
+    private AuthorityEntity authorityEntity;
+
+    /// <summary>
     /// Certificate storage.
     /// </summary>
     private CertificateStorage certificateStorage;
@@ -93,6 +98,34 @@ namespace Pirate.PiVote.Rpc
     public void ActivateVoter(VoterCertificate voterCertificate)
     {
       this.voterEntity = new VoterEntity(this.certificateStorage, voterCertificate);
+    }
+
+    /// <summary>
+    /// Creates an authority entity.
+    /// </summary>
+    /// <param name="certificate">Certificate of the authority.</param>
+    public void CreateAuthority(AuthorityCertificate certificate)
+    {
+      this.authorityEntity = new AuthorityEntity(this.certificateStorage, certificate);
+    }
+
+    /// <summary>
+    /// Saves the authorities data to file.
+    /// </summary>
+    /// <param name="fileName">Name of file to save to.</param>
+    public void SaveAuthority(string fileName)
+    {
+      this.authorityEntity.Save(fileName);
+    }
+
+    /// <summary>
+    /// Loads an authority's data from file.
+    /// </summary>
+    /// <param name="fileName">Name of file to load data from.</param>
+    /// <param name="certificate">Authority's certificate.</param>
+    public void LoadAuthority(string fileName, AuthorityCertificate certificate)
+    {
+      this.authorityEntity = new AuthorityEntity(this.certificateStorage, certificate, fileName);
     }
 
     /// <summary>
@@ -264,6 +297,21 @@ namespace Pirate.PiVote.Rpc
       lock (this.operations)
       {
         this.operations.Enqueue(new CreateVotingOperation(votingParameters, authorities, callBack));
+      }
+    }
+
+    /// <summary>
+    /// Authority creates share parts and pushes them to the server.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="authorityFileName">Filename to save authority data.</param>
+    /// <param name="authorityCertificate">Authority's certificate.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void CreateSharePart(Guid votingId, AuthorityCertificate authorityCertificate, string authorityFileName, CreateSharePartCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new CreateSharePartOperation(votingId, authorityCertificate, authorityFileName, callBack));
       }
     }
   }

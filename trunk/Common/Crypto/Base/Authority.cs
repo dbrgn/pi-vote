@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Emil.GMP;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
@@ -60,6 +61,31 @@ namespace Pirate.PiVote.Crypto
 
       Index = index;
       this.parameters = parameters;
+    }
+
+    public Authority(DeserializeContext context, Parameters parameters)
+    {
+      Index = context.ReadInt32();
+      this.polynomial = context.ReadObject<Polynomial>();
+
+      if (!context.ReadBoolean())
+      {
+        this.secretKeyPart = context.ReadBigInt();
+      }
+
+      this.parameters = parameters;
+    }
+
+    public void Serialize(SerializeContext context)
+    {
+      context.Write(Index);
+      context.Write(this.polynomial);
+      
+      context.Write(this.secretKeyPart == null);
+      if (this.secretKeyPart != null)
+      {
+        context.Write(this.secretKeyPart);
+      }
     }
 
     /// <summary>

@@ -232,8 +232,8 @@ namespace Pirate.PiVote.Crypto
     {
       RevocationList revocationList = this.revocationLists
         .Where(list => list.IssuerId == issuerId &&
-               date >= list.ValidFrom &&
-               date <= list.ValidUntil)
+               date.Date >= list.ValidFrom.Date &&
+               date.Date <= list.ValidUntil.Date)
         .FirstOrDefault();
 
       if (revocationList == null)
