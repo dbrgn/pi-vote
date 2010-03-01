@@ -66,7 +66,7 @@ namespace Pirate.PiVote.Rpc
         Guid id = reader.GetGuid(0);
         byte[] signedParametersData = reader.GetBlob(1);
         Signed<VotingParameters> signedParameters = Serializable.FromBinary<Signed<VotingParameters>>(signedParametersData);
-        VotingStatus status = (VotingStatus)reader.GetInt32(0);
+        VotingStatus status = (VotingStatus)reader.GetInt32(2);
         VotingServerEntity entity = new VotingServerEntity(this.dbConnection, signedParameters, this.CertificateStorage, status);
         this.votings.Add(id, entity);
       }
@@ -187,6 +187,11 @@ namespace Pirate.PiVote.Rpc
       replaceCommand.Parameters.AddWithValue("@Id", id.ToByteArray());
       replaceCommand.Parameters.AddWithValue("@Value", signatureRequest.ToBinary());
       replaceCommand.ExecuteNonQuery();
+
+      if (signatureRequest.Certificate is AuthorityCertificate)
+      {
+        CertificateStorage.Add(signatureRequest.Certificate);
+      }
     }
 
     /// <summary>
@@ -284,10 +289,38 @@ namespace Pirate.PiVote.Rpc
       if (!(signedSignatureResponse.Certificate is CACertificate))
         throw new PiSecurityException(ExceptionCode.SignatureResponseNotFromCA, "Signature response not from proper CA.");
       
+      SignatureResponse signatureResponse = signedSignatureResponse.Value;
+
       MySqlCommand replaceCommand = new MySqlCommand("REPLACE INTO signatureresponse (Id, Value) VALUES (@Id, @Value)", this.dbConnection);
-      replaceCommand.Parameters.AddWithValue("@Id", signedSignatureResponse.Value.SubjectId.ToByteArray());
+      replaceCommand.Parameters.AddWithValue("@Id", signatureResponse.SubjectId.ToByteArray());
       replaceCommand.Parameters.AddWithValue("@Value", signedSignatureResponse.ToBinary());
       replaceCommand.ExecuteNonQuery();
+
+      if (CertificateStorage.Has(signatureResponse.SubjectId))
+      {
+        Certificate certificate = CertificateStorage.Get(signatureResponse.SubjectId);
+        certificate.AddSignature(signatureResponse.Signature);
+        CertificateStorage.Add(certificate);
+      }
+    }
+
+    /// <summary>
+    /// Get all valid authority certificates in storage.
+    /// </summary>
+    /// <returns>List of authority certificates.</returns>
+    public List<AuthorityCertificate> GetValidAuthorityCertificates()
+    {
+      List<AuthorityCertificate> authorityCertificates = new List<AuthorityCertificate>();
+
+      foreach (Certificate certificate in CertificateStorage.Certificates)
+      {
+        if (certificate is AuthorityCertificate && certificate.Valid(CertificateStorage))
+        {
+          authorityCertificates.Add((AuthorityCertificate)certificate);
+        }
+      }
+
+      return authorityCertificates;
     }
   }
 }

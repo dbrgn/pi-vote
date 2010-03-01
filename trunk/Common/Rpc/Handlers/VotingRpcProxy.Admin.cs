@@ -76,5 +76,17 @@ namespace Pirate.PiVote.Rpc
       var request = new PushSignatureResponseRequest(Guid.NewGuid(), signatureResponse);
       var response = Execute<PushSignatureResponseResponse>(request); 
     }
+
+    /// <summary>
+    /// Fetches all valid authority certificates from the server.
+    /// </summary>
+    /// <returns>List of authority certificates.</returns>
+    public IEnumerable<AuthorityCertificate> FetchAuthorityCertificates()
+    {
+      var request = new FetchAuthorityCertificatesRequest(Guid.NewGuid());
+      var response = Execute<FetchAuthorityCertificatesResponse>(request);
+
+      return response.AuthorityCertificates;
+    }
   }
 }

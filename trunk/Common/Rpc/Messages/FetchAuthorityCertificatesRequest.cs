@@ -15,23 +15,25 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class VotingStatusRequest : RpcRequest<VotingRpcServer, VotingStatusResponse>
+  /// <summary>
+  /// RPC request to fetch all valid authority certificates.
+  /// </summary>
+  public class FetchAuthorityCertificatesRequest : RpcRequest<VotingRpcServer, FetchAuthorityCertificatesResponse>
   {
-    private Guid votingId;
-
-    public VotingStatusRequest(
-      Guid requestId,
-      Guid votingId)
+    /// <summary>
+    /// Creates a new request to fetch all valid authority certificates.
+    /// </summary>
+    /// <param name="requestId">Id of the request.</param>
+    public FetchAuthorityCertificatesRequest(
+      Guid requestId)
       : base(requestId)
-    {
-      this.votingId = votingId;
-    }
+    { }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public VotingStatusRequest(DeserializeContext context)
+    public FetchAuthorityCertificatesRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -42,7 +44,6 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(this.votingId);
     }
 
     /// <summary>
@@ -52,20 +53,16 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.votingId = context.ReadGuid();
     }
 
     /// <summary>
     /// Executes a RPC request.
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
-    /// <param name="signer">Signer of the RPC request.</param>
     /// <returns>Response to the request.</returns>
-    protected override VotingStatusResponse Execute(VotingRpcServer server)
+    protected override FetchAuthorityCertificatesResponse Execute(VotingRpcServer server)
     {
-      VotingServerEntity voting = server.GetVoting(this.votingId);
-
-      return new VotingStatusResponse(RequestId, voting.Status, voting.AuthoritiesDone);
+      return new FetchAuthorityCertificatesResponse(RequestId, server.GetValidAuthorityCertificates());
     }
   }
 }

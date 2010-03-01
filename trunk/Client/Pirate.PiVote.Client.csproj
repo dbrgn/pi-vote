@@ -75,6 +75,18 @@
     <Compile Include="Wizard\AdminChooseItem.Designer.cs">
       <DependentUpon>AdminChooseItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wizard\AuthorityListVotingsItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\AuthorityListVotingsItem.Designer.cs">
+      <DependentUpon>AuthorityListVotingsItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\CreateVotingItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\CreateVotingItem.Designer.cs">
+      <DependentUpon>CreateVotingItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Wizard\SetSignatureResponsesItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -136,6 +148,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\AdminChooseItem.resx">
       <DependentUpon>AdminChooseItem.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\AuthorityListVotingsItem.resx">
+      <DependentUpon>AuthorityListVotingsItem.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\CreateVotingItem.resx">
+      <DependentUpon>CreateVotingItem.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\SetSignatureResponsesItem.resx">

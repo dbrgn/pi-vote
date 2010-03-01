@@ -62,7 +62,7 @@ namespace Pirate.PiVote.Client
           }
           else if (Status.Certificate is AuthorityCertificate)
           {
-            return null;
+            return new AuthorityListVotingsItem();
           }
           else
           {

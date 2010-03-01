@@ -132,6 +132,8 @@
     <Compile Include="Exception\ExceptionCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exception\PiException.cs" />
+    <Compile Include="Rpc\Clients\GetAuthorityCertificates.cs" />
+    <Compile Include="Rpc\Clients\CreateVoting.cs" />
     <Compile Include="Rpc\Clients\SetSignatureResponses.cs" />
     <Compile Include="Rpc\Clients\GetSignatureRequests.cs" />
     <Compile Include="Rpc\Clients\GetCertificateStorage.cs" />
@@ -149,6 +151,8 @@
     <Compile Include="Rpc\Generic\RpcRequest.cs" />
     <Compile Include="Rpc\Generic\RpcMessage.cs" />
     <Compile Include="Rpc\Handlers\IBinaryRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\FetchAuthorityCertificatesRequest.cs" />
+    <Compile Include="Rpc\Messages\FetchAuthorityCertificatesResponse.cs" />
     <Compile Include="Rpc\Messages\PushSignatureResponseRequest.cs" />
     <Compile Include="Rpc\Messages\PushSignatureResponseResponse.cs" />
     <Compile Include="Rpc\Messages\FetchSignatureRequestRequest.cs" />

@@ -142,11 +142,11 @@ namespace Pirate.PiVote.Rpc
     /// Get voting list from server.
     /// </summary>
     /// <param name="callBack">Callback upon completion.</param>
-    public void GetVotingList(GetVotingListCallBack callBack)
+    public void GetVotingList(CertificateStorage certificateStorage, GetVotingListCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new GetVotingListOperation(callBack));
+        this.operations.Enqueue(new GetVotingListOperation(certificateStorage, callBack));
       }
     }
 
@@ -203,6 +203,18 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Get all valid authority certificates.
+    /// </summary>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void GetAuthorityCertificates(GetAuthorityCertificatesCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new GetAuthorityCertificatesOperation(callBack));
+      }
+    }
+
+    /// <summary>
     /// Send a signature request to the server.
     /// </summary>
     /// <param name="signatureRequest">Signed signature request.</param>
@@ -238,6 +250,20 @@ namespace Pirate.PiVote.Rpc
       lock (this.operations)
       {
         this.operations.Enqueue(new GetSignatureRequestsOperation(savePath, callBack));
+      }
+    }
+
+    /// <summary>
+    /// Create a voting procedure.
+    /// </summary>
+    /// <param name="votingParameters">Parameters of voting procedure.</param>
+    /// <param name="authorities">Authorities overseeing the voting procedure.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void CreateVoting(Signed<VotingParameters> votingParameters, IEnumerable<AuthorityCertificate> authorities, CreateVotingCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new CreateVotingOperation(votingParameters, authorities, callBack));
       }
     }
   }

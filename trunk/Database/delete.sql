@@ -1,0 +1,10 @@
+DELETE FROM `pivote`.`authority`;
+DELETE FROM `pivote`.`certificate`;
+DELETE FROM `pivote`.`deciphers`;
+DELETE FROM `pivote`.`envelope`;
+DELETE FROM `pivote`.`revocationlist`;
+DELETE FROM `pivote`.`sharepart`;
+DELETE FROM `pivote`.`shareresponse`;
+DELETE FROM `pivote`.`signaturerequest`;
+DELETE FROM `pivote`.`signatureresponse`;
+DELETE FROM `pivote`.`voting`;

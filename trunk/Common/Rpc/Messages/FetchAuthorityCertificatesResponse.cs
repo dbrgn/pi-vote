@@ -15,21 +15,25 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class VotingStatusResponse : RpcResponse
+  /// <summary>
+  /// Response to the request to fetch all valid authority certificates.
+  /// </summary>
+  public class FetchAuthorityCertificatesResponse : RpcResponse
   {
-    public VotingStatus VotingStatus { get; private set; }
+    /// <summary>
+    /// List of all valid authority certificates.
+    /// </summary>
+    public List<AuthorityCertificate> AuthorityCertificates { get; private set; }
 
     /// <summary>
-    /// List of authorities that have done the current step.
-    /// Null if not appliable.
+    /// Create a new response to the request to fetch all valid authority certificates.
     /// </summary>
-    public List<Guid> AuthoritiesDone { get; private set; }
-
-    public VotingStatusResponse(Guid requestId, VotingStatus votingStatus, List<Guid> authoritiesDone)
+    /// <param name="requestId">Id of the request.</param>
+    /// <param name="authorityCertificates">List of all valid authority certificates.</param>
+    public FetchAuthorityCertificatesResponse(Guid requestId, List<AuthorityCertificate> authorityCertificates)
       : base(requestId)
     {
-      VotingStatus = votingStatus;
-      AuthoritiesDone = authoritiesDone;
+      AuthorityCertificates = authorityCertificates;
     }
 
     /// <summary>
@@ -37,7 +41,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="exception">Exception that occured when executing the request.</param>
-    public VotingStatusResponse(Guid requestId, PiException exception)
+    public FetchAuthorityCertificatesResponse(Guid requestId, PiException exception)
       : base(requestId, exception)
     { }
 
@@ -45,7 +49,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public VotingStatusResponse(DeserializeContext context)
+    public FetchAuthorityCertificatesResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -56,9 +60,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write((int)VotingStatus);
-      context.Write(AuthoritiesDone.Count);
-      AuthoritiesDone.ForEach(authorityId => context.Write(authorityId));
+      context.WriteList(AuthorityCertificates);
     }
 
     /// <summary>
@@ -68,10 +70,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      VotingStatus = (VotingStatus)context.ReadInt32();
-      int count = context.ReadInt32();
-      AuthoritiesDone = new List<Guid>();
-      count.Times(() => AuthoritiesDone.Add(context.ReadGuid()));
+      AuthorityCertificates = context.ReadObjectList<AuthorityCertificate>();
     }
   }
 }

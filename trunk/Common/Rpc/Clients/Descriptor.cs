@@ -28,8 +28,11 @@ namespace Pirate.PiVote.Rpc
     public class VotingDescriptor
     {
       private readonly Guid id;
-      private readonly string name;
+      private readonly string title;
+      private readonly string descripton;
+      private readonly string question;
       private readonly VotingStatus status;
+      private readonly List<Guid> authoritiesDone;
       private readonly List<OptionDescriptor> options;
 
       /// <summary>
@@ -38,14 +41,30 @@ namespace Pirate.PiVote.Rpc
       public Guid Id { get { return this.id; } }
 
       /// <summary>
-      /// Name of the voting.
+      /// Title of the voting.
       /// </summary>
-      public string Name { get { return this.name; } }
+      public string Title { get { return this.title; } }
 
+      /// <summary>
+      /// Description of the voting.
+      /// </summary>
+      public string Description { get { return this.descripton; } }
+
+      /// <summary>
+      /// Question of the voting.
+      /// </summary>
+      public string Question { get { return this.question; } }
+      
       /// <summary>
       /// Status of the voting.
       /// </summary>
       public VotingStatus Status { get { return this.status; } }
+
+      /// <summary>
+      /// List of authorities that have done the current step.
+      /// Null if not applicable.
+      /// </summary>
+      public IEnumerable<Guid> AuthoritiesDone { get { return this.authoritiesDone; } }
 
       /// <summary>
       /// Options in the voting.
@@ -57,11 +76,15 @@ namespace Pirate.PiVote.Rpc
       /// </summary>
       /// <param name="material">Material of voting to describe.</param>
       /// <param name="status">Status of the voting.</param>
-      public VotingDescriptor(VotingParameters parameters, VotingStatus status)
+      /// <param name="authoritiesDone">List of authorities that have completed the current step if applicable.</param>
+      public VotingDescriptor(VotingParameters parameters, VotingStatus status, List<Guid> authoritiesDone)
       {
         this.id = parameters.VotingId;
-        this.name = parameters.VotingName;
+        this.title = parameters.Title;
+        this.descripton = parameters.Description;
+        this.question = parameters.Question;
         this.status = status;
+        this.authoritiesDone = authoritiesDone;
         this.options = new List<OptionDescriptor>();
 
         parameters.Options.Foreach(option => this.options.Add(new OptionDescriptor(option)));

@@ -64,16 +64,19 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
+        List<Certificate> certificates = new List<Certificate>();
         MySqlCommand command = new MySqlCommand("SELECT Value FROM certificate", this.dbConnection);
         MySqlDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
           byte[] certificateData = reader.GetBlob(0);
-          yield return Serializable.FromBinary<Certificate>(certificateData);
+          certificates.Add(Serializable.FromBinary<Certificate>(certificateData));
         }
 
         reader.Close();
+
+        return certificates;
       }
     }
 

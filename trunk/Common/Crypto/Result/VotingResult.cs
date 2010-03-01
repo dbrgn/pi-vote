@@ -26,10 +26,20 @@ namespace Pirate.PiVote.Crypto
     private readonly Guid votingId;
 
     /// <summary>
-    /// Name of the voting procedure.
+    /// Title of the voting procedure.
     /// </summary>
-    private readonly string votingName;
+    private readonly string title;
 
+    /// <summary>
+    /// Description of the voting procedure.
+    /// </summary>
+    private readonly string description;
+
+    /// <summary>
+    /// Question of the voting procedure.
+    /// </summary>
+    private readonly string question;
+    
     /// <summary>
     /// Results for each option.
     /// </summary>
@@ -46,10 +56,20 @@ namespace Pirate.PiVote.Crypto
     public Guid VotingId { get { return this.votingId; } }
 
     /// <summary>
-    /// Name of the voting procedure.
+    /// Title of the voting procedure.
     /// </summary>
-    public string VotingName { get { return this.votingName; } }
+    public string Title { get { return this.title; } }
 
+    /// <summary>
+    /// Description of the voting procedure.
+    /// </summary>
+    public string Description { get { return this.description; } }
+
+    /// <summary>
+    /// Question of the voting procedure.
+    /// </summary>
+    public string Question { get { return this.question; } }
+    
     /// <summary>
     /// Results for each option.
     /// </summary>
@@ -83,10 +103,12 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     /// <param name="id">Id of the voting procedure.</param>
     /// <param name="name">Name of the voting procedure.</param>
-    public VotingResult(Guid votingId, string votingName)
+    public VotingResult(Guid votingId, VotingParameters votingParameters)
     {
       this.votingId = votingId;
-      this.votingName = votingName;
+      this.title = votingParameters.Title;
+      this.description = votingParameters.Description;
+      this.question = votingParameters.Question;
       this.options = new List<OptionResult>();
       this.voters = new List<EnvelopeResult>();
     }

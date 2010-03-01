@@ -153,10 +153,14 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine();
       Console.WriteLine("Creating new voting procedure now.");
 
-      Console.Write("Enter voting name: ");
-      string votingName = Console.ReadLine();
+      Console.Write("Enter title: ");
+      string title = Console.ReadLine();
+      Console.Write("Enter description: ");
+      string desc = Console.ReadLine();
+      Console.Write("Enter question: ");
+      string quest = Console.ReadLine();
 
-      VotingParameters votingParameters = new VotingParameters(votingName, DateTime.Now, DateTime.Now.AddDays(1));
+      VotingParameters votingParameters = new VotingParameters(title, desc, quest, DateTime.Now, DateTime.Now.AddDays(1));
 
       Console.Write("Enter option name: ");
       string optionName = Console.ReadLine();
@@ -217,7 +221,8 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine("Done");
 
       Console.Write("Waiting for peers...");
-      while (proxy.FetchVotingStatus(votingId) != VotingStatus.Sharing)
+      List<Guid> authoritiesDone = new List<Guid>();
+      while (proxy.FetchVotingStatus(votingId, out authoritiesDone) != VotingStatus.Sharing)
       {
         Thread.Sleep(1000);
       }
@@ -236,13 +241,13 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine("Done");
 
       Console.Write("Waiting for peers...");
-      while (proxy.FetchVotingStatus(votingId) == VotingStatus.Sharing)
+      while (proxy.FetchVotingStatus(votingId, out authoritiesDone) == VotingStatus.Sharing)
       {
         Thread.Sleep(1000);
       }
       Console.WriteLine("Done");
 
-      if (proxy.FetchVotingStatus(votingId) != VotingStatus.Voting)
+      if (proxy.FetchVotingStatus(votingId, out authoritiesDone) != VotingStatus.Voting)
       {
         Console.WriteLine("Voting aborted.");
         Console.WriteLine();
@@ -252,7 +257,7 @@ namespace Pirate.PiVote.CliClient
       Console.WriteLine("Voting begun.");
 
       Console.Write("Waiting for voters...");
-      while (proxy.FetchVotingStatus(votingId) != VotingStatus.Deciphering)
+      while (proxy.FetchVotingStatus(votingId, out authoritiesDone) != VotingStatus.Deciphering)
       {
         Thread.Sleep(1000);
       }
@@ -303,7 +308,7 @@ namespace Pirate.PiVote.CliClient
         Console.WriteLine();
         Console.WriteLine("Connected to voting server.");
 
-        this.voterClient.GetVotingList(VotingList);
+        this.voterClient.GetVotingList(certs, VotingList);
       }
       else
       {
@@ -323,7 +328,7 @@ namespace Pirate.PiVote.CliClient
 
         foreach (var voting in votingList)
         {
-          Console.WriteLine("  {0}: {1}, {2}", voting.Id, voting.Name, voting.Status);
+          Console.WriteLine("  {0}: {1}, {2}", voting.Id, voting.Title, voting.Status);
         }
 
         Console.Write("  Select one: ");
@@ -342,7 +347,9 @@ namespace Pirate.PiVote.CliClient
             break;
           case VotingStatus.Voting:
             Console.WriteLine("You can now vote.");
-            Console.WriteLine(selectedVoting.Name);
+            Console.WriteLine(selectedVoting.Title);
+            Console.WriteLine(selectedVoting.Description);
+            Console.WriteLine(selectedVoting.Question);
 
             foreach (var option in selectedVoting.Options)
             {
@@ -384,7 +391,9 @@ namespace Pirate.PiVote.CliClient
       else
       {
         Console.WriteLine();
-        Console.WriteLine(result.VotingName);
+        Console.WriteLine(result.Title);
+        Console.WriteLine(result.Description);
+        Console.WriteLine(result.Question);
         Console.WriteLine("  Total ballots cast: {0}", result.TotalBallots);
         Console.WriteLine("  Invalid ballots cast: {0}", result.InvalidBallots);
         Console.WriteLine("  Valid ballots cast: {0}", result.ValidBallots);

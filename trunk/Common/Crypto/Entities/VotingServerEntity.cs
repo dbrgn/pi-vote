@@ -74,6 +74,58 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// List of authoritites that have performed the current step.
+    /// Null if not applicable.
+    /// </summary>
+    public List<Guid> AuthoritiesDone
+    {
+      get
+      {
+        List<Guid> authorityIds = new List<Guid>();
+        MySqlDataReader reader = null;
+
+        switch (Status)
+        {
+          case VotingStatus.New:
+            reader = this.dbConnection.ExecuteReader(
+              "SELECT authority.AuthorityId FROM authority, sharepart WHERE authority.VotingId = @VotingId AND sharepart.VotingId = @VotingId AND authority.AuthorityIndex = sharepart.AuthorityIndex",
+              "@VotingId", Id.ToByteArray());
+
+            while (reader.Read())
+            {
+              authorityIds.Add(reader.GetGuid(0));
+            }
+
+            return authorityIds;
+          case VotingStatus.Sharing:
+            reader = this.dbConnection.ExecuteReader(
+              "SELECT authority.AuthorityId FROM authority, shareresponse WHERE authority.VotingId = @VotingId AND shareresponse.VotingId = @VotingId AND authority.AuthorityIndex = shareresponse.AuthorityIndex",
+              "@VotingId", Id.ToByteArray());
+
+            while (reader.Read())
+            {
+              authorityIds.Add(reader.GetGuid(0));
+            }
+
+            return authorityIds;
+          case VotingStatus.Deciphering:
+            reader = this.dbConnection.ExecuteReader(
+              "SELECT authority.AuthorityId FROM authority, deciphers WHERE authority.VotingId = @VotingId AND deciphers.VotingId = @VotingId AND authority.AuthorityIndex = deciphers.AuthorityIndex",
+              "@VotingId", Id.ToByteArray());
+
+            while (reader.Read())
+            {
+              authorityIds.Add(reader.GetGuid(0));
+            }
+
+            return authorityIds;
+          default:
+            return null;
+        }
+      }
+    }
+
+    /// <summary>
     /// Id of the voting procedures.
     /// </summary>
     public Guid Id
@@ -107,18 +159,16 @@ namespace Pirate.PiVote.Crypto
     {
       if (dbConnection == null)
         throw new ArgumentNullException("dbConnection");
-      if (parameters == null)
-        throw new ArgumentNullException("parameters");
+      if (signedParameters == null)
+        throw new ArgumentNullException("signedParameters");
       if (certificateStorage == null)
         throw new ArgumentNullException("certificateStorage");
-      if (!signedParameters.Verify(certificateStorage))
-        throw new ArgumentException("Voting parameters signature invalid.");
 
       this.dbConnection = dbConnection;
       this.certificateStorage = certificateStorage;
       this.signedParameters = signedParameters;
       this.parameters = this.signedParameters.Value;
-      Status = status;
+      this.status = status;
     }
 
     /// <summary>
@@ -169,29 +219,32 @@ namespace Pirate.PiVote.Crypto
       if (!(certificate is AuthorityCertificate))
         throw new ArgumentException("No an authority certificate.");
 
-      long authorityCount = (long)this.dbConnection.ExecuteScalar(
-        "SELECT count(*) FROM authority WHERE VotingId = @VotingId",
-        "@VotingId", this.parameters.VotingId.ToByteArray());
-      if (authorityCount >= this.parameters.AuthorityCount)
+      MySqlTransaction transaction = this.dbConnection.BeginTransaction();
+
+      MySqlCommand countCommand = new MySqlCommand("SELECT count(*) FROM authority WHERE VotingId = @VotingId", this.dbConnection, transaction);
+      countCommand.Add("@VotingId", this.parameters.VotingId.ToByteArray());
+      if ((long)countCommand.ExecuteScalar() >= this.parameters.AuthorityCount)
         throw new InvalidOperationException("Already enough authorities.");
 
-      bool alreadyAdded = this.dbConnection.ExecuteHasRows(
-        "SELECT count(*) FROM authority WHERE VotingId = @VotingId AND AuthorityId = @AuthorityId",
-        "@VotingId", this.parameters.VotingId.ToByteArray(),
-        "@AuthorityId", certificate.Id.ToByteArray());
-      if (alreadyAdded)
+      MySqlCommand addedCommand = new MySqlCommand("SELECT count(*) FROM authority WHERE VotingId = @VotingId AND AuthorityId = @AuthorityId", this.dbConnection, transaction);
+      addedCommand.Add("@VotingId", this.parameters.VotingId.ToByteArray());
+      addedCommand.Add("@AuthorityId", certificate.Id.ToByteArray());
+      if (addedCommand.ExecuteHasRows())
         throw new InvalidOperationException("Already an authority of the voting.");
 
-      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO authority (VotingId, AuthorityIndex, AuthorityId, Certificate) VALUES (@VotingId, (SELECT max(AuthorityIndex) + 1 FROM authority WHERE VotingId = @VotingId), @AuthorityId, @Certificate)", this.dbConnection);
+      MySqlCommand indexCommand = new MySqlCommand("SELECT max(AuthorityIndex) + 1 FROM authority WHERE VotingId = @VotingId", this.dbConnection, transaction);
+      indexCommand.Add("@VotingId", this.parameters.VotingId.ToByteArray());
+      object authorityIndexNull = indexCommand.ExecuteScalar();
+      int authorityIndex = authorityIndexNull == DBNull.Value ? 1 : Convert.ToInt32((long)authorityIndexNull);
+
+      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO authority (VotingId, AuthorityIndex, AuthorityId, Certificate) VALUES (@VotingId, @AuthorityIndex, @AuthorityId, @Certificate)", this.dbConnection, transaction);
       insertCommand.Parameters.AddWithValue("@VotingId", this.parameters.VotingId.ToByteArray());
+      insertCommand.Parameters.AddWithValue("@AuthorityIndex", authorityIndex);
       insertCommand.Parameters.AddWithValue("@AuthorityId", certificate.Id.ToByteArray());
       insertCommand.Parameters.AddWithValue("@Certificate", certificate.ToBinary());
       insertCommand.ExecuteNonQuery();
 
-      int authorityIndex = (int)this.dbConnection.ExecuteScalar(
-        "SELECT AuthorityIndex FROM authority WHERE VotingId = @VotingId AND AuthorityId = @AuthorityId",
-        "@VotingId", this.parameters.VotingId.ToByteArray(),
-        "@AuthorityId", certificate.Id.ToByteArray());
+      transaction.Commit();
 
       return authorityIndex;
     }

@@ -35,6 +35,11 @@ namespace Pirate.PiVote.Rpc
     private class GetVotingListOperation : Operation
     {
       /// <summary>
+      /// Certificate storage to check against.
+      /// </summary>
+      private CertificateStorage certificateStorage;
+
+      /// <summary>
       /// Callback upon completion.
       /// </summary>
       private GetVotingListCallBack callBack;
@@ -42,9 +47,11 @@ namespace Pirate.PiVote.Rpc
       /// <summary>
       /// Create a new voting list get operation.
       /// </summary>
+      /// <param name="certificateStorage">Certificate storage to check against.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public GetVotingListOperation(GetVotingListCallBack callBack)
+      public GetVotingListOperation(CertificateStorage certificateStorage, GetVotingListCallBack callBack)
       {
+        this.certificateStorage = certificateStorage;
         this.callBack = callBack;
       }
 
@@ -70,13 +77,14 @@ namespace Pirate.PiVote.Rpc
 
           foreach (Guid votingId in votingIds)
           {
-            VotingStatus status = client.proxy.FetchVotingStatus(votingId);
+            List<Guid> authoritiesDone = null;
+            VotingStatus status = client.proxy.FetchVotingStatus(votingId, out authoritiesDone);
             VotingMaterial material = client.proxy.FetchVotingMaterial(votingId);
 
-            if (material.Valid(client.voterEntity.CertificateStorage))
+            if (material.Valid(this.certificateStorage))
             {
               VotingParameters parameters = material.Parameters.Value;
-              votingList.Add(new VotingDescriptor(parameters, status));
+              votingList.Add(new VotingDescriptor(parameters, status, authoritiesDone));
             }
 
             SubProgress += 1d / (double)votingIds.Count();

@@ -50,11 +50,13 @@ namespace Pirate.PiVote.Rpc
     /// Fetches the status of a voting.
     /// </summary>
     /// <param name="votingId">Id of the voting.</param>
+    /// <param name="authoritiesDone">List of authorities that have completed the current step if applicable.</param>
     /// <returns>Status of the voting.</returns>
-    public VotingStatus FetchVotingStatus(Guid votingId)
+    public VotingStatus FetchVotingStatus(Guid votingId, out List<Guid> authoritiesDone)
     {
       var request = new VotingStatusRequest(Guid.NewGuid(), votingId);
       var response = Execute<VotingStatusResponse>(request);
+      authoritiesDone = response.AuthoritiesDone;
 
       return response.VotingStatus;
     }

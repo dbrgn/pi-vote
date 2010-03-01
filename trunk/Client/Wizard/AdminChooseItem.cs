@@ -36,6 +36,10 @@ namespace Pirate.PiVote.Client
       {
         return new GetSignatureRequestsItem();
       }
+      else if (this.createVotingRadio.Checked)
+      {
+        return new CreateVotingItem();
+      }
       else
       {
         return null;

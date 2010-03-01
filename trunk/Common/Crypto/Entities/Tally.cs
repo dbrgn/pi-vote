@@ -69,7 +69,7 @@ namespace Pirate.PiVote.Crypto
       this.publicKey = publicKey;
 
       this.voteSums = new Vote[this.parameters.OptionCount];
-      this.result = new VotingResult(this.parameters.VotingId, this.parameters.VotingName);
+      this.result = new VotingResult(this.parameters.VotingId, this.parameters);
       this.partialDeciphers = new List<PartialDecipher>();
       this.countedVoters = new List<Guid>();
     }

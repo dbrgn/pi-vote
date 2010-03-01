@@ -41,7 +41,7 @@ namespace Pirate.PiVote.Crypto
       admin.CreateSelfSignature();
       admin.AddSignature(intermediate, DateTime.Now.AddDays(1));
 
-      VotingParameters parameters = new VotingParameters("Zufrieden", DateTime.Now, DateTime.Now.AddDays(1));
+      VotingParameters parameters = new VotingParameters("Zufrieden", "Tada", "Bist du?", DateTime.Now, DateTime.Now.AddDays(1));
       parameters.AddOption(new Option("Nein", "Dagegen"));
       parameters.AddOption(new Option("Ja", "Dafür"));
       parameters.Initialize(1);

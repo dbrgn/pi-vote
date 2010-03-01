@@ -22,7 +22,7 @@ namespace Pirate.PiVote.Crypto
     private const int StandardAuthorityCount = 5;
     private const int StandardThereshold = 3;
     private const int StandardProofCount = 40;
-    private const int PrimeBits = 4096;
+    private const int PrimeBits = 512;
 
     /// <summary>
     /// List of possible options for the voters.
@@ -35,9 +35,19 @@ namespace Pirate.PiVote.Crypto
     public Guid VotingId { get; private set; }
 
     /// <summary>
-    /// Name of this voting.
+    /// Title of this voting.
     /// </summary>
-    public string VotingName { get; private set; }
+    public string Title { get; private set; }
+
+    /// <summary>
+    /// Description of this voting.
+    /// </summary>
+    public string Description { get; private set; }
+
+    /// <summary>
+    /// Question of this voting.
+    /// </summary>
+    public string Question { get; private set; }
 
     /// <summary>
     /// Date at which voting begins.
@@ -60,13 +70,19 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new voting.
     /// </summary>
-    public VotingParameters(string votingName, DateTime votingBeginDate, DateTime votingEndDate)
+    public VotingParameters(string title, string description, string question, DateTime votingBeginDate, DateTime votingEndDate)
     {
-      if (votingName == null)
-        throw new ArgumentNullException("votingName");
+      if (title == null)
+        throw new ArgumentNullException("title");
+      if (description == null)
+        throw new ArgumentNullException("description");
+      if (question == null)
+        throw new ArgumentNullException("question");
 
       VotingId = Guid.NewGuid();
-      VotingName = votingName;
+      Title = title;
+      Description = description;
+      Question = question;
       VotingBeginDate = votingBeginDate;
       VotingEndDate = votingEndDate;
       this.options = new List<Option>();
@@ -135,8 +151,12 @@ namespace Pirate.PiVote.Crypto
     {
       base.Serialize(context);
       context.Write(VotingId);
-      context.Write(VotingName);
+      context.Write(Title);
+      context.Write(Description);
+      context.Write(Question);
       context.WriteList(Options);
+      context.Write(VotingBeginDate);
+      context.Write(VotingEndDate);
     }
 
     /// <summary>
@@ -147,8 +167,12 @@ namespace Pirate.PiVote.Crypto
     {
       base.Deserialize(context);
       VotingId = context.ReadGuid();
-      VotingName = context.ReadString();
+      Title = context.ReadString();
+      Description = context.ReadString();
+      Question = context.ReadString();
       this.options = context.ReadObjectList<Option>();
+      VotingBeginDate = context.ReadDateTime();
+      VotingEndDate = context.ReadDateTime();
     }
   }
 }
