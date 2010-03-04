@@ -48,7 +48,8 @@ namespace Pirate.PiVote.Client
       this.decipherButton = new System.Windows.Forms.Button();
       this.checkSharesButton = new System.Windows.Forms.Button();
       this.createSharesButton = new System.Windows.Forms.Button();
-      this.loadProgress = new System.Windows.Forms.ProgressBar();
+      this.progressBar = new System.Windows.Forms.ProgressBar();
+      this.progressLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // votingList
@@ -58,7 +59,7 @@ namespace Pirate.PiVote.Client
             this.statusColumnHeader});
       this.votingList.Enabled = false;
       this.votingList.FullRowSelect = true;
-      this.votingList.Location = new System.Drawing.Point(3, 27);
+      this.votingList.Location = new System.Drawing.Point(3, 45);
       this.votingList.MultiSelect = false;
       this.votingList.Name = "votingList";
       this.votingList.Size = new System.Drawing.Size(694, 421);
@@ -80,7 +81,7 @@ namespace Pirate.PiVote.Client
       // decipherButton
       // 
       this.decipherButton.Enabled = false;
-      this.decipherButton.Location = new System.Drawing.Point(599, 454);
+      this.decipherButton.Location = new System.Drawing.Point(599, 472);
       this.decipherButton.Name = "decipherButton";
       this.decipherButton.Size = new System.Drawing.Size(98, 25);
       this.decipherButton.TabIndex = 1;
@@ -91,7 +92,7 @@ namespace Pirate.PiVote.Client
       // checkSharesButton
       // 
       this.checkSharesButton.Enabled = false;
-      this.checkSharesButton.Location = new System.Drawing.Point(495, 454);
+      this.checkSharesButton.Location = new System.Drawing.Point(495, 472);
       this.checkSharesButton.Name = "checkSharesButton";
       this.checkSharesButton.Size = new System.Drawing.Size(98, 25);
       this.checkSharesButton.TabIndex = 2;
@@ -102,7 +103,7 @@ namespace Pirate.PiVote.Client
       // createSharesButton
       // 
       this.createSharesButton.Enabled = false;
-      this.createSharesButton.Location = new System.Drawing.Point(391, 454);
+      this.createSharesButton.Location = new System.Drawing.Point(391, 472);
       this.createSharesButton.Name = "createSharesButton";
       this.createSharesButton.Size = new System.Drawing.Size(98, 25);
       this.createSharesButton.TabIndex = 3;
@@ -110,18 +111,27 @@ namespace Pirate.PiVote.Client
       this.createSharesButton.UseVisualStyleBackColor = true;
       this.createSharesButton.Click += new System.EventHandler(this.createSharesButton_Click);
       // 
-      // loadProgress
+      // progressBar
       // 
-      this.loadProgress.Location = new System.Drawing.Point(3, 3);
-      this.loadProgress.Name = "loadProgress";
-      this.loadProgress.Size = new System.Drawing.Size(694, 18);
-      this.loadProgress.TabIndex = 4;
+      this.progressBar.Location = new System.Drawing.Point(3, 21);
+      this.progressBar.Name = "progressBar";
+      this.progressBar.Size = new System.Drawing.Size(694, 18);
+      this.progressBar.TabIndex = 4;
+      // 
+      // progressLabel
+      // 
+      this.progressLabel.AutoSize = true;
+      this.progressLabel.Location = new System.Drawing.Point(3, 5);
+      this.progressLabel.Name = "progressLabel";
+      this.progressLabel.Size = new System.Drawing.Size(0, 13);
+      this.progressLabel.TabIndex = 5;
       // 
       // AuthorityListVotingsItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.loadProgress);
+      this.Controls.Add(this.progressLabel);
+      this.Controls.Add(this.progressBar);
       this.Controls.Add(this.createSharesButton);
       this.Controls.Add(this.checkSharesButton);
       this.Controls.Add(this.decipherButton);
@@ -129,6 +139,7 @@ namespace Pirate.PiVote.Client
       this.Name = "AuthorityListVotingsItem";
       this.Size = new System.Drawing.Size(700, 500);
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
@@ -140,7 +151,8 @@ namespace Pirate.PiVote.Client
     private Button decipherButton;
     private Button checkSharesButton;
     private Button createSharesButton;
-    private ProgressBar loadProgress;
+    private ProgressBar progressBar;
+    private Label progressLabel;
 
 
 

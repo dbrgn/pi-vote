@@ -314,5 +314,35 @@ namespace Pirate.PiVote.Rpc
         this.operations.Enqueue(new CreateSharePartOperation(votingId, authorityCertificate, authorityFileName, callBack));
       }
     }
+
+    /// <summary>
+    /// Authority check share parts from server.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="authorityFileName">Filename to load authority data.</param>
+    /// <param name="authorityCertificate">Authority's certificate.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void CheckShares(Guid votingId, AuthorityCertificate authorityCertificate, string authorityFileName, CheckSharesCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new CheckSharesOperation(votingId, authorityCertificate, authorityFileName, callBack));
+      }
+    }
+
+    /// <summary>
+    /// Authority create partial deciphers push to server.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="authorityFileName">Filename to load authority data.</param>
+    /// <param name="authorityCertificate">Authority's certificate.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void CreateDeciphers(Guid votingId, AuthorityCertificate authorityCertificate, string authorityFileName, CreateDeciphersCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new CreateDeciphersOperation(votingId, authorityCertificate, authorityFileName, callBack));
+      }
+    }
   }
 }

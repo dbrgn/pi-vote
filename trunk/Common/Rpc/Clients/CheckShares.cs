@@ -23,15 +23,15 @@ namespace Pirate.PiVote.Rpc
   public partial class VotingClient
   {
     /// <summary>
-    /// Callback for the create share parts operation.
+    /// Callback for the check shares operation.
     /// </summary>
     /// <param name="exception">Exception or null in case of success.</param>
-    public delegate void CreateSharePartCallBack(VotingDescriptor votingDescriptor, Exception exception);
+    public delegate void CheckSharesCallBack(VotingDescriptor votingDescriptor, bool accept, Exception exception);
 
     /// <summary>
-    /// Create share parts.
+    /// Check shares parts.
     /// </summary>
-    private class CreateSharePartOperation : Operation
+    private class CheckSharesOperation : Operation
     {
       /// <summary>
       /// Id of the voting.
@@ -51,7 +51,7 @@ namespace Pirate.PiVote.Rpc
       /// <summary>
       /// Callback upon completion.
       /// </summary>
-      private CreateSharePartCallBack callBack;
+      private CheckSharesCallBack callBack;
 
       /// <summary>
       /// Create a new vote cast opeation.
@@ -60,7 +60,7 @@ namespace Pirate.PiVote.Rpc
       /// <param name="authorityFileName">Filename to save authority data.</param>
       /// <param name="authorityCertificate">Authority's certificate.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public CreateSharePartOperation(Guid votingId, AuthorityCertificate authorityCertificate, string authorityFileName, CreateSharePartCallBack callBack)
+      public CheckSharesOperation(Guid votingId, AuthorityCertificate authorityCertificate, string authorityFileName, CheckSharesCallBack callBack)
       {
         this.votingId = votingId;
         this.authorityFileName = authorityFileName;
@@ -76,48 +76,48 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Preparing authority.";
+          Text = "Load authority data.";
           Progress = 0d;
           SubText = string.Empty;
           SubProgress = 0d;
 
-          var parameters = client.proxy.FetchParameters(this.votingId, this.authorityCertificate);
+          client.LoadAuthority(this.authorityFileName, this.authorityCertificate);
 
-          client.authorityEntity.Prepare(parameters.Key, parameters.Value);
-
-          Text = "Fetching authority list.";
+          Text = "Fetching all shares.";
           Progress = 0.2d;
 
-          var authorityList = client.proxy.FetchAuthorityList(this.votingId);
+          var allShareParts = client.proxy.FetchAllShares(this.votingId);
 
-          client.authorityEntity.SetAuthorities(authorityList);
-
-          Text = "Saving authority.";
+          Text = "Verify all shares.";
           Progress = 0.4d;
+
+          var signedShareResponse = client.authorityEntity.VerifyShares(allShareParts);
+
+          Text = "Save authority data.";
+          Progress = 0.6d;
 
           client.SaveAuthority(this.authorityFileName);
 
-          Text = "Creating and pushing share parts.";
+          Text = "Push share response to server.";
           Progress = 0.6d;
 
-          var sharePart = client.authorityEntity.GetShares();
+          client.proxy.PushShareResponse(this.votingId, signedShareResponse);
 
-          client.proxy.PushShares(this.votingId, sharePart);
-
-          Text = "Getting new voting status.";
-          Progress = 8d;
-
+          Text = "Get new voting status from server.";
+          Progress = 0.8d;
+          
+          var parameters = client.proxy.FetchParameters(this.votingId, this.authorityCertificate); 
           List<Guid> authoritieDone;
           VotingStatus status = client.proxy.FetchVotingStatus(this.votingId, out authoritieDone);
           var votingDescriptor = new VotingDescriptor(parameters.Value, status, authoritieDone);
 
           Progress = 1d;
 
-          this.callBack(votingDescriptor, null);
+          this.callBack(votingDescriptor, signedShareResponse.Value.AcceptShares, null);
         }
         catch (Exception exception)
         {
-          this.callBack(null, exception);
+          this.callBack(null, false, exception);
         }
       }
     }

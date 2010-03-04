@@ -23,15 +23,15 @@ namespace Pirate.PiVote.Rpc
   public partial class VotingClient
   {
     /// <summary>
-    /// Callback for the create share parts operation.
+    /// Callback for the create deciphers operation.
     /// </summary>
     /// <param name="exception">Exception or null in case of success.</param>
-    public delegate void CreateSharePartCallBack(VotingDescriptor votingDescriptor, Exception exception);
+    public delegate void CreateDeciphersCallBack(VotingDescriptor votingDescriptor, Exception exception);
 
     /// <summary>
-    /// Create share parts.
+    /// Create decipherss parts.
     /// </summary>
-    private class CreateSharePartOperation : Operation
+    private class CreateDeciphersOperation : Operation
     {
       /// <summary>
       /// Id of the voting.
@@ -51,7 +51,7 @@ namespace Pirate.PiVote.Rpc
       /// <summary>
       /// Callback upon completion.
       /// </summary>
-      private CreateSharePartCallBack callBack;
+      private CreateDeciphersCallBack callBack;
 
       /// <summary>
       /// Create a new vote cast opeation.
@@ -60,7 +60,7 @@ namespace Pirate.PiVote.Rpc
       /// <param name="authorityFileName">Filename to save authority data.</param>
       /// <param name="authorityCertificate">Authority's certificate.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public CreateSharePartOperation(Guid votingId, AuthorityCertificate authorityCertificate, string authorityFileName, CreateSharePartCallBack callBack)
+      public CreateDeciphersOperation(Guid votingId, AuthorityCertificate authorityCertificate, string authorityFileName, CreateDeciphersCallBack callBack)
       {
         this.votingId = votingId;
         this.authorityFileName = authorityFileName;
@@ -76,37 +76,50 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Preparing authority.";
+          Text = "Load authority data.";
           Progress = 0d;
           SubText = string.Empty;
           SubProgress = 0d;
 
-          var parameters = client.proxy.FetchParameters(this.votingId, this.authorityCertificate);
+          client.LoadAuthority(this.authorityFileName, this.authorityCertificate);
 
-          client.authorityEntity.Prepare(parameters.Key, parameters.Value);
+          Text = "Fetching voting material.";
+          Progress = 0.1d;
 
-          Text = "Fetching authority list.";
+          var material = client.proxy.FetchVotingMaterial(this.votingId);
+          client.authorityEntity.TallyBegin(material);
+
+          Text = "Fetching envelope count.";
           Progress = 0.2d;
+          
+          int envelopeCount = client.proxy.FetchEnvelopeCount(this.votingId);
 
-          var authorityList = client.proxy.FetchAuthorityList(this.votingId);
+          Text = string.Format("Fetching all envelopes ({0} / {1}.", 0, envelopeCount);
+          Progress = 0.3d;
+          
+          for (int envelopeIndex = 0; envelopeIndex < envelopeCount; envelopeIndex++)
+          {
+            var signedEnvelope = client.proxy.FetchEnvelope(this.votingId, envelopeIndex);
+            client.authorityEntity.TallyAdd(signedEnvelope);
 
-          client.authorityEntity.SetAuthorities(authorityList);
+            Text = string.Format("Fetching all envelopes ({0} / {1}.", 0, envelopeIndex + 1);
+            Progress += 0.4d / (double)envelopeCount;
+          }
 
-          Text = "Saving authority.";
-          Progress = 0.4d;
+          Text = "Partially decipher voting.";
+          Progress = 0.7d;
 
-          client.SaveAuthority(this.authorityFileName);
+          var decipherList = client.authorityEntity.PartiallyDecipher();
 
-          Text = "Creating and pushing share parts.";
-          Progress = 0.6d;
+          Text = "Pushing partial deciphers.";
+          Progress = 0.8d;
+          
+          client.proxy.PushPartailDecipher(this.votingId, decipherList);
 
-          var sharePart = client.authorityEntity.GetShares();
+          Text = "Fetching new voting status.";
+          Progress = 0.9d;
 
-          client.proxy.PushShares(this.votingId, sharePart);
-
-          Text = "Getting new voting status.";
-          Progress = 8d;
-
+          var parameters = client.proxy.FetchParameters(this.votingId, this.authorityCertificate); 
           List<Guid> authoritieDone;
           VotingStatus status = client.proxy.FetchVotingStatus(this.votingId, out authoritieDone);
           var votingDescriptor = new VotingDescriptor(parameters.Value, status, authoritieDone);
