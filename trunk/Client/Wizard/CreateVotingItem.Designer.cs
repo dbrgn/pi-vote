@@ -55,9 +55,7 @@ namespace Pirate.PiVote.Client
       this.optionLabel = new System.Windows.Forms.Label();
       this.optionNumberUpDown = new System.Windows.Forms.NumericUpDown();
       this.optionNumberLabel = new System.Windows.Forms.Label();
-      this.createProgress = new System.Windows.Forms.ProgressBar();
       this.createButton = new System.Windows.Forms.Button();
-      this.createMessage = new System.Windows.Forms.Label();
       this.votingFromPicker = new System.Windows.Forms.DateTimePicker();
       this.votingUntilPicker = new System.Windows.Forms.DateTimePicker();
       this.votingFromLabel = new System.Windows.Forms.Label();
@@ -207,15 +205,6 @@ namespace Pirate.PiVote.Client
       this.optionNumberLabel.TabIndex = 28;
       this.optionNumberLabel.Text = "Answers / Voter";
       // 
-      // createProgress
-      // 
-      this.createProgress.Location = new System.Drawing.Point(120, 482);
-      this.createProgress.Maximum = 20;
-      this.createProgress.Name = "createProgress";
-      this.createProgress.Size = new System.Drawing.Size(566, 15);
-      this.createProgress.Step = 1;
-      this.createProgress.TabIndex = 29;
-      // 
       // createButton
       // 
       this.createButton.Enabled = false;
@@ -226,14 +215,6 @@ namespace Pirate.PiVote.Client
       this.createButton.Text = "Create";
       this.createButton.UseVisualStyleBackColor = true;
       this.createButton.Click += new System.EventHandler(this.createButton_Click);
-      // 
-      // createMessage
-      // 
-      this.createMessage.AutoSize = true;
-      this.createMessage.Location = new System.Drawing.Point(238, 459);
-      this.createMessage.Name = "createMessage";
-      this.createMessage.Size = new System.Drawing.Size(0, 13);
-      this.createMessage.TabIndex = 31;
       // 
       // votingFromPicker
       // 
@@ -366,9 +347,7 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.votingFromLabel);
       this.Controls.Add(this.votingUntilPicker);
       this.Controls.Add(this.votingFromPicker);
-      this.Controls.Add(this.createMessage);
       this.Controls.Add(this.createButton);
-      this.Controls.Add(this.createProgress);
       this.Controls.Add(this.optionNumberLabel);
       this.Controls.Add(this.optionNumberUpDown);
       this.Controls.Add(this.optionLabel);
@@ -406,9 +385,7 @@ namespace Pirate.PiVote.Client
     private Label optionLabel;
     private NumericUpDown optionNumberUpDown;
     private Label optionNumberLabel;
-    private ProgressBar createProgress;
     private Button createButton;
-    private Label createMessage;
     private DateTimePicker votingFromPicker;
     private DateTimePicker votingUntilPicker;
     private Label votingFromLabel;

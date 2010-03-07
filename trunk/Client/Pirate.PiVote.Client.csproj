@@ -81,6 +81,25 @@
     <Compile Include="Wizard\ChooseCertificateItem.designer.cs">
       <DependentUpon>ChooseCertificateItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wizard\Message.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\Message.Designer.cs">
+      <DependentUpon>Message.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\MessageType.cs" />
+    <Compile Include="Wizard\Progress.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\Progress.Designer.cs">
+      <DependentUpon>Progress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\VoteCompleteItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\VoteCompleteItem.designer.cs">
+      <DependentUpon>VoteCompleteItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Wizard\CreateCertificateItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -167,6 +186,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\ChooseCertificateItem.resx">
       <DependentUpon>ChooseCertificateItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\Message.resx">
+      <DependentUpon>Message.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\Progress.resx">
+      <DependentUpon>Progress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\VoteCompleteItem.resx">
+      <DependentUpon>VoteCompleteItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\CreateCertificateItem.resx">
       <DependentUpon>CreateCertificateItem.cs</DependentUpon>

@@ -126,6 +126,7 @@ namespace Pirate.PiVote.Rpc
 
           while (this.verifiedEnvelopes < this.envelopeCount)
           {
+            SubText = string.Format("Fetching and verifying votes {0} / {1}", this.verifiedEnvelopes, this.envelopeCount);
             SubProgress = 0.2d / (double)this.envelopeCount * (double)this.fetchedEnvelopes +
                           0.8d / (double)this.envelopeCount * (double)this.verifiedEnvelopes;
 
@@ -133,7 +134,7 @@ namespace Pirate.PiVote.Rpc
           }
 
           Progress = 0.8d;
-          SubText = "Fetching partial deciphers";
+          SubText = string.Format("Fetching partial deciphers 0 / {0}", parameters.AuthorityCount);
           SubProgress = 0d;
 
           fetcher.Join();
@@ -144,6 +145,7 @@ namespace Pirate.PiVote.Rpc
           {
             client.voterEntity.TallyAddPartialDecipher(client.proxy.FetchPartialDecipher(votingId, authorityIndex));
 
+            SubText = string.Format("Fetching partial deciphers {0} / {1}", authorityIndex + 1, parameters.AuthorityCount);
             SubProgress = 1d / (double)parameters.AuthorityCount * (double)(authorityIndex + 1);
           }
 
@@ -153,6 +155,7 @@ namespace Pirate.PiVote.Rpc
 
           var result = client.voterEntity.TallyResult;
 
+          SubProgress = 1d;
           Progress = 1d;
 
           this.callBack(result, null);

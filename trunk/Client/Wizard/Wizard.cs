@@ -31,8 +31,9 @@ namespace Pirate.PiVote.Client
 
     private void Wizard_Load(object sender, EventArgs e)
     {
-      this.status = new WizardStatus();
+      this.status = new WizardStatus(this.message1, this.progress1);
       this.status.CertificateStorage = new CertificateStorage();
+      this.status.UpdateProgress();
 
       if (File.Exists(RootCertificateFileName))
       {

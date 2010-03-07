@@ -45,8 +45,6 @@ namespace Pirate.PiVote.Client
       this.votingList = new System.Windows.Forms.ListView();
       this.titleColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.statusColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.progressBar = new System.Windows.Forms.ProgressBar();
-      this.progressLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // votingList
@@ -56,10 +54,10 @@ namespace Pirate.PiVote.Client
             this.statusColumnHeader});
       this.votingList.Enabled = false;
       this.votingList.FullRowSelect = true;
-      this.votingList.Location = new System.Drawing.Point(3, 45);
+      this.votingList.Location = new System.Drawing.Point(3, 3);
       this.votingList.MultiSelect = false;
       this.votingList.Name = "votingList";
-      this.votingList.Size = new System.Drawing.Size(694, 452);
+      this.votingList.Size = new System.Drawing.Size(694, 494);
       this.votingList.TabIndex = 0;
       this.votingList.UseCompatibleStateImageBehavior = false;
       this.votingList.View = System.Windows.Forms.View.Details;
@@ -75,32 +73,14 @@ namespace Pirate.PiVote.Client
       this.statusColumnHeader.Text = "Status";
       this.statusColumnHeader.Width = 150;
       // 
-      // progressBar
-      // 
-      this.progressBar.Location = new System.Drawing.Point(3, 21);
-      this.progressBar.Name = "progressBar";
-      this.progressBar.Size = new System.Drawing.Size(694, 18);
-      this.progressBar.TabIndex = 4;
-      // 
-      // progressLabel
-      // 
-      this.progressLabel.AutoSize = true;
-      this.progressLabel.Location = new System.Drawing.Point(3, 5);
-      this.progressLabel.Name = "progressLabel";
-      this.progressLabel.Size = new System.Drawing.Size(0, 13);
-      this.progressLabel.TabIndex = 5;
-      // 
       // ListVotingsItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.progressLabel);
-      this.Controls.Add(this.progressBar);
       this.Controls.Add(this.votingList);
       this.Name = "ListVotingsItem";
       this.Size = new System.Drawing.Size(700, 500);
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
@@ -109,8 +89,6 @@ namespace Pirate.PiVote.Client
     private ListView votingList;
     private ColumnHeader titleColumnHeader;
     private ColumnHeader statusColumnHeader;
-    private ProgressBar progressBar;
-    private Label progressLabel;
 
 
 

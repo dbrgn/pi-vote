@@ -484,13 +484,27 @@ namespace Pirate.PiVote.Crypto
       if (hasVoted)
         throw new PiArgumentException(ExceptionCode.AlreadyVoted, "Voter has already voted.");
 
+      MySqlTransaction transaction = this.dbConnection.BeginTransaction();
+
+      MySqlCommand indexCommand = new MySqlCommand(
+        "SELECT max(EnvelopeIndex) + 1 FROM envelope WHERE VotingId = @VotingId",
+        this.dbConnection,
+        transaction);
+      indexCommand.Add("@VotingId", Id.ToByteArray());
+      object indexObject = indexCommand.ExecuteScalar();
+      int envelopeIndex = indexObject == DBNull.Value ? 1 : Convert.ToInt32(indexObject);
+
       MySqlCommand insertCommand = new MySqlCommand(
-        "INSERT INTO envelope (VotingId, Index, VoterId, Value) VALUES (@VotingId, (SELECT max(Index) + 1 FROM envelope WHERE VotingId = @VotingId), @VoterId, @Value)", 
-        this.dbConnection);
+        "INSERT INTO envelope (VotingId, EnvelopeIndex, VoterId, Value) VALUES (@VotingId, @EnvelopeIndex, @VoterId, @Value)", 
+        this.dbConnection,
+        transaction);
       insertCommand.Add("@VotingId", Id.ToByteArray());
-      insertCommand.Add("@Voterid", signedEnvelope.Certificate.Id.ToByteArray());
+      insertCommand.Add("@VoterId", signedEnvelope.Certificate.Id.ToByteArray());
       insertCommand.Add("@Value", signedEnvelope.ToBinary());
+      insertCommand.Add("@EnvelopeIndex", envelopeIndex);
       insertCommand.ExecuteNonQuery();
+
+      transaction.Commit();
     }
 
     /// <summary>
@@ -555,9 +569,9 @@ namespace Pirate.PiVote.Crypto
     public Signed<Envelope> GetEnvelope(int envelopeIndex)
     {
       MySqlDataReader reader = this.dbConnection.ExecuteReader(
-        "SELECT Value FROM envelope WHERE VotingId = @VotingId AND Index = @Index",
+        "SELECT Value FROM envelope WHERE VotingId = @VotingId AND EnvelopeIndex = @EnvelopeIndex",
         "@VotingId", Id.ToByteArray(),
-        "@Index", envelopeIndex + 1);
+        "@EnvelopeIndex", envelopeIndex + 1);
 
       if (reader.Read())
       {
@@ -580,7 +594,7 @@ namespace Pirate.PiVote.Crypto
     public Signed<PartialDecipherList> GetPartialDecipher(int authorityIndex)
     {
       MySqlDataReader reader = this.dbConnection.ExecuteReader(
-        "SELECT Value FROM decipher WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
+        "SELECT Value FROM deciphers WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
         "@VotingId", Id.ToByteArray(),
         "@AuthorityIndex", authorityIndex);
 

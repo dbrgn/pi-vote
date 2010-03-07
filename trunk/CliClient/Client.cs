@@ -360,7 +360,9 @@ namespace Pirate.PiVote.CliClient
 
             Console.Write("  Select one: ");
             int optionIndex = Convert.ToInt32(Console.ReadLine());
-            this.voterClient.Vote(selectedVoting.Id, optionIndex, VoteCallBack);
+            bool[] vota = new bool[selectedVoting.Options.Count()];
+            vota[optionIndex] = true;
+            this.voterClient.Vote(selectedVoting.Id, vota, VoteCallBack);
 
             break;
           case VotingStatus.Finished:

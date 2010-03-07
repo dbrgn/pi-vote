@@ -42,40 +42,15 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
-      this.progressLabel = new System.Windows.Forms.Label();
-      this.progressBar = new System.Windows.Forms.ProgressBar();
-      this.subProgressLabel = new System.Windows.Forms.Label();
       this.openButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
-      // progressLabel
-      // 
-      this.progressLabel.AutoSize = true;
-      this.progressLabel.Location = new System.Drawing.Point(112, 189);
-      this.progressLabel.Name = "progressLabel";
-      this.progressLabel.Size = new System.Drawing.Size(0, 20);
-      this.progressLabel.TabIndex = 0;
-      // 
-      // progressBar
-      // 
-      this.progressBar.Location = new System.Drawing.Point(116, 212);
-      this.progressBar.Name = "progressBar";
-      this.progressBar.Size = new System.Drawing.Size(801, 23);
-      this.progressBar.TabIndex = 1;
-      // 
-      // subProgressLabel
-      // 
-      this.subProgressLabel.AutoSize = true;
-      this.subProgressLabel.Location = new System.Drawing.Point(112, 254);
-      this.subProgressLabel.Name = "subProgressLabel";
-      this.subProgressLabel.Size = new System.Drawing.Size(0, 20);
-      this.subProgressLabel.TabIndex = 3;
-      // 
       // openButton
       // 
-      this.openButton.Location = new System.Drawing.Point(116, 118);
+      this.openButton.Location = new System.Drawing.Point(77, 77);
+      this.openButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.openButton.Name = "openButton";
-      this.openButton.Size = new System.Drawing.Size(174, 31);
+      this.openButton.Size = new System.Drawing.Size(116, 20);
       this.openButton.TabIndex = 4;
       this.openButton.Text = "Open...";
       this.openButton.UseVisualStyleBackColor = true;
@@ -83,25 +58,17 @@ namespace Pirate.PiVote.Client
       // 
       // SetSignatureResponsesItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.openButton);
-      this.Controls.Add(this.subProgressLabel);
-      this.Controls.Add(this.progressBar);
-      this.Controls.Add(this.progressLabel);
-      this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.Name = "SetSignatureResponsesItem";
-      this.Size = new System.Drawing.Size(1050, 769);
+      this.Size = new System.Drawing.Size(700, 500);
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
     #endregion
 
-    private Label progressLabel;
-    private ProgressBar progressBar;
-    private Label subProgressLabel;
     private Button openButton;
 
 

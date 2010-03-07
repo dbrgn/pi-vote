@@ -23,6 +23,9 @@ namespace Pirate.PiVote.Client
   {
     public VotingClient.VotingDescriptor VotingDescriptor { get; set; }
 
+    private List<RadioButton> optionRadioButtons;
+    private List<CheckBox> optionCheckBoxes;
+
     public VoteItem()
     {
       InitializeComponent();
@@ -30,7 +33,24 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      return null;
+      if (this.optionCheckBoxes != null)
+      {
+        VoteCompleteItem item = new VoteCompleteItem();
+        item.Vota = new List<bool>(this.optionCheckBoxes.Select(box => box.Checked));
+        item.VotingDescriptor = VotingDescriptor;
+        return item;
+      }
+      else if (this.optionRadioButtons != null)
+      {
+        VoteCompleteItem item = new VoteCompleteItem();
+        item.Vota = new List<bool>(this.optionRadioButtons.Select(box => box.Checked));
+        item.VotingDescriptor = VotingDescriptor;
+        return item;
+      }
+      else
+      {
+        return null;
+      }
     }
 
     public override WizardItem Previous()
@@ -46,6 +66,25 @@ namespace Pirate.PiVote.Client
     public override bool CanCancel
     {
       get { return true; }
+    }
+
+    public override bool CanNext
+    {
+      get
+      {
+        if (this.optionCheckBoxes != null)
+        {
+          return this.optionCheckBoxes.Where(box => box.Checked).Count() == VotingDescriptor.MaxOptions;
+        }
+        else if (this.optionRadioButtons != null)
+        {
+          return this.optionRadioButtons.Where(box => box.Checked).Count() == VotingDescriptor.MaxOptions;
+        }
+        else
+        {
+          return false;
+        }
+      }
     }
 
     public override void Begin()
@@ -83,6 +122,15 @@ namespace Pirate.PiVote.Client
       Controls.Add(questionLabel);
       top += questionLabel.Height;
 
+      if (VotingDescriptor.MaxOptions > 1)
+      {
+        this.optionCheckBoxes = new List<CheckBox>();
+      }
+      else
+      {
+        this.optionRadioButtons = new List<RadioButton>();
+      }
+
       foreach (VotingClient.OptionDescriptor option in VotingDescriptor.Options)
       {
         top += 10;
@@ -96,8 +144,10 @@ namespace Pirate.PiVote.Client
           optionBox.Top = top;
           optionBox.Left = 0;
           optionBox.Width = Width;
+          optionBox.CheckedChanged += new EventHandler(optionBox_CheckedChanged);
           Controls.Add(optionBox);
           top += optionBox.Height;
+          this.optionCheckBoxes.Add(optionBox);
         }
         else
         {
@@ -108,8 +158,10 @@ namespace Pirate.PiVote.Client
           optionBox.Top = top;
           optionBox.Left = 0;
           optionBox.Width = Width;
+          optionBox.CheckedChanged += new EventHandler(optionBox_CheckedChanged);
           Controls.Add(optionBox);
           top += optionBox.Height;
+          this.optionRadioButtons.Add(optionBox);
         }
 
         Label optionDescriptionLabel = new Label();
@@ -123,6 +175,11 @@ namespace Pirate.PiVote.Client
         Controls.Add(optionDescriptionLabel);
         top += optionDescriptionLabel.Height;
       }
+    }
+
+    private void optionBox_CheckedChanged(object sender, EventArgs e)
+    {
+      OnUpdateWizard();
     }
   }
 }

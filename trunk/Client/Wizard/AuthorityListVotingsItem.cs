@@ -22,7 +22,7 @@ namespace Pirate.PiVote.Client
   public partial class AuthorityListVotingsItem : WizardItem
   {
     private bool run;
-    private bool success;
+    private Exception exception;
     private bool accept;
     private VotingClient.VotingDescriptor votingDescriptor;
     private IEnumerable<VotingClient.VotingDescriptor> votings;
@@ -65,43 +65,38 @@ namespace Pirate.PiVote.Client
 
       while (this.run)
       {
-        VotingClient.Operation operation = Status.VotingClient.CurrentOperation;
-        if (operation != null)
-        {
-          this.progressLabel.Text = operation.Text;
-          this.progressBar.Value = Convert.ToInt32(100d * operation.Progress);
-        }
-
+        Status.UpdateProgress();
         Application.DoEvents();
         Thread.Sleep(1);
       }
 
-      if (this.votings != null)
+      Status.UpdateProgress();
+
+      if (this.exception == null)
       {
-        foreach (VotingClient.VotingDescriptor voting in this.votings)
+        if (this.votings != null)
         {
-          ListViewItem item = new ListViewItem(voting.Title);
-          item.SubItems.Add(voting.Status.ToString());
-          item.Tag = voting;
-          this.votingList.Items.Add(item);
+          foreach (VotingClient.VotingDescriptor voting in this.votings)
+          {
+            ListViewItem item = new ListViewItem(voting.Title);
+            item.SubItems.Add(voting.Status.ToString());
+            item.Tag = voting;
+            this.votingList.Items.Add(item);
+          }
         }
       }
+      else
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
+      }
 
-      this.progressBar.Value = this.progressBar.Maximum;
       this.votingList.Enabled = true;
     }
 
     private void GetVotingListCompleted(IEnumerable<VotingClient.VotingDescriptor> votingList, Exception exception)
     {
-      if (exception == null)
-      {
-        this.votings = votingList;
-      }
-      else
-      {
-        MessageBox.Show(exception.ToString());
-      }
-
+      this.exception = exception;
+      this.votings = votingList;
       this.run = false;
     }
 
@@ -156,26 +151,27 @@ namespace Pirate.PiVote.Client
 
           while (this.run)
           {
-            VotingClient.Operation operation = Status.VotingClient.CurrentOperation;
-            if (operation != null)
-            {
-              this.progressLabel.Text = operation.Text;
-              this.progressBar.Value = Convert.ToInt32(100d * operation.Progress);
-            }
-
+            Status.UpdateProgress();
             Application.DoEvents();
             Thread.Sleep(1);
           }
 
-          if (this.success)
+          Status.UpdateProgress();
+
+          if (this.exception == null)
           {
             item.Tag = this.votingDescriptor;
             item.SubItems[1].Text = this.votingDescriptor.Status.ToString();
             votingList_SelectedIndexChanged(this.votingList, new EventArgs());
 
-            MessageBox.Show("Shares created and uploaded them to server.", "Pi-Vote,", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Status.SetMessage("Shares created and uploaded them to server.", MessageType.Success);
+          }
+          else
+          {
+            Status.SetMessage(this.exception.Message, MessageType.Error);
           }
 
+          Status.UpdateProgress();
           this.votingList.Enabled = true;
           OnUpdateWizard();
         }
@@ -184,14 +180,8 @@ namespace Pirate.PiVote.Client
 
     private void CreateSharesCompleteCallBack(VotingClient.VotingDescriptor votingDescriptor, Exception exception)
     {
-      this.success = exception == null;
+      this.exception = exception;
       this.votingDescriptor = votingDescriptor;
-
-      if (exception != null)
-      {
-        MessageBox.Show(exception.ToString());
-      }
-
       this.run = false;
     }
 
@@ -221,18 +211,14 @@ namespace Pirate.PiVote.Client
 
           while (this.run)
           {
-            VotingClient.Operation operation = Status.VotingClient.CurrentOperation;
-            if (operation != null)
-            {
-              this.progressLabel.Text = operation.Text;
-              this.progressBar.Value = Convert.ToInt32(100d * operation.Progress);
-            }
-
+            Status.UpdateProgress();
             Application.DoEvents();
             Thread.Sleep(1);
           }
 
-          if (this.success)
+          Status.UpdateProgress();
+
+          if (this.exception == null)
           {
             item.Tag = this.votingDescriptor;
             item.SubItems[1].Text = this.votingDescriptor.Status.ToString();
@@ -240,14 +226,19 @@ namespace Pirate.PiVote.Client
 
             if (this.accept)
             {
-              MessageBox.Show("Shares where verified and accepted. Our answer was uploaded to server.", "Pi-Vote,", MessageBoxButtons.OK, MessageBoxIcon.Information);
+              Status.SetMessage("Shares where verified and accepted. Our answer was uploaded to server.", MessageType.Success);
             }
             else
             {
-              MessageBox.Show("Shares where verified but not accepted. Our answer was uploaded to server.", "Pi-Vote,", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+              Status.SetMessage("Shares where verified but not accepted. Our answer was uploaded to server.", MessageType.Warning);
             }
           }
+          else
+          {
+            Status.SetMessage(this.exception.Message, MessageType.Error);
+          }
 
+          Status.UpdateProgress();
           this.votingList.Enabled = true;
           OnUpdateWizard();
         }
@@ -256,15 +247,9 @@ namespace Pirate.PiVote.Client
 
     private void CheckSharesCompleteCallBack(VotingClient.VotingDescriptor votingDescriptor, bool accept, Exception exception)
     {
-      this.success = exception == null;
+      this.exception = exception;
       this.votingDescriptor = votingDescriptor;
       this.accept = accept;
-
-      if (exception != null)
-      {
-        MessageBox.Show(exception.ToString());
-      }
-
       this.run = false;
     }
 
@@ -294,26 +279,27 @@ namespace Pirate.PiVote.Client
 
           while (this.run)
           {
-            VotingClient.Operation operation = Status.VotingClient.CurrentOperation;
-            if (operation != null)
-            {
-              this.progressLabel.Text = operation.Text;
-              this.progressBar.Value = Convert.ToInt32(100d * operation.Progress);
-            }
-
+            Status.UpdateProgress();
             Application.DoEvents();
             Thread.Sleep(1);
           }
 
-          if (this.success)
+          Status.UpdateProgress();
+
+          if (this.exception == null)
           {
             item.Tag = this.votingDescriptor;
             item.SubItems[1].Text = this.votingDescriptor.Status.ToString();
             votingList_SelectedIndexChanged(this.votingList, new EventArgs());
 
-            MessageBox.Show("Partial deciphers where calculated and uploaded to the server.", "Pi-Vote,", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Status.SetMessage("Partial deciphers where calculated and uploaded to the server.", MessageType.Success);
+          }
+          else
+          {
+            Status.SetMessage(this.exception.Message, MessageType.Error);
           }
 
+          Status.UpdateProgress();
           this.votingList.Enabled = true;
           OnUpdateWizard();
         }
@@ -322,14 +308,8 @@ namespace Pirate.PiVote.Client
 
     private void CreateDeciphersCompleteCallBack(VotingClient.VotingDescriptor votingDescriptor, Exception exception)
     {
-      this.success = exception == null;
+      this.exception = exception;
       this.votingDescriptor = votingDescriptor;
-
-      if (exception != null)
-      {
-        MessageBox.Show(exception.ToString());
-      }
-
       this.run = false;
     }
   }

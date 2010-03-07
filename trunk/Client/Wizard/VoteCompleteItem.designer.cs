@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Pirate.PiVote.Client
 {
-  partial class GetSignatureRequestsItem
+  partial class VoteCompleteItem
   {
     /// <summary> 
     /// Required designer variable.
@@ -42,34 +42,33 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
-      this.saveToButton = new System.Windows.Forms.Button();
+      this.castLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
-      // saveToButton
+      // castLabel
       // 
-      this.saveToButton.Location = new System.Drawing.Point(77, 77);
-      this.saveToButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-      this.saveToButton.Name = "saveToButton";
-      this.saveToButton.Size = new System.Drawing.Size(116, 20);
-      this.saveToButton.TabIndex = 4;
-      this.saveToButton.Text = "Save to...";
-      this.saveToButton.UseVisualStyleBackColor = true;
-      this.saveToButton.Click += new System.EventHandler(this.saveToButton_Click);
+      this.castLabel.AutoSize = true;
+      this.castLabel.Location = new System.Drawing.Point(3, 196);
+      this.castLabel.Name = "castLabel";
+      this.castLabel.Size = new System.Drawing.Size(0, 13);
+      this.castLabel.TabIndex = 2;
       // 
-      // GetSignatureRequestsItem
+      // VoteCompleteItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.saveToButton);
-      this.Name = "GetSignatureRequestsItem";
+      this.Controls.Add(this.castLabel);
+      this.Name = "VoteCompleteItem";
       this.Size = new System.Drawing.Size(700, 500);
+      this.Load += new System.EventHandler(this.VoteCompleteItem_Load);
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
     #endregion
 
-    private Button saveToButton;
+    private Label castLabel;
 
 
 

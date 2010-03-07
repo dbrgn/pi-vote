@@ -21,14 +21,8 @@ namespace Pirate.PiVote.Client
 {
   public partial class CreateRequestItem : WizardItem
   {
-    public enum SendStatus
-    { 
-      Send,
-      SendDone,
-      SendFailed
-    }
-
-    private SendStatus status;
+    private bool run;
+    private Exception exception;
 
     public CreateRequestItem()
     {
@@ -52,7 +46,7 @@ namespace Pirate.PiVote.Client
 
     public override bool CanCancel
     {
-      get { return true; }
+      get { return !this.run; }
     }
 
     public override void Begin()
@@ -84,6 +78,9 @@ namespace Pirate.PiVote.Client
       this.emailAddressTextBox.Enabled = false;
       this.sendButton.Enabled = false;
 
+      this.run = true;
+      OnUpdateWizard();
+
       SignatureRequest signatureRequest 
         = new SignatureRequest(
           this.firstNameTextBox.Text, 
@@ -92,38 +89,32 @@ namespace Pirate.PiVote.Client
       Signed<SignatureRequest> signedSignatureRequest = 
         new Signed<SignatureRequest>(signatureRequest, Status.Certificate);
 
-      this.status = SendStatus.Send;
-
       Status.VotingClient.SetSignatureRequest(signedSignatureRequest, SetSignatureRequestComplete);
 
-      while (this.status == SendStatus.Send)
+      while (this.run)
       {
+        Status.UpdateProgress();
         Application.DoEvents();
         Thread.Sleep(1);
       }
 
-      switch (this.status)
-      {
-        case SendStatus.SendFailed:
-          this.messageLabel.Text = "Your request could not be submitted.";
-          break;
-        case SendStatus.SendDone:
-          this.messageLabel.Text = "Your request has been submitted to the server. You must now wait for the certificat authority to process it.";
-          break;
+      Status.UpdateProgress();
+
+      if (this.exception == null)
+      { 
+        Status.SetMessage("Your request has been submitted to the server. You must now wait for the certificat authority to process it.", MessageType.Success);
       }
+      else
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
+      }
+
+      OnUpdateWizard();
     }
 
     private void SetSignatureRequestComplete(Exception exception)
     {
-      if (exception == null)
-      {
-        this.status = SendStatus.SendDone;
-      }
-      else
-      {
-        MessageBox.Show(exception.ToString());
-        this.status = SendStatus.SendFailed;
-      }
+      this.exception = exception;
     }
 
     private void firstNameTextBox_TextChanged(object sender, EventArgs e)

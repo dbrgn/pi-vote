@@ -22,6 +22,7 @@ namespace Pirate.PiVote.Client
   public partial class ListVotingsItem : WizardItem
   {
     private bool run;
+    private Exception exception;
     private IEnumerable<VotingClient.VotingDescriptor> votings;
 
     public ListVotingsItem()
@@ -102,43 +103,39 @@ namespace Pirate.PiVote.Client
 
       while (this.run)
       {
-        VotingClient.Operation operation = Status.VotingClient.CurrentOperation;
-        if (operation != null)
-        {
-          this.progressLabel.Text = operation.Text;
-          this.progressBar.Value = Convert.ToInt32(100d * operation.Progress);
-        }
-
+        Status.UpdateProgress();
         Application.DoEvents();
         Thread.Sleep(1);
       }
 
-      if (this.votings != null)
-      {
-        foreach (VotingClient.VotingDescriptor voting in this.votings)
-        {
-          ListViewItem item = new ListViewItem(voting.Title);
-          item.SubItems.Add(voting.Status.ToString());
-          item.Tag = voting;
-          this.votingList.Items.Add(item);
-        }
-      }
+      Status.UpdateProgress();
 
-      this.progressBar.Value = this.progressBar.Maximum;
-      this.votingList.Enabled = true;
+      if (exception == null)
+      {
+        if (this.votings != null)
+        {
+          foreach (VotingClient.VotingDescriptor voting in this.votings)
+          {
+            ListViewItem item = new ListViewItem(voting.Title);
+            item.SubItems.Add(voting.Status.ToString());
+            item.Tag = voting;
+            this.votingList.Items.Add(item);
+          }
+        }
+
+        this.votingList.Enabled = true;
+        Status.SetMessage("Voting list downloaded.", MessageType.Info);
+      }
+      else
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
+      }
     }
 
     private void GetVotingListCompleted(IEnumerable<VotingClient.VotingDescriptor> votingList, Exception exception)
     {
-      if (exception == null)
-      {
-        this.votings = votingList;
-      }
-      else
-      {
-        MessageBox.Show(exception.ToString());
-      }
-
+      this.votings = votingList;
+      this.exception = exception;
       this.run = false;
     }
 

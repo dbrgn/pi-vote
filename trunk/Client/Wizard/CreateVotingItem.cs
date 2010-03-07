@@ -23,6 +23,7 @@ namespace Pirate.PiVote.Client
   public partial class CreateVotingItem : WizardItem
   {
     private bool run;
+    private Exception exception;
     private Thread initThread;
     private VotingParameters votingParameters;
     private List<AuthorityCertificate> authorityCertificates;
@@ -67,17 +68,31 @@ namespace Pirate.PiVote.Client
 
       while (this.run)
       {
+        Status.UpdateProgress();
         Application.DoEvents();
         Thread.Sleep(1);
       }
 
-      if (this.authorityCertificates != null)
+      Status.UpdateProgress();
+
+      if (this.exception == null)
       {
-        this.authorityCertificates.ForEach(certificate => this.authority0List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-        this.authorityCertificates.ForEach(certificate => this.authority1List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-        this.authorityCertificates.ForEach(certificate => this.authority2List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-        this.authorityCertificates.ForEach(certificate => this.authority3List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-        this.authorityCertificates.ForEach(certificate => this.authority4List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+        if (this.authorityCertificates != null)
+        {
+          this.authorityCertificates.ForEach(certificate => this.authority0List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+          this.authorityCertificates.ForEach(certificate => this.authority1List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+          this.authorityCertificates.ForEach(certificate => this.authority2List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+          this.authorityCertificates.ForEach(certificate => this.authority3List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+          this.authorityCertificates.ForEach(certificate => this.authority4List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+        }
+        else
+        {
+          Status.SetMessage("No authority certificates from server.", MessageType.Error);
+        }
+      }
+      else
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
       }
 
       SetEnable(true);
@@ -89,11 +104,8 @@ namespace Pirate.PiVote.Client
       {
         this.authorityCertificates = new List<AuthorityCertificate>(authorityCertificates);
       }
-      else
-      {
-        MessageBox.Show(exception.ToString());
-      }
 
+      this.exception = exception;
       this.run = false;
     }
 
@@ -150,14 +162,15 @@ namespace Pirate.PiVote.Client
       this.initThread.Start();
 
       DateTime lastUpdate = DateTime.Now;
-      this.createProgress.Maximum = 10;
-      this.createMessage.Text = "Searching safe prime number for crypto.";
+      int progress = 0;
+      Status.SetProgress("Searching safe prime number for crypto.", 10d / (double)progress);
 
       while (this.run)
       {
         if (DateTime.Now.Subtract(lastUpdate).TotalSeconds > 0.25d)
         {
-          this.createProgress.Value = (this.createProgress.Value + 1) % this.createProgress.Maximum;
+          progress = (progress + 1) % 11;
+          Status.SetProgress("Searching safe prime number for crypto.", 10d / (double)progress);
           lastUpdate = DateTime.Now;
         }
 
@@ -166,8 +179,7 @@ namespace Pirate.PiVote.Client
       }
 
       this.run = true;
-      this.createMessage.Text = "Creating voting on server.";
-      this.createProgress.Value = 0;
+      Status.SetProgress("Creating voting on server.", 0d);
       Application.DoEvents();
 
       Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);
@@ -186,8 +198,15 @@ namespace Pirate.PiVote.Client
         Thread.Sleep(1);
       }
 
-      this.createProgress.Value = this.createProgress.Maximum;
-      this.createMessage.Text = "Voting procedure created.";
+      if (this.exception == null)
+      {
+        Status.SetProgress("Creating voting on server.", 1d);
+      }
+      else
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
+      }
+
       Application.DoEvents();
 
       OnUpdateWizard();
@@ -195,11 +214,7 @@ namespace Pirate.PiVote.Client
 
     private void CreateVotingCompleted(Exception exception)
     {
-      if (exception != null)
-      {
-        MessageBox.Show(exception.Message);
-      }
-
+      this.exception = exception;
       this.run = false;
     }
 

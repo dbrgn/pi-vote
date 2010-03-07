@@ -53,7 +53,6 @@ namespace Pirate.PiVote.Client
       this.emailAddressTextBox = new System.Windows.Forms.TextBox();
       this.emailAddressLabel = new System.Windows.Forms.Label();
       this.sendButton = new System.Windows.Forms.Button();
-      this.messageLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // idTextBox
@@ -152,18 +151,10 @@ namespace Pirate.PiVote.Client
       this.sendButton.UseVisualStyleBackColor = true;
       this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
       // 
-      // messageLabel
-      // 
-      this.messageLabel.Location = new System.Drawing.Point(76, 255);
-      this.messageLabel.Name = "messageLabel";
-      this.messageLabel.Size = new System.Drawing.Size(343, 78);
-      this.messageLabel.TabIndex = 18;
-      // 
       // CreateRequestItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.messageLabel);
       this.Controls.Add(this.sendButton);
       this.Controls.Add(this.emailAddressTextBox);
       this.Controls.Add(this.emailAddressLabel);
@@ -195,7 +186,6 @@ namespace Pirate.PiVote.Client
     private TextBox emailAddressTextBox;
     private Label emailAddressLabel;
     private Button sendButton;
-    private Label messageLabel;
 
 
   }

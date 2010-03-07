@@ -39,6 +39,7 @@ namespace Pirate.PiVote.Client
 
     private CheckStatus status;
     private string message;
+    private Exception exception;
 
     public CheckCertificateItem()
     {
@@ -114,39 +115,46 @@ namespace Pirate.PiVote.Client
     public override void Begin()
     {
       this.status = CheckStatus.Connect;
-      this.connectBox.BackColor = Color.Yellow;
+      Status.UpdateProgress();
       Status.VotingClient.Connect(IPAddress.Loopback, ConnectComplete);
 
       while (this.status == CheckStatus.Connect)
       {
+        Status.UpdateProgress();
         Application.DoEvents();
         Thread.Sleep(1);
       }
 
       if (this.status == CheckStatus.ConnectFailed)
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
         return;
+      }
 
       this.status = CheckStatus.GetCertificates;
-      this.getCertificatesBox.BackColor = Color.Yellow;
+      Status.UpdateProgress();
       Status.VotingClient.GetCertificateStorage(GetCertificateStorageComplete);
 
       while (this.status == CheckStatus.GetCertificates)
       {
+        Status.UpdateProgress();
         Application.DoEvents();
         Thread.Sleep(1);
       }
 
       if (this.status == CheckStatus.GetCertificatesFailed)
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
         return;
+      }
 
       this.status = CheckStatus.CheckCertificate;
-      this.checkStatusBox.BackColor = Color.Yellow;
+      Status.UpdateProgress();
 
       if (Status.Certificate.Valid(Status.CertificateStorage))
       {
         this.status = CheckStatus.CheckCertificateAccepted;
-        this.checkStatusBox.BackColor = Color.Green;
-        this.messageLabel.Text = "Your certificate is valid and ready for use.";
+        Status.SetMessage("Your certificate is valid and ready for use.", MessageType.Info);
         OnUpdateWizard();
       }
       else
@@ -155,30 +163,35 @@ namespace Pirate.PiVote.Client
 
         while (this.status == CheckStatus.CheckCertificate)
         {
+          Status.UpdateProgress();
           Application.DoEvents();
           Thread.Sleep(1);
         }
 
         if (this.status == CheckStatus.CheckCertificateFailed)
+        {
+          Status.SetMessage(this.exception.Message, MessageType.Error);
           return;
+        }
 
-        this.messageLabel.Text = this.message;
-
+        MessageType type = MessageType.Info;
         switch (this.status)
         {
           case CheckStatus.CheckCertificateAccepted:
-            this.checkStatusBox.BackColor = Color.Green;
+            type = MessageType.Success;
             break;
           case CheckStatus.CheckCertificateDeclined:
-            this.checkStatusBox.BackColor = Color.Red;
+            type = MessageType.Info;
             break;
           case CheckStatus.CheckCertificateFailed:
-            this.checkStatusBox.BackColor = Color.Red;
+            type = MessageType.Error;
             break;
           case CheckStatus.CheckCertificateNeeded:
-            this.checkStatusBox.BackColor = Color.Green;
+            type = MessageType.Info;
             break;
         }
+
+        Status.SetMessage(this.message, type);
 
         OnUpdateWizard();
       }
@@ -186,37 +199,37 @@ namespace Pirate.PiVote.Client
 
     private void ConnectComplete(Exception exception)
     {
+      this.exception = exception;
+
       if (exception == null)
       {
-        this.connectBox.BackColor = Color.Green;
         this.status = CheckStatus.ConnectDone;
       }
       else
       {
-        MessageBox.Show(exception.ToString());
-        this.connectBox.BackColor = Color.Red;
         this.status = CheckStatus.ConnectFailed;
       }
     }
 
     private void GetCertificateStorageComplete(CertificateStorage certificateStorage, Exception exception)
     {
+      this.exception = exception;
+
       if (exception == null)
       {
         Status.CertificateStorage.Add(certificateStorage);
-        this.getCertificatesBox.BackColor = Color.Green;
         this.status = CheckStatus.GetCertificatesDone;
       }
       else
       {
-        MessageBox.Show(exception.ToString());
-        this.getCertificatesBox.BackColor = Color.Red;
         this.status = CheckStatus.GetCertificatesFailed;
       }
     }
 
     private void GetSignatureResponseComplete(SignatureResponseStatus status, Signed<SignatureResponse> response, Exception exception)
     {
+      this.exception = exception;
+
       if (exception == null)
       {
         switch (status)
@@ -260,7 +273,6 @@ namespace Pirate.PiVote.Client
       }
       else
       {
-        MessageBox.Show(exception.ToString());
         this.status = CheckStatus.CheckCertificateFailed;
       }
     }

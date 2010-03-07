@@ -102,8 +102,8 @@ namespace Pirate.PiVote.Crypto
       acceptVote &= !this.countedVoters.Contains(signedEnvelope.Certificate.Id);
 
       //Date must be in voting period.
-      acceptVote &= envelope.Date > this.parameters.VotingBeginDate;
-      acceptVote &= envelope.Date < this.parameters.VotingEndDate;
+      acceptVote &= envelope.Date.Date >= this.parameters.VotingBeginDate;
+      acceptVote &= envelope.Date.Date <= this.parameters.VotingEndDate;
 
       //Ballot must verify (prooves).
       acceptVote &= envelope.Ballot.Verify(this.publicKey, this.parameters);

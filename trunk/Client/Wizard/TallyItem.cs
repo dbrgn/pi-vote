@@ -21,6 +21,10 @@ namespace Pirate.PiVote.Client
 {
   public partial class TallyItem : WizardItem
   {
+    private bool run;
+    private VotingResult result;
+    private Exception exception;
+
     public VotingClient.VotingDescriptor VotingDescriptor { get; set; }
 
     public TallyItem()
@@ -50,22 +54,66 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
+      this.run = true;
+
+      Status.VotingClient.ActivateVoter((VoterCertificate)Status.Certificate);
+      Status.VotingClient.GetResult(VotingDescriptor.Id, GetResultComplete);
+
+      VotingClient.Operation operation = null;
+
+      while (this.run)
+      {
+        Status.UpdateProgress();
+        Application.DoEvents();
+        Thread.Sleep(1);
+      }
+
+      Status.UpdateProgress();
+
+      if (this.exception == null)
+      {
+        if (this.result != null)
+        {
+          ListViewItem title = new ListViewItem(this.result.Title);
+          this.resultList.Items.Add(title);
+
+          ListViewItem totalBallots = new ListViewItem("Total ballots");
+          totalBallots.SubItems.Add(this.result.TotalBallots.ToString());
+          this.resultList.Items.Add(totalBallots);
+
+          ListViewItem invalidBallots = new ListViewItem("Invalid ballots");
+          invalidBallots.SubItems.Add(this.result.InvalidBallots.ToString());
+          this.resultList.Items.Add(invalidBallots);
+
+          ListViewItem validBallots = new ListViewItem("Valid ballots");
+          validBallots.SubItems.Add(this.result.ValidBallots.ToString());
+          this.resultList.Items.Add(validBallots);
+
+          foreach (OptionResult option in this.result.Options)
+          {
+            ListViewItem optionBallots = new ListViewItem(option.Text);
+            optionBallots.SubItems.Add(option.Result.ToString());
+            this.resultList.Items.Add(optionBallots);
+          }
+        }
+        else
+        {
+          Status.SetMessage("No result from server.", MessageType.Error);
+        }
+      }
+      else
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
+      }
+
       OnUpdateWizard();
     }
 
-    private void getSignatureRequestsRadio_CheckedChanged(object sender, EventArgs e)
+    private void GetResultComplete(VotingResult result, Exception exception)
     {
-      OnUpdateWizard();
-    }
-
-    private void setSignatureResponsesRadio_CheckedChanged(object sender, EventArgs e)
-    {
-      OnUpdateWizard();
-    }
-
-    private void createVotingRadio_CheckedChanged(object sender, EventArgs e)
-    {
-      OnUpdateWizard();
+      this.exception = exception;
+      this.result = result;
+      this.run = false;
     }
   }
 }

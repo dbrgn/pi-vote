@@ -22,6 +22,7 @@ namespace Pirate.PiVote.Client
   public partial class GetSignatureRequestsItem : WizardItem
   {
     private bool run;
+    private Exception exception;
 
     public GetSignatureRequestsItem()
     {
@@ -75,36 +76,25 @@ namespace Pirate.PiVote.Client
 
         while (this.run)
         {
-          UpdateProgress();
+          Status.UpdateProgress();
           Application.DoEvents();
           Thread.Sleep(1);
         }
 
-        UpdateProgress();
+        Status.UpdateProgress();
+
+        if (this.exception != null)
+        {
+          Status.SetMessage(this.exception.Message, MessageType.Error);
+        }
+
         OnUpdateWizard();
-      }
-    }
-
-    private void UpdateProgress()
-    {
-      VotingClient.Operation operation = Status.VotingClient.CurrentOperation;
-
-      if (operation != null)
-      {
-        this.progressLabel.Text = operation.Text;
-        this.progressBar.Value = Convert.ToInt32(100d * operation.Progress);
-        this.subProgressLabel.Text = operation.SubText;
-        this.subProgressBar.Value = Convert.ToInt32(100d * operation.SubProgress);
       }
     }
 
     private void GetSignatureRequestsComplete(Exception exception)
     {
-      if (exception != null)
-      {
-        MessageBox.Show(exception.ToString());
-      }
-
+      this.exception = exception;
       this.run = false;
     }
   }

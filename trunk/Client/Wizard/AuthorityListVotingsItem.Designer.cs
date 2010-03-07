@@ -48,8 +48,6 @@ namespace Pirate.PiVote.Client
       this.decipherButton = new System.Windows.Forms.Button();
       this.checkSharesButton = new System.Windows.Forms.Button();
       this.createSharesButton = new System.Windows.Forms.Button();
-      this.progressBar = new System.Windows.Forms.ProgressBar();
-      this.progressLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // votingList
@@ -59,10 +57,10 @@ namespace Pirate.PiVote.Client
             this.statusColumnHeader});
       this.votingList.Enabled = false;
       this.votingList.FullRowSelect = true;
-      this.votingList.Location = new System.Drawing.Point(3, 45);
+      this.votingList.Location = new System.Drawing.Point(3, 3);
       this.votingList.MultiSelect = false;
       this.votingList.Name = "votingList";
-      this.votingList.Size = new System.Drawing.Size(694, 421);
+      this.votingList.Size = new System.Drawing.Size(694, 463);
       this.votingList.TabIndex = 0;
       this.votingList.UseCompatibleStateImageBehavior = false;
       this.votingList.View = System.Windows.Forms.View.Details;
@@ -111,27 +109,10 @@ namespace Pirate.PiVote.Client
       this.createSharesButton.UseVisualStyleBackColor = true;
       this.createSharesButton.Click += new System.EventHandler(this.createSharesButton_Click);
       // 
-      // progressBar
-      // 
-      this.progressBar.Location = new System.Drawing.Point(3, 21);
-      this.progressBar.Name = "progressBar";
-      this.progressBar.Size = new System.Drawing.Size(694, 18);
-      this.progressBar.TabIndex = 4;
-      // 
-      // progressLabel
-      // 
-      this.progressLabel.AutoSize = true;
-      this.progressLabel.Location = new System.Drawing.Point(3, 5);
-      this.progressLabel.Name = "progressLabel";
-      this.progressLabel.Size = new System.Drawing.Size(0, 13);
-      this.progressLabel.TabIndex = 5;
-      // 
       // AuthorityListVotingsItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.progressLabel);
-      this.Controls.Add(this.progressBar);
       this.Controls.Add(this.createSharesButton);
       this.Controls.Add(this.checkSharesButton);
       this.Controls.Add(this.decipherButton);
@@ -139,7 +120,6 @@ namespace Pirate.PiVote.Client
       this.Name = "AuthorityListVotingsItem";
       this.Size = new System.Drawing.Size(700, 500);
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
@@ -151,8 +131,6 @@ namespace Pirate.PiVote.Client
     private Button decipherButton;
     private Button checkSharesButton;
     private Button createSharesButton;
-    private ProgressBar progressBar;
-    private Label progressLabel;
 
 
 

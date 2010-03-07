@@ -39,9 +39,9 @@ namespace Pirate.PiVote.Rpc
       private Guid votingId;
 
       /// <summary>
-      /// Index of chosen option.
+      /// Selected options.
       /// </summary>
-      private int optionIndex;
+      private IEnumerable<bool> vota;
 
       /// <summary>
       /// Callback upon completion.
@@ -52,12 +52,12 @@ namespace Pirate.PiVote.Rpc
       /// Create a new vote cast opeation.
       /// </summary>
       /// <param name="votingId">Id of the voting.</param>
-      /// <param name="optionIndex">Index of chosen option.</param>
+      /// <param name="optionIndex">Selected options.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public VoteOperation(Guid votingId, int optionIndex, VoteCallBack callBack)
+      public VoteOperation(Guid votingId, IEnumerable<bool> vota, VoteCallBack callBack)
       {
         this.votingId = votingId;
-        this.optionIndex = optionIndex;
+        this.vota = vota;
         this.callBack = callBack;
       }
 
@@ -79,8 +79,7 @@ namespace Pirate.PiVote.Rpc
             throw new InvalidOperationException("Voting material not valid.");
           var parameters = material.Parameters.Value;
 
-          int[] vota = new int[parameters.OptionCount];
-          vota[this.optionIndex] = 1;
+          int[] vota = this.vota.Select(votum => votum ? 1 : 0).ToArray();
 
           Progress = 0.3d;
           SubText = "Calculating vote";
