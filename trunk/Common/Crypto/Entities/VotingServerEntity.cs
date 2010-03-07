@@ -96,6 +96,8 @@ namespace Pirate.PiVote.Crypto
               authorityIds.Add(reader.GetGuid(0));
             }
 
+            reader.Close();
+
             return authorityIds;
           case VotingStatus.Sharing:
             reader = this.dbConnection.ExecuteReader(
@@ -107,6 +109,8 @@ namespace Pirate.PiVote.Crypto
               authorityIds.Add(reader.GetGuid(0));
             }
 
+            reader.Close();
+
             return authorityIds;
           case VotingStatus.Deciphering:
             reader = this.dbConnection.ExecuteReader(
@@ -117,6 +121,8 @@ namespace Pirate.PiVote.Crypto
             {
               authorityIds.Add(reader.GetGuid(0));
             }
+
+            reader.Close();
 
             return authorityIds;
           default:
@@ -256,7 +262,9 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
-        MySqlDataReader reader = this.dbConnection.ExecuteReader("SELECT Certificate FROM authority");
+        MySqlDataReader reader = this.dbConnection.ExecuteReader(
+          "SELECT Certificate FROM authority WHERE VotingId = @VotingId",
+          "@VotingId", Id.ToByteArray());
 
         while (reader.Read())
         {
@@ -287,7 +295,7 @@ namespace Pirate.PiVote.Crypto
     {
       MySqlDataReader reader = this.dbConnection.ExecuteReader(
         "SELECT Certificate FROM authority WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
-        "@VotingId", this.parameters.VotingId,
+        "@VotingId", this.parameters.VotingId.ToByteArray(),
         "@AuthorityIndex", authorityIndex);
 
       if (reader.Read())

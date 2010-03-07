@@ -96,6 +96,9 @@ namespace Pirate.PiVote.Crypto
       this.authorities.Foreach(pair => { context.Write(pair.Key); context.Write(pair.Value); });
 
       this.authority.Serialize(context);
+
+      context.Close();
+      fileStream.Close();
     }
 
     /// <summary>
@@ -114,6 +117,9 @@ namespace Pirate.PiVote.Crypto
       count.Times(() => this.authorities.Add(context.ReadInt32(), context.ReadObject<Certificate>()));
 
       this.authority = new Authority(context, this.parameters);
+
+      context.Close();
+      fileStream.Close();
     }
 
     /// <summary>

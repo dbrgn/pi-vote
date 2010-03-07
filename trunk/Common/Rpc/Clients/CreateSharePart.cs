@@ -83,6 +83,7 @@ namespace Pirate.PiVote.Rpc
 
           var parameters = client.proxy.FetchParameters(this.votingId, this.authorityCertificate);
 
+          client.CreateAuthority(this.authorityCertificate);
           client.authorityEntity.Prepare(parameters.Key, parameters.Value);
 
           Text = "Fetching authority list.";
@@ -105,7 +106,7 @@ namespace Pirate.PiVote.Rpc
           client.proxy.PushShares(this.votingId, sharePart);
 
           Text = "Getting new voting status.";
-          Progress = 8d;
+          Progress = 0.8d;
 
           List<Guid> authoritieDone;
           VotingStatus status = client.proxy.FetchVotingStatus(this.votingId, out authoritieDone);

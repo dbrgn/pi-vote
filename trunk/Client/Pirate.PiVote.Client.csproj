@@ -57,76 +57,94 @@
   <ItemGroup>
     <Compile Include="ClientMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wizard\ChooseCertificateItem.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Wizard\ChooseCertificateItem.Designer.cs">
-      <DependentUpon>ChooseCertificateItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Wizard\CheckCertificateItem.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Wizard\CheckCertificateItem.Designer.cs">
-      <DependentUpon>CheckCertificateItem.cs</DependentUpon>
-    </Compile>
     <Compile Include="Wizard\AdminChooseItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Wizard\AdminChooseItem.Designer.cs">
+    <Compile Include="Wizard\AdminChooseItem.designer.cs">
       <DependentUpon>AdminChooseItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Wizard\AuthorityListVotingsItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Wizard\AuthorityListVotingsItem.Designer.cs">
+    <Compile Include="Wizard\AuthorityListVotingsItem.designer.cs">
       <DependentUpon>AuthorityListVotingsItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Wizard\CreateVotingItem.cs">
+    <Compile Include="Wizard\CheckCertificateItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Wizard\CreateVotingItem.Designer.cs">
-      <DependentUpon>CreateVotingItem.cs</DependentUpon>
+    <Compile Include="Wizard\CheckCertificateItem.designer.cs">
+      <DependentUpon>CheckCertificateItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Wizard\SetSignatureResponsesItem.cs">
+    <Compile Include="Wizard\ChooseCertificateItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Wizard\SetSignatureResponsesItem.Designer.cs">
-      <DependentUpon>SetSignatureResponsesItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Wizard\GetSignatureRequestsItem.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Wizard\GetSignatureRequestsItem.Designer.cs">
-      <DependentUpon>GetSignatureRequestsItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Wizard\CreateRequestItem.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Wizard\CreateRequestItem.Designer.cs">
-      <DependentUpon>CreateRequestItem.cs</DependentUpon>
+    <Compile Include="Wizard\ChooseCertificateItem.designer.cs">
+      <DependentUpon>ChooseCertificateItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Wizard\CreateCertificateItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Wizard\CreateCertificateItem.Designer.cs">
+    <Compile Include="Wizard\CreateCertificateItem.designer.cs">
       <DependentUpon>CreateCertificateItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\CreateRequestItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\CreateRequestItem.designer.cs">
+      <DependentUpon>CreateRequestItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\CreateVotingItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\CreateVotingItem.designer.cs">
+      <DependentUpon>CreateVotingItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\GetSignatureRequestsItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\GetSignatureRequestsItem.designer.cs">
+      <DependentUpon>GetSignatureRequestsItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\ListVotingsItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\ListVotingsItem.designer.cs">
+      <DependentUpon>ListVotingsItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\SetSignatureResponsesItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\SetSignatureResponsesItem.designer.cs">
+      <DependentUpon>SetSignatureResponsesItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Wizard\StartItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Wizard\StartItem.Designer.cs">
+    <Compile Include="Wizard\StartItem.designer.cs">
       <DependentUpon>StartItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\TallyItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\TallyItem.designer.cs">
+      <DependentUpon>TallyItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\VoteItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\VoteItem.designer.cs">
+      <DependentUpon>VoteItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Wizard\Wizard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Wizard\Wizard.Designer.cs">
+    <Compile Include="Wizard\Wizard.designer.cs">
       <DependentUpon>Wizard.cs</DependentUpon>
     </Compile>
     <Compile Include="Wizard\WizardItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Wizard\WizardItem.Designer.cs">
+    <Compile Include="Wizard\WizardItem.designer.cs">
       <DependentUpon>WizardItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Wizard\WizardStatus.cs" />
@@ -138,49 +156,47 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Wizard\ChooseCertificateItem.resx">
-      <DependentUpon>ChooseCertificateItem.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Wizard\CheckCertificateItem.resx">
-      <DependentUpon>CheckCertificateItem.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Wizard\AdminChooseItem.resx">
       <DependentUpon>AdminChooseItem.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\AuthorityListVotingsItem.resx">
       <DependentUpon>AuthorityListVotingsItem.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Wizard\CreateVotingItem.resx">
-      <DependentUpon>CreateVotingItem.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Wizard\CheckCertificateItem.resx">
+      <DependentUpon>CheckCertificateItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Wizard\SetSignatureResponsesItem.resx">
-      <DependentUpon>SetSignatureResponsesItem.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Wizard\GetSignatureRequestsItem.resx">
-      <DependentUpon>GetSignatureRequestsItem.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Wizard\CreateRequestItem.resx">
-      <DependentUpon>CreateRequestItem.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Wizard\ChooseCertificateItem.resx">
+      <DependentUpon>ChooseCertificateItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\CreateCertificateItem.resx">
       <DependentUpon>CreateCertificateItem.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\CreateRequestItem.resx">
+      <DependentUpon>CreateRequestItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\CreateVotingItem.resx">
+      <DependentUpon>CreateVotingItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\GetSignatureRequestsItem.resx">
+      <DependentUpon>GetSignatureRequestsItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\ListVotingsItem.resx">
+      <DependentUpon>ListVotingsItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\SetSignatureResponsesItem.resx">
+      <DependentUpon>SetSignatureResponsesItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\StartItem.resx">
       <DependentUpon>StartItem.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\TallyItem.resx">
+      <DependentUpon>TallyItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\VoteItem.resx">
+      <DependentUpon>VoteItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\Wizard.resx">
       <DependentUpon>Wizard.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

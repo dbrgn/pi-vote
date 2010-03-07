@@ -34,6 +34,7 @@ namespace Pirate.PiVote.Rpc
       private readonly VotingStatus status;
       private readonly List<Guid> authoritiesDone;
       private readonly List<OptionDescriptor> options;
+      private readonly int maxOptions;
 
       /// <summary>
       /// Id of the voting.
@@ -72,6 +73,11 @@ namespace Pirate.PiVote.Rpc
       public IEnumerable<OptionDescriptor> Options { get { return this.options; } }
 
       /// <summary>
+      /// Maximum number of options one voter may vote for.
+      /// </summary>
+      public int MaxOptions { get { return this.maxOptions; } }
+
+      /// <summary>
       /// Create a new voting descriptor.
       /// </summary>
       /// <param name="material">Material of voting to describe.</param>
@@ -86,6 +92,7 @@ namespace Pirate.PiVote.Rpc
         this.status = status;
         this.authoritiesDone = authoritiesDone;
         this.options = new List<OptionDescriptor>();
+        this.maxOptions = parameters.MaxVota;
 
         parameters.Options.Foreach(option => this.options.Add(new OptionDescriptor(option)));
       }
