@@ -15,19 +15,6 @@ using Pirate.PiVote.Serialization;
 namespace Pirate.PiVote.Crypto
 {
   /// <summary>
-  /// Status of the voting procedure.
-  /// </summary>
-  public enum VotingStatus
-  {
-    New,
-    Sharing,
-    Voting,
-    Aborted,
-    Deciphering,
-    Finished,
-  }
-
-  /// <summary>
   /// Entity of the voting server.
   /// </summary>
   public class VotingServerEntity
@@ -62,7 +49,20 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public VotingStatus Status
     {
-      get { return this.status; }
+      get
+      {
+        if (this.status == VotingStatus.Ready && DateTime.Now.Date >= this.parameters.VotingBeginDate.Date)
+        {
+          Status = VotingStatus.Voting;
+        }
+
+        if (this.status == VotingStatus.Voting && DateTime.Now.Date > this.parameters.VotingEndDate.Date)
+        {
+          Status = VotingStatus.Deciphering;
+        }
+
+        return this.status;
+      }
       private set
       {
         this.status = value;
@@ -150,7 +150,7 @@ namespace Pirate.PiVote.Crypto
       ICertificateStorage certificateStorage)
       : this(dbConnection, signedParameters, certificateStorage, VotingStatus.New)
     { }
-    
+
     /// <summary>
     /// Create a new voting procedure.
     /// </summary>
@@ -426,7 +426,7 @@ namespace Pirate.PiVote.Crypto
 
       if (depositedShareResponseCount == this.parameters.AuthorityCount)
       {
-        Status = VotingStatus.Voting;
+        Status = VotingStatus.Ready;
       }
     }
 
@@ -450,7 +450,7 @@ namespace Pirate.PiVote.Crypto
         reader.Close();
       }
     }
-    
+
     /// <summary>
     /// Get material for a voter.
     /// </summary>
@@ -495,7 +495,7 @@ namespace Pirate.PiVote.Crypto
       int envelopeIndex = indexObject == DBNull.Value ? 1 : Convert.ToInt32(indexObject);
 
       MySqlCommand insertCommand = new MySqlCommand(
-        "INSERT INTO envelope (VotingId, EnvelopeIndex, VoterId, Value) VALUES (@VotingId, @EnvelopeIndex, @VoterId, @Value)", 
+        "INSERT INTO envelope (VotingId, EnvelopeIndex, VoterId, Value) VALUES (@VotingId, @EnvelopeIndex, @VoterId, @Value)",
         this.dbConnection,
         transaction);
       insertCommand.Add("@VotingId", Id.ToByteArray());

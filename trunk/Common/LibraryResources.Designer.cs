@@ -482,5 +482,68 @@ namespace Pirate.PiVote {
                 return ResourceManager.GetString("ClientVotePushVote", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aborted.
+        /// </summary>
+        public static string VotingStatusAborted {
+            get {
+                return ResourceManager.GetString("VotingStatusAborted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deciphering.
+        /// </summary>
+        public static string VotingStatusDeciphering {
+            get {
+                return ResourceManager.GetString("VotingStatusDeciphering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finished.
+        /// </summary>
+        public static string VotingStatusFinished {
+            get {
+                return ResourceManager.GetString("VotingStatusFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string VotingStatusNew {
+            get {
+                return ResourceManager.GetString("VotingStatusNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready.
+        /// </summary>
+        public static string VotingStatusReady {
+            get {
+                return ResourceManager.GetString("VotingStatusReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sharing.
+        /// </summary>
+        public static string VotingStatusSharing {
+            get {
+                return ResourceManager.GetString("VotingStatusSharing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voting.
+        /// </summary>
+        public static string VotingStatusVoting {
+            get {
+                return ResourceManager.GetString("VotingStatusVoting", resourceCulture);
+            }
+        }
     }
 }

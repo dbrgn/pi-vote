@@ -79,7 +79,7 @@ namespace Pirate.PiVote.Client
           foreach (VotingClient.VotingDescriptor voting in this.votings)
           {
             ListViewItem item = new ListViewItem(voting.Title);
-            item.SubItems.Add(voting.Status.ToString());
+            item.SubItems.Add(voting.Status.Text());
             item.Tag = voting;
             this.votingList.Items.Add(item);
           }
@@ -161,7 +161,7 @@ namespace Pirate.PiVote.Client
           if (this.exception == null)
           {
             item.Tag = this.votingDescriptor;
-            item.SubItems[1].Text = this.votingDescriptor.Status.ToString();
+            item.SubItems[1].Text = this.votingDescriptor.Status.Text();
             votingList_SelectedIndexChanged(this.votingList, new EventArgs());
 
             Status.SetMessage(Resources.AuthorityCreateSharesDone, MessageType.Success);
@@ -221,7 +221,7 @@ namespace Pirate.PiVote.Client
           if (this.exception == null)
           {
             item.Tag = this.votingDescriptor;
-            item.SubItems[1].Text = this.votingDescriptor.Status.ToString();
+            item.SubItems[1].Text = this.votingDescriptor.Status.Text();
             votingList_SelectedIndexChanged(this.votingList, new EventArgs());
 
             if (this.accept)
@@ -289,7 +289,7 @@ namespace Pirate.PiVote.Client
           if (this.exception == null)
           {
             item.Tag = this.votingDescriptor;
-            item.SubItems[1].Text = this.votingDescriptor.Status.ToString();
+            item.SubItems[1].Text = this.votingDescriptor.Status.Text();
             votingList_SelectedIndexChanged(this.votingList, new EventArgs());
 
             Status.SetMessage(Resources.AuthorityDecipherDone, MessageType.Success);

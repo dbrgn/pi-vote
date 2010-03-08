@@ -21,6 +21,8 @@ namespace Pirate.PiVote.Client
 {
   public partial class CheckCertificateItem : WizardItem
   {
+    private const string ServerIpFile = "serverip.txt";
+
     public enum CheckStatus
     {
       Unknown,
@@ -114,9 +116,11 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
+      IPAddress serverIpAddress = IPAddress.Parse(File.ReadAllText(ServerIpFile));
+
       this.status = CheckStatus.Connect;
       Status.UpdateProgress();
-      Status.VotingClient.Connect(IPAddress.Loopback, ConnectComplete);
+      Status.VotingClient.Connect(serverIpAddress, ConnectComplete);
 
       while (this.status == CheckStatus.Connect)
       {

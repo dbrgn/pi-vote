@@ -258,4 +258,25 @@
   <data name="ClientVotePushVote" xml:space="preserve">
     <value>Pushing vote.</value>
   </data>
+  <data name="VotingStatusAborted" xml:space="preserve">
+    <value>Aborted</value>
+  </data>
+  <data name="VotingStatusDeciphering" xml:space="preserve">
+    <value>Deciphering</value>
+  </data>
+  <data name="VotingStatusFinished" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="VotingStatusNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="VotingStatusReady" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="VotingStatusSharing" xml:space="preserve">
+    <value>Sharing</value>
+  </data>
+  <data name="VotingStatusVoting" xml:space="preserve">
+    <value>Voting</value>
+  </data>
 </root>
