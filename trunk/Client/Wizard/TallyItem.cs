@@ -59,8 +59,6 @@ namespace Pirate.PiVote.Client
       Status.VotingClient.ActivateVoter((VoterCertificate)Status.Certificate);
       Status.VotingClient.GetResult(VotingDescriptor.Id, GetResultComplete);
 
-      VotingClient.Operation operation = null;
-
       while (this.run)
       {
         Status.UpdateProgress();
@@ -77,15 +75,15 @@ namespace Pirate.PiVote.Client
           ListViewItem title = new ListViewItem(this.result.Title);
           this.resultList.Items.Add(title);
 
-          ListViewItem totalBallots = new ListViewItem("Total ballots");
+          ListViewItem totalBallots = new ListViewItem(Resources.TotalBallots);
           totalBallots.SubItems.Add(this.result.TotalBallots.ToString());
           this.resultList.Items.Add(totalBallots);
 
-          ListViewItem invalidBallots = new ListViewItem("Invalid ballots");
+          ListViewItem invalidBallots = new ListViewItem(Resources.InvalidBallots);
           invalidBallots.SubItems.Add(this.result.InvalidBallots.ToString());
           this.resultList.Items.Add(invalidBallots);
 
-          ListViewItem validBallots = new ListViewItem("Valid ballots");
+          ListViewItem validBallots = new ListViewItem(Resources.ValidBallots);
           validBallots.SubItems.Add(this.result.ValidBallots.ToString());
           this.resultList.Items.Add(validBallots);
 

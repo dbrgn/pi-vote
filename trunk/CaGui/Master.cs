@@ -188,7 +188,7 @@ namespace Pirate.PiVote.CaGui
           openDialog.Title = "Open Root Certificate Authority Certificate";
           openDialog.CheckPathExists = true;
           openDialog.CheckFileExists = true;
-          openDialog.Filter = "Pi-Vote Certificate|*.pi-cert";
+          openDialog.Filter = Files.CertificateFileFilter;
 
           if (openDialog.ShowDialog() == DialogResult.OK)
           {
@@ -214,7 +214,7 @@ namespace Pirate.PiVote.CaGui
       SaveFileDialog dialog = new SaveFileDialog();
       dialog.Title = "Save Signature Request";
       dialog.CheckPathExists = true;
-      dialog.Filter = "Pi-Vote Signature Request|*.pi-sig-req";
+      dialog.Filter = Files.SignatureRequestFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -230,7 +230,7 @@ namespace Pirate.PiVote.CaGui
       dialog.Title = "Open Signature Response";
       dialog.CheckPathExists = true;
       dialog.CheckFileExists = true;
-      dialog.Filter = "Pi-Vote Signature Request|*.pi-sig-resp";
+      dialog.Filter = Files.SignatureRequestFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -301,7 +301,7 @@ namespace Pirate.PiVote.CaGui
       dialog.CheckPathExists = true;
       dialog.CheckFileExists = true;
       dialog.Multiselect = true;
-      dialog.Filter = "Pi-Vote Signature Request|*.pi-sig-req";
+      dialog.Filter = Files.SignatureRequestFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -397,7 +397,7 @@ namespace Pirate.PiVote.CaGui
           SaveFileDialog saveDialog = new SaveFileDialog();
           saveDialog.Title = "Export Signature Response";
           saveDialog.CheckPathExists = true;
-          saveDialog.Filter = "Pi-Vote Signature Response|*.pi-sig-resp";
+          saveDialog.Filter = Files.SignatureRequestFileFilter;
 
           if (saveDialog.ShowDialog() == DialogResult.OK)
           {
@@ -431,7 +431,7 @@ namespace Pirate.PiVote.CaGui
           SaveFileDialog saveDialog = new SaveFileDialog();
           saveDialog.Title = "Export Signature Response";
           saveDialog.CheckPathExists = true;
-          saveDialog.Filter = "Pi-Vote Signature Response|*.pi-sig-resp";
+          saveDialog.Filter = Files.SignatureRequestFileFilter;
 
           if (saveDialog.ShowDialog() == DialogResult.OK)
           {
@@ -487,7 +487,7 @@ namespace Pirate.PiVote.CaGui
         SaveFileDialog dialog = new SaveFileDialog();
         dialog.Title = "Export Signature Response";
         dialog.CheckPathExists = true;
-        dialog.Filter = "Pi-Vote Signature Response|*.pi-sig-resp";
+        dialog.Filter = Files.SignatureRequestFileFilter;
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
@@ -501,7 +501,7 @@ namespace Pirate.PiVote.CaGui
       SaveFileDialog dialog = new SaveFileDialog();
       dialog.Title = "Export Root Certificate";
       dialog.CheckPathExists = true;
-      dialog.Filter = "Pi-Vote Certificate|*.pi-cert";
+      dialog.Filter = Files.CertificateFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -526,7 +526,7 @@ namespace Pirate.PiVote.CaGui
         SaveFileDialog saveDialog = new SaveFileDialog();
         saveDialog.Title = "Save Admin Certificate";
         saveDialog.CheckPathExists = true;
-        saveDialog.Filter = "Pi-Vote Certificate|*.pi-cert";
+        saveDialog.Filter = Files.CertificateFileFilter;
 
         if (saveDialog.ShowDialog() == DialogResult.OK)
         {

@@ -61,11 +61,11 @@ namespace Pirate.PiVote.Client
     private void openButton_Click(object sender, EventArgs e)
     {
       OpenFileDialog dialog = new OpenFileDialog();
-      dialog.Title = "Open Signature Responses.";
+      dialog.Title = Resources.OpenSignatureResponseDialog;
       dialog.CheckPathExists = true;
       dialog.CheckFileExists = true;
       dialog.Multiselect = true;
-      dialog.Filter = "Pi-Vote Signature Response|*.pi-sig-resp";
+      dialog.Filter = Files.SignatureRequestFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -85,7 +85,7 @@ namespace Pirate.PiVote.Client
 
         if (this.exception == null)
         {
-          Status.SetMessage("Signature responses have be uploaded to the server.", MessageType.Success);
+          Status.SetMessage(Resources.SignatureResponseUploaded, MessageType.Success);
         }
         else
         {
@@ -100,6 +100,13 @@ namespace Pirate.PiVote.Client
     {
       this.exception = exception;
       this.run = false;
+    }
+
+    public override void UpdateLanguage()
+    {
+      base.UpdateLanguage();
+
+      this.openButton.Text = Resources.OpenSignatureResponseButton;
     }
   }
 }

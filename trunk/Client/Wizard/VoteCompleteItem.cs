@@ -71,7 +71,7 @@ namespace Pirate.PiVote.Client
 
       if (exception == null)
       {
-        Status.SetMessage("Your vote is now cast.", MessageType.Success);
+        Status.SetMessage(Resources.VoteCast, MessageType.Success);
       }
       else
       {

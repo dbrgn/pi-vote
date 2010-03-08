@@ -48,9 +48,9 @@ namespace Pirate.PiVote.Client
       // saveToButton
       // 
       this.saveToButton.Location = new System.Drawing.Point(77, 77);
-      this.saveToButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.saveToButton.Margin = new System.Windows.Forms.Padding(2);
       this.saveToButton.Name = "saveToButton";
-      this.saveToButton.Size = new System.Drawing.Size(116, 20);
+      this.saveToButton.Size = new System.Drawing.Size(116, 26);
       this.saveToButton.TabIndex = 4;
       this.saveToButton.Text = "Save to...";
       this.saveToButton.UseVisualStyleBackColor = true;

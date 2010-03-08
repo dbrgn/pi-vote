@@ -77,5 +77,9 @@ namespace Pirate.PiVote.Client
     public virtual void Begin()
     { 
     }
+
+    public virtual void UpdateLanguage()
+    { 
+    }
   }
 }

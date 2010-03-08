@@ -124,7 +124,7 @@ namespace Pirate.PiVote.Client
         }
 
         this.votingList.Enabled = true;
-        Status.SetMessage("Voting list downloaded.", MessageType.Info);
+        Status.SetMessage(Resources.VotingListDownloaded, MessageType.Info);
       }
       else
       {
@@ -142,6 +142,14 @@ namespace Pirate.PiVote.Client
     private void votingList_SelectedIndexChanged(object sender, EventArgs e)
     {
       OnUpdateWizard();
+    }
+
+    public override void UpdateLanguage()
+    {
+      base.UpdateLanguage();
+
+      this.titleColumnHeader.Text = Resources.VotingTitle;
+      this.statusColumnHeader.Text = Resources.VotingStatus;
     }
   }
 }

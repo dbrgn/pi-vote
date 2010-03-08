@@ -42,6 +42,7 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       this.authoritiesLabel = new System.Windows.Forms.Label();
       this.titleLabel = new System.Windows.Forms.Label();
       this.titleBox = new System.Windows.Forms.TextBox();
@@ -49,9 +50,6 @@ namespace Pirate.PiVote.Client
       this.descriptionLabel = new System.Windows.Forms.Label();
       this.questionBox = new System.Windows.Forms.TextBox();
       this.questionLabel = new System.Windows.Forms.Label();
-      this.optionAddButton = new System.Windows.Forms.Button();
-      this.optionRemoveButton = new System.Windows.Forms.Button();
-      this.optionTextAddBox = new System.Windows.Forms.TextBox();
       this.optionLabel = new System.Windows.Forms.Label();
       this.optionNumberUpDown = new System.Windows.Forms.NumericUpDown();
       this.optionNumberLabel = new System.Windows.Forms.Label();
@@ -63,13 +61,16 @@ namespace Pirate.PiVote.Client
       this.optionListView = new System.Windows.Forms.ListView();
       this.textColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.descriptionColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.optionDescriptionAddBox = new System.Windows.Forms.TextBox();
+      this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.authority0List = new System.Windows.Forms.ComboBox();
       this.authority1List = new System.Windows.Forms.ComboBox();
       this.authority2List = new System.Windows.Forms.ComboBox();
       this.authority3List = new System.Windows.Forms.ComboBox();
       this.authority4List = new System.Windows.Forms.ComboBox();
       ((System.ComponentModel.ISupportInitialize)(this.optionNumberUpDown)).BeginInit();
+      this.contextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
       // authoritiesLabel
@@ -134,36 +135,6 @@ namespace Pirate.PiVote.Client
       this.questionLabel.TabIndex = 20;
       this.questionLabel.Text = "Question";
       // 
-      // optionAddButton
-      // 
-      this.optionAddButton.Enabled = false;
-      this.optionAddButton.Location = new System.Drawing.Point(609, 346);
-      this.optionAddButton.Name = "optionAddButton";
-      this.optionAddButton.Size = new System.Drawing.Size(77, 20);
-      this.optionAddButton.TabIndex = 27;
-      this.optionAddButton.Text = "Add";
-      this.optionAddButton.UseVisualStyleBackColor = true;
-      this.optionAddButton.Click += new System.EventHandler(this.optionAddButton_Click);
-      // 
-      // optionRemoveButton
-      // 
-      this.optionRemoveButton.Enabled = false;
-      this.optionRemoveButton.Location = new System.Drawing.Point(609, 372);
-      this.optionRemoveButton.Name = "optionRemoveButton";
-      this.optionRemoveButton.Size = new System.Drawing.Size(77, 20);
-      this.optionRemoveButton.TabIndex = 28;
-      this.optionRemoveButton.Text = "Remove";
-      this.optionRemoveButton.UseVisualStyleBackColor = true;
-      this.optionRemoveButton.Click += new System.EventHandler(this.optionRemoveButton_Click);
-      // 
-      // optionTextAddBox
-      // 
-      this.optionTextAddBox.Location = new System.Drawing.Point(120, 346);
-      this.optionTextAddBox.Name = "optionTextAddBox";
-      this.optionTextAddBox.Size = new System.Drawing.Size(483, 20);
-      this.optionTextAddBox.TabIndex = 25;
-      this.optionTextAddBox.TextChanged += new System.EventHandler(this.optionAddBox_TextChanged);
-      // 
       // optionLabel
       // 
       this.optionLabel.AutoSize = true;
@@ -176,7 +147,7 @@ namespace Pirate.PiVote.Client
       // optionNumberUpDown
       // 
       this.optionNumberUpDown.Enabled = false;
-      this.optionNumberUpDown.Location = new System.Drawing.Point(120, 398);
+      this.optionNumberUpDown.Location = new System.Drawing.Point(118, 419);
       this.optionNumberUpDown.Maximum = new decimal(new int[] {
             1,
             0,
@@ -199,7 +170,7 @@ namespace Pirate.PiVote.Client
       // optionNumberLabel
       // 
       this.optionNumberLabel.AutoSize = true;
-      this.optionNumberLabel.Location = new System.Drawing.Point(10, 400);
+      this.optionNumberLabel.Location = new System.Drawing.Point(12, 421);
       this.optionNumberLabel.Name = "optionNumberLabel";
       this.optionNumberLabel.Size = new System.Drawing.Size(83, 13);
       this.optionNumberLabel.TabIndex = 28;
@@ -208,7 +179,7 @@ namespace Pirate.PiVote.Client
       // createButton
       // 
       this.createButton.Enabled = false;
-      this.createButton.Location = new System.Drawing.Point(118, 454);
+      this.createButton.Location = new System.Drawing.Point(118, 475);
       this.createButton.Name = "createButton";
       this.createButton.Size = new System.Drawing.Size(114, 22);
       this.createButton.TabIndex = 32;
@@ -218,7 +189,7 @@ namespace Pirate.PiVote.Client
       // 
       // votingFromPicker
       // 
-      this.votingFromPicker.Location = new System.Drawing.Point(118, 424);
+      this.votingFromPicker.Location = new System.Drawing.Point(118, 445);
       this.votingFromPicker.Name = "votingFromPicker";
       this.votingFromPicker.Size = new System.Drawing.Size(236, 20);
       this.votingFromPicker.TabIndex = 30;
@@ -226,7 +197,7 @@ namespace Pirate.PiVote.Client
       // 
       // votingUntilPicker
       // 
-      this.votingUntilPicker.Location = new System.Drawing.Point(394, 424);
+      this.votingUntilPicker.Location = new System.Drawing.Point(392, 445);
       this.votingUntilPicker.Name = "votingUntilPicker";
       this.votingUntilPicker.Size = new System.Drawing.Size(234, 20);
       this.votingUntilPicker.TabIndex = 31;
@@ -235,7 +206,7 @@ namespace Pirate.PiVote.Client
       // votingFromLabel
       // 
       this.votingFromLabel.AutoSize = true;
-      this.votingFromLabel.Location = new System.Drawing.Point(10, 430);
+      this.votingFromLabel.Location = new System.Drawing.Point(12, 451);
       this.votingFromLabel.Name = "votingFromLabel";
       this.votingFromLabel.Size = new System.Drawing.Size(56, 13);
       this.votingFromLabel.TabIndex = 34;
@@ -244,7 +215,7 @@ namespace Pirate.PiVote.Client
       // votingUntilLabel
       // 
       this.votingUntilLabel.AutoSize = true;
-      this.votingUntilLabel.Location = new System.Drawing.Point(362, 430);
+      this.votingUntilLabel.Location = new System.Drawing.Point(360, 452);
       this.votingUntilLabel.Name = "votingUntilLabel";
       this.votingUntilLabel.Size = new System.Drawing.Size(26, 13);
       this.votingUntilLabel.TabIndex = 35;
@@ -255,11 +226,12 @@ namespace Pirate.PiVote.Client
       this.optionListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.textColumnHeader,
             this.descriptionColumnHeader});
+      this.optionListView.ContextMenuStrip = this.contextMenu;
       this.optionListView.FullRowSelect = true;
       this.optionListView.Location = new System.Drawing.Point(118, 257);
       this.optionListView.MultiSelect = false;
       this.optionListView.Name = "optionListView";
-      this.optionListView.Size = new System.Drawing.Size(568, 83);
+      this.optionListView.Size = new System.Drawing.Size(568, 156);
       this.optionListView.TabIndex = 36;
       this.optionListView.UseCompatibleStateImageBehavior = false;
       this.optionListView.View = System.Windows.Forms.View.Details;
@@ -274,13 +246,27 @@ namespace Pirate.PiVote.Client
       this.descriptionColumnHeader.Text = "Description";
       this.descriptionColumnHeader.Width = 390;
       // 
-      // optionDescriptionAddBox
+      // contextMenu
       // 
-      this.optionDescriptionAddBox.Location = new System.Drawing.Point(120, 372);
-      this.optionDescriptionAddBox.Name = "optionDescriptionAddBox";
-      this.optionDescriptionAddBox.Size = new System.Drawing.Size(483, 20);
-      this.optionDescriptionAddBox.TabIndex = 26;
-      this.optionDescriptionAddBox.TextChanged += new System.EventHandler(this.optionDescriptionAddBox_TextChanged);
+      this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.removeToolStripMenuItem});
+      this.contextMenu.Name = "contextMenu";
+      this.contextMenu.Size = new System.Drawing.Size(153, 70);
+      this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
+      // 
+      // addToolStripMenuItem
+      // 
+      this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+      this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+      this.addToolStripMenuItem.Text = "&Add";
+      this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+      // 
+      // removeToolStripMenuItem
+      // 
+      this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+      this.removeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+      this.removeToolStripMenuItem.Text = "&Remove";
       // 
       // authority0List
       // 
@@ -341,7 +327,6 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.authority2List);
       this.Controls.Add(this.authority1List);
       this.Controls.Add(this.authority0List);
-      this.Controls.Add(this.optionDescriptionAddBox);
       this.Controls.Add(this.optionListView);
       this.Controls.Add(this.votingUntilLabel);
       this.Controls.Add(this.votingFromLabel);
@@ -351,9 +336,6 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.optionNumberLabel);
       this.Controls.Add(this.optionNumberUpDown);
       this.Controls.Add(this.optionLabel);
-      this.Controls.Add(this.optionTextAddBox);
-      this.Controls.Add(this.optionRemoveButton);
-      this.Controls.Add(this.optionAddButton);
       this.Controls.Add(this.questionBox);
       this.Controls.Add(this.questionLabel);
       this.Controls.Add(this.descriptionBox);
@@ -365,6 +347,7 @@ namespace Pirate.PiVote.Client
       this.Size = new System.Drawing.Size(700, 500);
       this.Load += new System.EventHandler(this.CreateVotingItem_Load);
       ((System.ComponentModel.ISupportInitialize)(this.optionNumberUpDown)).EndInit();
+      this.contextMenu.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -379,9 +362,6 @@ namespace Pirate.PiVote.Client
     private Label descriptionLabel;
     private TextBox questionBox;
     private Label questionLabel;
-    private Button optionAddButton;
-    private Button optionRemoveButton;
-    private TextBox optionTextAddBox;
     private Label optionLabel;
     private NumericUpDown optionNumberUpDown;
     private Label optionNumberLabel;
@@ -393,12 +373,14 @@ namespace Pirate.PiVote.Client
     private ListView optionListView;
     private ColumnHeader textColumnHeader;
     private ColumnHeader descriptionColumnHeader;
-    private TextBox optionDescriptionAddBox;
     private ComboBox authority0List;
     private ComboBox authority1List;
     private ComboBox authority2List;
     private ComboBox authority3List;
     private ComboBox authority4List;
+    private ContextMenuStrip contextMenu;
+    private ToolStripMenuItem addToolStripMenuItem;
+    private ToolStripMenuItem removeToolStripMenuItem;
 
 
 

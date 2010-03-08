@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddOptionCancelButton" xml:space="preserve">
+    <value>&amp;Cancel</value>
+  </data>
+  <data name="AddOptionDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="AddOptionOkButton" xml:space="preserve">
+    <value>&amp;OK</value>
+  </data>
+  <data name="AddOptionText" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="AddOptionTitle" xml:space="preserve">
+    <value>Add Vote Option</value>
+  </data>
+  <data name="AdminChooseCreateVoting" xml:space="preserve">
+    <value>Create a voting procedure</value>
+  </data>
+  <data name="AdminChooseDownloadRequest" xml:space="preserve">
+    <value>Download signature requests from server</value>
+  </data>
+  <data name="AdminChooseUploadResponse" xml:space="preserve">
+    <value>Upload signature response to server</value>
+  </data>
+  <data name="AuthorityCheckShares" xml:space="preserve">
+    <value>C&amp;heck Shares</value>
+  </data>
+  <data name="AuthorityCheckSharesAccept" xml:space="preserve">
+    <value>Shares where verified and accepted. Our answer was uploaded to server.</value>
+  </data>
+  <data name="AuthorityCheckSharesDecline" xml:space="preserve">
+    <value>Shares where verified but not accepted. Our answer was uploaded to server.</value>
+  </data>
+  <data name="AuthorityCreateShares" xml:space="preserve">
+    <value>&amp;Create Shares</value>
+  </data>
+  <data name="AuthorityCreateSharesDone" xml:space="preserve">
+    <value>Shares created and uploaded them to server.</value>
+  </data>
+  <data name="AuthorityDecipher" xml:space="preserve">
+    <value>&amp;Decipher</value>
+  </data>
+  <data name="AuthorityDecipherDone" xml:space="preserve">
+    <value>Partial deciphers where calculated and uploaded to the server.</value>
+  </data>
+  <data name="AuthorityListStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="AuthorityListTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="AuthorityLoadData" xml:space="preserve">
+    <value>Load Authority Data</value>
+  </data>
+  <data name="AuthoritySaveData" xml:space="preserve">
+    <value>Save Authority Data</value>
+  </data>
+  <data name="CheckCertificateNeedRequest" xml:space="preserve">
+    <value>You need to create a certificate signature request and submit it to the server.</value>
+  </data>
+  <data name="CheckCertificatePending" xml:space="preserve">
+    <value>Your certificate signature request ist still pending on the server.</value>
+  </data>
+  <data name="CheckCertificateReady" xml:space="preserve">
+    <value>Your certificate is valid and ready for use.</value>
+  </data>
+  <data name="CheckCertificateResponseAccept" xml:space="preserve">
+    <value>The server sent a response to your certificate signing request and the signature was affixed to your certificate.</value>
+  </data>
+  <data name="CheckCertificateResponseDeclined" xml:space="preserve">
+    <value>The server sent a response to your certificate signing request, but the certificate authority declined your request for the following reason:</value>
+  </data>
+  <data name="CheckCertificateResponseInvalid" xml:space="preserve">
+    <value>The server sent a response to your certificate signing request, but it is not valid. Please context your voting administrator.</value>
+  </data>
+  <data name="ChooseCertificateFullName" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="ChooseCertificateId" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="ChooseCertificateLoadButton" xml:space="preserve">
+    <value>&amp;Load...</value>
+  </data>
+  <data name="ChooseCertificateLoadDialog" xml:space="preserve">
+    <value>Load Certificate</value>
+  </data>
+  <data name="ChooseCertificateNotAvailable" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="ChooseCertificateType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="ChooseCertificateTypeAdmin" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="ChooseCertificateTypeAuthority" xml:space="preserve">
+    <value>Voting Authority</value>
+  </data>
+  <data name="ChooseCertificateTypeCA" xml:space="preserve">
+    <value>Certificate Authority</value>
+  </data>
+  <data name="ChooseCertificateTypeUnknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="ChooseCertificateTypeVoter" xml:space="preserve">
+    <value>Voter</value>
+  </data>
+  <data name="CreateCertificateFirstname" xml:space="preserve">
+    <value>Firstname</value>
+  </data>
+  <data name="CreateCertificateFunction" xml:space="preserve">
+    <value>Party function</value>
+  </data>
+  <data name="CreateCertificateSaveButton" xml:space="preserve">
+    <value>&amp;Save...</value>
+  </data>
+  <data name="CreateCertificateSaveDialog" xml:space="preserve">
+    <value>Save Certificate</value>
+  </data>
+  <data name="CreateCertificateSurname" xml:space="preserve">
+    <value>Surname</value>
+  </data>
+  <data name="CreateCertificateType" xml:space="preserve">
+    <value>Certificate type</value>
+  </data>
+  <data name="CreateCertificateTypeAdmin" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="CreateCertificateTypeAuthority" xml:space="preserve">
+    <value>Voting Authority</value>
+  </data>
+  <data name="CreateCertificateTypeVoter" xml:space="preserve">
+    <value>Voter</value>
+  </data>
+  <data name="CreateVotingAnswers" xml:space="preserve">
+    <value>Answers</value>
+  </data>
+  <data name="CreateVotingAnswersPerVoter" xml:space="preserve">
+    <value>Answers / Voter</value>
+  </data>
+  <data name="CreateVotingAuthorities" xml:space="preserve">
+    <value>Authorities</value>
+  </data>
+  <data name="CreateVotingButton" xml:space="preserve">
+    <value>&amp;Create</value>
+  </data>
+  <data name="CreateVotingDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="CreateVotingOpenFrom" xml:space="preserve">
+    <value>Open from</value>
+  </data>
+  <data name="CreateVotingOpenUntil" xml:space="preserve">
+    <value>until</value>
+  </data>
+  <data name="CreateVotingOptionsAdd" xml:space="preserve">
+    <value>&amp;Add</value>
+  </data>
+  <data name="CreateVotingOptionsRemove" xml:space="preserve">
+    <value>&amp;Remove</value>
+  </data>
+  <data name="CreateVotingQuestion" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="CreateVotingTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="HaveCertificate" xml:space="preserve">
+    <value>I've &amp;got a certificate</value>
+  </data>
+  <data name="InvalidBallots" xml:space="preserve">
+    <value>Invalid ballots</value>
+  </data>
+  <data name="NeedCertificate" xml:space="preserve">
+    <value>I &amp;need a new certificate</value>
+  </data>
+  <data name="OpenSignatureResponseButton" xml:space="preserve">
+    <value>&amp;Open...</value>
+  </data>
+  <data name="OpenSignatureResponseDialog" xml:space="preserve">
+    <value>Open Signature Responses</value>
+  </data>
+  <data name="PiVoteClient" xml:space="preserve">
+    <value>Pi-Vote Client</value>
+  </data>
+  <data name="RootCertificateMissing" xml:space="preserve">
+    <value>The root certificate file is missing.</value>
+  </data>
+  <data name="SaveSignatureRequestButton" xml:space="preserve">
+    <value>&amp;Save...</value>
+  </data>
+  <data name="SaveSignatureRequestDialog" xml:space="preserve">
+    <value>Save Signature Requests</value>
+  </data>
+  <data name="SignatureResponseUploaded" xml:space="preserve">
+    <value>Signature responses have be uploaded to the server.</value>
+  </data>
+  <data name="TotalBallots" xml:space="preserve">
+    <value>Total ballots</value>
+  </data>
+  <data name="ValidBallots" xml:space="preserve">
+    <value>Valid ballots</value>
+  </data>
+  <data name="VoteCast" xml:space="preserve">
+    <value>Your vote is now cast.</value>
+  </data>
+  <data name="VotingListDownloaded" xml:space="preserve">
+    <value>Voting list downloaded.</value>
+  </data>
+  <data name="VotingStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="VotingTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="WizardCancelButton" xml:space="preserve">
+    <value>&amp;Cancel</value>
+  </data>
+  <data name="WizardNextButton" xml:space="preserve">
+    <value>&amp;Next</value>
+  </data>
+  <data name="WizardPreviousButton" xml:space="preserve">
+    <value>&amp;Previous</value>
+  </data>
+</root>

@@ -91,5 +91,14 @@ namespace Pirate.PiVote.Client
     {
       OnUpdateWizard();
     }
+
+    public override void UpdateLanguage()
+    {
+      base.UpdateLanguage();
+
+      this.getSignatureRequestsRadio.Text = Resources.AdminChooseDownloadRequest;
+      this.setSignatureResponsesRadio.Text = Resources.AdminChooseUploadResponse;
+      this.createVotingRadio.Text = Resources.AdminChooseCreateVoting;
+    }
   }
 }

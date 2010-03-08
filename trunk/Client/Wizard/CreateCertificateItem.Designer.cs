@@ -57,10 +57,6 @@ namespace Pirate.PiVote.Client
       // 
       this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.typeComboBox.FormattingEnabled = true;
-      this.typeComboBox.Items.AddRange(new object[] {
-            "Voter",
-            "Voting Authority",
-            "Administrator"});
       this.typeComboBox.Location = new System.Drawing.Point(221, 66);
       this.typeComboBox.Name = "typeComboBox";
       this.typeComboBox.Size = new System.Drawing.Size(270, 21);

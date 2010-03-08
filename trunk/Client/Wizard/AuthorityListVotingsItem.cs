@@ -133,11 +133,11 @@ namespace Pirate.PiVote.Client
         VotingClient.VotingDescriptor voting = (VotingClient.VotingDescriptor)item.Tag;
 
         SaveFileDialog dialog = new SaveFileDialog();
-        dialog.Title = "Save Authority Data";
+        dialog.Title = Resources.AuthoritySaveData;
         dialog.OverwritePrompt = true;
         dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         dialog.CheckPathExists = true;
-        dialog.Filter = "Pi-Vote Certificate|*.pi-auth";
+        dialog.Filter = Files.AuthorityDataFileFilter;
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
@@ -164,7 +164,7 @@ namespace Pirate.PiVote.Client
             item.SubItems[1].Text = this.votingDescriptor.Status.ToString();
             votingList_SelectedIndexChanged(this.votingList, new EventArgs());
 
-            Status.SetMessage("Shares created and uploaded them to server.", MessageType.Success);
+            Status.SetMessage(Resources.AuthorityCreateSharesDone, MessageType.Success);
           }
           else
           {
@@ -193,11 +193,11 @@ namespace Pirate.PiVote.Client
         VotingClient.VotingDescriptor voting = (VotingClient.VotingDescriptor)item.Tag;
 
         OpenFileDialog dialog = new OpenFileDialog();
-        dialog.Title = "Load Authority Data";
+        dialog.Title = Resources.AuthorityLoadData;
         dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         dialog.CheckPathExists = true;
         dialog.CheckFileExists = true;
-        dialog.Filter = "Pi-Vote Certificate|*.pi-auth";
+        dialog.Filter = Files.AuthorityDataFileFilter;
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
@@ -226,11 +226,11 @@ namespace Pirate.PiVote.Client
 
             if (this.accept)
             {
-              Status.SetMessage("Shares where verified and accepted. Our answer was uploaded to server.", MessageType.Success);
+              Status.SetMessage(Resources.AuthorityCheckSharesAccept, MessageType.Success);
             }
             else
             {
-              Status.SetMessage("Shares where verified but not accepted. Our answer was uploaded to server.", MessageType.Warning);
+              Status.SetMessage(Resources.AuthorityCheckSharesDecline, MessageType.Warning);
             }
           }
           else
@@ -261,11 +261,11 @@ namespace Pirate.PiVote.Client
         VotingClient.VotingDescriptor voting = (VotingClient.VotingDescriptor)item.Tag;
 
         OpenFileDialog dialog = new OpenFileDialog();
-        dialog.Title = "Load Authority Data";
+        dialog.Title = Resources.AuthorityLoadData;
         dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         dialog.CheckPathExists = true;
         dialog.CheckFileExists = true;
-        dialog.Filter = "Pi-Vote Certificate|*.pi-auth";
+        dialog.Filter = Files.AuthorityDataFileFilter;
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
@@ -292,7 +292,7 @@ namespace Pirate.PiVote.Client
             item.SubItems[1].Text = this.votingDescriptor.Status.ToString();
             votingList_SelectedIndexChanged(this.votingList, new EventArgs());
 
-            Status.SetMessage("Partial deciphers where calculated and uploaded to the server.", MessageType.Success);
+            Status.SetMessage(Resources.AuthorityDecipherDone, MessageType.Success);
           }
           else
           {
@@ -311,6 +311,17 @@ namespace Pirate.PiVote.Client
       this.exception = exception;
       this.votingDescriptor = votingDescriptor;
       this.run = false;
+    }
+
+    public override void UpdateLanguage()
+    {
+      base.UpdateLanguage();
+
+      this.createSharesButton.Text = Resources.AuthorityCreateShares;
+      this.checkSharesButton.Text = Resources.AuthorityCheckShares;
+      this.decipherButton.Text = Resources.AuthorityDecipher;
+      this.titleColumnHeader.Text = Resources.AuthorityListTitle;
+      this.statusColumnHeader.Text = Resources.AuthorityListStatus;
     }
   }
 }

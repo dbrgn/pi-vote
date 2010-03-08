@@ -27,6 +27,20 @@ namespace Pirate.PiVote.Client
     public Wizard()
     {
       InitializeComponent();
+      UpdateLanguage();
+    }
+
+    public void UpdateLanguage()
+    {
+      Text = Resources.PiVoteClient;
+      this.previouseButton.Text = Resources.WizardPreviousButton;
+      this.nextButton.Text = Resources.WizardNextButton;
+      this.cancelButton.Text = Resources.WizardCancelButton;
+
+      if (this.item != null)
+      {
+        this.item.UpdateLanguage();
+      }
     }
 
     private void Wizard_Load(object sender, EventArgs e)
@@ -42,7 +56,7 @@ namespace Pirate.PiVote.Client
       }
       else
       {
-        MessageBox.Show("The root certificate file is missing.", "Pi-Vote Client", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        MessageBox.Show(Resources.RootCertificateMissing, Resources.PiVoteClient, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         Close();
       }
 
@@ -87,6 +101,7 @@ namespace Pirate.PiVote.Client
       this.previouseButton.Enabled = this.item.CanPrevious;
       this.nextButton.Enabled = this.item.CanNext;
       this.cancelButton.Enabled = this.item.CanCancel;
+      this.item.UpdateLanguage();
 
       this.item.UpdateWizard += new EventHandler(item_UpdateWizard);
       this.item.NextStep += new EventHandler(item_NextStep);

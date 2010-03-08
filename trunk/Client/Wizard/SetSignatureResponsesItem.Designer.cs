@@ -48,9 +48,9 @@ namespace Pirate.PiVote.Client
       // openButton
       // 
       this.openButton.Location = new System.Drawing.Point(77, 77);
-      this.openButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.openButton.Margin = new System.Windows.Forms.Padding(2);
       this.openButton.Name = "openButton";
-      this.openButton.Size = new System.Drawing.Size(116, 20);
+      this.openButton.Size = new System.Drawing.Size(116, 25);
       this.openButton.TabIndex = 4;
       this.openButton.Text = "Open...";
       this.openButton.UseVisualStyleBackColor = true;

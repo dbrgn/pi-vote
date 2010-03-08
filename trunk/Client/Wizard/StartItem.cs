@@ -77,5 +77,13 @@ namespace Pirate.PiVote.Client
     public override void Begin()
     {
     }
+
+    public override void UpdateLanguage()
+    {
+      base.UpdateLanguage();
+
+      this.haveCertificateRadio.Text = Resources.HaveCertificate;
+      this.needCertificateRadio.Text = Resources.NeedCertificate;
+    }
   }
 }

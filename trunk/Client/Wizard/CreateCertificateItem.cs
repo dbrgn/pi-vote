@@ -157,17 +157,33 @@ namespace Pirate.PiVote.Client
       certificate.CreateSelfSignature();
 
       SaveFileDialog dialog = new SaveFileDialog();
-      dialog.Title = "Save certificate";
+      dialog.Title = Resources.CreateCertificateSaveDialog;
       dialog.OverwritePrompt = true;
       dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       dialog.CheckPathExists = true;
-      dialog.Filter = "Pi-Vote Certificate|*.pi-cert";
+      dialog.Filter = Files.CertificateFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
         certificate.Save(dialog.FileName);
         OnUpdateWizard();
       }
+    }
+
+    public override void UpdateLanguage()
+    {
+      base.UpdateLanguage();
+
+      this.typeLabel.Text = Resources.CreateCertificateType;
+      this.firstNameLabel.Text = Resources.CreateCertificateFirstname;
+      this.familyNameLabel.Text = Resources.CreateCertificateSurname;
+      this.functionNameLabel.Text = Resources.CreateCertificateFunction;
+      this.saveButton.Text = Resources.CreateCertificateSaveButton;
+
+      this.typeComboBox.Items.Clear();
+      this.typeComboBox.Items.Add(Resources.CreateCertificateTypeVoter);
+      this.typeComboBox.Items.Add(Resources.CreateCertificateTypeAuthority);
+      this.typeComboBox.Items.Add(Resources.CreateCertificateTypeAdmin);
     }
   }
 }

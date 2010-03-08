@@ -154,7 +154,7 @@ namespace Pirate.PiVote.Client
       if (Status.Certificate.Valid(Status.CertificateStorage))
       {
         this.status = CheckStatus.CheckCertificateAccepted;
-        Status.SetMessage("Your certificate is valid and ready for use.", MessageType.Info);
+        Status.SetMessage(Resources.CheckCertificateReady, MessageType.Info);
         OnUpdateWizard();
       }
       else
@@ -240,33 +240,33 @@ namespace Pirate.PiVote.Client
               Status.Certificate.AddSignature(response.Value.Signature);
               Status.Certificate.Save(Status.CertificateFileName);
 
-              this.message = "The server sent a response to your certificate signing request and the signature was affixed to your certificate.";
+              this.message = Resources.CheckCertificateResponseAccept;
               this.status = CheckStatus.CheckCertificateAccepted;
             }
             else
             {
-              this.message = "The server sent a response to your certificate signing request, but it is not valid. Please context your voting administrator.";
+              this.message = Resources.CheckCertificateResponseInvalid;
               this.status = CheckStatus.CheckCertificateDeclined;
             }
             break;
           case SignatureResponseStatus.Declined:
             if (response.Verify(Status.CertificateStorage))
             {
-              this.message = "The server sent a response to your certificate signing request, but the certificate authority declined your request for the following reason: " + response.Value.Reason;
+              this.message = Resources.CheckCertificateResponseDeclined + response.Value.Reason;
               this.status = CheckStatus.CheckCertificateDeclined;
             }
             else
             {
-              this.message = "The server sent a response to your certificate signing request, but it is not valid. Please context your voting administrator.";
+              this.message = Resources.CheckCertificateResponseInvalid;
               this.status = CheckStatus.CheckCertificateDeclined;
             }
             break;
           case SignatureResponseStatus.Pending:
-            this.message = "Your certificate signature request ist still pending on the server.";
+            this.message = Resources.CheckCertificatePending;
             this.status = CheckStatus.CheckCertificateDeclined;
             break;
           default:
-            this.message = "You need to create a certificate signature request and submit it to the server.";
+            this.message = Resources.CheckCertificateNeedRequest;
             this.status = CheckStatus.CheckCertificateNeeded;
             break;
         }

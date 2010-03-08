@@ -119,15 +119,10 @@ namespace Pirate.PiVote.Client
       this.titleBox.Enabled = enable;
       this.descriptionBox.Enabled = enable;
       this.questionBox.Enabled = enable;
-      this.optionTextAddBox.Enabled = enable;
       this.optionListView.Enabled = enable;
-      this.optionAddButton.Enabled = enable;
-      this.optionRemoveButton.Enabled = enable;
       this.optionNumberUpDown.Enabled = enable;
       this.votingFromPicker.Enabled = enable;
       this.votingUntilPicker.Enabled = enable;
-      this.optionTextAddBox.Enabled = enable;
-      this.optionDescriptionAddBox.Enabled = enable;
 
       if (enable)
       {
@@ -266,25 +261,6 @@ namespace Pirate.PiVote.Client
       this.createButton.Enabled = enable;
     }
 
-    private void optionAddButton_Click(object sender, EventArgs e)
-    {
-      ListViewItem item = new ListViewItem(this.optionTextAddBox.Text);
-      item.SubItems.Add(this.optionDescriptionAddBox.Text);
-      this.optionListView.Items.Add(item);
-
-      this.optionTextAddBox.Text = string.Empty;
-      this.optionDescriptionAddBox.Text = string.Empty;
-
-      this.optionNumberUpDown.Enabled = this.optionListView.Items.Count >= 2;
-
-      if (this.optionListView.Items.Count >= 2)
-      {
-        this.optionNumberUpDown.Maximum = this.optionListView.Items.Count - 1;
-      }
-      
-      CheckEnable();
-    }
-
     private void optionRemoveButton_Click(object sender, EventArgs e)
     {
       if (this.optionListView.SelectedIndices.Count >= 0)
@@ -301,16 +277,6 @@ namespace Pirate.PiVote.Client
       }
     }
 
-    private void optionList_SelectedIndexChanged(object sender, EventArgs e)
-    {
-      this.optionRemoveButton.Enabled = this.optionListView.SelectedIndices.Count >= 0;
-    }
-
-    private void optionAddBox_TextChanged(object sender, EventArgs e)
-    {
-      this.optionAddButton.Enabled = !this.optionTextAddBox.Text.IsNullOrEmpty() && !this.optionDescriptionAddBox.Text.IsNullOrEmpty();
-    }
-
     private void votingFromPicker_ValueChanged(object sender, EventArgs e)
     {
       CheckEnable();
@@ -324,11 +290,6 @@ namespace Pirate.PiVote.Client
     private void CreateVotingItem_Load(object sender, EventArgs e)
     {
 
-    }
-
-    private void optionDescriptionAddBox_TextChanged(object sender, EventArgs e)
-    {
-      this.optionAddButton.Enabled = !this.optionTextAddBox.Text.IsNullOrEmpty() && !this.optionDescriptionAddBox.Text.IsNullOrEmpty();
     }
 
     private void authority0List_SelectedIndexChanged(object sender, EventArgs e)
@@ -354,6 +315,40 @@ namespace Pirate.PiVote.Client
     private void authority4List_SelectedIndexChanged(object sender, EventArgs e)
     {
       CheckEnable();
+    }
+
+    public override void UpdateLanguage()
+    {
+      base.UpdateLanguage();
+
+      this.authoritiesLabel.Text = Resources.CreateVotingAuthorities;
+      this.titleLabel.Text = Resources.CreateVotingTitle;
+      this.descriptionLabel.Text = Resources.CreateVotingDescription;
+      this.questionLabel.Text = Resources.CreateVotingQuestion;
+      this.optionLabel.Text = Resources.CreateVotingAnswers;
+      this.optionNumberLabel.Text = Resources.CreateVotingAnswersPerVoter;
+      this.votingFromLabel.Text = Resources.CreateVotingOpenFrom;
+      this.votingUntilLabel.Text = Resources.CreateVotingOpenUntil;
+      this.createButton.Text = Resources.CreateVotingButton;
+    }
+
+    private void contextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+      this.addToolStripMenuItem.Text = Resources.CreateVotingOptionsAdd;
+      this.removeToolStripMenuItem.Text = Resources.CreateVotingOptionsRemove;
+      this.removeToolStripMenuItem.Enabled = this.optionListView.SelectedIndices.Count > 0;
+    }
+
+    private void addToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      AddOptionDialog dialog = new AddOptionDialog();
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        ListViewItem item = new ListViewItem(dialog.OptionText);
+        item.SubItems.Add(dialog.OptionDescription);
+        this.optionListView.Items.Add(item);
+      }
     }
   }
 }

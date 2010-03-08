@@ -48,7 +48,7 @@ namespace Pirate.PiVote.Client
       // castLabel
       // 
       this.castLabel.AutoSize = true;
-      this.castLabel.Location = new System.Drawing.Point(3, 196);
+      this.castLabel.Location = new System.Drawing.Point(46, 197);
       this.castLabel.Name = "castLabel";
       this.castLabel.Size = new System.Drawing.Size(0, 13);
       this.castLabel.TabIndex = 2;

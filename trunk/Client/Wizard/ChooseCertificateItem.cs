@@ -73,11 +73,11 @@ namespace Pirate.PiVote.Client
     private void loadButton_Click(object sender, EventArgs e)
     {
       OpenFileDialog dialog = new OpenFileDialog();
-      dialog.Title = "Load certificate";
+      dialog.Title = Resources.ChooseCertificateLoadDialog;
       dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       dialog.CheckPathExists = true;
       dialog.CheckFileExists = true;
-      dialog.Filter = "Pi-Vote Certificate|*.pi-cert";
+      dialog.Filter = Files.CertificateFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -88,32 +88,42 @@ namespace Pirate.PiVote.Client
 
         if (Status.Certificate is CACertificate)
         {
-          this.typeTextBox.Text = "Certificate Authority";
+          this.typeTextBox.Text = Resources.ChooseCertificateTypeCA;
           this.nameTextBox.Text = ((CACertificate)Status.Certificate).FullName;
         }
         else if (Status.Certificate is AuthorityCertificate)
         {
-          this.typeTextBox.Text = "Voting Authority";
+          this.typeTextBox.Text = Resources.ChooseCertificateTypeAuthority;
           this.nameTextBox.Text = ((AuthorityCertificate)Status.Certificate).FullName;
         }
         else if (Status.Certificate is AdminCertificate)
         {
-          this.typeTextBox.Text = "Administrator";
+          this.typeTextBox.Text = Resources.ChooseCertificateTypeAdmin;
           this.nameTextBox.Text = ((AdminCertificate)Status.Certificate).FullName;
         }
         else if (Status.Certificate is VoterCertificate)
         {
-          this.typeTextBox.Text = "Voter";
-          this.nameTextBox.Text = "N/A";
+          this.typeTextBox.Text = Resources.ChooseCertificateTypeVoter;
+          this.nameTextBox.Text = Resources.ChooseCertificateNotAvailable;
         }
         else
         {
-          this.typeTextBox.Text = "Unknown";
-          this.nameTextBox.Text = "N/A";
+          this.typeTextBox.Text = Resources.ChooseCertificateTypeUnknown;
+          this.nameTextBox.Text = Resources.ChooseCertificateNotAvailable;
         }
 
         OnUpdateWizard();
       }
+    }
+
+    public override void UpdateLanguage()
+    {
+      base.UpdateLanguage();
+
+      this.idLabel.Text = Resources.ChooseCertificateId;
+      this.typeLabel.Text = Resources.ChooseCertificateType;
+      this.nameLabel.Text = Resources.ChooseCertificateFullName;
+      this.loadButton.Text = Resources.ChooseCertificateLoadButton;
     }
   }
 }

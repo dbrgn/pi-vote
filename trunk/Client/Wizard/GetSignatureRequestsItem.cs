@@ -61,9 +61,9 @@ namespace Pirate.PiVote.Client
     private void saveToButton_Click(object sender, EventArgs e)
     {
       SaveFileDialog dialog = new SaveFileDialog();
-      dialog.Title = "Save Signature Requests";
+      dialog.Title = Resources.SaveSignatureRequestDialog;
       dialog.CheckPathExists = true;
-      dialog.Filter = "Pi-Vote Signature Request|*.pi-sig-req";
+      dialog.Filter = Files.SignatureRequestFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -96,6 +96,13 @@ namespace Pirate.PiVote.Client
     {
       this.exception = exception;
       this.run = false;
+    }
+
+    public override void UpdateLanguage()
+    {
+      base.UpdateLanguage();
+
+      this.saveToButton.Text = Resources.SaveSignatureRequestDialog;
     }
   }
 }
