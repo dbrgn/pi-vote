@@ -62,7 +62,7 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Connecting";
+          Text = LibraryResources.ClientConnect;
           Progress = 0d;
           SubText = string.Empty;
           SubProgress = 0d;

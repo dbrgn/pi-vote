@@ -655,6 +655,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Certificate.
+        /// </summary>
+        internal static string StartCertificate {
+            get {
+                return ResourceManager.GetString("StartCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total ballots.
         /// </summary>
         internal static string TotalBallots {

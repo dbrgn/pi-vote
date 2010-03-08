@@ -315,6 +315,9 @@
   <data name="SignatureResponseUploaded" xml:space="preserve">
     <value>Signature responses have be uploaded to the server.</value>
   </data>
+  <data name="StartCertificate" xml:space="preserve">
+    <value>Certificate</value>
+  </data>
   <data name="TotalBallots" xml:space="preserve">
     <value>Total ballots</value>
   </data>

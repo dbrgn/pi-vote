@@ -69,7 +69,7 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Create voting procedure.";
+          Text = LibraryResources.ClientCreateVoting;
           Progress = 0d;
           SubText = string.Empty;
           SubProgress = 0d;

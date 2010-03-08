@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using System.Globalization;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Rpc;
 
@@ -84,6 +85,28 @@ namespace Pirate.PiVote.Client
 
       this.haveCertificateRadio.Text = Resources.HaveCertificate;
       this.needCertificateRadio.Text = Resources.NeedCertificate;
+      this.certificateGroup.Text = Resources.StartCertificate;
+    }
+
+    private void englishRadio_CheckedChanged(object sender, EventArgs e)
+    {
+      Resources.Culture = CultureInfo.CreateSpecificCulture("en-US");
+      LibraryResources.Culture = CultureInfo.CreateSpecificCulture("en-US");
+      OnChangeLanguage();
+    }
+
+    private void germanRadio_CheckedChanged(object sender, EventArgs e)
+    {
+      Resources.Culture = CultureInfo.CreateSpecificCulture("de-DE");
+      LibraryResources.Culture = CultureInfo.CreateSpecificCulture("de-DE");
+      OnChangeLanguage();
+    }
+
+    private void frenchRadio_CheckedChanged(object sender, EventArgs e)
+    {
+      Resources.Culture = CultureInfo.CreateSpecificCulture("fr-FR");
+      LibraryResources.Culture = CultureInfo.CreateSpecificCulture("fr-FR");
+      OnChangeLanguage();
     }
   }
 }

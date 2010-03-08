@@ -62,9 +62,9 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Getting signature requests";
+          Text = LibraryResources.ClientGetSignatureRequests;
           Progress = 0d;
-          SubText = "Getting list of signature requests";
+          SubText = LibraryResources.ClientGetSignatureRequestsGetList;
           SubProgress = 0d;
 
           var signatureRequestList = client.proxy.FetchSignatureRequestList();
@@ -75,7 +75,7 @@ namespace Pirate.PiVote.Rpc
           if (max > 0)
           {
             Progress = 0.5d;
-            SubText = string.Format("Getting signature requests {0} / {1}", done, max);
+            SubText = string.Format(LibraryResources.ClientGetSignatureRequestsGetRequest, done, max);
             SubProgress = (double)done / (double)max;
 
             foreach (Guid id in signatureRequestList)
@@ -85,14 +85,14 @@ namespace Pirate.PiVote.Rpc
               signatureRequest.Save(fileName);
 
               done++;
-              SubText = string.Format("Getting signature requests {0} / {1}", done, max);
+              SubText = string.Format(LibraryResources.ClientGetSignatureRequestsGetRequest, done, max);
               SubProgress = (double)done / (double)max;
             }
           }
           else
           {
             Progress = 1d;
-            SubText = "No signature request on server.";
+            SubText = LibraryResources.ClientGetSignatureRequestsNoRequest;
             SubProgress = 1d;
           }
 

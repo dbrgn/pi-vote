@@ -93,24 +93,24 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Getting result";
+          Text = LibraryResources.ClientGetResultFetchMaterial;
           Progress = 0d;
-          SubText = "Fetching material";
+          SubText = string.Empty;
           SubProgress = 0d;
 
           var material = client.proxy.FetchVotingMaterial(votingId);
           if (!material.Valid(client.voterEntity.CertificateStorage))
-            throw new InvalidOperationException("Voting material not valid.");
+            throw new InvalidOperationException(LibraryResources.ClientGetResultMaterialInvalid);
           var parameters = material.Parameters.Value;
 
           Progress = 0.1d;
-          SubText = "Fetching envelope count";
-          SubProgress = 0d;
+          Text = LibraryResources.ClientGetResultFetchEnvelopeCount;
 
           this.envelopeCount = client.proxy.FetchEnvelopeCount(votingId);
 
           Progress = 0.2d;
-          SubText = "Fetching and verifying votes";
+          Text = LibraryResources.ClientGetResultFetchEnvelopes;
+          SubText = string.Format(LibraryResources.ClientGetResultFetchEnvelopesOf, 0, this.envelopeCount);
           SubProgress = 0d;
 
           client.voterEntity.TallyBegin(material);
@@ -126,7 +126,7 @@ namespace Pirate.PiVote.Rpc
 
           while (this.verifiedEnvelopes < this.envelopeCount)
           {
-            SubText = string.Format("Fetching and verifying votes {0} / {1}", this.verifiedEnvelopes, this.envelopeCount);
+            SubText = string.Format(LibraryResources.ClientGetResultFetchEnvelopesOf, this.verifiedEnvelopes, this.envelopeCount);
             SubProgress = 0.2d / (double)this.envelopeCount * (double)this.fetchedEnvelopes +
                           0.8d / (double)this.envelopeCount * (double)this.verifiedEnvelopes;
 
@@ -134,7 +134,8 @@ namespace Pirate.PiVote.Rpc
           }
 
           Progress = 0.8d;
-          SubText = string.Format("Fetching partial deciphers 0 / {0}", parameters.AuthorityCount);
+          Text = LibraryResources.ClientGetResultFetchPartialDeciphers;
+          SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, 0, parameters.AuthorityCount);
           SubProgress = 0d;
 
           fetcher.Join();
@@ -145,12 +146,12 @@ namespace Pirate.PiVote.Rpc
           {
             client.voterEntity.TallyAddPartialDecipher(client.proxy.FetchPartialDecipher(votingId, authorityIndex));
 
-            SubText = string.Format("Fetching partial deciphers {0} / {1}", authorityIndex + 1, parameters.AuthorityCount);
-            SubProgress = 1d / (double)parameters.AuthorityCount * (double)(authorityIndex + 1);
+            SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, authorityIndex, parameters.AuthorityCount);
+            SubProgress = 1d / (double)parameters.AuthorityCount * (double)(authorityIndex);
           }
 
           Progress = 0.9d;
-          SubText = "Deciphering result";
+          Text = LibraryResources.ClientGetResultDecipherResult;
           SubProgress = 0d;
 
           var result = client.voterEntity.TallyResult;

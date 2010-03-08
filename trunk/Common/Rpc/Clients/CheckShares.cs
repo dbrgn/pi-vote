@@ -76,34 +76,34 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Load authority data.";
+          Text = LibraryResources.ClientCheckSharesLoadAuthority;
           Progress = 0d;
           SubText = string.Empty;
           SubProgress = 0d;
 
           client.LoadAuthority(this.authorityFileName, this.authorityCertificate);
 
-          Text = "Fetching all shares.";
+          Text = LibraryResources.ClientCheckSharesFetchShares;
           Progress = 0.2d;
 
           var allShareParts = client.proxy.FetchAllShares(this.votingId);
 
-          Text = "Verify all shares.";
+          Text = LibraryResources.ClientCheckSharesVerifyShares;
           Progress = 0.4d;
 
           var signedShareResponse = client.authorityEntity.VerifyShares(allShareParts);
 
-          Text = "Save authority data.";
+          Text = LibraryResources.ClientCheckSharesSaveAuthority;
           Progress = 0.6d;
 
           client.SaveAuthority(this.authorityFileName);
 
-          Text = "Push share response to server.";
+          Text = LibraryResources.ClientCheckSharesPushShareResponse;
           Progress = 0.6d;
 
           client.proxy.PushShareResponse(this.votingId, signedShareResponse);
 
-          Text = "Get new voting status from server.";
+          Text = LibraryResources.ClientCheckSharesGetVotingStatus;
           Progress = 0.8d;
           
           var parameters = client.proxy.FetchParameters(this.votingId, this.authorityCertificate); 

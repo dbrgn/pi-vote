@@ -63,16 +63,17 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Getting voting list";
+          Text = LibraryResources.ClientGetVotingList;
           Progress = 0d;
-          SubText = "Fetching voting ids";
+          SubText = LibraryResources.ClientGetVotingListGetIds;
           SubProgress = 0d;
 
           List<VotingDescriptor> votingList = new List<VotingDescriptor>();
           IEnumerable<Guid> votingIds = client.proxy.FetchVotingIds();
 
+          int counter = 0;
           Progress = 0.5d;
-          SubText = "Fetching voting material and status";
+          SubText = string.Format(LibraryResources.ClientGetVotingListFetchVoting, counter, votingIds.Count());
           SubProgress = 0d;
 
           foreach (Guid votingId in votingIds)
@@ -87,7 +88,9 @@ namespace Pirate.PiVote.Rpc
               votingList.Add(new VotingDescriptor(parameters, status, authoritiesDone));
             }
 
-            SubProgress += 1d / (double)votingIds.Count();
+            counter++;
+            SubText = string.Format(LibraryResources.ClientGetVotingListFetchVoting, counter, votingIds.Count());
+            SubProgress = 1d / (double)votingIds.Count() * (double)counter;
           }
 
           Progress = 1d;

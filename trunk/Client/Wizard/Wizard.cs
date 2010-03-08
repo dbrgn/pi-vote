@@ -84,6 +84,8 @@ namespace Pirate.PiVote.Client
       if (this.item != null)
       {
         this.item.UpdateWizard -= new EventHandler(item_UpdateWizard);
+        this.item.NextStep -= new EventHandler(item_NextStep);
+        this.item.ChangeLanguage -= new EventHandler(item_ChangeLanguage);
         this.itemPanel.Controls.Remove(this.item);
       }
 
@@ -105,11 +107,17 @@ namespace Pirate.PiVote.Client
 
       this.item.UpdateWizard += new EventHandler(item_UpdateWizard);
       this.item.NextStep += new EventHandler(item_NextStep);
+      this.item.ChangeLanguage += new EventHandler(item_ChangeLanguage);
 
       Refresh();
       Application.DoEvents();
 
       this.item.Begin();
+    }
+
+    private void item_ChangeLanguage(object sender, EventArgs e)
+    {
+      UpdateLanguage();
     }
 
     private void item_NextStep(object sender, EventArgs e)

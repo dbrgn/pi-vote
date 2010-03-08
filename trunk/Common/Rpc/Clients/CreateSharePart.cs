@@ -76,7 +76,7 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Preparing authority.";
+          Text = LibraryResources.ClientCreateSharePartPrepareAuthority;
           Progress = 0d;
           SubText = string.Empty;
           SubProgress = 0d;
@@ -86,27 +86,30 @@ namespace Pirate.PiVote.Rpc
           client.CreateAuthority(this.authorityCertificate);
           client.authorityEntity.Prepare(parameters.Key, parameters.Value);
 
-          Text = "Fetching authority list.";
-          Progress = 0.2d;
+          Text = LibraryResources.ClientCreateSharePartFetchAuthorityList;
+          Progress = 0.15d;
 
           var authorityList = client.proxy.FetchAuthorityList(this.votingId);
 
           client.authorityEntity.SetAuthorities(authorityList);
 
-          Text = "Saving authority.";
-          Progress = 0.4d;
+          Text = LibraryResources.ClientCreateSharePartSaveAuthority;
+          Progress = 0.3d;
 
           client.SaveAuthority(this.authorityFileName);
 
-          Text = "Creating and pushing share parts.";
-          Progress = 0.6d;
+          Text = LibraryResources.ClientCreateSharePartCreateShareParts;
+          Progress = 0.55d;
 
           var sharePart = client.authorityEntity.GetShares();
 
+          Text = LibraryResources.ClientCreateSharePartPushShareParts;
+          Progress = 0.75d;
+
           client.proxy.PushShares(this.votingId, sharePart);
 
-          Text = "Getting new voting status.";
-          Progress = 0.8d;
+          Text = LibraryResources.ClientCreateSharePartGetVotingStatus;
+          Progress = 0.9d;
 
           List<Guid> authoritieDone;
           VotingStatus status = client.proxy.FetchVotingStatus(this.votingId, out authoritieDone);

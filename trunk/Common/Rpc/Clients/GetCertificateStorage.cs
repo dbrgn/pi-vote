@@ -56,7 +56,7 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Getting certificate storage";
+          Text = LibraryResources.ClientGetCertificateStorage;
           Progress = 0d;
           SubText = string.Empty;
           SubProgress = 0d;

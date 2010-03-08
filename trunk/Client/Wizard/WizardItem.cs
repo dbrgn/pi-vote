@@ -20,6 +20,7 @@ namespace Pirate.PiVote.Client
   {
     public event EventHandler UpdateWizard;
     public event EventHandler NextStep;
+    public event EventHandler ChangeLanguage;
 
     public WizardStatus Status { get; set; }
 
@@ -41,6 +42,14 @@ namespace Pirate.PiVote.Client
       if (UpdateWizard != null)
       {
         UpdateWizard(this, new EventArgs());
+      }
+    }
+
+    protected void OnChangeLanguage()
+    {
+      if (ChangeLanguage != null)
+      {
+        ChangeLanguage(this, new EventArgs());
       }
     }
     

@@ -69,26 +69,26 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Casting vote";
+          Text = LibraryResources.ClientVote;
           Progress = 0d;
-          SubText = "Fetching voting material";
+          SubText = LibraryResources.ClientVoteFetchMaterial;
           SubProgress = 0d;
 
           var material = client.proxy.FetchVotingMaterial(this.votingId);
           if (!material.Valid(client.voterEntity.CertificateStorage))
-            throw new InvalidOperationException("Voting material not valid.");
+            throw new InvalidOperationException(LibraryResources.ClientVoteMaterialInvalid);
           var parameters = material.Parameters.Value;
 
           int[] vota = this.vota.Select(votum => votum ? 1 : 0).ToArray();
 
           Progress = 0.3d;
-          SubText = "Calculating vote";
+          SubText = LibraryResources.ClientVoteCalcVote;
           SubProgress = 0d;
 
           var envelope = client.voterEntity.Vote(material, vota);
 
           Progress = 0.7d;
-          SubText = "Pushing vote";
+          SubText = LibraryResources.ClientVotePushVote;
           SubProgress = 0d;
 
           client.proxy.PushEnvelope(this.votingId, envelope);

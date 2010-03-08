@@ -76,25 +76,25 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Load authority data.";
+          Text = LibraryResources.ClientCreateDeciphersLoadAuthority;
           Progress = 0d;
           SubText = string.Empty;
           SubProgress = 0d;
 
           client.LoadAuthority(this.authorityFileName, this.authorityCertificate);
 
-          Text = "Fetching voting material.";
+          Text = LibraryResources.ClientCreateDeciphersFetchMaterial;
           Progress = 0.1d;
 
           var material = client.proxy.FetchVotingMaterial(this.votingId);
           client.authorityEntity.TallyBegin(material);
 
-          Text = "Fetching envelope count.";
+          Text = LibraryResources.ClientCreateDeciphersFetchEnvelopeCount;
           Progress = 0.2d;
           
           int envelopeCount = client.proxy.FetchEnvelopeCount(this.votingId);
 
-          Text = string.Format("Fetching all envelopes ({0} / {1}.", 0, envelopeCount);
+          Text = string.Format(LibraryResources.ClientCreateDeciphersFetchEnvelope, 0, envelopeCount);
           Progress = 0.3d;
           
           for (int envelopeIndex = 0; envelopeIndex < envelopeCount; envelopeIndex++)
@@ -102,21 +102,21 @@ namespace Pirate.PiVote.Rpc
             var signedEnvelope = client.proxy.FetchEnvelope(this.votingId, envelopeIndex);
             client.authorityEntity.TallyAdd(signedEnvelope);
 
-            Text = string.Format("Fetching all envelopes ({0} / {1}.", 0, envelopeIndex + 1);
+            Text = string.Format(LibraryResources.ClientCreateDeciphersFetchEnvelope, 0, envelopeIndex + 1);
             Progress += 0.4d / (double)envelopeCount;
           }
 
-          Text = "Partially decipher voting.";
+          Text = LibraryResources.ClientCreateDeciphersCreatePartialDecipher;
           Progress = 0.7d;
 
           var decipherList = client.authorityEntity.PartiallyDecipher();
 
-          Text = "Pushing partial deciphers.";
+          Text = LibraryResources.ClientCreateDeciphersPushPartialDecipher;
           Progress = 0.8d;
           
           client.proxy.PushPartailDecipher(this.votingId, decipherList);
 
-          Text = "Fetching new voting status.";
+          Text = LibraryResources.ClientCreateDeciphersFetchVotingStatus;
           Progress = 0.9d;
 
           var parameters = client.proxy.FetchParameters(this.votingId, this.authorityCertificate); 

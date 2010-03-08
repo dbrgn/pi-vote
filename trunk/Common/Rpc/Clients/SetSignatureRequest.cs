@@ -63,7 +63,7 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
-          Text = "Set signature request.";
+          Text = LibraryResources.ClientSetSignatureRequest;
           Progress = 0d;
           SubText = string.Empty;
           SubProgress = 0d;

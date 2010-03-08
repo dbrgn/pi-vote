@@ -67,7 +67,7 @@ namespace Pirate.PiVote.Rpc
 
           if (max > 0)
           {
-            Text = string.Format("Setting signature responses {0} / {1}", done, max);
+            Text = string.Format(LibraryResources.ClientSetSignatureResponses, done, max);
             Progress = (double)done / (double)max;
             SubText = string.Empty;
             SubProgress = 0d;
@@ -77,13 +77,13 @@ namespace Pirate.PiVote.Rpc
               var signatureResponse = Serializable.Load<Signed<SignatureResponse>>(fileName);
               client.proxy.PushSignatureResponse(signatureResponse);
               done++;
-              Text = string.Format("Setting signature responses {0} / {1}", done, max);
+              Text = string.Format(LibraryResources.ClientSetSignatureResponses, done, max);
               Progress = (double)done / (double)max;
             }
           }
           else
           {
-            Text = "No signature response files selected.";
+            Text = LibraryResources.ClientSetSignatureResponsesNoFiles;
             Progress = 1d;
           }
 
