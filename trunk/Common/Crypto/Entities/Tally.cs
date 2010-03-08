@@ -122,10 +122,6 @@ namespace Pirate.PiVote.Crypto
       }
 
       this.result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));
-
-#if DEBUG
-      Console.WriteLine(DateTime.Now.Subtract(start).ToString());
-#endif
     }
 
     /// <summary>

@@ -116,11 +116,11 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
-      IPAddress serverIpAddress = IPAddress.Parse(File.ReadAllText(ServerIpFile));
+      IPAddress serverIpAddress = IPAddress.Parse(File.ReadAllText(ServerIpFile).Trim());
 
       this.status = CheckStatus.Connect;
-      Status.UpdateProgress();
       Status.VotingClient.Connect(serverIpAddress, ConnectComplete);
+      Status.UpdateProgress();
 
       while (this.status == CheckStatus.Connect)
       {
@@ -132,6 +132,7 @@ namespace Pirate.PiVote.Client
       if (this.status == CheckStatus.ConnectFailed)
       {
         Status.SetMessage(this.exception.Message, MessageType.Error);
+        OnUpdateWizard();
         return;
       }
 
@@ -149,6 +150,7 @@ namespace Pirate.PiVote.Client
       if (this.status == CheckStatus.GetCertificatesFailed)
       {
         Status.SetMessage(this.exception.Message, MessageType.Error);
+        OnUpdateWizard();
         return;
       }
 
@@ -175,6 +177,7 @@ namespace Pirate.PiVote.Client
         if (this.status == CheckStatus.CheckCertificateFailed)
         {
           Status.SetMessage(this.exception.Message, MessageType.Error);
+          OnUpdateWizard();
           return;
         }
 
