@@ -57,7 +57,7 @@ namespace Pirate.PiVote.Client
       this.votingList.Location = new System.Drawing.Point(3, 3);
       this.votingList.MultiSelect = false;
       this.votingList.Name = "votingList";
-      this.votingList.Size = new System.Drawing.Size(694, 494);
+      this.votingList.Size = new System.Drawing.Size(694, 532);
       this.votingList.TabIndex = 0;
       this.votingList.UseCompatibleStateImageBehavior = false;
       this.votingList.View = System.Windows.Forms.View.Details;
@@ -75,11 +75,12 @@ namespace Pirate.PiVote.Client
       // 
       // ListVotingsItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.votingList);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "ListVotingsItem";
-      this.Size = new System.Drawing.Size(700, 500);
+      this.Size = new System.Drawing.Size(700, 538);
       this.ResumeLayout(false);
 
     }

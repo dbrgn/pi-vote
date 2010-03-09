@@ -60,7 +60,7 @@ namespace Pirate.PiVote.Client
       this.votingList.Location = new System.Drawing.Point(3, 3);
       this.votingList.MultiSelect = false;
       this.votingList.Name = "votingList";
-      this.votingList.Size = new System.Drawing.Size(694, 463);
+      this.votingList.Size = new System.Drawing.Size(694, 498);
       this.votingList.TabIndex = 0;
       this.votingList.UseCompatibleStateImageBehavior = false;
       this.votingList.View = System.Windows.Forms.View.Details;
@@ -79,9 +79,9 @@ namespace Pirate.PiVote.Client
       // decipherButton
       // 
       this.decipherButton.Enabled = false;
-      this.decipherButton.Location = new System.Drawing.Point(599, 472);
+      this.decipherButton.Location = new System.Drawing.Point(599, 508);
       this.decipherButton.Name = "decipherButton";
-      this.decipherButton.Size = new System.Drawing.Size(98, 25);
+      this.decipherButton.Size = new System.Drawing.Size(98, 27);
       this.decipherButton.TabIndex = 1;
       this.decipherButton.Text = "&Decipher";
       this.decipherButton.UseVisualStyleBackColor = true;
@@ -90,9 +90,9 @@ namespace Pirate.PiVote.Client
       // checkSharesButton
       // 
       this.checkSharesButton.Enabled = false;
-      this.checkSharesButton.Location = new System.Drawing.Point(495, 472);
+      this.checkSharesButton.Location = new System.Drawing.Point(495, 508);
       this.checkSharesButton.Name = "checkSharesButton";
-      this.checkSharesButton.Size = new System.Drawing.Size(98, 25);
+      this.checkSharesButton.Size = new System.Drawing.Size(98, 27);
       this.checkSharesButton.TabIndex = 2;
       this.checkSharesButton.Text = "&Check Shares";
       this.checkSharesButton.UseVisualStyleBackColor = true;
@@ -101,9 +101,9 @@ namespace Pirate.PiVote.Client
       // createSharesButton
       // 
       this.createSharesButton.Enabled = false;
-      this.createSharesButton.Location = new System.Drawing.Point(391, 472);
+      this.createSharesButton.Location = new System.Drawing.Point(391, 508);
       this.createSharesButton.Name = "createSharesButton";
-      this.createSharesButton.Size = new System.Drawing.Size(98, 25);
+      this.createSharesButton.Size = new System.Drawing.Size(98, 27);
       this.createSharesButton.TabIndex = 3;
       this.createSharesButton.Text = "Create &Shares";
       this.createSharesButton.UseVisualStyleBackColor = true;
@@ -111,14 +111,15 @@ namespace Pirate.PiVote.Client
       // 
       // AuthorityListVotingsItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.createSharesButton);
       this.Controls.Add(this.checkSharesButton);
       this.Controls.Add(this.decipherButton);
       this.Controls.Add(this.votingList);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "AuthorityListVotingsItem";
-      this.Size = new System.Drawing.Size(700, 500);
+      this.Size = new System.Drawing.Size(700, 538);
       this.ResumeLayout(false);
 
     }

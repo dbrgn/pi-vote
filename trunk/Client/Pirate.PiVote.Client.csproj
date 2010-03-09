@@ -247,6 +247,9 @@
     <EmbeddedResource Include="Wizard\Wizard.resx">
       <DependentUpon>Wizard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\WizardItem.resx">
+      <DependentUpon>WizardItem.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="serverip.txt">

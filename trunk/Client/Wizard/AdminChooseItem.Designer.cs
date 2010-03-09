@@ -50,10 +50,9 @@ namespace Pirate.PiVote.Client
       // getSignatureRequestsRadio
       // 
       this.getSignatureRequestsRadio.AutoSize = true;
-      this.getSignatureRequestsRadio.Location = new System.Drawing.Point(129, 105);
-      this.getSignatureRequestsRadio.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.getSignatureRequestsRadio.Location = new System.Drawing.Point(86, 73);
       this.getSignatureRequestsRadio.Name = "getSignatureRequestsRadio";
-      this.getSignatureRequestsRadio.Size = new System.Drawing.Size(317, 24);
+      this.getSignatureRequestsRadio.Size = new System.Drawing.Size(228, 18);
       this.getSignatureRequestsRadio.TabIndex = 0;
       this.getSignatureRequestsRadio.TabStop = true;
       this.getSignatureRequestsRadio.Text = "Download signature requests from server";
@@ -63,10 +62,9 @@ namespace Pirate.PiVote.Client
       // setSignatureResponsesRadio
       // 
       this.setSignatureResponsesRadio.AutoSize = true;
-      this.setSignatureResponsesRadio.Location = new System.Drawing.Point(129, 140);
-      this.setSignatureResponsesRadio.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.setSignatureResponsesRadio.Location = new System.Drawing.Point(86, 98);
       this.setSignatureResponsesRadio.Name = "setSignatureResponsesRadio";
-      this.setSignatureResponsesRadio.Size = new System.Drawing.Size(287, 24);
+      this.setSignatureResponsesRadio.Size = new System.Drawing.Size(204, 18);
       this.setSignatureResponsesRadio.TabIndex = 1;
       this.setSignatureResponsesRadio.TabStop = true;
       this.setSignatureResponsesRadio.Text = "Upload signature response to server.";
@@ -76,10 +74,9 @@ namespace Pirate.PiVote.Client
       // createVotingRadio
       // 
       this.createVotingRadio.AutoSize = true;
-      this.createVotingRadio.Location = new System.Drawing.Point(129, 175);
-      this.createVotingRadio.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.createVotingRadio.Location = new System.Drawing.Point(86, 123);
       this.createVotingRadio.Name = "createVotingRadio";
-      this.createVotingRadio.Size = new System.Drawing.Size(210, 24);
+      this.createVotingRadio.Size = new System.Drawing.Size(151, 18);
       this.createVotingRadio.TabIndex = 2;
       this.createVotingRadio.TabStop = true;
       this.createVotingRadio.Text = "Create a voting procedure";
@@ -88,14 +85,14 @@ namespace Pirate.PiVote.Client
       // 
       // AdminChooseItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.createVotingRadio);
       this.Controls.Add(this.setSignatureResponsesRadio);
       this.Controls.Add(this.getSignatureRequestsRadio);
-      this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "AdminChooseItem";
-      this.Size = new System.Drawing.Size(1050, 769);
+      this.Size = new System.Drawing.Size(700, 538);
       this.ResumeLayout(false);
       this.PerformLayout();
 

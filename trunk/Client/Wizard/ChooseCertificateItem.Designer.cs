@@ -53,9 +53,9 @@ namespace Pirate.PiVote.Client
       // 
       // loadButton
       // 
-      this.loadButton.Location = new System.Drawing.Point(58, 44);
+      this.loadButton.Location = new System.Drawing.Point(58, 47);
       this.loadButton.Name = "loadButton";
-      this.loadButton.Size = new System.Drawing.Size(112, 23);
+      this.loadButton.Size = new System.Drawing.Size(112, 25);
       this.loadButton.TabIndex = 0;
       this.loadButton.Text = "&Load...";
       this.loadButton.UseVisualStyleBackColor = true;
@@ -64,33 +64,33 @@ namespace Pirate.PiVote.Client
       // idLabel
       // 
       this.idLabel.AutoSize = true;
-      this.idLabel.Location = new System.Drawing.Point(55, 110);
+      this.idLabel.Location = new System.Drawing.Point(55, 118);
       this.idLabel.Name = "idLabel";
-      this.idLabel.Size = new System.Drawing.Size(19, 13);
+      this.idLabel.Size = new System.Drawing.Size(18, 14);
       this.idLabel.TabIndex = 1;
       this.idLabel.Text = "Id:";
       // 
       // typeLabel
       // 
       this.typeLabel.AutoSize = true;
-      this.typeLabel.Location = new System.Drawing.Point(55, 136);
+      this.typeLabel.Location = new System.Drawing.Point(55, 146);
       this.typeLabel.Name = "typeLabel";
-      this.typeLabel.Size = new System.Drawing.Size(34, 13);
+      this.typeLabel.Size = new System.Drawing.Size(33, 14);
       this.typeLabel.TabIndex = 2;
       this.typeLabel.Text = "Type:";
       // 
       // nameLabel
       // 
       this.nameLabel.AutoSize = true;
-      this.nameLabel.Location = new System.Drawing.Point(55, 162);
+      this.nameLabel.Location = new System.Drawing.Point(55, 174);
       this.nameLabel.Name = "nameLabel";
-      this.nameLabel.Size = new System.Drawing.Size(55, 13);
+      this.nameLabel.Size = new System.Drawing.Size(55, 14);
       this.nameLabel.TabIndex = 3;
       this.nameLabel.Text = "Full name:";
       // 
       // idTextBox
       // 
-      this.idTextBox.Location = new System.Drawing.Point(153, 107);
+      this.idTextBox.Location = new System.Drawing.Point(153, 115);
       this.idTextBox.Name = "idTextBox";
       this.idTextBox.ReadOnly = true;
       this.idTextBox.Size = new System.Drawing.Size(245, 20);
@@ -98,7 +98,7 @@ namespace Pirate.PiVote.Client
       // 
       // typeTextBox
       // 
-      this.typeTextBox.Location = new System.Drawing.Point(153, 133);
+      this.typeTextBox.Location = new System.Drawing.Point(153, 143);
       this.typeTextBox.Name = "typeTextBox";
       this.typeTextBox.ReadOnly = true;
       this.typeTextBox.Size = new System.Drawing.Size(245, 20);
@@ -106,7 +106,7 @@ namespace Pirate.PiVote.Client
       // 
       // nameTextBox
       // 
-      this.nameTextBox.Location = new System.Drawing.Point(153, 159);
+      this.nameTextBox.Location = new System.Drawing.Point(153, 171);
       this.nameTextBox.Name = "nameTextBox";
       this.nameTextBox.ReadOnly = true;
       this.nameTextBox.Size = new System.Drawing.Size(245, 20);
@@ -114,7 +114,7 @@ namespace Pirate.PiVote.Client
       // 
       // ChooseCertificateItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.nameTextBox);
       this.Controls.Add(this.typeTextBox);
@@ -123,8 +123,9 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.typeLabel);
       this.Controls.Add(this.idLabel);
       this.Controls.Add(this.loadButton);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "ChooseCertificateItem";
-      this.Size = new System.Drawing.Size(700, 500);
+      this.Size = new System.Drawing.Size(700, 538);
       this.Load += new System.EventHandler(this.StartWizardItem_Load);
       this.ResumeLayout(false);
       this.PerformLayout();

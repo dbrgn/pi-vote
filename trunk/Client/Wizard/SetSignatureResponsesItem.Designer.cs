@@ -47,10 +47,10 @@ namespace Pirate.PiVote.Client
       // 
       // openButton
       // 
-      this.openButton.Location = new System.Drawing.Point(77, 77);
+      this.openButton.Location = new System.Drawing.Point(77, 83);
       this.openButton.Margin = new System.Windows.Forms.Padding(2);
       this.openButton.Name = "openButton";
-      this.openButton.Size = new System.Drawing.Size(116, 25);
+      this.openButton.Size = new System.Drawing.Size(116, 27);
       this.openButton.TabIndex = 4;
       this.openButton.Text = "Open...";
       this.openButton.UseVisualStyleBackColor = true;
@@ -58,11 +58,12 @@ namespace Pirate.PiVote.Client
       // 
       // SetSignatureResponsesItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.openButton);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "SetSignatureResponsesItem";
-      this.Size = new System.Drawing.Size(700, 500);
+      this.Size = new System.Drawing.Size(700, 538);
       this.ResumeLayout(false);
 
     }

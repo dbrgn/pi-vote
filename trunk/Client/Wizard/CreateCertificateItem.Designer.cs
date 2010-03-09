@@ -57,15 +57,15 @@ namespace Pirate.PiVote.Client
       // 
       this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.typeComboBox.FormattingEnabled = true;
-      this.typeComboBox.Location = new System.Drawing.Point(221, 66);
+      this.typeComboBox.Location = new System.Drawing.Point(221, 71);
       this.typeComboBox.Name = "typeComboBox";
-      this.typeComboBox.Size = new System.Drawing.Size(270, 21);
+      this.typeComboBox.Size = new System.Drawing.Size(270, 22);
       this.typeComboBox.TabIndex = 0;
       this.typeComboBox.SelectedIndexChanged += new System.EventHandler(this.typeComboBox_SelectedIndexChanged);
       // 
       // firstNameTextBox
       // 
-      this.firstNameTextBox.Location = new System.Drawing.Point(221, 93);
+      this.firstNameTextBox.Location = new System.Drawing.Point(221, 100);
       this.firstNameTextBox.Name = "firstNameTextBox";
       this.firstNameTextBox.Size = new System.Drawing.Size(270, 20);
       this.firstNameTextBox.TabIndex = 1;
@@ -73,7 +73,7 @@ namespace Pirate.PiVote.Client
       // 
       // familyNameTextBox
       // 
-      this.familyNameTextBox.Location = new System.Drawing.Point(221, 119);
+      this.familyNameTextBox.Location = new System.Drawing.Point(221, 128);
       this.familyNameTextBox.Name = "familyNameTextBox";
       this.familyNameTextBox.Size = new System.Drawing.Size(270, 20);
       this.familyNameTextBox.TabIndex = 2;
@@ -82,33 +82,33 @@ namespace Pirate.PiVote.Client
       // typeLabel
       // 
       this.typeLabel.AutoSize = true;
-      this.typeLabel.Location = new System.Drawing.Point(64, 69);
+      this.typeLabel.Location = new System.Drawing.Point(64, 74);
       this.typeLabel.Name = "typeLabel";
-      this.typeLabel.Size = new System.Drawing.Size(80, 13);
+      this.typeLabel.Size = new System.Drawing.Size(83, 14);
       this.typeLabel.TabIndex = 3;
       this.typeLabel.Text = "Certificate type:";
       // 
       // firstNameLabel
       // 
       this.firstNameLabel.AutoSize = true;
-      this.firstNameLabel.Location = new System.Drawing.Point(64, 96);
+      this.firstNameLabel.Location = new System.Drawing.Point(64, 103);
       this.firstNameLabel.Name = "firstNameLabel";
-      this.firstNameLabel.Size = new System.Drawing.Size(55, 13);
+      this.firstNameLabel.Size = new System.Drawing.Size(57, 14);
       this.firstNameLabel.TabIndex = 4;
       this.firstNameLabel.Text = "Firstname:";
       // 
       // familyNameLabel
       // 
       this.familyNameLabel.AutoSize = true;
-      this.familyNameLabel.Location = new System.Drawing.Point(64, 122);
+      this.familyNameLabel.Location = new System.Drawing.Point(64, 131);
       this.familyNameLabel.Name = "familyNameLabel";
-      this.familyNameLabel.Size = new System.Drawing.Size(68, 13);
+      this.familyNameLabel.Size = new System.Drawing.Size(69, 14);
       this.familyNameLabel.TabIndex = 5;
       this.familyNameLabel.Text = "Family name:";
       // 
       // functionNameTextBox
       // 
-      this.functionNameTextBox.Location = new System.Drawing.Point(221, 145);
+      this.functionNameTextBox.Location = new System.Drawing.Point(221, 156);
       this.functionNameTextBox.Name = "functionNameTextBox";
       this.functionNameTextBox.Size = new System.Drawing.Size(270, 20);
       this.functionNameTextBox.TabIndex = 6;
@@ -117,17 +117,17 @@ namespace Pirate.PiVote.Client
       // functionNameLabel
       // 
       this.functionNameLabel.AutoSize = true;
-      this.functionNameLabel.Location = new System.Drawing.Point(64, 148);
+      this.functionNameLabel.Location = new System.Drawing.Point(64, 159);
       this.functionNameLabel.Name = "functionNameLabel";
-      this.functionNameLabel.Size = new System.Drawing.Size(75, 13);
+      this.functionNameLabel.Size = new System.Drawing.Size(77, 14);
       this.functionNameLabel.TabIndex = 7;
       this.functionNameLabel.Text = "Party function:";
       // 
       // saveButton
       // 
-      this.saveButton.Location = new System.Drawing.Point(360, 171);
+      this.saveButton.Location = new System.Drawing.Point(360, 184);
       this.saveButton.Name = "saveButton";
-      this.saveButton.Size = new System.Drawing.Size(131, 30);
+      this.saveButton.Size = new System.Drawing.Size(131, 32);
       this.saveButton.TabIndex = 8;
       this.saveButton.Text = "&Save...";
       this.saveButton.UseVisualStyleBackColor = true;
@@ -135,7 +135,7 @@ namespace Pirate.PiVote.Client
       // 
       // CreateCertificateItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.saveButton);
       this.Controls.Add(this.functionNameLabel);
@@ -146,8 +146,9 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.familyNameTextBox);
       this.Controls.Add(this.firstNameTextBox);
       this.Controls.Add(this.typeComboBox);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "CreateCertificateItem";
-      this.Size = new System.Drawing.Size(700, 500);
+      this.Size = new System.Drawing.Size(700, 538);
       this.Load += new System.EventHandler(this.StartWizardItem_Load);
       this.ResumeLayout(false);
       this.PerformLayout();

@@ -40,7 +40,7 @@
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.messageLabel.Location = new System.Drawing.Point(70, 0);
       this.messageLabel.Name = "messageLabel";
-      this.messageLabel.Size = new System.Drawing.Size(432, 73);
+      this.messageLabel.Size = new System.Drawing.Size(432, 79);
       this.messageLabel.TabIndex = 0;
       this.messageLabel.Text = "label1";
       // 
@@ -49,18 +49,19 @@
       this.iconBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
       this.iconBox.Location = new System.Drawing.Point(0, 0);
       this.iconBox.Name = "iconBox";
-      this.iconBox.Size = new System.Drawing.Size(64, 64);
+      this.iconBox.Size = new System.Drawing.Size(64, 69);
       this.iconBox.TabIndex = 1;
       this.iconBox.TabStop = false;
       // 
       // Message
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.iconBox);
       this.Controls.Add(this.messageLabel);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "Message";
-      this.Size = new System.Drawing.Size(505, 75);
+      this.Size = new System.Drawing.Size(505, 81);
       ((System.ComponentModel.ISupportInitialize)(this.iconBox)).EndInit();
       this.ResumeLayout(false);
 

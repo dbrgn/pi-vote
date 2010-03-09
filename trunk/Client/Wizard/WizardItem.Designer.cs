@@ -42,8 +42,17 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
-      components = new System.ComponentModel.Container();
+      this.SuspendLayout();
+      // 
+      // WizardItem
+      // 
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.Name = "WizardItem";
+      this.Size = new System.Drawing.Size(150, 162);
+      this.ResumeLayout(false);
+
     }
 
     #endregion

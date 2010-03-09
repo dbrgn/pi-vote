@@ -54,10 +54,11 @@ namespace Pirate.PiVote.Client
             this.valueColumnHeader});
       this.resultList.FullRowSelect = true;
       this.resultList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-      this.resultList.Location = new System.Drawing.Point(16, 17);
+      this.resultList.Location = new System.Drawing.Point(16, 18);
+      this.resultList.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.resultList.MultiSelect = false;
       this.resultList.Name = "resultList";
-      this.resultList.Size = new System.Drawing.Size(670, 411);
+      this.resultList.Size = new System.Drawing.Size(670, 442);
       this.resultList.TabIndex = 6;
       this.resultList.UseCompatibleStateImageBehavior = false;
       this.resultList.View = System.Windows.Forms.View.Details;
@@ -74,11 +75,13 @@ namespace Pirate.PiVote.Client
       // 
       // TallyItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.resultList);
+      this.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.Name = "TallyItem";
-      this.Size = new System.Drawing.Size(700, 500);
+      this.Size = new System.Drawing.Size(700, 538);
       this.ResumeLayout(false);
 
     }

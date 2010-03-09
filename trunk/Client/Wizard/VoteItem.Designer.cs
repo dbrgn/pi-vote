@@ -44,12 +44,13 @@ namespace Pirate.PiVote.Client
     {
       this.SuspendLayout();
       // 
-      // AdminChooseItem
+      // VoteItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Name = "AdminChooseItem";
-      this.Size = new System.Drawing.Size(700, 500);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.Name = "VoteItem";
+      this.Size = new System.Drawing.Size(700, 538);
       this.ResumeLayout(false);
 
     }

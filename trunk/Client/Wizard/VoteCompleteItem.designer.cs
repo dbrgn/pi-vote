@@ -48,18 +48,19 @@ namespace Pirate.PiVote.Client
       // castLabel
       // 
       this.castLabel.AutoSize = true;
-      this.castLabel.Location = new System.Drawing.Point(46, 197);
+      this.castLabel.Location = new System.Drawing.Point(46, 212);
       this.castLabel.Name = "castLabel";
-      this.castLabel.Size = new System.Drawing.Size(0, 13);
+      this.castLabel.Size = new System.Drawing.Size(0, 14);
       this.castLabel.TabIndex = 2;
       // 
       // VoteCompleteItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.castLabel);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "VoteCompleteItem";
-      this.Size = new System.Drawing.Size(700, 500);
+      this.Size = new System.Drawing.Size(700, 538);
       this.Load += new System.EventHandler(this.VoteCompleteItem_Load);
       this.ResumeLayout(false);
       this.PerformLayout();

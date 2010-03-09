@@ -57,7 +57,7 @@ namespace Pirate.PiVote.Client
       // 
       // idTextBox
       // 
-      this.idTextBox.Location = new System.Drawing.Point(174, 93);
+      this.idTextBox.Location = new System.Drawing.Point(174, 100);
       this.idTextBox.Name = "idTextBox";
       this.idTextBox.ReadOnly = true;
       this.idTextBox.Size = new System.Drawing.Size(245, 20);
@@ -66,15 +66,15 @@ namespace Pirate.PiVote.Client
       // idLabel
       // 
       this.idLabel.AutoSize = true;
-      this.idLabel.Location = new System.Drawing.Point(76, 96);
+      this.idLabel.Location = new System.Drawing.Point(76, 103);
       this.idLabel.Name = "idLabel";
-      this.idLabel.Size = new System.Drawing.Size(19, 13);
+      this.idLabel.Size = new System.Drawing.Size(18, 14);
       this.idLabel.TabIndex = 7;
       this.idLabel.Text = "Id:";
       // 
       // typeTextBox
       // 
-      this.typeTextBox.Location = new System.Drawing.Point(174, 119);
+      this.typeTextBox.Location = new System.Drawing.Point(174, 128);
       this.typeTextBox.Name = "typeTextBox";
       this.typeTextBox.ReadOnly = true;
       this.typeTextBox.Size = new System.Drawing.Size(245, 20);
@@ -83,15 +83,15 @@ namespace Pirate.PiVote.Client
       // typeLabel
       // 
       this.typeLabel.AutoSize = true;
-      this.typeLabel.Location = new System.Drawing.Point(76, 122);
+      this.typeLabel.Location = new System.Drawing.Point(76, 131);
       this.typeLabel.Name = "typeLabel";
-      this.typeLabel.Size = new System.Drawing.Size(34, 13);
+      this.typeLabel.Size = new System.Drawing.Size(33, 14);
       this.typeLabel.TabIndex = 9;
       this.typeLabel.Text = "Type:";
       // 
       // firstNameTextBox
       // 
-      this.firstNameTextBox.Location = new System.Drawing.Point(174, 145);
+      this.firstNameTextBox.Location = new System.Drawing.Point(174, 156);
       this.firstNameTextBox.Name = "firstNameTextBox";
       this.firstNameTextBox.Size = new System.Drawing.Size(245, 20);
       this.firstNameTextBox.TabIndex = 12;
@@ -100,15 +100,15 @@ namespace Pirate.PiVote.Client
       // firstNameLabel
       // 
       this.firstNameLabel.AutoSize = true;
-      this.firstNameLabel.Location = new System.Drawing.Point(76, 148);
+      this.firstNameLabel.Location = new System.Drawing.Point(76, 159);
       this.firstNameLabel.Name = "firstNameLabel";
-      this.firstNameLabel.Size = new System.Drawing.Size(58, 13);
+      this.firstNameLabel.Size = new System.Drawing.Size(60, 14);
       this.firstNameLabel.TabIndex = 11;
       this.firstNameLabel.Text = "First name:";
       // 
       // familyNameTextBox
       // 
-      this.familyNameTextBox.Location = new System.Drawing.Point(174, 171);
+      this.familyNameTextBox.Location = new System.Drawing.Point(174, 184);
       this.familyNameTextBox.Name = "familyNameTextBox";
       this.familyNameTextBox.Size = new System.Drawing.Size(245, 20);
       this.familyNameTextBox.TabIndex = 14;
@@ -117,15 +117,15 @@ namespace Pirate.PiVote.Client
       // familyNameLabel
       // 
       this.familyNameLabel.AutoSize = true;
-      this.familyNameLabel.Location = new System.Drawing.Point(76, 174);
+      this.familyNameLabel.Location = new System.Drawing.Point(76, 187);
       this.familyNameLabel.Name = "familyNameLabel";
-      this.familyNameLabel.Size = new System.Drawing.Size(68, 13);
+      this.familyNameLabel.Size = new System.Drawing.Size(69, 14);
       this.familyNameLabel.TabIndex = 13;
       this.familyNameLabel.Text = "Family name:";
       // 
       // emailAddressTextBox
       // 
-      this.emailAddressTextBox.Location = new System.Drawing.Point(174, 197);
+      this.emailAddressTextBox.Location = new System.Drawing.Point(174, 212);
       this.emailAddressTextBox.Name = "emailAddressTextBox";
       this.emailAddressTextBox.Size = new System.Drawing.Size(245, 20);
       this.emailAddressTextBox.TabIndex = 16;
@@ -134,18 +134,18 @@ namespace Pirate.PiVote.Client
       // emailAddressLabel
       // 
       this.emailAddressLabel.AutoSize = true;
-      this.emailAddressLabel.Location = new System.Drawing.Point(76, 200);
+      this.emailAddressLabel.Location = new System.Drawing.Point(76, 215);
       this.emailAddressLabel.Name = "emailAddressLabel";
-      this.emailAddressLabel.Size = new System.Drawing.Size(75, 13);
+      this.emailAddressLabel.Size = new System.Drawing.Size(77, 14);
       this.emailAddressLabel.TabIndex = 15;
       this.emailAddressLabel.Text = "Email address:";
       // 
       // sendButton
       // 
       this.sendButton.Enabled = false;
-      this.sendButton.Location = new System.Drawing.Point(328, 223);
+      this.sendButton.Location = new System.Drawing.Point(328, 240);
       this.sendButton.Name = "sendButton";
-      this.sendButton.Size = new System.Drawing.Size(91, 23);
+      this.sendButton.Size = new System.Drawing.Size(91, 25);
       this.sendButton.TabIndex = 17;
       this.sendButton.Text = "&Send";
       this.sendButton.UseVisualStyleBackColor = true;
@@ -153,7 +153,7 @@ namespace Pirate.PiVote.Client
       // 
       // CreateRequestItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.sendButton);
       this.Controls.Add(this.emailAddressTextBox);
@@ -166,8 +166,9 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.typeLabel);
       this.Controls.Add(this.idTextBox);
       this.Controls.Add(this.idLabel);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "CreateRequestItem";
-      this.Size = new System.Drawing.Size(700, 500);
+      this.Size = new System.Drawing.Size(700, 538);
       this.ResumeLayout(false);
       this.PerformLayout();
 
