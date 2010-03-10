@@ -223,20 +223,20 @@ namespace Pirate.PiVote.Crypto
       if (!certificate.Valid(this.certificateStorage))
         throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Authority certificate not valid.");
       if (!(certificate is AuthorityCertificate))
-        throw new ArgumentException("No an authority certificate.");
+        throw new PiSecurityException(ExceptionCode.NoAuthorizedAuthority, "No an authority certificate.");
 
       MySqlTransaction transaction = this.dbConnection.BeginTransaction();
 
       MySqlCommand countCommand = new MySqlCommand("SELECT count(*) FROM authority WHERE VotingId = @VotingId", this.dbConnection, transaction);
       countCommand.Add("@VotingId", this.parameters.VotingId.ToByteArray());
       if ((long)countCommand.ExecuteScalar() >= this.parameters.AuthorityCount)
-        throw new InvalidOperationException("Already enough authorities.");
+        throw new PiArgumentException(ExceptionCode.AlreadyEnoughAuthorities, "Already enough authorities.");
 
       MySqlCommand addedCommand = new MySqlCommand("SELECT count(*) FROM authority WHERE VotingId = @VotingId AND AuthorityId = @AuthorityId", this.dbConnection, transaction);
       addedCommand.Add("@VotingId", this.parameters.VotingId.ToByteArray());
       addedCommand.Add("@AuthorityId", certificate.Id.ToByteArray());
       if (addedCommand.ExecuteHasRows())
-        throw new InvalidOperationException("Already an authority of the voting.");
+        throw new PiArgumentException(ExceptionCode.AuthorityAlreadyInVoting, "Already an authority of the voting.");
 
       MySqlCommand indexCommand = new MySqlCommand("SELECT max(AuthorityIndex) + 1 FROM authority WHERE VotingId = @VotingId", this.dbConnection, transaction);
       indexCommand.Add("@VotingId", this.parameters.VotingId.ToByteArray());
@@ -307,7 +307,7 @@ namespace Pirate.PiVote.Crypto
       else
       {
         reader.Close();
-        throw new ArgumentException("Bad authority index.");
+        throw new PiArgumentException(ExceptionCode.NoAuthorizedAuthority, "Bad authority index.");
       }
     }
 
@@ -320,23 +320,23 @@ namespace Pirate.PiVote.Crypto
       if (signedSharePart == null)
         throw new ArgumentNullException("shares");
       if (Status != VotingStatus.New)
-        throw new InvalidOperationException("Wrong status for operation.");
+        throw new PiArgumentException(ExceptionCode.WrongStatusForOperation, "Wrong status for operation.");
 
       SharePart sharePart = signedSharePart.Value;
 
       Certificate certificate = GetAuthority(sharePart.AuthorityIndex);
 
       if (!signedSharePart.Verify(this.certificateStorage))
-        throw new ArgumentException("Bad signature.");
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Bad signature.");
       if (!signedSharePart.Certificate.IsIdentic(certificate))
-        throw new ArgumentException("Not signed by proper authority.");
+        throw new PiSecurityException(ExceptionCode.NoAuthorizedAuthority, "Not signed by proper authority.");
 
       bool exists = this.dbConnection.ExecuteHasRows(
         "SELECT count(*) FROM sharepart WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
         "@VotingId", Id.ToByteArray(),
         "@AuthorityIndex", sharePart.AuthorityIndex);
       if (exists)
-        throw new ArgumentException("Authority has already deposited shares.");
+        throw new PiArgumentException(ExceptionCode.AuthorityHasAlreadyDeposited, "Authority has already deposited shares.");
 
       MySqlCommand insertCommand = new MySqlCommand("INSERT INTO sharepart (VotingId, AuthorityIndex, Value) VALUES (@VotingId, @AuthorityIndex, @Value)", this.dbConnection);
       insertCommand.Add("@VotingId", Id.ToByteArray());
@@ -396,23 +396,23 @@ namespace Pirate.PiVote.Crypto
       if (signedShareResponse == null)
         throw new ArgumentNullException("shares");
       if (Status != VotingStatus.Sharing)
-        throw new InvalidOperationException("Wrong status for operation.");
+        throw new PiArgumentException(ExceptionCode.WrongStatusForOperation, "Wrong status for operation.");
 
       ShareResponse shareResponse = signedShareResponse.Value;
 
       Certificate certificate = GetAuthority(shareResponse.AuthorityIndex);
 
       if (!signedShareResponse.Verify(this.certificateStorage))
-        throw new ArgumentException("Bad signature.");
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Bad signature.");
       if (!signedShareResponse.Certificate.IsIdentic(certificate))
-        throw new ArgumentException("Not signed by proper authority.");
+        throw new PiSecurityException(ExceptionCode.NoAuthorizedAuthority, "Not signed by proper authority.");
 
       bool exists = this.dbConnection.ExecuteHasRows(
         "SELECT count(*) FROM shareresponse WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
         "@VotingId", Id.ToByteArray(),
         "@AuthorityIndex", shareResponse.AuthorityIndex);
       if (exists)
-        throw new ArgumentException("Authority has already deposited shares.");
+        throw new PiArgumentException(ExceptionCode.AuthorityHasAlreadyDeposited, "Authority has already deposited share responses.");
 
       MySqlCommand insertCommand = new MySqlCommand("INSERT INTO shareresponse (VotingId, AuthorityIndex, Value) VALUES (@VotingId, @AuthorityIndex, @Value)", this.dbConnection);
       insertCommand.Add("@VotingId", Id.ToByteArray());

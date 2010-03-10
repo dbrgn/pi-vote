@@ -258,6 +258,105 @@
   <data name="ClientVotePushVote" xml:space="preserve">
     <value>Pushing vote.</value>
   </data>
+  <data name="ExceptionAlreadyEnoughAuthorities" xml:space="preserve">
+    <value>Too many authorities with this voting.</value>
+  </data>
+  <data name="ExceptionAlreadyVoted" xml:space="preserve">
+    <value>You have already cast your vote.</value>
+  </data>
+  <data name="ExceptionArgumentNull" xml:space="preserve">
+    <value>An unknown error has occurred.</value>
+  </data>
+  <data name="ExceptionArgumentOutOfRange" xml:space="preserve">
+    <value>An unknown error has occurred.</value>
+  </data>
+  <data name="ExceptionAuthorityAlreadyInVoting" xml:space="preserve">
+    <value>Supplied authority is already assigned to this voting.</value>
+  </data>
+  <data name="ExceptionAuthorityCountMismatch" xml:space="preserve">
+    <value>Authority count does not match.</value>
+  </data>
+  <data name="ExceptionAuthorityCountOutOfRange" xml:space="preserve">
+    <value>Supplied authority count out of range.</value>
+  </data>
+  <data name="ExceptionAuthorityHasAlreadyDeposited" xml:space="preserve">
+    <value>Authority has already performed this step.</value>
+  </data>
+  <data name="ExceptionAuthorityInvalid" xml:space="preserve">
+    <value>Authority is not valid.</value>
+  </data>
+  <data name="ExceptionBadSerializableFormat" xml:space="preserve">
+    <value>Binary data is currupted.</value>
+  </data>
+  <data name="ExceptionBadVotingMaterial" xml:space="preserve">
+    <value>Voting material is not valid.</value>
+  </data>
+  <data name="ExceptionInvalidCertificate" xml:space="preserve">
+    <value>Certificate is not valid.</value>
+  </data>
+  <data name="ExceptionInvalidSignature" xml:space="preserve">
+    <value>Signature is not valid.</value>
+  </data>
+  <data name="ExceptionMaxVotaOutOfRange" xml:space="preserve">
+    <value>Supplied maximum vote number out of range.</value>
+  </data>
+  <data name="ExceptionNoAuthorityWithCertificate" xml:space="preserve">
+    <value>No authority with supplied certificate known.</value>
+  </data>
+  <data name="ExceptionNoAuthorizedAdmin" xml:space="preserve">
+    <value>You ar no authorized administrator.</value>
+  </data>
+  <data name="ExceptionNoAuthorizedAuthority" xml:space="preserve">
+    <value>Supplied certificate is not from an authority.</value>
+  </data>
+  <data name="ExceptionNoVoterCertificate" xml:space="preserve">
+    <value>Supplied certificate is not from any voter.</value>
+  </data>
+  <data name="ExceptionNoVotingWithId" xml:space="preserve">
+    <value>Voting not found.</value>
+  </data>
+  <data name="ExceptionOptionCountMismatch" xml:space="preserve">
+    <value>Supplied number of options does not match.</value>
+  </data>
+  <data name="ExceptionOptionCountOutOfRange" xml:space="preserve">
+    <value>Supplied option count out of range.</value>
+  </data>
+  <data name="ExceptionPIsNoPrime" xml:space="preserve">
+    <value>Supplied number is no prime.</value>
+  </data>
+  <data name="ExceptionPIsNoSafePrime" xml:space="preserve">
+    <value>Supplied number is no safe prime.</value>
+  </data>
+  <data name="ExceptionQIsNoPrime" xml:space="preserve">
+    <value>Supplied number is no prime.</value>
+  </data>
+  <data name="ExceptionRequestSignatureInvalid" xml:space="preserve">
+    <value>Signature request is not valid.</value>
+  </data>
+  <data name="ExceptionSignatureRequestInvalid" xml:space="preserve">
+    <value>Signature request is not valid.</value>
+  </data>
+  <data name="ExceptionSignatureRequestNotFound" xml:space="preserve">
+    <value>Requested signature request was not found.</value>
+  </data>
+  <data name="ExceptionSignatureRequestResponded" xml:space="preserve">
+    <value>This signature request was already answered.</value>
+  </data>
+  <data name="ExceptionSignatureResponseNotFromCA" xml:space="preserve">
+    <value>Signature request is not from proper CA.</value>
+  </data>
+  <data name="ExceptionTheresholdOutOfRange" xml:space="preserve">
+    <value>Supplied thereshold out of range.</value>
+  </data>
+  <data name="ExceptionUnknown" xml:space="preserve">
+    <value>An unknown error has occurred.</value>
+  </data>
+  <data name="ExceptionVoteSignatureNotValid" xml:space="preserve">
+    <value>Signature on vote is not valid.</value>
+  </data>
+  <data name="ExceptionWrongStatusForOperation" xml:space="preserve">
+    <value>Operation not possible in this state of voting.</value>
+  </data>
   <data name="VotingStatusAborted" xml:space="preserve">
     <value>Aborted</value>
   </data>

@@ -87,5 +87,10 @@ namespace Pirate.PiVote
 
       return exception;
     }
+
+    public string Text
+    {
+      get { return Code.Text(); }
+    }
   }
 }

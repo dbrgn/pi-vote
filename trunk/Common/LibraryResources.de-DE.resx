@@ -258,6 +258,105 @@
   <data name="ClientVotePushVote" xml:space="preserve">
     <value>Lade Stimme hinauf.</value>
   </data>
+  <data name="ExceptionAlreadyEnoughAuthorities" xml:space="preserve">
+    <value>Zu viele Autoritäten bei dieser Abstimmung.</value>
+  </data>
+  <data name="ExceptionAlreadyVoted" xml:space="preserve">
+    <value>Sie haben Ihre Stimme bereits abgegeben.</value>
+  </data>
+  <data name="ExceptionArgumentNull" xml:space="preserve">
+    <value>Ein unbekannter Fehler ist aufgetreten.</value>
+  </data>
+  <data name="ExceptionArgumentOutOfRange" xml:space="preserve">
+    <value>Ein unbekannter Fehler ist aufgetreten.</value>
+  </data>
+  <data name="ExceptionAuthorityAlreadyInVoting" xml:space="preserve">
+    <value>Autorität ist bereits dieser Abstimmung zugeordnet.</value>
+  </data>
+  <data name="ExceptionAuthorityCountMismatch" xml:space="preserve">
+    <value>Anzahl der Autoritäten stimmt nicht überein.</value>
+  </data>
+  <data name="ExceptionAuthorityCountOutOfRange" xml:space="preserve">
+    <value>Anzahl der Autoritäten ausserhalb des Wertebereichs.</value>
+  </data>
+  <data name="ExceptionAuthorityHasAlreadyDeposited" xml:space="preserve">
+    <value>Autorität hat diesen Schritt bereits ausgeführt.</value>
+  </data>
+  <data name="ExceptionAuthorityInvalid" xml:space="preserve">
+    <value>Autorität ist ungültig.</value>
+  </data>
+  <data name="ExceptionBadSerializableFormat" xml:space="preserve">
+    <value>Binärdaten sind korrupt.</value>
+  </data>
+  <data name="ExceptionBadVotingMaterial" xml:space="preserve">
+    <value>Abstimmungsmaterial ist ungültig.</value>
+  </data>
+  <data name="ExceptionInvalidCertificate" xml:space="preserve">
+    <value>Zertifikat ist ungültig.</value>
+  </data>
+  <data name="ExceptionInvalidSignature" xml:space="preserve">
+    <value>Signatur is ungültig.</value>
+  </data>
+  <data name="ExceptionMaxVotaOutOfRange" xml:space="preserve">
+    <value>Maximale Stimmzahl ist ausserhalb des Wertebereichs.</value>
+  </data>
+  <data name="ExceptionNoAuthorityWithCertificate" xml:space="preserve">
+    <value>Kein Authorität mit diesem Zertifikat gefunden.</value>
+  </data>
+  <data name="ExceptionNoAuthorizedAdmin" xml:space="preserve">
+    <value>Kein autorisierter Administrator.</value>
+  </data>
+  <data name="ExceptionNoAuthorizedAuthority" xml:space="preserve">
+    <value>Zertifikate ist von keiner Autorität.</value>
+  </data>
+  <data name="ExceptionNoVoterCertificate" xml:space="preserve">
+    <value>Zertifikat nicht Abstimmungsberechtig.</value>
+  </data>
+  <data name="ExceptionNoVotingWithId" xml:space="preserve">
+    <value>Abstimmung wurde nicht gefunden.</value>
+  </data>
+  <data name="ExceptionOptionCountMismatch" xml:space="preserve">
+    <value>Anzahl Optionen stimmt nicht überein.</value>
+  </data>
+  <data name="ExceptionOptionCountOutOfRange" xml:space="preserve">
+    <value>Ungültige Anzahl Optionen.</value>
+  </data>
+  <data name="ExceptionPIsNoPrime" xml:space="preserve">
+    <value>Zahl ist nicht prim.</value>
+  </data>
+  <data name="ExceptionPIsNoSafePrime" xml:space="preserve">
+    <value>Zahl ist keine sichere Primzahl.</value>
+  </data>
+  <data name="ExceptionQIsNoPrime" xml:space="preserve">
+    <value>Zahl ist nicht prim.</value>
+  </data>
+  <data name="ExceptionRequestSignatureInvalid" xml:space="preserve">
+    <value>Signatur der Zertifizierungsanfrage ist ungültig.</value>
+  </data>
+  <data name="ExceptionSignatureRequestInvalid" xml:space="preserve">
+    <value>Zertifizierungsanfrage is ungültig.</value>
+  </data>
+  <data name="ExceptionSignatureRequestNotFound" xml:space="preserve">
+    <value>Zertifizierungsanfrage wurde nicht gefunden.</value>
+  </data>
+  <data name="ExceptionSignatureRequestResponded" xml:space="preserve">
+    <value>Diese Zertifizierungsanfrage wurde bereits beantwortet.</value>
+  </data>
+  <data name="ExceptionSignatureResponseNotFromCA" xml:space="preserve">
+    <value>Antwort auf Zertifizierungsanfrage ist nicht von einer Zertifizierungstelle.</value>
+  </data>
+  <data name="ExceptionTheresholdOutOfRange" xml:space="preserve">
+    <value>Grenzwert ausserhalb des Wertebereichs.</value>
+  </data>
+  <data name="ExceptionUnknown" xml:space="preserve">
+    <value>Ein unbekannter Fehler ist aufgetreten.</value>
+  </data>
+  <data name="ExceptionVoteSignatureNotValid" xml:space="preserve">
+    <value>Signatur der Stimme ist nicht gültig.</value>
+  </data>
+  <data name="ExceptionWrongStatusForOperation" xml:space="preserve">
+    <value>Operation im aktuellen Status der Abstimmung nicht erlaubt.</value>
+  </data>
   <data name="VotingStatusAborted" xml:space="preserve">
     <value>Abgebrochen</value>
   </data>

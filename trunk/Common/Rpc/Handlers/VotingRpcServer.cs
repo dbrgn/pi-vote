@@ -188,6 +188,10 @@ namespace Pirate.PiVote.Rpc
       replaceCommand.Parameters.AddWithValue("@Value", signatureRequest.ToBinary());
       replaceCommand.ExecuteNonQuery();
 
+      MySqlCommand deleteCommand = new MySqlCommand("DELETE FROM signatureresponse WHERE Id = @Id", this.dbConnection);
+      replaceCommand.Parameters.AddWithValue("@Id", id.ToByteArray());
+      replaceCommand.ExecuteNonQuery();
+
       if (signatureRequest.Certificate is AuthorityCertificate)
       {
         CertificateStorage.Add(signatureRequest.Certificate);

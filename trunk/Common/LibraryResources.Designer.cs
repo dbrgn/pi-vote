@@ -484,6 +484,303 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Too many authorities with this voting..
+        /// </summary>
+        public static string ExceptionAlreadyEnoughAuthorities {
+            get {
+                return ResourceManager.GetString("ExceptionAlreadyEnoughAuthorities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have already cast your vote..
+        /// </summary>
+        public static string ExceptionAlreadyVoted {
+            get {
+                return ResourceManager.GetString("ExceptionAlreadyVoted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unknown error has occurred..
+        /// </summary>
+        public static string ExceptionArgumentNull {
+            get {
+                return ResourceManager.GetString("ExceptionArgumentNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unknown error has occurred..
+        /// </summary>
+        public static string ExceptionArgumentOutOfRange {
+            get {
+                return ResourceManager.GetString("ExceptionArgumentOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplied authority is already assigned to this voting..
+        /// </summary>
+        public static string ExceptionAuthorityAlreadyInVoting {
+            get {
+                return ResourceManager.GetString("ExceptionAuthorityAlreadyInVoting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authority count does not match..
+        /// </summary>
+        public static string ExceptionAuthorityCountMismatch {
+            get {
+                return ResourceManager.GetString("ExceptionAuthorityCountMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplied authority count out of range..
+        /// </summary>
+        public static string ExceptionAuthorityCountOutOfRange {
+            get {
+                return ResourceManager.GetString("ExceptionAuthorityCountOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authority has already performed this step..
+        /// </summary>
+        public static string ExceptionAuthorityHasAlreadyDeposited {
+            get {
+                return ResourceManager.GetString("ExceptionAuthorityHasAlreadyDeposited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authority is not valid..
+        /// </summary>
+        public static string ExceptionAuthorityInvalid {
+            get {
+                return ResourceManager.GetString("ExceptionAuthorityInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Binary data is currupted..
+        /// </summary>
+        public static string ExceptionBadSerializableFormat {
+            get {
+                return ResourceManager.GetString("ExceptionBadSerializableFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voting material is not valid..
+        /// </summary>
+        public static string ExceptionBadVotingMaterial {
+            get {
+                return ResourceManager.GetString("ExceptionBadVotingMaterial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate is not valid..
+        /// </summary>
+        public static string ExceptionInvalidCertificate {
+            get {
+                return ResourceManager.GetString("ExceptionInvalidCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signature is not valid..
+        /// </summary>
+        public static string ExceptionInvalidSignature {
+            get {
+                return ResourceManager.GetString("ExceptionInvalidSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplied maximum vote number out of range..
+        /// </summary>
+        public static string ExceptionMaxVotaOutOfRange {
+            get {
+                return ResourceManager.GetString("ExceptionMaxVotaOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No authority with supplied certificate known..
+        /// </summary>
+        public static string ExceptionNoAuthorityWithCertificate {
+            get {
+                return ResourceManager.GetString("ExceptionNoAuthorityWithCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You ar no authorized administrator..
+        /// </summary>
+        public static string ExceptionNoAuthorizedAdmin {
+            get {
+                return ResourceManager.GetString("ExceptionNoAuthorizedAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplied certificate is not from an authority..
+        /// </summary>
+        public static string ExceptionNoAuthorizedAuthority {
+            get {
+                return ResourceManager.GetString("ExceptionNoAuthorizedAuthority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplied certificate is not from any voter..
+        /// </summary>
+        public static string ExceptionNoVoterCertificate {
+            get {
+                return ResourceManager.GetString("ExceptionNoVoterCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voting not found..
+        /// </summary>
+        public static string ExceptionNoVotingWithId {
+            get {
+                return ResourceManager.GetString("ExceptionNoVotingWithId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplied number of options does not match..
+        /// </summary>
+        public static string ExceptionOptionCountMismatch {
+            get {
+                return ResourceManager.GetString("ExceptionOptionCountMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplied option count out of range..
+        /// </summary>
+        public static string ExceptionOptionCountOutOfRange {
+            get {
+                return ResourceManager.GetString("ExceptionOptionCountOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplied number is no prime..
+        /// </summary>
+        public static string ExceptionPIsNoPrime {
+            get {
+                return ResourceManager.GetString("ExceptionPIsNoPrime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplied number is no safe prime..
+        /// </summary>
+        public static string ExceptionPIsNoSafePrime {
+            get {
+                return ResourceManager.GetString("ExceptionPIsNoSafePrime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplied number is no prime..
+        /// </summary>
+        public static string ExceptionQIsNoPrime {
+            get {
+                return ResourceManager.GetString("ExceptionQIsNoPrime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signature request is not valid..
+        /// </summary>
+        public static string ExceptionRequestSignatureInvalid {
+            get {
+                return ResourceManager.GetString("ExceptionRequestSignatureInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signature request is not valid..
+        /// </summary>
+        public static string ExceptionSignatureRequestInvalid {
+            get {
+                return ResourceManager.GetString("ExceptionSignatureRequestInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requested signature request was not found..
+        /// </summary>
+        public static string ExceptionSignatureRequestNotFound {
+            get {
+                return ResourceManager.GetString("ExceptionSignatureRequestNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This signature request was already answered..
+        /// </summary>
+        public static string ExceptionSignatureRequestResponded {
+            get {
+                return ResourceManager.GetString("ExceptionSignatureRequestResponded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signature request is not from proper CA..
+        /// </summary>
+        public static string ExceptionSignatureResponseNotFromCA {
+            get {
+                return ResourceManager.GetString("ExceptionSignatureResponseNotFromCA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Supplied thereshold out of range..
+        /// </summary>
+        public static string ExceptionTheresholdOutOfRange {
+            get {
+                return ResourceManager.GetString("ExceptionTheresholdOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unknown error has occurred..
+        /// </summary>
+        public static string ExceptionUnknown {
+            get {
+                return ResourceManager.GetString("ExceptionUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signature on vote is not valid..
+        /// </summary>
+        public static string ExceptionVoteSignatureNotValid {
+            get {
+                return ResourceManager.GetString("ExceptionVoteSignatureNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation not possible in this state of voting..
+        /// </summary>
+        public static string ExceptionWrongStatusForOperation {
+            get {
+                return ResourceManager.GetString("ExceptionWrongStatusForOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aborted.
         /// </summary>
         public static string VotingStatusAborted {
