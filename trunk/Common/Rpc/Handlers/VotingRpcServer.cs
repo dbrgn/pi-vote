@@ -189,8 +189,8 @@ namespace Pirate.PiVote.Rpc
       replaceCommand.ExecuteNonQuery();
 
       MySqlCommand deleteCommand = new MySqlCommand("DELETE FROM signatureresponse WHERE Id = @Id", this.dbConnection);
-      replaceCommand.Parameters.AddWithValue("@Id", id.ToByteArray());
-      replaceCommand.ExecuteNonQuery();
+      deleteCommand.Parameters.AddWithValue("@Id", id.ToByteArray());
+      deleteCommand.ExecuteNonQuery();
 
       if (signatureRequest.Certificate is AuthorityCertificate)
       {

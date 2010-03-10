@@ -31,7 +31,7 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      return null;
+      return new ChooseCertificateItem();
     }
 
     public override WizardItem Previous()
@@ -49,26 +49,15 @@ namespace Pirate.PiVote.Client
       get { return !this.run; }
     }
 
+    public override bool CanNext
+    {
+      get { return !this.run; }
+    }
+
     public override void Begin()
     {
       this.idTextBox.Text = Status.Certificate.Id.ToString();
-
-      if (Status.Certificate is VoterCertificate)
-      {
-        this.typeTextBox.Text = "Voter";
-      }
-      else if (Status.Certificate is AuthorityCertificate)
-      {
-        this.typeTextBox.Text = "Voting Authority";
-      }
-      else if (Status.Certificate is AdminCertificate)
-      {
-        this.typeTextBox.Text = "Administrator";
-      }
-      else
-      {
-        this.typeTextBox.Text = "Unkown";
-      }
+      this.typeTextBox.Text = Status.Certificate.TypeText;
     }
 
     private void sendButton_Click(object sender, EventArgs e)
@@ -101,8 +90,8 @@ namespace Pirate.PiVote.Client
       Status.UpdateProgress();
 
       if (this.exception == null)
-      { 
-        Status.SetMessage("Your request has been submitted to the server. You must now wait for the certificat authority to process it.", MessageType.Success);
+      {
+        Status.SetMessage(Resources.CreateCertificateDone, MessageType.Success);
       }
       else
       {
@@ -114,6 +103,7 @@ namespace Pirate.PiVote.Client
 
     private void SetSignatureRequestComplete(Exception exception)
     {
+      this.run = false;
       this.exception = exception;
     }
 

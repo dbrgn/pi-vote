@@ -192,6 +192,9 @@
   <data name="CheckCertificateResponseInvalid" xml:space="preserve">
     <value>The server sent a response to your certificate signing request, but it is not valid. Please context your voting administrator.</value>
   </data>
+  <data name="ChooseCertificateCreateButton" xml:space="preserve">
+    <value>&amp;Create...</value>
+  </data>
   <data name="ChooseCertificateFullName" xml:space="preserve">
     <value>Full name</value>
   </data>
@@ -204,26 +207,11 @@
   <data name="ChooseCertificateLoadDialog" xml:space="preserve">
     <value>Load Certificate</value>
   </data>
-  <data name="ChooseCertificateNotAvailable" xml:space="preserve">
-    <value>N/A</value>
-  </data>
   <data name="ChooseCertificateType" xml:space="preserve">
     <value>Type</value>
   </data>
-  <data name="ChooseCertificateTypeAdmin" xml:space="preserve">
-    <value>Administrator</value>
-  </data>
-  <data name="ChooseCertificateTypeAuthority" xml:space="preserve">
-    <value>Voting Authority</value>
-  </data>
-  <data name="ChooseCertificateTypeCA" xml:space="preserve">
-    <value>Certificate Authority</value>
-  </data>
-  <data name="ChooseCertificateTypeUnknown" xml:space="preserve">
-    <value>Unknown</value>
-  </data>
-  <data name="ChooseCertificateTypeVoter" xml:space="preserve">
-    <value>Voter</value>
+  <data name="CreateCertificateDone" xml:space="preserve">
+    <value>Your request has been submitted to the server. You must now wait for the certificat authority to process it.</value>
   </data>
   <data name="CreateCertificateFirstname" xml:space="preserve">
     <value>Firstname</value>
@@ -258,11 +246,20 @@
   <data name="CreateVotingAnswersPerVoter" xml:space="preserve">
     <value>Answers / Voter</value>
   </data>
+  <data name="CreateVotingAuthFileMissing" xml:space="preserve">
+    <value>Authority voting file missing.</value>
+  </data>
   <data name="CreateVotingAuthorities" xml:space="preserve">
     <value>Authorities</value>
   </data>
   <data name="CreateVotingButton" xml:space="preserve">
     <value>&amp;Create</value>
+  </data>
+  <data name="CreateVotingCreated" xml:space="preserve">
+    <value>Created voting on server.</value>
+  </data>
+  <data name="CreateVotingCreating" xml:space="preserve">
+    <value>Creating voting on server.</value>
   </data>
   <data name="CreateVotingDescription" xml:space="preserve">
     <value>Description</value>
@@ -282,17 +279,14 @@
   <data name="CreateVotingQuestion" xml:space="preserve">
     <value>Question</value>
   </data>
+  <data name="CreateVotingSearchPrime" xml:space="preserve">
+    <value>Searching safe prime number for crypto.</value>
+  </data>
   <data name="CreateVotingTitle" xml:space="preserve">
     <value>Title</value>
   </data>
-  <data name="HaveCertificate" xml:space="preserve">
-    <value>I've &amp;got a certificate</value>
-  </data>
   <data name="InvalidBallots" xml:space="preserve">
     <value>Invalid ballots</value>
-  </data>
-  <data name="NeedCertificate" xml:space="preserve">
-    <value>I &amp;need a new certificate</value>
   </data>
   <data name="OpenSignatureResponseButton" xml:space="preserve">
     <value>&amp;Open...</value>
@@ -314,9 +308,6 @@
   </data>
   <data name="SignatureResponseUploaded" xml:space="preserve">
     <value>Signature responses have be uploaded to the server.</value>
-  </data>
-  <data name="StartCertificate" xml:space="preserve">
-    <value>Certificate</value>
   </data>
   <data name="TotalBallots" xml:space="preserve">
     <value>Total ballots</value>

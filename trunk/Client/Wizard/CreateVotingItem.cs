@@ -158,14 +158,14 @@ namespace Pirate.PiVote.Client
 
       DateTime lastUpdate = DateTime.Now;
       int progress = 0;
-      Status.SetProgress("Searching safe prime number for crypto.", 10d / (double)progress);
+      Status.SetProgress(Resources.CreateVotingSearchPrime, (double)progress / 10d);
 
       while (this.run)
       {
         if (DateTime.Now.Subtract(lastUpdate).TotalSeconds > 0.25d)
         {
           progress = (progress + 1) % 11;
-          Status.SetProgress("Searching safe prime number for crypto.", 10d / (double)progress);
+          Status.SetProgress(Resources.CreateVotingSearchPrime, (double)progress / 10d);
           lastUpdate = DateTime.Now;
         }
 
@@ -174,7 +174,7 @@ namespace Pirate.PiVote.Client
       }
 
       this.run = true;
-      Status.SetProgress("Creating voting on server.", 0d);
+      Status.SetProgress(Resources.CreateVotingCreating, 0d);
       Application.DoEvents();
 
       Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);
@@ -195,7 +195,7 @@ namespace Pirate.PiVote.Client
 
       if (this.exception == null)
       {
-        Status.SetProgress("Creating voting on server.", 1d);
+        Status.SetProgress(Resources.CreateVotingCreated, 1d);
       }
       else
       {

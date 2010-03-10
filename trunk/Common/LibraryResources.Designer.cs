@@ -61,6 +61,60 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        public static string CertificateFullNameNotAvailable {
+            get {
+                return ResourceManager.GetString("CertificateFullNameNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Administrator.
+        /// </summary>
+        public static string CertificateTypeAdmin {
+            get {
+                return ResourceManager.GetString("CertificateTypeAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voting Authority.
+        /// </summary>
+        public static string CertificateTypeAuthority {
+            get {
+                return ResourceManager.GetString("CertificateTypeAuthority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate Authority.
+        /// </summary>
+        public static string CertificateTypeCA {
+            get {
+                return ResourceManager.GetString("CertificateTypeCA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        public static string CertificateTypeUnknown {
+            get {
+                return ResourceManager.GetString("CertificateTypeUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voter.
+        /// </summary>
+        public static string CertificateTypeVoter {
+            get {
+                return ResourceManager.GetString("CertificateTypeVoter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fetching all shares..
         /// </summary>
         public static string ClientCheckSharesFetchShares {

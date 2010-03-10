@@ -22,8 +22,8 @@ namespace Pirate.PiVote
   public static class Files
   {
     public const string CertificateFileFilter = "Pi-Vote Certificate|*.pi-cert";
-    public const string SignatureRequestFileFilter = "Pi-Vote Signature Request|*.pi-sig-resp";
-    public const string SignatureResponseFileFilter = "Pi-Vote Signature Request|*.pi-sig-req";
+    public const string SignatureRequestFileFilter = "Pi-Vote Signature Request|*.pi-sig-req";
+    public const string SignatureResponseFileFilter = "Pi-Vote Signature Response|*.pi-sig-resp";
     public const string AuthorityDataFileFilter = "Pi-Vote Certificate|*.pi-auth";
   }
 }

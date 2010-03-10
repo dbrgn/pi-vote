@@ -58,6 +58,14 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Is the client connected to the server?
+    /// </summary>
+    public bool Connected
+    {
+      get { return this.client.Connected; }
+    }
+
+    /// <summary>
     /// Disconnect the client from the server.
     /// </summary>
     public void Disconnect()

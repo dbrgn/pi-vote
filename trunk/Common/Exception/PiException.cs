@@ -80,7 +80,7 @@ namespace Pirate.PiVote
       string message = context.ReadString();
 
       Type type = Type.GetType(typeName);
-      PiException exception = (PiException)Activator.CreateInstance(type, new object[] { code, message });
+      PiException exception = (PiException)Activator.CreateInstance(type, new object[] { code, code.Text() });
 
       context.Close();
       stream.Close();

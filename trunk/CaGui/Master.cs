@@ -230,7 +230,7 @@ namespace Pirate.PiVote.CaGui
       dialog.Title = "Open Signature Response";
       dialog.CheckPathExists = true;
       dialog.CheckFileExists = true;
-      dialog.Filter = Files.SignatureRequestFileFilter;
+      dialog.Filter = Files.SignatureResponseFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -397,7 +397,7 @@ namespace Pirate.PiVote.CaGui
           SaveFileDialog saveDialog = new SaveFileDialog();
           saveDialog.Title = "Export Signature Response";
           saveDialog.CheckPathExists = true;
-          saveDialog.Filter = Files.SignatureRequestFileFilter;
+          saveDialog.Filter = Files.SignatureResponseFileFilter;
 
           if (saveDialog.ShowDialog() == DialogResult.OK)
           {
@@ -431,7 +431,7 @@ namespace Pirate.PiVote.CaGui
           SaveFileDialog saveDialog = new SaveFileDialog();
           saveDialog.Title = "Export Signature Response";
           saveDialog.CheckPathExists = true;
-          saveDialog.Filter = Files.SignatureRequestFileFilter;
+          saveDialog.Filter = Files.SignatureResponseFileFilter;
 
           if (saveDialog.ShowDialog() == DialogResult.OK)
           {
@@ -487,7 +487,7 @@ namespace Pirate.PiVote.CaGui
         SaveFileDialog dialog = new SaveFileDialog();
         dialog.Title = "Export Signature Response";
         dialog.CheckPathExists = true;
-        dialog.Filter = Files.SignatureRequestFileFilter;
+        dialog.Filter = Files.SignatureResponseFileFilter;
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {

@@ -286,6 +286,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Create....
+        /// </summary>
+        internal static string ChooseCertificateCreateButton {
+            get {
+                return ResourceManager.GetString("ChooseCertificateCreateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Full name.
         /// </summary>
         internal static string ChooseCertificateFullName {
@@ -322,15 +331,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to N/A.
-        /// </summary>
-        internal static string ChooseCertificateNotAvailable {
-            get {
-                return ResourceManager.GetString("ChooseCertificateNotAvailable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Type.
         /// </summary>
         internal static string ChooseCertificateType {
@@ -340,47 +340,11 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Administrator.
+        ///   Looks up a localized string similar to Your request has been submitted to the server. You must now wait for the certificat authority to process it..
         /// </summary>
-        internal static string ChooseCertificateTypeAdmin {
+        internal static string CreateCertificateDone {
             get {
-                return ResourceManager.GetString("ChooseCertificateTypeAdmin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Voting Authority.
-        /// </summary>
-        internal static string ChooseCertificateTypeAuthority {
-            get {
-                return ResourceManager.GetString("ChooseCertificateTypeAuthority", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Certificate Authority.
-        /// </summary>
-        internal static string ChooseCertificateTypeCA {
-            get {
-                return ResourceManager.GetString("ChooseCertificateTypeCA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown.
-        /// </summary>
-        internal static string ChooseCertificateTypeUnknown {
-            get {
-                return ResourceManager.GetString("ChooseCertificateTypeUnknown", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Voter.
-        /// </summary>
-        internal static string ChooseCertificateTypeVoter {
-            get {
-                return ResourceManager.GetString("ChooseCertificateTypeVoter", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateDone", resourceCulture);
             }
         }
         
@@ -484,6 +448,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authority voting file missing..
+        /// </summary>
+        internal static string CreateVotingAuthFileMissing {
+            get {
+                return ResourceManager.GetString("CreateVotingAuthFileMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Authorities.
         /// </summary>
         internal static string CreateVotingAuthorities {
@@ -498,6 +471,24 @@ namespace Pirate.PiVote.Client {
         internal static string CreateVotingButton {
             get {
                 return ResourceManager.GetString("CreateVotingButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created voting on server..
+        /// </summary>
+        internal static string CreateVotingCreated {
+            get {
+                return ResourceManager.GetString("CreateVotingCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating voting on server..
+        /// </summary>
+        internal static string CreateVotingCreating {
+            get {
+                return ResourceManager.GetString("CreateVotingCreating", resourceCulture);
             }
         }
         
@@ -556,6 +547,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Searching safe prime number for crypto..
+        /// </summary>
+        internal static string CreateVotingSearchPrime {
+            get {
+                return ResourceManager.GetString("CreateVotingSearchPrime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
         internal static string CreateVotingTitle {
@@ -565,29 +565,11 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I&apos;ve &amp;got a certificate.
-        /// </summary>
-        internal static string HaveCertificate {
-            get {
-                return ResourceManager.GetString("HaveCertificate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Invalid ballots.
         /// </summary>
         internal static string InvalidBallots {
             get {
                 return ResourceManager.GetString("InvalidBallots", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to I &amp;need a new certificate.
-        /// </summary>
-        internal static string NeedCertificate {
-            get {
-                return ResourceManager.GetString("NeedCertificate", resourceCulture);
             }
         }
         
@@ -651,15 +633,6 @@ namespace Pirate.PiVote.Client {
         internal static string SignatureResponseUploaded {
             get {
                 return ResourceManager.GetString("SignatureResponseUploaded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Certificate.
-        /// </summary>
-        internal static string StartCertificate {
-            get {
-                return ResourceManager.GetString("StartCertificate", resourceCulture);
             }
         }
         

@@ -49,11 +49,16 @@ namespace Pirate.PiVote.Client
       this.idTextBox = new System.Windows.Forms.TextBox();
       this.typeTextBox = new System.Windows.Forms.TextBox();
       this.nameTextBox = new System.Windows.Forms.TextBox();
+      this.certificateList = new System.Windows.Forms.ListView();
+      this.typeColumnHeader = new System.Windows.Forms.ColumnHeader();
+      this.idColumnHeader = new System.Windows.Forms.ColumnHeader();
+      this.nameColumnHeader = new System.Windows.Forms.ColumnHeader();
+      this.createButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // loadButton
       // 
-      this.loadButton.Location = new System.Drawing.Point(58, 47);
+      this.loadButton.Location = new System.Drawing.Point(3, 317);
       this.loadButton.Name = "loadButton";
       this.loadButton.Size = new System.Drawing.Size(112, 25);
       this.loadButton.TabIndex = 0;
@@ -64,7 +69,7 @@ namespace Pirate.PiVote.Client
       // idLabel
       // 
       this.idLabel.AutoSize = true;
-      this.idLabel.Location = new System.Drawing.Point(55, 118);
+      this.idLabel.Location = new System.Drawing.Point(48, 392);
       this.idLabel.Name = "idLabel";
       this.idLabel.Size = new System.Drawing.Size(18, 14);
       this.idLabel.TabIndex = 1;
@@ -73,7 +78,7 @@ namespace Pirate.PiVote.Client
       // typeLabel
       // 
       this.typeLabel.AutoSize = true;
-      this.typeLabel.Location = new System.Drawing.Point(55, 146);
+      this.typeLabel.Location = new System.Drawing.Point(48, 420);
       this.typeLabel.Name = "typeLabel";
       this.typeLabel.Size = new System.Drawing.Size(33, 14);
       this.typeLabel.TabIndex = 2;
@@ -82,7 +87,7 @@ namespace Pirate.PiVote.Client
       // nameLabel
       // 
       this.nameLabel.AutoSize = true;
-      this.nameLabel.Location = new System.Drawing.Point(55, 174);
+      this.nameLabel.Location = new System.Drawing.Point(48, 448);
       this.nameLabel.Name = "nameLabel";
       this.nameLabel.Size = new System.Drawing.Size(55, 14);
       this.nameLabel.TabIndex = 3;
@@ -90,7 +95,7 @@ namespace Pirate.PiVote.Client
       // 
       // idTextBox
       // 
-      this.idTextBox.Location = new System.Drawing.Point(153, 115);
+      this.idTextBox.Location = new System.Drawing.Point(146, 389);
       this.idTextBox.Name = "idTextBox";
       this.idTextBox.ReadOnly = true;
       this.idTextBox.Size = new System.Drawing.Size(245, 20);
@@ -98,7 +103,7 @@ namespace Pirate.PiVote.Client
       // 
       // typeTextBox
       // 
-      this.typeTextBox.Location = new System.Drawing.Point(153, 143);
+      this.typeTextBox.Location = new System.Drawing.Point(146, 417);
       this.typeTextBox.Name = "typeTextBox";
       this.typeTextBox.ReadOnly = true;
       this.typeTextBox.Size = new System.Drawing.Size(245, 20);
@@ -106,16 +111,59 @@ namespace Pirate.PiVote.Client
       // 
       // nameTextBox
       // 
-      this.nameTextBox.Location = new System.Drawing.Point(153, 171);
+      this.nameTextBox.Location = new System.Drawing.Point(146, 445);
       this.nameTextBox.Name = "nameTextBox";
       this.nameTextBox.ReadOnly = true;
       this.nameTextBox.Size = new System.Drawing.Size(245, 20);
       this.nameTextBox.TabIndex = 6;
       // 
+      // certificateList
+      // 
+      this.certificateList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.typeColumnHeader,
+            this.idColumnHeader,
+            this.nameColumnHeader});
+      this.certificateList.FullRowSelect = true;
+      this.certificateList.Location = new System.Drawing.Point(3, 3);
+      this.certificateList.MultiSelect = false;
+      this.certificateList.Name = "certificateList";
+      this.certificateList.Size = new System.Drawing.Size(694, 308);
+      this.certificateList.TabIndex = 7;
+      this.certificateList.UseCompatibleStateImageBehavior = false;
+      this.certificateList.View = System.Windows.Forms.View.Details;
+      this.certificateList.SelectedIndexChanged += new System.EventHandler(this.certificateList_SelectedIndexChanged);
+      // 
+      // typeColumnHeader
+      // 
+      this.typeColumnHeader.Text = "Type";
+      this.typeColumnHeader.Width = 150;
+      // 
+      // idColumnHeader
+      // 
+      this.idColumnHeader.Text = "Id";
+      this.idColumnHeader.Width = 220;
+      // 
+      // nameColumnHeader
+      // 
+      this.nameColumnHeader.Text = "Name";
+      this.nameColumnHeader.Width = 300;
+      // 
+      // createButton
+      // 
+      this.createButton.Location = new System.Drawing.Point(121, 317);
+      this.createButton.Name = "createButton";
+      this.createButton.Size = new System.Drawing.Size(112, 25);
+      this.createButton.TabIndex = 8;
+      this.createButton.Text = "&Create...";
+      this.createButton.UseVisualStyleBackColor = true;
+      this.createButton.Click += new System.EventHandler(this.createButton_Click);
+      // 
       // ChooseCertificateItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.createButton);
+      this.Controls.Add(this.certificateList);
       this.Controls.Add(this.nameTextBox);
       this.Controls.Add(this.typeTextBox);
       this.Controls.Add(this.idTextBox);
@@ -123,7 +171,6 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.typeLabel);
       this.Controls.Add(this.idLabel);
       this.Controls.Add(this.loadButton);
-      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "ChooseCertificateItem";
       this.Size = new System.Drawing.Size(700, 538);
       this.Load += new System.EventHandler(this.StartWizardItem_Load);
@@ -141,5 +188,10 @@ namespace Pirate.PiVote.Client
     private TextBox idTextBox;
     private TextBox typeTextBox;
     private TextBox nameTextBox;
+    private ListView certificateList;
+    private ColumnHeader typeColumnHeader;
+    private ColumnHeader idColumnHeader;
+    private ColumnHeader nameColumnHeader;
+    private Button createButton;
   }
 }

@@ -192,6 +192,9 @@
   <data name="CheckCertificateResponseInvalid" xml:space="preserve">
     <value>Der Server hat eine Antwort auf Ihre Zertifizierungsanfrage gesendet, aber die Antwort ist ungültig. Bitte kontakieren Sie Ihren Abstimmungsadministrator.</value>
   </data>
+  <data name="ChooseCertificateCreateButton" xml:space="preserve">
+    <value>&amp;Erstellen...</value>
+  </data>
   <data name="ChooseCertificateFullName" xml:space="preserve">
     <value>Voller name</value>
   </data>
@@ -210,20 +213,8 @@
   <data name="ChooseCertificateType" xml:space="preserve">
     <value>Typ</value>
   </data>
-  <data name="ChooseCertificateTypeAdmin" xml:space="preserve">
-    <value>Administrator</value>
-  </data>
-  <data name="ChooseCertificateTypeAuthority" xml:space="preserve">
-    <value>Abstimmungsautorität</value>
-  </data>
-  <data name="ChooseCertificateTypeCA" xml:space="preserve">
-    <value>Zertifizierungsstelle</value>
-  </data>
-  <data name="ChooseCertificateTypeUnknown" xml:space="preserve">
-    <value>Unbekannt</value>
-  </data>
-  <data name="ChooseCertificateTypeVoter" xml:space="preserve">
-    <value>Wähler</value>
+  <data name="CreateCertificateDone" xml:space="preserve">
+    <value>Ihre Zertifizierungsanfrage wurde auf den Server hochgeladen. Sie müssen jetzt warten, bis die Zertifizierungstelle Ihre anfrage beantwortet.</value>
   </data>
   <data name="CreateCertificateFirstname" xml:space="preserve">
     <value>Vorname</value>
@@ -258,11 +249,20 @@
   <data name="CreateVotingAnswersPerVoter" xml:space="preserve">
     <value>Antworten / Wähler</value>
   </data>
+  <data name="CreateVotingAuthFileMissing" xml:space="preserve">
+    <value>Datei der Autorität fehlt.</value>
+  </data>
   <data name="CreateVotingAuthorities" xml:space="preserve">
     <value>Autoritäten</value>
   </data>
   <data name="CreateVotingButton" xml:space="preserve">
     <value>&amp;Erstellen</value>
+  </data>
+  <data name="CreateVotingCreated" xml:space="preserve">
+    <value>Abstimmungsprozedur auf dem Server erstellt.</value>
+  </data>
+  <data name="CreateVotingCreating" xml:space="preserve">
+    <value>Erstelle Abstimmungsprozedur auf dem Server.</value>
   </data>
   <data name="CreateVotingDescription" xml:space="preserve">
     <value>Beschreibung</value>
@@ -282,17 +282,14 @@
   <data name="CreateVotingQuestion" xml:space="preserve">
     <value>Frage</value>
   </data>
+  <data name="CreateVotingSearchPrime" xml:space="preserve">
+    <value>Generiere sichere Primzahl für Crypto.</value>
+  </data>
   <data name="CreateVotingTitle" xml:space="preserve">
     <value>Titel</value>
   </data>
-  <data name="HaveCertificate" xml:space="preserve">
-    <value>Ich habe ein Zertifikat</value>
-  </data>
   <data name="InvalidBallots" xml:space="preserve">
     <value>Ungültige Stimmen</value>
-  </data>
-  <data name="NeedCertificate" xml:space="preserve">
-    <value>Ich brauche ein Zertifikat</value>
   </data>
   <data name="OpenSignatureResponseButton" xml:space="preserve">
     <value>&amp;Laden...</value>
@@ -314,9 +311,6 @@
   </data>
   <data name="SignatureResponseUploaded" xml:space="preserve">
     <value>Antworten auf Zertifizierungsanfragen wurden auf den Server hochgeladen.</value>
-  </data>
-  <data name="StartCertificate" xml:space="preserve">
-    <value>Zertifikat</value>
   </data>
   <data name="TotalBallots" xml:space="preserve">
     <value>Total Stimmen</value>

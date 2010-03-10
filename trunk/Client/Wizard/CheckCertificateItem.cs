@@ -69,10 +69,10 @@ namespace Pirate.PiVote.Client
           }
           else
           {
-            return null;
+            return new ChooseCertificateItem();
           }
         default:
-          return null;
+          return new ChooseCertificateItem();
       }
     }
 
@@ -109,8 +109,11 @@ namespace Pirate.PiVote.Client
     {
       get
       {
-        return this.status == CheckStatus.CheckCertificateAccepted ||
-          this.status == CheckStatus.CheckCertificateNeeded;
+        return
+          this.status == CheckStatus.CheckCertificateAccepted ||
+          this.status == CheckStatus.CheckCertificateNeeded ||
+          this.status == CheckStatus.CheckCertificateDeclined ||
+          this.status == CheckStatus.CheckCertificateFailed;
       }
     }
 

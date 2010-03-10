@@ -132,49 +132,42 @@ namespace Pirate.PiVote.Client
         ListViewItem item = this.votingList.SelectedItems[0];
         VotingClient.VotingDescriptor voting = (VotingClient.VotingDescriptor)item.Tag;
 
-        SaveFileDialog dialog = new SaveFileDialog();
-        dialog.Title = Resources.AuthoritySaveData;
-        dialog.OverwritePrompt = true;
-        dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        dialog.CheckPathExists = true;
-        dialog.Filter = Files.AuthorityDataFileFilter;
+        string fileName = string.Format("{0}@{1}.pi-auth", Status.Certificate.Id.ToString(), voting.Id.ToString());
+        string filePath = Path.Combine(Status.DataPath, fileName);
 
-        if (dialog.ShowDialog() == DialogResult.OK)
+        this.createSharesButton.Enabled = false;
+        this.votingList.Enabled = false;
+
+        this.run = true;
+        OnUpdateWizard();
+
+        Status.VotingClient.CreateSharePart(voting.Id, (AuthorityCertificate)Status.Certificate, filePath, CreateSharesCompleteCallBack);
+
+        while (this.run)
         {
-          this.createSharesButton.Enabled = false;
-          this.votingList.Enabled = false;
-
-          this.run = true;
-          OnUpdateWizard();
-
-          Status.VotingClient.CreateSharePart(voting.Id, (AuthorityCertificate)Status.Certificate, dialog.FileName, CreateSharesCompleteCallBack);
-
-          while (this.run)
-          {
-            Status.UpdateProgress();
-            Application.DoEvents();
-            Thread.Sleep(1);
-          }
-
           Status.UpdateProgress();
-
-          if (this.exception == null)
-          {
-            item.Tag = this.votingDescriptor;
-            item.SubItems[1].Text = this.votingDescriptor.Status.Text();
-            votingList_SelectedIndexChanged(this.votingList, new EventArgs());
-
-            Status.SetMessage(Resources.AuthorityCreateSharesDone, MessageType.Success);
-          }
-          else
-          {
-            Status.SetMessage(this.exception.Message, MessageType.Error);
-          }
-
-          Status.UpdateProgress();
-          this.votingList.Enabled = true;
-          OnUpdateWizard();
+          Application.DoEvents();
+          Thread.Sleep(1);
         }
+
+        Status.UpdateProgress();
+
+        if (this.exception == null)
+        {
+          item.Tag = this.votingDescriptor;
+          item.SubItems[1].Text = this.votingDescriptor.Status.Text();
+          votingList_SelectedIndexChanged(this.votingList, new EventArgs());
+
+          Status.SetMessage(Resources.AuthorityCreateSharesDone, MessageType.Success);
+        }
+        else
+        {
+          Status.SetMessage(this.exception.Message, MessageType.Error);
+        }
+
+        Status.UpdateProgress();
+        this.votingList.Enabled = true;
+        OnUpdateWizard();
       }
     }
 
@@ -192,14 +185,10 @@ namespace Pirate.PiVote.Client
         ListViewItem item = this.votingList.SelectedItems[0];
         VotingClient.VotingDescriptor voting = (VotingClient.VotingDescriptor)item.Tag;
 
-        OpenFileDialog dialog = new OpenFileDialog();
-        dialog.Title = Resources.AuthorityLoadData;
-        dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        dialog.CheckPathExists = true;
-        dialog.CheckFileExists = true;
-        dialog.Filter = Files.AuthorityDataFileFilter;
+        string fileName = string.Format("{0}@{1}.pi-auth", Status.Certificate.Id.ToString(), voting.Id.ToString());
+        string filePath = Path.Combine(Status.DataPath, fileName);
 
-        if (dialog.ShowDialog() == DialogResult.OK)
+        if (File.Exists(filePath))
         {
           this.checkSharesButton.Enabled = false;
           this.votingList.Enabled = false;
@@ -207,7 +196,7 @@ namespace Pirate.PiVote.Client
           this.run = true;
           OnUpdateWizard();
 
-          Status.VotingClient.CheckShares(voting.Id, (AuthorityCertificate)Status.Certificate, dialog.FileName, CheckSharesCompleteCallBack);
+          Status.VotingClient.CheckShares(voting.Id, (AuthorityCertificate)Status.Certificate, filePath, CheckSharesCompleteCallBack);
 
           while (this.run)
           {
@@ -242,6 +231,12 @@ namespace Pirate.PiVote.Client
           this.votingList.Enabled = true;
           OnUpdateWizard();
         }
+        else
+        {
+          Status.SetMessage(Resources.CreateVotingAuthFileMissing, MessageType.Error);
+          this.votingList.Enabled = true;
+          OnUpdateWizard();
+        }
       }
     }
 
@@ -260,14 +255,10 @@ namespace Pirate.PiVote.Client
         ListViewItem item = this.votingList.SelectedItems[0];
         VotingClient.VotingDescriptor voting = (VotingClient.VotingDescriptor)item.Tag;
 
-        OpenFileDialog dialog = new OpenFileDialog();
-        dialog.Title = Resources.AuthorityLoadData;
-        dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        dialog.CheckPathExists = true;
-        dialog.CheckFileExists = true;
-        dialog.Filter = Files.AuthorityDataFileFilter;
+        string fileName = string.Format("{0}@{1}.pi-auth", Status.Certificate.Id.ToString(), voting.Id.ToString());
+        string filePath = Path.Combine(Status.DataPath, fileName);
 
-        if (dialog.ShowDialog() == DialogResult.OK)
+        if (File.Exists(filePath))
         {
           this.checkSharesButton.Enabled = false;
           this.votingList.Enabled = false;
@@ -275,7 +266,7 @@ namespace Pirate.PiVote.Client
           this.run = true;
           OnUpdateWizard();
 
-          Status.VotingClient.CreateDeciphers(voting.Id, (AuthorityCertificate)Status.Certificate, dialog.FileName, CreateDeciphersCompleteCallBack);
+          Status.VotingClient.CreateDeciphers(voting.Id, (AuthorityCertificate)Status.Certificate, filePath, CreateDeciphersCompleteCallBack);
 
           while (this.run)
           {
@@ -300,6 +291,12 @@ namespace Pirate.PiVote.Client
           }
 
           Status.UpdateProgress();
+          this.votingList.Enabled = true;
+          OnUpdateWizard();
+        }
+        else
+        {
+          Status.SetMessage(Resources.CreateVotingAuthFileMissing, MessageType.Error);
           this.votingList.Enabled = true;
           OnUpdateWizard();
         }

@@ -461,5 +461,22 @@ namespace Pirate.PiVote.Crypto
     /// of certificate.
     /// </summary>
     public abstract byte[] MagicTypeConstant { get; }
+
+    /// <summary>
+    /// Type of the certificate in multilingual text.
+    /// </summary>
+    public virtual string TypeText
+    {
+      get { return LibraryResources.CertificateTypeUnknown; }
+    }
+
+    /// <summary>
+    /// Full name of the subject.
+    /// N/A in case of voter certificate.
+    /// </summary>
+    public virtual string FullName
+    {
+      get { return LibraryResources.CertificateFullNameNotAvailable; }
+    }
   }
 }

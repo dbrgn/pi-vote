@@ -19,6 +19,8 @@ namespace Pirate.PiVote.Client
 {
   public partial class ChooseCertificateItem : WizardItem
   {
+    private bool nextIsCreate;
+
     public ChooseCertificateItem()
     {
       InitializeComponent();
@@ -26,13 +28,20 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      if (Status.Certificate is CACertificate)
+      if (this.nextIsCreate)
       {
-        return null;
+        return new CreateCertificateItem();
       }
       else
       {
-        return new CheckCertificateItem();
+        if (Status.Certificate is CACertificate)
+        {
+          return null;
+        }
+        else
+        {
+          return new CheckCertificateItem();
+        }
       }
     }
 
@@ -70,6 +79,35 @@ namespace Pirate.PiVote.Client
 
     }
 
+    public override void Begin()
+    {
+      this.nextIsCreate = false;
+
+      DirectoryInfo directory = new DirectoryInfo(Status.DataPath);
+
+      foreach (FileInfo file in directory.GetFiles("*.pi-cert"))
+      {
+        try
+        {
+          Certificate certificate = Serializable.Load<Certificate>(file.FullName);
+
+          ListViewItem item = new ListViewItem(certificate.TypeText);
+          item.SubItems.Add(certificate.Id.ToString());
+          item.SubItems.Add(certificate.FullName.ToString());
+          item.Tag = new KeyValuePair<string, Certificate>(file.FullName, certificate);
+          this.certificateList.Items.Add(item);
+        }
+        catch
+        {
+          ListViewItem item = new ListViewItem("Cannot load file.");
+          item.SubItems.Add(string.Empty);
+          item.SubItems.Add(file.Name);
+          item.Tag = null;
+          this.certificateList.Items.Add(item);
+        }
+      }
+    }
+
     private void loadButton_Click(object sender, EventArgs e)
     {
       OpenFileDialog dialog = new OpenFileDialog();
@@ -81,38 +119,18 @@ namespace Pirate.PiVote.Client
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
-        Status.CertificateFileName = dialog.FileName;
-        Status.Certificate = Serializable.Load<Certificate>(Status.CertificateFileName);
+        Certificate certificate = Serializable.Load<Certificate>(dialog.FileName);
 
-        this.idTextBox.Text = Status.Certificate.Id.ToString();
+        string newFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + ".pi-cert");
+        File.Copy(dialog.FileName, newFileName);
 
-        if (Status.Certificate is CACertificate)
-        {
-          this.typeTextBox.Text = Resources.ChooseCertificateTypeCA;
-          this.nameTextBox.Text = ((CACertificate)Status.Certificate).FullName;
-        }
-        else if (Status.Certificate is AuthorityCertificate)
-        {
-          this.typeTextBox.Text = Resources.ChooseCertificateTypeAuthority;
-          this.nameTextBox.Text = ((AuthorityCertificate)Status.Certificate).FullName;
-        }
-        else if (Status.Certificate is AdminCertificate)
-        {
-          this.typeTextBox.Text = Resources.ChooseCertificateTypeAdmin;
-          this.nameTextBox.Text = ((AdminCertificate)Status.Certificate).FullName;
-        }
-        else if (Status.Certificate is VoterCertificate)
-        {
-          this.typeTextBox.Text = Resources.ChooseCertificateTypeVoter;
-          this.nameTextBox.Text = Resources.ChooseCertificateNotAvailable;
-        }
-        else
-        {
-          this.typeTextBox.Text = Resources.ChooseCertificateTypeUnknown;
-          this.nameTextBox.Text = Resources.ChooseCertificateNotAvailable;
-        }
+          ListViewItem item = new ListViewItem(certificate.TypeText);
+        item.SubItems.Add(certificate.Id.ToString());
+        item.SubItems.Add(certificate.FullName.ToString());
+        item.Tag = new KeyValuePair<string, Certificate>(newFileName, certificate);
+        this.certificateList.Items.Add(item);
 
-        OnUpdateWizard();
+        item.Selected = true;
       }
     }
 
@@ -123,7 +141,47 @@ namespace Pirate.PiVote.Client
       this.idLabel.Text = Resources.ChooseCertificateId;
       this.typeLabel.Text = Resources.ChooseCertificateType;
       this.nameLabel.Text = Resources.ChooseCertificateFullName;
+      
       this.loadButton.Text = Resources.ChooseCertificateLoadButton;
+      this.createButton.Text = Resources.ChooseCertificateCreateButton;
+
+      this.typeColumnHeader.Text = Resources.ChooseCertificateType;
+      this.idLabel.Text = Resources.ChooseCertificateId;
+      this.nameColumnHeader.Text = Resources.ChooseCertificateFullName;
+    }
+
+    private void certificateList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      if (this.certificateList.SelectedItems.Count > 0)
+      {
+        ListViewItem item = this.certificateList.SelectedItems[0];
+
+        if (item.Tag != null)
+        {
+          KeyValuePair<string, Certificate> value = (KeyValuePair<string, Certificate>)item.Tag;
+          Status.CertificateFileName = value.Key;
+          Status.Certificate = value.Value;
+
+          this.idTextBox.Text = Status.Certificate.Id.ToString();
+          this.typeTextBox.Text = Status.Certificate.TypeText;
+          this.nameTextBox.Text = Status.Certificate.FullName;
+        }
+        else
+        {
+          this.idTextBox.Text = string.Empty;
+          this.typeTextBox.Text = string.Empty;
+          this.nameTextBox.Text = string.Empty;
+        }
+
+        OnUpdateWizard();
+      }
+    }
+
+    private void createButton_Click(object sender, EventArgs e)
+    {
+      this.nextIsCreate = true;
+
+      OnNextStep();
     }
   }
 }

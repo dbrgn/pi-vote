@@ -26,14 +26,7 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      if (this.haveCertificateRadio.Checked)
-      {
-        return new ChooseCertificateItem();
-      }
-      else
-      {
-        return new CreateCertificateItem();
-      }
+      return new ChooseCertificateItem();
     }
 
     public override WizardItem Previous()
@@ -53,7 +46,7 @@ namespace Pirate.PiVote.Client
 
     public override bool CanNext
     {
-      get { return this.haveCertificateRadio.Checked || this.needCertificateRadio.Checked; }
+      get { return true; }
     }
 
     public override bool CanPrevious
@@ -77,15 +70,12 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
+      this.englishRadio.Checked = true;
     }
 
     public override void UpdateLanguage()
     {
       base.UpdateLanguage();
-
-      this.haveCertificateRadio.Text = Resources.HaveCertificate;
-      this.needCertificateRadio.Text = Resources.NeedCertificate;
-      this.certificateGroup.Text = Resources.StartCertificate;
     }
 
     private void englishRadio_CheckedChanged(object sender, EventArgs e)

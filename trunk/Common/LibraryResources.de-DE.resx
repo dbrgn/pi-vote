@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CertificateFullNameNotAvailable" xml:space="preserve">
+    <value>N/V</value>
+  </data>
+  <data name="CertificateTypeAdmin" xml:space="preserve">
+    <value>Administrator</value>
+  </data>
+  <data name="CertificateTypeAuthority" xml:space="preserve">
+    <value>Abstimmungsautorität</value>
+  </data>
+  <data name="CertificateTypeCA" xml:space="preserve">
+    <value>Zertifizierungsstelle</value>
+  </data>
+  <data name="CertificateTypeUnknown" xml:space="preserve">
+    <value>Unbekannt</value>
+  </data>
+  <data name="CertificateTypeVoter" xml:space="preserve">
+    <value>Wähler</value>
+  </data>
   <data name="ClientCheckSharesFetchShares" xml:space="preserve">
     <value>Lade Teile herunter.</value>
   </data>

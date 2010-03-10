@@ -260,6 +260,36 @@ namespace Pirate.PiVote.Crypto
         reader.Close();
       }
     }
+    /// <summary>
+    /// Set a certificate revocation list even if its not valid.
+    /// </summary>
+    /// <param name="signedRevocationList">Signed certificate revocation list.</param>
+    private void ForceAddRevocationList(Signed<RevocationList> signedRevocationList)
+    {
+      RevocationList revocationList = signedRevocationList.Value;
+
+      MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", this.dbConnection);
+      command.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
+      command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
+      command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
+      MySqlDataReader reader = command.ExecuteReader();
+
+      if (!reader.Read())
+      {
+        reader.Close();
+
+        MySqlCommand insertCommand = new MySqlCommand("INSERT INTO revocationlist (IssuerId, ValidFrom, ValidUntil, Value) VALUES (@IssuerId, @ValidFrom, @ValidUntil, @Value)", this.dbConnection);
+        insertCommand.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
+        insertCommand.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
+        insertCommand.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
+        insertCommand.Parameters.AddWithValue("@Value", signedRevocationList.ToBinary());
+        insertCommand.ExecuteNonQuery();
+      }
+      else
+      {
+        reader.Close();
+      }
+    }
 
     /// <summary>
     /// Is the certificate revoked.
@@ -271,8 +301,8 @@ namespace Pirate.PiVote.Crypto
     {
       MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom <= @FromDate AND ValidUntil >= @UntilDate", this.dbConnection);
       command.Parameters.AddWithValue("@IssuerId", issuerId.ToByteArray());
-      command.Parameters.AddWithValue("@FromDate", date.Date);
-      command.Parameters.AddWithValue("@UntilDate", date.Date.AddDays(1));
+      command.Parameters.AddWithValue("@FromDate", date.Date.AddDays(1));
+      command.Parameters.AddWithValue("@UntilDate", date.Date);
 
       MySqlDataReader reader = command.ExecuteReader();
       bool isRevoked;
@@ -307,7 +337,7 @@ namespace Pirate.PiVote.Crypto
       certificateStorage.Certificates
         .Foreach(certificate => Add(certificate));
       certificateStorage.SignedRevocationLists
-        .Foreach(reveocationList => AddRevocationList(reveocationList));
+        .Foreach(reveocationList => ForceAddRevocationList(reveocationList));
     }
 
     /// <summary>

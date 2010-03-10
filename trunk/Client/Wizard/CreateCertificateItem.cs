@@ -137,7 +137,7 @@ namespace Pirate.PiVote.Client
           this.certificate = new VoterCertificate();
           break;
         case AuthorityType:
-          string authorityFullName = 
+          string authorityFullName =
             string.Format("{0} {1}, {2}",
             this.firstNameTextBox.Text,
             this.familyNameTextBox.Text,
@@ -156,18 +156,10 @@ namespace Pirate.PiVote.Client
 
       certificate.CreateSelfSignature();
 
-      SaveFileDialog dialog = new SaveFileDialog();
-      dialog.Title = Resources.CreateCertificateSaveDialog;
-      dialog.OverwritePrompt = true;
-      dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-      dialog.CheckPathExists = true;
-      dialog.Filter = Files.CertificateFileFilter;
+      string fileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + ".pi-cert");
+      certificate.Save(fileName);
 
-      if (dialog.ShowDialog() == DialogResult.OK)
-      {
-        certificate.Save(dialog.FileName);
-        OnUpdateWizard();
-      }
+      OnUpdateWizard();
     }
 
     public override void UpdateLanguage()

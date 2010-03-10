@@ -65,7 +65,7 @@ namespace Pirate.PiVote.Client
       dialog.CheckPathExists = true;
       dialog.CheckFileExists = true;
       dialog.Multiselect = true;
-      dialog.Filter = Files.SignatureRequestFileFilter;
+      dialog.Filter = Files.SignatureResponseFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {

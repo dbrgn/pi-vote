@@ -23,7 +23,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Full name of the certificate authority.
     /// </summary>
-    public string FullName { get; private set; }
+    public string fullName;
 
     /// <summary>
     /// Create a new certificate for a certificate authority.
@@ -35,7 +35,7 @@ namespace Pirate.PiVote.Crypto
       if (fullName == null)
         throw new ArgumentNullException("fullName");
 
-      FullName = fullName;
+      this.fullName = fullName;
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ namespace Pirate.PiVote.Crypto
     protected CACertificate(CACertificate original, bool onlyPublicPart)
       : base(original, onlyPublicPart)
     {
-      FullName = original.FullName;
+      this.fullName = original.fullName;
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(FullName);
+      context.Write(this.fullName);
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      FullName = context.ReadString();
+      this.fullName = context.ReadString();
     }
 
     /// <summary>
@@ -117,6 +117,22 @@ namespace Pirate.PiVote.Crypto
     public override byte[] MagicTypeConstant
     {
       get { return Encoding.UTF8.GetBytes("CACertificate"); }
+    }
+
+    /// <summary>
+    /// Full name of the certificate authority.
+    /// </summary>
+    public override string FullName
+    {
+      get { return this.fullName; }
+    }
+
+    /// <summary>
+    /// Type of the certificate in multilingual text.
+    /// </summary>
+    public override string TypeText
+    {
+      get { return LibraryResources.CertificateTypeCA; }
     }
   }
 }

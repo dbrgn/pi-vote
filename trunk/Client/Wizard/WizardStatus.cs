@@ -18,6 +18,8 @@ namespace Pirate.PiVote.Client
 {
   public class WizardStatus
   {
+    private const string DataFolder = "PiVote";
+
     public CertificateStorage CertificateStorage { get; set; }
 
     public Certificate Certificate { get; set; }
@@ -25,6 +27,10 @@ namespace Pirate.PiVote.Client
     public string CertificateFileName { get; set; }
 
     public VotingClient VotingClient { get; set; }
+
+    public string DataPath { get { return this.dataPath; } }
+
+    private string dataPath;
 
     private Message message;
 
@@ -35,6 +41,10 @@ namespace Pirate.PiVote.Client
       this.message = message;
       this.progress = progress;
       this.progress.Status = this;
+
+      this.dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), DataFolder);
+      if (!Directory.Exists(DataPath))
+        Directory.CreateDirectory(dataPath);
     }
 
     public void SetMessage(string message, MessageType type)

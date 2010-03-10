@@ -146,7 +146,6 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.familyNameTextBox);
       this.Controls.Add(this.firstNameTextBox);
       this.Controls.Add(this.typeComboBox);
-      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "CreateCertificateItem";
       this.Size = new System.Drawing.Size(700, 538);
       this.Load += new System.EventHandler(this.StartWizardItem_Load);

@@ -94,5 +94,13 @@ namespace Pirate.PiVote.Crypto
     {
       get { return Encoding.UTF8.GetBytes("VoterCertificate"); }
     }
+
+    /// <summary>
+    /// Type of the certificate in multilingual text.
+    /// </summary>
+    public override string TypeText
+    {
+      get { return LibraryResources.CertificateTypeVoter; }
+    }
   }
 }

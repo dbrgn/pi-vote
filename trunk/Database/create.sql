@@ -48,7 +48,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `pivote`.`envelope` (
   `VotingId` VARBINARY(16) NOT NULL ,
-  `Index` INT(11) NOT NULL ,
+  `EnvelopeIndex` INT(11) NOT NULL ,
   `VoterId` VARBINARY(16) NOT NULL ,
   `Value` BLOB NOT NULL ,
   PRIMARY KEY (`VotingId`, `Index`) )
