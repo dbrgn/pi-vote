@@ -189,6 +189,20 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Creates a proof for bad shares.
+    /// </summary>
+    /// <param name="allShareParts">All share parts from all authorities.</param>
+    /// <returns>Signed proof data.</returns>
+    public Signed<BadShareProof> CreateBadShareProof(AllShareParts allShareParts)
+    {
+      BadShareProof badShareProof = new BadShareProof(
+        this.certificateStorage,
+        this.parameters,
+        allShareParts);
+      return new Signed<BadShareProof>(badShareProof, Certificate);
+    }
+      
+    /// <summary>
     /// Verifies shares from all authorities.
     /// </summary>
     /// <param name="allShareParts">All share parts from all authorities.</param>

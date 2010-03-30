@@ -106,6 +106,7 @@
     <Compile Include="Crypto\Certificate\SignatureResponseStatus.cs" />
     <Compile Include="Crypto\Certificate\VoterCertificate.cs" />
     <Compile Include="Crypto\Container\AuthorityList.cs" />
+    <Compile Include="Crypto\Container\BadShareProof.cs" />
     <Compile Include="Crypto\Container\Envelope.cs" />
     <Compile Include="Crypto\Container\AllShareParts.cs" />
     <Compile Include="Crypto\Container\PartialDecipherList.cs" />

@@ -24,6 +24,7 @@ namespace Pirate.PiVote.Client
     private bool run;
     private Exception exception;
     private bool accept;
+    private Signed<BadShareProof> signedBadShareProof;
     private VotingClient.VotingDescriptor votingDescriptor;
     private IEnumerable<VotingClient.VotingDescriptor> votings;
 
@@ -240,11 +241,12 @@ namespace Pirate.PiVote.Client
       }
     }
 
-    private void CheckSharesCompleteCallBack(VotingClient.VotingDescriptor votingDescriptor, bool accept, Exception exception)
+    private void CheckSharesCompleteCallBack(VotingClient.VotingDescriptor votingDescriptor, bool accept, Signed<BadShareProof> signedBadShareProof, Exception exception)
     {
       this.exception = exception;
       this.votingDescriptor = votingDescriptor;
       this.accept = accept;
+      this.signedBadShareProof = signedBadShareProof;
       this.run = false;
     }
 

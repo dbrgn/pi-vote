@@ -26,7 +26,7 @@ namespace Pirate.PiVote.Rpc
     /// Callback for the check shares operation.
     /// </summary>
     /// <param name="exception">Exception or null in case of success.</param>
-    public delegate void CheckSharesCallBack(VotingDescriptor votingDescriptor, bool accept, Exception exception);
+    public delegate void CheckSharesCallBack(VotingDescriptor votingDescriptor, bool accept, Signed<BadShareProof> signedBadShareProof, Exception exception);
 
     /// <summary>
     /// Check shares parts.
@@ -94,7 +94,15 @@ namespace Pirate.PiVote.Rpc
           var signedShareResponse = client.authorityEntity.VerifyShares(allShareParts);
 
           Text = LibraryResources.ClientCheckSharesSaveAuthority;
-          Progress = 0.6d;
+          Progress = 0.5d;
+
+          Signed<BadShareProof> signedBadShareProof = null;
+
+          if (!signedShareResponse.Value.AcceptShares)
+          {
+            signedBadShareProof = client.authorityEntity.CreateBadShareProof(allShareParts);
+            signedShareResponse.Save(signedBadShareProof.Value.FileName(signedBadShareProof.Certificate.Id));
+          }
 
           client.SaveAuthority(this.authorityFileName);
 
@@ -113,11 +121,11 @@ namespace Pirate.PiVote.Rpc
 
           Progress = 1d;
 
-          this.callBack(votingDescriptor, signedShareResponse.Value.AcceptShares, null);
+          this.callBack(votingDescriptor, signedShareResponse.Value.AcceptShares, signedBadShareProof, null);
         }
         catch (Exception exception)
         {
-          this.callBack(null, false, exception);
+          this.callBack(null, false, null, exception);
         }
       }
     }

@@ -93,6 +93,12 @@
     <Compile Include="Wizard\ChooseCertificateItem.designer.cs">
       <DependentUpon>ChooseCertificateItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wizard\BadShareProofItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\BadShareProofItem.designer.cs">
+      <DependentUpon>BadShareProofItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Wizard\Message.cs">
       <SubType>UserControl</SubType>
     </Compile>
