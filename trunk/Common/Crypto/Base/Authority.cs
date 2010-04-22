@@ -266,7 +266,7 @@ namespace Pirate.PiVote.Crypto
       if (verificationValues == null)
         throw new ArgumentNullException("verificationValues");
       if (verificationValues
-        .Any(verificationValueList => verificationValueList == null || 
+        .Any(verificationValueList => verificationValueList == null ||
           verificationValues.Any(verificationValue => verificationValue == null)))
         throw new ArgumentException("No verification value can be null.");
       if (verificationValues.Count != this.parameters.AuthorityCount)
@@ -278,22 +278,8 @@ namespace Pirate.PiVote.Crypto
       {
         //Check each part of the sharing.
         Share share = shares[shareIndex];
-        if (share.DestinationAuthorityIndex != Index)
-          return false;
 
-        BigInt GtoS = this.parameters.G.PowerMod(shares[shareIndex].Value, this.parameters.P);
-        BigInt aProduct = new BigInt(1);
-        for (int k = 0; k <= this.polynomial.Degree; k++)
-        {
-          VerificationValue verificationValue = verificationValues[shareIndex][k];
-          if (verificationValue.SourceAuthorityIndex != share.SourceAuthorityIndex)
-            return false;
-
-          aProduct *= verificationValue.Value.PowerMod(new BigInt(Index).PowerMod(new BigInt(k), this.parameters.P), this.parameters.P);
-          aProduct = aProduct.Mod(this.parameters.P);
-        }
-
-        if (GtoS != aProduct)
+        if (!share.Verify(Index, this.parameters, verificationValues[shareIndex]))
           return false;
       }
 
@@ -306,5 +292,64 @@ namespace Pirate.PiVote.Crypto
 
       return true;
     }
+
+    /////// <summary>
+    /////// Verify the sharing of the secret.
+    /////// </summary>
+    /////// <param name="shares">Shares from all authorities.</param>
+    /////// <param name="verificationValues">Verification values. Also known as A(i)(j).</param>
+    /////// <returns>Was sharing accepted?</returns>
+    ////public bool VerifySharing(List<Share> shares, List<List<VerificationValue>> verificationValues)
+    ////{
+    ////  if (shares == null)
+    ////    throw new ArgumentNullException("shares");
+    ////  if (shares.Any(share => share == null))
+    ////    throw new ArgumentException("No share can be null.");
+    ////  if (shares.Count != this.parameters.AuthorityCount)
+    ////    throw new ArgumentException("Bad share count.");
+
+    ////  if (verificationValues == null)
+    ////    throw new ArgumentNullException("verificationValues");
+    ////  if (verificationValues
+    ////    .Any(verificationValueList => verificationValueList == null || 
+    ////      verificationValues.Any(verificationValue => verificationValue == null)))
+    ////    throw new ArgumentException("No verification value can be null.");
+    ////  if (verificationValues.Count != this.parameters.AuthorityCount)
+    ////    throw new ArgumentException("Bad verifcation value list count.");
+    ////  if (verificationValues.Any(verificationValueList => verificationValueList.Count != this.parameters.Thereshold + 1))
+    ////    throw new ArgumentException("Bad verificaton value count.");
+
+    ////  for (int shareIndex = 0; shareIndex < shares.Count; shareIndex++)
+    ////  {
+    ////    //Check each part of the sharing.
+    ////    Share share = shares[shareIndex];
+    ////    if (share.DestinationAuthorityIndex != Index)
+    ////      return false;
+
+    ////    BigInt GtoS = this.parameters.G.PowerMod(shares[shareIndex].Value, this.parameters.P);
+    ////    BigInt aProduct = new BigInt(1);
+    ////    for (int k = 0; k <= this.polynomial.Degree; k++)
+    ////    {
+    ////      VerificationValue verificationValue = verificationValues[shareIndex][k];
+    ////      if (verificationValue.SourceAuthorityIndex != share.SourceAuthorityIndex)
+    ////        return false;
+
+    ////      aProduct *= verificationValue.Value.PowerMod(new BigInt(Index).PowerMod(new BigInt(k), this.parameters.P), this.parameters.P);
+    ////      aProduct = aProduct.Mod(this.parameters.P);
+    ////    }
+
+    ////    if (GtoS != aProduct)
+    ////      return false;
+    ////  }
+
+    ////  //Compute this authority's secret.
+    ////  this.secretKeyPart = new BigInt(0);
+    ////  foreach (Share share in shares)
+    ////  {
+    ////    this.secretKeyPart += share.Value;
+    ////  }
+
+    ////  return true;
+    ////}
   }
 }

@@ -85,7 +85,7 @@ namespace Pirate.PiVote.Rpc
     {
       VotingServerEntity voting = server.GetVoting(this.votingId);
 
-      return new FetchParametersResponse(RequestId, voting.GetAuthorityIndex(this.certificate), voting.Parameters);
+      return new FetchParametersResponse(RequestId, voting.GetAuthorityIndex(this.certificate), voting.SignedParameters);
     }
   }
 }

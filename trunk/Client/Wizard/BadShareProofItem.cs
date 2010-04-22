@@ -21,6 +21,7 @@ namespace Pirate.PiVote.Client
 {
   public partial class BadShareProofItem : WizardItem
   {
+    public bool IsAuthority { get; set; }
     public Signed<BadShareProof> SignedBadShareProof { get; set; }
 
     public BadShareProofItem()
@@ -30,7 +31,14 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      return null;
+      if (IsAuthority)
+      {
+        return new AuthorityListVotingsItem();
+      }
+      else
+      {
+        return null;
+      }
     }
 
     public override WizardItem Previous()
@@ -48,13 +56,98 @@ namespace Pirate.PiVote.Client
       get { return true; }
     }
 
+    public override bool CanNext
+    {
+      get { return IsAuthority; }
+    }
+
     public override void Begin()
     {
+      Display();
+    }
+
+    private void Display()
+    {
+      BadShareProof proof = SignedBadShareProof.Value;
+
+      this.reportingCertificate.ValidationDate = proof.Parameters.VotingBeginDate;
+      this.reportingCertificate.CertificateStorage = proof.CertificateStorage;
+      this.reportingCertificate.Certificate = SignedBadShareProof.Certificate;
+
+      if (SignedBadShareProof.Verify(proof.CertificateStorage, proof.Parameters.VotingBeginDate))
+      {
+        this.reportingSignatureBox.Text = Resources.CertificateValid;
+        this.reportingSignatureBox.BackColor = Color.Green;
+      }
+      else
+      {
+        this.reportingSignatureBox.Text = Resources.CertificateInvalid;
+        this.reportingSignatureBox.BackColor = Color.Red;
+      }
+
+      this.organizingCertificate.ValidationDate = proof.Parameters.VotingBeginDate;
+      this.organizingCertificate.CertificateStorage = proof.CertificateStorage;
+      this.organizingCertificate.Certificate = proof.SignedParameters.Certificate;
+
+      if (proof.SignedParameters.Verify(proof.CertificateStorage, proof.Parameters.VotingBeginDate))
+      {
+        this.organizingSignatureBox.Text = Resources.CertificateValid;
+        this.organizingSignatureBox.BackColor = Color.Green;
+      }
+      else
+      {
+        this.organizingSignatureBox.Text = Resources.CertificateInvalid;
+        this.organizingSignatureBox.BackColor = Color.Red;
+      }
+        
+      this.share0.ValidationDate = proof.Parameters.VotingBeginDate;
+      this.share0.AuthorityIndex = 1;
+      this.share0.Proof = SignedBadShareProof.Value;
+      this.share0.ComplainingAuthorityCertificate = SignedBadShareProof.Certificate;
+      this.share0.Display();
+
+      this.share1.ValidationDate = proof.Parameters.VotingBeginDate;
+      this.share1.AuthorityIndex = 2;
+      this.share1.Proof = SignedBadShareProof.Value;
+      this.share1.ComplainingAuthorityCertificate = SignedBadShareProof.Certificate;
+      this.share1.Display();
+
+      this.share2.ValidationDate = proof.Parameters.VotingBeginDate;
+      this.share2.AuthorityIndex = 3;
+      this.share2.Proof = SignedBadShareProof.Value;
+      this.share2.ComplainingAuthorityCertificate = SignedBadShareProof.Certificate;
+      this.share2.Display();
+
+      this.share3.ValidationDate = proof.Parameters.VotingBeginDate;
+      this.share3.AuthorityIndex = 4;
+      this.share3.Proof = SignedBadShareProof.Value;
+      this.share3.ComplainingAuthorityCertificate = SignedBadShareProof.Certificate;
+      this.share3.Display();
+
+      this.share4.ValidationDate = proof.Parameters.VotingBeginDate;
+      this.share4.AuthorityIndex = 5;
+      this.share4.Proof = SignedBadShareProof.Value;
+      this.share4.ComplainingAuthorityCertificate = SignedBadShareProof.Certificate;
+      this.share4.Display();
     }
 
     public override void UpdateLanguage()
     {
       base.UpdateLanguage();
+
+      this.reportingLabel.Text = Resources.BadShareProofReporting;
+      this.organizingLabel.Text = Resources.BadShareProofOrganizing;
+      this.controlingAuthoritiesLabel.Text = Resources.BadShareProofControlling;
+      this.reportingSignatureLabel.Text = Resources.BadShareProofSignature;
+      this.organizingSignatureLabel.Text = Resources.BadShareProofSignature;
+
+      this.reportingCertificate.SetLanguage();
+      this.organizingCertificate.SetLanguage();
+      this.share0.SetLanguage();
+      this.share1.SetLanguage();
+      this.share2.SetLanguage();
+      this.share3.SetLanguage();
+      this.share4.SetLanguage();
     }
   }
 }

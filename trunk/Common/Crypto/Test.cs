@@ -86,11 +86,11 @@ namespace Pirate.PiVote.Crypto
       vs.AddAuthority(a4.Certificate);
       vs.AddAuthority(a5.Certificate);
 
-      a1.Prepare(1, vs.Parameters);
-      a2.Prepare(2, vs.Parameters);
-      a3.Prepare(3, vs.Parameters);
-      a4.Prepare(4, vs.Parameters);
-      a5.Prepare(5, vs.Parameters);
+      a1.Prepare(1, vs.SignedParameters);
+      a2.Prepare(2, vs.SignedParameters);
+      a3.Prepare(3, vs.SignedParameters);
+      a4.Prepare(4, vs.SignedParameters);
+      a5.Prepare(5, vs.SignedParameters);
 
       a1.SetAuthorities(vs.AuthorityList);
       a2.SetAuthorities(vs.AuthorityList);

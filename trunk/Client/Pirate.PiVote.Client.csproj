@@ -81,6 +81,18 @@
     <Compile Include="Wizard\AuthorityListVotingsItem.designer.cs">
       <DependentUpon>AuthorityListVotingsItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wizard\CertificateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\CertificateControl.Designer.cs">
+      <DependentUpon>CertificateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\CertificateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Wizard\CertificateForm.Designer.cs">
+      <DependentUpon>CertificateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Wizard\CheckCertificateItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -99,6 +111,12 @@
     <Compile Include="Wizard\BadShareProofItem.designer.cs">
       <DependentUpon>BadShareProofItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wizard\SmallCertificateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\SmallCertificateControl.Designer.cs">
+      <DependentUpon>SmallCertificateControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Wizard\Message.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -111,6 +129,12 @@
     </Compile>
     <Compile Include="Wizard\Progress.Designer.cs">
       <DependentUpon>Progress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\ViewShareControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\ViewShareControl.Designer.cs">
+      <DependentUpon>ViewShareControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Wizard\VoteCompleteItem.cs">
       <SubType>UserControl</SubType>
@@ -208,17 +232,32 @@
     <EmbeddedResource Include="Wizard\AuthorityListVotingsItem.resx">
       <DependentUpon>AuthorityListVotingsItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\BadShareProofItem.resx">
+      <DependentUpon>BadShareProofItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\CertificateControl.resx">
+      <DependentUpon>CertificateControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\CertificateForm.resx">
+      <DependentUpon>CertificateForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Wizard\CheckCertificateItem.resx">
       <DependentUpon>CheckCertificateItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\ChooseCertificateItem.resx">
       <DependentUpon>ChooseCertificateItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\SmallCertificateControl.resx">
+      <DependentUpon>SmallCertificateControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Wizard\Message.resx">
       <DependentUpon>Message.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\Progress.resx">
       <DependentUpon>Progress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\ViewShareControl.resx">
+      <DependentUpon>ViewShareControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\VoteCompleteItem.resx">
       <DependentUpon>VoteCompleteItem.cs</DependentUpon>

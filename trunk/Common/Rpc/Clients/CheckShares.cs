@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Net;
+using System.IO;
 using Pirate.PiVote.Serialization;
 using Pirate.PiVote.Crypto;
 
@@ -96,13 +97,8 @@ namespace Pirate.PiVote.Rpc
           Text = LibraryResources.ClientCheckSharesSaveAuthority;
           Progress = 0.5d;
 
-          Signed<BadShareProof> signedBadShareProof = null;
-
-          if (!signedShareResponse.Value.AcceptShares)
-          {
-            signedBadShareProof = client.authorityEntity.CreateBadShareProof(allShareParts);
-            signedShareResponse.Save(signedBadShareProof.Value.FileName(signedBadShareProof.Certificate.Id));
-          }
+          Signed<BadShareProof> signedBadShareProof = client.authorityEntity.CreateBadShareProof(allShareParts);
+          signedShareResponse.Save(Path.Combine(Path.GetDirectoryName(this.authorityFileName), signedBadShareProof.Value.FileName(signedBadShareProof.Certificate.Id)));
 
           client.SaveAuthority(this.authorityFileName);
 
@@ -117,7 +113,7 @@ namespace Pirate.PiVote.Rpc
           var parameters = client.proxy.FetchParameters(this.votingId, this.authorityCertificate); 
           List<Guid> authoritieDone;
           VotingStatus status = client.proxy.FetchVotingStatus(this.votingId, out authoritieDone);
-          var votingDescriptor = new VotingDescriptor(parameters.Value, status, authoritieDone);
+          var votingDescriptor = new VotingDescriptor(parameters.Value.Value, status, authoritieDone);
 
           Progress = 1d;
 

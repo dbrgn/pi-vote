@@ -252,21 +252,22 @@ namespace Pirate.PiVote.Client
             this.addToolStripMenuItem,
             this.removeToolStripMenuItem});
       this.contextMenu.Name = "contextMenu";
-      this.contextMenu.Size = new System.Drawing.Size(114, 48);
+      this.contextMenu.Size = new System.Drawing.Size(153, 70);
       this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
       // 
       // addToolStripMenuItem
       // 
       this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-      this.addToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+      this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
       this.addToolStripMenuItem.Text = "&Add";
       this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
       // 
       // removeToolStripMenuItem
       // 
       this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-      this.removeToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+      this.removeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
       this.removeToolStripMenuItem.Text = "&Remove";
+      this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
       // 
       // authority0List
       // 

@@ -28,7 +28,7 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Parameters of the voting.
     /// </summary>
-    public VotingParameters VotingParameters { get; private set; }
+    public Signed<VotingParameters> VotingParameters { get; private set; }
 
     /// <summary>
     /// Create a new response to the request to fetch voting parameters.
@@ -36,7 +36,7 @@ namespace Pirate.PiVote.Rpc
     /// <param name="requestId">Id of the request.</param>
     /// <param name="authorityIndex">Index of the authority.</param>
     /// <param name="votingParameters">Parameters of the voting.</param>
-    public FetchParametersResponse(Guid requestId, int authorityIndex, VotingParameters votingParameters)
+    public FetchParametersResponse(Guid requestId, int authorityIndex, Signed<VotingParameters> votingParameters)
       : base(requestId)
     {
       AuthorityIndex = authorityIndex;
@@ -79,7 +79,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Deserialize(context);
       AuthorityIndex = context.ReadInt32();
-      VotingParameters = context.ReadObject<VotingParameters>();
+      VotingParameters = context.ReadObject<Signed<VotingParameters>>();
     }
   }
 }

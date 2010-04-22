@@ -97,6 +97,18 @@ namespace Pirate.PiVote.Serialization
       }
     }
 
+    public void WriteDictionary<TValue>(IDictionary<int, TValue> list)
+      where TValue : Serializable
+    {
+      Write(list.Count());
+
+      foreach (KeyValuePair<int, TValue> pair in list)
+      {
+        Write(pair.Key);
+        Write(pair.Value);
+      }
+    }
+
     public void WriteList<TValue>(IEnumerable<TValue> list)
       where TValue : Serializable
     {

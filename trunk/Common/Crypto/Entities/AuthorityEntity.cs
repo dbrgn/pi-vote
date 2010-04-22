@@ -31,6 +31,11 @@ namespace Pirate.PiVote.Crypto
     private VotingParameters parameters;
 
     /// <summary>
+    /// Signed version of the voting parameters;
+    /// </summary>
+    private Signed<VotingParameters> signedParameters;
+
+    /// <summary>
     /// Cryptographic authority.
     /// </summary>
     private Authority authority;
@@ -91,6 +96,7 @@ namespace Pirate.PiVote.Crypto
       SerializeContext context = new SerializeContext(fileStream);
 
       context.Write(this.parameters);
+      context.Write(this.signedParameters);
 
       context.Write(this.authorities.Count);
       this.authorities.Foreach(pair => { context.Write(pair.Key); context.Write(pair.Value); });
@@ -111,6 +117,7 @@ namespace Pirate.PiVote.Crypto
       DeserializeContext context = new DeserializeContext(fileStream);
 
       this.parameters = context.ReadObject<VotingParameters>();
+      this.signedParameters = context.ReadObject<Signed<VotingParameters>>();
 
       this.authorities = new Dictionary<int,Certificate>();
       int count = context.ReadInt32();
@@ -127,14 +134,15 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="index">Index given to this authority.</param>
     /// <param name="parameters">Voting parameters for the procedure.</param>
-    public void Prepare(int index, VotingParameters parameters)
+    public void Prepare(int index, Signed<VotingParameters> signedParameters)
     {
       if (index < 1)
         throw new ArgumentException("Index must be at least 1.");
-      if (parameters == null)
-        throw new ArgumentNullException("parameters");
+      if (signedParameters == null)
+        throw new ArgumentNullException("signedParameters");
 
-      this.parameters = parameters;
+      this.signedParameters = signedParameters;
+      this.parameters = signedParameters.Value;
       this.authority = new Authority(index, this.parameters);
       this.authority.CreatePolynomial();
       this.authorities = new Dictionary<int, Certificate>();
@@ -195,11 +203,24 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Signed proof data.</returns>
     public Signed<BadShareProof> CreateBadShareProof(AllShareParts allShareParts)
     {
+      Dictionary<int, TrapDoor> trapDoors = new Dictionary<int, TrapDoor>();
+      foreach (Signed<SharePart> signedSharePart in allShareParts.ShareParts)
+      {
+        SharePart sharePart = signedSharePart.Value;
+
+        Encrypted<Share> encryptedShare = sharePart.EncryptedShares[this.authority.Index - 1];
+        trapDoors.Add(sharePart.AuthorityIndex, encryptedShare.CreateTrapDoor(this.certificate));
+      }
+      
       BadShareProof badShareProof = new BadShareProof(
+        this.authority.Index,
         this.certificateStorage,
-        this.parameters,
-        allShareParts);
-      return new Signed<BadShareProof>(badShareProof, Certificate);
+        this.signedParameters,
+        allShareParts,
+        trapDoors,
+        this.authorities);
+
+      return new Signed<BadShareProof>(badShareProof, this.certificate);
     }
       
     /// <summary>

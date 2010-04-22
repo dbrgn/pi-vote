@@ -96,6 +96,8 @@ namespace Pirate.PiVote.Client
       }
 
       SetEnable(true);
+      this.run = false;
+      OnUpdateWizard();
     }
 
     private void GetAuthorityCertificatesCompleted(IEnumerable<AuthorityCertificate> authorityCertificates, Exception exception)
@@ -348,6 +350,16 @@ namespace Pirate.PiVote.Client
         ListViewItem item = new ListViewItem(dialog.OptionText);
         item.SubItems.Add(dialog.OptionDescription);
         this.optionListView.Items.Add(item);
+        CheckEnable();
+      }
+    }
+
+    private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      if (this.optionListView.SelectedItems.Count > 0)
+      {
+        this.optionListView.SelectedItems[0].Remove();
+        CheckEnable();
       }
     }
   }

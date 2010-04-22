@@ -183,6 +183,11 @@ namespace Pirate.PiVote.Crypto
     public VotingParameters Parameters { get { return this.parameters; } }
 
     /// <summary>
+    /// Signed version of voting parameters;
+    /// </summary>
+    public Signed<VotingParameters> SignedParameters { get { return this.signedParameters; } }
+
+    /// <summary>
     /// Get the index of an authority from certificate.
     /// </summary>
     /// <param name="certificate">Certificate of the authority.</param>
@@ -194,7 +199,8 @@ namespace Pirate.PiVote.Crypto
       if (!certificate.Valid(this.certificateStorage))
         throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Authority certificate invalid.");
 
-      MySqlCommand command = new MySqlCommand("SELECT AuthorityIndex FROM authority WHERE AuthorityId = @AuthorityId", this.dbConnection);
+      MySqlCommand command = new MySqlCommand("SELECT AuthorityIndex FROM authority WHERE VotingId = @VotingId AND AuthorityId = @AuthorityId", this.dbConnection);
+      command.Parameters.AddWithValue("@VotingId", this.parameters.VotingId.ToByteArray());
       command.Parameters.AddWithValue("@AuthorityId", certificate.Id.ToByteArray());
       MySqlDataReader reader = command.ExecuteReader();
 

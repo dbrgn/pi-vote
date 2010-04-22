@@ -35,7 +35,17 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      return null;
+      if (this.signedBadShareProof == null)
+      {
+        return null;
+      }
+      else
+      {
+        var badShareProofItem = new BadShareProofItem();
+        badShareProofItem.IsAuthority = true;
+        badShareProofItem.SignedBadShareProof = this.signedBadShareProof;
+        return badShareProofItem;
+      }
     }
 
     public override WizardItem Previous()
@@ -55,7 +65,7 @@ namespace Pirate.PiVote.Client
 
     public override bool CanNext
     {
-      get { return false; }
+      get { return this.signedBadShareProof != null; }
     }
 
     public override void Begin()
@@ -166,7 +176,6 @@ namespace Pirate.PiVote.Client
           Status.SetMessage(this.exception.Message, MessageType.Error);
         }
 
-        Status.UpdateProgress();
         this.votingList.Enabled = true;
         OnUpdateWizard();
       }
@@ -222,15 +231,15 @@ namespace Pirate.PiVote.Client
             {
               Status.SetMessage(Resources.AuthorityCheckSharesDecline, MessageType.Warning);
             }
+
+            OnNextStep();
           }
           else
           {
             Status.SetMessage(this.exception.Message, MessageType.Error);
+            this.votingList.Enabled = true;
+            OnUpdateWizard();
           }
-
-          Status.UpdateProgress();
-          this.votingList.Enabled = true;
-          OnUpdateWizard();
         }
         else
         {

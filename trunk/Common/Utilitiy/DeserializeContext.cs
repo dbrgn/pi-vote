@@ -126,6 +126,20 @@ namespace Pirate.PiVote.Serialization
       return list;
     }
 
+    public Dictionary<int, TValue> ReadObjectDictionary<TValue>()
+      where TValue : Serializable
+    {
+      int count = ReadInt32();
+      Dictionary<int, TValue> list = new Dictionary<int, TValue>();
+
+      for (int index = 0; index < count; index++)
+      {
+        list.Add(ReadInt32(), ReadObject<TValue>());
+      }
+
+      return list;
+    }
+
     public List<byte[]> ReadBytesList()
     {
       int count = ReadInt32();

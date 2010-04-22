@@ -85,12 +85,12 @@ namespace Pirate.PiVote.Rpc
     /// <param name="votingId">Id of the voting.</param>
     /// <param name="certificate">Certificate of the authority.</param>
     /// <returns>Index of the authority.</returns>
-    public KeyValuePair<int, VotingParameters> FetchParameters(Guid votingId, AuthorityCertificate certificate)
+    public KeyValuePair<int, Signed<VotingParameters>> FetchParameters(Guid votingId, AuthorityCertificate certificate)
     {
       var request = new FetchParametersRequest(Guid.NewGuid(), votingId, certificate);
       var response = Execute<FetchParametersResponse>(request);
 
-      return new KeyValuePair<int, VotingParameters>(response.AuthorityIndex, response.VotingParameters);
+      return new KeyValuePair<int, Signed<VotingParameters>>(response.AuthorityIndex, response.VotingParameters);
     }
   }
 }

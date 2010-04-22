@@ -104,6 +104,7 @@
     <Compile Include="Crypto\Certificate\SignatureRequest.cs" />
     <Compile Include="Crypto\Certificate\SignatureResponse.cs" />
     <Compile Include="Crypto\Certificate\SignatureResponseStatus.cs" />
+    <Compile Include="Crypto\Certificate\TrapDoor.cs" />
     <Compile Include="Crypto\Certificate\VoterCertificate.cs" />
     <Compile Include="Crypto\Container\AuthorityList.cs" />
     <Compile Include="Crypto\Container\BadShareProof.cs" />

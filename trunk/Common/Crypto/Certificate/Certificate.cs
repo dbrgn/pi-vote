@@ -267,7 +267,7 @@ namespace Pirate.PiVote.Crypto
       if (data == null)
         throw new ArgumentNullException("data");
       if (!HasPrivateKey)
-        throw new InvalidProgramException("No public key.");
+        throw new InvalidProgramException("No private key.");
 
       var rsaProvider = GetRsaProvider();
 
@@ -279,6 +279,56 @@ namespace Pirate.PiVote.Crypto
       rijndael.KeySize = 256;
       rijndael.IV = data.Part(128, 16);
       rijndael.Key = rsaProvider.Decrypt(encryptedKey, true);
+      rijndael.Mode = CipherMode.CBC;
+      rijndael.Padding = PaddingMode.ISO10126;
+
+      MemoryStream memoryStream = new MemoryStream();
+      CryptoStream cryptoStream = new CryptoStream(memoryStream, rijndael.CreateDecryptor(), CryptoStreamMode.Write);
+      cryptoStream.Write(cipherText, 0, cipherText.Length);
+      cryptoStream.Close();
+      memoryStream.Close();
+
+      return memoryStream.ToArray();
+    }
+
+    /// <summary>
+    /// Creates a trapdoor.
+    /// </summary>
+    /// <param name="data">Encrypted data.</param>
+    /// <returns>Created trapdoor.</returns>
+    public TrapDoor CreateTrapDoor(byte[] data)
+    {
+      if (data == null)
+        throw new ArgumentNullException("data");
+      if (!HasPrivateKey)
+        throw new InvalidProgramException("No private key.");
+
+      var rsaProvider = GetRsaProvider();
+
+      byte[] encryptedKey = data.Part(0, 128);
+
+      return new TrapDoor(Id, rsaProvider.Decrypt(encryptedKey, true));
+    }
+
+    /// <summary>
+    /// Decrypts data using a trapdoor.
+    /// </summary>
+    /// <param name="trapDoor">Trapdoor to the data.</param>
+    /// <param name="data">Encrypted data.</param>
+    /// <returns>Decrypted data.</returns>
+    public byte[] DeryptWithTrapDoor(TrapDoor trapDoor, byte[] data)
+    {
+      if (data == null)
+        throw new ArgumentNullException("data");
+
+      byte[] encryptedKey = data.Part(0, 128);
+      byte[] cipherText = data.Part(144);
+
+      RijndaelManaged rijndael = new RijndaelManaged();
+      rijndael.BlockSize = 128;
+      rijndael.KeySize = 256;
+      rijndael.IV = data.Part(128, 16);
+      rijndael.Key = trapDoor.SymmetricKey;
       rijndael.Mode = CipherMode.CBC;
       rijndael.Padding = PaddingMode.ISO10126;
 
@@ -358,7 +408,7 @@ namespace Pirate.PiVote.Crypto
     /// Assembles the data to be signed for the certificate.
     /// </summary>
     /// <returns>Data to be signed.</returns>
-    private byte[] GetSignatureContent()
+    public byte[] GetSignatureContent()
     {
       MemoryStream signatureContent = new MemoryStream();
       BinaryWriter contentWriter = new BinaryWriter(signatureContent);

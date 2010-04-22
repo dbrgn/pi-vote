@@ -113,7 +113,7 @@ namespace Pirate.PiVote.Rpc
 
           List<Guid> authoritieDone;
           VotingStatus status = client.proxy.FetchVotingStatus(this.votingId, out authoritieDone);
-          var votingDescriptor = new VotingDescriptor(parameters.Value, status, authoritieDone);
+          var votingDescriptor = new VotingDescriptor(parameters.Value.Value, status, authoritieDone);
 
           Progress = 1d;
 

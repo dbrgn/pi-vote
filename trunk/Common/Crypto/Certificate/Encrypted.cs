@@ -19,6 +19,11 @@ namespace Pirate.PiVote.Crypto
   public class Encrypted : Serializable
   {
     /// <summary>
+    /// Id of the intended receiver.
+    /// </summary>
+    public Guid ReceiverId { get; protected set; }
+
+    /// <summary>
     /// Encrypted data of serializable object.
     /// </summary>
     public byte[] Data { get; protected set; }
@@ -44,6 +49,7 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+      context.Write(ReceiverId);
       context.Write(Data);
     }
 
@@ -54,6 +60,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+      ReceiverId = context.ReadGuid();
       Data = context.ReadBytes();
     }
   }
@@ -76,6 +83,7 @@ namespace Pirate.PiVote.Crypto
       if (receiverCertificate == null)
         throw new ArgumentNullException("receiverCertificate");
 
+      ReceiverId = receiverCertificate.Id;
       Data = receiverCertificate.Encrypt(value.ToBinary());
     }
 
@@ -94,8 +102,45 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("receiverCertificate");
       if (!receiverCertificate.HasPrivateKey)
         throw new ArgumentException("Private key missing.");
+      if (receiverCertificate.Id != ReceiverId)
+        throw new ArgumentException("Wrong receiver id.");
 
       return Serializable.FromBinary<TValue>(receiverCertificate.Decrypt(Data));
+    }
+
+    /// <summary>
+    /// Creates a trapdoor to this encryption.
+    /// </summary>
+    /// <param name="receiverCertificate">Certificate of the receiver.</param>
+    /// <returns>Created trapdoor.</returns>
+    public TrapDoor CreateTrapDoor(Certificate receiverCertificate)
+    {
+      if (receiverCertificate == null)
+        throw new ArgumentNullException("receiverCertificate");
+      if (!receiverCertificate.HasPrivateKey)
+        throw new ArgumentException("Private key missing.");
+      if (receiverCertificate.Id != ReceiverId)
+        throw new ArgumentException("Wrong receiver id.");
+
+      return receiverCertificate.CreateTrapDoor(Data);
+    }
+
+    /// <summary>
+    /// Decrypts the data with a trapdoor.
+    /// </summary>
+    /// <param name="trapDoor">Trapdoor.</param>
+    /// <param name="receiverCertificate">Certificate of the receiver.</param>
+    /// <returns>Decrypted data.</returns>
+    public TValue DecryptWithTrapDoor(TrapDoor trapDoor, Certificate receiverCertificate)
+    {
+      if (receiverCertificate == null)
+        throw new ArgumentNullException("receiverCertificate");
+      if (receiverCertificate.Id != ReceiverId)
+        throw new ArgumentException("Wrong receiver id.");
+      if (trapDoor.IssuerId != ReceiverId)
+        throw new ArgumentException("Wrong trapdoor issuer id.");
+
+      return Serializable.FromBinary<TValue>(receiverCertificate.DeryptWithTrapDoor(trapDoor, Data));
     }
   }
 }

@@ -63,5 +63,41 @@ namespace Pirate.PiVote.Crypto
       DestinationAuthorityIndex = context.ReadInt32();
       Value = context.ReadBigInt();
     }
+
+    /// <summary>
+    /// Verify this share of the secret.
+    /// </summary>
+    /// <param name="authorityIndex">Index of the verifying authority.</param>
+    /// <param name="parameters">Cryptographic parameters.</param>
+    /// <param name="polynomial">Polynomial to verify against.</param>
+    /// <param name="verificationValues">Verification values. Also known as A(i)(j).</param>
+    /// <returns>Was share accepted?</returns>
+    public bool Verify(int authorityIndex, Parameters parameters, List<VerificationValue> verificationValues)
+    {
+      if (verificationValues == null)
+        throw new ArgumentNullException("verificationValues");
+      if (verificationValues
+        .Any(verificationValueList => verificationValueList == null))
+        throw new ArgumentException("No verification value can be null.");
+      if (verificationValues.Count != parameters.Thereshold + 1)
+        throw new ArgumentException("Bad verificaton value count.");
+
+      if (DestinationAuthorityIndex != authorityIndex)
+        return false;
+
+      BigInt GtoS = parameters.G.PowerMod(Value, parameters.P);
+      BigInt aProduct = new BigInt(1);
+      for (int k = 0; k <= parameters.Thereshold; k++)
+      {
+        VerificationValue verificationValue = verificationValues[k];
+        if (verificationValue.SourceAuthorityIndex != SourceAuthorityIndex)
+          return false;
+
+        aProduct *= verificationValue.Value.PowerMod(new BigInt(authorityIndex).PowerMod(new BigInt(k), parameters.P), parameters.P);
+        aProduct = aProduct.Mod(parameters.P);
+      }
+
+      return GtoS == aProduct;
+    }
   }
 }
