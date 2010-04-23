@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Net;
+using System.IO;
 using Pirate.PiVote.Serialization;
 using Pirate.PiVote.Crypto;
 
@@ -25,8 +26,9 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Callback for the vote operation.
     /// </summary>
+    /// <param name="voteReceipt">Vote receipt signed by the server.</param>
     /// <param name="exception">Exception or null in case of success.</param>
-    public delegate void VoteCallBack(Exception exception);
+    public delegate void VoteCallBack(Signed<VoteReceipt> voteReceipt, Exception exception);
 
     /// <summary>
     /// Vote cast operation.
@@ -91,15 +93,25 @@ namespace Pirate.PiVote.Rpc
           SubText = LibraryResources.ClientVotePushVote;
           SubProgress = 0d;
 
-          client.proxy.PushEnvelope(this.votingId, envelope);
+          var voteReceipt = client.proxy.PushEnvelope(this.votingId, envelope);
+
+          if (voteReceipt == null ||
+              !voteReceipt.Verify(client.voterEntity.CertificateStorage) ||
+              !(voteReceipt.Certificate is ServerCertificate) ||
+              voteReceipt.Value.VoterId != envelope.Certificate.Id ||
+              voteReceipt.Value.VotingId != this.votingId ||
+              !voteReceipt.Value.Verify(envelope))
+          {
+            throw new PiSecurityException(ExceptionCode.InvalidVoteReceipt, "Invalid vote receipt");
+          }
 
           Progress = 1d;
 
-          this.callBack(null);
+          this.callBack(voteReceipt, null);
         }
         catch (Exception exception)
         {
-          this.callBack(exception);
+          this.callBack(null, exception);
         }
       }
     }

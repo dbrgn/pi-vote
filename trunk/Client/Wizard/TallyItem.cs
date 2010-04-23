@@ -24,8 +24,11 @@ namespace Pirate.PiVote.Client
     private bool run;
     private VotingResult result;
     private Exception exception;
+    private IDictionary<Guid, VoteReceiptStatus> voteReceiptsStatus;
 
     public VotingClient.VotingDescriptor VotingDescriptor { get; set; }
+
+    public IEnumerable<Signed<VoteReceipt>> VoteReceipts { get; set; }
 
     public TallyItem()
     {
@@ -57,7 +60,7 @@ namespace Pirate.PiVote.Client
       this.run = true;
 
       Status.VotingClient.ActivateVoter((VoterCertificate)Status.Certificate);
-      Status.VotingClient.GetResult(VotingDescriptor.Id, GetResultComplete);
+      Status.VotingClient.GetResult(VotingDescriptor.Id, VoteReceipts, GetResultComplete);
 
       while (this.run)
       {
@@ -93,6 +96,32 @@ namespace Pirate.PiVote.Client
             optionBallots.SubItems.Add(option.Result.ToString());
             this.resultList.Items.Add(optionBallots);
           }
+
+          ListViewItem space = new ListViewItem(string.Empty);
+          space.SubItems.Add(string.Empty);
+          this.resultList.Items.Add(space);
+
+          foreach (KeyValuePair<Guid, VoteReceiptStatus> voteReceipt in this.voteReceiptsStatus)
+          {
+            ListViewItem voteReceiptItem = new ListViewItem(Resources.TallyVoteReceipt + " " + voteReceipt.Key.ToString());
+
+            switch (voteReceipt.Value)
+            {
+              case VoteReceiptStatus.NotFound:
+                voteReceiptItem.SubItems.Add(Resources.TallyVoteReceiptNotFound);
+                break;
+              case VoteReceiptStatus.FoundBad:
+                voteReceiptItem.SubItems.Add(Resources.TallyVoteReceiptFoundBad);
+                break;
+              case VoteReceiptStatus.FoundOk:
+                voteReceiptItem.SubItems.Add(Resources.TallyVoteReceiptFoundOk);
+                break;
+              default:
+                throw new InvalidOperationException("Unknown VoteReceiptStatus");
+            }
+
+            this.resultList.Items.Add(voteReceiptItem);
+          }
         }
         else
         {
@@ -107,8 +136,9 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
     }
 
-    private void GetResultComplete(VotingResult result, Exception exception)
+    private void GetResultComplete(VotingResult result, IDictionary<Guid, VoteReceiptStatus> voteReceiptsStatus, Exception exception)
     {
+      this.voteReceiptsStatus = voteReceiptsStatus;
       this.exception = exception;
       this.result = result;
       this.run = false;

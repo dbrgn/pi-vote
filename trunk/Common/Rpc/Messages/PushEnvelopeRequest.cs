@@ -69,9 +69,9 @@ namespace Pirate.PiVote.Rpc
     protected override PushEnvelopeResponse Execute(VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
-      voting.Vote(this.signedEnvelope);
+      var voteReceipt = voting.Vote(this.signedEnvelope);
 
-      return new PushEnvelopeResponse(RequestId);
+      return new PushEnvelopeResponse(RequestId, voteReceipt);
     }
   }
 }

@@ -817,6 +817,33 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Voted.
+        /// </summary>
+        internal static string ListVotingsVoted {
+            get {
+                return ResourceManager.GetString("ListVotingsVoted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string ListVotingsVotedNo {
+            get {
+                return ResourceManager.GetString("ListVotingsVotedNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        internal static string ListVotingsVotedYes {
+            get {
+                return ResourceManager.GetString("ListVotingsVotedYes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Open....
         /// </summary>
         internal static string OpenSignatureResponseButton {
@@ -876,6 +903,42 @@ namespace Pirate.PiVote.Client {
         internal static string SignatureResponseUploaded {
             get {
                 return ResourceManager.GetString("SignatureResponseUploaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your vote.
+        /// </summary>
+        internal static string TallyVoteReceipt {
+            get {
+                return ResourceManager.GetString("TallyVoteReceipt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manipulated.
+        /// </summary>
+        internal static string TallyVoteReceiptFoundBad {
+            get {
+                return ResourceManager.GetString("TallyVoteReceiptFoundBad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Counted.
+        /// </summary>
+        internal static string TallyVoteReceiptFoundOk {
+            get {
+                return ResourceManager.GetString("TallyVoteReceiptFoundOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not found.
+        /// </summary>
+        internal static string TallyVoteReceiptNotFound {
+            get {
+                return ResourceManager.GetString("TallyVoteReceiptNotFound", resourceCulture);
             }
         }
         

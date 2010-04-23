@@ -46,6 +46,7 @@
       this.generateRevocationListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
       this.createAdminCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.createServerCertifiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.entryListView = new System.Windows.Forms.ListView();
       this.idColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.typeColumnHeader = new System.Windows.Forms.ColumnHeader();
@@ -170,7 +171,8 @@
             this.importRequestsToolStripMenuItem,
             this.generateRevocationListToolStripMenuItem,
             this.toolStripMenuItem4,
-            this.createAdminCertificateToolStripMenuItem});
+            this.createAdminCertificateToolStripMenuItem,
+            this.createServerCertifiToolStripMenuItem});
       this.signaturesToolStripMenuItem.Name = "signaturesToolStripMenuItem";
       this.signaturesToolStripMenuItem.Size = new System.Drawing.Size(100, 25);
       this.signaturesToolStripMenuItem.Text = "&Signatures";
@@ -200,6 +202,13 @@
       this.createAdminCertificateToolStripMenuItem.Size = new System.Drawing.Size(266, 26);
       this.createAdminCertificateToolStripMenuItem.Text = "Create &Admin Certificate";
       this.createAdminCertificateToolStripMenuItem.Click += new System.EventHandler(this.createAdminCertificateToolStripMenuItem_Click);
+      // 
+      // createServerCertifiToolStripMenuItem
+      // 
+      this.createServerCertifiToolStripMenuItem.Name = "createServerCertifiToolStripMenuItem";
+      this.createServerCertifiToolStripMenuItem.Size = new System.Drawing.Size(266, 26);
+      this.createServerCertifiToolStripMenuItem.Text = "Create &Server Certificate";
+      this.createServerCertifiToolStripMenuItem.Click += new System.EventHandler(this.createServerCertifiToolStripMenuItem_Click);
       // 
       // entryListView
       // 
@@ -406,6 +415,7 @@
     private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
     private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
     private System.Windows.Forms.ToolStripMenuItem createAdminCertificateToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem createServerCertifiToolStripMenuItem;
   }
 }
 

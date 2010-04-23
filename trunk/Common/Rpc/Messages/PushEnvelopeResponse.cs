@@ -17,9 +17,16 @@ namespace Pirate.PiVote.Rpc
 {
   public class PushEnvelopeResponse : RpcResponse
   {
-    public PushEnvelopeResponse(Guid requestId)
+    /// <summary>
+    /// Receipt of the cast vote or null in case of exception.
+    /// </summary>
+    public Signed<VoteReceipt> VoteReceipt { get; private set; }
+
+    public PushEnvelopeResponse(Guid requestId, Signed<VoteReceipt> voteReceipt)
       : base(requestId)
-    { }
+    {
+      VoteReceipt = voteReceipt;
+    }
 
     /// <summary>
     /// Create a failure response to request.
@@ -45,6 +52,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+      context.Write(VoteReceipt);
     }
 
     /// <summary>
@@ -54,6 +62,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+      VoteReceipt = context.ReadObject<Signed<VoteReceipt>>();
     }
   }
 }

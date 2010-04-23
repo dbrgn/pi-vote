@@ -33,6 +33,11 @@ namespace Pirate.PiVote.Crypto
     private const string LoadStorageFileName = "storage.pi-cert-storage";
 
     /// <summary>
+    /// Load server certificate file name.
+    /// </summary>
+    private const string LoadServerCertFileName = "server.pi-cert";
+
+    /// <summary>
     /// MySQL database connection.
     /// </summary>
     private MySqlConnection dbConnection;
@@ -368,6 +373,22 @@ namespace Pirate.PiVote.Crypto
       CertificateStorage certificateStorage = new CertificateStorage();
       certificateStorage.AddOnlyCA(this);
       return certificateStorage;
+    }
+
+    public ServerCertificate LoadServerCertificate()
+    {
+      if (File.Exists(LoadServerCertFileName))
+      {
+        ServerCertificate serverCertificate =
+          Serializable.Load<ServerCertificate>(LoadServerCertFileName);
+        Add(serverCertificate.OnlyPublicPart);
+
+        return serverCertificate;
+      }
+      else
+      {
+        throw new InvalidOperationException("Server certificate file not found.");
+      }
     }
 
     /// <summary>

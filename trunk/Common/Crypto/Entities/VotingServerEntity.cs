@@ -40,6 +40,11 @@ namespace Pirate.PiVote.Crypto
     private ICertificateStorage certificateStorage;
 
     /// <summary>
+    /// The server's own certificate.
+    /// </summary>
+    private ServerCertificate serverCertificate;
+
+    /// <summary>
     /// Status of the voting procedures.
     /// </summary>
     private VotingStatus status;
@@ -147,8 +152,9 @@ namespace Pirate.PiVote.Crypto
     public VotingServerEntity(
       MySqlConnection dbConnection,
       Signed<VotingParameters> signedParameters,
-      ICertificateStorage certificateStorage)
-      : this(dbConnection, signedParameters, certificateStorage, VotingStatus.New)
+      ICertificateStorage certificateStorage,
+      ServerCertificate serverCertificate)
+      : this(dbConnection, signedParameters, certificateStorage, serverCertificate, VotingStatus.New)
     { }
 
     /// <summary>
@@ -161,17 +167,19 @@ namespace Pirate.PiVote.Crypto
       MySqlConnection dbConnection,
       Signed<VotingParameters> signedParameters,
       ICertificateStorage certificateStorage,
+      ServerCertificate serverCertificate,
       VotingStatus status)
     {
       if (dbConnection == null)
         throw new ArgumentNullException("dbConnection");
       if (signedParameters == null)
         throw new ArgumentNullException("signedParameters");
-      if (certificateStorage == null)
-        throw new ArgumentNullException("certificateStorage");
+      if (serverCertificate == null)
+        throw new ArgumentNullException("serverCertificate");
 
       this.dbConnection = dbConnection;
       this.certificateStorage = certificateStorage;
+      this.serverCertificate = serverCertificate;
       this.signedParameters = signedParameters;
       this.parameters = this.signedParameters.Value;
       this.status = status;
@@ -472,7 +480,8 @@ namespace Pirate.PiVote.Crypto
     /// Deposit a ballot.
     /// </summary>
     /// <param name="ballot">Ballot in signed envleope.</param>
-    public void Vote(Signed<Envelope> signedEnvelope)
+    /// <returns>Vote receipt signed by the server.</returns>
+    public Signed<VoteReceipt> Vote(Signed<Envelope> signedEnvelope)
     {
       if (signedEnvelope == null)
         throw new ArgumentNullException("ballot");
@@ -511,6 +520,10 @@ namespace Pirate.PiVote.Crypto
       insertCommand.ExecuteNonQuery();
 
       transaction.Commit();
+
+      VoteReceipt voteReceipt = new VoteReceipt(Parameters, signedEnvelope);
+
+      return new Signed<VoteReceipt>(voteReceipt, this.serverCertificate);
     }
 
     /// <summary>

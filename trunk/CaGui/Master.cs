@@ -564,5 +564,37 @@ namespace Pirate.PiVote.CaGui
       this.cAPropertiesToolStripMenuItem.Enabled = haveCertificate;
       this.createAdminCertificateToolStripMenuItem.Enabled = canSign;
     }
+
+    private void createServerCertifiToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CreateServerDialog dialog = new CreateServerDialog();
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        SaveFileDialog saveDialog = new SaveFileDialog();
+        saveDialog.Title = "Save Server Certificate";
+        saveDialog.CheckPathExists = true;
+        saveDialog.Filter = Files.CertificateFileFilter;
+
+        if (saveDialog.ShowDialog() == DialogResult.OK)
+        {
+          AdminCertificate certificate = new AdminCertificate(dialog.FullName);
+          certificate.CreateSelfSignature();
+
+          SignatureRequest request = new SignatureRequest(dialog.FullName, string.Empty, string.Empty);
+          Signed<SignatureRequest> signedRequest = new Signed<SignatureRequest>(request, certificate);
+
+          CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
+          entry.Sign(Certificate, dialog.ValidUntil);
+          certificate.AddSignature(entry.Response.Value.Signature);
+
+          string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
+          entry.Save(DataPath(entryFileName));
+          AddEntry(entry, entryFileName);
+
+          certificate.Save(saveDialog.FileName);
+        }
+      }
+    }
   }
 }

@@ -41,6 +41,10 @@ namespace Pirate.PiVote.Crypto
       admin.CreateSelfSignature();
       admin.AddSignature(intermediate, DateTime.Now.AddDays(1));
 
+      var serverCert = new ServerCertificate("Server");
+      serverCert.CreateSelfSignature();
+      serverCert.AddSignature(intermediate, DateTime.Now.AddDays(1));
+
       VotingParameters parameters = new VotingParameters("Zufrieden", "Tada", "Bist du?", DateTime.Now, DateTime.Now.AddDays(1));
       parameters.AddOption(new Option("Nein", "Dagegen"));
       parameters.AddOption(new Option("Ja", "Dafür"));
@@ -56,7 +60,8 @@ namespace Pirate.PiVote.Crypto
       serverCertStorage.Add(intermediate);
       serverCertStorage.AddRevocationList(sigRootCrl);
       serverCertStorage.AddRevocationList(sigIntCrl);
-      VotingServerEntity vs = new VotingServerEntity(null, signedParameters, serverCertStorage);
+
+      VotingServerEntity vs = new VotingServerEntity(null, signedParameters, serverCertStorage, serverCert);
 
       var a1c = new AuthorityCertificate("Authority 1");
       a1c.CreateSelfSignature();

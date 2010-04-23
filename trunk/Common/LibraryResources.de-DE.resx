@@ -129,6 +129,9 @@
   <data name="CertificateTypeCA" xml:space="preserve">
     <value>Zertifizierungsstelle</value>
   </data>
+  <data name="CertificateTypeServer" xml:space="preserve">
+    <value>Server</value>
+  </data>
   <data name="CertificateTypeUnknown" xml:space="preserve">
     <value>Unbekannt</value>
   </data>
@@ -314,6 +317,9 @@
   </data>
   <data name="ExceptionInvalidSignature" xml:space="preserve">
     <value>Signatur is ungültig.</value>
+  </data>
+  <data name="ExceptionInvalidVoteReceipt" xml:space="preserve">
+    <value>Ungültige Stimmquittung.</value>
   </data>
   <data name="ExceptionMaxVotaOutOfRange" xml:space="preserve">
     <value>Maximale Stimmzahl ist ausserhalb des Wertebereichs.</value>

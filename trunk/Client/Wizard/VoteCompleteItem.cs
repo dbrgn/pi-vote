@@ -26,6 +26,7 @@ namespace Pirate.PiVote.Client
 
     private bool run;
     private Exception exception;
+    private Signed<VoteReceipt> voteReceipt;
 
     public VoteCompleteItem()
     {
@@ -69,8 +70,13 @@ namespace Pirate.PiVote.Client
 
       Status.UpdateProgress();
 
-      if (exception == null)
+      if (this.exception == null)
       {
+        this.voteReceipt.Save(
+          Path.Combine(Status.DataPath,
+          string.Format("{0}@{1}.pi-receipt",
+          Status.Certificate.Id.ToString(), VotingDescriptor.Id.ToString())));
+
         Status.SetMessage(Resources.VoteCast, MessageType.Success);
       }
       else
@@ -81,8 +87,9 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
     }
 
-    public void VoteCompleted(Exception exception)
+    public void VoteCompleted(Signed<VoteReceipt> voteReceipt, Exception exception)
     {
+      this.voteReceipt = voteReceipt;
       this.exception = exception;
       this.run = false;
     }

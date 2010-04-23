@@ -18,6 +18,16 @@ using Pirate.PiVote.Crypto;
 namespace Pirate.PiVote.Rpc
 {
   /// <summary>
+  /// Status of a vote receipt to check.
+  /// </summary>
+  public enum VoteReceiptStatus
+  {
+    NotFound,
+    FoundBad,
+    FoundOk
+  }
+
+  /// <summary>
   /// Asynchronous client.
   /// </summary>
   public partial class VotingClient
@@ -27,7 +37,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="result">Voting result or null in case of failure.</param>
     /// <param name="exception">Exception or null in case of success.</param>
-    public delegate void GetResultCallBack(VotingResult result, Exception exception);
+    public delegate void GetResultCallBack(VotingResult result, IDictionary<Guid, VoteReceiptStatus> voteReceiptsStatus, Exception exception);
 
     /// <summary>
     /// Result get operation.
@@ -48,6 +58,16 @@ namespace Pirate.PiVote.Rpc
       /// Queue with enveloped to verify and add.
       /// </summary>
       private Queue<Signed<Envelope>> envelopeQueue;
+
+      /// <summary>
+      /// Receipts the server issued for this vote by voter id.
+      /// </summary>
+      private Dictionary<Guid, Signed<VoteReceipt>> voteReceipts;
+
+      /// <summary>
+      /// Status of the vote receipts to be checked.
+      /// </summary>
+      private Dictionary<Guid, VoteReceiptStatus> voteReceiptsStatus;
 
       /// <summary>
       /// Continue to run worker threads?
@@ -79,10 +99,16 @@ namespace Pirate.PiVote.Rpc
       /// </summary>
       /// <param name="votingId">Id of the voting.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public GetResultOperation(Guid votingId, GetResultCallBack callBack)
+      public GetResultOperation(Guid votingId, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, GetResultCallBack callBack)
       {
         this.votingId = votingId;
         this.callBack = callBack;
+
+        this.voteReceipts = new Dictionary<Guid, Signed<VoteReceipt>>();
+        signedVoteReceipts.Foreach(signedVoteReceipt => this.voteReceipts.Add(signedVoteReceipt.Value.VoterId, signedVoteReceipt));
+
+        this.voteReceipts = new Dictionary<Guid, Signed<VoteReceipt>>();
+        signedVoteReceipts.Foreach(signedVoteReceipt => this.voteReceiptsStatus.Add(signedVoteReceipt.Value.VoterId, VoteReceiptStatus.NotFound));
       }
 
       /// <summary>
@@ -159,11 +185,11 @@ namespace Pirate.PiVote.Rpc
           SubProgress = 1d;
           Progress = 1d;
 
-          this.callBack(result, null);
+          this.callBack(result, this.voteReceiptsStatus, null);
         }
         catch (Exception exception)
         {
-          this.callBack(null, exception);
+          this.callBack(null, null, exception);
         }
       }
 
@@ -214,6 +240,28 @@ namespace Pirate.PiVote.Rpc
           else
           {
             this.client.voterEntity.TallyAdd(envelope);
+
+            if (this.voteReceipts.ContainsKey(envelope.Value.VoterId))
+            {
+              Signed<VoteReceipt> signedVoteReceipt = this.voteReceipts[envelope.Value.VoterId];
+              VoteReceipt voteReceipt = signedVoteReceipt.Value;
+
+              if (voteReceipt.Verify(envelope))
+              {
+                lock (this.voteReceiptsStatus)
+                {
+                  this.voteReceiptsStatus[voteReceipt.VoterId] = VoteReceiptStatus.FoundOk;
+                }
+              }
+              else
+              {
+                lock (this.voteReceiptsStatus)
+                {
+                  this.voteReceiptsStatus[voteReceipt.VoterId] = VoteReceiptStatus.FoundBad;
+                }
+              }
+            }
+
             Interlocked.Increment(ref this.verifiedEnvelopes);
           }
         }

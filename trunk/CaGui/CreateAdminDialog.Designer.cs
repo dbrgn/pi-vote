@@ -44,7 +44,7 @@
       // 
       // cancelButton
       // 
-      this.cancelButton.Location = new System.Drawing.Point(464, 218);
+      this.cancelButton.Location = new System.Drawing.Point(462, 198);
       this.cancelButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(112, 35);
@@ -56,7 +56,7 @@
       // okButton
       // 
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(342, 218);
+      this.okButton.Location = new System.Drawing.Point(342, 198);
       this.okButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(112, 35);
@@ -76,7 +76,7 @@
       // 
       // emailAddressTextBox
       // 
-      this.emailAddressTextBox.Location = new System.Drawing.Point(140, 138);
+      this.emailAddressTextBox.Location = new System.Drawing.Point(139, 126);
       this.emailAddressTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.emailAddressTextBox.Name = "emailAddressTextBox";
       this.emailAddressTextBox.Size = new System.Drawing.Size(434, 26);
@@ -86,7 +86,7 @@
       // emailAddressLabel
       // 
       this.emailAddressLabel.AutoSize = true;
-      this.emailAddressLabel.Location = new System.Drawing.Point(18, 143);
+      this.emailAddressLabel.Location = new System.Drawing.Point(24, 129);
       this.emailAddressLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.emailAddressLabel.Name = "emailAddressLabel";
       this.emailAddressLabel.Size = new System.Drawing.Size(113, 20);
@@ -96,7 +96,7 @@
       // firstNameLabel
       // 
       this.firstNameLabel.AutoSize = true;
-      this.firstNameLabel.Location = new System.Drawing.Point(18, 23);
+      this.firstNameLabel.Location = new System.Drawing.Point(18, 21);
       this.firstNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.firstNameLabel.Name = "firstNameLabel";
       this.firstNameLabel.Size = new System.Drawing.Size(88, 20);
@@ -106,7 +106,7 @@
       // familyNameLabel
       // 
       this.familyNameLabel.AutoSize = true;
-      this.familyNameLabel.Location = new System.Drawing.Point(18, 63);
+      this.familyNameLabel.Location = new System.Drawing.Point(18, 57);
       this.familyNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.familyNameLabel.Name = "familyNameLabel";
       this.familyNameLabel.Size = new System.Drawing.Size(102, 20);
@@ -115,7 +115,7 @@
       // 
       // familyNameTextBox
       // 
-      this.familyNameTextBox.Location = new System.Drawing.Point(140, 58);
+      this.familyNameTextBox.Location = new System.Drawing.Point(140, 54);
       this.familyNameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.familyNameTextBox.Name = "familyNameTextBox";
       this.familyNameTextBox.Size = new System.Drawing.Size(434, 26);
@@ -125,7 +125,7 @@
       // functionLabel
       // 
       this.functionLabel.AutoSize = true;
-      this.functionLabel.Location = new System.Drawing.Point(18, 103);
+      this.functionLabel.Location = new System.Drawing.Point(24, 93);
       this.functionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.functionLabel.Name = "functionLabel";
       this.functionLabel.Size = new System.Drawing.Size(75, 20);
@@ -134,7 +134,7 @@
       // 
       // functionTextBox
       // 
-      this.functionTextBox.Location = new System.Drawing.Point(140, 98);
+      this.functionTextBox.Location = new System.Drawing.Point(140, 90);
       this.functionTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.functionTextBox.Name = "functionTextBox";
       this.functionTextBox.Size = new System.Drawing.Size(434, 26);
@@ -143,7 +143,7 @@
       // 
       // validUntilPicker
       // 
-      this.validUntilPicker.Location = new System.Drawing.Point(140, 178);
+      this.validUntilPicker.Location = new System.Drawing.Point(139, 162);
       this.validUntilPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.validUntilPicker.Name = "validUntilPicker";
       this.validUntilPicker.Size = new System.Drawing.Size(434, 26);
@@ -152,7 +152,7 @@
       // validUntilLabel
       // 
       this.validUntilLabel.AutoSize = true;
-      this.validUntilLabel.Location = new System.Drawing.Point(18, 188);
+      this.validUntilLabel.Location = new System.Drawing.Point(24, 167);
       this.validUntilLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.validUntilLabel.Name = "validUntilLabel";
       this.validUntilLabel.Size = new System.Drawing.Size(81, 20);
@@ -163,7 +163,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(594, 272);
+      this.ClientSize = new System.Drawing.Size(594, 252);
       this.ControlBox = false;
       this.Controls.Add(this.validUntilPicker);
       this.Controls.Add(this.validUntilLabel);

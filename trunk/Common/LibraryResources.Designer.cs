@@ -97,6 +97,15 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Server.
+        /// </summary>
+        public static string CertificateTypeServer {
+            get {
+                return ResourceManager.GetString("CertificateTypeServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown.
         /// </summary>
         public static string CertificateTypeUnknown {
@@ -651,6 +660,15 @@ namespace Pirate.PiVote {
         public static string ExceptionInvalidSignature {
             get {
                 return ResourceManager.GetString("ExceptionInvalidSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid vote receipt..
+        /// </summary>
+        public static string ExceptionInvalidVoteReceipt {
+            get {
+                return ResourceManager.GetString("ExceptionInvalidVoteReceipt", resourceCulture);
             }
         }
         

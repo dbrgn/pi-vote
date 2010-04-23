@@ -25,10 +25,13 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="votingId">Id of the voting.</param>
     /// <param name="signedEnvelope">Signed envelope.</param>
-    public void PushEnvelope(Guid votingId, Signed<Envelope> signedEnvelope)
+    /// <returns>Vote receipt signed by the server.</returns>
+    public Signed<VoteReceipt> PushEnvelope(Guid votingId, Signed<Envelope> signedEnvelope)
     {
       var request = new PushEnvelopeRequest(Guid.NewGuid(), votingId, signedEnvelope);
       var response = Execute<PushEnvelopeResponse>(request);
+
+      return response.VoteReceipt;
     }
   }
 }

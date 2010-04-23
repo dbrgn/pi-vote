@@ -435,4 +435,25 @@
   <data name="ChooseCertificateVerifyBadShareProof" xml:space="preserve">
     <value>Verteilungs&amp;beweis prüfen...</value>
   </data>
+  <data name="ListVotingsVoted" xml:space="preserve">
+    <value>Abgestimmt</value>
+  </data>
+  <data name="ListVotingsVotedNo" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="ListVotingsVotedYes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="TallyVoteReceipt" xml:space="preserve">
+    <value>Ihre Stimme</value>
+  </data>
+  <data name="TallyVoteReceiptFoundBad" xml:space="preserve">
+    <value>Manipuliert</value>
+  </data>
+  <data name="TallyVoteReceiptFoundOk" xml:space="preserve">
+    <value>Gezählt</value>
+  </data>
+  <data name="TallyVoteReceiptNotFound" xml:space="preserve">
+    <value>Nicht vorhanden</value>
+  </data>
 </root>

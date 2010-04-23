@@ -38,6 +38,11 @@ namespace Pirate.PiVote.Rpc
     public DatabaseCertificateStorage CertificateStorage { get; private set; }
 
     /// <summary>
+    /// The server's own certificate.
+    /// </summary>
+    private ServerCertificate serverCertificate;
+
+    /// <summary>
     /// Create the voting server.
     /// </summary>
     public VotingRpcServer()
@@ -47,6 +52,8 @@ namespace Pirate.PiVote.Rpc
 
       CertificateStorage = new DatabaseCertificateStorage(this.dbConnection);
       CertificateStorage.ImportCaIfNeed();
+
+      this.serverCertificate = CertificateStorage.LoadServerCertificate();
 
       LoadVotings();
     }
@@ -67,7 +74,7 @@ namespace Pirate.PiVote.Rpc
         byte[] signedParametersData = reader.GetBlob(1);
         Signed<VotingParameters> signedParameters = Serializable.FromBinary<Signed<VotingParameters>>(signedParametersData);
         VotingStatus status = (VotingStatus)reader.GetInt32(2);
-        VotingServerEntity entity = new VotingServerEntity(this.dbConnection, signedParameters, this.CertificateStorage, status);
+        VotingServerEntity entity = new VotingServerEntity(this.dbConnection, signedParameters, this.CertificateStorage, this.serverCertificate, status);
         this.votings.Add(id, entity);
       }
 
@@ -142,7 +149,7 @@ namespace Pirate.PiVote.Rpc
       insertCommand.Parameters.AddWithValue("@Status", (int)VotingStatus.New);
       insertCommand.ExecuteNonQuery();
 
-      VotingServerEntity voting = new VotingServerEntity(this.dbConnection, signedVotingParameters, CertificateStorage);
+      VotingServerEntity voting = new VotingServerEntity(this.dbConnection, signedVotingParameters, CertificateStorage, this.serverCertificate);
       authorities.Foreach(authority => voting.AddAuthority(authority));
       this.votings.Add(voting.Id, voting);
     }

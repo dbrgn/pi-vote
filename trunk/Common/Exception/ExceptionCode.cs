@@ -47,6 +47,7 @@ namespace Pirate.PiVote
     AlreadyVoted                  = 4000001,
     VoteSignatureNotValid         = 4000002,
     NoVoterCertificate            = 4000003,
+    InvalidVoteReceipt            = 4000004,
 
     SignatureRequestInvalid       = 5000001,
     SignatureRequestResponded     = 5000002,
@@ -98,6 +99,8 @@ namespace Pirate.PiVote
           return LibraryResources.ExceptionNoVotingWithId;
         case ExceptionCode.NoVoterCertificate:
           return LibraryResources.ExceptionNoVoterCertificate;
+        case ExceptionCode.InvalidVoteReceipt:
+          return LibraryResources.ExceptionInvalidVoteReceipt;
         case ExceptionCode.NoAuthorizedAdmin:
           return LibraryResources.ExceptionNoAuthorizedAdmin;
         case ExceptionCode.NoAuthorityWithCertificate:

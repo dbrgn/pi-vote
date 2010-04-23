@@ -201,12 +201,13 @@ namespace Pirate.PiVote.Rpc
     /// Get result from server.
     /// </summary>
     /// <param name="votingId">Id of the voting.</param>
+    /// <param name="signedVoteReceipts">Vote receipts signed by the server to check.</param>
     /// <param name="callBack">Callback upon completion.</param>
-    public void GetResult(Guid votingId, GetResultCallBack callBack)
+    public void GetResult(Guid votingId, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, GetResultCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new GetResultOperation(votingId, callBack));
+        this.operations.Enqueue(new GetResultOperation(votingId, signedVoteReceipts, callBack));
       }
     }
 

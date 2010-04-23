@@ -16,6 +16,7 @@ using System.Net;
 using System.Threading;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Client
 {
@@ -24,6 +25,7 @@ namespace Pirate.PiVote.Client
     private bool run;
     private Exception exception;
     private IEnumerable<VotingClient.VotingDescriptor> votings;
+    private Dictionary<Guid, List<Signed<VoteReceipt>>> voteReceipts;
 
     public ListVotingsItem()
     {
@@ -45,6 +47,10 @@ namespace Pirate.PiVote.Client
             case VotingStatus.Finished:
               TallyItem tallyItem = new TallyItem();
               tallyItem.VotingDescriptor = votingDescriptor;
+              tallyItem.VoteReceipts = 
+                this.voteReceipts.ContainsKey(votingDescriptor.Id) ? 
+                this.voteReceipts[votingDescriptor.Id] : 
+                new List<Signed<VoteReceipt>>();
               return tallyItem;
             default:
               return null;
@@ -114,10 +120,45 @@ namespace Pirate.PiVote.Client
       {
         if (this.votings != null)
         {
+          DirectoryInfo dataDirectory = new DirectoryInfo(Status.DataPath);
+          this.voteReceipts = new Dictionary<Guid, List<Signed<VoteReceipt>>>();
+
+          foreach (FileInfo file in dataDirectory.GetFiles("*.pi-receipt"))
+          {
+            Signed<VoteReceipt> signedVoteReceipt = Serializable.Load<Signed<VoteReceipt>>(file.FullName);
+            VoteReceipt voteReceipt = signedVoteReceipt.Value;
+
+            if (!this.voteReceipts.ContainsKey(voteReceipt.VotingId))
+            {
+              this.voteReceipts.Add(voteReceipt.VotingId, new List<Signed<VoteReceipt>>());
+            }
+
+            this.voteReceipts[voteReceipt.VotingId].Add(signedVoteReceipt);
+          }
+
           foreach (VotingClient.VotingDescriptor voting in this.votings)
           {
             ListViewItem item = new ListViewItem(voting.Title);
             item.SubItems.Add(voting.Status.Text());
+
+            if (this.voteReceipts.ContainsKey(voting.Id))
+            {
+              var voteReceiptList = this.voteReceipts[voting.Id];
+
+              if (voteReceiptList.Count > 1)
+              {
+                item.SubItems.Add(voteReceiptList.Count.ToString());
+              }
+              else
+              {
+                item.SubItems.Add(Resources.ListVotingsVotedYes);
+              }
+            }
+            else
+            {
+              item.SubItems.Add(Resources.ListVotingsVotedNo);
+            }
+
             item.Tag = voting;
             this.votingList.Items.Add(item);
           }

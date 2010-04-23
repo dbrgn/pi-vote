@@ -95,6 +95,7 @@
     <Compile Include="Crypto\Certificate\AuthorityCertificate.cs" />
     <Compile Include="Crypto\Certificate\CACertificate.cs" />
     <Compile Include="Crypto\Certificate\CertificateAuthorityEntry.cs" />
+    <Compile Include="Crypto\Certificate\ServerCertificate.cs" />
     <Compile Include="Crypto\Certificate\ICertificateStorage.cs" />
     <Compile Include="Crypto\Certificate\AdminCertificate.cs" />
     <Compile Include="Crypto\Certificate\CertificateStorage.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Crypto\Container\AllShareParts.cs" />
     <Compile Include="Crypto\Container\PartialDecipherList.cs" />
     <Compile Include="Crypto\Certificate\Encrypted.cs" />
+    <Compile Include="Crypto\Container\VoteReceipt.cs" />
     <Compile Include="Crypto\Container\VotingMaterial.cs" />
     <Compile Include="Crypto\Container\ShareResponse.cs" />
     <Compile Include="Crypto\Container\Option.cs" />

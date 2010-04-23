@@ -367,13 +367,13 @@ namespace Pirate.PiVote.CliClient
             break;
           case VotingStatus.Finished:
             Console.WriteLine("Getting result now.");
-            this.voterClient.GetResult(selectedVoting.Id, GetResult);
+            this.voterClient.GetResult(selectedVoting.Id, new List<Signed<VoteReceipt>>(), GetResult);
             break;
         }
       }
     }
 
-    private void VoteCallBack(Exception exception)
+    private void VoteCallBack(Signed<VoteReceipt> voteReceipt, Exception exception)
     {
       if (exception == null)
       {
@@ -386,7 +386,7 @@ namespace Pirate.PiVote.CliClient
       }
     }
 
-    private void GetResult(VotingResult result, Exception exception)
+    private void GetResult(VotingResult result, IDictionary<Guid, VoteReceiptStatus> voteReceiptsStatus, Exception exception)
     {
       if (result == null)
       {
