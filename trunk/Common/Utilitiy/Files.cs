@@ -25,5 +25,6 @@ namespace Pirate.PiVote
     public const string SignatureRequestFileFilter = "Pi-Vote Signature Request|*.pi-sig-req";
     public const string SignatureResponseFileFilter = "Pi-Vote Signature Response|*.pi-sig-resp";
     public const string AuthorityDataFileFilter = "Pi-Vote Certificate|*.pi-auth";
+    public const string BadShareProofFileFilter = "Pi-Vote Share Proof|*.pi-shareproof";
   }
 }

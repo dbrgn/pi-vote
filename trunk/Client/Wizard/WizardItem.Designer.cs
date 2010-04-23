@@ -46,8 +46,8 @@ namespace Pirate.PiVote.Client
       // 
       // WizardItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "WizardItem";
       this.Size = new System.Drawing.Size(150, 162);

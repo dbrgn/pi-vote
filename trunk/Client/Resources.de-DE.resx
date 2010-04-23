@@ -423,4 +423,16 @@
   <data name="BadShareProofSignature" xml:space="preserve">
     <value>Signatur:</value>
   </data>
+  <data name="BadShareProofVoting" xml:space="preserve">
+    <value>Abstimmungsprozedur</value>
+  </data>
+  <data name="BadShareProofVotingId" xml:space="preserve">
+    <value>Id:</value>
+  </data>
+  <data name="BadShareProofVotingTitle" xml:space="preserve">
+    <value>Titel:</value>
+  </data>
+  <data name="ChooseCertificateVerifyBadShareProof" xml:space="preserve">
+    <value>Verteilungs&amp;beweis prüfen...</value>
+  </data>
 </root>

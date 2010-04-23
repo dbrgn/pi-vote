@@ -38,9 +38,9 @@
       // 
       this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.progressBar.Location = new System.Drawing.Point(0, 20);
+      this.progressBar.Location = new System.Drawing.Point(3, 23);
       this.progressBar.Name = "progressBar";
-      this.progressBar.Size = new System.Drawing.Size(593, 22);
+      this.progressBar.Size = new System.Drawing.Size(621, 22);
       this.progressBar.TabIndex = 0;
       // 
       // progessLabel
@@ -48,16 +48,16 @@
       this.progessLabel.AutoSize = true;
       this.progessLabel.Location = new System.Drawing.Point(3, 3);
       this.progessLabel.Name = "progessLabel";
-      this.progessLabel.Size = new System.Drawing.Size(35, 14);
+      this.progessLabel.Size = new System.Drawing.Size(51, 19);
       this.progessLabel.TabIndex = 1;
       this.progessLabel.Text = "label1";
       // 
       // subProgressLabel
       // 
       this.subProgressLabel.AutoSize = true;
-      this.subProgressLabel.Location = new System.Drawing.Point(3, 53);
+      this.subProgressLabel.Location = new System.Drawing.Point(3, 48);
       this.subProgressLabel.Name = "subProgressLabel";
-      this.subProgressLabel.Size = new System.Drawing.Size(35, 14);
+      this.subProgressLabel.Size = new System.Drawing.Size(51, 19);
       this.subProgressLabel.TabIndex = 3;
       this.subProgressLabel.Text = "label2";
       // 
@@ -67,20 +67,20 @@
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.subProgessBar.Location = new System.Drawing.Point(0, 70);
       this.subProgessBar.Name = "subProgessBar";
-      this.subProgessBar.Size = new System.Drawing.Size(593, 22);
+      this.subProgessBar.Size = new System.Drawing.Size(621, 22);
       this.subProgessBar.TabIndex = 2;
       // 
       // Progress
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.progressBar);
       this.Controls.Add(this.subProgessBar);
       this.Controls.Add(this.subProgressLabel);
       this.Controls.Add(this.progessLabel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "Progress";
-      this.Size = new System.Drawing.Size(593, 100);
+      this.Size = new System.Drawing.Size(621, 100);
       this.Load += new System.EventHandler(this.Progress_Load);
       this.ResumeLayout(false);
       this.PerformLayout();

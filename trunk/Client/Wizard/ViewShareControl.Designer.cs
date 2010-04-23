@@ -37,59 +37,71 @@
       // 
       // signatureLabel
       // 
+      this.signatureLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.signatureLabel.AutoSize = true;
-      this.signatureLabel.Location = new System.Drawing.Point(478, 3);
+      this.signatureLabel.Location = new System.Drawing.Point(718, 2);
+      this.signatureLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.signatureLabel.Name = "signatureLabel";
-      this.signatureLabel.Size = new System.Drawing.Size(55, 13);
+      this.signatureLabel.Size = new System.Drawing.Size(82, 20);
       this.signatureLabel.TabIndex = 2;
       this.signatureLabel.Text = "Signature:";
       // 
       // signatureTextBox
       // 
-      this.signatureTextBox.Location = new System.Drawing.Point(582, 0);
+      this.signatureTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.signatureTextBox.Location = new System.Drawing.Point(854, -1);
+      this.signatureTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.signatureTextBox.Name = "signatureTextBox";
       this.signatureTextBox.ReadOnly = true;
-      this.signatureTextBox.Size = new System.Drawing.Size(94, 20);
+      this.signatureTextBox.Size = new System.Drawing.Size(139, 26);
       this.signatureTextBox.TabIndex = 4;
       // 
       // dataTextBox
       // 
-      this.dataTextBox.Location = new System.Drawing.Point(582, 26);
+      this.dataTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.dataTextBox.Location = new System.Drawing.Point(854, 35);
+      this.dataTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.dataTextBox.Name = "dataTextBox";
       this.dataTextBox.ReadOnly = true;
-      this.dataTextBox.Size = new System.Drawing.Size(94, 20);
+      this.dataTextBox.Size = new System.Drawing.Size(139, 26);
       this.dataTextBox.TabIndex = 5;
       // 
       // dataLabel
       // 
+      this.dataLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.dataLabel.AutoSize = true;
-      this.dataLabel.Location = new System.Drawing.Point(478, 29);
+      this.dataLabel.Location = new System.Drawing.Point(718, 38);
+      this.dataLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.dataLabel.Name = "dataLabel";
-      this.dataLabel.Size = new System.Drawing.Size(33, 13);
+      this.dataLabel.Size = new System.Drawing.Size(48, 20);
       this.dataLabel.TabIndex = 6;
       this.dataLabel.Text = "Data:";
       // 
       // certificateControl
       // 
+      this.certificateControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.certificateControl.Certificate = null;
       this.certificateControl.CertificateStorage = null;
       this.certificateControl.Location = new System.Drawing.Point(0, 0);
+      this.certificateControl.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
       this.certificateControl.Name = "certificateControl";
-      this.certificateControl.Size = new System.Drawing.Size(472, 74);
+      this.certificateControl.Size = new System.Drawing.Size(708, 64);
       this.certificateControl.TabIndex = 0;
       this.certificateControl.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
       // 
       // ViewShareControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.dataLabel);
       this.Controls.Add(this.dataTextBox);
       this.Controls.Add(this.signatureTextBox);
       this.Controls.Add(this.signatureLabel);
       this.Controls.Add(this.certificateControl);
+      this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.Name = "ViewShareControl";
-      this.Size = new System.Drawing.Size(679, 47);
+      this.Size = new System.Drawing.Size(993, 64);
       this.ResumeLayout(false);
       this.PerformLayout();
 

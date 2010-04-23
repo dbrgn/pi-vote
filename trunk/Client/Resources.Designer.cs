@@ -268,6 +268,33 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Voting Procedure.
+        /// </summary>
+        internal static string BadShareProofVoting {
+            get {
+                return ResourceManager.GetString("BadShareProofVoting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id:.
+        /// </summary>
+        internal static string BadShareProofVotingId {
+            get {
+                return ResourceManager.GetString("BadShareProofVotingId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title:.
+        /// </summary>
+        internal static string BadShareProofVotingTitle {
+            get {
+                return ResourceManager.GetString("BadShareProofVotingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creation Date:.
         /// </summary>
         internal static string CertificateCreationDate {
@@ -543,6 +570,15 @@ namespace Pirate.PiVote.Client {
         internal static string ChooseCertificateType {
             get {
                 return ResourceManager.GetString("ChooseCertificateType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verfiy share &amp;proof....
+        /// </summary>
+        internal static string ChooseCertificateVerifyBadShareProof {
+            get {
+                return ResourceManager.GetString("ChooseCertificateVerifyBadShareProof", resourceCulture);
             }
         }
         

@@ -20,6 +20,7 @@ namespace Pirate.PiVote.Client
   public partial class ChooseCertificateItem : WizardItem
   {
     private bool nextIsCreate;
+    private BadShareProofItem nextItemBadShareProof;
 
     public ChooseCertificateItem()
     {
@@ -28,6 +29,10 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
+      if (this.nextItemBadShareProof != null)
+      {
+        return this.nextItemBadShareProof;
+      }
       if (this.nextIsCreate)
       {
         return new CreateCertificateItem();
@@ -148,6 +153,8 @@ namespace Pirate.PiVote.Client
       this.typeColumnHeader.Text = Resources.ChooseCertificateType;
       this.idLabel.Text = Resources.ChooseCertificateId;
       this.nameColumnHeader.Text = Resources.ChooseCertificateFullName;
+
+      this.verifyShareProofButton.Text = Resources.ChooseCertificateVerifyBadShareProof;
     }
 
     private void certificateList_SelectedIndexChanged(object sender, EventArgs e)
@@ -182,6 +189,24 @@ namespace Pirate.PiVote.Client
       this.nextIsCreate = true;
 
       OnNextStep();
+    }
+
+    private void verifyShareProofButton_Click(object sender, EventArgs e)
+    {
+      OpenFileDialog dialog = new OpenFileDialog();
+      dialog.Title = Resources.ChooseCertificateLoadDialog;
+      dialog.InitialDirectory = Status.DataPath;
+      dialog.CheckPathExists = true;
+      dialog.CheckFileExists = true;
+      dialog.Filter = Files.BadShareProofFileFilter;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        this.nextItemBadShareProof = new BadShareProofItem();
+        this.nextItemBadShareProof.IsAuthority = false;
+        this.nextItemBadShareProof.SignedBadShareProof = Serializable.Load<Signed<BadShareProof>>(dialog.FileName);
+        OnNextStep();
+      }
     }
   }
 }

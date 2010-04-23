@@ -46,9 +46,8 @@ namespace Pirate.PiVote.Client
       // 
       // CheckCertificateItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Name = "CheckCertificateItem";
       this.Size = new System.Drawing.Size(700, 538);
       this.Load += new System.EventHandler(this.StartWizardItem_Load);

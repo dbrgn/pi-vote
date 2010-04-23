@@ -50,9 +50,10 @@ namespace Pirate.PiVote.Client
       // frenchRadio
       // 
       this.frenchRadio.AutoSize = true;
-      this.frenchRadio.Location = new System.Drawing.Point(65, 141);
+      this.frenchRadio.Location = new System.Drawing.Point(27, 140);
+      this.frenchRadio.Margin = new System.Windows.Forms.Padding(4);
       this.frenchRadio.Name = "frenchRadio";
-      this.frenchRadio.Size = new System.Drawing.Size(67, 18);
+      this.frenchRadio.Size = new System.Drawing.Size(91, 23);
       this.frenchRadio.TabIndex = 2;
       this.frenchRadio.TabStop = true;
       this.frenchRadio.Text = "Français";
@@ -62,9 +63,10 @@ namespace Pirate.PiVote.Client
       // germanRadio
       // 
       this.germanRadio.AutoSize = true;
-      this.germanRadio.Location = new System.Drawing.Point(65, 99);
+      this.germanRadio.Location = new System.Drawing.Point(27, 83);
+      this.germanRadio.Margin = new System.Windows.Forms.Padding(4);
       this.germanRadio.Name = "germanRadio";
-      this.germanRadio.Size = new System.Drawing.Size(65, 18);
+      this.germanRadio.Size = new System.Drawing.Size(87, 23);
       this.germanRadio.TabIndex = 1;
       this.germanRadio.TabStop = true;
       this.germanRadio.Text = "Deutsch";
@@ -74,9 +76,10 @@ namespace Pirate.PiVote.Client
       // englishRadio
       // 
       this.englishRadio.AutoSize = true;
-      this.englishRadio.Location = new System.Drawing.Point(65, 58);
+      this.englishRadio.Location = new System.Drawing.Point(27, 28);
+      this.englishRadio.Margin = new System.Windows.Forms.Padding(4);
       this.englishRadio.Name = "englishRadio";
-      this.englishRadio.Size = new System.Drawing.Size(59, 18);
+      this.englishRadio.Size = new System.Drawing.Size(80, 23);
       this.englishRadio.TabIndex = 0;
       this.englishRadio.TabStop = true;
       this.englishRadio.Text = "English";
@@ -85,13 +88,14 @@ namespace Pirate.PiVote.Client
       // 
       // StartItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.frenchRadio);
       this.Controls.Add(this.germanRadio);
       this.Controls.Add(this.englishRadio);
+      this.Margin = new System.Windows.Forms.Padding(4);
       this.Name = "StartItem";
-      this.Size = new System.Drawing.Size(700, 538);
+      this.Size = new System.Drawing.Size(1050, 730);
       this.Load += new System.EventHandler(this.StartItem_Load);
       this.ResumeLayout(false);
       this.PerformLayout();

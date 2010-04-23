@@ -46,11 +46,11 @@ namespace Pirate.PiVote.Client
       // 
       // VoteItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.Name = "VoteItem";
-      this.Size = new System.Drawing.Size(700, 538);
+      this.Size = new System.Drawing.Size(1050, 730);
       this.ResumeLayout(false);
 
     }

@@ -57,95 +57,95 @@ namespace Pirate.PiVote.Client
       // 
       // idTextBox
       // 
-      this.idTextBox.Location = new System.Drawing.Point(174, 100);
+      this.idTextBox.Location = new System.Drawing.Point(174, 3);
       this.idTextBox.Name = "idTextBox";
       this.idTextBox.ReadOnly = true;
-      this.idTextBox.Size = new System.Drawing.Size(245, 20);
+      this.idTextBox.Size = new System.Drawing.Size(335, 26);
       this.idTextBox.TabIndex = 8;
       // 
       // idLabel
       // 
       this.idLabel.AutoSize = true;
-      this.idLabel.Location = new System.Drawing.Point(76, 103);
+      this.idLabel.Location = new System.Drawing.Point(3, 6);
       this.idLabel.Name = "idLabel";
-      this.idLabel.Size = new System.Drawing.Size(18, 14);
+      this.idLabel.Size = new System.Drawing.Size(28, 19);
       this.idLabel.TabIndex = 7;
       this.idLabel.Text = "Id:";
       // 
       // typeTextBox
       // 
-      this.typeTextBox.Location = new System.Drawing.Point(174, 128);
+      this.typeTextBox.Location = new System.Drawing.Point(174, 35);
       this.typeTextBox.Name = "typeTextBox";
       this.typeTextBox.ReadOnly = true;
-      this.typeTextBox.Size = new System.Drawing.Size(245, 20);
+      this.typeTextBox.Size = new System.Drawing.Size(335, 26);
       this.typeTextBox.TabIndex = 10;
       // 
       // typeLabel
       // 
       this.typeLabel.AutoSize = true;
-      this.typeLabel.Location = new System.Drawing.Point(76, 131);
+      this.typeLabel.Location = new System.Drawing.Point(3, 38);
       this.typeLabel.Name = "typeLabel";
-      this.typeLabel.Size = new System.Drawing.Size(33, 14);
+      this.typeLabel.Size = new System.Drawing.Size(49, 19);
       this.typeLabel.TabIndex = 9;
       this.typeLabel.Text = "Type:";
       // 
       // firstNameTextBox
       // 
-      this.firstNameTextBox.Location = new System.Drawing.Point(174, 156);
+      this.firstNameTextBox.Location = new System.Drawing.Point(174, 67);
       this.firstNameTextBox.Name = "firstNameTextBox";
-      this.firstNameTextBox.Size = new System.Drawing.Size(245, 20);
+      this.firstNameTextBox.Size = new System.Drawing.Size(335, 26);
       this.firstNameTextBox.TabIndex = 12;
       this.firstNameTextBox.TextChanged += new System.EventHandler(this.firstNameTextBox_TextChanged);
       // 
       // firstNameLabel
       // 
       this.firstNameLabel.AutoSize = true;
-      this.firstNameLabel.Location = new System.Drawing.Point(76, 159);
+      this.firstNameLabel.Location = new System.Drawing.Point(3, 70);
       this.firstNameLabel.Name = "firstNameLabel";
-      this.firstNameLabel.Size = new System.Drawing.Size(60, 14);
+      this.firstNameLabel.Size = new System.Drawing.Size(91, 19);
       this.firstNameLabel.TabIndex = 11;
       this.firstNameLabel.Text = "First name:";
       // 
       // familyNameTextBox
       // 
-      this.familyNameTextBox.Location = new System.Drawing.Point(174, 184);
+      this.familyNameTextBox.Location = new System.Drawing.Point(174, 99);
       this.familyNameTextBox.Name = "familyNameTextBox";
-      this.familyNameTextBox.Size = new System.Drawing.Size(245, 20);
+      this.familyNameTextBox.Size = new System.Drawing.Size(335, 26);
       this.familyNameTextBox.TabIndex = 14;
       this.familyNameTextBox.TextChanged += new System.EventHandler(this.familyNameTextBox_TextChanged);
       // 
       // familyNameLabel
       // 
       this.familyNameLabel.AutoSize = true;
-      this.familyNameLabel.Location = new System.Drawing.Point(76, 187);
+      this.familyNameLabel.Location = new System.Drawing.Point(3, 102);
       this.familyNameLabel.Name = "familyNameLabel";
-      this.familyNameLabel.Size = new System.Drawing.Size(69, 14);
+      this.familyNameLabel.Size = new System.Drawing.Size(107, 19);
       this.familyNameLabel.TabIndex = 13;
       this.familyNameLabel.Text = "Family name:";
       // 
       // emailAddressTextBox
       // 
-      this.emailAddressTextBox.Location = new System.Drawing.Point(174, 212);
+      this.emailAddressTextBox.Location = new System.Drawing.Point(174, 131);
       this.emailAddressTextBox.Name = "emailAddressTextBox";
-      this.emailAddressTextBox.Size = new System.Drawing.Size(245, 20);
+      this.emailAddressTextBox.Size = new System.Drawing.Size(335, 26);
       this.emailAddressTextBox.TabIndex = 16;
       this.emailAddressTextBox.TextChanged += new System.EventHandler(this.functionTextBox_TextChanged);
       // 
       // emailAddressLabel
       // 
       this.emailAddressLabel.AutoSize = true;
-      this.emailAddressLabel.Location = new System.Drawing.Point(76, 215);
+      this.emailAddressLabel.Location = new System.Drawing.Point(3, 134);
       this.emailAddressLabel.Name = "emailAddressLabel";
-      this.emailAddressLabel.Size = new System.Drawing.Size(77, 14);
+      this.emailAddressLabel.Size = new System.Drawing.Size(117, 19);
       this.emailAddressLabel.TabIndex = 15;
       this.emailAddressLabel.Text = "Email address:";
       // 
       // sendButton
       // 
       this.sendButton.Enabled = false;
-      this.sendButton.Location = new System.Drawing.Point(328, 240);
+      this.sendButton.Location = new System.Drawing.Point(389, 163);
       this.sendButton.Name = "sendButton";
-      this.sendButton.Size = new System.Drawing.Size(91, 25);
+      this.sendButton.Size = new System.Drawing.Size(120, 32);
       this.sendButton.TabIndex = 17;
       this.sendButton.Text = "&Send";
       this.sendButton.UseVisualStyleBackColor = true;
@@ -153,8 +153,8 @@ namespace Pirate.PiVote.Client
       // 
       // CreateRequestItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.sendButton);
       this.Controls.Add(this.emailAddressTextBox);
       this.Controls.Add(this.emailAddressLabel);
@@ -166,7 +166,6 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.typeLabel);
       this.Controls.Add(this.idTextBox);
       this.Controls.Add(this.idLabel);
-      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "CreateRequestItem";
       this.Size = new System.Drawing.Size(700, 538);
       this.ResumeLayout(false);

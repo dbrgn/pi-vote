@@ -47,10 +47,9 @@ namespace Pirate.PiVote.Client
       // 
       // saveToButton
       // 
-      this.saveToButton.Location = new System.Drawing.Point(77, 83);
-      this.saveToButton.Margin = new System.Windows.Forms.Padding(2);
+      this.saveToButton.Location = new System.Drawing.Point(3, 3);
       this.saveToButton.Name = "saveToButton";
-      this.saveToButton.Size = new System.Drawing.Size(116, 28);
+      this.saveToButton.Size = new System.Drawing.Size(174, 38);
       this.saveToButton.TabIndex = 4;
       this.saveToButton.Text = "Save to...";
       this.saveToButton.UseVisualStyleBackColor = true;
@@ -58,12 +57,12 @@ namespace Pirate.PiVote.Client
       // 
       // GetSignatureRequestsItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.saveToButton);
-      this.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.Name = "GetSignatureRequestsItem";
-      this.Size = new System.Drawing.Size(700, 538);
+      this.Size = new System.Drawing.Size(1050, 730);
       this.ResumeLayout(false);
 
     }

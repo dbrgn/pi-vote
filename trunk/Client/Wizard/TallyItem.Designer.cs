@@ -49,16 +49,19 @@ namespace Pirate.PiVote.Client
       // 
       // resultList
       // 
+      this.resultList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.resultList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.propertyColumnHeader,
             this.valueColumnHeader});
       this.resultList.FullRowSelect = true;
       this.resultList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-      this.resultList.Location = new System.Drawing.Point(16, 18);
+      this.resultList.Location = new System.Drawing.Point(2, 3);
       this.resultList.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.resultList.MultiSelect = false;
       this.resultList.Name = "resultList";
-      this.resultList.Size = new System.Drawing.Size(670, 442);
+      this.resultList.Size = new System.Drawing.Size(696, 532);
       this.resultList.TabIndex = 6;
       this.resultList.UseCompatibleStateImageBehavior = false;
       this.resultList.View = System.Windows.Forms.View.Details;
@@ -75,8 +78,8 @@ namespace Pirate.PiVote.Client
       // 
       // TallyItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.resultList);
       this.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);

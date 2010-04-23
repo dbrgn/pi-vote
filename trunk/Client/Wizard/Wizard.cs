@@ -94,11 +94,7 @@ namespace Pirate.PiVote.Client
 
       this.itemPanel.Controls.Add(this.item);
 
-      this.item.Width = 700;
-      this.item.Left = this.itemPanel.Width / 2 - this.item.Width / 2;
-
-      this.item.Height = 500;
-      this.item.Top = this.itemPanel.Height / 2 - this.item.Height / 2;
+      this.item.Dock = DockStyle.Fill;
 
       this.previouseButton.Enabled = this.item.CanPrevious;
       this.nextButton.Enabled = this.item.CanNext;

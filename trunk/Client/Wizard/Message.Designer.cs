@@ -55,8 +55,8 @@
       // 
       // Message
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.iconBox);
       this.Controls.Add(this.messageLabel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);

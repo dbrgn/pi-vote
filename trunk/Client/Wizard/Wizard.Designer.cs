@@ -43,12 +43,12 @@ namespace Pirate.PiVote.Client
     private void InitializeComponent()
     {
       this.nextPanel = new System.Windows.Forms.Panel();
-      this.progress1 = new Pirate.PiVote.Client.Progress();
-      this.message1 = new Pirate.PiVote.Client.Message();
       this.previouseButton = new System.Windows.Forms.Button();
       this.nextButton = new System.Windows.Forms.Button();
       this.cancelButton = new System.Windows.Forms.Button();
       this.itemPanel = new System.Windows.Forms.Panel();
+      this.progress1 = new Pirate.PiVote.Client.Progress();
+      this.message1 = new Pirate.PiVote.Client.Message();
       this.nextPanel.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -60,30 +60,15 @@ namespace Pirate.PiVote.Client
       this.nextPanel.Controls.Add(this.nextButton);
       this.nextPanel.Controls.Add(this.cancelButton);
       this.nextPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.nextPanel.Location = new System.Drawing.Point(0, 540);
+      this.nextPanel.Location = new System.Drawing.Point(0, 396);
       this.nextPanel.Name = "nextPanel";
-      this.nextPanel.Size = new System.Drawing.Size(732, 158);
+      this.nextPanel.Size = new System.Drawing.Size(790, 158);
       this.nextPanel.TabIndex = 0;
-      // 
-      // progress1
-      // 
-      this.progress1.Location = new System.Drawing.Point(12, 6);
-      this.progress1.Name = "progress1";
-      this.progress1.Size = new System.Drawing.Size(708, 94);
-      this.progress1.Status = null;
-      this.progress1.TabIndex = 4;
-      // 
-      // message1
-      // 
-      this.message1.Location = new System.Drawing.Point(12, 6);
-      this.message1.Name = "message1";
-      this.message1.Size = new System.Drawing.Size(708, 94);
-      this.message1.TabIndex = 3;
       // 
       // previouseButton
       // 
       this.previouseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.previouseButton.Location = new System.Drawing.Point(342, 111);
+      this.previouseButton.Location = new System.Drawing.Point(400, 111);
       this.previouseButton.Name = "previouseButton";
       this.previouseButton.Size = new System.Drawing.Size(122, 34);
       this.previouseButton.TabIndex = 2;
@@ -94,7 +79,7 @@ namespace Pirate.PiVote.Client
       // nextButton
       // 
       this.nextButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.nextButton.Location = new System.Drawing.Point(470, 111);
+      this.nextButton.Location = new System.Drawing.Point(528, 111);
       this.nextButton.Name = "nextButton";
       this.nextButton.Size = new System.Drawing.Size(122, 34);
       this.nextButton.TabIndex = 1;
@@ -105,7 +90,7 @@ namespace Pirate.PiVote.Client
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(598, 111);
+      this.cancelButton.Location = new System.Drawing.Point(656, 111);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(122, 34);
       this.cancelButton.TabIndex = 0;
@@ -118,22 +103,43 @@ namespace Pirate.PiVote.Client
       this.itemPanel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.itemPanel.Location = new System.Drawing.Point(0, 0);
       this.itemPanel.Name = "itemPanel";
-      this.itemPanel.Size = new System.Drawing.Size(732, 540);
+      this.itemPanel.Size = new System.Drawing.Size(790, 396);
       this.itemPanel.TabIndex = 1;
       this.itemPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.itemPanel_Paint);
       // 
+      // progress1
+      // 
+      this.progress1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.progress1.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.progress1.Location = new System.Drawing.Point(12, 6);
+      this.progress1.Name = "progress1";
+      this.progress1.Size = new System.Drawing.Size(766, 94);
+      this.progress1.Status = null;
+      this.progress1.TabIndex = 4;
+      // 
+      // message1
+      // 
+      this.message1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.message1.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.message1.Location = new System.Drawing.Point(12, 6);
+      this.message1.Name = "message1";
+      this.message1.Size = new System.Drawing.Size(766, 94);
+      this.message1.TabIndex = 3;
+      // 
       // Wizard
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(732, 698);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.ClientSize = new System.Drawing.Size(790, 554);
       this.ControlBox = false;
       this.Controls.Add(this.itemPanel);
       this.Controls.Add(this.nextPanel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(800, 600);
       this.Name = "Wizard";
       this.Text = "Pi-Vote";
       this.Load += new System.EventHandler(this.Wizard_Load);

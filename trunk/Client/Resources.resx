@@ -420,4 +420,16 @@
   <data name="BadShareProofSignature" xml:space="preserve">
     <value>Signature:</value>
   </data>
+  <data name="BadShareProofVoting" xml:space="preserve">
+    <value>Voting Procedure</value>
+  </data>
+  <data name="BadShareProofVotingId" xml:space="preserve">
+    <value>Id:</value>
+  </data>
+  <data name="BadShareProofVotingTitle" xml:space="preserve">
+    <value>Title:</value>
+  </data>
+  <data name="ChooseCertificateVerifyBadShareProof" xml:space="preserve">
+    <value>Verfiy share &amp;proof...</value>
+  </data>
 </root>

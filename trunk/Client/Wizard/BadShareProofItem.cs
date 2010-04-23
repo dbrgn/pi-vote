@@ -70,6 +70,9 @@ namespace Pirate.PiVote.Client
     {
       BadShareProof proof = SignedBadShareProof.Value;
 
+      this.votingIdTextBox.Text = proof.Parameters.VotingId.ToString();
+      this.votingTitleTextBox.Text = proof.Parameters.Title;
+
       this.reportingCertificate.ValidationDate = proof.Parameters.VotingBeginDate;
       this.reportingCertificate.CertificateStorage = proof.CertificateStorage;
       this.reportingCertificate.Certificate = SignedBadShareProof.Certificate;
@@ -140,6 +143,9 @@ namespace Pirate.PiVote.Client
       this.controlingAuthoritiesLabel.Text = Resources.BadShareProofControlling;
       this.reportingSignatureLabel.Text = Resources.BadShareProofSignature;
       this.organizingSignatureLabel.Text = Resources.BadShareProofSignature;
+      this.votingLabel.Text = Resources.BadShareProofVoting;
+      this.votingIdLabel.Text = Resources.BadShareProofVotingId;
+      this.votingTitleLabel.Text = Resources.BadShareProofVotingTitle;
 
       this.reportingCertificate.SetLanguage();
       this.organizingCertificate.SetLanguage();
