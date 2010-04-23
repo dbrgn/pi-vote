@@ -98,14 +98,17 @@ namespace Pirate.PiVote.Serialization
       }
       else
       {
-        if (Types.ContainsKey(typeName))
+        lock (Types)
         {
-          type = Types[typeName];
-        }
-        else
-        {
-          type = Type.GetType(typeName);
-          Types.Add(typeName, type);
+          if (Types.ContainsKey(typeName))
+          {
+            type = Types[typeName];
+          }
+          else
+          {
+            type = Type.GetType(typeName);
+            Types.Add(typeName, type);
+          }
         }
 
         return (TValue)Activator.CreateInstance(type, new object[] { this }, new object[] { });

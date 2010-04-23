@@ -23,11 +23,6 @@ namespace Pirate.PiVote.Crypto
   public class DatabaseCertificateStorage : ICertificateStorage
   {
     /// <summary>
-    /// Root certificate preload file name.
-    /// </summary>
-    private const string LoadRootCertFileName = "root.pi-cert";
-
-    /// <summary>
     /// Load certificate storage preload file name.
     /// </summary>
     private const string LoadStorageFileName = "storage.pi-cert-storage";
@@ -41,6 +36,11 @@ namespace Pirate.PiVote.Crypto
     /// MySQL database connection.
     /// </summary>
     private MySqlConnection dbConnection;
+
+    /// <summary>
+    /// The root certificate.
+    /// </summary>
+    private Certificate rootCertificate;
 
     /// <summary>
     /// Signed certificate revocation lists for certificate authorities.
@@ -211,24 +211,7 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Is it a root?</returns>
     public bool IsRootCertificate(Certificate certificate)
     {
-      MySqlCommand command = new MySqlCommand("SELECT Root FROM certificate WHERE Id = @Id", this.dbConnection);
-      command.Parameters.AddWithValue("@Id", certificate.Id.ToByteArray());
-      
-      MySqlDataReader reader = command.ExecuteReader();
-      bool isRoot;
-
-      if (reader.Read())
-      {
-        isRoot = reader.GetInt32(0) == 1;
-      }
-      else
-      {
-        isRoot = false;
-      }
-
-      reader.Close();
-
-      return isRoot;
+      return certificate.IsIdentic(this.rootCertificate);
     }
 
     /// <summary>
@@ -392,21 +375,19 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
-    /// Imports CAs if needed.
+    /// Loads the root certificate from resources.
     /// </summary>
-    public void ImportCaIfNeed()
+    public void LoadRoot()
     {
-      long rootCount = (long)this.dbConnection.ExecuteScalar("SELECT count(*) FROM certificate WHERE Root = 1");
+      this.rootCertificate = Serializable.FromBinary<Certificate>(LibraryResources.root);
+      Add(this.rootCertificate);
+    }
 
-      if (rootCount < 1)
-      {
-        if (!File.Exists(LoadRootCertFileName))
-          throw new InvalidOperationException("Root certificate preload file not found.");
-
-        CACertificate rootCertificate = Serializable.Load<CACertificate>(LoadRootCertFileName);
-        AddRoot(rootCertificate);
-      }
-
+    /// <summary>
+    /// Imports certificate storage if needed.
+    /// </summary>
+    public void ImportStorageIfNeed()
+    {
       long certificateCount = (long)this.dbConnection.ExecuteScalar("SELECT count(*) FROM certificate");
 
       if (certificateCount < 2)

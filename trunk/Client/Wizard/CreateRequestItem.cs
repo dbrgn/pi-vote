@@ -58,6 +58,18 @@ namespace Pirate.PiVote.Client
     {
       this.idTextBox.Text = Status.Certificate.Id.ToString();
       this.typeTextBox.Text = Status.Certificate.TypeText;
+
+      if (!Status.FirstName.IsNullOrEmpty())
+      {
+        this.firstNameTextBox.Text = Status.FirstName;
+        this.firstNameTextBox.ReadOnly = true;
+      }
+
+      if (!Status.FamilyName.IsNullOrEmpty())
+      {
+        this.familyNameTextBox.Text = Status.FamilyName;
+        this.familyNameTextBox.ReadOnly = true;
+      }
     }
 
     private void sendButton_Click(object sender, EventArgs e)

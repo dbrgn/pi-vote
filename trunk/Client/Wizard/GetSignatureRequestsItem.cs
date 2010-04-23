@@ -23,6 +23,7 @@ namespace Pirate.PiVote.Client
   {
     private bool run;
     private Exception exception;
+    private bool done = false;
 
     public GetSignatureRequestsItem()
     {
@@ -31,7 +32,7 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      return null;
+      return new AdminChooseItem();
     }
 
     public override WizardItem Previous()
@@ -52,6 +53,11 @@ namespace Pirate.PiVote.Client
     public override bool CanPrevious
     {
       get { return !this.run; }
+    }
+
+    public override bool CanNext
+    {
+      get { return this.done; }
     }
 
     public override void Begin()
@@ -87,6 +93,8 @@ namespace Pirate.PiVote.Client
         {
           Status.SetMessage(this.exception.Message, MessageType.Error);
         }
+
+        this.done = true;
 
         OnUpdateWizard();
       }

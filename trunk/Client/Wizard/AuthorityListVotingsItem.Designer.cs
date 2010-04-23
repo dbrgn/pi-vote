@@ -60,10 +60,11 @@ namespace Pirate.PiVote.Client
             this.statusColumnHeader});
       this.votingList.Enabled = false;
       this.votingList.FullRowSelect = true;
-      this.votingList.Location = new System.Drawing.Point(3, 3);
+      this.votingList.Location = new System.Drawing.Point(2, 2);
+      this.votingList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.votingList.MultiSelect = false;
       this.votingList.Name = "votingList";
-      this.votingList.Size = new System.Drawing.Size(714, 259);
+      this.votingList.Size = new System.Drawing.Size(477, 164);
       this.votingList.TabIndex = 0;
       this.votingList.UseCompatibleStateImageBehavior = false;
       this.votingList.View = System.Windows.Forms.View.Details;
@@ -83,9 +84,10 @@ namespace Pirate.PiVote.Client
       // 
       this.decipherButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.decipherButton.Enabled = false;
-      this.decipherButton.Location = new System.Drawing.Point(619, 268);
+      this.decipherButton.Location = new System.Drawing.Point(336, 170);
+      this.decipherButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.decipherButton.Name = "decipherButton";
-      this.decipherButton.Size = new System.Drawing.Size(98, 27);
+      this.decipherButton.Size = new System.Drawing.Size(142, 27);
       this.decipherButton.TabIndex = 1;
       this.decipherButton.Text = "&Decipher";
       this.decipherButton.UseVisualStyleBackColor = true;
@@ -95,9 +97,10 @@ namespace Pirate.PiVote.Client
       // 
       this.checkSharesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.checkSharesButton.Enabled = false;
-      this.checkSharesButton.Location = new System.Drawing.Point(515, 268);
+      this.checkSharesButton.Location = new System.Drawing.Point(188, 170);
+      this.checkSharesButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.checkSharesButton.Name = "checkSharesButton";
-      this.checkSharesButton.Size = new System.Drawing.Size(98, 27);
+      this.checkSharesButton.Size = new System.Drawing.Size(144, 27);
       this.checkSharesButton.TabIndex = 2;
       this.checkSharesButton.Text = "&Check Shares";
       this.checkSharesButton.UseVisualStyleBackColor = true;
@@ -107,9 +110,10 @@ namespace Pirate.PiVote.Client
       // 
       this.createSharesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.createSharesButton.Enabled = false;
-      this.createSharesButton.Location = new System.Drawing.Point(411, 268);
+      this.createSharesButton.Location = new System.Drawing.Point(40, 170);
+      this.createSharesButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.createSharesButton.Name = "createSharesButton";
-      this.createSharesButton.Size = new System.Drawing.Size(98, 27);
+      this.createSharesButton.Size = new System.Drawing.Size(144, 27);
       this.createSharesButton.TabIndex = 3;
       this.createSharesButton.Text = "Create &Shares";
       this.createSharesButton.UseVisualStyleBackColor = true;
@@ -117,14 +121,15 @@ namespace Pirate.PiVote.Client
       // 
       // AuthorityListVotingsItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.createSharesButton);
       this.Controls.Add(this.checkSharesButton);
       this.Controls.Add(this.decipherButton);
       this.Controls.Add(this.votingList);
+      this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
       this.Name = "AuthorityListVotingsItem";
-      this.Size = new System.Drawing.Size(720, 301);
+      this.Size = new System.Drawing.Size(480, 201);
       this.ResumeLayout(false);
 
     }

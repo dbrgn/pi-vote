@@ -38,6 +38,11 @@ namespace Pirate.PiVote.Crypto
     /// <param name="signedEnvelope">Signed envelope.</param>
     public VoteReceipt(VotingParameters parameters, Signed<Envelope> signedEnvelope)
     {
+      if (signedEnvelope.Value.VotingId != parameters.VotingId)
+        throw new InvalidOperationException("Wrong parameters for envelope.");
+      if (signedEnvelope.Value.VoterId != signedEnvelope.Certificate.Id)
+        throw new InvalidOperationException("Inconsistent envelope.");
+
       VotingId = parameters.VotingId;
       VotingTitle = parameters.Title;
       VoterId = signedEnvelope.Certificate.Id;
@@ -52,6 +57,11 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Is it valid?</returns>
     public bool Verify(Signed<Envelope> signedEnvelope)
     {
+      if (signedEnvelope.Value.VotingId != VotingId)
+        return false;
+      if (signedEnvelope.Value.VoterId != VoterId)
+        return false;
+
       SHA256Managed sha256 = new SHA256Managed();
       return sha256.ComputeHash(signedEnvelope.ToBinary())
         .Equal(SignedEnvelopeHash);
@@ -72,6 +82,10 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+      context.Write(VotingId);
+      context.Write(VoterId);
+      context.Write(SignedEnvelopeHash);
+      //context.Write(VotingTitle);
     }
 
     /// <summary>
@@ -81,6 +95,10 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+      VotingId = context.ReadGuid();
+      VoterId = context.ReadGuid();
+      SignedEnvelopeHash = context.ReadBytes();
+      //VotingTitle = context.ReadString();
     }
   }
 }

@@ -65,6 +65,12 @@ namespace Pirate.PiVote.Client
 
     }
 
+    public override void Begin()
+    {
+      Status.FirstName = null;
+      Status.FamilyName = null;
+    }
+
     private void CheckSaveEnabled()
     {
       switch (typeComboBox.SelectedIndex)
@@ -131,10 +137,18 @@ namespace Pirate.PiVote.Client
 
     private void saveButton_Click(object sender, EventArgs e)
     {
+      this.saveButton.Enabled = false;
+      this.firstNameTextBox.Enabled = false;
+      this.familyNameTextBox.Enabled = false;
+      this.functionNameTextBox.Enabled = false;
+      this.typeComboBox.Enabled = false;
+
       switch (typeComboBox.SelectedIndex)
       {
         case VoterType:
           this.certificate = new VoterCertificate();
+          Status.FirstName = null;
+          Status.FamilyName = null;
           break;
         case AuthorityType:
           string authorityFullName =
@@ -143,6 +157,8 @@ namespace Pirate.PiVote.Client
             this.familyNameTextBox.Text,
             this.functionNameTextBox.Text);
           this.certificate = new AuthorityCertificate(authorityFullName);
+          Status.FirstName = this.firstNameTextBox.Text;
+          Status.FamilyName = this.familyNameTextBox.Text;
           break;
         case AdminType:
           string adminFullName =
@@ -151,6 +167,8 @@ namespace Pirate.PiVote.Client
             this.familyNameTextBox.Text,
             this.functionNameTextBox.Text);
           this.certificate = new AdminCertificate(adminFullName);
+          Status.FirstName = this.firstNameTextBox.Text;
+          Status.FamilyName = this.familyNameTextBox.Text;
           break;
       }
 

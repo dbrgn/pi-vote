@@ -92,5 +92,10 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     /// <param name="certificateStorage">Certificate storage to add.</param>
     void Add(ICertificateStorage certificateStorage);
+
+    /// <summary>
+    /// Loads the root certificate from resources.
+    /// </summary>
+    void LoadRoot();
   }
 }

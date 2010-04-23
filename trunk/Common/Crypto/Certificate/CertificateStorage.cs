@@ -276,5 +276,13 @@ namespace Pirate.PiVote.Crypto
       certificateStorage.SignedRevocationLists
         .Foreach(reveocationList => ForceAddRevocationList(reveocationList));
     }
+
+    /// <summary>
+    /// Loads the root certificate from resources.
+    /// </summary>
+    public void LoadRoot()
+    {
+      AddRoot(Serializable.FromBinary<Certificate>(LibraryResources.root));
+    }
   }
 }

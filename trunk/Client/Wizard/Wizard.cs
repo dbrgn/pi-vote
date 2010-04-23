@@ -19,8 +19,6 @@ namespace Pirate.PiVote.Client
 {
   public partial class Wizard : Form
   {
-    private const string RootCertificateFileName = "root.pi-cert";
-
     private WizardItem item;
     private WizardStatus status;
 
@@ -47,18 +45,8 @@ namespace Pirate.PiVote.Client
     {
       this.status = new WizardStatus(this.message1, this.progress1);
       this.status.CertificateStorage = new CertificateStorage();
+      this.status.CertificateStorage.LoadRoot();
       this.status.UpdateProgress();
-
-      if (File.Exists(RootCertificateFileName))
-      {
-        Certificate rootCertificate = Serializable.Load<Certificate>(RootCertificateFileName);
-        this.status.CertificateStorage.AddRoot(rootCertificate);
-      }
-      else
-      {
-        MessageBox.Show(Resources.RootCertificateMissing, Resources.PiVoteClient, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        Close();
-      }
 
       this.status.VotingClient = new VotingClient(this.status.CertificateStorage);
 

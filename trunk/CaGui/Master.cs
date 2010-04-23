@@ -115,6 +115,10 @@ namespace Pirate.PiVote.CaGui
       {
         return "Voter";
       }
+      else if (certificate is ServerCertificate)
+      {
+        return "Server";
+      }
       else
       {
         return "Unknown";
@@ -127,7 +131,15 @@ namespace Pirate.PiVote.CaGui
       ListViewItem item = new ListViewItem(entry.Certificate.Id.ToString());
 
       item.SubItems.Add(TypeName(entry.Request.Certificate));
-      item.SubItems.Add(string.Format("{0}, {1}", request.FamilyName, request.FirstName));
+
+      if (request.FamilyName.IsNullOrEmpty())
+      {
+        item.SubItems.Add(request.FirstName);
+      }
+      else
+      {
+        item.SubItems.Add(string.Format("{0}, {1}", request.FamilyName, request.FirstName));
+      }
 
       if (entry.Response == null)
       {
@@ -578,7 +590,7 @@ namespace Pirate.PiVote.CaGui
 
         if (saveDialog.ShowDialog() == DialogResult.OK)
         {
-          AdminCertificate certificate = new AdminCertificate(dialog.FullName);
+          ServerCertificate certificate = new ServerCertificate(dialog.FullName);
           certificate.CreateSelfSignature();
 
           SignatureRequest request = new SignatureRequest(dialog.FullName, string.Empty, string.Empty);

@@ -57,77 +57,86 @@ namespace Pirate.PiVote.Client
       // 
       this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.typeComboBox.FormattingEnabled = true;
-      this.typeComboBox.Location = new System.Drawing.Point(200, 6);
+      this.typeComboBox.Location = new System.Drawing.Point(133, 4);
+      this.typeComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.typeComboBox.Name = "typeComboBox";
-      this.typeComboBox.Size = new System.Drawing.Size(336, 27);
+      this.typeComboBox.Size = new System.Drawing.Size(255, 22);
       this.typeComboBox.TabIndex = 0;
       this.typeComboBox.SelectedIndexChanged += new System.EventHandler(this.typeComboBox_SelectedIndexChanged);
       // 
       // firstNameTextBox
       // 
-      this.firstNameTextBox.Location = new System.Drawing.Point(200, 39);
+      this.firstNameTextBox.Location = new System.Drawing.Point(133, 30);
+      this.firstNameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.firstNameTextBox.Name = "firstNameTextBox";
-      this.firstNameTextBox.Size = new System.Drawing.Size(336, 26);
+      this.firstNameTextBox.Size = new System.Drawing.Size(255, 20);
       this.firstNameTextBox.TabIndex = 1;
       this.firstNameTextBox.TextChanged += new System.EventHandler(this.firstNameTextBox_TextChanged);
       // 
       // familyNameTextBox
       // 
-      this.familyNameTextBox.Location = new System.Drawing.Point(200, 71);
+      this.familyNameTextBox.Location = new System.Drawing.Point(133, 54);
+      this.familyNameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.familyNameTextBox.Name = "familyNameTextBox";
-      this.familyNameTextBox.Size = new System.Drawing.Size(336, 26);
+      this.familyNameTextBox.Size = new System.Drawing.Size(255, 20);
       this.familyNameTextBox.TabIndex = 2;
       this.familyNameTextBox.TextChanged += new System.EventHandler(this.familyNameTextBox_TextChanged);
       // 
       // typeLabel
       // 
       this.typeLabel.AutoSize = true;
-      this.typeLabel.Location = new System.Drawing.Point(3, 6);
+      this.typeLabel.Location = new System.Drawing.Point(2, 7);
+      this.typeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.typeLabel.Name = "typeLabel";
-      this.typeLabel.Size = new System.Drawing.Size(125, 19);
+      this.typeLabel.Size = new System.Drawing.Size(83, 14);
       this.typeLabel.TabIndex = 3;
       this.typeLabel.Text = "Certificate type:";
       // 
       // firstNameLabel
       // 
       this.firstNameLabel.AutoSize = true;
-      this.firstNameLabel.Location = new System.Drawing.Point(3, 42);
+      this.firstNameLabel.Location = new System.Drawing.Point(2, 33);
+      this.firstNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.firstNameLabel.Name = "firstNameLabel";
-      this.firstNameLabel.Size = new System.Drawing.Size(86, 19);
+      this.firstNameLabel.Size = new System.Drawing.Size(57, 14);
       this.firstNameLabel.TabIndex = 4;
       this.firstNameLabel.Text = "Firstname:";
       // 
       // familyNameLabel
       // 
       this.familyNameLabel.AutoSize = true;
-      this.familyNameLabel.Location = new System.Drawing.Point(3, 74);
+      this.familyNameLabel.Location = new System.Drawing.Point(2, 57);
+      this.familyNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.familyNameLabel.Name = "familyNameLabel";
-      this.familyNameLabel.Size = new System.Drawing.Size(107, 19);
+      this.familyNameLabel.Size = new System.Drawing.Size(69, 14);
       this.familyNameLabel.TabIndex = 5;
       this.familyNameLabel.Text = "Family name:";
       // 
       // functionNameTextBox
       // 
-      this.functionNameTextBox.Location = new System.Drawing.Point(200, 103);
+      this.functionNameTextBox.Location = new System.Drawing.Point(133, 78);
+      this.functionNameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.functionNameTextBox.Name = "functionNameTextBox";
-      this.functionNameTextBox.Size = new System.Drawing.Size(336, 26);
+      this.functionNameTextBox.Size = new System.Drawing.Size(255, 20);
       this.functionNameTextBox.TabIndex = 6;
       this.functionNameTextBox.TextChanged += new System.EventHandler(this.functionNameTextBox_TextChanged);
       // 
       // functionNameLabel
       // 
       this.functionNameLabel.AutoSize = true;
-      this.functionNameLabel.Location = new System.Drawing.Point(3, 106);
+      this.functionNameLabel.Location = new System.Drawing.Point(2, 81);
+      this.functionNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.functionNameLabel.Name = "functionNameLabel";
-      this.functionNameLabel.Size = new System.Drawing.Size(116, 19);
+      this.functionNameLabel.Size = new System.Drawing.Size(77, 14);
       this.functionNameLabel.TabIndex = 7;
       this.functionNameLabel.Text = "Party function:";
       // 
       // saveButton
       // 
-      this.saveButton.Location = new System.Drawing.Point(405, 135);
+      this.saveButton.Location = new System.Drawing.Point(294, 102);
+      this.saveButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.saveButton.Name = "saveButton";
-      this.saveButton.Size = new System.Drawing.Size(131, 32);
+      this.saveButton.Size = new System.Drawing.Size(94, 24);
       this.saveButton.TabIndex = 8;
       this.saveButton.Text = "&Save...";
       this.saveButton.UseVisualStyleBackColor = true;
@@ -135,7 +144,7 @@ namespace Pirate.PiVote.Client
       // 
       // CreateCertificateItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.saveButton);
       this.Controls.Add(this.functionNameLabel);
@@ -146,8 +155,9 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.familyNameTextBox);
       this.Controls.Add(this.firstNameTextBox);
       this.Controls.Add(this.typeComboBox);
+      this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
       this.Name = "CreateCertificateItem";
-      this.Size = new System.Drawing.Size(700, 538);
+      this.Size = new System.Drawing.Size(467, 359);
       this.Load += new System.EventHandler(this.StartWizardItem_Load);
       this.ResumeLayout(false);
       this.PerformLayout();

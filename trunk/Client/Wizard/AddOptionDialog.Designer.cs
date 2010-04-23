@@ -58,44 +58,54 @@ namespace Pirate.PiVote.Client
       // textLabel
       // 
       this.textLabel.AutoSize = true;
-      this.textLabel.Location = new System.Drawing.Point(12, 16);
+      this.textLabel.Location = new System.Drawing.Point(8, 11);
+      this.textLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.textLabel.Name = "textLabel";
-      this.textLabel.Size = new System.Drawing.Size(51, 19);
+      this.textLabel.Size = new System.Drawing.Size(35, 14);
       this.textLabel.TabIndex = 0;
       this.textLabel.Text = "label1";
       // 
       // textTextBox
       // 
-      this.textTextBox.Location = new System.Drawing.Point(109, 13);
+      this.textTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.textTextBox.Location = new System.Drawing.Point(107, 8);
+      this.textTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.textTextBox.Name = "textTextBox";
-      this.textTextBox.Size = new System.Drawing.Size(409, 26);
+      this.textTextBox.Size = new System.Drawing.Size(333, 20);
       this.textTextBox.TabIndex = 1;
       this.textTextBox.TextChanged += new System.EventHandler(this.textTextBox_TextChanged);
       // 
       // descriptionTextBox
       // 
-      this.descriptionTextBox.Location = new System.Drawing.Point(109, 45);
+      this.descriptionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.descriptionTextBox.Location = new System.Drawing.Point(107, 32);
+      this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.descriptionTextBox.Multiline = true;
       this.descriptionTextBox.Name = "descriptionTextBox";
       this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.descriptionTextBox.Size = new System.Drawing.Size(409, 109);
+      this.descriptionTextBox.Size = new System.Drawing.Size(333, 68);
       this.descriptionTextBox.TabIndex = 2;
       // 
       // descriptionLabel
       // 
       this.descriptionLabel.AutoSize = true;
-      this.descriptionLabel.Location = new System.Drawing.Point(12, 48);
+      this.descriptionLabel.Location = new System.Drawing.Point(8, 32);
+      this.descriptionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.descriptionLabel.Name = "descriptionLabel";
-      this.descriptionLabel.Size = new System.Drawing.Size(51, 19);
+      this.descriptionLabel.Size = new System.Drawing.Size(35, 14);
       this.descriptionLabel.TabIndex = 3;
       this.descriptionLabel.Text = "label2";
       // 
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(398, 160);
+      this.cancelButton.Location = new System.Drawing.Point(360, 104);
+      this.cancelButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.cancelButton.Name = "cancelButton";
-      this.cancelButton.Size = new System.Drawing.Size(120, 34);
+      this.cancelButton.Size = new System.Drawing.Size(80, 23);
       this.cancelButton.TabIndex = 4;
       this.cancelButton.Text = "button1";
       this.cancelButton.UseVisualStyleBackColor = true;
@@ -105,9 +115,10 @@ namespace Pirate.PiVote.Client
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(272, 160);
+      this.okButton.Location = new System.Drawing.Point(276, 104);
+      this.okButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.okButton.Name = "okButton";
-      this.okButton.Size = new System.Drawing.Size(120, 34);
+      this.okButton.Size = new System.Drawing.Size(80, 23);
       this.okButton.TabIndex = 5;
       this.okButton.Text = "button2";
       this.okButton.UseVisualStyleBackColor = true;
@@ -115,9 +126,9 @@ namespace Pirate.PiVote.Client
       // 
       // AddOptionDialog
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(530, 206);
+      this.ClientSize = new System.Drawing.Size(451, 138);
       this.ControlBox = false;
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);
@@ -128,6 +139,7 @@ namespace Pirate.PiVote.Client
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.KeyPreview = true;
+      this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "AddOptionDialog";

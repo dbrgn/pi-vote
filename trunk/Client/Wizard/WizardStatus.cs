@@ -36,6 +36,10 @@ namespace Pirate.PiVote.Client
 
     private Progress progress;
 
+    public string FirstName = null;
+
+    public string FamilyName = null;
+
     public WizardStatus(Message message, Progress progress)
     {
       this.message = message;

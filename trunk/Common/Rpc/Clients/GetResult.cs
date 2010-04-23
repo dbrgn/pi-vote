@@ -107,7 +107,7 @@ namespace Pirate.PiVote.Rpc
         this.voteReceipts = new Dictionary<Guid, Signed<VoteReceipt>>();
         signedVoteReceipts.Foreach(signedVoteReceipt => this.voteReceipts.Add(signedVoteReceipt.Value.VoterId, signedVoteReceipt));
 
-        this.voteReceipts = new Dictionary<Guid, Signed<VoteReceipt>>();
+        this.voteReceiptsStatus = new Dictionary<Guid, VoteReceiptStatus>();
         signedVoteReceipts.Foreach(signedVoteReceipt => this.voteReceiptsStatus.Add(signedVoteReceipt.Value.VoterId, VoteReceiptStatus.NotFound));
       }
 

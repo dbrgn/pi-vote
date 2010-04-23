@@ -81,6 +81,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\Config.cs" />
+    <Compile Include="Config\ServerConfig.cs" />
     <Compile Include="Crypto\Base\Authority.cs" />
     <Compile Include="Crypto\Base\Ballot.cs" />
     <Compile Include="Crypto\Base\ThreadedPrimeGenerator.cs" />
@@ -242,5 +244,6 @@
     <None Include="Emil.GMP.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\root.pi-cert" />
   </ItemGroup>
 </Project>

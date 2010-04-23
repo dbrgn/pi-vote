@@ -88,6 +88,9 @@ namespace Pirate.PiVote.Rpc
               SubText = string.Format(LibraryResources.ClientGetSignatureRequestsGetRequest, done, max);
               SubProgress = (double)done / (double)max;
             }
+
+            Progress = 1d;
+            SubProgress = 1d;
           }
           else
           {

@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using Pirate.PiVote.Serialization;
 using Pirate.PiVote.Crypto;
 using MySql.Data;
@@ -22,6 +23,8 @@ namespace Pirate.PiVote.Rpc
   /// </summary>
   public class VotingRpcServer : RpcServer
   {
+    private const string ServerConfigFileName = "pi-vote-server.cfg";
+
     /// <summary>
     /// MySQL database connection.
     /// </summary>
@@ -43,15 +46,23 @@ namespace Pirate.PiVote.Rpc
     private ServerCertificate serverCertificate;
 
     /// <summary>
+    /// Server config file.
+    /// </summary>
+    private ServerConfig serverConfig;
+
+    /// <summary>
     /// Create the voting server.
     /// </summary>
     public VotingRpcServer()
     {
-      this.dbConnection = new MySqlConnection("Server=localhost;Database=PiVote;Uid=pivote;Pwd=alpha123.;");
+      this.serverConfig = new ServerConfig(ServerConfigFileName);
+
+      this.dbConnection = new MySqlConnection(this.serverConfig.MySqlConnectionString);
       this.dbConnection.Open();
 
       CertificateStorage = new DatabaseCertificateStorage(this.dbConnection);
-      CertificateStorage.ImportCaIfNeed();
+      CertificateStorage.LoadRoot();
+      CertificateStorage.ImportStorageIfNeed();
 
       this.serverCertificate = CertificateStorage.LoadServerCertificate();
 
@@ -307,11 +318,14 @@ namespace Pirate.PiVote.Rpc
       replaceCommand.Parameters.AddWithValue("@Value", signedSignatureResponse.ToBinary());
       replaceCommand.ExecuteNonQuery();
 
-      if (CertificateStorage.Has(signatureResponse.SubjectId))
+      if (signatureResponse.Status == SignatureResponseStatus.Accepted)
       {
-        Certificate certificate = CertificateStorage.Get(signatureResponse.SubjectId);
-        certificate.AddSignature(signatureResponse.Signature);
-        CertificateStorage.Add(certificate);
+        if (CertificateStorage.Has(signatureResponse.SubjectId))
+        {
+          Certificate certificate = CertificateStorage.Get(signatureResponse.SubjectId);
+          certificate.AddSignature(signatureResponse.Signature);
+          CertificateStorage.Add(certificate);
+        }
       }
     }
 
