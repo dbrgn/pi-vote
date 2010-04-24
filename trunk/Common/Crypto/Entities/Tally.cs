@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Security.Cryptography;
+using System.Threading;
 using Emil.GMP;
 
 namespace Pirate.PiVote.Crypto
@@ -54,6 +56,21 @@ namespace Pirate.PiVote.Crypto
     private List<Guid> countedVoters;
 
     /// <summary>
+    /// Next envelope index to be added.
+    /// </summary>
+    private int nextEnvelopeIndex;
+
+    /// <summary>
+    /// Total number of envelopes.
+    /// </summary>
+    public int EnvelopeCount { get; private set; }
+
+    /// <summary>
+    /// Hash over all envelopes tallied.
+    /// </summary>
+    public byte[] EnvelopeHash { get; private set; }
+
+    /// <summary>
     /// Creates a new summation of votes.
     /// </summary>
     /// <param name="parameters">Voting parameters.</param>
@@ -72,6 +89,10 @@ namespace Pirate.PiVote.Crypto
       this.result = new VotingResult(this.parameters.VotingId, this.parameters);
       this.partialDeciphers = new List<PartialDecipher>();
       this.countedVoters = new List<Guid>();
+      this.nextEnvelopeIndex = 0;
+
+      EnvelopeHash = new byte[] { };
+      EnvelopeCount = 0;
     }
 
     /// <summary>
@@ -80,8 +101,9 @@ namespace Pirate.PiVote.Crypto
     /// <remarks>
     /// Verfies the correctness of the vote first.
     /// </remarks>
+    /// <param name="envelopeIndex">Index of the envelope.</param>
     /// <param name="signedEnvelope">Signed envelope from voter.</param>
-    public void Add(Signed<Envelope> signedEnvelope)
+    public void Add(int envelopeIndex, Signed<Envelope> signedEnvelope)
     {
 #if DEBUG
       DateTime start = DateTime.Now;
@@ -108,20 +130,34 @@ namespace Pirate.PiVote.Crypto
       //Ballot must verify (prooves).
       acceptVote &= envelope.Ballot.Verify(this.publicKey, this.parameters);
 
-      if (acceptVote)
+      while (envelopeIndex != this.nextEnvelopeIndex)
       {
-        for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
-        {
-          this.voteSums[optionIndex] =
-            this.voteSums[optionIndex] == null ?
-            envelope.Ballot.Votes[optionIndex] :
-            this.voteSums[optionIndex] + envelope.Ballot.Votes[optionIndex];
-        }
-
-        this.countedVoters.Add(signedEnvelope.Certificate.Id);
+        Thread.Sleep(1);
       }
 
-      this.result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));
+      lock (this.voteSums)
+      {
+        SHA256Managed sha256 = new SHA256Managed();
+        EnvelopeHash = sha256.ComputeHash(EnvelopeHash.Concat(signedEnvelope.ToBinary()));
+        EnvelopeCount++;
+
+        if (acceptVote)
+        {
+          for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)
+          {
+            this.voteSums[optionIndex] =
+              this.voteSums[optionIndex] == null ?
+              envelope.Ballot.Votes[optionIndex] :
+              this.voteSums[optionIndex] + envelope.Ballot.Votes[optionIndex];
+          }
+
+          this.countedVoters.Add(signedEnvelope.Certificate.Id);
+        }
+
+        this.result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));
+
+        this.nextEnvelopeIndex = envelopeIndex + 1;
+      }
     }
 
     /// <summary>
@@ -138,11 +174,17 @@ namespace Pirate.PiVote.Crypto
     /// <param name="signedPartialDecipherList">List of partial deciphers.</param>
     public void AddPartialDecipher(Signed<PartialDecipherList> signedPartialDecipherList)
     {
-      if (signedPartialDecipherList.Verify(this.certificateStorage))
-      {
-        PartialDecipherList partialDeciphersContainer = signedPartialDecipherList.Value;
-        partialDeciphers.AddRange(partialDeciphersContainer.PartialDeciphers);
-      }
+      if (!signedPartialDecipherList.Verify(this.certificateStorage))
+        throw new PiSecurityException(ExceptionCode.PartialDecipherBadSignature, "Partial decipher has bad signature.");
+
+      PartialDecipherList partialDeciphersContainer = signedPartialDecipherList.Value;
+
+      if (partialDeciphersContainer.EnvelopeCount != EnvelopeCount)
+        throw new PiSecurityException(ExceptionCode.PartialDecipherBadEnvelopeCount, "The number of envelopes does not match the partial decipher.");
+      if (!partialDeciphersContainer.EnvelopeHash.Equal(EnvelopeHash))
+        throw new PiSecurityException(ExceptionCode.PartialDecipherBadEnvelopeHash, "The hash over all envelopes does not match the partail decipher.");
+
+      partialDeciphers.AddRange(partialDeciphersContainer.PartialDeciphers);
     }
 
     /// <summary>
@@ -160,7 +202,7 @@ namespace Pirate.PiVote.Crypto
 
           for (int groupIndex = 1; groupIndex < this.parameters.AuthorityCount; groupIndex++)
           {
-            IEnumerable<BigInt> partialDeciphersByOptionAndGroup = partialDeciphers
+            IEnumerable<BigInt> partialDeciphersByOptionAndGroup = this.partialDeciphers
               .Where(partialDecipher => partialDecipher.GroupIndex == groupIndex && partialDecipher.OptionIndex == optionIndex)
               .Select(partialDecipher => partialDecipher.Value);
             if (partialDeciphersByOptionAndGroup.Count() == this.parameters.Thereshold + 1)

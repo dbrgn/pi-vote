@@ -273,7 +273,7 @@ namespace Pirate.PiVote.CliClient
 
       for (int envelopeIndex = 0; envelopeIndex < envelopeCount; envelopeIndex++)
       {
-        auth.TallyAdd(proxy.FetchEnvelope(votingId, envelopeIndex));
+        auth.TallyAdd(envelopeIndex, proxy.FetchEnvelope(votingId, envelopeIndex));
         Console.Write(".");
       }
 

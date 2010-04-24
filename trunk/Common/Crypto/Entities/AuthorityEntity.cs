@@ -281,15 +281,16 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Adds a vote to the vote sum.
     /// </summary>
+    /// <param name="envelopeIndex">Index of the envelope to be added.</param>
     /// <param name="signedEnvelope">Signed envelope containing the vote.</param>
-    public void TallyAdd(Signed<Envelope> signedEnvelope)
+    public void TallyAdd(int envelopeIndex, Signed<Envelope> signedEnvelope)
     {
       if (signedEnvelope == null)
         throw new ArgumentNullException("signedEnvelope");
       if (this.tally == null)
         throw new InvalidOperationException("Tally not yet begun.");
 
-      this.tally.Add(signedEnvelope);
+      this.tally.Add(envelopeIndex, signedEnvelope);
     }
 
     /// <summary>
@@ -330,7 +331,7 @@ namespace Pirate.PiVote.Crypto
       if (this.tally == null)
         throw new InvalidOperationException("Tally not yet begun.");
 
-      PartialDecipherList partialDecipherList = new PartialDecipherList(this.parameters.VotingId, this.authority.Index);
+      PartialDecipherList partialDecipherList = new PartialDecipherList(this.parameters.VotingId, this.authority.Index, this.tally.EnvelopeCount, this.tally.EnvelopeHash);
 
       for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex ++)
       {

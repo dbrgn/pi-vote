@@ -229,6 +229,7 @@
     <Compile Include="Utilitiy\SerializeContext.cs" />
     <Compile Include="Utilitiy\SystemExtensions.cs" />
     <Compile Include="Utilitiy\Tools.cs" />
+    <Compile Include="Utilitiy\Tuple.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LibraryResources.fr-FR.resx" />

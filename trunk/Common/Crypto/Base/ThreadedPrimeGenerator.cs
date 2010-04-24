@@ -107,8 +107,8 @@ namespace Pirate.PiVote.Crypto
     /// <param name="safePrime">Returns the safe prime.</param>
     public void FindPrimeAndSafePrime(int bitLength, out BigInt prime, out BigInt safePrime)
     {
-      if (File.Exists("prime")) this.prime = new BigInt(File.ReadAllBytes("prime"));
-      if (File.Exists("safeprime")) this.safePrime = new BigInt(File.ReadAllBytes("safeprime"));
+      //if (File.Exists("prime")) this.prime = new BigInt(File.ReadAllBytes("prime"));
+      //if (File.Exists("safeprime")) this.safePrime = new BigInt(File.ReadAllBytes("safeprime"));
 
       DateTime start = DateTime.Now;
 

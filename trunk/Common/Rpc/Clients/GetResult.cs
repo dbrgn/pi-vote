@@ -57,7 +57,7 @@ namespace Pirate.PiVote.Rpc
       /// <summary>
       /// Queue with enveloped to verify and add.
       /// </summary>
-      private Queue<Signed<Envelope>> envelopeQueue;
+      private Queue<Tuple<int, Signed<Envelope>>> envelopeQueue;
 
       /// <summary>
       /// Receipts the server issued for this vote by voter id.
@@ -142,7 +142,7 @@ namespace Pirate.PiVote.Rpc
           client.voterEntity.TallyBegin(material);
 
           this.client = client;
-          this.envelopeQueue = new Queue<Signed<Envelope>>();
+          this.envelopeQueue = new Queue<Tuple<int, Signed<Envelope>>>();
           this.workerRun = true;
           Thread fetcher = new Thread(FetchWorker);
           fetcher.Start();
@@ -209,7 +209,7 @@ namespace Pirate.PiVote.Rpc
 
           lock (this.envelopeQueue)
           {
-            this.envelopeQueue.Enqueue(envelope);
+            this.envelopeQueue.Enqueue(new Tuple<int, Signed<Envelope>>(envelopeIndex, envelope));
           }
 
           Interlocked.Increment(ref this.fetchedEnvelopes);
@@ -223,30 +223,37 @@ namespace Pirate.PiVote.Rpc
       {
         while (this.workerRun)
         {
-          Signed<Envelope> envelope = null;
+          Tuple<int, Signed<Envelope>> indexedSignedEnvelope = null;
 
           lock (this.envelopeQueue)
           {
             if (this.envelopeQueue.Count > 0)
             {
-              envelope = this.envelopeQueue.Dequeue();
+              indexedSignedEnvelope = this.envelopeQueue.Dequeue();
             }
           }
 
-          if (envelope == null)
+          if (indexedSignedEnvelope == null)
           {
             Thread.Sleep(1);
           }
           else
           {
-            this.client.voterEntity.TallyAdd(envelope);
+            this.client.voterEntity.TallyAdd(indexedSignedEnvelope.First, indexedSignedEnvelope.Second);
 
-            if (this.voteReceipts.ContainsKey(envelope.Value.VoterId))
+            Envelope envelope = indexedSignedEnvelope.Second.Value;
+            if (this.voteReceipts.ContainsKey(envelope.VoterId))
             {
-              Signed<VoteReceipt> signedVoteReceipt = this.voteReceipts[envelope.Value.VoterId];
+              Signed<VoteReceipt> signedVoteReceipt = null;
+
+              lock (this.voteReceipts)
+              {
+                signedVoteReceipt = this.voteReceipts[envelope.VoterId];
+              }
+
               VoteReceipt voteReceipt = signedVoteReceipt.Value;
 
-              if (voteReceipt.Verify(envelope))
+              if (voteReceipt.Verify(indexedSignedEnvelope.Second))
               {
                 lock (this.voteReceiptsStatus)
                 {

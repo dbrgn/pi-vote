@@ -22,28 +22,42 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Id of voting procedure.
     /// </summary>
-    public Guid VotingId { get; set; }
+    public Guid VotingId { get; private set; }
 
     /// <summary>
     /// Index of issuing authority.
     /// </summary>
-    public int AuthorityIndex { get; set; }
+    public int AuthorityIndex { get; private set; }
 
     /// <summary>
     /// Partial deciphers from authority.
     /// </summary>
-    public List<PartialDecipher> PartialDeciphers { get; set; }
+    public List<PartialDecipher> PartialDeciphers { get; private set; }
+
+    /// <summary>
+    /// Number of envelopes that where partially deciphered.
+    /// </summary>
+    public int EnvelopeCount { get; private set; }
+
+    /// <summary>
+    /// Hash over all envelopes that where partially deciphered.
+    /// </summary>
+    public byte[] EnvelopeHash { get; private set; }
 
     /// <summary>
     /// Create new list of partial deciphers from an authority.
     /// </summary>
     /// <param name="votingId">Id of voting procedure.</param>
     /// <param name="authorityIndex">Index of issuing authority.</param>
-    public PartialDecipherList(Guid votingId, int authorityIndex)
+    /// <param name="envelopeCount">Total number of envelopes.</param>
+    /// <param name="envelopeHash">Hash over all envelopes.</param>
+    public PartialDecipherList(Guid votingId, int authorityIndex, int envelopeCount, byte[] envelopeHash)
     {
       VotingId = votingId;
       AuthorityIndex = authorityIndex;
       PartialDeciphers = new List<PartialDecipher>();
+      EnvelopeCount = envelopeCount;
+      EnvelopeHash = envelopeHash;
     }
 
     /// <summary>
@@ -64,6 +78,8 @@ namespace Pirate.PiVote.Crypto
       context.Write(VotingId);
       context.Write(AuthorityIndex);
       context.WriteList(PartialDeciphers);
+      context.Write(EnvelopeCount);
+      context.Write(EnvelopeHash);
     }
 
     /// <summary>
@@ -76,6 +92,8 @@ namespace Pirate.PiVote.Crypto
       VotingId = context.ReadGuid();
       AuthorityIndex = context.ReadInt32();
       PartialDeciphers = context.ReadObjectList<PartialDecipher>();
+      EnvelopeCount = context.ReadInt32();
+      EnvelopeHash = context.ReadBytes();
     }
   }
 }

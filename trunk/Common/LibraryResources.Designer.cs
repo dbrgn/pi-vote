@@ -745,6 +745,33 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The number of envelopes does not match the partial decipher..
+        /// </summary>
+        public static string ExceptionPartialDecipherBadEnvelopeCount {
+            get {
+                return ResourceManager.GetString("ExceptionPartialDecipherBadEnvelopeCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The hash over all envelopes does not match the partail decipher..
+        /// </summary>
+        public static string ExceptionPartialDecipherBadEnvelopeHash {
+            get {
+                return ResourceManager.GetString("ExceptionPartialDecipherBadEnvelopeHash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partial decipher has a bad signature..
+        /// </summary>
+        public static string ExceptionPartialDecipherBadSignature {
+            get {
+                return ResourceManager.GetString("ExceptionPartialDecipherBadSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Supplied number is no prime..
         /// </summary>
         public static string ExceptionPIsNoPrime {

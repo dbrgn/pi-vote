@@ -345,6 +345,15 @@
   <data name="ExceptionOptionCountOutOfRange" xml:space="preserve">
     <value>Ungültige Anzahl Optionen.</value>
   </data>
+  <data name="ExceptionPartialDecipherBadEnvelopeCount" xml:space="preserve">
+    <value>Die Zahl der Stimmen der stimmt nicht mit der Teilentschlüsselung überein.</value>
+  </data>
+  <data name="ExceptionPartialDecipherBadEnvelopeHash" xml:space="preserve">
+    <value>Der Hash über alle Stimmen stimmt nicht mit der Teilentschlüsselung überein.</value>
+  </data>
+  <data name="ExceptionPartialDecipherBadSignature" xml:space="preserve">
+    <value>Die Signatur der Teilentschlüsselung ist falsch.</value>
+  </data>
   <data name="ExceptionPIsNoPrime" xml:space="preserve">
     <value>Zahl ist nicht prim.</value>
   </data>

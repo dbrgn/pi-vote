@@ -85,7 +85,7 @@ namespace Pirate.PiVote.Crypto
       context.Write(VotingId);
       context.Write(VoterId);
       context.Write(SignedEnvelopeHash);
-      //context.Write(VotingTitle);
+      context.Write(VotingTitle);
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ namespace Pirate.PiVote.Crypto
       VotingId = context.ReadGuid();
       VoterId = context.ReadGuid();
       SignedEnvelopeHash = context.ReadBytes();
-      //VotingTitle = context.ReadString();
+      VotingTitle = context.ReadString();
     }
   }
 }

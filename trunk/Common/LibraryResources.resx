@@ -406,4 +406,13 @@
   <data name="VotingStatusVoting" xml:space="preserve">
     <value>Voting</value>
   </data>
+  <data name="ExceptionPartialDecipherBadEnvelopeCount" xml:space="preserve">
+    <value>The number of envelopes does not match the partial decipher.</value>
+  </data>
+  <data name="ExceptionPartialDecipherBadEnvelopeHash" xml:space="preserve">
+    <value>The hash over all envelopes does not match the partail decipher.</value>
+  </data>
+  <data name="ExceptionPartialDecipherBadSignature" xml:space="preserve">
+    <value>Partial decipher has a bad signature.</value>
+  </data>
 </root>

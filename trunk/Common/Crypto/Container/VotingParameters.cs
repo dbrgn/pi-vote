@@ -122,7 +122,7 @@ namespace Pirate.PiVote.Crypto
 
       DateTime start = DateTime.Now;
       Prime.FindPrimeAndSafePrimeThreaded(PrimeBits, out prime, out safePrime);
-      Console.WriteLine(DateTime.Now.Subtract(start).ToString());
+      System.Diagnostics.Debug.WriteLine("Found safe prime after " + DateTime.Now.Subtract(start).ToString());
       //Prime.FindPrimeAndSafePrime(PrimeBits, out prime, out safePrime);
 
       InitilizeCrypto(

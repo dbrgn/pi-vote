@@ -100,7 +100,7 @@ namespace Pirate.PiVote.Rpc
           for (int envelopeIndex = 0; envelopeIndex < envelopeCount; envelopeIndex++)
           {
             var signedEnvelope = client.proxy.FetchEnvelope(this.votingId, envelopeIndex);
-            client.authorityEntity.TallyAdd(signedEnvelope);
+            client.authorityEntity.TallyAdd(envelopeIndex, signedEnvelope);
 
             Text = string.Format(LibraryResources.ClientCreateDeciphersFetchEnvelope, 0, envelopeIndex + 1);
             Progress += 0.4d / (double)envelopeCount;

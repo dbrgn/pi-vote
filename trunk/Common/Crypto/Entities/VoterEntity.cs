@@ -118,10 +118,11 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Add a vote to the sum of votes.
     /// </summary>
+    /// <param name="envelopeIndex">Index of the envelope.</param>
     /// <param name="signedEnvelope">Signed envelope containing the vote.</param>
-    public void TallyAdd(Signed<Envelope> signedEnvelope)
+    public void TallyAdd(int envelopeIndex, Signed<Envelope> signedEnvelope)
     {
-      this.tally.Add(signedEnvelope);
+      this.tally.Add(envelopeIndex, signedEnvelope);
     }
 
     /// <summary>

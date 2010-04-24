@@ -171,11 +171,11 @@ namespace Pirate.PiVote.Crypto
 
       for (int envelopeIndex = 0; envelopeIndex < vs.GetEnvelopeCount(); envelopeIndex++)
       {
-        a1.TallyAdd(vs.GetEnvelope(envelopeIndex));
-        a2.TallyAdd(vs.GetEnvelope(envelopeIndex));
-        a3.TallyAdd(vs.GetEnvelope(envelopeIndex));
-        a4.TallyAdd(vs.GetEnvelope(envelopeIndex));
-        a5.TallyAdd(vs.GetEnvelope(envelopeIndex));
+        a1.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
+        a2.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
+        a3.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
+        a4.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
+        a5.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
       }
 
       var pd1 = a1.PartiallyDecipher();
@@ -194,7 +194,7 @@ namespace Pirate.PiVote.Crypto
 
       for (int envelopeIndex = 0; envelopeIndex < vs.GetEnvelopeCount(); envelopeIndex++)
       {
-        v1.TallyAdd(vs.GetEnvelope(envelopeIndex));
+        v1.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
       }
 
       for (int authorityIndex = 1; authorityIndex < vs.Parameters.AuthorityCount + 1; authorityIndex++)

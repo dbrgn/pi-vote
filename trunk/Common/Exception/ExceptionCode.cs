@@ -18,47 +18,51 @@ namespace Pirate.PiVote
   /// </summary>
   public enum ExceptionCode
   {
-    Unknown                       = 0,
-    ArgumentNull                  = 1,
-    ArgumentOutOfRange            = 2,
-    BadSerializableFormat         = 3,
-    InvalidCertificate            = 4,
-    WrongStatusForOperation       = 5,
-    RequestSignatureInvalid       = 6,
-    NoAuthorizedAdmin             = 7,
-    BadVotingMaterial             = 8,
-    InvalidSignature              = 9,
+    Unknown                           = 0,
+    ArgumentNull                      = 1,
+    ArgumentOutOfRange                = 2,
+    BadSerializableFormat             = 3,
+    InvalidCertificate                = 4,
+    WrongStatusForOperation           = 5,
+    RequestSignatureInvalid           = 6,
+    NoAuthorizedAdmin                 = 7,
+    BadVotingMaterial                 = 8,
+    InvalidSignature                  = 9,
 
-    AuthorityCountOutOfRange      = 1000001,
-    TheresholdOutOfRange          = 1000002,
-    OptionCountOutOfRange         = 1000003,
-    MaxVotaOutOfRange             = 1000004,
-    OptionCountMismatch           = 1000005,
-    PIsNoPrime                    = 1000006,
-    PIsNoSafePrime                = 1000007,
-    QIsNoPrime                    = 1000008,
-    AuthorityCountMismatch        = 1000009,
-    AuthorityInvalid              = 1000010,
+    AuthorityCountOutOfRange          = 1000001,
+    TheresholdOutOfRange              = 1000002,
+    OptionCountOutOfRange             = 1000003,
+    MaxVotaOutOfRange                 = 1000004,
+    OptionCountMismatch               = 1000005,
+    PIsNoPrime                        = 1000006,
+    PIsNoSafePrime                    = 1000007,
+    QIsNoPrime                        = 1000008,
+    AuthorityCountMismatch            = 1000009,
+    AuthorityInvalid                  = 1000010,
 
-    NoVotingWithId                = 2000001,
+    NoVotingWithId                    = 2000001,
 
-    NoAuthorityWithCertificate    = 3000001,
+    NoAuthorityWithCertificate        = 3000001,
 
-    AlreadyVoted                  = 4000001,
-    VoteSignatureNotValid         = 4000002,
-    NoVoterCertificate            = 4000003,
-    InvalidVoteReceipt            = 4000004,
+    AlreadyVoted                      = 4000001,
+    VoteSignatureNotValid             = 4000002,
+    NoVoterCertificate                = 4000003,
+    InvalidVoteReceipt                = 4000004,
 
-    SignatureRequestInvalid       = 5000001,
-    SignatureRequestResponded     = 5000002,
-    SignatureRequestNotFound      = 5000003,
+    SignatureRequestInvalid           = 5000001,
+    SignatureRequestResponded         = 5000002,
+    SignatureRequestNotFound          = 5000003,
 
-    SignatureResponseNotFromCA    = 6000001,
+    SignatureResponseNotFromCA        = 6000001,
 
-    NoAuthorizedAuthority         = 7000001,
-    AlreadyEnoughAuthorities      = 7000002,
-    AuthorityAlreadyInVoting      = 7000003,
-    AuthorityHasAlreadyDeposited  = 7000004
+    NoAuthorizedAuthority             = 7000001,
+    AlreadyEnoughAuthorities          = 7000002,
+    AuthorityAlreadyInVoting          = 7000003,
+    AuthorityHasAlreadyDeposited      = 7000004,
+
+    PartialDecipherBadSignature       = 8000001,
+    PartialDecipherBadEnvelopeCount   = 8000002,
+    PartialDecipherBadEnvelopeHash    = 8000003
   }
 
   public static class ExceptionCodeExtension
@@ -135,6 +139,12 @@ namespace Pirate.PiVote
           return LibraryResources.ExceptionAuthorityAlreadyInVoting;
         case ExceptionCode.AuthorityHasAlreadyDeposited:
           return LibraryResources.ExceptionAuthorityHasAlreadyDeposited;
+        case ExceptionCode.PartialDecipherBadSignature:
+          return LibraryResources.ExceptionPartialDecipherBadSignature;
+        case ExceptionCode.PartialDecipherBadEnvelopeCount:
+          return LibraryResources.ExceptionPartialDecipherBadEnvelopeCount;
+        case ExceptionCode.PartialDecipherBadEnvelopeHash:
+          return LibraryResources.ExceptionPartialDecipherBadEnvelopeHash;
         default:
           return LibraryResources.ExceptionUnknown;
       }

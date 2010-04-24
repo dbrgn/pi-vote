@@ -63,7 +63,7 @@ namespace Pirate.PiVote.Crypto
 
         if (this.status == VotingStatus.Voting && DateTime.Now.Date > this.parameters.VotingEndDate.Date)
         {
-          Status = VotingStatus.Deciphering;
+         Status = VotingStatus.Deciphering;
         }
 
         return this.status;
