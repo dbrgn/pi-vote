@@ -170,7 +170,12 @@ namespace Pirate.PiVote.Rpc
 
           for (int authorityIndex = 1; authorityIndex < parameters.AuthorityCount + 1; authorityIndex++)
           {
-            client.voterEntity.TallyAddPartialDecipher(client.proxy.FetchPartialDecipher(votingId, authorityIndex));
+            var partialDecipher = client.proxy.FetchPartialDecipher(votingId, authorityIndex);
+
+            if (partialDecipher != null)
+            {
+              client.voterEntity.TallyAddPartialDecipher(partialDecipher);
+            }
 
             SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, authorityIndex, parameters.AuthorityCount);
             SubProgress = 1d / (double)parameters.AuthorityCount * (double)(authorityIndex);

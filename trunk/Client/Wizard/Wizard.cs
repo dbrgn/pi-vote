@@ -50,7 +50,11 @@ namespace Pirate.PiVote.Client
 
       this.status.VotingClient = new VotingClient(this.status.CertificateStorage);
 
+      this.Height = 600;
+      this.Width = 800;
+
       CenterToScreen();
+
       SetItem(new StartItem());
     }
 

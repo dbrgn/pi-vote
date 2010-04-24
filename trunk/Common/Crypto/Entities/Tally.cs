@@ -141,6 +141,8 @@ namespace Pirate.PiVote.Crypto
         EnvelopeHash = sha256.ComputeHash(EnvelopeHash.Concat(signedEnvelope.ToBinary()));
         EnvelopeCount++;
 
+        System.Diagnostics.Debug.WriteLine("I=" + envelopeIndex + " EvH=" + Convert.ToBase64String(sha256.ComputeHash(signedEnvelope.ToBinary())) + " RH=" + Convert.ToBase64String(EnvelopeHash));
+
         if (acceptVote)
         {
           for (int optionIndex = 0; optionIndex < this.parameters.OptionCount; optionIndex++)

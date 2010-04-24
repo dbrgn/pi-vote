@@ -29,6 +29,11 @@ namespace Pirate.PiVote.Crypto
     public List<Signed<ShareResponse>> PublicKeyParts { get; private set; }
 
     /// <summary>
+    /// Number of cast envelopes.
+    /// </summary>
+    public int CastEnvelopeCount { get; private set; }
+
+    /// <summary>
     /// Createa new voting material.
     /// </summary>
     /// <param name="parameters">Voting parameters.</param>
@@ -37,7 +42,8 @@ namespace Pirate.PiVote.Crypto
     /// <param name="certificates">List of intermediate certificates.</param>
     public VotingMaterial(
       Signed<VotingParameters> parameters, 
-      IEnumerable<Signed<ShareResponse>> publicKeyParts)
+      IEnumerable<Signed<ShareResponse>> publicKeyParts,
+      int castEnvelopeCount)
     {
       if (parameters == null)
         throw new ArgumentNullException("parameters");
@@ -46,6 +52,7 @@ namespace Pirate.PiVote.Crypto
 
       Parameters = parameters;
       PublicKeyParts = new List<Signed<ShareResponse>>(publicKeyParts);
+      CastEnvelopeCount = castEnvelopeCount;
     }
 
     /// <summary>
@@ -65,6 +72,7 @@ namespace Pirate.PiVote.Crypto
       base.Serialize(context);
       context.Write(Parameters);
       context.WriteList(PublicKeyParts);
+      context.Write(CastEnvelopeCount);
     }
 
     /// <summary>
@@ -76,6 +84,7 @@ namespace Pirate.PiVote.Crypto
       base.Deserialize(context);
       Parameters = context.ReadObject<Signed<VotingParameters>>();
       PublicKeyParts = context.ReadObjectList<Signed<ShareResponse>>();
+      CastEnvelopeCount = context.ReadInt32();
     }
 
     /// <summary>

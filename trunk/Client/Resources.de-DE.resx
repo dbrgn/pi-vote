@@ -456,4 +456,16 @@
   <data name="TallyVoteReceiptNotFound" xml:space="preserve">
     <value>Nicht vorhanden</value>
   </data>
+  <data name="VotingListAuthorities" xml:space="preserve">
+    <value>Autoritäten</value>
+  </data>
+  <data name="VotingListEnvelopes" xml:space="preserve">
+    <value>Stimmen</value>
+  </data>
+  <data name="VotingListVoteFrom" xml:space="preserve">
+    <value>Von</value>
+  </data>
+  <data name="VotingListVoteUntil" xml:space="preserve">
+    <value>Bis</value>
+  </data>
 </root>

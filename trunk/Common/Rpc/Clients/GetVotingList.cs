@@ -85,7 +85,7 @@ namespace Pirate.PiVote.Rpc
             if (material.Valid(this.certificateStorage))
             {
               VotingParameters parameters = material.Parameters.Value;
-              votingList.Add(new VotingDescriptor(parameters, status, authoritiesDone));
+              votingList.Add(new VotingDescriptor(parameters, status, authoritiesDone, material.CastEnvelopeCount));
             }
 
             counter++;

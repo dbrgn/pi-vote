@@ -1015,11 +1015,47 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Authorities.
+        /// </summary>
+        internal static string VotingListAuthorities {
+            get {
+                return ResourceManager.GetString("VotingListAuthorities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Voting list downloaded..
         /// </summary>
         internal static string VotingListDownloaded {
             get {
                 return ResourceManager.GetString("VotingListDownloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Votes.
+        /// </summary>
+        internal static string VotingListEnvelopes {
+            get {
+                return ResourceManager.GetString("VotingListEnvelopes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        internal static string VotingListVoteFrom {
+            get {
+                return ResourceManager.GetString("VotingListVoteFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Until.
+        /// </summary>
+        internal static string VotingListVoteUntil {
+            get {
+                return ResourceManager.GetString("VotingListVoteUntil", resourceCulture);
             }
         }
         

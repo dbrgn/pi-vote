@@ -35,6 +35,10 @@ namespace Pirate.PiVote.Rpc
       private readonly List<Guid> authoritiesDone;
       private readonly List<OptionDescriptor> options;
       private readonly int maxOptions;
+      private readonly DateTime voteFrom;
+      private readonly DateTime voteUntil;
+      private readonly int authorityCount;
+      private readonly int envelopeCount;
 
       /// <summary>
       /// Id of the voting.
@@ -62,6 +66,26 @@ namespace Pirate.PiVote.Rpc
       public VotingStatus Status { get { return this.status; } }
 
       /// <summary>
+      /// Date when voting begins.
+      /// </summary>
+      public DateTime VoteFrom { get { return this.voteFrom; } }
+
+      /// <summary>
+      /// Date when voting ends.
+      /// </summary>
+      public DateTime VoteUntil { get { return this.voteUntil; } }
+
+      /// <summary>
+      /// Number of authorities needed to complete phase.
+      /// </summary>
+      public int AuthorityCount { get { return this.authorityCount; } }
+
+      /// <summary>
+      /// Number of envelopes cast.
+      /// </summary>
+      public int EnvelopeCount { get { return this.envelopeCount; } }
+
+      /// <summary>
       /// List of authorities that have done the current step.
       /// Null if not applicable.
       /// </summary>
@@ -83,7 +107,7 @@ namespace Pirate.PiVote.Rpc
       /// <param name="material">Material of voting to describe.</param>
       /// <param name="status">Status of the voting.</param>
       /// <param name="authoritiesDone">List of authorities that have completed the current step if applicable.</param>
-      public VotingDescriptor(VotingParameters parameters, VotingStatus status, List<Guid> authoritiesDone)
+      public VotingDescriptor(VotingParameters parameters, VotingStatus status, List<Guid> authoritiesDone, int envelopeCount)
       {
         this.id = parameters.VotingId;
         this.title = parameters.Title;
@@ -93,6 +117,10 @@ namespace Pirate.PiVote.Rpc
         this.authoritiesDone = authoritiesDone;
         this.options = new List<OptionDescriptor>();
         this.maxOptions = parameters.MaxVota;
+        this.voteFrom = parameters.VotingBeginDate;
+        this.voteUntil = parameters.VotingEndDate;
+        this.authorityCount = status == VotingStatus.Deciphering ? parameters.Thereshold + 1 : parameters.AuthorityCount;
+        this.envelopeCount = envelopeCount;
 
         parameters.Options.Foreach(option => this.options.Add(new OptionDescriptor(option)));
       }

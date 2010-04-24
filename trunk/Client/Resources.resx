@@ -453,4 +453,16 @@
   <data name="TallyVoteReceiptNotFound" xml:space="preserve">
     <value>Not found</value>
   </data>
+  <data name="VotingListAuthorities" xml:space="preserve">
+    <value>Authorities</value>
+  </data>
+  <data name="VotingListEnvelopes" xml:space="preserve">
+    <value>Votes</value>
+  </data>
+  <data name="VotingListVoteFrom" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="VotingListVoteUntil" xml:space="preserve">
+    <value>Until</value>
+  </data>
 </root>

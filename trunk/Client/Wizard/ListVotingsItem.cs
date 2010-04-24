@@ -140,7 +140,26 @@ namespace Pirate.PiVote.Client
           {
             ListViewItem item = new ListViewItem(voting.Title);
             item.SubItems.Add(voting.Status.Text());
-
+            item.SubItems.Add(voting.VoteFrom.ToShortDateString());
+            item.SubItems.Add(voting.VoteUntil.ToShortDateString());
+            if (voting.AuthoritiesDone == null)
+            {
+              item.SubItems.Add(string.Empty);
+            }
+            else
+            {
+              item.SubItems.Add(voting.AuthoritiesDone.Count().ToString() + " / " + voting.AuthorityCount.ToString());
+            }
+            if (voting.Status == VotingStatus.Voting ||
+                voting.Status == VotingStatus.Deciphering ||
+                voting.Status == VotingStatus.Finished)
+            {
+              item.SubItems.Add(voting.EnvelopeCount.ToString());
+            }
+            else
+            {
+              item.SubItems.Add(string.Empty);
+            }
             if (this.voteReceipts.ContainsKey(voting.Id))
             {
               var voteReceiptList = this.voteReceipts[voting.Id];
@@ -191,6 +210,10 @@ namespace Pirate.PiVote.Client
 
       this.titleColumnHeader.Text = Resources.VotingTitle;
       this.statusColumnHeader.Text = Resources.VotingStatus;
+      this.voteFromColumnHeader.Text = Resources.VotingListVoteFrom;
+      this.voteUntilColumnHeader.Text = Resources.VotingListVoteUntil;
+      this.authoritiesColumnHeader.Text = Resources.VotingListAuthorities;
+      this.envelopesColumnHeader.Text = Resources.VotingListEnvelopes;
     }
   }
 }

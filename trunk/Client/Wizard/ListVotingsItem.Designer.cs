@@ -45,20 +45,30 @@ namespace Pirate.PiVote.Client
       this.votingList = new System.Windows.Forms.ListView();
       this.titleColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.statusColumnHeader = new System.Windows.Forms.ColumnHeader();
+      this.voteFromColumnHeader = new System.Windows.Forms.ColumnHeader();
+      this.voteUntilColumnHeader = new System.Windows.Forms.ColumnHeader();
+      this.authoritiesColumnHeader = new System.Windows.Forms.ColumnHeader();
+      this.envelopesColumnHeader = new System.Windows.Forms.ColumnHeader();
       this.SuspendLayout();
       // 
       // votingList
       // 
+      this.votingList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.votingList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.titleColumnHeader,
-            this.statusColumnHeader});
+            this.statusColumnHeader,
+            this.voteFromColumnHeader,
+            this.voteUntilColumnHeader,
+            this.authoritiesColumnHeader,
+            this.envelopesColumnHeader});
       this.votingList.Enabled = false;
       this.votingList.FullRowSelect = true;
-      this.votingList.Location = new System.Drawing.Point(4, 4);
-      this.votingList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.votingList.Location = new System.Drawing.Point(3, 3);
       this.votingList.MultiSelect = false;
       this.votingList.Name = "votingList";
-      this.votingList.Size = new System.Drawing.Size(1039, 721);
+      this.votingList.Size = new System.Drawing.Size(694, 482);
       this.votingList.TabIndex = 0;
       this.votingList.UseCompatibleStateImageBehavior = false;
       this.votingList.View = System.Windows.Forms.View.Details;
@@ -67,21 +77,41 @@ namespace Pirate.PiVote.Client
       // titleColumnHeader
       // 
       this.titleColumnHeader.Text = "Title";
-      this.titleColumnHeader.Width = 460;
+      this.titleColumnHeader.Width = 300;
       // 
       // statusColumnHeader
       // 
       this.statusColumnHeader.Text = "Status";
-      this.statusColumnHeader.Width = 150;
+      this.statusColumnHeader.Width = 100;
+      // 
+      // voteFromColumnHeader
+      // 
+      this.voteFromColumnHeader.Text = "From";
+      this.voteFromColumnHeader.Width = 70;
+      // 
+      // voteUntilColumnHeader
+      // 
+      this.voteUntilColumnHeader.Text = "Until";
+      this.voteUntilColumnHeader.Width = 70;
+      // 
+      // authoritiesColumnHeader
+      // 
+      this.authoritiesColumnHeader.Text = "Authorities";
+      this.authoritiesColumnHeader.Width = 70;
+      // 
+      // envelopesColumnHeader
+      // 
+      this.envelopesColumnHeader.Text = "Votes";
+      this.envelopesColumnHeader.Width = 70;
       // 
       // ListVotingsItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.votingList);
-      this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.Margin = new System.Windows.Forms.Padding(3);
       this.Name = "ListVotingsItem";
-      this.Size = new System.Drawing.Size(1050, 730);
+      this.Size = new System.Drawing.Size(700, 487);
       this.ResumeLayout(false);
 
     }
@@ -91,6 +121,10 @@ namespace Pirate.PiVote.Client
     private ListView votingList;
     private ColumnHeader titleColumnHeader;
     private ColumnHeader statusColumnHeader;
+    private ColumnHeader voteFromColumnHeader;
+    private ColumnHeader voteUntilColumnHeader;
+    private ColumnHeader authoritiesColumnHeader;
+    private ColumnHeader envelopesColumnHeader;
 
 
 

@@ -473,7 +473,8 @@ namespace Pirate.PiVote.Crypto
     {
       return new VotingMaterial(
         this.signedParameters,
-        SignedShareResponses);
+        SignedShareResponses,
+        GetEnvelopeCount());
     }
 
     /// <summary>
@@ -574,7 +575,7 @@ namespace Pirate.PiVote.Crypto
         "SELECT count(*) FROM deciphers WHERE VotingId = @VotingId",
         "@VotingId", Id.ToByteArray());
 
-      if (depositedShareResponseCount == this.parameters.AuthorityCount)
+      if (depositedShareResponseCount == this.parameters.Thereshold + 1)
       {
         Status = VotingStatus.Finished;
       }
@@ -626,7 +627,7 @@ namespace Pirate.PiVote.Crypto
       else
       {
         reader.Close();
-        throw new PiArgumentException(ExceptionCode.ArgumentOutOfRange, "Authority index out of range.");
+        return null;
       }
     }
 
