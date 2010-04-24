@@ -129,7 +129,7 @@ namespace Pirate.PiVote.Rpc
 
     public bool Overdue
     {
-      get { return DateTime.Now.Subtract(this.lastActivity).TotalMinutes > 9999999d; }
+      get { return DateTime.Now.Subtract(this.lastActivity).TotalMinutes > 1d; }
     }
 
     public void Close()

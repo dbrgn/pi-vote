@@ -169,5 +169,14 @@ namespace Pirate.PiVote.Rpc
 
       return response.CertificateStorage;
     }
+
+    /// <summary>
+    /// Keeps the connection alive.
+    /// </summary>
+    public void KeepAlive()
+    {
+      var request = new KeepAliveRequest(Guid.NewGuid());
+      var response = Execute<KeepAliveResponse>(request);
+    }
   }
 }

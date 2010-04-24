@@ -166,6 +166,8 @@
     <Compile Include="Rpc\Generic\RpcRequest.cs" />
     <Compile Include="Rpc\Generic\RpcMessage.cs" />
     <Compile Include="Rpc\Handlers\IBinaryRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\KeepAliveRequest.cs" />
+    <Compile Include="Rpc\Messages\KeepAliveResponse.cs" />
     <Compile Include="Rpc\Messages\FetchAuthorityCertificatesRequest.cs" />
     <Compile Include="Rpc\Messages\FetchAuthorityCertificatesResponse.cs" />
     <Compile Include="Rpc\Messages\PushSignatureResponseRequest.cs" />
