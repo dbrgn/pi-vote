@@ -51,7 +51,7 @@ namespace Pirate.PiVote.Client
 
     private void textTextBox_TextChanged(object sender, EventArgs e)
     {
-      this.okButton.Enabled = !this.textTextBox.Text.IsNullOrEmpty();
+      this.okButton.Enabled = !this.textTextBox.IsEmpty;
     }
 
     private void AddOptionDialog_KeyDown(object sender, KeyEventArgs e)
@@ -72,8 +72,8 @@ namespace Pirate.PiVote.Client
       }
     }
 
-    public string OptionText { get { return this.textTextBox.Text; } }
+    public MultiLanguageString OptionText { get { return this.textTextBox.Text; } }
 
-    public string OptionDescription { get { return this.descriptionTextBox.Text; } }
+    public MultiLanguageString OptionDescription { get { return this.descriptionTextBox.Text; } }
   }
 }

@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.IO;
 using System.Net;
+using Pirate.PiVote;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.CliClient.VoteService;
@@ -160,13 +161,19 @@ namespace Pirate.PiVote.CliClient
       Console.Write("Enter question: ");
       string quest = Console.ReadLine();
 
-      VotingParameters votingParameters = new VotingParameters(title, desc, quest, DateTime.Now, DateTime.Now.AddDays(1));
+      VotingParameters votingParameters 
+        = new VotingParameters(
+        new MultiLanguageString(title), 
+        new MultiLanguageString(desc), 
+        new MultiLanguageString(quest), 
+        DateTime.Now, 
+        DateTime.Now.AddDays(1));
 
       Console.Write("Enter option name: ");
       string optionName = Console.ReadLine();
       while (!optionName.IsNullOrEmpty())
       {
-        votingParameters.AddOption(new Option(optionName, string.Empty));
+        votingParameters.AddOption(new Option(new MultiLanguageString(optionName), new MultiLanguageString(string.Empty)));
         Console.Write("Enter option name: ");
         optionName = Console.ReadLine();
       }

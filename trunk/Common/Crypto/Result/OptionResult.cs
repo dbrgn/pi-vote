@@ -23,12 +23,12 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Text of option.
     /// </summary>
-    private readonly string text;
+    private readonly MultiLanguageString text;
 
     /// <summary>
     /// Descrption of option.
     /// </summary>
-    private readonly string description;
+    private readonly MultiLanguageString description;
 
     /// <summary>
     /// Votes for this option.
@@ -38,12 +38,12 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Text of option.
     /// </summary>
-    public string Text { get { return this.text; } }
+    public MultiLanguageString Text { get { return this.text; } }
 
     /// <summary>
     /// Descrption of option.
     /// </summary>
-    public string Description { get { return this.description; } }
+    public MultiLanguageString Description { get { return this.description; } }
 
     /// <summary>
     /// Votes for this option.
@@ -56,7 +56,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="text">Text of option.</param>
     /// <param name="description">Descrption of option.</param>
     /// <param name="result">Votes for this option.</param>
-    public OptionResult(string text, string description, int result)
+    public OptionResult(MultiLanguageString text, MultiLanguageString description, int result)
     {
       this.text = text;
       this.description = description;

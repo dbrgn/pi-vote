@@ -28,17 +28,17 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Title of the voting procedure.
     /// </summary>
-    private readonly string title;
+    private readonly MultiLanguageString title;
 
     /// <summary>
     /// Description of the voting procedure.
     /// </summary>
-    private readonly string description;
+    private readonly MultiLanguageString description;
 
     /// <summary>
     /// Question of the voting procedure.
     /// </summary>
-    private readonly string question;
+    private readonly MultiLanguageString question;
     
     /// <summary>
     /// Results for each option.
@@ -58,17 +58,17 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Title of the voting procedure.
     /// </summary>
-    public string Title { get { return this.title; } }
+    public MultiLanguageString Title { get { return this.title; } }
 
     /// <summary>
     /// Description of the voting procedure.
     /// </summary>
-    public string Description { get { return this.description; } }
+    public MultiLanguageString Description { get { return this.description; } }
 
     /// <summary>
     /// Question of the voting procedure.
     /// </summary>
-    public string Question { get { return this.question; } }
+    public MultiLanguageString Question { get { return this.question; } }
     
     /// <summary>
     /// Results for each option.

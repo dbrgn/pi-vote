@@ -45,10 +45,10 @@ namespace Pirate.PiVote.Client
       this.components = new System.ComponentModel.Container();
       this.authoritiesLabel = new System.Windows.Forms.Label();
       this.titleLabel = new System.Windows.Forms.Label();
-      this.titleBox = new System.Windows.Forms.TextBox();
-      this.descriptionBox = new System.Windows.Forms.TextBox();
+      this.titleBox = new MultiLanguageTextBox();
+      this.descriptionBox = new MultiLanguageTextBox();
       this.descriptionLabel = new System.Windows.Forms.Label();
-      this.questionBox = new System.Windows.Forms.TextBox();
+      this.questionBox = new MultiLanguageTextBox();
       this.questionLabel = new System.Windows.Forms.Label();
       this.optionLabel = new System.Windows.Forms.Label();
       this.optionNumberUpDown = new System.Windows.Forms.NumericUpDown();
@@ -406,10 +406,10 @@ namespace Pirate.PiVote.Client
 
     private Label authoritiesLabel;
     private Label titleLabel;
-    private TextBox titleBox;
-    private TextBox descriptionBox;
+    private MultiLanguageTextBox titleBox;
+    private MultiLanguageTextBox descriptionBox;
     private Label descriptionLabel;
-    private TextBox questionBox;
+    private MultiLanguageTextBox questionBox;
     private Label questionLabel;
     private Label optionLabel;
     private NumericUpDown optionNumberUpDown;

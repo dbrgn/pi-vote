@@ -763,6 +763,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string CreateVotingOptionDescription {
+            get {
+                return ResourceManager.GetString("CreateVotingOptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Add.
         /// </summary>
         internal static string CreateVotingOptionsAdd {
@@ -777,6 +786,15 @@ namespace Pirate.PiVote.Client {
         internal static string CreateVotingOptionsRemove {
             get {
                 return ResourceManager.GetString("CreateVotingOptionsRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        internal static string CreateVotingOptionText {
+            get {
+                return ResourceManager.GetString("CreateVotingOptionText", resourceCulture);
             }
         }
         

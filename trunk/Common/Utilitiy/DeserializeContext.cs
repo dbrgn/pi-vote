@@ -86,6 +86,11 @@ namespace Pirate.PiVote.Serialization
       return new BigInt(ReadBytes());
     }
 
+    public MultiLanguageString ReadMultiLanguageString()
+    {
+      return MultiLanguageString.Deserialize(this);
+    }
+
     public TValue ReadObject<TValue>()
       where TValue : Serializable
     {

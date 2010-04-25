@@ -45,9 +45,15 @@ namespace Pirate.PiVote.Crypto
       serverCert.CreateSelfSignature();
       serverCert.AddSignature(intermediate, DateTime.Now.AddDays(1));
 
-      VotingParameters parameters = new VotingParameters("Zufrieden", "Tada", "Bist du?", DateTime.Now, DateTime.Now.AddDays(1));
-      parameters.AddOption(new Option("Nein", "Dagegen"));
-      parameters.AddOption(new Option("Ja", "Dafür"));
+      VotingParameters parameters = 
+        new VotingParameters(
+          new MultiLanguageString("Zufrieden"), 
+          new MultiLanguageString("Tada"), 
+          new MultiLanguageString("Bist du?"), 
+          DateTime.Now, 
+          DateTime.Now.AddDays(1));
+      parameters.AddOption(new Option(new MultiLanguageString("Nein"), new MultiLanguageString("Dagegen")));
+      parameters.AddOption(new Option(new MultiLanguageString("Ja"), new MultiLanguageString("Dafür")));
       parameters.Initialize(1);
       Signed<VotingParameters> signedParameters = new Signed<VotingParameters>(parameters, admin);
 

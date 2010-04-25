@@ -37,17 +37,17 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Title of this voting.
     /// </summary>
-    public string Title { get; private set; }
+    public MultiLanguageString Title { get; private set; }
 
     /// <summary>
     /// Description of this voting.
     /// </summary>
-    public string Description { get; private set; }
+    public MultiLanguageString Description { get; private set; }
 
     /// <summary>
     /// Question of this voting.
     /// </summary>
-    public string Question { get; private set; }
+    public MultiLanguageString Question { get; private set; }
 
     /// <summary>
     /// Date at which voting begins.
@@ -70,7 +70,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new voting.
     /// </summary>
-    public VotingParameters(string title, string description, string question, DateTime votingBeginDate, DateTime votingEndDate)
+    public VotingParameters(MultiLanguageString title, MultiLanguageString description, MultiLanguageString question, DateTime votingBeginDate, DateTime votingEndDate)
     {
       if (title == null)
         throw new ArgumentNullException("title");
@@ -167,9 +167,9 @@ namespace Pirate.PiVote.Crypto
     {
       base.Deserialize(context);
       VotingId = context.ReadGuid();
-      Title = context.ReadString();
-      Description = context.ReadString();
-      Question = context.ReadString();
+      Title = context.ReadMultiLanguageString();
+      Description = context.ReadMultiLanguageString();
+      Question = context.ReadMultiLanguageString();
       this.options = context.ReadObjectList<Option>();
       VotingBeginDate = context.ReadDateTime();
       VotingEndDate = context.ReadDateTime();

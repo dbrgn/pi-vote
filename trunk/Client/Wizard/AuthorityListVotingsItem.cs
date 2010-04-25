@@ -89,7 +89,7 @@ namespace Pirate.PiVote.Client
         {
           foreach (VotingClient.VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
           {
-            ListViewItem item = new ListViewItem(voting.Title);
+            ListViewItem item = new ListViewItem(voting.Title.Text);
             item.SubItems.Add(voting.Status.Text());
             item.SubItems.Add(voting.VoteFrom.ToShortDateString());
             item.SubItems.Add(voting.VoteUntil.ToShortDateString());

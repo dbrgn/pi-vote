@@ -28,9 +28,9 @@ namespace Pirate.PiVote.Rpc
     public class VotingDescriptor
     {
       private readonly Guid id;
-      private readonly string title;
-      private readonly string descripton;
-      private readonly string question;
+      private readonly MultiLanguageString title;
+      private readonly MultiLanguageString descripton;
+      private readonly MultiLanguageString question;
       private readonly VotingStatus status;
       private readonly List<Guid> authoritiesDone;
       private readonly List<OptionDescriptor> options;
@@ -48,17 +48,17 @@ namespace Pirate.PiVote.Rpc
       /// <summary>
       /// Title of the voting.
       /// </summary>
-      public string Title { get { return this.title; } }
+      public MultiLanguageString Title { get { return this.title; } }
 
       /// <summary>
       /// Description of the voting.
       /// </summary>
-      public string Description { get { return this.descripton; } }
+      public MultiLanguageString Description { get { return this.descripton; } }
 
       /// <summary>
       /// Question of the voting.
       /// </summary>
-      public string Question { get { return this.question; } }
+      public MultiLanguageString Question { get { return this.question; } }
       
       /// <summary>
       /// Status of the voting.
@@ -131,18 +131,18 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     public class OptionDescriptor
     {
-      private readonly string text;
-      private readonly string description;
+      private readonly MultiLanguageString text;
+      private readonly MultiLanguageString description;
 
       /// <summary>
       /// Text of the option.
       /// </summary>
-      public string Text { get { return this.text; } }
+      public MultiLanguageString Text { get { return this.text; } }
 
       /// <summary>
       /// Description of the option.
       /// </summary>
-      public string Description { get { return this.description; } }
+      public MultiLanguageString Description { get { return this.description; } }
 
       /// <summary>
       /// Creates a new option decriptor.

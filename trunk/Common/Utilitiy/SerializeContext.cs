@@ -84,6 +84,11 @@ namespace Pirate.PiVote.Serialization
       Write(value.ToByteArray());
     }
 
+    public void Write(MultiLanguageString value)
+    {
+      value.Serialize(this);
+    }
+
     public void Write<TValue>(TValue value)
       where TValue : Serializable
     {

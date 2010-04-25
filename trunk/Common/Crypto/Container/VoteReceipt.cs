@@ -25,7 +25,7 @@ namespace Pirate.PiVote.Crypto
   {
     public Guid VotingId { get; private set; }
 
-    public string VotingTitle { get; private set; }
+    public MultiLanguageString VotingTitle { get; private set; }
 
     public Guid VoterId { get; private set; }
 
@@ -98,7 +98,7 @@ namespace Pirate.PiVote.Crypto
       VotingId = context.ReadGuid();
       VoterId = context.ReadGuid();
       SignedEnvelopeHash = context.ReadBytes();
-      VotingTitle = context.ReadString();
+      VotingTitle = context.ReadMultiLanguageString();
     }
   }
 }

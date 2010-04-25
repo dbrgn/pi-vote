@@ -93,7 +93,7 @@ namespace Pirate.PiVote.Client
 
       Label titleLabel = new Label();
       titleLabel.Font = new Font("Arial", 10, FontStyle.Bold);
-      titleLabel.Text = VotingDescriptor.Title;
+      titleLabel.Text = VotingDescriptor.Title.Text;
       titleLabel.AutoSize = false;
       titleLabel.Top = top;
       titleLabel.Left = 0;
@@ -103,7 +103,7 @@ namespace Pirate.PiVote.Client
 
       Label descriptionLabel = new Label();
       descriptionLabel.Font = new Font("Arial", 10, FontStyle.Regular);
-      descriptionLabel.Text = VotingDescriptor.Description;
+      descriptionLabel.Text = VotingDescriptor.Description.Text;
       descriptionLabel.AutoSize = false;
       descriptionLabel.Top = top;
       descriptionLabel.Left = 0;
@@ -114,7 +114,7 @@ namespace Pirate.PiVote.Client
 
       Label questionLabel = new Label();
       questionLabel.Font = new Font("Arial", 10, FontStyle.Regular);
-      questionLabel.Text = VotingDescriptor.Question;
+      questionLabel.Text = VotingDescriptor.Question.Text;
       questionLabel.AutoSize = false;
       questionLabel.Top = top;
       questionLabel.Left = 0;
@@ -139,7 +139,7 @@ namespace Pirate.PiVote.Client
         {
           CheckBox optionBox = new CheckBox();
           optionBox.Font = new Font("Arial", 10, FontStyle.Regular);
-          optionBox.Text = option.Text;
+          optionBox.Text = option.Text.Text;
           optionBox.AutoSize = false;
           optionBox.Top = top;
           optionBox.Left = 0;
@@ -153,7 +153,7 @@ namespace Pirate.PiVote.Client
         {
           RadioButton optionBox = new RadioButton();
           optionBox.Font = new Font("Arial", 10, FontStyle.Regular);
-          optionBox.Text = option.Text;
+          optionBox.Text = option.Text.Text;
           optionBox.AutoSize = false;
           optionBox.Top = top;
           optionBox.Left = 0;
@@ -166,7 +166,7 @@ namespace Pirate.PiVote.Client
 
         Label optionDescriptionLabel = new Label();
         optionDescriptionLabel.Font = new Font("Arial", 10, FontStyle.Regular);
-        optionDescriptionLabel.Text = option.Description;
+        optionDescriptionLabel.Text = option.Description.Text;
         optionDescriptionLabel.AutoSize = false;
         optionDescriptionLabel.Top = top;
         optionDescriptionLabel.Left = 0;

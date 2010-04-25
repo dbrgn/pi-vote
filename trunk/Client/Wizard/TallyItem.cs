@@ -75,7 +75,7 @@ namespace Pirate.PiVote.Client
       {
         if (this.result != null)
         {
-          ListViewItem title = new ListViewItem(this.result.Title);
+          ListViewItem title = new ListViewItem(this.result.Title.Text);
           this.resultList.Items.Add(title);
 
           ListViewItem totalBallots = new ListViewItem(Resources.TotalBallots);
@@ -92,7 +92,7 @@ namespace Pirate.PiVote.Client
 
           foreach (OptionResult option in this.result.Options)
           {
-            ListViewItem optionBallots = new ListViewItem(option.Text);
+            ListViewItem optionBallots = new ListViewItem(option.Text.Text);
             optionBallots.SubItems.Add(option.Result.ToString());
             this.resultList.Items.Add(optionBallots);
           }

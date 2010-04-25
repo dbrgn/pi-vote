@@ -71,7 +71,7 @@ namespace Pirate.PiVote.Client
       BadShareProof proof = SignedBadShareProof.Value;
 
       this.votingIdTextBox.Text = proof.Parameters.VotingId.ToString();
-      this.votingTitleTextBox.Text = proof.Parameters.Title;
+      this.votingTitleTextBox.Text = proof.Parameters.Title.Text;
 
       this.reportingCertificate.ValidationDate = proof.Parameters.VotingBeginDate;
       this.reportingCertificate.CertificateStorage = proof.CertificateStorage;

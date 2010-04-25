@@ -468,4 +468,10 @@
   <data name="VotingListVoteUntil" xml:space="preserve">
     <value>Bis</value>
   </data>
+  <data name="CreateVotingOptionDescription" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="CreateVotingOptionText" xml:space="preserve">
+    <value>Text</value>
+  </data>
 </root>

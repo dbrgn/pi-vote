@@ -25,19 +25,19 @@ namespace Pirate.PiVote.Crypto
     /// Yes / No / Abstain
     /// Alice Shepard / Bob Miller
     /// </example>
-    public string Text { get; private set; }
+    public MultiLanguageString Text { get; private set; }
 
     /// <summary>
     /// Description of the option.
     /// </summary>
-    public string Description { get; private set; }
+    public MultiLanguageString Description { get; private set; }
 
     /// <summary>
     /// Create a new option.
     /// </summary>
     /// <param name="text">Text of option.</param>
     /// <param name="description">Description of option.</param>
-    public Option(string text, string description)
+    public Option(MultiLanguageString text, MultiLanguageString description)
     {
       if (text == null)
         throw new ArgumentNullException("text");
@@ -74,8 +74,8 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      Text = context.ReadString();
-      Description = context.ReadString();
+      Text = context.ReadMultiLanguageString();
+      Description = context.ReadMultiLanguageString();
     }
   }
 }

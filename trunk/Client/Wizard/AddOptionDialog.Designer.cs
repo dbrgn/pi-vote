@@ -48,8 +48,8 @@ namespace Pirate.PiVote.Client
     private void InitializeComponent()
     {
       this.textLabel = new System.Windows.Forms.Label();
-      this.textTextBox = new System.Windows.Forms.TextBox();
-      this.descriptionTextBox = new System.Windows.Forms.TextBox();
+      this.textTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.descriptionTextBox = new Pirate.PiVote.MultiLanguageTextBox();
       this.descriptionLabel = new System.Windows.Forms.Label();
       this.cancelButton = new System.Windows.Forms.Button();
       this.okButton = new System.Windows.Forms.Button();
@@ -70,8 +70,10 @@ namespace Pirate.PiVote.Client
       this.textTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.textTextBox.Location = new System.Drawing.Point(107, 8);
-      this.textTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.textTextBox.Margin = new System.Windows.Forms.Padding(2);
+      this.textTextBox.Multiline = false;
       this.textTextBox.Name = "textTextBox";
+      this.textTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
       this.textTextBox.Size = new System.Drawing.Size(333, 20);
       this.textTextBox.TabIndex = 1;
       this.textTextBox.TextChanged += new System.EventHandler(this.textTextBox_TextChanged);
@@ -82,7 +84,7 @@ namespace Pirate.PiVote.Client
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.descriptionTextBox.Location = new System.Drawing.Point(107, 32);
-      this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.descriptionTextBox.Multiline = true;
       this.descriptionTextBox.Name = "descriptionTextBox";
       this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -103,7 +105,7 @@ namespace Pirate.PiVote.Client
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.cancelButton.Location = new System.Drawing.Point(360, 104);
-      this.cancelButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(80, 23);
       this.cancelButton.TabIndex = 4;
@@ -116,7 +118,7 @@ namespace Pirate.PiVote.Client
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
       this.okButton.Location = new System.Drawing.Point(276, 104);
-      this.okButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.okButton.Margin = new System.Windows.Forms.Padding(2);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(80, 23);
       this.okButton.TabIndex = 5;
@@ -139,7 +141,7 @@ namespace Pirate.PiVote.Client
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.KeyPreview = true;
-      this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.Margin = new System.Windows.Forms.Padding(2);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "AddOptionDialog";
@@ -154,8 +156,8 @@ namespace Pirate.PiVote.Client
     #endregion
 
     private System.Windows.Forms.Label textLabel;
-    private System.Windows.Forms.TextBox textTextBox;
-    private System.Windows.Forms.TextBox descriptionTextBox;
+    private MultiLanguageTextBox textTextBox;
+    private MultiLanguageTextBox descriptionTextBox;
     private System.Windows.Forms.Label descriptionLabel;
     private System.Windows.Forms.Button cancelButton;
     private System.Windows.Forms.Button okButton;

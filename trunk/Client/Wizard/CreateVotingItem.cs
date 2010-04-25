@@ -152,7 +152,7 @@ namespace Pirate.PiVote.Client
 
       foreach (ListViewItem item in this.optionListView.Items)
       {
-        this.votingParameters.AddOption(new Option(item.Text, item.SubItems[1].Text));
+        this.votingParameters.AddOption((Option)item.Tag);
       }
 
       this.initThread = new Thread(Init);
@@ -240,9 +240,9 @@ namespace Pirate.PiVote.Client
     {
       bool enable = true;
 
-      enable &= !this.titleBox.Text.IsNullOrEmpty();
-      enable &= !this.descriptionBox.Text.IsNullOrEmpty();
-      enable &= !this.questionBox.Text.IsNullOrEmpty();
+      enable &= !this.titleBox.IsEmpty;
+      enable &= !this.descriptionBox.IsEmpty;
+      enable &= !this.questionBox.IsEmpty;
       enable &= this.optionListView.Items.Count >= 2;
       enable &= this.votingFromPicker.Value.Date >= DateTime.Now.Date;
       enable &= this.votingUntilPicker.Value > this.votingFromPicker.Value;
@@ -332,6 +332,8 @@ namespace Pirate.PiVote.Client
       this.votingFromLabel.Text = Resources.CreateVotingOpenFrom;
       this.votingUntilLabel.Text = Resources.CreateVotingOpenUntil;
       this.createButton.Text = Resources.CreateVotingButton;
+      this.textColumnHeader.Text = Resources.CreateVotingOptionText;
+      this.descriptionColumnHeader.Text = Resources.CreateVotingOptionDescription;
     }
 
     private void contextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -347,8 +349,9 @@ namespace Pirate.PiVote.Client
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
-        ListViewItem item = new ListViewItem(dialog.OptionText);
-        item.SubItems.Add(dialog.OptionDescription);
+        ListViewItem item = new ListViewItem(dialog.OptionText.AllLanguages);
+        item.SubItems.Add(dialog.OptionDescription.AllLanguages);
+        item.Tag = new Option(dialog.OptionText, dialog.OptionDescription);
         this.optionListView.Items.Add(item);
         CheckEnable();
       }
