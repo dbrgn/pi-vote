@@ -26,7 +26,7 @@ namespace Pirate.PiVote.Client
     private Exception exception;
     private IDictionary<Guid, VoteReceiptStatus> voteReceiptsStatus;
 
-    public VotingClient.VotingDescriptor VotingDescriptor { get; set; }
+    public VotingDescriptor VotingDescriptor { get; set; }
 
     public IEnumerable<Signed<VoteReceipt>> VoteReceipts { get; set; }
 

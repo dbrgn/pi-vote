@@ -325,7 +325,7 @@ namespace Pirate.PiVote.CliClient
       }
     }
 
-    private void VotingList(IEnumerable<VotingClient.VotingDescriptor> votingList, Exception exception)
+    private void VotingList(IEnumerable<VotingDescriptor> votingList, Exception exception)
     {
       if (votingList == null)
       {

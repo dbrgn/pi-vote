@@ -24,7 +24,7 @@ namespace Pirate.PiVote.Client
   {
     private bool run;
     private Exception exception;
-    private IEnumerable<VotingClient.VotingDescriptor> votings;
+    private IEnumerable<VotingDescriptor> votings;
     private Dictionary<Guid, List<Signed<VoteReceipt>>> voteReceipts;
 
     public ListVotingsItem()
@@ -36,7 +36,7 @@ namespace Pirate.PiVote.Client
     {
         if (this.votingList.SelectedIndices.Count > 0)
         {
-          var votingDescriptor = (VotingClient.VotingDescriptor)this.votingList.SelectedItems[0].Tag;
+          var votingDescriptor = (VotingDescriptor)this.votingList.SelectedItems[0].Tag;
 
           switch (votingDescriptor.Status)
           {
@@ -83,7 +83,7 @@ namespace Pirate.PiVote.Client
       {
         if (this.votingList.SelectedIndices.Count > 0)
         {
-          var votingDescriptor = (VotingClient.VotingDescriptor)this.votingList.SelectedItems[0].Tag;
+          var votingDescriptor = (VotingDescriptor)this.votingList.SelectedItems[0].Tag;
 
           switch (votingDescriptor.Status)
           {
@@ -136,7 +136,7 @@ namespace Pirate.PiVote.Client
             this.voteReceipts[voteReceipt.VotingId].Add(signedVoteReceipt);
           }
 
-          foreach (VotingClient.VotingDescriptor voting in this.votings)
+          foreach (VotingDescriptor voting in this.votings)
           {
             ListViewItem item = new ListViewItem(voting.Title.Text);
             item.SubItems.Add(voting.Status.Text());
@@ -192,7 +192,7 @@ namespace Pirate.PiVote.Client
       }
     }
 
-    private void GetVotingListCompleted(IEnumerable<VotingClient.VotingDescriptor> votingList, Exception exception)
+    private void GetVotingListCompleted(IEnumerable<VotingDescriptor> votingList, Exception exception)
     {
       this.votings = votingList;
       this.exception = exception;

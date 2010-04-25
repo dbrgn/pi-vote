@@ -189,11 +189,29 @@
     <Compile Include="Wizard\TallyItem.designer.cs">
       <DependentUpon>TallyItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wizard\VoteControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\VoteControl.Designer.cs">
+      <DependentUpon>VoteControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Wizard\VoteItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Wizard\VoteItem.designer.cs">
       <DependentUpon>VoteItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\VoteOptionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\VoteOptionControl.Designer.cs">
+      <DependentUpon>VoteOptionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\VoteDescriptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Wizard\VoteDescriptionForm.Designer.cs">
+      <DependentUpon>VoteDescriptionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Wizard\Wizard.cs">
       <SubType>Form</SubType>
@@ -285,8 +303,17 @@
     <EmbeddedResource Include="Wizard\TallyItem.resx">
       <DependentUpon>TallyItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\VoteControl.resx">
+      <DependentUpon>VoteControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Wizard\VoteItem.resx">
       <DependentUpon>VoteItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\VoteOptionControl.resx">
+      <DependentUpon>VoteOptionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\VoteDescriptionForm.resx">
+      <DependentUpon>VoteDescriptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\Wizard.resx">
       <DependentUpon>Wizard.cs</DependentUpon>

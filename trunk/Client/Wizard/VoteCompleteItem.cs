@@ -21,7 +21,7 @@ namespace Pirate.PiVote.Client
 {
   public partial class VoteCompleteItem : WizardItem
   {
-    public VotingClient.VotingDescriptor VotingDescriptor { get; set; }
+    public VotingDescriptor VotingDescriptor { get; set; }
     public List<bool> Vota;
 
     private bool run;

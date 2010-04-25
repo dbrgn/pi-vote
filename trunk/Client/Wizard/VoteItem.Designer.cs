@@ -42,20 +42,33 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
+      this.voteControl = new Pirate.PiVote.Client.VoteControl();
       this.SuspendLayout();
+      // 
+      // voteControl
+      // 
+      this.voteControl.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.voteControl.Location = new System.Drawing.Point(0, 0);
+      this.voteControl.Name = "voteControl";
+      this.voteControl.Size = new System.Drawing.Size(700, 487);
+      this.voteControl.TabIndex = 0;
+      this.voteControl.Voting = null;
       // 
       // VoteItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.Controls.Add(this.voteControl);
+      this.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
       this.Name = "VoteItem";
-      this.Size = new System.Drawing.Size(1050, 730);
+      this.Size = new System.Drawing.Size(700, 487);
       this.ResumeLayout(false);
 
     }
 
     #endregion
+
+    private VoteControl voteControl;
 
 
 

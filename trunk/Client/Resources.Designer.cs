@@ -1033,6 +1033,33 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Description....
+        /// </summary>
+        internal static string VoteDescriptionButton {
+            get {
+                return ResourceManager.GetString("VoteDescriptionButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Close.
+        /// </summary>
+        internal static string VoteDescriptionCloseButton {
+            get {
+                return ResourceManager.GetString("VoteDescriptionCloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        internal static string VoteDescriptionTitle {
+            get {
+                return ResourceManager.GetString("VoteDescriptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Authorities.
         /// </summary>
         internal static string VotingListAuthorities {

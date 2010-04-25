@@ -25,8 +25,8 @@ namespace Pirate.PiVote.Client
     private Exception exception;
     private bool accept;
     private Signed<BadShareProof> signedBadShareProof;
-    private VotingClient.VotingDescriptor votingDescriptor;
-    private IEnumerable<VotingClient.VotingDescriptor> votings;
+    private VotingDescriptor votingDescriptor;
+    private IEnumerable<VotingDescriptor> votings;
 
     public AuthorityListVotingsItem()
     {
@@ -87,7 +87,7 @@ namespace Pirate.PiVote.Client
       {
         if (this.votings != null)
         {
-          foreach (VotingClient.VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
+          foreach (VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
           {
             ListViewItem item = new ListViewItem(voting.Title.Text);
             item.SubItems.Add(voting.Status.Text());
@@ -124,7 +124,7 @@ namespace Pirate.PiVote.Client
       this.votingList.Enabled = true;
     }
 
-    private void GetVotingListCompleted(IEnumerable<VotingClient.VotingDescriptor> votingList, Exception exception)
+    private void GetVotingListCompleted(IEnumerable<VotingDescriptor> votingList, Exception exception)
     {
       this.exception = exception;
       this.votings = votingList;
@@ -136,7 +136,7 @@ namespace Pirate.PiVote.Client
       if (this.votingList.SelectedIndices.Count > 0)
       {
         ListViewItem item = this.votingList.SelectedItems[0];
-        VotingClient.VotingDescriptor voting = (VotingClient.VotingDescriptor)item.Tag;
+        VotingDescriptor voting = (VotingDescriptor)item.Tag;
 
         this.createSharesButton.Enabled = 
           voting.Status == VotingStatus.New && 
@@ -161,7 +161,7 @@ namespace Pirate.PiVote.Client
       if (this.votingList.SelectedIndices.Count > 0)
       {
         ListViewItem item = this.votingList.SelectedItems[0];
-        VotingClient.VotingDescriptor voting = (VotingClient.VotingDescriptor)item.Tag;
+        VotingDescriptor voting = (VotingDescriptor)item.Tag;
 
         string fileName = string.Format("{0}@{1}.pi-auth", Status.Certificate.Id.ToString(), voting.Id.ToString());
         string filePath = Path.Combine(Status.DataPath, fileName);
@@ -203,7 +203,7 @@ namespace Pirate.PiVote.Client
       }
     }
 
-    private void CreateSharesCompleteCallBack(VotingClient.VotingDescriptor votingDescriptor, Exception exception)
+    private void CreateSharesCompleteCallBack(VotingDescriptor votingDescriptor, Exception exception)
     {
       this.exception = exception;
       this.votingDescriptor = votingDescriptor;
@@ -215,7 +215,7 @@ namespace Pirate.PiVote.Client
       if (this.votingList.SelectedIndices.Count > 0)
       {
         ListViewItem item = this.votingList.SelectedItems[0];
-        VotingClient.VotingDescriptor voting = (VotingClient.VotingDescriptor)item.Tag;
+        VotingDescriptor voting = (VotingDescriptor)item.Tag;
 
         string fileName = string.Format("{0}@{1}.pi-auth", Status.Certificate.Id.ToString(), voting.Id.ToString());
         string filePath = Path.Combine(Status.DataPath, fileName);
@@ -274,7 +274,7 @@ namespace Pirate.PiVote.Client
       }
     }
 
-    private void CheckSharesCompleteCallBack(VotingClient.VotingDescriptor votingDescriptor, bool accept, Signed<BadShareProof> signedBadShareProof, Exception exception)
+    private void CheckSharesCompleteCallBack(VotingDescriptor votingDescriptor, bool accept, Signed<BadShareProof> signedBadShareProof, Exception exception)
     {
       this.exception = exception;
       this.votingDescriptor = votingDescriptor;
@@ -288,7 +288,7 @@ namespace Pirate.PiVote.Client
       if (this.votingList.SelectedIndices.Count > 0)
       {
         ListViewItem item = this.votingList.SelectedItems[0];
-        VotingClient.VotingDescriptor voting = (VotingClient.VotingDescriptor)item.Tag;
+        VotingDescriptor voting = (VotingDescriptor)item.Tag;
 
         string fileName = string.Format("{0}@{1}.pi-auth", Status.Certificate.Id.ToString(), voting.Id.ToString());
         string filePath = Path.Combine(Status.DataPath, fileName);
@@ -340,7 +340,7 @@ namespace Pirate.PiVote.Client
       }
     }
 
-    private void CreateDeciphersCompleteCallBack(VotingClient.VotingDescriptor votingDescriptor, Exception exception)
+    private void CreateDeciphersCompleteCallBack(VotingDescriptor votingDescriptor, Exception exception)
     {
       this.exception = exception;
       this.votingDescriptor = votingDescriptor;

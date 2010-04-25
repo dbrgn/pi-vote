@@ -474,4 +474,13 @@
   <data name="CreateVotingOptionText" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="VoteOptionDescriptionButton" xml:space="preserve">
+    <value>&amp;Beschreibung...</value>
+  </data>
+  <data name="VoteOptionDescriptionCloseButton" xml:space="preserve">
+    <value>&amp;Schliessen</value>
+  </data>
+  <data name="VoteOptionDescriptionTitle" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
 </root>
