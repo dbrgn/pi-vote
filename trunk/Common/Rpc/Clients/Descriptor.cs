@@ -107,17 +107,17 @@ namespace Pirate.PiVote.Rpc
       this.id = parameters.VotingId;
       this.title = parameters.Title;
       this.descripton = parameters.Description;
-      this.question = parameters.Question;
+      this.question = parameters.Quest.Question;
       this.status = status;
       this.authoritiesDone = authoritiesDone;
       this.options = new List<OptionDescriptor>();
-      this.maxOptions = parameters.Quest.MaxVota;
+      this.maxOptions = parameters.QB.MaxVota;
       this.voteFrom = parameters.VotingBeginDate;
       this.voteUntil = parameters.VotingEndDate;
-      this.authorityCount = status == VotingStatus.Deciphering ? parameters.Voting.Thereshold + 1 : parameters.Voting.AuthorityCount;
+      this.authorityCount = status == VotingStatus.Deciphering ? parameters.QV.Thereshold + 1 : parameters.QV.AuthorityCount;
       this.envelopeCount = envelopeCount;
 
-      parameters.Options.Foreach(option => this.options.Add(new OptionDescriptor(option)));
+      parameters.Quest.Options.Foreach(option => this.options.Add(new OptionDescriptor(option)));
     }
   }
 

@@ -64,7 +64,7 @@ namespace Pirate.PiVote.Crypto
 
       if (vota == null)
         throw new ArgumentNullException("vota");
-      if (vota.Count() != this.parameters.Quest.OptionCount)
+      if (vota.Count() != this.parameters.QB.OptionCount)
         throw new ArgumentException("Bad vota count.");
       if (!vota.All(votum => votum.InRange(0, 1)))
         throw new ArgumentException("Votum out of range.");

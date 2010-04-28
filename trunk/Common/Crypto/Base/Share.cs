@@ -79,7 +79,7 @@ namespace Pirate.PiVote.Crypto
       if (verificationValues
         .Any(verificationValueList => verificationValueList == null))
         throw new ArgumentException("No verification value can be null.");
-      if (verificationValues.Count != parameters.Voting.Thereshold + 1)
+      if (verificationValues.Count != parameters.QV.Thereshold + 1)
         throw new ArgumentException("Bad verificaton value count.");
 
       if (DestinationAuthorityIndex != authorityIndex)
@@ -87,7 +87,7 @@ namespace Pirate.PiVote.Crypto
 
       BigInt GtoS = parameters.Crypto.G.PowerMod(Value, parameters.Crypto.P);
       BigInt aProduct = new BigInt(1);
-      for (int k = 0; k <= parameters.Voting.Thereshold; k++)
+      for (int k = 0; k <= parameters.QV.Thereshold; k++)
       {
         VerificationValue verificationValue = verificationValues[k];
         if (verificationValue.SourceAuthorityIndex != SourceAuthorityIndex)

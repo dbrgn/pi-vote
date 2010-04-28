@@ -108,7 +108,7 @@ namespace Pirate.PiVote.Crypto
       this.votingId = votingId;
       this.title = votingParameters.Title;
       this.description = votingParameters.Description;
-      this.question = votingParameters.Question;
+      this.question = votingParameters.Quest.Question;
       this.options = new List<OptionResult>();
       this.voters = new List<EnvelopeResult>();
     }

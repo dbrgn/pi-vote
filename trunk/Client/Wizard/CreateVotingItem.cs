@@ -25,8 +25,8 @@ namespace Pirate.PiVote.Client
     private bool run;
     private Exception exception;
     private Thread initThread;
-    private VotingParameters votingParameters;
     private List<AuthorityCertificate> authorityCertificates;
+    private CryptoParameters cryptoParameters;
 
     public CreateVotingItem()
     {
@@ -142,19 +142,6 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
       SetEnable(false);
 
-      this.votingParameters =
-        new VotingParameters(
-        this.titleBox.Text,
-        this.descriptionBox.Text,
-        this.questionBox.Text,
-        this.votingFromPicker.Value.Date,
-        this.votingUntilPicker.Value.Date);
-
-      foreach (ListViewItem item in this.optionListView.Items)
-      {
-        this.votingParameters.AddOption((Option)item.Tag);
-      }
-
       this.initThread = new Thread(Init);
       this.initThread.Start();
 
@@ -178,6 +165,21 @@ namespace Pirate.PiVote.Client
       this.run = true;
       Status.SetProgress(Resources.CreateVotingCreating, 0d);
       Application.DoEvents();
+
+      VotingParameters votingParameters =
+        new VotingParameters(
+          this.cryptoParameters,
+          new QuestionParameters(this.questionBox.Text, Convert.ToInt32(this.optionNumberUpDown.Value)),
+          new VotingBaseParameters(VotingBaseParameters.StandardThereshold, VotingBaseParameters.StandardAuthorityCount, VotingBaseParameters.StandardProofCount),
+          this.titleBox.Text,
+          this.descriptionBox.Text,
+          this.votingFromPicker.Value.Date,
+          this.votingUntilPicker.Value.Date);
+
+      foreach (ListViewItem item in this.optionListView.Items)
+      {
+        votingParameters.Quest.AddOption((Option)item.Tag);
+      }
 
       Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);
       List<AuthorityCertificate> authorities = new List<AuthorityCertificate>();
@@ -217,7 +219,7 @@ namespace Pirate.PiVote.Client
 
     private void Init()
     {
-      this.votingParameters.Initialize(Convert.ToInt32(this.optionNumberUpDown.Value));
+      this.cryptoParameters = CryptoParameters.Generate(CryptoParameters.PrimeBits);
       this.run = false;
     }
 

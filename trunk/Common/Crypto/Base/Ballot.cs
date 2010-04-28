@@ -43,11 +43,11 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("parameters");
       if (publicKey == null)
         throw new ArgumentNullException("publicKey");
-      if (vota.Count() != parameters.Quest.OptionCount)
+      if (vota.Count() != parameters.QB.OptionCount)
         throw new ArgumentException("Bad vota.");
       if (!vota.All(votum => votum.InRange(0, 1)))
         throw new ArgumentException("Bad vota.");
-      if (vota.Sum() != parameters.Quest.MaxVota)
+      if (vota.Sum() != parameters.QB.MaxVota)
         throw new ArgumentException("Bad vota.");
 
       Votes = new List<Vote>();
@@ -65,7 +65,7 @@ namespace Pirate.PiVote.Crypto
 
       SumProves = new List<Proof>();
 
-      for (int proofIndex = 0; proofIndex < parameters.Voting.ProofCount; proofIndex++)
+      for (int proofIndex = 0; proofIndex < parameters.QV.ProofCount; proofIndex++)
       {
         SumProves.Add(new Proof(nonceSum * 12, voteSum, publicKey, parameters));
       }
@@ -96,7 +96,7 @@ namespace Pirate.PiVote.Crypto
         voteSum = voteSum == null ? vote : voteSum + vote;
       }
 
-      verifies &= SumProves.Count == parameters.Voting.ProofCount;
+      verifies &= SumProves.Count == parameters.QV.ProofCount;
       verifies &= SumProves.All(sumProof => sumProof.Verify(voteSum, publicKey, parameters));
 
       return verifies;

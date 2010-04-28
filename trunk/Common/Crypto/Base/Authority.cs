@@ -56,7 +56,7 @@ namespace Pirate.PiVote.Crypto
     {
       if (parameters == null)
         throw new ArgumentNullException("parameters");
-      if (!index.InRange(1, parameters.Voting.AuthorityCount))
+      if (!index.InRange(1, parameters.QV.AuthorityCount))
         throw new ArgumentException("Index must be in range 1..AuthorityCount.");
 
       Index = index;
@@ -99,7 +99,7 @@ namespace Pirate.PiVote.Crypto
 
       this.polynomial = new Polynomial();
 
-      while (this.polynomial.Degree < this.parameters.Voting.Thereshold)
+      while (this.polynomial.Degree < this.parameters.QV.Thereshold)
       {
         this.polynomial.AddCoefficient(this.parameters.Crypto.Random());
       }
@@ -146,7 +146,7 @@ namespace Pirate.PiVote.Crypto
     /// <returns>A share of the secret.</returns>
     public Share Share(int authorithyIndex)
     {
-      if (!authorithyIndex.InRange(1, parameters.Voting.AuthorityCount))
+      if (!authorithyIndex.InRange(1, parameters.QV.AuthorityCount))
         throw new ArgumentException("Authority index must be in range 1..AuthorityCount.");
 
       BigInt value = this.polynomial.Evaluate(new BigInt(authorithyIndex));
@@ -166,7 +166,7 @@ namespace Pirate.PiVote.Crypto
     {
       if (vote == null)
         throw new ArgumentNullException("vote");
-      if (!optionIndex.InRange(0, parameters.Quest.OptionCount - 1))
+      if (!optionIndex.InRange(0, parameters.QB.OptionCount - 1))
         throw new ArgumentException("Option index must be in range 0..OptionCount-1.");
 
       List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
@@ -260,7 +260,7 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("shares");
       if (shares.Any(share => share == null))
         throw new ArgumentException("No share can be null.");
-      if (shares.Count != this.parameters.Voting.AuthorityCount)
+      if (shares.Count != this.parameters.QV.AuthorityCount)
         throw new ArgumentException("Bad share count.");
 
       if (verificationValues == null)
@@ -269,9 +269,9 @@ namespace Pirate.PiVote.Crypto
         .Any(verificationValueList => verificationValueList == null ||
           verificationValues.Any(verificationValue => verificationValue == null)))
         throw new ArgumentException("No verification value can be null.");
-      if (verificationValues.Count != this.parameters.Voting.AuthorityCount)
+      if (verificationValues.Count != this.parameters.QV.AuthorityCount)
         throw new ArgumentException("Bad verifcation value list count.");
-      if (verificationValues.Any(verificationValueList => verificationValueList.Count != this.parameters.Voting.Thereshold + 1))
+      if (verificationValues.Any(verificationValueList => verificationValueList.Count != this.parameters.QV.Thereshold + 1))
         throw new ArgumentException("Bad verificaton value count.");
 
       for (int shareIndex = 0; shareIndex < shares.Count; shareIndex++)

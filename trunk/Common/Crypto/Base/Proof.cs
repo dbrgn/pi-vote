@@ -90,7 +90,7 @@ namespace Pirate.PiVote.Crypto
         return false;
 
       if (publicKey.PowerMod(S0, parameters.Crypto.P) !=
-        (T0 * vote.Ciphertext.DivideMod(parameters.Crypto.F.PowerMod(parameters.Quest.MaxVota, parameters.Crypto.P), parameters.Crypto.P).PowerMod(C0, parameters.Crypto.P)).Mod(parameters.Crypto.P))
+        (T0 * vote.Ciphertext.DivideMod(parameters.Crypto.F.PowerMod(parameters.QB.MaxVota, parameters.Crypto.P), parameters.Crypto.P).PowerMod(C0, parameters.Crypto.P)).Mod(parameters.Crypto.P))
         return false;
 
       return true;

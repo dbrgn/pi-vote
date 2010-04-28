@@ -15,37 +15,61 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
-  public class BaseParameters : Serializable
+  public abstract class BaseParameters : Serializable
   {
     public CryptoParameters Crypto { get; private set; }
 
-    public QuestionBaseParameters Quest { get; private set; }
+    public abstract QuestionBaseParameters QB { get; }
 
-    public VotingBaseParameters Voting { get; private set; }
+    public abstract VotingBaseParameters QV { get; }
 
-    public BaseParameters()
-    {
-    }
-    
-    /// <summary>
-    /// Initializes the crypto part of the parameters.
-    /// </summary>
-    /// <remarks>
-    /// Prime must be lower than safePrime.
-    /// </remarks>
-    /// <param name="prime">Prime number p for group Zp*.</param>
-    /// <param name="safePrime">Safe prime for q.</param>
-    /// <param name="thereshold">Maximal tolerable number of compromised authorities.</param>
-    /// <param name="authorityCount">Number of authorities.</param>
-    /// <param name="optionCount">Number of options.</param>
-    /// <param name="maxVota">Maximum number of votes castable by a voter.</param>
-    /// <param name="proofCount">Number of proof required to proof each fact.</param>
-    public void InitilizeCrypto(
-      CryptoParameters crypto,
-      QuestionBaseParameters quest,
-      VotingBaseParameters voting)
+    public BaseParameters(CryptoParameters crypto)
     {
       Crypto = crypto;
+    }
+
+    public BaseParameters(DeserializeContext context)
+      : base(context)
+    { }
+
+    public override void Serialize(SerializeContext context)
+    {
+      base.Serialize(context);
+      context.Write(Crypto);
+    }
+
+    protected override void Deserialize(DeserializeContext context)
+    {
+      base.Deserialize(context);
+      Crypto = context.ReadObject<CryptoParameters>();
+    }
+  }
+
+  public class BaseParameters<TQuestionBaseParameters, TVotingBaseParameters> 
+    : BaseParameters
+    where TQuestionBaseParameters : QuestionBaseParameters
+    where TVotingBaseParameters : VotingBaseParameters
+  {
+    public TQuestionBaseParameters Quest { get; private set; }
+
+    public TVotingBaseParameters Voting { get; private set; }
+
+    public override QuestionBaseParameters QB
+    {
+      get { return Quest; }
+    }
+
+    public override VotingBaseParameters QV
+    {
+      get { return Voting; }
+    }
+
+    public BaseParameters(
+      CryptoParameters crypto,
+      TQuestionBaseParameters quest,
+      TVotingBaseParameters voting)
+      : base(crypto)
+    {
       Quest = quest;
       Voting = voting;
     }
@@ -57,7 +81,6 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(Crypto);
       context.Write(Quest);
       context.Write(Voting);
     }
@@ -65,14 +88,17 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      Crypto = context.ReadObject<CryptoParameters>();
-      Quest = context.ReadObject<QuestionBaseParameters>();
-      Voting = context.ReadObject<VotingBaseParameters>();
+      Quest = context.ReadObject<TQuestionBaseParameters>();
+      Voting = context.ReadObject<TVotingBaseParameters>();
     }
   }
 
   public class VotingBaseParameters : Serializable
   {
+    public const int StandardAuthorityCount = 5;
+    public const int StandardThereshold = 3;
+    public const int StandardProofCount = 40;
+
     /// <summary>
     /// Number of adversaries that can be tolerated.
     /// </summary>
@@ -124,7 +150,7 @@ namespace Pirate.PiVote.Crypto
     }
   }
 
-  public class QuestionBaseParameters : Serializable
+  public abstract class QuestionBaseParameters : Serializable
   {
     /// <summary>
     /// Number of vota each voter may cast.
@@ -134,18 +160,11 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Number of voting options or candidates.
     /// </summary>
-    public int OptionCount { get; private set; }
+    public abstract int OptionCount { get; }
 
     public QuestionBaseParameters(
-      int optionCount,
       int maxVota)
     {
-      if (optionCount < 2)
-        throw new ArgumentException("Option count must be at least 2.");
-      if (!maxVota.InRange(1, optionCount))
-        throw new ArgumentException("Maximum vota number must be in range from 1 to optionCount.");
-
-      OptionCount = optionCount;
       MaxVota = maxVota;
     }
 
@@ -157,19 +176,19 @@ namespace Pirate.PiVote.Crypto
     {
       base.Serialize(context);
       context.Write(MaxVota);
-      context.Write(OptionCount);
     }
 
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
       MaxVota = context.ReadInt32();
-      OptionCount = context.ReadInt32();
     }
   }
 
   public class CryptoParameters : Serializable
   {
+    public const int PrimeBits = 1024;
+
     /// <summary>
     /// Prime
     /// </summary>
@@ -250,6 +269,19 @@ namespace Pirate.PiVote.Crypto
       Q = context.ReadBigInt();
       G = context.ReadBigInt();
       F = context.ReadBigInt();
+    }
+
+    public static CryptoParameters Generate(int primeBits)
+    {
+      BigInt prime = null;
+      BigInt safePrime = null;
+
+      DateTime start = DateTime.Now;
+      Prime.FindPrimeAndSafePrimeThreaded(primeBits, out prime, out safePrime);
+      System.Diagnostics.Debug.WriteLine("Found safe prime after " + DateTime.Now.Subtract(start).ToString());
+      //Prime.FindPrimeAndSafePrime(PrimeBits, out prime, out safePrime);
+
+      return new CryptoParameters(prime, safePrime);
     }
   }
 }

@@ -68,7 +68,7 @@ namespace Pirate.PiVote.Crypto
       Ciphertext = (publicKey.PowerMod(nonce * 12, P) * parameters.Crypto.F.PowerMod(votum, P)).Mod(P);
 
       this.RangeProves = new List<RangeProof>();
-      for (int proofIndex = 0; proofIndex < parameters.Voting.ProofCount; proofIndex++)
+      for (int proofIndex = 0; proofIndex < parameters.QV.ProofCount; proofIndex++)
       {
         this.RangeProves.Add(new RangeProof(votum, nonce * 12, this, publicKey, parameters));
       }
@@ -133,7 +133,7 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("partialDeciphers");
       if (parameters == null)
         throw new ArgumentNullException("parameters");
-      if (partialDeciphers.Count() != parameters.Voting.Thereshold + 1)
+      if (partialDeciphers.Count() != parameters.QV.Thereshold + 1)
         throw new ArgumentException("Wrong number of partial deciphers.");
 
       BigInt votePower = Ciphertext;
@@ -190,7 +190,7 @@ namespace Pirate.PiVote.Crypto
 
       bool verifies = true;
 
-      verifies &= RangeProves.Count == parameters.Voting.ProofCount;
+      verifies &= RangeProves.Count == parameters.QV.ProofCount;
       verifies &= RangeProves.All(proof => proof.Verify(this, publicKey, parameters));
 
       return verifies;

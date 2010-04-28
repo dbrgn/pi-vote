@@ -85,7 +85,7 @@ namespace Pirate.PiVote.Crypto
       this.certificateStorage = certificateStorage;
       this.publicKey = publicKey;
 
-      this.voteSums = new Vote[this.parameters.Quest.OptionCount];
+      this.voteSums = new Vote[this.parameters.QB.OptionCount];
       this.result = new VotingResult(this.parameters.VotingId, this.parameters);
       this.partialDeciphers = new List<PartialDecipher>();
       this.countedVoters = new List<Guid>();
@@ -145,7 +145,7 @@ namespace Pirate.PiVote.Crypto
 
         if (acceptVote)
         {
-          for (int optionIndex = 0; optionIndex < this.parameters.Quest.OptionCount; optionIndex++)
+          for (int optionIndex = 0; optionIndex < this.parameters.QB.OptionCount; optionIndex++)
           {
             this.voteSums[optionIndex] =
               this.voteSums[optionIndex] == null ?
@@ -198,20 +198,20 @@ namespace Pirate.PiVote.Crypto
       {
         List<int> results = new List<int>();
 
-        for (int optionIndex = 0; optionIndex < this.parameters.Quest.OptionCount; optionIndex++)
+        for (int optionIndex = 0; optionIndex < this.parameters.QB.OptionCount; optionIndex++)
         {
           List<int> optionResults = new List<int>();
 
-          for (int groupIndex = 1; groupIndex < this.parameters.Voting.AuthorityCount; groupIndex++)
+          for (int groupIndex = 1; groupIndex < this.parameters.QV.AuthorityCount; groupIndex++)
           {
             IEnumerable<BigInt> partialDeciphersByOptionAndGroup = this.partialDeciphers
               .Where(partialDecipher => partialDecipher.GroupIndex == groupIndex && partialDecipher.OptionIndex == optionIndex)
               .Select(partialDecipher => partialDecipher.Value);
-            if (partialDeciphersByOptionAndGroup.Count() == this.parameters.Voting.Thereshold + 1)
+            if (partialDeciphersByOptionAndGroup.Count() == this.parameters.QV.Thereshold + 1)
               optionResults.Add(this.voteSums[optionIndex].Decrypt(partialDeciphersByOptionAndGroup, parameters));
           }
 
-          Option option = this.parameters.Options.ElementAt(optionIndex);
+          Option option = this.parameters.Quest.Options.ElementAt(optionIndex);
 
           if (optionResults.Count > 0)
           {

@@ -161,14 +161,14 @@ namespace Pirate.PiVote.Rpc
 
           Progress = 0.8d;
           Text = LibraryResources.ClientGetResultFetchPartialDeciphers;
-          SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, 0, parameters.Voting.AuthorityCount);
+          SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, 0, parameters.QV.AuthorityCount);
           SubProgress = 0d;
 
           fetcher.Join();
           this.workerRun = false;
           workers.ForEach(worker => worker.Join());
 
-          for (int authorityIndex = 1; authorityIndex < parameters.Voting.AuthorityCount + 1; authorityIndex++)
+          for (int authorityIndex = 1; authorityIndex < parameters.QV.AuthorityCount + 1; authorityIndex++)
           {
             var partialDecipher = client.proxy.FetchPartialDecipher(votingId, authorityIndex);
 
@@ -177,8 +177,8 @@ namespace Pirate.PiVote.Rpc
               client.voterEntity.TallyAddPartialDecipher(partialDecipher);
             }
 
-            SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, authorityIndex, parameters.Voting.AuthorityCount);
-            SubProgress = 1d / (double)parameters.Voting.AuthorityCount * (double)(authorityIndex);
+            SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, authorityIndex, parameters.QV.AuthorityCount);
+            SubProgress = 1d / (double)parameters.QV.AuthorityCount * (double)(authorityIndex);
           }
 
           Progress = 0.9d;
