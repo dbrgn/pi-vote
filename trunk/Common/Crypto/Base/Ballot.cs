@@ -35,7 +35,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="vota">Vota the voter wishes to cast for each option.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <param name="publicKey">Public key of voting authorities.</param>
-    public Ballot(IEnumerable<int> vota, Parameters parameters, BigInt publicKey)
+    public Ballot(IEnumerable<int> vota, BaseParameters parameters, BigInt publicKey)
     {
       if (vota == null)
         throw new ArgumentNullException("vota");
@@ -43,11 +43,11 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("parameters");
       if (publicKey == null)
         throw new ArgumentNullException("publicKey");
-      if (vota.Count() != parameters.OptionCount)
+      if (vota.Count() != parameters.Quest.OptionCount)
         throw new ArgumentException("Bad vota.");
       if (!vota.All(votum => votum.InRange(0, 1)))
         throw new ArgumentException("Bad vota.");
-      if (vota.Sum() != parameters.MaxVota)
+      if (vota.Sum() != parameters.Quest.MaxVota)
         throw new ArgumentException("Bad vota.");
 
       Votes = new List<Vote>();
@@ -56,7 +56,7 @@ namespace Pirate.PiVote.Crypto
 
       foreach (int votum in vota)
       {
-        BigInt nonce = parameters.Random();
+        BigInt nonce = parameters.Crypto.Random();
         nonceSum += nonce;
         Vote vote = new Vote(votum, nonce, parameters, publicKey);
         voteSum = voteSum == null ? vote : voteSum + vote;
@@ -65,7 +65,7 @@ namespace Pirate.PiVote.Crypto
 
       SumProves = new List<Proof>();
 
-      for (int proofIndex = 0; proofIndex < parameters.ProofCount; proofIndex++)
+      for (int proofIndex = 0; proofIndex < parameters.Voting.ProofCount; proofIndex++)
       {
         SumProves.Add(new Proof(nonceSum * 12, voteSum, publicKey, parameters));
       }
@@ -80,7 +80,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="publicKey">Public key of the authorities.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <returns>Result of the verification.</returns>
-    public bool Verify(BigInt publicKey, Parameters parameters)
+    public bool Verify(BigInt publicKey, BaseParameters parameters)
     {
       if (publicKey == null)
         throw new ArgumentNullException("publicKey");
@@ -96,7 +96,7 @@ namespace Pirate.PiVote.Crypto
         voteSum = voteSum == null ? vote : voteSum + vote;
       }
 
-      verifies &= SumProves.Count == parameters.ProofCount;
+      verifies &= SumProves.Count == parameters.Voting.ProofCount;
       verifies &= SumProves.All(sumProof => sumProof.Verify(voteSum, publicKey, parameters));
 
       return verifies;

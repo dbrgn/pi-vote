@@ -64,7 +64,7 @@ namespace Pirate.PiVote.Crypto
 
       if (vota == null)
         throw new ArgumentNullException("vota");
-      if (vota.Count() != this.parameters.OptionCount)
+      if (vota.Count() != this.parameters.Quest.OptionCount)
         throw new ArgumentException("Bad vota count.");
       if (!vota.All(votum => votum.InRange(0, 1)))
         throw new ArgumentException("Votum out of range.");
@@ -108,7 +108,7 @@ namespace Pirate.PiVote.Crypto
         foreach (Signed<ShareResponse> signedShareResponse in votingMaterial.PublicKeyParts)
         {
           ShareResponse shareResponse = signedShareResponse.Value;
-          this.publicKey = (this.publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.P);
+          this.publicKey = (this.publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.Crypto.P);
         }
       }
 

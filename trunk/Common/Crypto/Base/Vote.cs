@@ -49,7 +49,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="votum">Actual vote.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <param name="publicKey">Public key of the authorities.</param>
-    public Vote(int votum, BigInt nonce, Parameters parameters, BigInt publicKey)
+    public Vote(int votum, BigInt nonce, BaseParameters parameters, BigInt publicKey)
     {
       if (!votum.InRange(0, 1))
         throw new ArgumentException("Bad votum.");
@@ -60,15 +60,15 @@ namespace Pirate.PiVote.Crypto
       if (publicKey == null)
         throw new ArgumentNullException("publicKey");
 
-      P = parameters.P;
-      HalfKey = parameters.G.PowerMod(nonce, P);
+      P = parameters.Crypto.P;
+      HalfKey = parameters.Crypto.G.PowerMod(nonce, P);
 
       //The 12 magic number is inserted to avoid division remainders when
       //dividing partial deciphers for linear combinations by 2, 3 and 4.
-      Ciphertext = (publicKey.PowerMod(nonce * 12, P) * parameters.F.PowerMod(votum, P)).Mod(P);
+      Ciphertext = (publicKey.PowerMod(nonce * 12, P) * parameters.Crypto.F.PowerMod(votum, P)).Mod(P);
 
       this.RangeProves = new List<RangeProof>();
-      for (int proofIndex = 0; proofIndex < parameters.ProofCount; proofIndex++)
+      for (int proofIndex = 0; proofIndex < parameters.Voting.ProofCount; proofIndex++)
       {
         this.RangeProves.Add(new RangeProof(votum, nonce * 12, this, publicKey, parameters));
       }
@@ -127,13 +127,13 @@ namespace Pirate.PiVote.Crypto
     /// <param name="partialDeciphers">Partial deciphers from t+1 authorities.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <returns>Result of the vote.</returns>
-    public int Decrypt(IEnumerable<BigInt> partialDeciphers, Parameters parameters)
+    public int Decrypt(IEnumerable<BigInt> partialDeciphers, BaseParameters parameters)
     {
       if (partialDeciphers == null)
         throw new ArgumentNullException("partialDeciphers");
       if (parameters == null)
-        throw new ArgumentNullException("parameters"); 
-      if (partialDeciphers.Count() != parameters.Thereshold + 1)
+        throw new ArgumentNullException("parameters");
+      if (partialDeciphers.Count() != parameters.Voting.Thereshold + 1)
         throw new ArgumentException("Wrong number of partial deciphers.");
 
       BigInt votePower = Ciphertext;
@@ -148,7 +148,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="votePower">Vote value equal to F^vote.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <returns>Result of the vote.</returns>
-    private static int Result(BigInt votePower, Parameters parameters)
+    private static int Result(BigInt votePower, BaseParameters parameters)
     {
       if (votePower == null)
         throw new ArgumentNullException("votePower");
@@ -156,7 +156,7 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("parameters");
       
       int sumOfVotes = 0;
-      while (parameters.F.PowerMod(new BigInt(sumOfVotes), parameters.P) != votePower)
+      while (parameters.Crypto.F.PowerMod(new BigInt(sumOfVotes), parameters.Crypto.P) != votePower)
       {
         sumOfVotes++;
         if (sumOfVotes > 10000)
@@ -181,7 +181,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="publicKey">Public key to verify against.</param>
     /// <param name="parameters">Cryptographic Parameters.</param>
     /// <returns>All proves are valid.</returns>
-    public bool Verify(BigInt publicKey, Parameters parameters)
+    public bool Verify(BigInt publicKey, BaseParameters parameters)
     {
       if (publicKey == null)
         throw new ArgumentNullException("publicKey");
@@ -190,7 +190,7 @@ namespace Pirate.PiVote.Crypto
 
       bool verifies = true;
 
-      verifies &= RangeProves.Count == parameters.ProofCount;
+      verifies &= RangeProves.Count == parameters.Voting.ProofCount;
       verifies &= RangeProves.All(proof => proof.Verify(this, publicKey, parameters));
 
       return verifies;

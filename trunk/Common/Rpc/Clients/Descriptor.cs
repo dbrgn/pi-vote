@@ -111,10 +111,10 @@ namespace Pirate.PiVote.Rpc
       this.status = status;
       this.authoritiesDone = authoritiesDone;
       this.options = new List<OptionDescriptor>();
-      this.maxOptions = parameters.MaxVota;
+      this.maxOptions = parameters.Quest.MaxVota;
       this.voteFrom = parameters.VotingBeginDate;
       this.voteUntil = parameters.VotingEndDate;
-      this.authorityCount = status == VotingStatus.Deciphering ? parameters.Thereshold + 1 : parameters.AuthorityCount;
+      this.authorityCount = status == VotingStatus.Deciphering ? parameters.Voting.Thereshold + 1 : parameters.Voting.AuthorityCount;
       this.envelopeCount = envelopeCount;
 
       parameters.Options.Foreach(option => this.options.Add(new OptionDescriptor(option)));

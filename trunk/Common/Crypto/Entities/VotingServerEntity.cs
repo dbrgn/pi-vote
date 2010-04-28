@@ -243,7 +243,7 @@ namespace Pirate.PiVote.Crypto
 
       MySqlCommand countCommand = new MySqlCommand("SELECT count(*) FROM authority WHERE VotingId = @VotingId", this.dbConnection, transaction);
       countCommand.Add("@VotingId", this.parameters.VotingId.ToByteArray());
-      if ((long)countCommand.ExecuteScalar() >= this.parameters.AuthorityCount)
+      if ((long)countCommand.ExecuteScalar() >= this.parameters.Voting.AuthorityCount)
         throw new PiArgumentException(ExceptionCode.AlreadyEnoughAuthorities, "Already enough authorities.");
 
       MySqlCommand addedCommand = new MySqlCommand("SELECT count(*) FROM authority WHERE VotingId = @VotingId AND AuthorityId = @AuthorityId", this.dbConnection, transaction);
@@ -362,7 +362,7 @@ namespace Pirate.PiVote.Crypto
         "SELECT count(*) FROM sharepart WHERE VotingId = @VotingId",
         "@VotingId", Id.ToByteArray());
 
-      if (depositedSharePartCount == this.parameters.AuthorityCount)
+      if (depositedSharePartCount == this.parameters.Voting.AuthorityCount)
       {
         Status = VotingStatus.Sharing;
       }
@@ -438,7 +438,7 @@ namespace Pirate.PiVote.Crypto
         "SELECT count(*) FROM shareresponse WHERE VotingId = @VotingId",
         "@VotingId", Id.ToByteArray());
 
-      if (depositedShareResponseCount == this.parameters.AuthorityCount)
+      if (depositedShareResponseCount == this.parameters.Voting.AuthorityCount)
       {
         Status = VotingStatus.Ready;
       }
@@ -575,7 +575,7 @@ namespace Pirate.PiVote.Crypto
         "SELECT count(*) FROM deciphers WHERE VotingId = @VotingId",
         "@VotingId", Id.ToByteArray());
 
-      if (depositedShareResponseCount == this.parameters.Thereshold + 1)
+      if (depositedShareResponseCount == this.parameters.Voting.Thereshold + 1)
       {
         Status = VotingStatus.Finished;
       }

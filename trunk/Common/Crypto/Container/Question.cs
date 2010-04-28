@@ -17,7 +17,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Contains all parameters of a voting.
   /// </summary>
-  public class VotingParameters : BaseParameters
+  public class Question : Parameters
   {
     private const int StandardAuthorityCount = 5;
     private const int StandardThereshold = 3;
@@ -47,7 +47,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Question of this voting.
     /// </summary>
-    public MultiLanguageString Question { get; private set; }
+    public MultiLanguageString Text { get; private set; }
 
     /// <summary>
     /// Date at which voting begins.
@@ -70,19 +70,19 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new voting.
     /// </summary>
-    public VotingParameters(MultiLanguageString title, MultiLanguageString description, MultiLanguageString question, DateTime votingBeginDate, DateTime votingEndDate)
+    public Question(MultiLanguageString title, MultiLanguageString description, MultiLanguageString text, DateTime votingBeginDate, DateTime votingEndDate)
     {
       if (title == null)
         throw new ArgumentNullException("title");
       if (description == null)
         throw new ArgumentNullException("description");
-      if (question == null)
+      if (text == null)
         throw new ArgumentNullException("question");
 
       VotingId = Guid.NewGuid();
       Title = title;
       Description = description;
-      Question = question;
+      Text = text;
       VotingBeginDate = votingBeginDate;
       VotingEndDate = votingEndDate;
       this.options = new List<Option>();
@@ -99,7 +99,7 @@ namespace Pirate.PiVote.Crypto
     {
       if (option == null)
         throw new ArgumentNullException("option");
-      if (Crypto != null)
+      if (P != null)
         throw new InvalidOperationException("Already initialized.");
 
       this.options.Add(option);
@@ -114,7 +114,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="votesPerVoter">How many votes does each voter have?</param>
     public void Initialize(int votesPerVoter)
     {
-      if (Crypto != null)
+      if (P != null)
         throw new InvalidOperationException("Already initialized.");
 
       BigInt prime = null;
@@ -126,16 +126,20 @@ namespace Pirate.PiVote.Crypto
       //Prime.FindPrimeAndSafePrime(PrimeBits, out prime, out safePrime);
 
       InitilizeCrypto(
-        new CryptoParameters(prime, safePrime),
-        new QuestionBaseParameters(Options.Count(), votesPerVoter),
-        new VotingBaseParameters(StandardThereshold, StandardAuthorityCount, StandardProofCount));
+        prime,
+        safePrime,
+        StandardThereshold,
+        StandardAuthorityCount,
+        Options.Count(),
+        votesPerVoter,
+        StandardProofCount);
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public VotingParameters(DeserializeContext context)
+    public Question(DeserializeContext context)
       : base(context)
     { }
 
@@ -149,7 +153,7 @@ namespace Pirate.PiVote.Crypto
       context.Write(VotingId);
       context.Write(Title);
       context.Write(Description);
-      context.Write(Question);
+      context.Write(Text);
       context.WriteList(Options);
       context.Write(VotingBeginDate);
       context.Write(VotingEndDate);
@@ -165,7 +169,7 @@ namespace Pirate.PiVote.Crypto
       VotingId = context.ReadGuid();
       Title = context.ReadMultiLanguageString();
       Description = context.ReadMultiLanguageString();
-      Question = context.ReadMultiLanguageString();
+      Text = context.ReadMultiLanguageString();
       this.options = context.ReadObjectList<Option>();
       VotingBeginDate = context.ReadDateTime();
       VotingEndDate = context.ReadDateTime();

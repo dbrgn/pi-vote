@@ -203,7 +203,7 @@ namespace Pirate.PiVote.Crypto
         v1.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
       }
 
-      for (int authorityIndex = 1; authorityIndex < vs.Parameters.AuthorityCount + 1; authorityIndex++)
+      for (int authorityIndex = 1; authorityIndex < vs.Parameters.Voting.AuthorityCount + 1; authorityIndex++)
       {
         v1.TallyAddPartialDecipher(vs.GetPartialDecipher(authorityIndex));
       }
@@ -225,11 +225,11 @@ namespace Pirate.PiVote.Crypto
       BigInt prime = Prime.Find(80);
       BigInt safePrime = Prime.FindSafe(88);
 
-      Parameters parameters = new Parameters();
-      parameters.InitilizeCrypto(prime, safePrime, 3, 5, 2, 1, 100);
+      BaseParameters parameters = new BaseParameters();
+      parameters.InitilizeCrypto(new CryptoParameters(prime, safePrime),new QuestionBaseParameters(2, 1), new VotingBaseParameters(3, 5, 100));
       Authority[] auths = new Authority[5];
 
-      for (int aI = 0; aI < parameters.AuthorityCount; aI++)
+      for (int aI = 0; aI < parameters.Voting.AuthorityCount; aI++)
       {
         auths[aI] = new Authority(aI + 1, parameters);
       }
@@ -249,7 +249,7 @@ namespace Pirate.PiVote.Crypto
           shares.Add(b.Share(a.Index));
           As.Add(new List<VerificationValue>());
 
-          for (int l = 0; l <= parameters.Thereshold; l++)
+          for (int l = 0; l <= parameters.Voting.Thereshold; l++)
           {
             As[As.Count - 1].Add(b.VerificationValue(l));
           }
@@ -261,7 +261,7 @@ namespace Pirate.PiVote.Crypto
       BigInt publicKey = new BigInt(1);
       foreach (Authority a in auths)
       {
-        publicKey = (publicKey * a.PublicKeyPart).Mod(parameters.P);
+        publicKey = (publicKey * a.PublicKeyPart).Mod(parameters.Crypto.P);
       }
 
       List<Ballot> ballots = new List<Ballot>();
@@ -275,7 +275,7 @@ namespace Pirate.PiVote.Crypto
       if (!ballots.All(ballot => ballot.Verify(publicKey, parameters)))
         throw new Exception("Bad proof.");
 
-      for (int optionIndex = 0; optionIndex < parameters.OptionCount; optionIndex++)
+      for (int optionIndex = 0; optionIndex < parameters.Quest.OptionCount; optionIndex++)
       {
         IEnumerable<Vote> votes = ballots.Select(ballot => ballot.Votes[optionIndex]);
 

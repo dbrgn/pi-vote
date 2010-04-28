@@ -35,7 +35,7 @@ namespace Pirate.PiVote.Client
     {
       if (Proof != null && 
         AuthorityIndex >= 1 && 
-        AuthorityIndex <= Proof.Parameters.AuthorityCount)
+        AuthorityIndex <= Proof.Parameters.Voting.AuthorityCount)
       {
         Certificate authorityCertificate = Proof.Authorities[AuthorityIndex];
 
