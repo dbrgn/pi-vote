@@ -17,6 +17,37 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  public class QuestionDescriptor
+  {
+    private readonly MultiLanguageString question;
+    private readonly List<OptionDescriptor> options;
+    private readonly int maxOptions;
+
+    /// <summary>
+    /// Question of the voting.
+    /// </summary>
+    public MultiLanguageString Question { get { return this.question; } }
+
+    /// <summary>
+    /// Options in the voting.
+    /// </summary>
+    public IEnumerable<OptionDescriptor> Options { get { return this.options; } }
+
+    /// <summary>
+    /// Maximum number of options one voter may vote for.
+    /// </summary>
+    public int MaxOptions { get { return this.maxOptions; } }
+
+    public QuestionDescriptor(QuestionParameters parameters)
+    {
+      this.question = parameters.Question;
+      this.maxOptions = parameters.MaxVota;
+
+      this.options = new List<OptionDescriptor>();
+      parameters.Options.Foreach(option => this.options.Add(new OptionDescriptor(option)));
+    }
+  }
+
   /// <summary>
   /// Voting descriptor.
   /// </summary>
@@ -25,15 +56,13 @@ namespace Pirate.PiVote.Rpc
     private readonly Guid id;
     private readonly MultiLanguageString title;
     private readonly MultiLanguageString descripton;
-    private readonly MultiLanguageString question;
     private readonly VotingStatus status;
     private readonly List<Guid> authoritiesDone;
-    private readonly List<OptionDescriptor> options;
-    private readonly int maxOptions;
     private readonly DateTime voteFrom;
     private readonly DateTime voteUntil;
     private readonly int authorityCount;
     private readonly int envelopeCount;
+    private readonly List<QuestionDescriptor> questions;
 
     /// <summary>
     /// Id of the voting.
@@ -49,11 +78,6 @@ namespace Pirate.PiVote.Rpc
     /// Description of the voting.
     /// </summary>
     public MultiLanguageString Description { get { return this.descripton; } }
-
-    /// <summary>
-    /// Question of the voting.
-    /// </summary>
-    public MultiLanguageString Question { get { return this.question; } }
 
     /// <summary>
     /// Status of the voting.
@@ -86,15 +110,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     public IEnumerable<Guid> AuthoritiesDone { get { return this.authoritiesDone; } }
 
-    /// <summary>
-    /// Options in the voting.
-    /// </summary>
-    public IEnumerable<OptionDescriptor> Options { get { return this.options; } }
-
-    /// <summary>
-    /// Maximum number of options one voter may vote for.
-    /// </summary>
-    public int MaxOptions { get { return this.maxOptions; } }
+    public IEnumerable<QuestionDescriptor> Questions { get { return this.questions; } }
 
     /// <summary>
     /// Create a new voting descriptor.
@@ -107,17 +123,14 @@ namespace Pirate.PiVote.Rpc
       this.id = parameters.VotingId;
       this.title = parameters.Title;
       this.descripton = parameters.Description;
-      this.question = parameters.Quest.Question;
       this.status = status;
       this.authoritiesDone = authoritiesDone;
-      this.options = new List<OptionDescriptor>();
-      this.maxOptions = parameters.QB.MaxVota;
       this.voteFrom = parameters.VotingBeginDate;
       this.voteUntil = parameters.VotingEndDate;
       this.authorityCount = status == VotingStatus.Deciphering ? parameters.QV.Thereshold + 1 : parameters.QV.AuthorityCount;
       this.envelopeCount = envelopeCount;
-
-      parameters.Quest.Options.Foreach(option => this.options.Add(new OptionDescriptor(option)));
+      this.questions = new List<QuestionDescriptor>();
+      this.questions.Add(new QuestionDescriptor(parameters.Quest));
     }
   }
 

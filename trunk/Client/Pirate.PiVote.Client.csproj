@@ -110,6 +110,12 @@
     <Compile Include="Wizard\BadShareProofItem.designer.cs">
       <DependentUpon>BadShareProofItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wizard\QuestionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\QuestionControl.Designer.cs">
+      <DependentUpon>QuestionControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Wizard\SmallCertificateControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -263,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\ChooseCertificateItem.resx">
       <DependentUpon>ChooseCertificateItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\QuestionControl.resx">
+      <DependentUpon>QuestionControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\SmallCertificateControl.resx">
       <DependentUpon>SmallCertificateControl.cs</DependentUpon>

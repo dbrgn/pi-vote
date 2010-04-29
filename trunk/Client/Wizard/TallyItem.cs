@@ -90,11 +90,14 @@ namespace Pirate.PiVote.Client
           validBallots.SubItems.Add(this.result.ValidBallots.ToString());
           this.resultList.Items.Add(validBallots);
 
-          foreach (OptionResult option in this.result.Options)
+          foreach (QuestionResult question in this.result.Questions)
           {
-            ListViewItem optionBallots = new ListViewItem(option.Text.Text);
-            optionBallots.SubItems.Add(option.Result.ToString());
-            this.resultList.Items.Add(optionBallots);
+            foreach (OptionResult option in question.Options)
+            {
+              ListViewItem optionBallots = new ListViewItem(option.Text.Text);
+              optionBallots.SubItems.Add(option.Result.ToString());
+              this.resultList.Items.Add(optionBallots);
+            }
           }
 
           ListViewItem space = new ListViewItem(string.Empty);

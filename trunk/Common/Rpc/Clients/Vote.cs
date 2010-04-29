@@ -43,7 +43,7 @@ namespace Pirate.PiVote.Rpc
       /// <summary>
       /// Selected options.
       /// </summary>
-      private IEnumerable<bool> vota;
+      private IEnumerable<IEnumerable<bool>> vota;
 
       /// <summary>
       /// Callback upon completion.
@@ -56,7 +56,7 @@ namespace Pirate.PiVote.Rpc
       /// <param name="votingId">Id of the voting.</param>
       /// <param name="optionIndex">Selected options.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public VoteOperation(Guid votingId, IEnumerable<bool> vota, VoteCallBack callBack)
+      public VoteOperation(Guid votingId, IEnumerable<IEnumerable<bool>> vota, VoteCallBack callBack)
       {
         this.votingId = votingId;
         this.vota = vota;
@@ -81,7 +81,8 @@ namespace Pirate.PiVote.Rpc
             throw new InvalidOperationException(LibraryResources.ClientVoteMaterialInvalid);
           var parameters = material.Parameters.Value;
 
-          int[] vota = this.vota.Select(votum => votum ? 1 : 0).ToArray();
+          //HACK
+          int[] vota = this.vota.ElementAt(0).Select(votum => votum ? 1 : 0).ToArray();
 
           Progress = 0.3d;
           SubText = LibraryResources.ClientVoteCalcVote;

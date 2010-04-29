@@ -22,7 +22,7 @@ namespace Pirate.PiVote.Client
   public partial class VoteCompleteItem : WizardItem
   {
     public VotingDescriptor VotingDescriptor { get; set; }
-    public List<bool> Vota;
+    public IEnumerable<IEnumerable<bool>> Vota;
 
     private bool run;
     private Exception exception;

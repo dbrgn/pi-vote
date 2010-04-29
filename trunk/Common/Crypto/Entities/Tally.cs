@@ -198,6 +198,9 @@ namespace Pirate.PiVote.Crypto
       {
         List<int> results = new List<int>();
 
+        QuestionParameters question = this.parameters.Quest;
+        QuestionResult questionResult = new QuestionResult(question);
+
         for (int optionIndex = 0; optionIndex < this.parameters.QB.OptionCount; optionIndex++)
         {
           List<int> optionResults = new List<int>();
@@ -219,18 +222,20 @@ namespace Pirate.PiVote.Crypto
 
             if (optionResults.All(optionResult => optionResult == firstOptionResult))
             {
-              this.result.Options.Add(new OptionResult(option.Text, option.Description, firstOptionResult));
+              questionResult.Options.Add(new OptionResult(option.Text, option.Description, firstOptionResult));
             }
             else
             {
-              this.result.Options.Add(new OptionResult(option.Text, option.Description, -1));
+              questionResult.Options.Add(new OptionResult(option.Text, option.Description, -1));
             }
           }
           else
           {
-            this.result.Options.Add(new OptionResult(option.Text, option.Description, -1));
+            questionResult.Options.Add(new OptionResult(option.Text, option.Description, -1));
           }
         }
+
+        this.result.Questions.Add(questionResult);
 
         return this.result;
       }

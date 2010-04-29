@@ -33,7 +33,7 @@ namespace Pirate.PiVote.Client
       if (this.voteControl.Valid)
       {
         VoteCompleteItem item = new VoteCompleteItem();
-        item.Vota = new List<bool>(this.voteControl.Vota);
+        item.Vota = this.voteControl.Vota;
         item.VotingDescriptor = VotingDescriptor;
         return item;
       }

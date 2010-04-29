@@ -12,6 +12,35 @@ using System.Text;
 
 namespace Pirate.PiVote.Crypto
 {
+  public class QuestionResult
+  {
+    /// <summary>
+    /// Question of the voting procedure.
+    /// </summary>
+    private readonly MultiLanguageString question;
+
+    /// <summary>
+    /// Results for each option.
+    /// </summary>
+    private readonly List<OptionResult> options;
+
+    /// <summary>
+    /// Question of the voting procedure.
+    /// </summary>
+    public MultiLanguageString Question { get { return this.question; } }
+
+    /// <summary>
+    /// Results for each option.
+    /// </summary>
+    public List<OptionResult> Options { get { return this.options; } }
+
+    public QuestionResult(QuestionParameters parameters)
+    {
+      this.question = parameters.Question;
+      this.options = new List<OptionResult>();
+    }
+  }
+
   /// <summary>
   /// Container for the voting result.
   /// </summary>
@@ -35,15 +64,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     private readonly MultiLanguageString description;
 
-    /// <summary>
-    /// Question of the voting procedure.
-    /// </summary>
-    private readonly MultiLanguageString question;
-    
-    /// <summary>
-    /// Results for each option.
-    /// </summary>
-    private readonly List<OptionResult> options;
+    private readonly List<QuestionResult> questions;
 
     /// <summary>
     /// Participing voters.
@@ -65,15 +86,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public MultiLanguageString Description { get { return this.description; } }
 
-    /// <summary>
-    /// Question of the voting procedure.
-    /// </summary>
-    public MultiLanguageString Question { get { return this.question; } }
-    
-    /// <summary>
-    /// Results for each option.
-    /// </summary>
-    public List<OptionResult> Options { get { return this.options; } }
+    public List<QuestionResult> Questions { get { return this.questions; } }
 
     /// <summary>
     /// Participing voters.
@@ -88,7 +101,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Number of valid ballots.
     /// </summary>
-    public int ValidBallots { get { return Options.Sum(option => option.Result); } }
+    public int ValidBallots { get { return Questions.First().Options.Sum(option => option.Result); } }
 
     /// <summary>
     /// Total number of cast ballots.
@@ -108,8 +121,7 @@ namespace Pirate.PiVote.Crypto
       this.votingId = votingId;
       this.title = votingParameters.Title;
       this.description = votingParameters.Description;
-      this.question = votingParameters.Quest.Question;
-      this.options = new List<OptionResult>();
+      this.questions = new List<QuestionResult>();
       this.voters = new List<EnvelopeResult>();
     }
   }

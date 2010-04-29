@@ -356,17 +356,27 @@ namespace Pirate.PiVote.CliClient
             Console.WriteLine("You can now vote.");
             Console.WriteLine(selectedVoting.Title);
             Console.WriteLine(selectedVoting.Description);
-            Console.WriteLine(selectedVoting.Question);
 
-            foreach (var option in selectedVoting.Options)
+            List<IEnumerable<bool>> vota = new List<IEnumerable<bool>>();
+
+            foreach (QuestionDescriptor question in selectedVoting.Questions)
             {
-              Console.WriteLine("  {0}, {1}", option.Text, option.Description);
+              Console.WriteLine(question.Question);
+
+              foreach (var option in question.Options)
+              {
+                Console.WriteLine("  {0}, {1}", option.Text, option.Description);
+              }
+
+              Console.Write("  Select one: ");
+              int optionIndex = Convert.ToInt32(Console.ReadLine());
+
+              bool[] votaItem = new bool[question.Options.Count()];
+              votaItem[optionIndex] = true;
+
+              vota.Add(votaItem);
             }
 
-            Console.Write("  Select one: ");
-            int optionIndex = Convert.ToInt32(Console.ReadLine());
-            bool[] vota = new bool[selectedVoting.Options.Count()];
-            vota[optionIndex] = true;
             this.voterClient.Vote(selectedVoting.Id, vota, VoteCallBack);
 
             break;
@@ -402,14 +412,18 @@ namespace Pirate.PiVote.CliClient
         Console.WriteLine();
         Console.WriteLine(result.Title);
         Console.WriteLine(result.Description);
-        Console.WriteLine(result.Question);
         Console.WriteLine("  Total ballots cast: {0}", result.TotalBallots);
         Console.WriteLine("  Invalid ballots cast: {0}", result.InvalidBallots);
         Console.WriteLine("  Valid ballots cast: {0}", result.ValidBallots);
 
-        foreach (var option in result.Options)
+        foreach (QuestionResult question in result.Questions)
         {
-          Console.WriteLine("    {0}: {1}", option.Text, option.Result);
+          Console.WriteLine(question.Question);
+
+          foreach (var option in question.Options)
+          {
+            Console.WriteLine("    {0}: {1}", option.Text, option.Result);
+          }
         }
       }
     }

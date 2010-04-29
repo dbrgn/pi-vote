@@ -21,7 +21,7 @@ namespace Pirate.PiVote.Client
 {
   public partial class VoteControl : UserControl
   {
-    private List<VoteOptionControl> optionControls;
+    private List<QuestionControl> questionControls;
 
     public VotingDescriptor Voting { get; set; }
 
@@ -43,23 +43,27 @@ namespace Pirate.PiVote.Client
 
       int space = 10;
       int top = this.questionLabel.Top + this.questionLabel.Height + space;
-      this.optionControls = new List<VoteOptionControl>();
+      this.questionControls = new List<QuestionControl>();
 
-      foreach (OptionDescriptor option in Voting.Options)
+      foreach (QuestionDescriptor question in Voting.Questions)
       {
-        VoteOptionControl optionControl = new VoteOptionControl();
-        optionControl.Option = option;
-        optionControl.MultiOption = Voting.MaxOptions > 1;
-        optionControl.Top = top;
-        optionControl.Width = Width;
-        optionControl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-        optionControl.CheckedChanged += OptionControl_CheckedChanged;
-        optionControl.Display();
-        Controls.Add(optionControl);
-        this.optionControls.Add(optionControl);
+        QuestionControl questionControl = new QuestionControl();
+        questionControl.Question = question;
+        questionControl.Top = top;
+        questionControl.Width = Width;
+        questionControl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+        questionControl.ValidChanged += new EventHandler(questionControl_ValidChanged);
+        questionControl.Display();
+        Controls.Add(questionControl);
+        this.questionControls.Add(questionControl);
 
-        top += optionControl.Height + space;
+        top += questionControl.Height + space;
       }
+    }
+
+    void questionControl_ValidChanged(object sender, EventArgs e)
+    {
+      throw new NotImplementedException();
     }
 
     private void OptionControl_CheckedChanged(object sender, EventArgs e)
@@ -79,7 +83,7 @@ namespace Pirate.PiVote.Client
     {
       get
       {
-        return Voting == null ? false : this.optionControls.Where(optionControl => optionControl.Checked).Count() == Voting.MaxOptions;
+        return Voting == null ? false : this.questionControls.All(questionControl => questionControl.Valid);
       }
     }
 
@@ -88,11 +92,11 @@ namespace Pirate.PiVote.Client
       VoteDescriptionForm.ShowDescription(Voting.Title.Text, Voting.Description.Text);
     }
 
-    public IEnumerable<bool> Vota
+    public IEnumerable<IEnumerable<bool>> Vota
     {
       get
       {
-        return this.optionControls.Select(optionControl => optionControl.Checked);
+        return this.questionControls.Select(questionControl => questionControl.Vota);
       }
     }
   }
