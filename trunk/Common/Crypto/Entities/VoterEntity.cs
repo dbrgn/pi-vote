@@ -55,7 +55,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="votingMaterial">Voting material.</param>
     /// <param name="vota">List of vota.</param>
     /// <returns>Signed envelope containing the ballot.</returns>
-    public Signed<Envelope> Vote(VotingMaterial votingMaterial, IEnumerable<int> vota)
+    public Signed<Envelope> Vote(VotingMaterial votingMaterial, IEnumerable<IEnumerable<int>> vota)
     {
       if (votingMaterial == null)
         throw new ArgumentNullException("votingMaterial");
@@ -64,15 +64,29 @@ namespace Pirate.PiVote.Crypto
 
       if (vota == null)
         throw new ArgumentNullException("vota");
-      if (vota.Count() != this.parameters.QB.OptionCount)
+      if (vota.Count() != this.parameters.Questions.Count())
         throw new ArgumentException("Bad vota count.");
-      if (!vota.All(votum => votum.InRange(0, 1)))
-        throw new ArgumentException("Votum out of range.");
 
       if (acceptMaterial)
       {
-        Ballot ballot = new Ballot(vota, this.parameters, this.publicKey);
-        Envelope ballotContainer = new Envelope(this.parameters.VotingId, Certificate.Id, ballot);
+        List<Ballot> ballots = new List<Ballot>();
+
+        for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
+        {
+          IEnumerable<int> questionVota = vota.ElementAt(questionIndex);
+          QuestionParameters question = this.parameters.Questions.ElementAt(questionIndex);
+
+          if (questionVota == null)
+            throw new ArgumentNullException("questionVota");
+          if (questionVota.Count() != question.OptionCount)
+            throw new ArgumentException("Bad vota count.");
+          if (!questionVota.All(votum => votum.InRange(0, 1)))
+            throw new ArgumentException("Votum out of range.");
+
+          ballots.Add(new Ballot(questionVota, this.parameters, question, this.publicKey));
+        }
+
+        Envelope ballotContainer = new Envelope(this.parameters.VotingId, Certificate.Id, ballots);
 
         return new Signed<Envelope>(ballotContainer, Certificate);
       }

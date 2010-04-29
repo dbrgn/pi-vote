@@ -333,9 +333,14 @@ namespace Pirate.PiVote.Crypto
 
       PartialDecipherList partialDecipherList = new PartialDecipherList(this.parameters.VotingId, this.authority.Index, this.tally.EnvelopeCount, this.tally.EnvelopeHash);
 
-      for (int optionIndex = 0; optionIndex < this.parameters.QB.OptionCount; optionIndex++)
+      for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
       {
-        partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(this.tally.VoteSums[optionIndex], optionIndex));
+        QuestionParameters question = this.parameters.Questions.ElementAt(questionIndex);
+
+        for (int optionIndex = 0; optionIndex < question.OptionCount; optionIndex++)
+        {
+          partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(this.tally.VoteSums[questionIndex][optionIndex], questionIndex, optionIndex));
+        }
       }
 
       return new Signed<PartialDecipherList>(partialDecipherList, this.certificate);

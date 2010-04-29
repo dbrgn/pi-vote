@@ -120,13 +120,12 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public VotingParameters(
       CryptoParameters crypto,
-      QuestionParameters quest,
       VotingBaseParameters voting,
       MultiLanguageString title, 
       MultiLanguageString description, 
       DateTime votingBeginDate, 
       DateTime votingEndDate)
-      : base(crypto, quest, voting)
+      : base(crypto, voting)
     {
       if (title == null)
         throw new ArgumentNullException("title");

@@ -31,7 +31,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Cryptographic parameters.
     /// </summary>
-    private BaseParameters parameters;
+    private BaseParameters<QuestionParameters, VotingBaseParameters> parameters;
 
     /// <summary>
     /// Part of total secret.
@@ -52,7 +52,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="index">Index of new authority. Must be at least one.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
-    public Authority(int index, BaseParameters parameters)
+    public Authority(int index, BaseParameters<QuestionParameters, VotingBaseParameters> parameters)
     {
       if (parameters == null)
         throw new ArgumentNullException("parameters");
@@ -63,7 +63,7 @@ namespace Pirate.PiVote.Crypto
       this.parameters = parameters;
     }
 
-    public Authority(DeserializeContext context, BaseParameters parameters)
+    public Authority(DeserializeContext context, BaseParameters<QuestionParameters, VotingBaseParameters> parameters)
     {
       Index = context.ReadInt32();
       this.polynomial = context.ReadObject<Polynomial>();
@@ -162,11 +162,13 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     /// <param name="vote">Vote to partially decipher.</param>
     /// <returns>List of partial deciphers.</returns>
-    public IEnumerable<PartialDecipher> PartialDeciphers(Vote vote, int optionIndex)
+    public IEnumerable<PartialDecipher> PartialDeciphers(Vote vote, int questionIndex, int optionIndex)
     {
       if (vote == null)
         throw new ArgumentNullException("vote");
-      if (!optionIndex.InRange(0, parameters.QB.OptionCount - 1))
+      if (!questionIndex.InRange(0, parameters.Questions.Count() - 1))
+        throw new ArgumentException("Option index must be in range 0..OptionCount-1.");
+      if (!optionIndex.InRange(0, parameters.Questions.ElementAt(questionIndex).OptionCount - 1))
         throw new ArgumentException("Option index must be in range 0..OptionCount-1.");
 
       List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();

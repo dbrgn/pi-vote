@@ -23,7 +23,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Sums of votes.
     /// </summary>
-    private Vote[] voteSums;
+    private Vote[][] voteSums;
 
     /// <summary>
     /// Result of voting.
@@ -85,7 +85,13 @@ namespace Pirate.PiVote.Crypto
       this.certificateStorage = certificateStorage;
       this.publicKey = publicKey;
 
-      this.voteSums = new Vote[this.parameters.QB.OptionCount];
+      this.voteSums = new Vote[this.parameters.Questions.Count()][];
+      for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
+      {
+        QuestionParameters question = this.parameters.Questions.ElementAt(0);
+        this.voteSums[questionIndex] = new Vote[question.OptionCount];
+      }
+      
       this.result = new VotingResult(this.parameters.VotingId, this.parameters);
       this.partialDeciphers = new List<PartialDecipher>();
       this.countedVoters = new List<Guid>();
@@ -128,7 +134,13 @@ namespace Pirate.PiVote.Crypto
       acceptVote &= envelope.Date.Date <= this.parameters.VotingEndDate;
 
       //Ballot must verify (prooves).
-      acceptVote &= envelope.Ballot.Verify(this.publicKey, this.parameters);
+      for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
+      {
+        QuestionParameters question = this.parameters.Questions.ElementAt(questionIndex);
+        Ballot ballot = envelope.Ballots.ElementAt(questionIndex);
+
+        acceptVote &= ballot.Verify(this.publicKey, this.parameters, question);
+      }
 
       while (envelopeIndex != this.nextEnvelopeIndex)
       {
@@ -145,12 +157,18 @@ namespace Pirate.PiVote.Crypto
 
         if (acceptVote)
         {
-          for (int optionIndex = 0; optionIndex < this.parameters.QB.OptionCount; optionIndex++)
+          for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
           {
-            this.voteSums[optionIndex] =
-              this.voteSums[optionIndex] == null ?
-              envelope.Ballot.Votes[optionIndex] :
-              this.voteSums[optionIndex] + envelope.Ballot.Votes[optionIndex];
+            QuestionParameters question = this.parameters.Questions.ElementAt(0);
+            Ballot ballot = envelope.Ballots.ElementAt(questionIndex);
+
+            for (int optionIndex = 0; optionIndex < question.OptionCount; optionIndex++)
+            {
+              this.voteSums[questionIndex][optionIndex] =
+                this.voteSums[questionIndex][optionIndex] == null ?
+                ballot.Votes[optionIndex] :
+                this.voteSums[questionIndex][optionIndex] + ballot.Votes[optionIndex];
+            }
           }
 
           this.countedVoters.Add(signedEnvelope.Certificate.Id);
@@ -165,7 +183,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Sums of votes for all options.
     /// </summary>
-    public Vote[] VoteSums
+    public Vote[][] VoteSums
     {
       get { return this.voteSums; }
     }
@@ -198,44 +216,47 @@ namespace Pirate.PiVote.Crypto
       {
         List<int> results = new List<int>();
 
-        QuestionParameters question = this.parameters.Quest;
-        QuestionResult questionResult = new QuestionResult(question);
-
-        for (int optionIndex = 0; optionIndex < this.parameters.QB.OptionCount; optionIndex++)
+        for (int questionIndex = 0; questionIndex < parameters.Questions.Count(); questionIndex++)
         {
-          List<int> optionResults = new List<int>();
+          QuestionParameters question = this.parameters.Questions.ElementAt(questionIndex);
+          QuestionResult questionResult = new QuestionResult(question);
 
-          for (int groupIndex = 1; groupIndex < this.parameters.QV.AuthorityCount; groupIndex++)
+          for (int optionIndex = 0; optionIndex < question.OptionCount; optionIndex++)
           {
-            IEnumerable<BigInt> partialDeciphersByOptionAndGroup = this.partialDeciphers
-              .Where(partialDecipher => partialDecipher.GroupIndex == groupIndex && partialDecipher.OptionIndex == optionIndex)
-              .Select(partialDecipher => partialDecipher.Value);
-            if (partialDeciphersByOptionAndGroup.Count() == this.parameters.QV.Thereshold + 1)
-              optionResults.Add(this.voteSums[optionIndex].Decrypt(partialDeciphersByOptionAndGroup, parameters));
-          }
+            List<int> optionResults = new List<int>();
 
-          Option option = this.parameters.Quest.Options.ElementAt(optionIndex);
-
-          if (optionResults.Count > 0)
-          {
-            int firstOptionResult = optionResults[0];
-
-            if (optionResults.All(optionResult => optionResult == firstOptionResult))
+            for (int groupIndex = 1; groupIndex < this.parameters.QV.AuthorityCount; groupIndex++)
             {
-              questionResult.Options.Add(new OptionResult(option.Text, option.Description, firstOptionResult));
+              IEnumerable<BigInt> partialDeciphersByOptionAndGroup = this.partialDeciphers
+                .Where(partialDecipher => partialDecipher.GroupIndex == groupIndex && partialDecipher.OptionIndex == optionIndex)
+                .Select(partialDecipher => partialDecipher.Value);
+              if (partialDeciphersByOptionAndGroup.Count() == this.parameters.QV.Thereshold + 1)
+                optionResults.Add(this.voteSums[questionIndex][optionIndex].Decrypt(partialDeciphersByOptionAndGroup, parameters));
+            }
+
+            Option option = question.Options.ElementAt(optionIndex);
+
+            if (optionResults.Count > 0)
+            {
+              int firstOptionResult = optionResults[0];
+
+              if (optionResults.All(optionResult => optionResult == firstOptionResult))
+              {
+                questionResult.Options.Add(new OptionResult(option.Text, option.Description, firstOptionResult));
+              }
+              else
+              {
+                questionResult.Options.Add(new OptionResult(option.Text, option.Description, -1));
+              }
             }
             else
             {
               questionResult.Options.Add(new OptionResult(option.Text, option.Description, -1));
             }
           }
-          else
-          {
-            questionResult.Options.Add(new OptionResult(option.Text, option.Description, -1));
-          }
-        }
 
-        this.result.Questions.Add(questionResult);
+          this.result.Questions.Add(questionResult);
+        }
 
         return this.result;
       }

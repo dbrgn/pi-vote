@@ -130,7 +130,7 @@ namespace Pirate.PiVote.Rpc
       this.authorityCount = status == VotingStatus.Deciphering ? parameters.QV.Thereshold + 1 : parameters.QV.AuthorityCount;
       this.envelopeCount = envelopeCount;
       this.questions = new List<QuestionDescriptor>();
-      this.questions.Add(new QuestionDescriptor(parameters.Quest));
+      this.questions.AddRange(parameters.Questions.Select(question => new QuestionDescriptor(question)));
     }
   }
 

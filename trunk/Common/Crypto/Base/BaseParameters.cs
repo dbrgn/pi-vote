@@ -19,8 +19,6 @@ namespace Pirate.PiVote.Crypto
   {
     public CryptoParameters Crypto { get; private set; }
 
-    public abstract QuestionBaseParameters QB { get; }
-
     public abstract VotingBaseParameters QV { get; }
 
     public BaseParameters(CryptoParameters crypto)
@@ -50,14 +48,13 @@ namespace Pirate.PiVote.Crypto
     where TQuestionBaseParameters : QuestionBaseParameters
     where TVotingBaseParameters : VotingBaseParameters
   {
-    public TQuestionBaseParameters Quest { get; private set; }
+    private List<TQuestionBaseParameters> questions;
+
+    public IEnumerable<TQuestionBaseParameters> Questions { get { return this.questions; } }
+
+    private TQuestionBaseParameters Quest { get { return Questions.ElementAt(0); } }
 
     public TVotingBaseParameters Voting { get; private set; }
-
-    public override QuestionBaseParameters QB
-    {
-      get { return Quest; }
-    }
 
     public override VotingBaseParameters QV
     {
@@ -66,11 +63,10 @@ namespace Pirate.PiVote.Crypto
 
     public BaseParameters(
       CryptoParameters crypto,
-      TQuestionBaseParameters quest,
       TVotingBaseParameters voting)
       : base(crypto)
     {
-      Quest = quest;
+      this.questions = new List<TQuestionBaseParameters>();
       Voting = voting;
     }
 
@@ -81,15 +77,20 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(Quest);
+      context.WriteList(this.questions);
       context.Write(Voting);
     }
 
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      Quest = context.ReadObject<TQuestionBaseParameters>();
+      this.questions = context.ReadObjectList<TQuestionBaseParameters>();
       Voting = context.ReadObject<TVotingBaseParameters>();
+    }
+
+    public void AddQuestion(TQuestionBaseParameters question)
+    {
+      this.questions.Add(question);
     }
   }
 

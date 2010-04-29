@@ -81,8 +81,7 @@ namespace Pirate.PiVote.Rpc
             throw new InvalidOperationException(LibraryResources.ClientVoteMaterialInvalid);
           var parameters = material.Parameters.Value;
 
-          //HACK
-          int[] vota = this.vota.ElementAt(0).Select(votum => votum ? 1 : 0).ToArray();
+          IEnumerable<IEnumerable<int>> vota = this.vota.Select(questionVota => questionVota.Select(votum => votum ? 1 : 0));
 
           Progress = 0.3d;
           SubText = LibraryResources.ClientVoteCalcVote;

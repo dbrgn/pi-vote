@@ -169,17 +169,18 @@ namespace Pirate.PiVote.Client
       VotingParameters votingParameters =
         new VotingParameters(
           this.cryptoParameters,
-          new QuestionParameters(this.questionBox.Text, Convert.ToInt32(this.optionNumberUpDown.Value)),
           new VotingBaseParameters(VotingBaseParameters.StandardThereshold, VotingBaseParameters.StandardAuthorityCount, VotingBaseParameters.StandardProofCount),
           this.titleBox.Text,
           this.descriptionBox.Text,
           this.votingFromPicker.Value.Date,
           this.votingUntilPicker.Value.Date);
 
+      QuestionParameters question = new QuestionParameters(this.questionBox.Text, Convert.ToInt32(this.optionNumberUpDown.Value));
       foreach (ListViewItem item in this.optionListView.Items)
       {
-        votingParameters.Quest.AddOption((Option)item.Tag);
+        question.AddOption((Option)item.Tag);
       }
+      votingParameters.AddQuestion(question);
 
       Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);
       List<AuthorityCertificate> authorities = new List<AuthorityCertificate>();

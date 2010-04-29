@@ -164,21 +164,24 @@ namespace Pirate.PiVote.CliClient
       VotingParameters votingParameters = 
         new VotingParameters(
           CryptoParameters.Generate(CryptoParameters.PrimeBits),
-          new QuestionParameters(new MultiLanguageString(quest), 1),
           new VotingBaseParameters(VotingBaseParameters.StandardThereshold, VotingBaseParameters.StandardAuthorityCount, VotingBaseParameters.StandardProofCount),
           new MultiLanguageString(title), 
           new MultiLanguageString(desc), 
           DateTime.Now, 
           DateTime.Now.AddDays(1));
 
+      QuestionParameters question = new QuestionParameters(new MultiLanguageString(quest), 1);
+
       Console.Write("Enter option name: ");
       string optionName = Console.ReadLine();
       while (!optionName.IsNullOrEmpty())
       {
-        votingParameters.Quest.AddOption(new Option(new MultiLanguageString(optionName), new MultiLanguageString(string.Empty)));
+        question.AddOption(new Option(new MultiLanguageString(optionName), new MultiLanguageString(string.Empty)));
         Console.Write("Enter option name: ");
         optionName = Console.ReadLine();
       }
+
+      votingParameters.AddQuestion(question);
 
       Console.Write("Requesting server to create voting procedure...");
       VotingRpcProxy proxy = new VotingRpcProxy(this.client);

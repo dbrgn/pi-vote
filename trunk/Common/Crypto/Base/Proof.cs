@@ -72,7 +72,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="publicKey">Public key against which to verify the proof.</param>
     /// <param name="parameters">Cryptographic Parameters.</param>
     /// <returns>Wether the proof is valid.</returns>
-    public bool Verify(Vote vote, BigInt publicKey, BaseParameters parameters)
+    public bool Verify(Vote vote, BigInt publicKey, BaseParameters parameters, QuestionBaseParameters questionParameters)
     {
       if (vote == null)
         throw new ArgumentNullException("vote");
@@ -90,7 +90,7 @@ namespace Pirate.PiVote.Crypto
         return false;
 
       if (publicKey.PowerMod(S0, parameters.Crypto.P) !=
-        (T0 * vote.Ciphertext.DivideMod(parameters.Crypto.F.PowerMod(parameters.QB.MaxVota, parameters.Crypto.P), parameters.Crypto.P).PowerMod(C0, parameters.Crypto.P)).Mod(parameters.Crypto.P))
+        (T0 * vote.Ciphertext.DivideMod(parameters.Crypto.F.PowerMod(questionParameters.MaxVota, parameters.Crypto.P), parameters.Crypto.P).PowerMod(C0, parameters.Crypto.P)).Mod(parameters.Crypto.P))
         return false;
 
       return true;

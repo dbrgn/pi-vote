@@ -35,7 +35,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="vota">Vota the voter wishes to cast for each option.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <param name="publicKey">Public key of voting authorities.</param>
-    public Ballot(IEnumerable<int> vota, BaseParameters parameters, BigInt publicKey)
+    public Ballot(IEnumerable<int> vota, BaseParameters parameters, QuestionBaseParameters questionParameters, BigInt publicKey)
     {
       if (vota == null)
         throw new ArgumentNullException("vota");
@@ -43,11 +43,11 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("parameters");
       if (publicKey == null)
         throw new ArgumentNullException("publicKey");
-      if (vota.Count() != parameters.QB.OptionCount)
+      if (vota.Count() != questionParameters.OptionCount)
         throw new ArgumentException("Bad vota.");
       if (!vota.All(votum => votum.InRange(0, 1)))
         throw new ArgumentException("Bad vota.");
-      if (vota.Sum() != parameters.QB.MaxVota)
+      if (vota.Sum() != questionParameters.MaxVota)
         throw new ArgumentException("Bad vota.");
 
       Votes = new List<Vote>();
@@ -80,7 +80,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="publicKey">Public key of the authorities.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <returns>Result of the verification.</returns>
-    public bool Verify(BigInt publicKey, BaseParameters parameters)
+    public bool Verify(BigInt publicKey, BaseParameters parameters, QuestionParameters questionParameters)
     {
       if (publicKey == null)
         throw new ArgumentNullException("publicKey");
@@ -97,7 +97,7 @@ namespace Pirate.PiVote.Crypto
       }
 
       verifies &= SumProves.Count == parameters.QV.ProofCount;
-      verifies &= SumProves.All(sumProof => sumProof.Verify(voteSum, publicKey, parameters));
+      verifies &= SumProves.All(sumProof => sumProof.Verify(voteSum, publicKey, parameters, questionParameters));
 
       return verifies;
     }
