@@ -50,7 +50,7 @@ CREATE  TABLE IF NOT EXISTS `pivote`.`envelope` (
   `VotingId` VARBINARY(16) NOT NULL ,
   `EnvelopeIndex` INT(11) NOT NULL ,
   `VoterId` VARBINARY(16) NOT NULL ,
-  `Value` BLOB NOT NULL ,
+  `Value` LONGBLOB NOT NULL ,
   PRIMARY KEY (`VotingId`, `EnvelopeIndex`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
