@@ -808,6 +808,33 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Descrption.
+        /// </summary>
+        internal static string CreateVotingQuestionDescription {
+            get {
+                return ResourceManager.GetString("CreateVotingQuestionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Questions.
+        /// </summary>
+        internal static string CreateVotingQuestions {
+            get {
+                return ResourceManager.GetString("CreateVotingQuestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        internal static string CreateVotingQuestionText {
+            get {
+                return ResourceManager.GetString("CreateVotingQuestionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Searching safe prime number for crypto..
         /// </summary>
         internal static string CreateVotingSearchPrime {

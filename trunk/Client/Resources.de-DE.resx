@@ -486,4 +486,13 @@
   <data name="ContextMenuEdit" xml:space="preserve">
     <value>&amp;Bearbeiten</value>
   </data>
+  <data name="CreateVotingQuestionDescription" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="CreateVotingQuestions" xml:space="preserve">
+    <value>Fragen</value>
+  </data>
+  <data name="CreateVotingQuestionText" xml:space="preserve">
+    <value>Text</value>
+  </data>
 </root>

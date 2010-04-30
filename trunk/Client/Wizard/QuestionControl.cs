@@ -60,7 +60,7 @@ namespace Pirate.PiVote.Client
         top += optionControl.Height + space;
       }
 
-      this.Height = top - space;
+      this.Height = top;
     }
 
     private void OptionControl_CheckedChanged(object sender, EventArgs e)

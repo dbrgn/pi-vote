@@ -308,6 +308,9 @@ namespace Pirate.PiVote.Client
       this.votingFromLabel.Text = Resources.CreateVotingOpenFrom;
       this.votingUntilLabel.Text = Resources.CreateVotingOpenUntil;
       this.createButton.Text = Resources.CreateVotingButton;
+      this.questionLabel.Text = Resources.CreateVotingQuestions;
+      this.textColumnHeader.Text = Resources.CreateVotingQuestionText;
+      this.descriptionColumnHeader.Text = Resources.CreateVotingQuestionDescription;
     }
 
     private void addToolStripMenuItem_Click(object sender, EventArgs e)
