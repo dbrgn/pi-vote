@@ -36,9 +36,10 @@
       // descriptionButton
       // 
       this.descriptionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.descriptionButton.Location = new System.Drawing.Point(403, 21);
+      this.descriptionButton.Location = new System.Drawing.Point(660, 32);
+      this.descriptionButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.descriptionButton.Name = "descriptionButton";
-      this.descriptionButton.Size = new System.Drawing.Size(111, 24);
+      this.descriptionButton.Size = new System.Drawing.Size(166, 37);
       this.descriptionButton.TabIndex = 2;
       this.descriptionButton.Text = "&Description";
       this.descriptionButton.UseVisualStyleBackColor = true;
@@ -48,9 +49,10 @@
       // 
       this.titleLabel.AutoSize = true;
       this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.titleLabel.Location = new System.Drawing.Point(-3, 0);
+      this.titleLabel.Location = new System.Drawing.Point(-4, 0);
+      this.titleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.titleLabel.Name = "titleLabel";
-      this.titleLabel.Size = new System.Drawing.Size(39, 16);
+      this.titleLabel.Size = new System.Drawing.Size(54, 25);
       this.titleLabel.TabIndex = 3;
       this.titleLabel.Text = "Title";
       // 
@@ -58,21 +60,23 @@
       // 
       this.questionLabel.AutoSize = true;
       this.questionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.questionLabel.Location = new System.Drawing.Point(-3, 25);
+      this.questionLabel.Location = new System.Drawing.Point(-4, 38);
+      this.questionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.questionLabel.Name = "questionLabel";
-      this.questionLabel.Size = new System.Drawing.Size(61, 16);
+      this.questionLabel.Size = new System.Drawing.Size(91, 25);
       this.questionLabel.TabIndex = 4;
       this.questionLabel.Text = "Question";
       // 
       // VoteControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.questionLabel);
       this.Controls.Add(this.titleLabel);
       this.Controls.Add(this.descriptionButton);
+      this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.Name = "VoteControl";
-      this.Size = new System.Drawing.Size(514, 239);
+      this.Size = new System.Drawing.Size(827, 368);
       this.ResumeLayout(false);
       this.PerformLayout();
 

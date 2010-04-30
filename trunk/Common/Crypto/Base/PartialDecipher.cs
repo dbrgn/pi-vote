@@ -19,6 +19,8 @@ namespace Pirate.PiVote.Crypto
   /// </summary>
   public class PartialDecipher : Serializable
   {
+    public int QuestionIndex { get;private set; }
+
     public int OptionIndex { get; private set; }
 
     public int AuthorityIndex { get; private set; }
@@ -40,13 +42,16 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Creates a new partial decipher.
     /// </summary>
-    /// <param name="index">Index of the partial decipher group. Equals index of authority not in this group.</param>
-    /// <param name="value"></param>
-    public PartialDecipher(int groupIndex, int optionIndex, BigInt value)
+    /// <param name="groupIndex">Index of the partial decipher group. Equals index of authority not in this group.</param>
+    /// <param name="questionIndex">Index of question in the voting.</param>
+    /// <param name="optionIndex">Index of the option in the question.</param>
+    /// <param name="value">Value of the partial decipher</param>
+    public PartialDecipher(int groupIndex, int questionIndex, int optionIndex, BigInt value)
     {
       if (value == null)
         throw new ArgumentNullException("value");
 
+      QuestionIndex = questionIndex;
       GroupIndex = groupIndex;
       OptionIndex = optionIndex;
       Value = value;
@@ -59,6 +64,7 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+      context.Write(QuestionIndex);
       context.Write(OptionIndex);
       context.Write(AuthorityIndex);
       context.Write(GroupIndex);
@@ -68,6 +74,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+      QuestionIndex = context.ReadInt32();
       OptionIndex = context.ReadInt32();
       AuthorityIndex = context.ReadInt32();
       GroupIndex = context.ReadInt32();

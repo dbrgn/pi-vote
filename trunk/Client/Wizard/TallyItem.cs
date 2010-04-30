@@ -90,8 +90,18 @@ namespace Pirate.PiVote.Client
           validBallots.SubItems.Add(this.result.ValidBallots.ToString());
           this.resultList.Items.Add(validBallots);
 
+          ListViewItem space = null;
+
           foreach (QuestionResult question in this.result.Questions)
           {
+            space = new ListViewItem(string.Empty);
+            space.SubItems.Add(string.Empty);
+            this.resultList.Items.Add(space);
+
+            space = new ListViewItem(question.Text.Text);
+            space.SubItems.Add(string.Empty);
+            this.resultList.Items.Add(space);
+
             foreach (OptionResult option in question.Options)
             {
               ListViewItem optionBallots = new ListViewItem(option.Text.Text);
@@ -100,7 +110,7 @@ namespace Pirate.PiVote.Client
             }
           }
 
-          ListViewItem space = new ListViewItem(string.Empty);
+          space = new ListViewItem(string.Empty);
           space.SubItems.Add(string.Empty);
           this.resultList.Items.Add(space);
 

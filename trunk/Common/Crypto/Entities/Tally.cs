@@ -88,7 +88,7 @@ namespace Pirate.PiVote.Crypto
       this.voteSums = new Vote[this.parameters.Questions.Count()][];
       for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
       {
-        Question question = this.parameters.Questions.ElementAt(0);
+        Question question = this.parameters.Questions.ElementAt(questionIndex);
         this.voteSums[questionIndex] = new Vote[question.Options.Count()];
       }
       
@@ -159,7 +159,7 @@ namespace Pirate.PiVote.Crypto
         {
           for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
           {
-            Question question = this.parameters.Questions.ElementAt(0);
+            Question question = this.parameters.Questions.ElementAt(questionIndex);
             Ballot ballot = envelope.Ballots.ElementAt(questionIndex);
 
             for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
@@ -228,7 +228,9 @@ namespace Pirate.PiVote.Crypto
             for (int groupIndex = 1; groupIndex < this.parameters.AuthorityCount; groupIndex++)
             {
               IEnumerable<BigInt> partialDeciphersByOptionAndGroup = this.partialDeciphers
-                .Where(partialDecipher => partialDecipher.GroupIndex == groupIndex && partialDecipher.OptionIndex == optionIndex)
+                .Where(partialDecipher => partialDecipher.GroupIndex == groupIndex && 
+                                          partialDecipher.QuestionIndex == questionIndex &&
+                                          partialDecipher.OptionIndex == optionIndex)
                 .Select(partialDecipher => partialDecipher.Value);
               if (partialDeciphersByOptionAndGroup.Count() == this.parameters.Thereshold + 1)
                 optionResults.Add(this.voteSums[questionIndex][optionIndex].Decrypt(partialDeciphersByOptionAndGroup, parameters));

@@ -191,34 +191,34 @@ namespace Pirate.PiVote.Crypto
       switch (Index)
       { 
         case 1:
-          partialDeciphers.Add(new PartialDecipher(2, optionIndex, PartialDecipher(vote, 5, 2)));
-          partialDeciphers.Add(new PartialDecipher(3, optionIndex, PartialDecipher(vote, 10, 3)));
-          partialDeciphers.Add(new PartialDecipher(4, optionIndex, PartialDecipher(vote, 15, 4)));
-          partialDeciphers.Add(new PartialDecipher(5, optionIndex, PartialDecipher(vote, 4, 1)));
+          partialDeciphers.Add(new PartialDecipher(2, questionIndex, optionIndex, PartialDecipher(vote, 5, 2)));
+          partialDeciphers.Add(new PartialDecipher(3, questionIndex, optionIndex, PartialDecipher(vote, 10, 3)));
+          partialDeciphers.Add(new PartialDecipher(4, questionIndex, optionIndex, PartialDecipher(vote, 15, 4)));
+          partialDeciphers.Add(new PartialDecipher(5, questionIndex, optionIndex, PartialDecipher(vote, 4, 1)));
           break;
         case 2:
-          partialDeciphers.Add(new PartialDecipher(1, optionIndex, PartialDecipher(vote, 10, 1)));
-          partialDeciphers.Add(new PartialDecipher(3, optionIndex, PartialDecipher(vote, -10, 3)));
-          partialDeciphers.Add(new PartialDecipher(4, optionIndex, PartialDecipher(vote, -5, 1)));
-          partialDeciphers.Add(new PartialDecipher(5, optionIndex, PartialDecipher(vote, -6, 1)));
+          partialDeciphers.Add(new PartialDecipher(1, questionIndex, optionIndex, PartialDecipher(vote, 10, 1)));
+          partialDeciphers.Add(new PartialDecipher(3, questionIndex, optionIndex, PartialDecipher(vote, -10, 3)));
+          partialDeciphers.Add(new PartialDecipher(4, questionIndex, optionIndex, PartialDecipher(vote, -5, 1)));
+          partialDeciphers.Add(new PartialDecipher(5, questionIndex, optionIndex, PartialDecipher(vote, -6, 1)));
           break;
         case 3:
-          partialDeciphers.Add(new PartialDecipher(1, optionIndex, PartialDecipher(vote, -20, 1)));
-          partialDeciphers.Add(new PartialDecipher(2, optionIndex, PartialDecipher(vote, -5, 1)));
-          partialDeciphers.Add(new PartialDecipher(4, optionIndex, PartialDecipher(vote, 5, 2)));
-          partialDeciphers.Add(new PartialDecipher(5, optionIndex, PartialDecipher(vote, 4, 1)));
+          partialDeciphers.Add(new PartialDecipher(1, questionIndex, optionIndex, PartialDecipher(vote, -20, 1)));
+          partialDeciphers.Add(new PartialDecipher(2, questionIndex, optionIndex, PartialDecipher(vote, -5, 1)));
+          partialDeciphers.Add(new PartialDecipher(4, questionIndex, optionIndex, PartialDecipher(vote, 5, 2)));
+          partialDeciphers.Add(new PartialDecipher(5, questionIndex, optionIndex, PartialDecipher(vote, 4, 1)));
           break;
         case 4:
-          partialDeciphers.Add(new PartialDecipher(1, optionIndex, PartialDecipher(vote, 15, 1)));
-          partialDeciphers.Add(new PartialDecipher(2, optionIndex, PartialDecipher(vote, 5, 1)));
-          partialDeciphers.Add(new PartialDecipher(3, optionIndex, PartialDecipher(vote, 5, 3)));
-          partialDeciphers.Add(new PartialDecipher(5, optionIndex, PartialDecipher(vote, -1, 1)));
+          partialDeciphers.Add(new PartialDecipher(1, questionIndex, optionIndex, PartialDecipher(vote, 15, 1)));
+          partialDeciphers.Add(new PartialDecipher(2, questionIndex, optionIndex, PartialDecipher(vote, 5, 1)));
+          partialDeciphers.Add(new PartialDecipher(3, questionIndex, optionIndex, PartialDecipher(vote, 5, 3)));
+          partialDeciphers.Add(new PartialDecipher(5, questionIndex, optionIndex, PartialDecipher(vote, -1, 1)));
           break;
         case 5:
-          partialDeciphers.Add(new PartialDecipher(1, optionIndex, PartialDecipher(vote, -4, 1)));
-          partialDeciphers.Add(new PartialDecipher(2, optionIndex, PartialDecipher(vote, -3, 2)));
-          partialDeciphers.Add(new PartialDecipher(3, optionIndex, PartialDecipher(vote, -2, 3)));
-          partialDeciphers.Add(new PartialDecipher(4, optionIndex, PartialDecipher(vote, -1, 4)));
+          partialDeciphers.Add(new PartialDecipher(1, questionIndex, optionIndex, PartialDecipher(vote, -4, 1)));
+          partialDeciphers.Add(new PartialDecipher(2, questionIndex, optionIndex, PartialDecipher(vote, -3, 2)));
+          partialDeciphers.Add(new PartialDecipher(3, questionIndex, optionIndex, PartialDecipher(vote, -2, 3)));
+          partialDeciphers.Add(new PartialDecipher(4, questionIndex, optionIndex, PartialDecipher(vote, -1, 4)));
           break;
         default:
           throw new InvalidOperationException("Bad authority index.");
