@@ -54,9 +54,9 @@ namespace Pirate.PiVote.Crypto
       if (parameters == null)
         throw new ArgumentNullException("parameters");
 
-      BigInt r0 = parameters.Crypto.Random();
+      BigInt r0 = parameters.Random();
 
-      T0 = publicKey.PowerMod(r0, parameters.Crypto.P);
+      T0 = publicKey.PowerMod(r0, parameters.P);
 
       SHA512Managed sha512 = new SHA512Managed();
       byte[] hash = sha512.ComputeHash(T0.ToByteArray());
@@ -72,7 +72,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="publicKey">Public key against which to verify the proof.</param>
     /// <param name="parameters">Cryptographic Parameters.</param>
     /// <returns>Wether the proof is valid.</returns>
-    public bool Verify(Vote vote, BigInt publicKey, BaseParameters parameters, QuestionBaseParameters questionParameters)
+    public bool Verify(Vote vote, BigInt publicKey, BaseParameters parameters, Question questionParameters)
     {
       if (vote == null)
         throw new ArgumentNullException("vote");
@@ -89,8 +89,8 @@ namespace Pirate.PiVote.Crypto
       if (C0 != (((hash[0] & 1) == 1) ? 1 : 0))
         return false;
 
-      if (publicKey.PowerMod(S0, parameters.Crypto.P) !=
-        (T0 * vote.Ciphertext.DivideMod(parameters.Crypto.F.PowerMod(questionParameters.MaxVota, parameters.Crypto.P), parameters.Crypto.P).PowerMod(C0, parameters.Crypto.P)).Mod(parameters.Crypto.P))
+      if (publicKey.PowerMod(S0, parameters.P) !=
+        (T0 * vote.Ciphertext.DivideMod(parameters.F.PowerMod(questionParameters.MaxVota, parameters.P), parameters.P).PowerMod(C0, parameters.P)).Mod(parameters.P))
         return false;
 
       return true;

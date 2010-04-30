@@ -26,7 +26,7 @@ namespace Pirate.PiVote.Client
     private Exception exception;
     private Thread initThread;
     private List<AuthorityCertificate> authorityCertificates;
-    private CryptoParameters cryptoParameters;
+    private VotingParameters votingParameters;
 
     public CreateVotingItem()
     {
@@ -166,16 +166,7 @@ namespace Pirate.PiVote.Client
       Status.SetProgress(Resources.CreateVotingCreating, 0d);
       Application.DoEvents();
 
-      VotingParameters votingParameters =
-        new VotingParameters(
-          this.cryptoParameters,
-          new VotingBaseParameters(VotingBaseParameters.StandardThereshold, VotingBaseParameters.StandardAuthorityCount, VotingBaseParameters.StandardProofCount),
-          this.titleBox.Text,
-          this.descriptionBox.Text,
-          this.votingFromPicker.Value.Date,
-          this.votingUntilPicker.Value.Date);
-
-      QuestionParameters question = new QuestionParameters(this.questionBox.Text, Convert.ToInt32(this.optionNumberUpDown.Value));
+      Question question = new Question(this.questionBox.Text, new MultiLanguageString(string.Empty), Convert.ToInt32(this.optionNumberUpDown.Value));
       foreach (ListViewItem item in this.optionListView.Items)
       {
         question.AddOption((Option)item.Tag);
@@ -220,7 +211,13 @@ namespace Pirate.PiVote.Client
 
     private void Init()
     {
-      this.cryptoParameters = CryptoParameters.Generate(CryptoParameters.PrimeBits);
+      this.votingParameters =
+        new VotingParameters(
+          this.titleBox.Text,
+          this.descriptionBox.Text,
+          this.votingFromPicker.Value.Date,
+          this.votingUntilPicker.Value.Date);
+
       this.run = false;
     }
 

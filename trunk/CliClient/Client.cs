@@ -163,14 +163,12 @@ namespace Pirate.PiVote.CliClient
 
       VotingParameters votingParameters = 
         new VotingParameters(
-          CryptoParameters.Generate(CryptoParameters.PrimeBits),
-          new VotingBaseParameters(VotingBaseParameters.StandardThereshold, VotingBaseParameters.StandardAuthorityCount, VotingBaseParameters.StandardProofCount),
           new MultiLanguageString(title), 
           new MultiLanguageString(desc), 
           DateTime.Now, 
           DateTime.Now.AddDays(1));
 
-      QuestionParameters question = new QuestionParameters(new MultiLanguageString(quest), 1);
+      Question question = new Question(new MultiLanguageString(quest), new MultiLanguageString(string.Empty), 1);
 
       Console.Write("Enter option name: ");
       string optionName = Console.ReadLine();
@@ -364,7 +362,7 @@ namespace Pirate.PiVote.CliClient
 
             foreach (QuestionDescriptor question in selectedVoting.Questions)
             {
-              Console.WriteLine(question.Question);
+              Console.WriteLine(question.Text);
 
               foreach (var option in question.Options)
               {
@@ -421,7 +419,7 @@ namespace Pirate.PiVote.CliClient
 
         foreach (QuestionResult question in result.Questions)
         {
-          Console.WriteLine(question.Question);
+          Console.WriteLine(question.Text);
 
           foreach (var option in question.Options)
           {

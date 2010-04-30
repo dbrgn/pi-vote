@@ -124,35 +124,35 @@ namespace Pirate.PiVote.Rpc
 
       VotingParameters votingParameters = signedVotingParameters.Value;
 
-      if (votingParameters.Crypto.P == null)
+      if (votingParameters.P == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "P cannot be null.");
-      if (votingParameters.Crypto.Q == null)
+      if (votingParameters.Q == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "Q cannot be null.");
-      if (votingParameters.Crypto.F == null)
+      if (votingParameters.F == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "F cannot be null.");
-      if (votingParameters.Crypto.G == null)
+      if (votingParameters.G == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "G cannot be null.");
-      if (!Prime.IsPrime(votingParameters.Crypto.P))
+      if (!Prime.IsPrime(votingParameters.P))
         throw new PiArgumentException(ExceptionCode.PIsNoPrime, "P is not prime.");
-      if (!Prime.IsPrime((votingParameters.Crypto.P - 1) / 2))
+      if (!Prime.IsPrime((votingParameters.P - 1) / 2))
         throw new PiArgumentException(ExceptionCode.PIsNoSafePrime, "P is no safe prime.");
-      if (!Prime.IsPrime(votingParameters.Crypto.Q))
+      if (!Prime.IsPrime(votingParameters.Q))
         throw new PiArgumentException(ExceptionCode.QIsNoPrime, "Q is not prime.");
 
-      if (!votingParameters.QV.AuthorityCount.InRange(3, 23))
+      if (!votingParameters.AuthorityCount.InRange(3, 23))
         throw new PiArgumentException(ExceptionCode.AuthorityCountOutOfRange, "Authority count out of range.");
-      if (!votingParameters.QV.Thereshold.InRange(1, votingParameters.QV.AuthorityCount - 1))
+      if (!votingParameters.Thereshold.InRange(1, votingParameters.AuthorityCount - 1))
         throw new PiArgumentException(ExceptionCode.TheresholdOutOfRange, "Thereshold out of range.");
 
-      foreach (QuestionParameters question in votingParameters.Questions)
+      foreach (Question question in votingParameters.Questions)
       {
-        if (question.OptionCount < 2)
+        if (question.Options.Count() < 2)
           throw new PiArgumentException(ExceptionCode.OptionCountOutOfRange, "Option count out of range.");
-        if (!question.MaxVota.InRange(1, question.OptionCount))
+        if (!question.MaxVota.InRange(1, question.Options.Count()))
           throw new PiArgumentException(ExceptionCode.MaxVotaOutOfRange, "Maximum vota out of range.");
       }
 
-      if (votingParameters.QV.AuthorityCount != authorities.Count())
+      if (votingParameters.AuthorityCount != authorities.Count())
         throw new PiArgumentException(ExceptionCode.AuthorityCountMismatch, "Authority count does not match number of provided authorities.");
       if (!authorities.All(authority => authority.Valid(CertificateStorage)))
         throw new PiArgumentException(ExceptionCode.AuthorityInvalid, "Authority certificate invalid or not recognized.");

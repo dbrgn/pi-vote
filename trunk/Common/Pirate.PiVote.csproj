@@ -90,7 +90,7 @@
     <Compile Include="Crypto\Base\ThreadedPrimeGenerator.cs" />
     <Compile Include="Crypto\Base\VerificationValue.cs" />
     <Compile Include="Crypto\Base\Proof.cs" />
-    <Compile Include="Crypto\Base\BaseParameters.cs" />
+    <Compile Include="Crypto\Parameters\BaseParameters.cs" />
     <Compile Include="Crypto\Base\PartialDecipher.cs" />
     <Compile Include="Crypto\Base\Polynomial.cs" />
     <Compile Include="Crypto\Base\Prime.cs" />
@@ -120,13 +120,15 @@
     <Compile Include="Crypto\Container\VoteReceipt.cs" />
     <Compile Include="Crypto\Container\VotingMaterial.cs" />
     <Compile Include="Crypto\Container\ShareResponse.cs" />
-    <Compile Include="Crypto\Container\Option.cs" />
-    <Compile Include="Crypto\Container\VotingParameters.cs" />
+    <Compile Include="Crypto\Parameters\Question.cs" />
+    <Compile Include="Crypto\Parameters\Option.cs" />
+    <Compile Include="Crypto\Parameters\VotingParameters.cs" />
     <Compile Include="Crypto\Container\SharePart.cs" />
     <Compile Include="Crypto\Certificate\Signed.cs" />
     <Compile Include="Crypto\Entities\AuthorityEntity.cs" />
     <Compile Include="Crypto\Entities\Tally.cs" />
     <Compile Include="Crypto\Entities\VotingStatus.cs" />
+    <Compile Include="Crypto\Result\QuestionResult.cs" />
     <Compile Include="Crypto\Result\EnvelopeResult.cs" />
     <Compile Include="Crypto\Result\OptionResult.cs" />
     <Compile Include="Crypto\Base\Share.cs" />
@@ -155,6 +157,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exception\PiException.cs" />
     <Compile Include="Rpc\Clients\CheckShares.cs" />
+    <Compile Include="Rpc\Clients\QuestionDescriptor.cs" />
+    <Compile Include="Rpc\Clients\OptionDescriptor.cs" />
     <Compile Include="Rpc\Clients\CreateDeciphers.cs" />
     <Compile Include="Rpc\Clients\CreateSharePart.cs" />
     <Compile Include="Rpc\Clients\GetAuthorityCertificates.cs" />
@@ -164,7 +168,7 @@
     <Compile Include="Rpc\Clients\GetCertificateStorage.cs" />
     <Compile Include="Rpc\Clients\GetSignatureResponse.cs" />
     <Compile Include="Rpc\Clients\SetSignatureRequest.cs" />
-    <Compile Include="Rpc\Clients\Descriptor.cs" />
+    <Compile Include="Rpc\Clients\VotingDescriptor.cs" />
     <Compile Include="Rpc\Clients\GetResult.cs" />
     <Compile Include="Rpc\Clients\Vote.cs" />
     <Compile Include="Rpc\Clients\GetVotingList.cs" />

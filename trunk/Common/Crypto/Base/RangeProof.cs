@@ -74,11 +74,11 @@ namespace Pirate.PiVote.Crypto
       if (parameters == null)
         throw new ArgumentNullException("parameters");
 
-      BigInt r0 = parameters.Crypto.Random();
-      BigInt r1 = parameters.Crypto.Random();
+      BigInt r0 = parameters.Random();
+      BigInt r1 = parameters.Random();
 
-      T0 = publicKey.PowerMod(r0, parameters.Crypto.P);
-      T1 = publicKey.PowerMod(r1, parameters.Crypto.P);
+      T0 = publicKey.PowerMod(r0, parameters.P);
+      T1 = publicKey.PowerMod(r1, parameters.P);
 
       SHA512Managed sha512 = new SHA512Managed();
       byte[] hash = sha512.ComputeHash(T0.ToByteArray().Concat(T1.ToByteArray()));
@@ -136,12 +136,12 @@ namespace Pirate.PiVote.Crypto
       if (C0 + C1 != C)
         return false;
 
-      if (publicKey.PowerMod(S0, parameters.Crypto.P) !=
-        (T0 * vote.Ciphertext.DivideMod(parameters.Crypto.F.PowerMod(0, parameters.Crypto.P), parameters.Crypto.P).PowerMod(C0, parameters.Crypto.P)).Mod(parameters.Crypto.P))
+      if (publicKey.PowerMod(S0, parameters.P) !=
+        (T0 * vote.Ciphertext.DivideMod(parameters.F.PowerMod(0, parameters.P), parameters.P).PowerMod(C0, parameters.P)).Mod(parameters.P))
         return false;
 
-      if (publicKey.PowerMod(S1, parameters.Crypto.P) !=
-        (T1 * vote.Ciphertext.DivideMod(parameters.Crypto.F.PowerMod(1, parameters.Crypto.P), parameters.Crypto.P).PowerMod(C1, parameters.Crypto.P)).Mod(parameters.Crypto.P))
+      if (publicKey.PowerMod(S1, parameters.P) !=
+        (T1 * vote.Ciphertext.DivideMod(parameters.F.PowerMod(1, parameters.P), parameters.P).PowerMod(C1, parameters.P)).Mod(parameters.P))
         return false;
 
       return true;

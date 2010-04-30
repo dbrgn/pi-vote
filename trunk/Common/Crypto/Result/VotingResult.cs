@@ -12,35 +12,6 @@ using System.Text;
 
 namespace Pirate.PiVote.Crypto
 {
-  public class QuestionResult
-  {
-    /// <summary>
-    /// Question of the voting procedure.
-    /// </summary>
-    private readonly MultiLanguageString question;
-
-    /// <summary>
-    /// Results for each option.
-    /// </summary>
-    private readonly List<OptionResult> options;
-
-    /// <summary>
-    /// Question of the voting procedure.
-    /// </summary>
-    public MultiLanguageString Question { get { return this.question; } }
-
-    /// <summary>
-    /// Results for each option.
-    /// </summary>
-    public List<OptionResult> Options { get { return this.options; } }
-
-    public QuestionResult(QuestionParameters parameters)
-    {
-      this.question = parameters.Question;
-      this.options = new List<OptionResult>();
-    }
-  }
-
   /// <summary>
   /// Container for the voting result.
   /// </summary>
@@ -64,6 +35,9 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     private readonly MultiLanguageString description;
 
+    /// <summary>
+    /// Questions posed in the voting.
+    /// </summary>
     private readonly List<QuestionResult> questions;
 
     /// <summary>
@@ -86,6 +60,9 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public MultiLanguageString Description { get { return this.description; } }
 
+    /// <summary>
+    /// Questions posed in the voting.
+    /// </summary>
     public List<QuestionResult> Questions { get { return this.questions; } }
 
     /// <summary>
@@ -114,8 +91,8 @@ namespace Pirate.PiVote.Crypto
     /// <remarks>
     /// Don't forget adding option and envelopes results.
     /// </remarks>
-    /// <param name="id">Id of the voting procedure.</param>
-    /// <param name="name">Name of the voting procedure.</param>
+    /// <param name="votingId">Id of the voting procedure.</param>
+    /// <param name="votingParameters">Parameters of the voting in question.</param>
     public VotingResult(Guid votingId, VotingParameters votingParameters)
     {
       this.votingId = votingId;

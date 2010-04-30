@@ -74,11 +74,11 @@ namespace Pirate.PiVote.Crypto
         for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
         {
           IEnumerable<int> questionVota = vota.ElementAt(questionIndex);
-          QuestionParameters question = this.parameters.Questions.ElementAt(questionIndex);
+          Question question = this.parameters.Questions.ElementAt(questionIndex);
 
           if (questionVota == null)
             throw new ArgumentNullException("questionVota");
-          if (questionVota.Count() != question.OptionCount)
+          if (questionVota.Count() != question.Options.Count())
             throw new ArgumentException("Bad vota count.");
           if (!questionVota.All(votum => votum.InRange(0, 1)))
             throw new ArgumentException("Votum out of range.");
@@ -122,7 +122,7 @@ namespace Pirate.PiVote.Crypto
         foreach (Signed<ShareResponse> signedShareResponse in votingMaterial.PublicKeyParts)
         {
           ShareResponse shareResponse = signedShareResponse.Value;
-          this.publicKey = (this.publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.Crypto.P);
+          this.publicKey = (this.publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.P);
         }
       }
 

@@ -181,14 +181,14 @@ namespace Pirate.PiVote.Crypto
     {
       SharePart shareContainer = new SharePart(this.parameters.VotingId, this.authority.Index);
 
-      for (int authorityIndex = 1; authorityIndex <= this.parameters.QV.AuthorityCount; authorityIndex++)
+      for (int authorityIndex = 1; authorityIndex <= this.parameters.AuthorityCount; authorityIndex++)
       {
         Share share = this.authority.Share(authorityIndex);
         shareContainer.EncryptedShares.Add(
           new Encrypted<Share>(share, this.authorities[authorityIndex]));
       }
 
-      for (int valueIndex = 0; valueIndex <= this.parameters.QV.Thereshold; valueIndex++)
+      for (int valueIndex = 0; valueIndex <= this.parameters.Thereshold; valueIndex++)
       {
         shareContainer.VerificationValues.Add(this.authority.VerificationValue(valueIndex));
       }
@@ -249,7 +249,7 @@ namespace Pirate.PiVote.Crypto
 
         verificationValuesByAuthority.Add(new List<VerificationValue>());
 
-        for (int l = 0; l <= this.parameters.QV.Thereshold; l++)
+        for (int l = 0; l <= this.parameters.Thereshold; l++)
         {
           verificationValuesByAuthority[verificationValuesByAuthority.Count - 1].Add(sharePart.VerificationValues[l]);
         }
@@ -316,7 +316,7 @@ namespace Pirate.PiVote.Crypto
         if (!acceptResponse)
           throw new Exception("Share response not accepted.");
 
-        publicKey = (publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.Crypto.P);
+        publicKey = (publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.P);
       }
 
       return publicKey;
@@ -335,9 +335,9 @@ namespace Pirate.PiVote.Crypto
 
       for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
       {
-        QuestionParameters question = this.parameters.Questions.ElementAt(questionIndex);
+        Question question = this.parameters.Questions.ElementAt(questionIndex);
 
-        for (int optionIndex = 0; optionIndex < question.OptionCount; optionIndex++)
+        for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
         {
           partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(this.tally.VoteSums[questionIndex][optionIndex], questionIndex, optionIndex));
         }

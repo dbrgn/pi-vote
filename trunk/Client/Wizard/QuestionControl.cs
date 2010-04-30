@@ -37,7 +37,7 @@ namespace Pirate.PiVote.Client
       if (Question == null)
         throw new InvalidOperationException("Question must not be null.");
 
-      this.questionLabel.Text = Question.Question.Text;
+      this.questionLabel.Text = Question.Text.Text;
       this.descriptionButton.Text = Resources.VoteDescriptionButton;
 
       int space = 10;
@@ -96,7 +96,7 @@ namespace Pirate.PiVote.Client
 
     private void descriptionButton_Click_1(object sender, EventArgs e)
     {
-      VoteDescriptionForm.ShowDescription(Question.Question.Text, string.Empty);
+      VoteDescriptionForm.ShowDescription(Question.Text.Text, string.Empty);
     }
   }
 }

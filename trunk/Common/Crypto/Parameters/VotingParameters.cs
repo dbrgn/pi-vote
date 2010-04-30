@@ -14,81 +14,10 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
-  public class QuestionParameters : QuestionBaseParameters
-  {
-    /// <summary>
-    /// List of possible options for the voters.
-    /// </summary>
-    private List<Option> options;
-
-    /// <summary>
-    /// Question of this voting.
-    /// </summary>
-    public MultiLanguageString Question { get; private set; }
-
-    public override int OptionCount
-    {
-      get { return this.options.Count; }
-    }
-
-    /// <summary>
-    /// List of possible options for the voters.
-    /// </summary>
-    public IEnumerable<Option> Options
-    {
-      get { return this.options; }
-    }
-
-    public QuestionParameters(MultiLanguageString question, int maxVota)
-      : base(maxVota)
-    {
-      if (question == null)
-        throw new ArgumentNullException("question");
-
-      Question = question;
-      this.options = new List<Option>();
-    }
-
-    /// <summary>
-    /// Add an option to this voting.
-    /// </summary>
-    /// <remarks>
-    /// Only allowed before initialization.
-    /// </remarks>
-    /// <param name="option">An selectable option.</param>
-    public void AddOption(Option option)
-    {
-      if (option == null)
-        throw new ArgumentNullException("option");
-
-      this.options.Add(option);
-    }
-    
-    public QuestionParameters(DeserializeContext context)
-      : base(context)
-    { 
-    }
-
-    public override void Serialize(SerializeContext context)
-    {
-      base.Serialize(context);
-      context.Write(Question);
-      context.WriteList(Options);
-    }
-
-    protected override void Deserialize(DeserializeContext context)
-    {
-      base.Deserialize(context);
-      Question = context.ReadMultiLanguageString();
-      this.options = context.ReadObjectList<Option>();
-    }
-  }
-
   /// <summary>
   /// Contains all parameters of a voting.
   /// </summary>
-  public class VotingParameters
-    : BaseParameters<QuestionParameters, VotingBaseParameters>
+  public class VotingParameters : BaseParameters
   {
     /// <summary>
     /// Id of this voting.
@@ -119,13 +48,10 @@ namespace Pirate.PiVote.Crypto
     /// Create a new voting.
     /// </summary>
     public VotingParameters(
-      CryptoParameters crypto,
-      VotingBaseParameters voting,
       MultiLanguageString title, 
       MultiLanguageString description, 
       DateTime votingBeginDate, 
       DateTime votingEndDate)
-      : base(crypto, voting)
     {
       if (title == null)
         throw new ArgumentNullException("title");
@@ -137,11 +63,6 @@ namespace Pirate.PiVote.Crypto
       Description = description;
       VotingBeginDate = votingBeginDate;
       VotingEndDate = votingEndDate;
-    }
-
-    private QuestionParameters GenerateQuestionParameters(MultiLanguageString question, int maxVota)
-    {
-      return new QuestionParameters(question, maxVota);
     }
 
     /// <summary>

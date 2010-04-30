@@ -47,14 +47,12 @@ namespace Pirate.PiVote.Crypto
 
       VotingParameters parameters = 
         new VotingParameters(
-          CryptoParameters.Generate(CryptoParameters.PrimeBits),
-          new VotingBaseParameters(VotingBaseParameters.StandardThereshold, VotingBaseParameters.StandardAuthorityCount, VotingBaseParameters.StandardProofCount),
           new MultiLanguageString("Zufrieden"), 
           new MultiLanguageString("Tada"), 
           DateTime.Now, 
           DateTime.Now.AddDays(1));
 
-      QuestionParameters question = new QuestionParameters(new MultiLanguageString("Zufrieden?"), 1);
+      Question question = new Question(new MultiLanguageString("Zufrieden?"), new MultiLanguageString(string.Empty), 1);
       question.AddOption(new Option(new MultiLanguageString("Nein"), new MultiLanguageString("Dagegen")));
       question.AddOption(new Option(new MultiLanguageString("Ja"), new MultiLanguageString("Dafür")));
       parameters.AddQuestion(question);
@@ -211,7 +209,7 @@ namespace Pirate.PiVote.Crypto
         v1.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
       }
 
-      for (int authorityIndex = 1; authorityIndex < vs.Parameters.QV.AuthorityCount + 1; authorityIndex++)
+      for (int authorityIndex = 1; authorityIndex < vs.Parameters.AuthorityCount + 1; authorityIndex++)
       {
         v1.TallyAddPartialDecipher(vs.GetPartialDecipher(authorityIndex));
       }
@@ -233,19 +231,16 @@ namespace Pirate.PiVote.Crypto
       BigInt prime = Prime.Find(80);
       BigInt safePrime = Prime.FindSafe(88);
 
-      BaseParameters<QuestionParameters, VotingBaseParameters> parameters =
-        new BaseParameters<QuestionParameters, VotingBaseParameters>(
-          CryptoParameters.Generate(CryptoParameters.PrimeBits),
-          new VotingBaseParameters(VotingBaseParameters.StandardThereshold, VotingBaseParameters.StandardAuthorityCount, VotingBaseParameters.StandardProofCount));
+      BaseParameters parameters = new BaseParameters();
 
-      QuestionParameters question = new QuestionParameters(new MultiLanguageString(string.Empty), 1);
+      Question question = new Question(new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty), 1);
       question.AddOption(new Option(new MultiLanguageString("Ja"), new MultiLanguageString(string.Empty)));
       question.AddOption(new Option(new MultiLanguageString("Nein"), new MultiLanguageString(string.Empty)));
       parameters.AddQuestion(question);
 
       Authority[] auths = new Authority[5];
 
-      for (int aI = 0; aI < parameters.QV.AuthorityCount; aI++)
+      for (int aI = 0; aI < parameters.AuthorityCount; aI++)
       {
         auths[aI] = new Authority(aI + 1, parameters);
       }
@@ -265,7 +260,7 @@ namespace Pirate.PiVote.Crypto
           shares.Add(b.Share(a.Index));
           As.Add(new List<VerificationValue>());
 
-          for (int l = 0; l <= parameters.QV.Thereshold; l++)
+          for (int l = 0; l <= parameters.Thereshold; l++)
           {
             As[As.Count - 1].Add(b.VerificationValue(l));
           }
@@ -277,7 +272,7 @@ namespace Pirate.PiVote.Crypto
       BigInt publicKey = new BigInt(1);
       foreach (Authority a in auths)
       {
-        publicKey = (publicKey * a.PublicKeyPart).Mod(parameters.Crypto.P);
+        publicKey = (publicKey * a.PublicKeyPart).Mod(parameters.P);
       }
 
       List<Ballot> ballots = new List<Ballot>();
@@ -291,7 +286,7 @@ namespace Pirate.PiVote.Crypto
       if (!ballots.All(ballot => ballot.Verify(publicKey, parameters, question)))
         throw new Exception("Bad proof.");
 
-      for (int optionIndex = 0; optionIndex < question.OptionCount; optionIndex++)
+      for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
       {
         IEnumerable<Vote> votes = ballots.Select(ballot => ballot.Votes[optionIndex]);
 

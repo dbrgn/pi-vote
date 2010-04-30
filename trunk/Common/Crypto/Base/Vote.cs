@@ -60,15 +60,15 @@ namespace Pirate.PiVote.Crypto
       if (publicKey == null)
         throw new ArgumentNullException("publicKey");
 
-      P = parameters.Crypto.P;
-      HalfKey = parameters.Crypto.G.PowerMod(nonce, P);
+      P = parameters.P;
+      HalfKey = parameters.G.PowerMod(nonce, P);
 
       //The 12 magic number is inserted to avoid division remainders when
       //dividing partial deciphers for linear combinations by 2, 3 and 4.
-      Ciphertext = (publicKey.PowerMod(nonce * 12, P) * parameters.Crypto.F.PowerMod(votum, P)).Mod(P);
+      Ciphertext = (publicKey.PowerMod(nonce * 12, P) * parameters.F.PowerMod(votum, P)).Mod(P);
 
       this.RangeProves = new List<RangeProof>();
-      for (int proofIndex = 0; proofIndex < parameters.QV.ProofCount; proofIndex++)
+      for (int proofIndex = 0; proofIndex < parameters.ProofCount; proofIndex++)
       {
         this.RangeProves.Add(new RangeProof(votum, nonce * 12, this, publicKey, parameters));
       }
@@ -133,7 +133,7 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("partialDeciphers");
       if (parameters == null)
         throw new ArgumentNullException("parameters");
-      if (partialDeciphers.Count() != parameters.QV.Thereshold + 1)
+      if (partialDeciphers.Count() != parameters.Thereshold + 1)
         throw new ArgumentException("Wrong number of partial deciphers.");
 
       BigInt votePower = Ciphertext;
@@ -156,7 +156,7 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("parameters");
       
       int sumOfVotes = 0;
-      while (parameters.Crypto.F.PowerMod(new BigInt(sumOfVotes), parameters.Crypto.P) != votePower)
+      while (parameters.F.PowerMod(new BigInt(sumOfVotes), parameters.P) != votePower)
       {
         sumOfVotes++;
         if (sumOfVotes > 10000)
@@ -190,7 +190,7 @@ namespace Pirate.PiVote.Crypto
 
       bool verifies = true;
 
-      verifies &= RangeProves.Count == parameters.QV.ProofCount;
+      verifies &= RangeProves.Count == parameters.ProofCount;
       verifies &= RangeProves.All(proof => proof.Verify(this, publicKey, parameters));
 
       return verifies;
