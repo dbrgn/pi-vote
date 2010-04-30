@@ -164,6 +164,8 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public BaseParameters()
     {
+      this.questions = new List<Question>();
+
       GenerateNumbers(PrimeBits);
       SetParameters(StandardThereshold, StandardAuthorityCount, StandardProofCount);
     }
@@ -184,7 +186,6 @@ namespace Pirate.PiVote.Crypto
     public BaseParameters(DeserializeContext context)
       : base(context)
     {
-      this.questions = new List<Question>();
     }
 
     /// <summary>

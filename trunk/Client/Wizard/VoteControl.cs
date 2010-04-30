@@ -61,9 +61,9 @@ namespace Pirate.PiVote.Client
       }
     }
 
-    void questionControl_ValidChanged(object sender, EventArgs e)
+    private void questionControl_ValidChanged(object sender, EventArgs e)
     {
-      throw new NotImplementedException();
+      OnValidChanged();
     }
 
     private void OptionControl_CheckedChanged(object sender, EventArgs e)

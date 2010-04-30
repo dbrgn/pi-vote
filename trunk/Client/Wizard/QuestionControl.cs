@@ -59,6 +59,8 @@ namespace Pirate.PiVote.Client
 
         top += optionControl.Height + space;
       }
+
+      this.Height = top - space;
     }
 
     private void OptionControl_CheckedChanged(object sender, EventArgs e)
@@ -96,7 +98,7 @@ namespace Pirate.PiVote.Client
 
     private void descriptionButton_Click_1(object sender, EventArgs e)
     {
-      VoteDescriptionForm.ShowDescription(Question.Text.Text, string.Empty);
+      VoteDescriptionForm.ShowDescription(Question.Text.Text, Question.Description.Text);
     }
   }
 }

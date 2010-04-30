@@ -120,9 +120,6 @@ namespace Pirate.PiVote.Client
       this.authority4List.Enabled = enable;
       this.titleBox.Enabled = enable;
       this.descriptionBox.Enabled = enable;
-      this.questionBox.Enabled = enable;
-      this.optionListView.Enabled = enable;
-      this.optionNumberUpDown.Enabled = enable;
       this.votingFromPicker.Enabled = enable;
       this.votingUntilPicker.Enabled = enable;
 
@@ -166,12 +163,10 @@ namespace Pirate.PiVote.Client
       Status.SetProgress(Resources.CreateVotingCreating, 0d);
       Application.DoEvents();
 
-      Question question = new Question(this.questionBox.Text, new MultiLanguageString(string.Empty), Convert.ToInt32(this.optionNumberUpDown.Value));
-      foreach (ListViewItem item in this.optionListView.Items)
+      foreach (ListViewItem item in this.questionListView.Items)
       {
-        question.AddOption((Option)item.Tag);
+        votingParameters.AddQuestion((Question)item.Tag);
       }
-      votingParameters.AddQuestion(question);
 
       Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);
       List<AuthorityCertificate> authorities = new List<AuthorityCertificate>();
@@ -242,8 +237,6 @@ namespace Pirate.PiVote.Client
 
       enable &= !this.titleBox.IsEmpty;
       enable &= !this.descriptionBox.IsEmpty;
-      enable &= !this.questionBox.IsEmpty;
-      enable &= this.optionListView.Items.Count >= 2;
       enable &= this.votingFromPicker.Value.Date >= DateTime.Now.Date;
       enable &= this.votingUntilPicker.Value > this.votingFromPicker.Value;
       enable &= this.authority0List.SelectedIndex >= 0;
@@ -260,23 +253,9 @@ namespace Pirate.PiVote.Client
       indices.Add(this.authority4List.SelectedIndex);
       enable &= !indices.Any(i => indices.Where(x => x == i).Count() > 1);
 
+      enable &= this.questionListView.Items.Count >= 1;
+
       this.createButton.Enabled = enable;
-    }
-
-    private void optionRemoveButton_Click(object sender, EventArgs e)
-    {
-      if (this.optionListView.SelectedIndices.Count >= 0)
-      {
-        this.optionListView.Items.RemoveAt(this.optionListView.SelectedIndices[0]);
-        this.optionNumberUpDown.Enabled = this.optionListView.Items.Count >= 2;
-
-        if (this.optionListView.Items.Count >= 2)
-        {
-          this.optionNumberUpDown.Maximum = this.optionListView.Items.Count - 1;
-        }
-
-        CheckEnable();
-      }
     }
 
     private void votingFromPicker_ValueChanged(object sender, EventArgs e)
@@ -326,44 +305,61 @@ namespace Pirate.PiVote.Client
       this.authoritiesLabel.Text = Resources.CreateVotingAuthorities;
       this.titleLabel.Text = Resources.CreateVotingTitle;
       this.descriptionLabel.Text = Resources.CreateVotingDescription;
-      this.questionLabel.Text = Resources.CreateVotingQuestion;
-      this.optionLabel.Text = Resources.CreateVotingAnswers;
-      this.optionNumberLabel.Text = Resources.CreateVotingAnswersPerVoter;
       this.votingFromLabel.Text = Resources.CreateVotingOpenFrom;
       this.votingUntilLabel.Text = Resources.CreateVotingOpenUntil;
       this.createButton.Text = Resources.CreateVotingButton;
-      this.textColumnHeader.Text = Resources.CreateVotingOptionText;
-      this.descriptionColumnHeader.Text = Resources.CreateVotingOptionDescription;
-    }
-
-    private void contextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-    {
-      this.addToolStripMenuItem.Text = Resources.CreateVotingOptionsAdd;
-      this.removeToolStripMenuItem.Text = Resources.CreateVotingOptionsRemove;
-      this.removeToolStripMenuItem.Enabled = this.optionListView.SelectedIndices.Count > 0;
     }
 
     private void addToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      AddOptionDialog dialog = new AddOptionDialog();
+      Question question = AddQuestionDialog.ShowQuestion(null);
 
-      if (dialog.ShowDialog() == DialogResult.OK)
+      if (question != null)
       {
-        ListViewItem item = new ListViewItem(dialog.OptionText.AllLanguages);
-        item.SubItems.Add(dialog.OptionDescription.AllLanguages);
-        item.Tag = new Option(dialog.OptionText, dialog.OptionDescription);
-        this.optionListView.Items.Add(item);
+        ListViewItem item = new ListViewItem(question.Text.AllLanguages);
+        item.SubItems.Add(question.Description.AllLanguages);
+        item.Tag = question;
+        this.questionListView.Items.Add(item);
+
         CheckEnable();
       }
     }
 
     private void removeToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      if (this.optionListView.SelectedItems.Count > 0)
+      if (this.questionListView.SelectedItems.Count > 0)
       {
-        this.optionListView.SelectedItems[0].Remove();
+        this.questionListView.SelectedItems[0].Remove();
+
         CheckEnable();
       }
+    }
+
+    private void editToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      if (this.questionListView.SelectedItems.Count > 0)
+      {
+        ListViewItem item = this.questionListView.SelectedItems[0];
+        Question question = (Question)item.Tag;
+        question = AddQuestionDialog.ShowQuestion(question);
+
+        if (question != null)
+        {
+          item.Text = question.Text.AllLanguages;
+          item.SubItems[1].Text = question.Description.AllLanguages;
+          item.Tag = question;
+        }
+      }
+    }
+
+    private void questionContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+      this.addToolStripMenuItem.Text = Resources.ContextMenuAdd;
+      this.removeToolStripMenuItem.Text = Resources.ContextMenuRemove;
+      this.editToolStripMenuItem.Text = Resources.ContextMenuEdit;
+
+      this.removeToolStripMenuItem.Enabled = this.questionListView.SelectedItems.Count > 0;
+      this.editToolStripMenuItem.Enabled = this.questionListView.SelectedItems.Count > 0;
     }
   }
 }

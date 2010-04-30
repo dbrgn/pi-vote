@@ -105,6 +105,7 @@ namespace Pirate.PiVote.Crypto
       context.Write(Text);
       context.Write(Description);
       context.Write(MaxVota);
+      context.WriteList(this.options);
     }
 
     /// <summary>
@@ -117,6 +118,7 @@ namespace Pirate.PiVote.Crypto
       Text = context.ReadMultiLanguageString();
       Description = context.ReadMultiLanguageString();
       MaxVota = context.ReadInt32();
+      this.options = context.ReadObjectList<Option>();
     }
   }
 }

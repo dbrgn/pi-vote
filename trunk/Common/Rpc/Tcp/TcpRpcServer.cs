@@ -129,6 +129,10 @@ namespace Pirate.PiVote.Rpc
                 this.connections.Enqueue(connection);
               }
             }
+            else
+            {
+              int t = 0;
+            }
           }
           catch
           {

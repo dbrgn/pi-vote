@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddOptionCancelButton" xml:space="preserve">
+  <data name="CancelButton" xml:space="preserve">
     <value>&amp;Abbrechen</value>
   </data>
   <data name="AddOptionDescription" xml:space="preserve">
@@ -330,10 +330,10 @@
   <data name="CreateVotingOpenUntil" xml:space="preserve">
     <value>bis</value>
   </data>
-  <data name="CreateVotingOptionsAdd" xml:space="preserve">
+  <data name="ContextMenuAdd" xml:space="preserve">
     <value>&amp;Hinzufügen</value>
   </data>
-  <data name="CreateVotingOptionsRemove" xml:space="preserve">
+  <data name="ContextMenuRemove" xml:space="preserve">
     <value>&amp;Entfernen</value>
   </data>
   <data name="CreateVotingQuestion" xml:space="preserve">
@@ -482,5 +482,8 @@
   </data>
   <data name="VoteOptionDescriptionTitle" xml:space="preserve">
     <value>Beschreibung</value>
+  </data>
+  <data name="ContextMenuEdit" xml:space="preserve">
+    <value>&amp;Bearbeiten</value>
   </data>
 </root>
