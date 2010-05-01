@@ -12,10 +12,83 @@ using System.Text;
 using System.Threading;
 using System.IO;
 using Emil.GMP;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
-  public class ThreadedPrimeGenerator : IPrimeGenerator
+  public class PrimeFile
+  {
+    private List<uint> primes;
+    private string fileName;
+
+    public PrimeFile(string fileName)
+    {
+      this.fileName = fileName;
+    }
+
+    public void Load()
+    {
+      FileStream file = new FileStream(this.fileName, FileMode.Open, FileAccess.Read);
+      DeserializeContext context = new DeserializeContext(file);
+      int count = (int)file.Length / sizeof(uint);
+      this.primes = new List<uint>();
+
+      for (int index = 0; index <= count; index++)
+      {
+        this.primes.Add(context.ReadUInt32());
+      }
+
+      context.Close();
+      file.Close();
+    }
+
+    public void Save()
+    {
+      FileStream file = new FileStream(this.fileName, FileMode.Create, FileAccess.Write);
+      SerializeContext context = new SerializeContext(file);
+
+      foreach (uint prime in this.primes)
+      {
+        context.Write(prime);
+      }
+
+      context.Close();
+      file.Close();
+    }
+
+    public void Generate()
+    {
+      this.primes = new List<uint>();
+      BigInt prime = 2;
+      DateTime startTime = DateTime.Now;
+      DateTime lastTime = DateTime.Now;
+
+      while (prime.BitLength <= 32)
+      {
+        this.primes.Add((uint)prime);
+        prime = prime.NextPrimeGMP();
+
+        if (DateTime.Now.Subtract(lastTime).TotalSeconds > 1d)
+        {
+          lastTime = DateTime.Now;
+          double percent = 100d / (double)uint.MaxValue * (double)(uint)prime;
+          double perSecond = (double)(uint)prime / DateTime.Now.Subtract(startTime).TotalSeconds;
+          double todo = (double)(uint.MaxValue - (uint)prime);
+          double seconds = todo / perSecond;
+          TimeSpan estimated = startTime.AddSeconds(seconds).Subtract(startTime);
+
+          Console.WriteLine("{0:0.00000}% {1:0.00}p/s {2}", percent, perSecond, estimated);
+        }
+      }
+    }
+
+    public int Count
+    {
+      get { return this.primes.Count; }
+    }
+  }
+
+  public class AlternatePrimeGenerator : IPrimeGenerator
   {
     /// <summary>
     /// Low number of rabin-miller tests to perform.
