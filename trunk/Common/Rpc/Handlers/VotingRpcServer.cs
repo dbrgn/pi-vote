@@ -55,10 +55,6 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     public VotingRpcServer()
     {
-      PrimeFile f = new PrimeFile("primes");
-      f.Generate();
-      f.Save();
-
       this.serverConfig = new ServerConfig(ServerConfigFileName);
 
       this.dbConnection = new MySqlConnection(this.serverConfig.MySqlConnectionString);

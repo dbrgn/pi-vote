@@ -113,8 +113,6 @@
     <Compile Include="Config\ServerConfig.cs" />
     <Compile Include="Crypto\Base\Authority.cs" />
     <Compile Include="Crypto\Base\Ballot.cs" />
-    <Compile Include="Crypto\Base\AlternatePrimeGenerator.cs" />
-    <Compile Include="Crypto\Base\IPrimeGenerator.cs" />
     <Compile Include="Crypto\Base\ThreadedPrimeGenerator.cs" />
     <Compile Include="Crypto\Base\VerificationValue.cs" />
     <Compile Include="Crypto\Base\Proof.cs" />

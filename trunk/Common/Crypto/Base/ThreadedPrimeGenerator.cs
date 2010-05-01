@@ -15,7 +15,7 @@ using Emil.GMP;
 
 namespace Pirate.PiVote.Crypto
 {
-  public class ThreadedPrimeGenerator : IPrimeGenerator
+  public class ThreadedPrimeGenerator
   {
     /// <summary>
     /// Low number of rabin-miller tests to perform.
@@ -45,6 +45,59 @@ namespace Pirate.PiVote.Crypto
     /// The found safe prime.
     /// </summary>
     private BigInt safePrime;
+
+    private int tested;
+    private int safePrimes;
+
+    private void PrimeTest()
+    {
+      Console.WriteLine();
+      Console.WriteLine();
+
+      this.tested = 0;
+      this.safePrimes = 0;
+      DateTime start = DateTime.Now;
+      DateTime last = DateTime.Now;
+
+      Environment.ProcessorCount.Times(() => new Thread(PrimeTestThread).Start());
+
+      while (true)
+      {
+        if (DateTime.Now.Subtract(last).TotalSeconds > 5)
+        {
+          last = DateTime.Now;
+          string since = DateTime.Now.Subtract(start).ToString();
+          double safePrimePercent = 100d / (double)this.tested * (double)this.safePrimes;
+          double safePrimePerSecond = (double)this.safePrimes / DateTime.Now.Subtract(start).TotalSeconds;
+          Console.WriteLine("{0}: {1,10} / {2,10} = {3:0.00000}%, {4:0.00000}", since, this.safePrimes, this.tested, safePrimePercent, safePrimePerSecond);
+        }
+      }
+    }
+
+    private void PrimeTestThread()
+    {
+      BigInt number = Prime.RandomNumber(2048);
+      BigInt safeNumber;
+
+      while (true)
+      {
+        //number = Prime.RandomNumber(64).NextPrimeGMP();
+        number = number.NextPrimeGMP();
+        safeNumber = number * 2 + 1;
+        Interlocked.Increment(ref this.tested);
+
+        if (safeNumber.IsProbablyPrimeRabinMiller(1))
+        {
+          if (number.IsProbablyPrimeRabinMiller(64))
+          {
+            if (safeNumber.IsProbablyPrimeRabinMiller(64))
+            {
+              Interlocked.Increment(ref this.safePrimes);
+            }
+          }
+        }
+      }
+    }
 
     /// <summary>
     /// Finds both a prime and a larger safe prime.
