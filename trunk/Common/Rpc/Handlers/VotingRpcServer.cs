@@ -55,6 +55,25 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     public VotingRpcServer()
     {
+      Console.WriteLine();
+      Console.WriteLine();
+      Console.WriteLine();
+      TimeSpan time0 = new TimeSpan(0);
+      int counter = 0;
+
+      while (true)
+      {
+        DateTime start0 = DateTime.Now;
+        Emil.GMP.BigInt p0 = null;
+        Emil.GMP.BigInt sp0 = null;
+        ThreadedPrimeGenerator g0 = new ThreadedPrimeGenerator();
+        g0.FindPrimeAndSafePrime2(3072, out p0, out sp0);
+        time0 = time0.Add(DateTime.Now.Subtract(start0));
+        counter++;
+        double seconds = time0.TotalSeconds / (double)counter;
+        Console.WriteLine("avg={0}", DateTime.Now.AddSeconds(seconds).Subtract(DateTime.Now).ToString());
+      }
+
       this.serverConfig = new ServerConfig(ServerConfigFileName);
 
       this.dbConnection = new MySqlConnection(this.serverConfig.MySqlConnectionString);

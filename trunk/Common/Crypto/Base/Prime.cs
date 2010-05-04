@@ -94,7 +94,7 @@ namespace Pirate.PiVote.Crypto
     public static void FindPrimeAndSafePrimeThreaded(int bitLength, out BigInt prime, out BigInt safePrime)
     {
       ThreadedPrimeGenerator generator = new ThreadedPrimeGenerator();
-      generator.FindPrimeAndSafePrime(bitLength, out prime, out safePrime);
+      generator.FindPrimeAndSafePrime2(bitLength, out prime, out safePrime);
     }
 
     /// <summary>

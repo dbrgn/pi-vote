@@ -151,10 +151,7 @@ namespace Pirate.PiVote.Crypto
       BigInt prime = null;
       BigInt safePrime = null;
 
-      DateTime start = DateTime.Now;
       Prime.FindPrimeAndSafePrimeThreaded(primeBits, out prime, out safePrime);
-      System.Diagnostics.Debug.WriteLine("Found safe prime after " + DateTime.Now.Subtract(start).ToString());
-      //Prime.FindPrimeAndSafePrime(PrimeBits, out prime, out safePrime);
 
       SetNumbers(prime, safePrime);
     }
