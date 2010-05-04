@@ -385,7 +385,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Resources\ballot_200.png" />
   </ItemGroup>
   <ItemGroup>

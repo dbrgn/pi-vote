@@ -71,6 +71,7 @@ namespace Pirate.PiVote.Client
     public override void Begin()
     {
       this.run = true;
+      OnUpdateWizard();
 
       Status.VotingClient.GetVotingList(Status.CertificateStorage, GetVotingListCompleted);
 
@@ -121,6 +122,7 @@ namespace Pirate.PiVote.Client
         Status.SetMessage(this.exception.Message, MessageType.Error);
       }
 
+      OnUpdateWizard();
       this.votingList.Enabled = true;
     }
 
