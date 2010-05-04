@@ -45,15 +45,20 @@ namespace Pirate.PiVote.Client
       this.frenchRadio = new System.Windows.Forms.RadioButton();
       this.germanRadio = new System.Windows.Forms.RadioButton();
       this.englishRadio = new System.Windows.Forms.RadioButton();
+      this.alphaTitleLabel = new System.Windows.Forms.Label();
+      this.titlelLabel = new System.Windows.Forms.Label();
+      this.alphaWarningLabel = new System.Windows.Forms.Label();
+      this.logoBox = new System.Windows.Forms.PictureBox();
+      this.alphaBugLink = new System.Windows.Forms.LinkLabel();
+      ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
       this.SuspendLayout();
       // 
       // frenchRadio
       // 
       this.frenchRadio.AutoSize = true;
-      this.frenchRadio.Location = new System.Drawing.Point(27, 140);
-      this.frenchRadio.Margin = new System.Windows.Forms.Padding(4);
+      this.frenchRadio.Location = new System.Drawing.Point(40, 372);
       this.frenchRadio.Name = "frenchRadio";
-      this.frenchRadio.Size = new System.Drawing.Size(91, 23);
+      this.frenchRadio.Size = new System.Drawing.Size(67, 18);
       this.frenchRadio.TabIndex = 2;
       this.frenchRadio.TabStop = true;
       this.frenchRadio.Text = "Français";
@@ -63,10 +68,9 @@ namespace Pirate.PiVote.Client
       // germanRadio
       // 
       this.germanRadio.AutoSize = true;
-      this.germanRadio.Location = new System.Drawing.Point(27, 83);
-      this.germanRadio.Margin = new System.Windows.Forms.Padding(4);
+      this.germanRadio.Location = new System.Drawing.Point(40, 334);
       this.germanRadio.Name = "germanRadio";
-      this.germanRadio.Size = new System.Drawing.Size(87, 23);
+      this.germanRadio.Size = new System.Drawing.Size(65, 18);
       this.germanRadio.TabIndex = 1;
       this.germanRadio.TabStop = true;
       this.germanRadio.Text = "Deutsch";
@@ -76,27 +80,84 @@ namespace Pirate.PiVote.Client
       // englishRadio
       // 
       this.englishRadio.AutoSize = true;
-      this.englishRadio.Location = new System.Drawing.Point(27, 28);
-      this.englishRadio.Margin = new System.Windows.Forms.Padding(4);
+      this.englishRadio.Location = new System.Drawing.Point(40, 298);
       this.englishRadio.Name = "englishRadio";
-      this.englishRadio.Size = new System.Drawing.Size(80, 23);
+      this.englishRadio.Size = new System.Drawing.Size(59, 18);
       this.englishRadio.TabIndex = 0;
       this.englishRadio.TabStop = true;
       this.englishRadio.Text = "English";
       this.englishRadio.UseVisualStyleBackColor = true;
       this.englishRadio.CheckedChanged += new System.EventHandler(this.englishRadio_CheckedChanged);
       // 
+      // alphaTitleLabel
+      // 
+      this.alphaTitleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.alphaTitleLabel.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.alphaTitleLabel.ForeColor = System.Drawing.Color.Red;
+      this.alphaTitleLabel.Location = new System.Drawing.Point(209, 35);
+      this.alphaTitleLabel.Name = "alphaTitleLabel";
+      this.alphaTitleLabel.Size = new System.Drawing.Size(491, 27);
+      this.alphaTitleLabel.TabIndex = 3;
+      this.alphaTitleLabel.Text = "Alpha Version";
+      // 
+      // titlelLabel
+      // 
+      this.titlelLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.titlelLabel.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.titlelLabel.Location = new System.Drawing.Point(209, 3);
+      this.titlelLabel.Name = "titlelLabel";
+      this.titlelLabel.Size = new System.Drawing.Size(488, 32);
+      this.titlelLabel.TabIndex = 4;
+      this.titlelLabel.Text = "Pirate Party Switzerland eVoting";
+      // 
+      // alphaWarningLabel
+      // 
+      this.alphaWarningLabel.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.alphaWarningLabel.ForeColor = System.Drawing.Color.Red;
+      this.alphaWarningLabel.Location = new System.Drawing.Point(209, 62);
+      this.alphaWarningLabel.Name = "alphaWarningLabel";
+      this.alphaWarningLabel.Size = new System.Drawing.Size(488, 105);
+      this.alphaWarningLabel.TabIndex = 5;
+      this.alphaWarningLabel.Text = "This is alpha verion of this software. All voting are just for test purposes. Ple" +
+          "ase report all bugs to:";
+      // 
+      // logoBox
+      // 
+      this.logoBox.Location = new System.Drawing.Point(3, 3);
+      this.logoBox.Name = "logoBox";
+      this.logoBox.Size = new System.Drawing.Size(200, 200);
+      this.logoBox.TabIndex = 6;
+      this.logoBox.TabStop = false;
+      // 
+      // alphaBugLink
+      // 
+      this.alphaBugLink.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.alphaBugLink.Location = new System.Drawing.Point(209, 167);
+      this.alphaBugLink.Name = "alphaBugLink";
+      this.alphaBugLink.Size = new System.Drawing.Size(488, 36);
+      this.alphaBugLink.TabIndex = 7;
+      this.alphaBugLink.TabStop = true;
+      this.alphaBugLink.Text = "http://pi-vote.origo.ethz.ch/";
+      // 
       // StartItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.alphaBugLink);
+      this.Controls.Add(this.logoBox);
+      this.Controls.Add(this.alphaWarningLabel);
+      this.Controls.Add(this.titlelLabel);
+      this.Controls.Add(this.alphaTitleLabel);
       this.Controls.Add(this.frenchRadio);
       this.Controls.Add(this.germanRadio);
       this.Controls.Add(this.englishRadio);
-      this.Margin = new System.Windows.Forms.Padding(4);
+      this.Margin = new System.Windows.Forms.Padding(3);
       this.Name = "StartItem";
-      this.Size = new System.Drawing.Size(1050, 730);
+      this.Size = new System.Drawing.Size(700, 487);
       this.Load += new System.EventHandler(this.StartItem_Load);
+      ((System.ComponentModel.ISupportInitialize)(this.logoBox)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -107,5 +168,10 @@ namespace Pirate.PiVote.Client
     private RadioButton frenchRadio;
     private RadioButton germanRadio;
     private RadioButton englishRadio;
+    private Label alphaTitleLabel;
+    private Label titlelLabel;
+    private Label alphaWarningLabel;
+    private PictureBox logoBox;
+    private LinkLabel alphaBugLink;
   }
 }

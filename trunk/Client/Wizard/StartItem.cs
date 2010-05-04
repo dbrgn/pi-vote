@@ -76,6 +76,11 @@ namespace Pirate.PiVote.Client
     public override void UpdateLanguage()
     {
       base.UpdateLanguage();
+
+      this.titlelLabel.Text = Resources.StartTitle;
+      this.alphaTitleLabel.Text = Resources.StartAlphaTitle;
+      this.alphaWarningLabel.Text = Resources.StartAlphaWarning;
+      this.logoBox.Image = Resources.ballot_200;
     }
 
     private void englishRadio_CheckedChanged(object sender, EventArgs e)
