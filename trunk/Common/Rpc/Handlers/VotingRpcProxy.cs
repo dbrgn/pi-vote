@@ -176,7 +176,13 @@ namespace Pirate.PiVote.Rpc
     public void KeepAlive()
     {
       var request = new KeepAliveRequest(Guid.NewGuid());
-      var response = Execute<KeepAliveResponse>(request);
+
+      try
+      {
+        var response = Execute<KeepAliveResponse>(request);
+      }
+      catch
+      { }
     }
   }
 }

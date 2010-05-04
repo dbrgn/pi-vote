@@ -74,7 +74,7 @@ namespace Pirate.PiVote.Client
 
     public override bool CanCancel
     {
-      get { return true; }
+      get { return !this.run; }
     }
 
     public override bool CanNext

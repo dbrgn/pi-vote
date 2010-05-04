@@ -69,7 +69,7 @@ namespace Pirate.PiVote.Crypto
       serverCertStorage.AddRevocationList(sigRootCrl);
       serverCertStorage.AddRevocationList(sigIntCrl);
 
-      VotingServerEntity vs = new VotingServerEntity(null, signedParameters, serverCertStorage, serverCert);
+      VotingServerEntity vs = new VotingServerEntity(null, null, signedParameters, serverCertStorage, serverCert);
 
       var a1c = new AuthorityCertificate("Authority 1");
       a1c.CreateSelfSignature();

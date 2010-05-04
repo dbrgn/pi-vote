@@ -60,15 +60,22 @@ namespace Pirate.PiVote.Client
 
     protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
     {
-      base.OnClosing(e);
-
-      if (this.status != null)
+      if (this.item == null || this.item.CanCancel)
       {
-        if (this.status.VotingClient != null)
+        if (this.status != null)
         {
-          this.status.VotingClient.Close();
+          if (this.status.VotingClient != null)
+          {
+            this.status.VotingClient.Close();
+          }
         }
       }
+      else
+      {
+        e.Cancel = true;
+      }
+
+      base.OnClosing(e);
     }
 
     private void SetItem(WizardItem item)

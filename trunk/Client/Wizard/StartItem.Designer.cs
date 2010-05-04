@@ -48,9 +48,7 @@ namespace Pirate.PiVote.Client
       this.alphaTitleLabel = new System.Windows.Forms.Label();
       this.titlelLabel = new System.Windows.Forms.Label();
       this.alphaWarningLabel = new System.Windows.Forms.Label();
-      this.logoBox = new System.Windows.Forms.PictureBox();
       this.alphaBugLink = new System.Windows.Forms.LinkLabel();
-      ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
       this.SuspendLayout();
       // 
       // frenchRadio
@@ -123,14 +121,6 @@ namespace Pirate.PiVote.Client
       this.alphaWarningLabel.Text = "This is alpha verion of this software. All voting are just for test purposes. Ple" +
           "ase report all bugs to:";
       // 
-      // logoBox
-      // 
-      this.logoBox.Location = new System.Drawing.Point(3, 3);
-      this.logoBox.Name = "logoBox";
-      this.logoBox.Size = new System.Drawing.Size(200, 200);
-      this.logoBox.TabIndex = 6;
-      this.logoBox.TabStop = false;
-      // 
       // alphaBugLink
       // 
       this.alphaBugLink.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -146,7 +136,6 @@ namespace Pirate.PiVote.Client
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.alphaBugLink);
-      this.Controls.Add(this.logoBox);
       this.Controls.Add(this.alphaWarningLabel);
       this.Controls.Add(this.titlelLabel);
       this.Controls.Add(this.alphaTitleLabel);
@@ -157,7 +146,6 @@ namespace Pirate.PiVote.Client
       this.Name = "StartItem";
       this.Size = new System.Drawing.Size(700, 487);
       this.Load += new System.EventHandler(this.StartItem_Load);
-      ((System.ComponentModel.ISupportInitialize)(this.logoBox)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -171,7 +159,6 @@ namespace Pirate.PiVote.Client
     private Label alphaTitleLabel;
     private Label titlelLabel;
     private Label alphaWarningLabel;
-    private PictureBox logoBox;
     private LinkLabel alphaBugLink;
   }
 }

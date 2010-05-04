@@ -6,6 +6,7 @@
  */
  
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Serialization;
@@ -32,11 +33,15 @@ namespace Pirate.PiVote.Server
       TcpServer.Start();
 
       Console.WriteLine("Done");
-      Console.ReadLine();
 
-      Console.Write("Stopping...");
-      TcpServer.Stop();
-      Console.WriteLine("Done");
+      while (true)
+      {
+        Thread.Sleep(1000);
+      }
+
+      //Console.Write("Stopping...");
+      //TcpServer.Stop();
+      //Console.WriteLine("Done");
     }
   }
 }

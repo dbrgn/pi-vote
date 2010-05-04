@@ -136,5 +136,21 @@ namespace Pirate.PiVote.Rpc
     {
       this.client.Close();
     }
+
+    public string RemoteEndPointText
+    { 
+      get
+      {
+        if (this.client.Client.RemoteEndPoint is IPEndPoint)
+        {
+          IPEndPoint ipEndPoint = (IPEndPoint)this.client.Client.RemoteEndPoint;
+          return ipEndPoint.Address.ToString() + ":" + ipEndPoint.Port.ToString();
+        }
+        else
+        {
+          return "Unknown";
+        }
+      }
+    }
   }
 }

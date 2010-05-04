@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using System.Drawing;
 using System.Globalization;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Rpc;
@@ -80,7 +81,6 @@ namespace Pirate.PiVote.Client
       this.titlelLabel.Text = Resources.StartTitle;
       this.alphaTitleLabel.Text = Resources.StartAlphaTitle;
       this.alphaWarningLabel.Text = Resources.StartAlphaWarning;
-      this.logoBox.Image = Resources.ballot_200;
     }
 
     private void englishRadio_CheckedChanged(object sender, EventArgs e)
@@ -102,6 +102,13 @@ namespace Pirate.PiVote.Client
       Resources.Culture = CultureInfo.CreateSpecificCulture("fr-FR");
       LibraryResources.Culture = CultureInfo.CreateSpecificCulture("fr-FR");
       OnChangeLanguage();
+    }
+
+    protected override void OnPaint(PaintEventArgs e)
+    {
+      base.OnPaint(e);
+
+      e.Graphics.DrawImage(Resources.ballot_200 , 3, 3, 200, 200);
     }
   }
 }

@@ -20,6 +20,11 @@ namespace Pirate.PiVote.Crypto
   public class VotingServerEntity
   {
     /// <summary>
+    /// Logs information to file.
+    /// </summary>
+    private Logger logger;
+
+    /// <summary>
     /// MySQL database connection.
     /// </summary>
     private MySqlConnection dbConnection;
@@ -75,6 +80,8 @@ namespace Pirate.PiVote.Crypto
         updateCommand.Add("@Id", Id.ToByteArray());
         updateCommand.Add("@Status", (int)this.status);
         updateCommand.ExecuteNonQuery();
+
+        this.logger.Log(LogLevel.Info, "Status of voting {0} changed to {1}.", Id.ToString(), this.status.ToString());
       }
     }
 
@@ -147,29 +154,37 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new voting procedure.
     /// </summary>
+    /// <param name="logger">Logs messages to file.</param>
+    /// <param name="dbConnection">Connection to the database.</param>
     /// <param name="parameters">Voting parameters.</param>
     /// <param name="rootCertificate">Certificate storage.</param>
     public VotingServerEntity(
+      Logger logger,
       MySqlConnection dbConnection,
       Signed<VotingParameters> signedParameters,
       ICertificateStorage certificateStorage,
       ServerCertificate serverCertificate)
-      : this(dbConnection, signedParameters, certificateStorage, serverCertificate, VotingStatus.New)
+      : this(logger, dbConnection, signedParameters, certificateStorage, serverCertificate, VotingStatus.New)
     { }
 
     /// <summary>
     /// Create a new voting procedure.
     /// </summary>
+    /// <param name="logger">Logs messages to file.</param>
+    /// <param name="dbConnection">Connection to the database.</param>
     /// <param name="parameters">Voting parameters.</param>
     /// <param name="rootCertificate">Certificate storage.</param>
     /// <param name="status">Voting status.</param>
     public VotingServerEntity(
+      Logger logger,
       MySqlConnection dbConnection,
       Signed<VotingParameters> signedParameters,
       ICertificateStorage certificateStorage,
       ServerCertificate serverCertificate,
       VotingStatus status)
     {
+      if (logger == null)
+        throw new ArgumentNullException("logger");
       if (dbConnection == null)
         throw new ArgumentNullException("dbConnection");
       if (signedParameters == null)
@@ -177,6 +192,7 @@ namespace Pirate.PiVote.Crypto
       if (serverCertificate == null)
         throw new ArgumentNullException("serverCertificate");
 
+      this.logger = logger;
       this.dbConnection = dbConnection;
       this.certificateStorage = certificateStorage;
       this.serverCertificate = serverCertificate;

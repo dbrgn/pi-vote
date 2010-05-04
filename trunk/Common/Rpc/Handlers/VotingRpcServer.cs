@@ -51,22 +51,40 @@ namespace Pirate.PiVote.Rpc
     private ServerConfig serverConfig;
 
     /// <summary>
+    /// Logs messages to file.
+    /// </summary>
+    private Logger logger;
+
+    /// <summary>
+    /// Logs messages to file.
+    /// </summary>
+    public override Logger Logger { get { return this.logger; } }
+
+    /// <summary>
     /// Create the voting server.
     /// </summary>
     public VotingRpcServer()
     {
+      this.logger = new Logger(Logger.ServerLogFileName, LogLevel.Debug);
+      Logger.Log(LogLevel.Info, "Voting RPC server starting...");
+
       this.serverConfig = new ServerConfig(ServerConfigFileName);
+      Logger.Log(LogLevel.Info, "Config file is read.");
 
       this.dbConnection = new MySqlConnection(this.serverConfig.MySqlConnectionString);
       this.dbConnection.Open();
+      Logger.Log(LogLevel.Info, "Database connection is open.");
 
       CertificateStorage = new DatabaseCertificateStorage(this.dbConnection);
       CertificateStorage.LoadRoot();
       CertificateStorage.ImportStorageIfNeed();
+      Logger.Log(LogLevel.Info, "Certificate storage is loaded.");
 
       this.serverCertificate = CertificateStorage.LoadServerCertificate();
+      Logger.Log(LogLevel.Info, "Server certificate is loaded.");
 
       LoadVotings();
+      Logger.Log(LogLevel.Info, "Votings are loaded.");  
     }
 
     /// <summary>
@@ -85,7 +103,7 @@ namespace Pirate.PiVote.Rpc
         byte[] signedParametersData = reader.GetBlob(1);
         Signed<VotingParameters> signedParameters = Serializable.FromBinary<Signed<VotingParameters>>(signedParametersData);
         VotingStatus status = (VotingStatus)reader.GetInt32(2);
-        VotingServerEntity entity = new VotingServerEntity(this.dbConnection, signedParameters, this.CertificateStorage, this.serverCertificate, status);
+        VotingServerEntity entity = new VotingServerEntity(Logger, this.dbConnection, signedParameters, this.CertificateStorage, this.serverCertificate, status);
         this.votings.Add(id, entity);
       }
 
@@ -99,10 +117,15 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Serialized response data</returns>
     public byte[] Execute(byte[] requestData)
     {
+      Logger.Log(LogLevel.Debug, "Receiving request of {0} bytes.", requestData.Length);
+
       var request = Serializable.FromBinary<RpcRequest<VotingRpcServer>>(requestData);
       var response = request.TryExecute(this);
 
-      return response.ToBinary();
+      byte[] responseData = response.ToBinary();
+      Logger.Log(LogLevel.Debug, "Sending response of {0} bytes.", responseData.Length);
+
+      return responseData;
     }
 
     /// <summary>
@@ -163,7 +186,7 @@ namespace Pirate.PiVote.Rpc
       insertCommand.Parameters.AddWithValue("@Status", (int)VotingStatus.New);
       insertCommand.ExecuteNonQuery();
 
-      VotingServerEntity voting = new VotingServerEntity(this.dbConnection, signedVotingParameters, CertificateStorage, this.serverCertificate);
+      VotingServerEntity voting = new VotingServerEntity(Logger, this.dbConnection, signedVotingParameters, CertificateStorage, this.serverCertificate);
       authorities.Foreach(authority => voting.AddAuthority(authority));
       this.votings.Add(voting.Id, voting);
     }

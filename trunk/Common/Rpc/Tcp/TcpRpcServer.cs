@@ -59,11 +59,17 @@ namespace Pirate.PiVote.Rpc
     private VotingRpcServer rpcServer;
 
     /// <summary>
+    /// Logs messages to file.
+    /// </summary>
+    private Logger logger;
+
+    /// <summary>
     /// Create a new TCP RPC server.
     /// </summary>
     /// <param name="rpcServer">Voting RPC server.</param>
     public TcpRpcServer(VotingRpcServer rpcServer)
     {
+      this.logger = rpcServer.Logger;
       this.listener = new TcpListener(new IPEndPoint(IPAddress.Any, Port));
       this.connections = new Queue<TcpRpcConnection>();
       this.rpcServer = rpcServer;
@@ -122,7 +128,12 @@ namespace Pirate.PiVote.Rpc
           {
             connection.Process();
 
-            if (!connection.Overdue)
+            if (connection.Overdue)
+            {
+              connection.Close();
+              this.logger.Log(LogLevel.Info, "Connection from {0} was overdue and therefore dropped.", connection.RemoteEndPointText);
+            }
+            else
             {
               lock (this.connections)
               {
@@ -158,6 +169,8 @@ namespace Pirate.PiVote.Rpc
           {
             this.connections.Enqueue(connection);
           }
+
+          this.logger.Log(LogLevel.Info, "New connection from {0}.", connection.RemoteEndPointText);
         }
 
         Thread.Sleep(1);

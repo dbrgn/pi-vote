@@ -124,14 +124,24 @@ namespace Pirate.PiVote.Rpc
     {
       try
       {
-        return Execute(server);
+        server.Logger.Log(LogLevel.Debug, "Executing request of type {0}.", GetType().FullName); 
+        
+        RpcResponse response = Execute(server);
+
+        server.Logger.Log(LogLevel.Debug, "Request of type {0} executed sucessfully.", GetType().FullName); 
+
+        return response;
       }
       catch (PiException exception)
       {
+        server.Logger.Log(LogLevel.Info, "Executing request of type {0} resulted in PiException with message {1}.", exception.Message);
+        
         return (TResponse)Activator.CreateInstance(typeof(TResponse), new object[] { RequestId, exception });
       }
       catch (Exception exception)
       {
+        server.Logger.Log(LogLevel.Error, "Executing request of type {0} resulted in Exception with message {1} and trace {2}.", exception.Message, exception.StackTrace);
+
         return (TResponse)Activator.CreateInstance(typeof(TResponse), new object[] { RequestId, new PiException(exception) });
       }
     }

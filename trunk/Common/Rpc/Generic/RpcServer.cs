@@ -19,5 +19,6 @@ namespace Pirate.PiVote.Rpc
   /// </summary>
   public abstract class RpcServer
   {
+    public abstract Logger Logger { get; }
   }
 }

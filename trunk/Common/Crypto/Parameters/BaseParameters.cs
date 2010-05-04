@@ -20,7 +20,7 @@ namespace Pirate.PiVote.Crypto
   /// </summary>
   public class BaseParameters : Serializable
   {
-    public const int PrimeBits = 1024;
+    public const int PrimeBits = 4096;
     public const int StandardAuthorityCount = 5;
     public const int StandardThereshold = 3;
     public const int StandardProofCount = 40;
