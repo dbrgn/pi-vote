@@ -42,20 +42,36 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
+      this.spaceLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
+      // 
+      // spaceLabel
+      // 
+      this.spaceLabel.AutoSize = true;
+      this.spaceLabel.ForeColor = System.Drawing.Color.Red;
+      this.spaceLabel.Location = new System.Drawing.Point(95, 161);
+      this.spaceLabel.Name = "spaceLabel";
+      this.spaceLabel.Size = new System.Drawing.Size(274, 14);
+      this.spaceLabel.TabIndex = 0;
+      this.spaceLabel.Text = "This space shall be occupied by an appropriate picture.";
       // 
       // CheckCertificateItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.spaceLabel);
+      this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
       this.Name = "CheckCertificateItem";
-      this.Size = new System.Drawing.Size(700, 538);
+      this.Size = new System.Drawing.Size(467, 359);
       this.Load += new System.EventHandler(this.StartWizardItem_Load);
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
     #endregion
+
+    private Label spaceLabel;
 
   }
 }

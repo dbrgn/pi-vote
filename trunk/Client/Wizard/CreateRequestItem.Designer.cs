@@ -53,12 +53,13 @@ namespace Pirate.PiVote.Client
       this.emailAddressTextBox = new System.Windows.Forms.TextBox();
       this.emailAddressLabel = new System.Windows.Forms.Label();
       this.sendButton = new System.Windows.Forms.Button();
+      this.spaceLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // idTextBox
       // 
       this.idTextBox.Location = new System.Drawing.Point(116, 2);
-      this.idTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.idTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.idTextBox.Name = "idTextBox";
       this.idTextBox.ReadOnly = true;
       this.idTextBox.Size = new System.Drawing.Size(262, 20);
@@ -77,7 +78,7 @@ namespace Pirate.PiVote.Client
       // typeTextBox
       // 
       this.typeTextBox.Location = new System.Drawing.Point(116, 26);
-      this.typeTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.typeTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.typeTextBox.Name = "typeTextBox";
       this.typeTextBox.ReadOnly = true;
       this.typeTextBox.Size = new System.Drawing.Size(262, 20);
@@ -96,7 +97,7 @@ namespace Pirate.PiVote.Client
       // firstNameTextBox
       // 
       this.firstNameTextBox.Location = new System.Drawing.Point(116, 50);
-      this.firstNameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.firstNameTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.firstNameTextBox.Name = "firstNameTextBox";
       this.firstNameTextBox.Size = new System.Drawing.Size(262, 20);
       this.firstNameTextBox.TabIndex = 12;
@@ -115,7 +116,7 @@ namespace Pirate.PiVote.Client
       // familyNameTextBox
       // 
       this.familyNameTextBox.Location = new System.Drawing.Point(116, 74);
-      this.familyNameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.familyNameTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.familyNameTextBox.Name = "familyNameTextBox";
       this.familyNameTextBox.Size = new System.Drawing.Size(262, 20);
       this.familyNameTextBox.TabIndex = 14;
@@ -134,7 +135,7 @@ namespace Pirate.PiVote.Client
       // emailAddressTextBox
       // 
       this.emailAddressTextBox.Location = new System.Drawing.Point(116, 98);
-      this.emailAddressTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.emailAddressTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.emailAddressTextBox.Name = "emailAddressTextBox";
       this.emailAddressTextBox.Size = new System.Drawing.Size(262, 20);
       this.emailAddressTextBox.TabIndex = 16;
@@ -154,7 +155,7 @@ namespace Pirate.PiVote.Client
       // 
       this.sendButton.Enabled = false;
       this.sendButton.Location = new System.Drawing.Point(280, 122);
-      this.sendButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.sendButton.Margin = new System.Windows.Forms.Padding(2);
       this.sendButton.Name = "sendButton";
       this.sendButton.Size = new System.Drawing.Size(98, 25);
       this.sendButton.TabIndex = 17;
@@ -162,10 +163,21 @@ namespace Pirate.PiVote.Client
       this.sendButton.UseVisualStyleBackColor = true;
       this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
       // 
+      // spaceLabel
+      // 
+      this.spaceLabel.AutoSize = true;
+      this.spaceLabel.ForeColor = System.Drawing.Color.Red;
+      this.spaceLabel.Location = new System.Drawing.Point(70, 253);
+      this.spaceLabel.Name = "spaceLabel";
+      this.spaceLabel.Size = new System.Drawing.Size(274, 14);
+      this.spaceLabel.TabIndex = 18;
+      this.spaceLabel.Text = "This space shall be occupied by an appropriate picture.";
+      // 
       // CreateRequestItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.spaceLabel);
       this.Controls.Add(this.sendButton);
       this.Controls.Add(this.emailAddressTextBox);
       this.Controls.Add(this.emailAddressLabel);
@@ -177,7 +189,7 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.typeLabel);
       this.Controls.Add(this.idTextBox);
       this.Controls.Add(this.idLabel);
-      this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+      this.Margin = new System.Windows.Forms.Padding(1);
       this.Name = "CreateRequestItem";
       this.Size = new System.Drawing.Size(467, 359);
       this.ResumeLayout(false);
@@ -198,6 +210,7 @@ namespace Pirate.PiVote.Client
     private TextBox emailAddressTextBox;
     private Label emailAddressLabel;
     private Button sendButton;
+    private Label spaceLabel;
 
 
   }

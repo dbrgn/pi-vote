@@ -51,6 +51,7 @@ namespace Pirate.PiVote.Client
       this.functionNameTextBox = new System.Windows.Forms.TextBox();
       this.functionNameLabel = new System.Windows.Forms.Label();
       this.saveButton = new System.Windows.Forms.Button();
+      this.spaceLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // typeComboBox
@@ -58,7 +59,7 @@ namespace Pirate.PiVote.Client
       this.typeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.typeComboBox.FormattingEnabled = true;
       this.typeComboBox.Location = new System.Drawing.Point(133, 4);
-      this.typeComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.typeComboBox.Margin = new System.Windows.Forms.Padding(2);
       this.typeComboBox.Name = "typeComboBox";
       this.typeComboBox.Size = new System.Drawing.Size(255, 22);
       this.typeComboBox.TabIndex = 0;
@@ -67,7 +68,7 @@ namespace Pirate.PiVote.Client
       // firstNameTextBox
       // 
       this.firstNameTextBox.Location = new System.Drawing.Point(133, 30);
-      this.firstNameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.firstNameTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.firstNameTextBox.Name = "firstNameTextBox";
       this.firstNameTextBox.Size = new System.Drawing.Size(255, 20);
       this.firstNameTextBox.TabIndex = 1;
@@ -76,7 +77,7 @@ namespace Pirate.PiVote.Client
       // familyNameTextBox
       // 
       this.familyNameTextBox.Location = new System.Drawing.Point(133, 54);
-      this.familyNameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.familyNameTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.familyNameTextBox.Name = "familyNameTextBox";
       this.familyNameTextBox.Size = new System.Drawing.Size(255, 20);
       this.familyNameTextBox.TabIndex = 2;
@@ -115,7 +116,7 @@ namespace Pirate.PiVote.Client
       // functionNameTextBox
       // 
       this.functionNameTextBox.Location = new System.Drawing.Point(133, 78);
-      this.functionNameTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.functionNameTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.functionNameTextBox.Name = "functionNameTextBox";
       this.functionNameTextBox.Size = new System.Drawing.Size(255, 20);
       this.functionNameTextBox.TabIndex = 6;
@@ -134,7 +135,7 @@ namespace Pirate.PiVote.Client
       // saveButton
       // 
       this.saveButton.Location = new System.Drawing.Point(294, 102);
-      this.saveButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.saveButton.Margin = new System.Windows.Forms.Padding(2);
       this.saveButton.Name = "saveButton";
       this.saveButton.Size = new System.Drawing.Size(94, 24);
       this.saveButton.TabIndex = 8;
@@ -142,10 +143,21 @@ namespace Pirate.PiVote.Client
       this.saveButton.UseVisualStyleBackColor = true;
       this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
       // 
+      // spaceLabel
+      // 
+      this.spaceLabel.AutoSize = true;
+      this.spaceLabel.ForeColor = System.Drawing.Color.Red;
+      this.spaceLabel.Location = new System.Drawing.Point(73, 260);
+      this.spaceLabel.Name = "spaceLabel";
+      this.spaceLabel.Size = new System.Drawing.Size(274, 14);
+      this.spaceLabel.TabIndex = 9;
+      this.spaceLabel.Text = "This space shall be occupied by an appropriate picture.";
+      // 
       // CreateCertificateItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.spaceLabel);
       this.Controls.Add(this.saveButton);
       this.Controls.Add(this.functionNameLabel);
       this.Controls.Add(this.functionNameTextBox);
@@ -155,7 +167,7 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.familyNameTextBox);
       this.Controls.Add(this.firstNameTextBox);
       this.Controls.Add(this.typeComboBox);
-      this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+      this.Margin = new System.Windows.Forms.Padding(1);
       this.Name = "CreateCertificateItem";
       this.Size = new System.Drawing.Size(467, 359);
       this.Load += new System.EventHandler(this.StartWizardItem_Load);
@@ -175,5 +187,6 @@ namespace Pirate.PiVote.Client
     private TextBox functionNameTextBox;
     private Label functionNameLabel;
     private Button saveButton;
+    private Label spaceLabel;
   }
 }

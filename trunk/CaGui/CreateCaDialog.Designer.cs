@@ -39,28 +39,25 @@
       // nameLabel
       // 
       this.nameLabel.AutoSize = true;
-      this.nameLabel.Location = new System.Drawing.Point(32, 23);
-      this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.nameLabel.Location = new System.Drawing.Point(21, 15);
       this.nameLabel.Name = "nameLabel";
-      this.nameLabel.Size = new System.Drawing.Size(81, 20);
+      this.nameLabel.Size = new System.Drawing.Size(55, 13);
       this.nameLabel.TabIndex = 0;
       this.nameLabel.Text = "CA Name:";
       // 
       // nameTextBox
       // 
-      this.nameTextBox.Location = new System.Drawing.Point(123, 18);
-      this.nameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.nameTextBox.Location = new System.Drawing.Point(82, 12);
       this.nameTextBox.Name = "nameTextBox";
-      this.nameTextBox.Size = new System.Drawing.Size(314, 26);
+      this.nameTextBox.Size = new System.Drawing.Size(211, 20);
       this.nameTextBox.TabIndex = 0;
       this.nameTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
       // 
       // cancelButton
       // 
-      this.cancelButton.Location = new System.Drawing.Point(321, 149);
-      this.cancelButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.cancelButton.Location = new System.Drawing.Point(214, 99);
       this.cancelButton.Name = "cancelButton";
-      this.cancelButton.Size = new System.Drawing.Size(112, 35);
+      this.cancelButton.Size = new System.Drawing.Size(75, 23);
       this.cancelButton.TabIndex = 2;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
@@ -69,10 +66,9 @@
       // okButton
       // 
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(200, 149);
-      this.okButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.okButton.Location = new System.Drawing.Point(133, 99);
       this.okButton.Name = "okButton";
-      this.okButton.Size = new System.Drawing.Size(112, 35);
+      this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 1;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
@@ -81,18 +77,16 @@
       // rootCaLabel
       // 
       this.rootCaLabel.AutoSize = true;
-      this.rootCaLabel.Location = new System.Drawing.Point(32, 75);
-      this.rootCaLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.rootCaLabel.Location = new System.Drawing.Point(21, 50);
       this.rootCaLabel.Name = "rootCaLabel";
-      this.rootCaLabel.Size = new System.Drawing.Size(74, 20);
+      this.rootCaLabel.Size = new System.Drawing.Size(50, 13);
       this.rootCaLabel.TabIndex = 4;
       this.rootCaLabel.Text = "Root CA:";
       // 
       // rootCaCheckBox
       // 
       this.rootCaCheckBox.AutoSize = true;
-      this.rootCaCheckBox.Location = new System.Drawing.Point(123, 74);
-      this.rootCaCheckBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.rootCaCheckBox.Location = new System.Drawing.Point(82, 49);
       this.rootCaCheckBox.Name = "rootCaCheckBox";
       this.rootCaCheckBox.Size = new System.Drawing.Size(15, 14);
       this.rootCaCheckBox.TabIndex = 3;
@@ -100,9 +94,9 @@
       // 
       // CreateCaDialog
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(458, 203);
+      this.ClientSize = new System.Drawing.Size(305, 135);
       this.ControlBox = false;
       this.Controls.Add(this.rootCaLabel);
       this.Controls.Add(this.rootCaCheckBox);
@@ -112,7 +106,6 @@
       this.Controls.Add(this.nameLabel);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
-      this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "CreateCaDialog";

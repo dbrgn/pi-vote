@@ -45,13 +45,14 @@ namespace Pirate.PiVote.Client
       this.getSignatureRequestsRadio = new System.Windows.Forms.RadioButton();
       this.setSignatureResponsesRadio = new System.Windows.Forms.RadioButton();
       this.createVotingRadio = new System.Windows.Forms.RadioButton();
+      this.spaceLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // getSignatureRequestsRadio
       // 
       this.getSignatureRequestsRadio.AutoSize = true;
       this.getSignatureRequestsRadio.Location = new System.Drawing.Point(18, 18);
-      this.getSignatureRequestsRadio.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.getSignatureRequestsRadio.Margin = new System.Windows.Forms.Padding(2);
       this.getSignatureRequestsRadio.Name = "getSignatureRequestsRadio";
       this.getSignatureRequestsRadio.Size = new System.Drawing.Size(228, 18);
       this.getSignatureRequestsRadio.TabIndex = 0;
@@ -64,7 +65,7 @@ namespace Pirate.PiVote.Client
       // 
       this.setSignatureResponsesRadio.AutoSize = true;
       this.setSignatureResponsesRadio.Location = new System.Drawing.Point(18, 40);
-      this.setSignatureResponsesRadio.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.setSignatureResponsesRadio.Margin = new System.Windows.Forms.Padding(2);
       this.setSignatureResponsesRadio.Name = "setSignatureResponsesRadio";
       this.setSignatureResponsesRadio.Size = new System.Drawing.Size(204, 18);
       this.setSignatureResponsesRadio.TabIndex = 1;
@@ -77,7 +78,7 @@ namespace Pirate.PiVote.Client
       // 
       this.createVotingRadio.AutoSize = true;
       this.createVotingRadio.Location = new System.Drawing.Point(18, 62);
-      this.createVotingRadio.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.createVotingRadio.Margin = new System.Windows.Forms.Padding(2);
       this.createVotingRadio.Name = "createVotingRadio";
       this.createVotingRadio.Size = new System.Drawing.Size(151, 18);
       this.createVotingRadio.TabIndex = 2;
@@ -86,14 +87,25 @@ namespace Pirate.PiVote.Client
       this.createVotingRadio.UseVisualStyleBackColor = true;
       this.createVotingRadio.CheckedChanged += new System.EventHandler(this.createVotingRadio_CheckedChanged);
       // 
+      // spaceLabel
+      // 
+      this.spaceLabel.AutoSize = true;
+      this.spaceLabel.ForeColor = System.Drawing.Color.Red;
+      this.spaceLabel.Location = new System.Drawing.Point(96, 172);
+      this.spaceLabel.Name = "spaceLabel";
+      this.spaceLabel.Size = new System.Drawing.Size(274, 14);
+      this.spaceLabel.TabIndex = 3;
+      this.spaceLabel.Text = "This space shall be occupied by an appropriate picture.";
+      // 
       // AdminChooseItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.spaceLabel);
       this.Controls.Add(this.createVotingRadio);
       this.Controls.Add(this.setSignatureResponsesRadio);
       this.Controls.Add(this.getSignatureRequestsRadio);
-      this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+      this.Margin = new System.Windows.Forms.Padding(1);
       this.Name = "AdminChooseItem";
       this.Size = new System.Drawing.Size(467, 359);
       this.ResumeLayout(false);
@@ -106,6 +118,7 @@ namespace Pirate.PiVote.Client
     private RadioButton getSignatureRequestsRadio;
     private RadioButton setSignatureResponsesRadio;
     private RadioButton createVotingRadio;
+    private Label spaceLabel;
 
 
 
