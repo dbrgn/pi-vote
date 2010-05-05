@@ -283,6 +283,7 @@
     <EmbeddedResource Include="LibraryResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LibraryResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MultiLanguage\MultiLanguageTextBox.resx">
       <DependentUpon>MultiLanguageTextBox.cs</DependentUpon>

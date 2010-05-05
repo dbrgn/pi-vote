@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 using Emil.GMP;
 
 namespace Pirate.PiVote.Serialization
@@ -27,7 +28,8 @@ namespace Pirate.PiVote.Serialization
 
     public virtual void Serialize(SerializeContext context)
     {
-      context.Write(GetType().FullName);
+      string fullName = Regex.Replace(GetType().FullName, @"(\[[^,]*?,\s*[^,]*?)(,[^\]]*?)(\])", "$1$3");
+      context.Write(fullName);
     }
 
     protected virtual void Deserialize(DeserializeContext context)

@@ -48,9 +48,7 @@ namespace Pirate.PiVote.Crypto
       VoterId = signedEnvelope.Certificate.Id;
       SHA256Managed sha256 = new SHA256Managed();
       byte[] signedEnvelopeData = signedEnvelope.ToBinary();
-      signedEnvelopeData.Display("VoteReceipt.signedEnvelopeData");
-      SignedEnvelopeHash = signedEnvelopeData; //sha256.ComputeHash(signedEnvelopeData);
-      SignedEnvelopeHash.Display("VoteReceipt.SignedEnvelopeHash");
+      SignedEnvelopeHash = sha256.ComputeHash(signedEnvelopeData);
     }
 
     /// <summary>
@@ -67,10 +65,7 @@ namespace Pirate.PiVote.Crypto
 
       SHA256Managed sha256 = new SHA256Managed();
       byte[] signedEnvelopeData = signedEnvelope.ToBinary();
-      signedEnvelopeData.Display("VoteReceipt.Verify.signedEnvelopeData");
-      byte[] signedEnvelopeHash = signedEnvelopeData; //sha256.ComputeHash(signedEnvelopeData);
-      signedEnvelopeHash.Display("VoteReceipt.Verify.signedEnvelopeHash");
-      SignedEnvelopeHash.Display("VoteReceipt.SignedEnvelopeHash.Original");
+      byte[] signedEnvelopeHash = sha256.ComputeHash(signedEnvelopeData);
       return signedEnvelopeHash.Equal(SignedEnvelopeHash);
     }
 
