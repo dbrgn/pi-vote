@@ -21,19 +21,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_311216A95298AB80794B365B9A439226"
-        "OwnerKey" = "8:_9CB817E5F62C428596E849A6DE40AECA"
+        "MsmKey" = "8:_18F26FADC1A54820BF71B7F626F26142"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_311216A95298AB80794B365B9A439226"
-        "OwnerKey" = "8:_E6E4465EBCAF266E065CF1725B6146E6"
+        "MsmKey" = "8:_360A6B59FE6549E68F034A5EF8E3949F"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_56C46E5B886E4236AB4E1CE337A02255"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_62249F58F277463BBE827B1898679DE6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -45,14 +51,38 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_B34CBB58876843B7BBE1094F48AFF3E0"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D7AB44F379FC4712A9CF4C51990445DC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E6E4465EBCAF266E065CF1725B6146E6"
+        "MsmKey" = "8:_DCE6AD1EC45D2D394EB8CC857F56C53C"
         "OwnerKey" = "8:_9CB817E5F62C428596E849A6DE40AECA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DCE6AD1EC45D2D394EB8CC857F56C53C"
+        "OwnerKey" = "8:_E7B6D896A6FBC319F21D144D170FD3BE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E7B6D896A6FBC319F21D144D170FD3BE"
+        "OwnerKey" = "8:_9CB817E5F62C428596E849A6DE40AECA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EE863EB2346E4916DA2A911C59F0CDC2"
+        "OwnerKey" = "8:_E7B6D896A6FBC319F21D144D170FD3BE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -63,12 +93,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_EE863EB2346E4916DA2A911C59F0CDC2"
-        "OwnerKey" = "8:_E6E4465EBCAF266E065CF1725B6146E6"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_9CB817E5F62C428596E849A6DE40AECA"
         "MsmSig" = "8:_UNDEFINED"
@@ -76,19 +100,43 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E6E4465EBCAF266E065CF1725B6146E6"
+        "OwnerKey" = "8:_B34CBB58876843B7BBE1094F48AFF3E0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_311216A95298AB80794B365B9A439226"
+        "OwnerKey" = "8:_62249F58F277463BBE827B1898679DE6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_18F26FADC1A54820BF71B7F626F26142"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_360A6B59FE6549E68F034A5EF8E3949F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_E7B6D896A6FBC319F21D144D170FD3BE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_EE863EB2346E4916DA2A911C59F0CDC2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_DCE6AD1EC45D2D394EB8CC857F56C53C"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -216,23 +264,23 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_311216A95298AB80794B365B9A439226"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_18F26FADC1A54820BF71B7F626F26142"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Emil.GMP, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.resources, Version=0.1.3777.37436, Culture=de-DE, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_311216A95298AB80794B365B9A439226"
+                    "_18F26FADC1A54820BF71B7F626F26142"
                     {
-                    "Name" = "8:Emil.GMP.dll"
+                    "Name" = "8:Pirate.PiVote.resources.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Emil.GMP.dll"
+            "SourcePath" = "8:..\\Client\\bin\\Release\\de-DE\\Pirate.PiVote.resources.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
+            "Folder" = "8:_C0FDA6D27C6244E7BB6E5A15DBBCFD2B"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -244,7 +292,38 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_360A6B59FE6549E68F034A5EF8E3949F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client.resources, Version=0.1.3777.37436, Culture=de-DE, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_360A6B59FE6549E68F034A5EF8E3949F"
+                    {
+                    "Name" = "8:Pirate.PiVote.Client.resources.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Client\\bin\\Release\\de-DE\\Pirate.PiVote.Client.resources.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_C0FDA6D27C6244E7BB6E5A15DBBCFD2B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_56C46E5B886E4236AB4E1CE337A02255"
@@ -264,6 +343,68 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_62249F58F277463BBE827B1898679DE6"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client.resources, Version=0.1.3777.37436, Culture=fr-FR, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_62249F58F277463BBE827B1898679DE6"
+                    {
+                    "Name" = "8:Pirate.PiVote.Client.resources.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Client\\bin\\Release\\fr-FR\\Pirate.PiVote.Client.resources.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_45792E2F122142EC8412E3E1AA042FE2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B34CBB58876843B7BBE1094F48AFF3E0"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.resources, Version=0.1.3777.37436, Culture=fr-FR, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_B34CBB58876843B7BBE1094F48AFF3E0"
+                    {
+                    "Name" = "8:Pirate.PiVote.resources.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Client\\bin\\Release\\fr-FR\\Pirate.PiVote.resources.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_45792E2F122142EC8412E3E1AA042FE2"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
@@ -287,14 +428,45 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E6E4465EBCAF266E065CF1725B6146E6"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DCE6AD1EC45D2D394EB8CC857F56C53C"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote, Version=0.1.3777.37217, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Emil.GMP, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_E6E4465EBCAF266E065CF1725B6146E6"
+                    "_DCE6AD1EC45D2D394EB8CC857F56C53C"
+                    {
+                    "Name" = "8:Emil.GMP.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Emil.GMP.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E7B6D896A6FBC319F21D144D170FD3BE"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote, Version=0.1.3777.37436, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E7B6D896A6FBC319F21D144D170FD3BE"
                     {
                     "Name" = "8:Pirate.PiVote.dll"
                     "Attributes" = "3:512"
@@ -387,6 +559,28 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_45792E2F122142EC8412E3E1AA042FE2"
+                    {
+                    "Name" = "8:fr-FR"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_33B3F51ABBC14F3E8F90A456A5E573AB"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_C0FDA6D27C6244E7BB6E5A15DBBCFD2B"
+                    {
+                    "Name" = "8:de-DE"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_66DE89F8144D492F8D4BF7913C838878"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
         }
@@ -406,7 +600,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PiVote Client"
         "ProductCode" = "8:{33C4903C-008F-4533-8F7B-C4B8EF9B3844}"
-        "PackageCode" = "8:{4A606975-FE1D-40C6-AED5-55240FEBB636}"
+        "PackageCode" = "8:{D36CBA89-7E15-440D-8072-F696F316905C}"
         "UpgradeCode" = "8:{7F36B602-1CBB-449B-AA17-69145F1FFB38}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
