@@ -51,6 +51,11 @@ namespace Pirate.PiVote.Rpc
       private VoteCallBack callBack;
 
       /// <summary>
+      /// Client for update
+      /// </summary>
+      private VotingClient client;
+
+      /// <summary>
       /// Create a new vote cast opeation.
       /// </summary>
       /// <param name="votingId">Id of the voting.</param>
@@ -71,6 +76,8 @@ namespace Pirate.PiVote.Rpc
       {
         try
         {
+          this.client = client;
+
           Text = LibraryResources.ClientVote;
           Progress = 0d;
           SubText = LibraryResources.ClientVoteFetchMaterial;
@@ -87,7 +94,7 @@ namespace Pirate.PiVote.Rpc
           SubText = LibraryResources.ClientVoteCalcVote;
           SubProgress = 0d;
 
-          var envelope = client.voterEntity.Vote(material, vota);
+          var envelope = client.voterEntity.Vote(material, vota, new Progress(VoteProgressHandler));
 
           Progress = 0.7d;
           SubText = LibraryResources.ClientVotePushVote;
@@ -113,6 +120,12 @@ namespace Pirate.PiVote.Rpc
         {
           this.callBack(null, exception);
         }
+      }
+
+      private void VoteProgressHandler(double value)
+      {
+        this.client.proxy.KeepAlive();
+        SubProgress = value;
       }
     }
   }

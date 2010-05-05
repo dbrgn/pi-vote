@@ -35,8 +35,10 @@ namespace Pirate.PiVote.Crypto
     /// <param name="vota">Vota the voter wishes to cast for each option.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <param name="publicKey">Public key of voting authorities.</param>
-    public Ballot(IEnumerable<int> vota, BaseParameters parameters, Question questionParameters, BigInt publicKey)
+    public Ballot(IEnumerable<int> vota, BaseParameters parameters, Question questionParameters, BigInt publicKey, Progress progress)
     {
+      if (progress == null)
+        throw new ArgumentNullException("progress");
       if (vota == null)
         throw new ArgumentNullException("vota");
       if (parameters == null)
@@ -61,6 +63,8 @@ namespace Pirate.PiVote.Crypto
         Vote vote = new Vote(votum, nonce, parameters, publicKey);
         voteSum = voteSum == null ? vote : voteSum + vote;
         Votes.Add(vote);
+
+        progress.Add(1d / (double)(vota.Count() + 1));
       }
 
       SumProves = new List<Proof>();
@@ -69,6 +73,8 @@ namespace Pirate.PiVote.Crypto
       {
         SumProves.Add(new Proof(nonceSum * 12, voteSum, publicKey, parameters));
       }
+
+      progress.Add(1d / (double)(vota.Count() + 1));
     }
 
     /// <summary>

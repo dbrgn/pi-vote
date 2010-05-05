@@ -139,5 +139,26 @@ namespace System
       Buffer.BlockCopy(data, 0, newData, 0, data.Length);
       return newData;
     }
+
+    public static void Display(this byte[] data, string name)
+    {
+      string firstBytes = string.Empty;
+
+      for (int index = 0; index < Math.Min(data.Length, 8); index++)
+      {
+        firstBytes += string.Format("{0:x2} ", data[index]);
+      }
+
+      string lastBytes = string.Empty;
+
+      for (int index = Math.Max(8, data.Length - 8); index < data.Length; index++)
+      {
+        lastBytes += string.Format("{0:x2} ", data[index]);
+      }
+
+      string text = string.Format("{0}: {1}... {2}length {3}", name, firstBytes, lastBytes, data.Length);
+
+      Console.WriteLine(text);
+    }
   }
 }

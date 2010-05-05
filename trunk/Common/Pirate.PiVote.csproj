@@ -257,6 +257,7 @@
     <Compile Include="Rpc\Messages\CreateVotingResponse.cs" />
     <Compile Include="Rpc\Messages\CreateVotingRequest.cs" />
     <Compile Include="Rpc\Handlers\VotingRpcServer.cs" />
+    <Compile Include="Utilitiy\ProgressHandler.cs" />
     <Compile Include="Utilitiy\Files.cs" />
     <Compile Include="Utilitiy\Logger.cs" />
     <Compile Include="Utilitiy\MemoryBuffer.cs" />

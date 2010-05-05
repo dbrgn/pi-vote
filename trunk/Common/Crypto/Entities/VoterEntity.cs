@@ -13,6 +13,8 @@ using Emil.GMP;
 
 namespace Pirate.PiVote.Crypto
 {
+  public delegate void ProgressHandler(double value);
+
   /// <summary>
   /// Entity of a voter.
   /// </summary>
@@ -55,8 +57,10 @@ namespace Pirate.PiVote.Crypto
     /// <param name="votingMaterial">Voting material.</param>
     /// <param name="vota">List of vota.</param>
     /// <returns>Signed envelope containing the ballot.</returns>
-    public Signed<Envelope> Vote(VotingMaterial votingMaterial, IEnumerable<IEnumerable<int>> vota)
+    public Signed<Envelope> Vote(VotingMaterial votingMaterial, IEnumerable<IEnumerable<int>> vota, Progress progress)
     {
+      if (progress == null)
+        throw new ArgumentNullException("progress");
       if (votingMaterial == null)
         throw new ArgumentNullException("votingMaterial");
 
@@ -83,7 +87,9 @@ namespace Pirate.PiVote.Crypto
           if (!questionVota.All(votum => votum.InRange(0, 1)))
             throw new ArgumentException("Votum out of range.");
 
-          ballots.Add(new Ballot(questionVota, this.parameters, question, this.publicKey));
+          progress.Down(1d / (double)this.parameters.Questions.Count());
+          ballots.Add(new Ballot(questionVota, this.parameters, question, this.publicKey, progress));
+          progress.Up();
         }
 
         Envelope ballotContainer = new Envelope(this.parameters.VotingId, Certificate.Id, ballots);
