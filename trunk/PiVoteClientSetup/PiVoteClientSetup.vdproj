@@ -116,6 +116,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
         "Release"
@@ -278,7 +291,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote, Version=0.1.3776.31344, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote, Version=0.1.3777.37217, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_E6E4465EBCAF266E065CF1725B6146E6"
@@ -393,7 +406,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PiVote Client"
         "ProductCode" = "8:{33C4903C-008F-4533-8F7B-C4B8EF9B3844}"
-        "PackageCode" = "8:{BC6F22CD-0F29-41FC-BD7B-DFF19B19B76A}"
+        "PackageCode" = "8:{4A606975-FE1D-40C6-AED5-55240FEBB636}"
         "UpgradeCode" = "8:{7F36B602-1CBB-449B-AA17-69145F1FFB38}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -513,6 +526,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_571EF126965D4A39AB54ABC87393E258"
+            {
+            "Name" = "8:PiVote Client"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_9CB817E5F62C428596E849A6DE40AECA"
+            "Folder" = "8:_3FDD2400DA8A47BD8963BDD4C3770416"
+            "WorkingFolder" = "8:_E55824479EB3467F94CB9C80360A0B76"
+            "Icon" = "8:_11350A1BFEC2468B9B5E459E49B2332D"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
