@@ -95,6 +95,11 @@ namespace Pirate.PiVote.Rpc
       private int envelopeCount;
 
       /// <summary>
+      /// Indivual progress by thread id.
+      /// </summary>
+      private Dictionary<int, double> threadProgress;
+
+      /// <summary>
       /// Create a new result get operation.
       /// </summary>
       /// <param name="votingId">Id of the voting.</param>
@@ -148,15 +153,20 @@ namespace Pirate.PiVote.Rpc
           fetcher.Start();
           List<Thread> workers = new List<Thread>();
           Environment.ProcessorCount.Times(() => workers.Add(new Thread(TallyAddWorker)));
+          this.threadProgress = new Dictionary<int, double>();
+          workers.ForEach(worker => this.threadProgress.Add(worker.ManagedThreadId, 0d));
           workers.ForEach(worker => worker.Start());
 
           while (this.verifiedEnvelopes < this.envelopeCount)
           {
-            SubText = string.Format(LibraryResources.ClientGetResultFetchEnvelopesOf, this.verifiedEnvelopes, this.envelopeCount);
-            SubProgress = 0.2d / (double)this.envelopeCount * (double)this.fetchedEnvelopes +
-                          0.8d / (double)this.envelopeCount * (double)this.verifiedEnvelopes;
+            lock (this.threadProgress)
+            {
+              SubText = string.Format(LibraryResources.ClientGetResultFetchEnvelopesOf, this.verifiedEnvelopes, this.envelopeCount);
+              SubProgress = 0.2d / (double)this.envelopeCount * (double)this.fetchedEnvelopes +
+                            0.8d / (double)this.envelopeCount * ((double)this.verifiedEnvelopes + this.threadProgress.Values.Sum());
+            }
 
-            Thread.Sleep(10);
+            Thread.Sleep(100);
           }
 
           Progress = 0.8d;
@@ -210,7 +220,7 @@ namespace Pirate.PiVote.Rpc
             Thread.Sleep(1);
           }
 
-          var envelope = client.proxy.FetchEnvelope(votingId, envelopeIndex);
+          var envelope = this.client.proxy.FetchEnvelope(votingId, envelopeIndex);
 
           lock (this.envelopeQueue)
           {
@@ -244,7 +254,7 @@ namespace Pirate.PiVote.Rpc
           }
           else
           {
-            this.client.voterEntity.TallyAdd(indexedSignedEnvelope.First, indexedSignedEnvelope.Second);
+            this.client.voterEntity.TallyAdd(indexedSignedEnvelope.First, indexedSignedEnvelope.Second, new Progress(TallyProgressHandler));
 
             Envelope envelope = indexedSignedEnvelope.Second.Value;
             if (this.voteReceipts.ContainsKey(envelope.VoterId))
@@ -274,8 +284,24 @@ namespace Pirate.PiVote.Rpc
               }
             }
 
-            Interlocked.Increment(ref this.verifiedEnvelopes);
+            lock (this.threadProgress)
+            {
+              this.threadProgress[Thread.CurrentThread.ManagedThreadId] = 0d;
+              Interlocked.Increment(ref this.verifiedEnvelopes);
+            }
           }
+        }
+      }
+
+      /// <summary>
+      /// Callback that reports on the progress of the tallying.
+      /// </summary>
+      /// <param name="value">Amount of work done.</param>
+      private void TallyProgressHandler(double value)
+      {
+        lock (this.threadProgress)
+        {
+          this.threadProgress[Thread.CurrentThread.ManagedThreadId] = value;
         }
       }
     }

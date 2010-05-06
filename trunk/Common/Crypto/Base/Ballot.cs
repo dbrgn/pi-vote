@@ -85,8 +85,9 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     /// <param name="publicKey">Public key of the authorities.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
+    /// <param name="progress">Reports on the progress.</param>
     /// <returns>Result of the verification.</returns>
-    public bool Verify(BigInt publicKey, BaseParameters parameters, Question questionParameters)
+    public bool Verify(BigInt publicKey, BaseParameters parameters, Question questionParameters, Progress progress)
     {
       if (publicKey == null)
         throw new ArgumentNullException("publicKey");
@@ -100,6 +101,7 @@ namespace Pirate.PiVote.Crypto
       {
         verifies &= vote.Verify(publicKey, parameters);
         voteSum = voteSum == null ? vote : voteSum + vote;
+        progress.Add(1d / (double)Votes.Count);
       }
 
       verifies &= SumProves.Count == parameters.ProofCount;

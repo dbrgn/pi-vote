@@ -109,12 +109,9 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     /// <param name="envelopeIndex">Index of the envelope.</param>
     /// <param name="signedEnvelope">Signed envelope from voter.</param>
-    public void Add(int envelopeIndex, Signed<Envelope> signedEnvelope)
+    /// <param name="progress">Report the progress of the tallying.</param>
+    public void Add(int envelopeIndex, Signed<Envelope> signedEnvelope, Progress progress)
     {
-#if DEBUG
-      DateTime start = DateTime.Now;
-#endif
-
       if (signedEnvelope == null)
         throw new ArgumentNullException("signedEnvelope");
       if (voteSums == null)
@@ -139,7 +136,9 @@ namespace Pirate.PiVote.Crypto
         Question question = this.parameters.Questions.ElementAt(questionIndex);
         Ballot ballot = envelope.Ballots.ElementAt(questionIndex);
 
-        acceptVote &= ballot.Verify(this.publicKey, this.parameters, question);
+        progress.Down(1d / (double)this.parameters.Questions.Count());
+        acceptVote &= ballot.Verify(this.publicKey, this.parameters, question, progress);
+        progress.Up();
       }
 
       while (envelopeIndex != this.nextEnvelopeIndex)

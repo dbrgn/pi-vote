@@ -140,9 +140,15 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="envelopeIndex">Index of the envelope.</param>
     /// <param name="signedEnvelope">Signed envelope containing the vote.</param>
-    public void TallyAdd(int envelopeIndex, Signed<Envelope> signedEnvelope)
+    /// <param name="progress">Reports progress of the tallying.</param>
+    public void TallyAdd(int envelopeIndex, Signed<Envelope> signedEnvelope, Progress progress)
     {
-      this.tally.Add(envelopeIndex, signedEnvelope);
+      if (signedEnvelope == null)
+        throw new ArgumentNullException("signedEnvelope");
+      if (progress == null)
+        throw new ArgumentNullException("progress");
+
+      this.tally.Add(envelopeIndex, signedEnvelope, progress);
     }
 
     /// <summary>

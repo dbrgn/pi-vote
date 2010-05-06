@@ -60,7 +60,7 @@ namespace Pirate.PiVote.Client
 
     public override bool CanCancel
     {
-      get { return true; }
+      get { return !this.run; }
     }
 
     public override bool CanNext
@@ -162,14 +162,13 @@ namespace Pirate.PiVote.Client
     {
       if (this.votingList.SelectedIndices.Count > 0)
       {
+        SetGuiEnable(false);
+
         ListViewItem item = this.votingList.SelectedItems[0];
         VotingDescriptor voting = (VotingDescriptor)item.Tag;
 
         string fileName = string.Format("{0}@{1}.pi-auth", Status.Certificate.Id.ToString(), voting.Id.ToString());
         string filePath = Path.Combine(Status.DataPath, fileName);
-
-        this.createSharesButton.Enabled = false;
-        this.votingList.Enabled = false;
 
         this.run = true;
         OnUpdateWizard();
@@ -200,8 +199,8 @@ namespace Pirate.PiVote.Client
           Status.SetMessage(this.exception.Message, MessageType.Error);
         }
 
-        this.votingList.Enabled = true;
         OnUpdateWizard();
+        SetGuiEnable(true);
       }
     }
 
@@ -216,6 +215,8 @@ namespace Pirate.PiVote.Client
     {
       if (this.votingList.SelectedIndices.Count > 0)
       {
+        SetGuiEnable(false);
+
         ListViewItem item = this.votingList.SelectedItems[0];
         VotingDescriptor voting = (VotingDescriptor)item.Tag;
 
@@ -224,9 +225,6 @@ namespace Pirate.PiVote.Client
 
         if (File.Exists(filePath))
         {
-          this.checkSharesButton.Enabled = false;
-          this.votingList.Enabled = false;
-
           this.run = true;
           OnUpdateWizard();
 
@@ -263,16 +261,16 @@ namespace Pirate.PiVote.Client
           else
           {
             Status.SetMessage(this.exception.Message, MessageType.Error);
-            this.votingList.Enabled = true;
             OnUpdateWizard();
           }
         }
         else
         {
           Status.SetMessage(Resources.CreateVotingAuthFileMissing, MessageType.Error);
-          this.votingList.Enabled = true;
           OnUpdateWizard();
         }
+
+        SetGuiEnable(true);
       }
     }
 
@@ -285,10 +283,48 @@ namespace Pirate.PiVote.Client
       this.run = false;
     }
 
+    private void SetGuiEnable(bool enable)
+    {
+      if (enable)
+      {
+        if (this.votingList.SelectedIndices.Count > 0)
+        {
+          ListViewItem item = this.votingList.SelectedItems[0];
+          VotingDescriptor voting = (VotingDescriptor)item.Tag;
+
+          this.createSharesButton.Enabled =
+            voting.Status == VotingStatus.New &&
+            !voting.AuthoritiesDone.Contains(Status.Certificate.Id);
+          this.checkSharesButton.Enabled =
+            voting.Status == VotingStatus.Sharing &&
+            !voting.AuthoritiesDone.Contains(Status.Certificate.Id);
+          this.decipherButton.Enabled =
+            voting.Status == VotingStatus.Deciphering &&
+            !voting.AuthoritiesDone.Contains(Status.Certificate.Id);
+        }
+        else
+        {
+          this.createSharesButton.Enabled = false;
+          this.checkSharesButton.Enabled = false;
+          this.decipherButton.Enabled = false;
+        }
+      }
+      else
+      {
+        this.createSharesButton.Enabled = false;
+        this.checkSharesButton.Enabled = false;
+        this.decipherButton.Enabled = false;
+      }
+
+      this.votingList.Enabled = enable;
+    }
+
     private void decipherButton_Click(object sender, EventArgs e)
     {
       if (this.votingList.SelectedIndices.Count > 0)
       {
+        SetGuiEnable(false);
+
         ListViewItem item = this.votingList.SelectedItems[0];
         VotingDescriptor voting = (VotingDescriptor)item.Tag;
 
@@ -297,9 +333,6 @@ namespace Pirate.PiVote.Client
 
         if (File.Exists(filePath))
         {
-          this.checkSharesButton.Enabled = false;
-          this.votingList.Enabled = false;
-
           this.run = true;
           OnUpdateWizard();
 
@@ -330,15 +363,15 @@ namespace Pirate.PiVote.Client
           }
 
           Status.UpdateProgress();
-          this.votingList.Enabled = true;
           OnUpdateWizard();
         }
         else
         {
           Status.SetMessage(Resources.CreateVotingAuthFileMissing, MessageType.Error);
-          this.votingList.Enabled = true;
           OnUpdateWizard();
         }
+
+        SetGuiEnable(true);
       }
     }
 

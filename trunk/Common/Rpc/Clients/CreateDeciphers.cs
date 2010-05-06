@@ -54,6 +54,41 @@ namespace Pirate.PiVote.Rpc
       private CreateDeciphersCallBack callBack;
 
       /// <summary>
+      /// Number of envelopes fetched from the server.
+      /// </summary>
+      private int fetchedEnvelopes;
+
+      /// <summary>
+      /// Number of envelopes verified.
+      /// </summary>
+      private int verifiedEnvelopes;
+
+      /// <summary>
+      /// Number of envelopes in voting.
+      /// </summary>
+      private int envelopeCount;
+
+      /// <summary>
+      /// Indivual progress by thread id.
+      /// </summary>
+      private Dictionary<int, double> threadProgress;
+
+      /// <summary>
+      /// Queue with enveloped to verify and add.
+      /// </summary>
+      private Queue<Tuple<int, Signed<Envelope>>> envelopeQueue;
+
+      /// <summary>
+      /// Continue to run worker threads?
+      /// </summary>
+      private bool workerRun;
+
+      /// <summary>
+      /// Voter client to work with.
+      /// </summary>
+      private VotingClient client;
+
+      /// <summary>
       /// Create a new vote cast opeation.
       /// </summary>
       /// <param name="votingId">Id of the voting.</param>
@@ -91,19 +126,32 @@ namespace Pirate.PiVote.Rpc
 
           Text = LibraryResources.ClientCreateDeciphersFetchEnvelopeCount;
           Progress = 0.2d;
-          
-          int envelopeCount = client.proxy.FetchEnvelopeCount(this.votingId);
+          this.envelopeCount = client.proxy.FetchEnvelopeCount(votingId);
 
-          Text = string.Format(LibraryResources.ClientCreateDeciphersFetchEnvelope, 0, envelopeCount);
-          Progress = 0.3d;
-          
-          for (int envelopeIndex = 0; envelopeIndex < envelopeCount; envelopeIndex++)
+          Text = LibraryResources.ClientCreateDeciphersFetchEnvelope;
+          Progress = 0.2d;
+
+          this.client = client;
+          this.envelopeQueue = new Queue<Tuple<int, Signed<Envelope>>>();
+          this.workerRun = true;
+          Thread fetcher = new Thread(FetchWorker);
+          fetcher.Start();
+          List<Thread> workers = new List<Thread>();
+          Environment.ProcessorCount.Times(() => workers.Add(new Thread(TallyAddWorker)));
+          this.threadProgress = new Dictionary<int, double>();
+          workers.ForEach(worker => this.threadProgress.Add(worker.ManagedThreadId, 0d));
+          workers.ForEach(worker => worker.Start());
+
+          while (this.verifiedEnvelopes < this.envelopeCount)
           {
-            var signedEnvelope = client.proxy.FetchEnvelope(this.votingId, envelopeIndex);
-            client.authorityEntity.TallyAdd(envelopeIndex, signedEnvelope);
+            lock (this.threadProgress)
+            {
+              SubText = string.Format(LibraryResources.ClientGetResultFetchEnvelopesOf, this.verifiedEnvelopes, this.envelopeCount);
+              SubProgress = 0.2d / (double)this.envelopeCount * (double)this.fetchedEnvelopes +
+                            0.8d / (double)this.envelopeCount * ((double)this.verifiedEnvelopes + this.threadProgress.Values.Sum());
+            }
 
-            Text = string.Format(LibraryResources.ClientCreateDeciphersFetchEnvelope, 0, envelopeIndex + 1);
-            Progress += 0.4d / (double)envelopeCount;
+            Thread.Sleep(100);
           }
 
           Text = LibraryResources.ClientCreateDeciphersCreatePartialDecipher;
@@ -131,6 +179,75 @@ namespace Pirate.PiVote.Rpc
         catch (Exception exception)
         {
           this.callBack(null, exception);
+        }
+      }
+
+      /// <summary>
+      /// Thread that fetches envelopes from server.
+      /// </summary>
+      private void FetchWorker()
+      {
+        for (int envelopeIndex = 0; envelopeIndex < this.envelopeCount; envelopeIndex++)
+        {
+          while (this.envelopeQueue.Count > Environment.ProcessorCount * 2)
+          {
+            Thread.Sleep(1);
+          }
+
+          var envelope = this.client.proxy.FetchEnvelope(votingId, envelopeIndex);
+
+          lock (this.envelopeQueue)
+          {
+            this.envelopeQueue.Enqueue(new Tuple<int, Signed<Envelope>>(envelopeIndex, envelope));
+          }
+
+          Interlocked.Increment(ref this.fetchedEnvelopes);
+        }
+      }
+
+      /// <summary>
+      /// Thread that adds envelopes to tally.
+      /// </summary>
+      private void TallyAddWorker()
+      {
+        while (this.workerRun)
+        {
+          Tuple<int, Signed<Envelope>> indexedSignedEnvelope = null;
+
+          lock (this.envelopeQueue)
+          {
+            if (this.envelopeQueue.Count > 0)
+            {
+              indexedSignedEnvelope = this.envelopeQueue.Dequeue();
+            }
+          }
+
+          if (indexedSignedEnvelope == null)
+          {
+            Thread.Sleep(1);
+          }
+          else
+          {
+            this.client.authorityEntity.TallyAdd(indexedSignedEnvelope.First, indexedSignedEnvelope.Second, new Progress(TallyProgressHandler));
+
+            lock (this.threadProgress)
+            {
+              this.threadProgress[Thread.CurrentThread.ManagedThreadId] = 0d;
+              Interlocked.Increment(ref this.verifiedEnvelopes);
+            }
+          }
+        }
+      }
+
+      /// <summary>
+      /// Callback that reports on the progress of the tallying.
+      /// </summary>
+      /// <param name="value">Amount of work done.</param>
+      private void TallyProgressHandler(double value)
+      {
+        lock (this.threadProgress)
+        {
+          this.threadProgress[Thread.CurrentThread.ManagedThreadId] = value;
         }
       }
     }

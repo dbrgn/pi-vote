@@ -183,11 +183,11 @@ namespace Pirate.PiVote.Crypto
 
       for (int envelopeIndex = 0; envelopeIndex < vs.GetEnvelopeCount(); envelopeIndex++)
       {
-        a1.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
-        a2.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
-        a3.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
-        a4.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
-        a5.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
+        a1.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex), new Progress(null));
+        a2.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex), new Progress(null));
+        a3.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex), new Progress(null));
+        a4.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex), new Progress(null));
+        a5.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex), new Progress(null));
       }
 
       var pd1 = a1.PartiallyDecipher();
@@ -206,7 +206,7 @@ namespace Pirate.PiVote.Crypto
 
       for (int envelopeIndex = 0; envelopeIndex < vs.GetEnvelopeCount(); envelopeIndex++)
       {
-        v1.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex));
+        v1.TallyAdd(envelopeIndex, vs.GetEnvelope(envelopeIndex), new Progress(null));
       }
 
       for (int authorityIndex = 1; authorityIndex < vs.Parameters.AuthorityCount + 1; authorityIndex++)
@@ -283,7 +283,7 @@ namespace Pirate.PiVote.Crypto
       ballots.Add(new Ballot(new int[] { 1, 0 }, parameters, question, publicKey, new Progress(null)));
       ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, question, publicKey, new Progress(null)));
 
-      if (!ballots.All(ballot => ballot.Verify(publicKey, parameters, question)))
+      if (!ballots.All(ballot => ballot.Verify(publicKey, parameters, question, new Progress(null))))
         throw new Exception("Bad proof.");
 
       for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
