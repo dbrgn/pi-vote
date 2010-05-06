@@ -87,7 +87,7 @@ namespace Pirate.PiVote.Rpc
 
       this.workerThreads = new List<Thread>();
 
-      for (int threadIndex = 0; threadIndex < 4; threadIndex++)
+      for (int threadIndex = 0; threadIndex < 2; threadIndex++)
       {
         Thread workerThread = new Thread(Worker);
         workerThread.Start();
@@ -112,42 +112,53 @@ namespace Pirate.PiVote.Rpc
     {
       while (this.run)
       {
+        bool doneSomeWork = false;
         TcpRpcConnection connection = null;
 
-        lock (this.connections)
+        for (int processIndex = 0; processIndex < this.connections.Count; processIndex++)
         {
-          if (this.connections.Count > 0)
+          lock (this.connections)
           {
-            connection = this.connections.Dequeue();
-          }
-        }
-
-        if (connection != null)
-        {
-          try
-          {
-            connection.Process();
-
-            if (connection.Overdue)
+            if (this.connections.Count > 0)
             {
-              connection.Close();
-              this.logger.Log(LogLevel.Info, "Connection from {0} was overdue and therefore dropped.", connection.RemoteEndPointText);
+              connection = this.connections.Dequeue();
             }
-            else
+          }
+
+          if (connection != null)
+          {
+            try
             {
-              lock (this.connections)
+              doneSomeWork |= connection.Process();
+
+              if (connection.Overdue)
               {
-                this.connections.Enqueue(connection);
+                connection.Close();
+                this.logger.Log(LogLevel.Info, "Connection from {0} was overdue and therefore dropped.", connection.RemoteEndPointText);
+              }
+              else
+              {
+                lock (this.connections)
+                {
+                  this.connections.Enqueue(connection);
+                }
               }
             }
-          }
-          catch
-          {
-            connection.Close();
+            catch
+            {
+              connection.Close();
+            }
           }
         }
 
-        Thread.Sleep(1);
+        if (doneSomeWork)
+        {
+          Thread.Sleep(1);
+        }
+        else
+        {
+          Thread.Sleep(100);
+        }
       }
     }
 
@@ -160,7 +171,7 @@ namespace Pirate.PiVote.Rpc
 
       while (this.run)
       {
-        if (this.listener.Pending())
+        while (this.listener.Pending())
         {
           TcpClient client = this.listener.AcceptTcpClient();
           TcpRpcConnection connection = new TcpRpcConnection(client, rpcServer);
@@ -171,9 +182,11 @@ namespace Pirate.PiVote.Rpc
           }
 
           this.logger.Log(LogLevel.Info, "New connection from {0}.", connection.RemoteEndPointText);
+
+          Thread.Sleep(1);
         }
 
-        Thread.Sleep(1);
+        Thread.Sleep(100);
       }
 
       this.listener.Stop();

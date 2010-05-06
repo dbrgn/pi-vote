@@ -84,20 +84,27 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Work the connection for incoming requests.
     /// </summary>
-    public void Process()
+    /// <returns>
+    /// Has some work actually be done?
+    /// </returns>
+    public bool Process()
     {
+      bool doneSomeWork = false;
+
       //Read from network and put to inBuffer.
       if (this.client.Available > 0)
       {
         byte[] data = new byte[this.client.Available];
         this.stream.Read(data, 0, data.Length);
         this.inBuffer.Write(data);
+        doneSomeWork = true;
       }
 
       //Read message length from inBuffer.
       if (this.messageLength == 0 && this.inBuffer.Length >= sizeof(int))
       {
         this.messageLength = this.inBuffer.ReadInt32();
+        doneSomeWork = true;
       }
 
       //Read message from inBuffer, execute and write to outBuffer.
@@ -116,6 +123,7 @@ namespace Pirate.PiVote.Rpc
 
         this.outBuffer.Write(responseData.Length);
         this.outBuffer.Write(responseData);
+        doneSomeWork = true;
       }
 
       //Write from outBuffer to network.
@@ -124,7 +132,10 @@ namespace Pirate.PiVote.Rpc
         int sendLength = Math.Min(this.outBuffer.Length, this.client.SendBufferSize);
         byte[] data = this.outBuffer.ReadBytes(sendLength);
         this.writer.Write(data);
+        doneSomeWork = true;
       }
+
+      return doneSomeWork;
     }
 
     public bool Overdue
