@@ -22,7 +22,8 @@ namespace Pirate.PiVote.Client
 {
   public partial class CreateVotingItem : WizardItem
   {
-    private bool run;
+    private bool done = false;
+    private bool run = false;
     private Exception exception;
     private Thread initThread;
     private List<AuthorityCertificate> authorityCertificates;
@@ -56,6 +57,11 @@ namespace Pirate.PiVote.Client
     public override bool CanPrevious
     {
       get { return !this.run; }
+    }
+
+    public override bool CancelIsDone
+    {
+      get { return this.done; }
     }
 
     public override void Begin()
@@ -95,6 +101,7 @@ namespace Pirate.PiVote.Client
       }
 
       SetEnable(true);
+      this.done = true;
       this.run = false;
       OnUpdateWizard();
     }

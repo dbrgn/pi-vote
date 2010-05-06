@@ -65,6 +65,22 @@ namespace Pirate.PiVote.Client
 
     private void OptionControl_CheckedChanged(object sender, EventArgs e)
     {
+      if (Question.MaxOptions < 2)
+      {
+        VoteOptionControl activeControl = (VoteOptionControl)sender;
+
+        if (activeControl.Checked)
+        {
+          foreach (VoteOptionControl optionControl in this.optionControls)
+          {
+            if (optionControl != activeControl)
+            {
+              optionControl.Checked = false;
+            }
+          }
+        }
+      }
+
       OnValidChanged();
     }
 

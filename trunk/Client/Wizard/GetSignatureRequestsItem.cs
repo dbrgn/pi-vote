@@ -60,6 +60,11 @@ namespace Pirate.PiVote.Client
       get { return this.done; }
     }
 
+    public override bool CancelIsDone
+    {
+      get { return this.done; }
+    }
+
     public override void Begin()
     {
     }
@@ -94,7 +99,6 @@ namespace Pirate.PiVote.Client
         }
 
         this.done = true;
-
         OnUpdateWizard();
       }
     }

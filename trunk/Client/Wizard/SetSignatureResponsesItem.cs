@@ -21,7 +21,8 @@ namespace Pirate.PiVote.Client
 {
   public partial class SetSignatureResponsesItem : WizardItem
   {
-    private bool run;
+    private bool done = false;
+    private bool run = false;
     private Exception exception;
 
     public SetSignatureResponsesItem()
@@ -52,6 +53,11 @@ namespace Pirate.PiVote.Client
     public override bool CanPrevious
     {
       get { return !this.run; }
+    }
+
+    public override bool CancelIsDone
+    {
+      get { return this.done; }
     }
 
     public override void Begin()
@@ -90,7 +96,8 @@ namespace Pirate.PiVote.Client
         {
           Status.SetMessage(this.exception.Message, MessageType.Error);
         }
-        
+
+        this.done = true;
         OnUpdateWizard();
       }
     }
