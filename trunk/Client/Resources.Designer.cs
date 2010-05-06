@@ -1202,6 +1202,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Done.
+        /// </summary>
+        internal static string WizardDoneButton {
+            get {
+                return ResourceManager.GetString("WizardDoneButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Next.
         /// </summary>
         internal static string WizardNextButton {

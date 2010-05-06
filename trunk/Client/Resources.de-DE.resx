@@ -504,4 +504,7 @@
   <data name="StartTitle" xml:space="preserve">
     <value>eVoting der Piratenpartei Schweiz</value>
   </data>
+  <data name="WizardDoneButton" xml:space="preserve">
+    <value>&amp;Fertig</value>
+  </data>
 </root>

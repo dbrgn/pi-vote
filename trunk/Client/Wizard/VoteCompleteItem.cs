@@ -24,7 +24,8 @@ namespace Pirate.PiVote.Client
     public VotingDescriptor VotingDescriptor { get; set; }
     public IEnumerable<IEnumerable<bool>> Vota;
 
-    private bool run;
+    private bool done = false;
+    private bool run = false;
     private Exception exception;
     private Signed<VoteReceipt> voteReceipt;
 
@@ -51,6 +52,11 @@ namespace Pirate.PiVote.Client
     public override bool CanCancel
     {
       get { return !this.run; }
+    }
+
+    public override bool CancelIsDone
+    {
+      get { return this.done; }
     }
 
     public override void Begin()
@@ -82,6 +88,7 @@ namespace Pirate.PiVote.Client
         Status.SetMessage(exception.Message, MessageType.Error);
       }
 
+      this.done = true;
       OnUpdateWizard();
     }
 

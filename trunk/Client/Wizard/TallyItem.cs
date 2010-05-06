@@ -21,7 +21,8 @@ namespace Pirate.PiVote.Client
 {
   public partial class TallyItem : WizardItem
   {
-    private bool run;
+    private bool done = false;
+    private bool run = false;
     private VotingResult result;
     private Exception exception;
     private IDictionary<Guid, VoteReceiptStatus> voteReceiptsStatus;
@@ -52,12 +53,18 @@ namespace Pirate.PiVote.Client
 
     public override bool CanCancel
     {
-      get { return true; }
+      get { return !this.run; }
+    }
+
+    public override bool CancelIsDone
+    {
+      get { return this.done; }
     }
 
     public override void Begin()
     {
       this.run = true;
+      OnUpdateWizard();
 
       Status.VotingClient.ActivateVoter((VoterCertificate)Status.Certificate);
       Status.VotingClient.GetResult(VotingDescriptor.Id, VoteReceipts, GetResultComplete);
@@ -145,6 +152,7 @@ namespace Pirate.PiVote.Client
         Status.SetMessage(this.exception.Message, MessageType.Error);
       }
 
+      this.done = true;
       OnUpdateWizard();
     }
 

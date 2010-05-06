@@ -33,7 +33,15 @@ namespace Pirate.PiVote.Client
       Text = Resources.PiVoteClient;
       this.previouseButton.Text = Resources.WizardPreviousButton;
       this.nextButton.Text = Resources.WizardNextButton;
-      this.cancelButton.Text = Resources.WizardCancelButton;
+
+      if (this.item != null)
+      {
+        this.cancelButton.Text = this.item.CancelIsDone ? Resources.WizardDoneButton : Resources.WizardCancelButton;
+      }
+      else
+      {
+        this.cancelButton.Text = Resources.WizardCancelButton;
+      }
 
       if (this.item != null)
       {
@@ -125,6 +133,7 @@ namespace Pirate.PiVote.Client
       this.previouseButton.Enabled = this.item.CanPrevious;
       this.nextButton.Enabled = this.item.CanNext;
       this.cancelButton.Enabled = this.item.CanCancel;
+      this.cancelButton.Text = this.item.CancelIsDone ? Resources.WizardDoneButton : Resources.WizardCancelButton;
     }
 
     private void itemPanel_Paint(object sender, PaintEventArgs e)

@@ -83,6 +83,11 @@ namespace Pirate.PiVote.Client
       get { return false; }
     }
 
+    public virtual bool CancelIsDone
+    {
+      get { return false; }
+    }
+
     public virtual void Begin()
     { 
     }

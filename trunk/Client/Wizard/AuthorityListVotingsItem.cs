@@ -68,6 +68,11 @@ namespace Pirate.PiVote.Client
       get { return this.signedBadShareProof != null; }
     }
 
+    public override bool CancelIsDone
+    {
+      get { return true; }
+    }
+
     public override void Begin()
     {
       this.run = true;

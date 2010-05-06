@@ -95,7 +95,10 @@ namespace Pirate.PiVote.Rpc
     {
       this.run = false;
       this.masterThread.Join();
-      this.proxy.Stop();
+
+      if (this.proxy != null)
+        this.proxy.Stop();
+
       this.client.Disconnect();
     }
 
