@@ -78,7 +78,6 @@ namespace Pirate.PiVote.Client
       while (this.run)
       {
         Status.UpdateProgress();
-        Application.DoEvents();
         Thread.Sleep(1);
       }
 
@@ -178,7 +177,6 @@ namespace Pirate.PiVote.Client
         while (this.run)
         {
           Status.UpdateProgress();
-          Application.DoEvents();
           Thread.Sleep(1);
         }
 
@@ -233,7 +231,6 @@ namespace Pirate.PiVote.Client
           while (this.run)
           {
             Status.UpdateProgress();
-            Application.DoEvents();
             Thread.Sleep(1);
           }
 
@@ -341,7 +338,6 @@ namespace Pirate.PiVote.Client
           while (this.run)
           {
             Status.UpdateProgress();
-            Application.DoEvents();
             Thread.Sleep(1);
           }
 

@@ -62,7 +62,8 @@ namespace Pirate.PiVote.Client
     {
       this.message.Visible = false;
       this.progress.Visible = true;
-      this.progress.Refresh();
+      this.progress.UpdateProgress();
+      Application.DoEvents();
     }
 
     public void SetProgress(string message, double progress)

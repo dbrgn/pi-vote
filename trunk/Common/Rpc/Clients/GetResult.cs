@@ -169,6 +169,10 @@ namespace Pirate.PiVote.Rpc
             Thread.Sleep(100);
           }
 
+          fetcher.Join();
+          this.workerRun = false;
+          workers.ForEach(worker => worker.Join());
+
           Progress = 0.8d;
           Text = LibraryResources.ClientGetResultFetchPartialDeciphers;
           SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, 0, parameters.AuthorityCount);

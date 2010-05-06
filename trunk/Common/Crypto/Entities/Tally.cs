@@ -61,6 +61,13 @@ namespace Pirate.PiVote.Crypto
     private int nextEnvelopeIndex;
 
     /// <summary>
+    /// Queue used to bring envelopes in order.
+    /// Key is the envelope index.
+    /// Value is a tuple of signed envelope and accept vote boolean.
+    /// </summary>
+    private Dictionary<int, Tuple<Signed<Envelope>, bool>> envelopeSequencerList;
+
+    /// <summary>
     /// Total number of envelopes.
     /// </summary>
     public int EnvelopeCount { get; private set; }
@@ -96,6 +103,7 @@ namespace Pirate.PiVote.Crypto
       this.partialDeciphers = new List<PartialDecipher>();
       this.countedVoters = new List<Guid>();
       this.nextEnvelopeIndex = 0;
+      this.envelopeSequencerList = new Dictionary<int, Tuple<Signed<Envelope>, bool>>();
 
       EnvelopeHash = new byte[] { };
       EnvelopeCount = 0;
@@ -141,41 +149,66 @@ namespace Pirate.PiVote.Crypto
         progress.Up();
       }
 
-      while (envelopeIndex != this.nextEnvelopeIndex)
+      lock (this.envelopeSequencerList)
       {
-        Thread.Sleep(1);
+        this.envelopeSequencerList.Add(envelopeIndex, new Tuple<Signed<Envelope>,bool>(signedEnvelope, acceptVote));
       }
 
-      lock (this.voteSums)
+      AddInSequence();
+    }
+
+    private void AddInSequence()
+    {
+      bool nextOne = true;
+
+      while (nextOne)
       {
-        SHA256Managed sha256 = new SHA256Managed();
-        EnvelopeHash = sha256.ComputeHash(EnvelopeHash.Concat(signedEnvelope.ToBinary()));
-        EnvelopeCount++;
+        Tuple<Signed<Envelope>, bool> envelopeEntry = null;
 
-        System.Diagnostics.Debug.WriteLine("I=" + envelopeIndex + " EvH=" + Convert.ToBase64String(sha256.ComputeHash(signedEnvelope.ToBinary())) + " RH=" + Convert.ToBase64String(EnvelopeHash));
-
-        if (acceptVote)
+        lock (this.envelopeSequencerList)
         {
-          for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
+          if (this.envelopeSequencerList.ContainsKey(this.nextEnvelopeIndex))
           {
-            Question question = this.parameters.Questions.ElementAt(questionIndex);
-            Ballot ballot = envelope.Ballots.ElementAt(questionIndex);
-
-            for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
-            {
-              this.voteSums[questionIndex][optionIndex] =
-                this.voteSums[questionIndex][optionIndex] == null ?
-                ballot.Votes[optionIndex] :
-                this.voteSums[questionIndex][optionIndex] + ballot.Votes[optionIndex];
-            }
+            envelopeEntry = this.envelopeSequencerList[this.nextEnvelopeIndex];
+            this.envelopeSequencerList.Remove(this.nextEnvelopeIndex);
           }
-
-          this.countedVoters.Add(signedEnvelope.Certificate.Id);
         }
 
-        this.result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));
+        nextOne = envelopeEntry != null;
 
-        this.nextEnvelopeIndex = envelopeIndex + 1;
+        if (envelopeEntry != null)
+        {
+          Signed<Envelope> signedEnvelope = envelopeEntry.First;
+          Envelope envelope = signedEnvelope.Value;
+          bool acceptVote = envelopeEntry.Second;
+
+          SHA256Managed sha256 = new SHA256Managed();
+          EnvelopeHash = sha256.ComputeHash(EnvelopeHash.Concat(signedEnvelope.ToBinary()));
+          EnvelopeCount++;
+
+          if (acceptVote)
+          {
+            for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
+            {
+              Question question = this.parameters.Questions.ElementAt(questionIndex);
+              Ballot ballot = envelope.Ballots.ElementAt(questionIndex);
+
+              for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
+              {
+                this.voteSums[questionIndex][optionIndex] =
+                  this.voteSums[questionIndex][optionIndex] == null ?
+                  ballot.Votes[optionIndex] :
+                  this.voteSums[questionIndex][optionIndex] + ballot.Votes[optionIndex];
+              }
+            }
+
+            this.countedVoters.Add(signedEnvelope.Certificate.Id);
+          }
+
+          this.result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));
+
+          this.nextEnvelopeIndex++;
+        }
       }
     }
 

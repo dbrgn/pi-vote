@@ -41,10 +41,8 @@ namespace Pirate.PiVote.Client
       this.progressBar.Value = Convert.ToInt32(100d * progress);
     }
 
-    public override void Refresh()
+    public void UpdateProgress()
     {
-      base.Refresh();
-
       if (Status != null && Status.VotingClient != null)
       {
         VotingClient.Operation operation = Status.VotingClient.CurrentOperation;
@@ -60,7 +58,8 @@ namespace Pirate.PiVote.Client
             this.progessLabel.Visible = true;
             this.progressBar.Visible = true;
             this.progessLabel.Text = operation.Text;
-            this.progressBar.Value = Convert.ToInt32(100d * operation.Progress);
+            int progressValue = Convert.ToInt32(100d * operation.Progress);
+            if (this.progressBar.Value != progressValue) this.progressBar.Value = progressValue;
           }
 
           if (operation.Text.IsNullOrEmpty())
@@ -73,7 +72,8 @@ namespace Pirate.PiVote.Client
             this.subProgressLabel.Visible = true;
             this.subProgessBar.Visible = true;
             this.subProgressLabel.Text = operation.SubText;
-            this.subProgessBar.Value = Convert.ToInt32(100d * operation.SubProgress);
+            int progressValue = Convert.ToInt32(100d * operation.SubProgress);
+            if (this.subProgessBar.Value != progressValue) this.subProgessBar.Value = progressValue;
           }
         }
         else

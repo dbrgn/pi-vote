@@ -126,7 +126,6 @@ namespace Pirate.PiVote.Client
       while (this.status == CheckStatus.Connect)
       {
         Status.UpdateProgress();
-        Application.DoEvents();
         Thread.Sleep(1);
       }
 
@@ -144,7 +143,6 @@ namespace Pirate.PiVote.Client
       while (this.status == CheckStatus.GetCertificates)
       {
         Status.UpdateProgress();
-        Application.DoEvents();
         Thread.Sleep(1);
       }
 
@@ -171,7 +169,6 @@ namespace Pirate.PiVote.Client
         while (this.status == CheckStatus.CheckCertificate)
         {
           Status.UpdateProgress();
-          Application.DoEvents();
           Thread.Sleep(1);
         }
 
