@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Pirate.PiVote.Serialization;
 using Pirate.PiVote.Crypto;
 
@@ -26,12 +27,30 @@ namespace Pirate.PiVote.Rpc
     private IBinaryRpcProxy binaryProxy;
 
     /// <summary>
+    /// When was the last message sent.
+    /// Used to determine when to send an keepalive.
+    /// </summary>
+    private DateTime lastMessageSent;
+
+    /// <summary>
+    /// Continue to run the process thread?
+    /// </summary>
+    private bool run;
+
+    /// <summary>
+    /// Thread that does continues processing.
+    /// Sends keepalive if necessary.
+    /// </summary>
+    private Thread processThread;
+
+    /// <summary>
     /// Creates a new voting proxy.
     /// </summary>
     /// <param name="binaryProxy">Binary RPC proxy.</param>
     public VotingRpcProxy(IBinaryRpcProxy binaryProxy)
     {
       this.binaryProxy = binaryProxy;
+      this.lastMessageSent = DateTime.Now;
     }
 
     /// <summary>
@@ -70,13 +89,18 @@ namespace Pirate.PiVote.Rpc
     protected TResponse Execute<TResponse>(RpcRequest<VotingRpcServer> request)
       where TResponse : RpcResponse
     {
-      var responseData = this.binaryProxy.Execute(request.ToBinary());
-      var response = Serializable.FromBinary<TResponse>(responseData);
+      lock (this.binaryProxy)
+      {
+        this.lastMessageSent = DateTime.Now;
 
-      if (response.Exception != null)
-        throw response.Exception;
+        var responseData = this.binaryProxy.Execute(request.ToBinary());
+        var response = Serializable.FromBinary<TResponse>(responseData);
 
-      return response;
+        if (response.Exception != null)
+          throw response.Exception;
+
+        return response;
+      }
     }
 
     /// <summary>
@@ -171,9 +195,41 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Starts the processing thread.
+    /// </summary>
+    public void Start()
+    {
+      this.run = true;
+      this.processThread = new Thread(Process);
+      this.processThread.Start();
+    }
+
+    /// <summary>
+    /// Stops the processing thread.
+    /// </summary>
+    public void Stop()
+    {
+      this.run = false;
+      this.processThread.Join();
+    }
+
+    private void Process()
+    {
+      while (this.run)
+      {
+        if (DateTime.Now.Subtract(this.lastMessageSent).TotalSeconds > 20d)
+        {
+          SendKeepAlive();
+        }
+
+        Thread.Sleep(100);
+      }
+    }
+
+    /// <summary>
     /// Keeps the connection alive.
     /// </summary>
-    public void KeepAlive()
+    private void SendKeepAlive()
     {
       var request = new KeepAliveRequest(Guid.NewGuid());
 

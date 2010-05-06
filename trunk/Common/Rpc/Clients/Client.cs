@@ -63,11 +63,6 @@ namespace Pirate.PiVote.Rpc
     private bool run;
 
     /// <summary>
-    /// Last time a keepalive was sent.
-    /// </summary>
-    private DateTime lastKeepAlive;
-
-    /// <summary>
     /// Currently active operation.
     /// </summary>
     public Operation CurrentOperation { get; private set; }
@@ -82,9 +77,15 @@ namespace Pirate.PiVote.Rpc
       this.client = new TcpRpcClient();
       this.operations = new Queue<Operation>();
       this.run = true;
-      this.lastKeepAlive = DateTime.Now;
       this.masterThread = new Thread(RunMaster);
       this.masterThread.Start();
+    }
+
+    public void Connect(IPAddress serverIpAddress)
+    {
+      this.client.Connect(serverIpAddress);
+      this.proxy = new VotingRpcProxy(this.client);
+      this.proxy.Start();
     }
 
     /// <summary>
@@ -94,6 +95,7 @@ namespace Pirate.PiVote.Rpc
     {
       this.run = false;
       this.masterThread.Join();
+      this.proxy.Stop();
       this.client.Disconnect();
     }
 
@@ -153,15 +155,7 @@ namespace Pirate.PiVote.Rpc
 
         if (operation == null)
         {
-          if (this.proxy != null && DateTime.Now.Subtract(this.lastKeepAlive).TotalSeconds > 20d)
-          {
-            this.proxy.KeepAlive();
-            this.lastKeepAlive = DateTime.Now;
-          }
-          else
-          {
-            Thread.Sleep(1);
-          }
+          Thread.Sleep(1);
         }
         else
         {

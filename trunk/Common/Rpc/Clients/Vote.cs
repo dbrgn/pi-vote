@@ -124,7 +124,6 @@ namespace Pirate.PiVote.Rpc
 
       private void VoteProgressHandler(double value)
       {
-        this.client.proxy.KeepAlive();
         SubProgress = value;
       }
     }

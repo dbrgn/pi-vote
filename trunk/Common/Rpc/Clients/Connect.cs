@@ -69,8 +69,7 @@ namespace Pirate.PiVote.Rpc
 
           if (!client.client.Connected)
           {
-            client.client.Connect(this.serverIpAddress);
-            client.proxy = new VotingRpcProxy(client.client);
+            client.Connect(this.serverIpAddress);
           }
 
           Progress = 1d;
