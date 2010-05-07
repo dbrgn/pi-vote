@@ -13,8 +13,6 @@ using Emil.GMP;
 
 namespace Pirate.PiVote.Crypto
 {
-  public delegate void ProgressHandler(double value);
-
   /// <summary>
   /// Entity of a voter.
   /// </summary>
@@ -57,10 +55,8 @@ namespace Pirate.PiVote.Crypto
     /// <param name="votingMaterial">Voting material.</param>
     /// <param name="vota">List of vota.</param>
     /// <returns>Signed envelope containing the ballot.</returns>
-    public Signed<Envelope> Vote(VotingMaterial votingMaterial, IEnumerable<IEnumerable<int>> vota, Progress progress)
+    public Signed<Envelope> Vote(VotingMaterial votingMaterial, IEnumerable<IEnumerable<int>> vota, ProgressHandler progressHandler)
     {
-      if (progress == null)
-        throw new ArgumentNullException("progress");
       if (votingMaterial == null)
         throw new ArgumentNullException("votingMaterial");
 
@@ -73,7 +69,7 @@ namespace Pirate.PiVote.Crypto
 
       if (acceptMaterial)
       {
-        List<Ballot> ballots = new List<Ballot>();
+        List<Tuple<IEnumerable<int>, VotingParameters, Question, BigInt>> inputs = new List<Tuple<IEnumerable<int>, VotingParameters, Question, BigInt>>();
 
         for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
         {
@@ -87,10 +83,10 @@ namespace Pirate.PiVote.Crypto
           if (!questionVota.All(votum => votum.InRange(0, 1)))
             throw new ArgumentException("Votum out of range.");
 
-          progress.Down(1d / (double)this.parameters.Questions.Count());
-          ballots.Add(new Ballot(questionVota, this.parameters, question, this.publicKey, progress));
-          progress.Up();
+          inputs.Add(new Tuple<IEnumerable<int>, VotingParameters, Question, BigInt>(questionVota, this.parameters, question, this.publicKey));
         }
+
+        List<Ballot> ballots = Parallel.Work(CreateBallot, inputs, progressHandler);
 
         Envelope ballotContainer = new Envelope(this.parameters.VotingId, Certificate.Id, ballots);
 
@@ -100,6 +96,20 @@ namespace Pirate.PiVote.Crypto
       {
         return null;
       }
+    }
+
+    /// <summary>
+    /// Create a ballot.
+    /// </summary>
+    /// <remarks>
+    /// Used to multi-thread ballot creation.
+    /// </remarks>
+    /// <param name="input">Parameters needed to create the ballot.</param>
+    /// <param name="progressHandler">Handles the progress done.</param>
+    /// <returns>A ballot.</returns>
+    private static Ballot CreateBallot(Tuple<IEnumerable<int>, VotingParameters, Question, BigInt> input, ProgressHandler progressHandler)
+    {
+      return new Ballot(input.First, input.Second, input.Third, input.Fourth, new Progress(progressHandler));
     }
 
     /// <summary>

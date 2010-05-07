@@ -568,4 +568,7 @@
   <data name="SigningRequestDocumentSignSignature" xml:space="preserve">
     <value>Signature</value>
   </data>
+  <data name="ServerIpAddress" xml:space="preserve">
+    <value>pivote.piratenpartei.ch</value>
+  </data>
 </root>

@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace Pirate.PiVote
+namespace System
 {
   /// <summary>
   /// Callback for report on the progress of some lengty work.

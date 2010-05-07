@@ -94,7 +94,7 @@ namespace Pirate.PiVote.Rpc
           SubText = LibraryResources.ClientVoteCalcVote;
           SubProgress = 0d;
 
-          var envelope = client.voterEntity.Vote(material, vota, new Progress(VoteProgressHandler));
+          var envelope = client.voterEntity.Vote(material, vota, VoteProgressHandler);
 
           Progress = 0.7d;
           SubText = LibraryResources.ClientVotePushVote;

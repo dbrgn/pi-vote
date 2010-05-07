@@ -139,7 +139,7 @@ namespace Pirate.PiVote.Crypto
 
       IEnumerable<int> questionVota = new int[] { 0, 1 };
 
-      var vote1 = v1.Vote(vs.GetVotingMaterial(), new IEnumerable<int>[] { questionVota }, new Progress(null));
+      var vote1 = v1.Vote(vs.GetVotingMaterial(), new IEnumerable<int>[] { questionVota }, null);
 
       vs.Vote(vote1);
 
@@ -154,7 +154,7 @@ namespace Pirate.PiVote.Crypto
         var vx = new VoterEntity(cs, vc);
 
         IEnumerable<int> questionVota2 = new int[] { 0, 1 };
-        var votex = vx.Vote(vs.GetVotingMaterial(), new IEnumerable<int>[] { questionVota2 }, new Progress(null));
+        var votex = vx.Vote(vs.GetVotingMaterial(), new IEnumerable<int>[] { questionVota2 }, null);
 
         vs.Vote(votex);
       }
@@ -168,7 +168,7 @@ namespace Pirate.PiVote.Crypto
         var vx = new VoterEntity(cs, vc);
 
         IEnumerable<int> questionVota3 = new int[] { 1, 0 };
-        var votex = vx.Vote(vs.GetVotingMaterial(), new IEnumerable<int>[] { questionVota3 }, new Progress(null));
+        var votex = vx.Vote(vs.GetVotingMaterial(), new IEnumerable<int>[] { questionVota3 }, null);
 
         vs.Vote(votex);
       }

@@ -108,7 +108,7 @@ namespace Pirate.PiVote.Client
         while (this.run)
         {
           Status.UpdateProgress();
-          Thread.Sleep(1);
+          Thread.Sleep(10);
         }
 
         Status.UpdateProgress();

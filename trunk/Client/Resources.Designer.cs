@@ -959,6 +959,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to pivote.piratenpartei.ch.
+        /// </summary>
+        internal static string ServerIpAddress {
+            get {
+                return ResourceManager.GetString("ServerIpAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Signature responses have be uploaded to the server..
         /// </summary>
         internal static string SignatureResponseUploaded {
