@@ -72,13 +72,17 @@ namespace Pirate.PiVote.Client
       }
     }
 
+    private void SetEnable(bool enable)
+    {
+      this.firstNameTextBox.Enabled = enable;
+      this.familyNameTextBox.Enabled = enable;
+      this.emailAddressTextBox.Enabled = enable;
+      this.sendButton.Enabled = enable;
+    }
+
     private void sendButton_Click(object sender, EventArgs e)
     {
-      this.firstNameTextBox.Enabled = false;
-      this.familyNameTextBox.Enabled = false;
-      this.emailAddressTextBox.Enabled = false;
-      this.sendButton.Enabled = false;
-
+      SetEnable(false);
       this.run = true;
       OnUpdateWizard();
 
@@ -87,26 +91,41 @@ namespace Pirate.PiVote.Client
           this.firstNameTextBox.Text, 
           this.familyNameTextBox.Text, 
           this.emailAddressTextBox.Text);
-      Signed<SignatureRequest> signedSignatureRequest = 
-        new Signed<SignatureRequest>(signatureRequest, Status.Certificate);
 
-      Status.VotingClient.SetSignatureRequest(signedSignatureRequest, SetSignatureRequestComplete);
+      SignatureRequestDocument document = new SignatureRequestDocument(signatureRequest, Status.Certificate);
+      PrintDialog printDialog = new PrintDialog();
+      printDialog.Document = document;
 
-      while (this.run)
+      if (printDialog.ShowDialog() == DialogResult.OK)
       {
+        document.Print();
+
+        Signed<SignatureRequest> signedSignatureRequest =
+          new Signed<SignatureRequest>(signatureRequest, Status.Certificate);
+
+        Status.VotingClient.SetSignatureRequest(signedSignatureRequest, SetSignatureRequestComplete);
+
+        while (this.run)
+        {
+          Status.UpdateProgress();
+          Thread.Sleep(1);
+        }
+
         Status.UpdateProgress();
-        Thread.Sleep(1);
-      }
 
-      Status.UpdateProgress();
-
-      if (this.exception == null)
-      {
-        Status.SetMessage(Resources.CreateCertificateDone, MessageType.Success);
+        if (this.exception == null)
+        {
+          Status.SetMessage(Resources.CreateCertificateDone, MessageType.Success);
+        }
+        else
+        {
+          Status.SetMessage(this.exception.Message, MessageType.Error);
+        }
       }
       else
       {
-        Status.SetMessage(this.exception.Message, MessageType.Error);
+        SetEnable(true);
+        this.run = false;
       }
 
       OnUpdateWizard();

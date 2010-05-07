@@ -54,6 +54,19 @@ namespace Pirate.PiVote.Crypto
     public DateTime CreationDate { get; private set; }
 
     /// <summary>
+    /// SHA 256 fingerprint of the certificate.
+    /// </summary>
+    public string Fingerprint
+    {
+      get
+      {
+        SHA256Managed sha256 = new SHA256Managed();
+        byte[] hash = sha256.ComputeHash(ToBinary());
+        return string.Join(" ", hash.Select(b => string.Format("{0:x2}", b)).ToArray());
+      }
+    }
+
+    /// <summary>
     /// Create a new certificate.
     /// </summary>
     public Certificate()

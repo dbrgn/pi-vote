@@ -507,4 +507,64 @@
   <data name="WizardDoneButton" xml:space="preserve">
     <value>&amp;Fertig</value>
   </data>
+  <data name="SigningRequestDocumentAccepted" xml:space="preserve">
+    <value>□ Akzeptiert</value>
+  </data>
+  <data name="SigningRequestDocumentCertificateFingerprint" xml:space="preserve">
+    <value>Fingerprint des Zertifikats:</value>
+  </data>
+  <data name="SigningRequestDocumentCertificateId" xml:space="preserve">
+    <value>Id des Zertifikats:</value>
+  </data>
+  <data name="SigningRequestDocumentEmailAddress" xml:space="preserve">
+    <value>Email Adresse:</value>
+  </data>
+  <data name="SigningRequestDocumentFamilyName" xml:space="preserve">
+    <value>Nachname:</value>
+  </data>
+  <data name="SigningRequestDocumentFirstName" xml:space="preserve">
+    <value>Vorname:</value>
+  </data>
+  <data name="SigningRequestDocumentHeaderLeft" xml:space="preserve">
+    <value>π-Vote</value>
+  </data>
+  <data name="SigningRequestDocumentHeaderRight" xml:space="preserve">
+    <value>Piratenpartei Schweiz</value>
+  </data>
+  <data name="SigningRequestDocumentRefusedHasCertificate" xml:space="preserve">
+    <value>□ Verweigert, hat ein gültiges Zertifikat</value>
+  </data>
+  <data name="SigningRequestDocumentRefusedNoPirate" xml:space="preserve">
+    <value>□ Verweigert, kein Pirat</value>
+  </data>
+  <data name="SigningRequestDocumentRequest" xml:space="preserve">
+    <value>Zertifizierungsanfrage</value>
+  </data>
+  <data name="SigningRequestDocumentRevokedLost" xml:space="preserve">
+    <value>□ Widerrufen, vermutlich verloren</value>
+  </data>
+  <data name="SigningRequestDocumentRevokedNoLonger" xml:space="preserve">
+    <value>□ Widerrufen, kein Pirat mehr</value>
+  </data>
+  <data name="SigningRequestDocumentRevokedStolen" xml:space="preserve">
+    <value>□ Widerrufen, vermutlich gestolen</value>
+  </data>
+  <data name="SigningRequestDocumentSignCA" xml:space="preserve">
+    <value>Zertifizierungsstelle</value>
+  </data>
+  <data name="SigningRequestDocumentSignDate" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="SigningRequestDocumentSignFirstAuthority" xml:space="preserve">
+    <value>Erste Autorität</value>
+  </data>
+  <data name="SigningRequestDocumentSignRequester" xml:space="preserve">
+    <value>Anfragender</value>
+  </data>
+  <data name="SigningRequestDocumentSignSecondAuthority" xml:space="preserve">
+    <value>Zweite Autorität</value>
+  </data>
+  <data name="SigningRequestDocumentSignSignature" xml:space="preserve">
+    <value>Unterschrift</value>
+  </data>
 </root>

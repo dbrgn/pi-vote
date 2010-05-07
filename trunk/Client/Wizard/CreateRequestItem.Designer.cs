@@ -154,12 +154,12 @@ namespace Pirate.PiVote.Client
       // sendButton
       // 
       this.sendButton.Enabled = false;
-      this.sendButton.Location = new System.Drawing.Point(280, 122);
+      this.sendButton.Location = new System.Drawing.Point(240, 122);
       this.sendButton.Margin = new System.Windows.Forms.Padding(2);
       this.sendButton.Name = "sendButton";
-      this.sendButton.Size = new System.Drawing.Size(98, 25);
+      this.sendButton.Size = new System.Drawing.Size(138, 25);
       this.sendButton.TabIndex = 17;
-      this.sendButton.Text = "&Send";
+      this.sendButton.Text = "Print and &Send";
       this.sendButton.UseVisualStyleBackColor = true;
       this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
       // 

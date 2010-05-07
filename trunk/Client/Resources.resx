@@ -508,4 +508,64 @@
   <data name="WizardDoneButton" xml:space="preserve">
     <value>&amp;Done</value>
   </data>
+  <data name="SigningRequestDocumentAccepted" xml:space="preserve">
+    <value>□ Accepted</value>
+  </data>
+  <data name="SigningRequestDocumentCertificateFingerprint" xml:space="preserve">
+    <value>Certificate fingerprint:</value>
+  </data>
+  <data name="SigningRequestDocumentCertificateId" xml:space="preserve">
+    <value>Certificate id:</value>
+  </data>
+  <data name="SigningRequestDocumentEmailAddress" xml:space="preserve">
+    <value>Email address:</value>
+  </data>
+  <data name="SigningRequestDocumentFamilyName" xml:space="preserve">
+    <value>Family name:</value>
+  </data>
+  <data name="SigningRequestDocumentFirstName" xml:space="preserve">
+    <value>First name:</value>
+  </data>
+  <data name="SigningRequestDocumentHeaderLeft" xml:space="preserve">
+    <value>π-Vote</value>
+  </data>
+  <data name="SigningRequestDocumentHeaderRight" xml:space="preserve">
+    <value>Pirate Party Switzerland</value>
+  </data>
+  <data name="SigningRequestDocumentRefusedHasCertificate" xml:space="preserve">
+    <value>□ Refused, already has valid certificate</value>
+  </data>
+  <data name="SigningRequestDocumentRefusedNoPirate" xml:space="preserve">
+    <value>□ Refused, no pirate</value>
+  </data>
+  <data name="SigningRequestDocumentRequest" xml:space="preserve">
+    <value>Request for certificate signing</value>
+  </data>
+  <data name="SigningRequestDocumentRevokedLost" xml:space="preserve">
+    <value>□ Revoked, presumed lost</value>
+  </data>
+  <data name="SigningRequestDocumentRevokedNoLonger" xml:space="preserve">
+    <value>□ Revoked, no longer pirate</value>
+  </data>
+  <data name="SigningRequestDocumentRevokedStolen" xml:space="preserve">
+    <value>□ Revoked, presumed stolen</value>
+  </data>
+  <data name="SigningRequestDocumentSignCA" xml:space="preserve">
+    <value>Certificate Authority</value>
+  </data>
+  <data name="SigningRequestDocumentSignDate" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="SigningRequestDocumentSignFirstAuthority" xml:space="preserve">
+    <value>First Authority</value>
+  </data>
+  <data name="SigningRequestDocumentSignRequester" xml:space="preserve">
+    <value>Requester</value>
+  </data>
+  <data name="SigningRequestDocumentSignSecondAuthority" xml:space="preserve">
+    <value>Second Authority</value>
+  </data>
+  <data name="SigningRequestDocumentSignSignature" xml:space="preserve">
+    <value>Signature</value>
+  </data>
 </root>
