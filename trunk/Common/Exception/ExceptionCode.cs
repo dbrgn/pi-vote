@@ -62,7 +62,12 @@ namespace Pirate.PiVote
 
     PartialDecipherBadSignature       = 8000001,
     PartialDecipherBadEnvelopeCount   = 8000002,
-    PartialDecipherBadEnvelopeHash    = 8000003
+    PartialDecipherBadEnvelopeHash    = 8000003,
+
+    ShareResponseBadSignature         = 9000001,
+    ShareResponseWrongAuthority       = 9000002,
+    ShareResponseNotAccepted          = 9000003,
+    ShareResponseParametersDontMatch  = 9000004,
   }
 
   public static class ExceptionCodeExtension
@@ -145,6 +150,14 @@ namespace Pirate.PiVote
           return LibraryResources.ExceptionPartialDecipherBadEnvelopeCount;
         case ExceptionCode.PartialDecipherBadEnvelopeHash:
           return LibraryResources.ExceptionPartialDecipherBadEnvelopeHash;
+        case ExceptionCode.ShareResponseBadSignature:
+          return string.Empty;
+        case ExceptionCode.ShareResponseNotAccepted:
+          return string.Empty;
+        case ExceptionCode.ShareResponseParametersDontMatch:
+          return string.Empty;
+        case ExceptionCode.ShareResponseWrongAuthority:
+          return string.Empty;
         default:
           return LibraryResources.ExceptionUnknown;
       }

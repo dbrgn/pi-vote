@@ -276,12 +276,12 @@ namespace Pirate.PiVote.Crypto
       }
 
       List<Ballot> ballots = new List<Ballot>();
-      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, question, publicKey, new Progress(null)));
-      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, question, publicKey, new Progress(null)));
-      ballots.Add(new Ballot(new int[] { 1, 0 }, parameters, question, publicKey, new Progress(null)));
-      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, question, publicKey, new Progress(null)));
-      ballots.Add(new Ballot(new int[] { 1, 0 }, parameters, question, publicKey, new Progress(null)));
-      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, question, publicKey, new Progress(null)));
+      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, question, publicKey, null));
+      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, question, publicKey, null));
+      ballots.Add(new Ballot(new int[] { 1, 0 }, parameters, question, publicKey, null));
+      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, question, publicKey, null));
+      ballots.Add(new Ballot(new int[] { 1, 0 }, parameters, question, publicKey, null));
+      ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, question, publicKey, null));
 
       if (!ballots.All(ballot => ballot.Verify(publicKey, parameters, question, new Progress(null))))
         throw new Exception("Bad proof.");

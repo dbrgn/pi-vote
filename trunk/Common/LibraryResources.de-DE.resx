@@ -411,4 +411,16 @@
   <data name="VotingStatusVoting" xml:space="preserve">
     <value>Abstimmen</value>
   </data>
+  <data name="ExceptionShareResponseBadSignature" xml:space="preserve">
+    <value>Signatur der Teilantwort ist falsch.</value>
+  </data>
+  <data name="ExceptionShareResponseNotAccepted" xml:space="preserve">
+    <value>Teilantwort akzeptiert nicht.</value>
+  </data>
+  <data name="ExceptionShareResponseParametersDontMatch" xml:space="preserve">
+    <value>Teilantwort stimmt nicht mit Abstimmungsparametern überein</value>
+  </data>
+  <data name="ExceptionShareResponseWrongAuthority" xml:space="preserve">
+    <value>Teilantwort stammt von falscher Autorität.</value>
+  </data>
 </root>

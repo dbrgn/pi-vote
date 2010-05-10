@@ -49,7 +49,8 @@ namespace Pirate.PiVote.Crypto
     /// <param name="votum">Actual vote.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <param name="publicKey">Public key of the authorities.</param>
-    public Vote(int votum, BigInt nonce, BaseParameters parameters, BigInt publicKey)
+    /// <param name="progress">Report the progress up.</param>
+    public Vote(int votum, BigInt nonce, BaseParameters parameters, BigInt publicKey, Progress progress)
     {
       if (!votum.InRange(0, 1))
         throw new ArgumentException("Bad votum.");
@@ -71,6 +72,7 @@ namespace Pirate.PiVote.Crypto
       for (int proofIndex = 0; proofIndex < parameters.ProofCount; proofIndex++)
       {
         this.RangeProves.Add(new RangeProof(votum, nonce * 12, this, publicKey, parameters));
+        progress.Add(1d / (double)parameters.ProofCount);
       }
     }
 

@@ -40,6 +40,12 @@ namespace System
     private ProgressHandler handler;
 
     /// <summary>
+    /// Value of the last progress set to take
+    /// into account when setting again.
+    /// </summary>
+    private double lastProgressSet;
+
+    /// <summary>
     /// Creates a new progress reporter.
     /// </summary>
     /// <param name="handler">Report through this handler.</param>
@@ -49,6 +55,7 @@ namespace System
       this.fractions = new Stack<double>();
       this.fractions.Push(1d);
       this.value = 0d;
+      this.lastProgressSet = 0;
     }
 
     /// <summary>
@@ -58,6 +65,7 @@ namespace System
     public void Down(double fraction)
     {
       this.fractions.Push(this.fractions.Peek() * fraction);
+      this.lastProgressSet = 0;
     }
 
     /// <summary>
@@ -72,11 +80,25 @@ namespace System
     }
 
     /// <summary>
+    /// Set progress.
+    /// </summary>
+    /// <param name="addValue">Total amount of work done in that fraction.</param>
+    public void Set(double setValue)
+    {
+      double newValue = this.fractions.Peek() * setValue;
+      this.value += (newValue - this.lastProgressSet);
+      this.lastProgressSet = newValue;
+
+      if (handler != null) handler(this.value);
+    }
+
+    /// <summary>
     /// Up one step in the hierarchy.
     /// </summary>
     public void Up()
     {
       this.fractions.Pop();
+      this.lastProgressSet = 0;
     }
   }
 }

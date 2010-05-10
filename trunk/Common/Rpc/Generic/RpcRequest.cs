@@ -134,13 +134,13 @@ namespace Pirate.PiVote.Rpc
       }
       catch (PiException exception)
       {
-        server.Logger.Log(LogLevel.Info, "Executing request of type {0} resulted in PiException with message {1}.", exception.Message);
+        server.Logger.Log(LogLevel.Info, "Executing request of type {0} resulted in PiException with message {1}.", GetType().FullName, exception.Message);
         
         return (TResponse)Activator.CreateInstance(typeof(TResponse), new object[] { RequestId, exception });
       }
       catch (Exception exception)
       {
-        server.Logger.Log(LogLevel.Error, "Executing request of type {0} resulted in Exception with message {1} and trace {2}.", exception.Message, exception.StackTrace);
+        server.Logger.Log(LogLevel.Error, "Executing request of type {0} resulted in Exception with message {1} and trace {2}.", GetType().FullName, exception.Message, exception.StackTrace);
 
         return (TResponse)Activator.CreateInstance(typeof(TResponse), new object[] { RequestId, new PiException(exception) });
       }

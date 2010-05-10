@@ -381,7 +381,7 @@
   <data name="ExceptionWrongStatusForOperation" xml:space="preserve">
     <value>Operation not possible in this state of voting.</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="root" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\root.pi-cert;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -414,5 +414,17 @@
   </data>
   <data name="ExceptionPartialDecipherBadSignature" xml:space="preserve">
     <value>Partial decipher has a bad signature.</value>
+  </data>
+  <data name="ExceptionShareResponseBadSignature" xml:space="preserve">
+    <value>Share response has bad signature.</value>
+  </data>
+  <data name="ExceptionShareResponseNotAccepted" xml:space="preserve">
+    <value>Share response does not accept.</value>
+  </data>
+  <data name="ExceptionShareResponseParametersDontMatch" xml:space="preserve">
+    <value>Share response does not match voting parameters.</value>
+  </data>
+  <data name="ExceptionShareResponseWrongAuthority" xml:space="preserve">
+    <value>Share response is from wrong athority.</value>
   </data>
 </root>

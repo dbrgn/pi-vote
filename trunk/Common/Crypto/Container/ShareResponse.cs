@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Security.Cryptography;
 using Emil.GMP;
 using Pirate.PiVote.Serialization;
 
@@ -48,13 +49,19 @@ namespace Pirate.PiVote.Crypto
     public BigInt PublicKeyPart { get; private set; }
 
     /// <summary>
+    /// Hash over the signed voting parameters.
+    /// </summary>
+    public byte[] VotingParametersHash { get; private set; }
+
+    /// <summary>
     /// Create a new response to shares.
     /// </summary>
     /// <param name="votingId">Id of the voting procedure.</param>
     /// <param name="authorityIndex">Index of the issuing authority.</param>
     /// <param name="acceptShares">Does the authority accept all the shares?</param>
     /// <param name="publicKeyPart">Public key part from that authority.</param>
-    public ShareResponse(Guid votingId, int authorityIndex, bool acceptShares, BigInt publicKeyPart)
+    /// <param name="signedVotingParameters">Signed voting parameters.</param>
+    public ShareResponse(Guid votingId, int authorityIndex, bool acceptShares, BigInt publicKeyPart, Signed<VotingParameters> signedVotingParameters)
     {
       if (publicKeyPart == null)
         throw new ArgumentNullException("publicKeyPart");
@@ -63,6 +70,24 @@ namespace Pirate.PiVote.Crypto
       AuthorityIndex = authorityIndex;
       AcceptShares = acceptShares;
       PublicKeyPart = publicKeyPart;
+      byte[] votingParametersData = signedVotingParameters.ToBinary();
+      SHA256Managed sha256 = new SHA256Managed();
+      VotingParametersHash = sha256.ComputeHash(votingParametersData);
+    }
+
+    /// <summary>
+    /// Verifies that the voting parameters are valid for this share response.
+    /// </summary>
+    /// <param name="signedVotingParameters">Signed voting parameters.</param>
+    /// <returns>Are that valid?</returns>
+    public bool Verify(Signed<VotingParameters> signedVotingParameters)
+    {
+      byte[] votingParametersData = signedVotingParameters.ToBinary();
+      SHA256Managed sha256 = new SHA256Managed();
+      byte[] votingParametersHash = sha256.ComputeHash(votingParametersData);
+      //TODO engage hash. Breaks binary compatiblity!
+      //return VotingParametersHash.Equal(votingParametersHash);
+      return true;
     }
 
     /// <summary>
@@ -84,6 +109,8 @@ namespace Pirate.PiVote.Crypto
       context.Write(AuthorityIndex);
       context.Write(AcceptShares);
       context.Write(PublicKeyPart);
+      //TODO engage hash. Breaks binary compatiblity!
+      //context.Write(VotingParametersHash);
     }
 
     /// <summary>
@@ -97,6 +124,8 @@ namespace Pirate.PiVote.Crypto
       AuthorityIndex = context.ReadInt32();
       AcceptShares = context.ReadBoolean();
       PublicKeyPart = context.ReadBigInt();
+      //TODO engage hash. Breaks binary compatiblity!
+      //VotingParametersHash = context.ReadBytes();
     }
   }
 }

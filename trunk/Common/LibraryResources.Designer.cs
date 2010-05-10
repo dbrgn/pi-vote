@@ -808,6 +808,42 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Share response has bad signature..
+        /// </summary>
+        public static string ExceptionShareResponseBadSignature {
+            get {
+                return ResourceManager.GetString("ExceptionShareResponseBadSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share response does not accept..
+        /// </summary>
+        public static string ExceptionShareResponseNotAccepted {
+            get {
+                return ResourceManager.GetString("ExceptionShareResponseNotAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share response does not match voting parameters..
+        /// </summary>
+        public static string ExceptionShareResponseParametersDontMatch {
+            get {
+                return ResourceManager.GetString("ExceptionShareResponseParametersDontMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share response is from wrong athority..
+        /// </summary>
+        public static string ExceptionShareResponseWrongAuthority {
+            get {
+                return ResourceManager.GetString("ExceptionShareResponseWrongAuthority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Signature request is not valid..
         /// </summary>
         public static string ExceptionSignatureRequestInvalid {

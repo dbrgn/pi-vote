@@ -259,7 +259,7 @@ namespace Pirate.PiVote.Crypto
 
       BigInt publicKeyPart = acceptShares ? this.authority.PublicKeyPart : new BigInt(0);
 
-      ShareResponse response = new ShareResponse(allShareParts.VotingId, this.authority.Index, acceptShares, publicKeyPart);
+      ShareResponse response = new ShareResponse(allShareParts.VotingId, this.authority.Index, acceptShares, publicKeyPart, this.signedParameters);
 
       return new Signed<ShareResponse>(response, this.certificate);
     }
@@ -311,13 +311,15 @@ namespace Pirate.PiVote.Crypto
       foreach (Signed<ShareResponse> signedShareResponse in votingMaterial.PublicKeyParts)
       {
         ShareResponse shareResponse = signedShareResponse.Value;
-        bool acceptResponse = true;
 
-        acceptResponse &= signedShareResponse.Verify(this.certificateStorage);
-        acceptResponse &= signedShareResponse.Certificate.IsIdentic(this.authorities[shareResponse.AuthorityIndex]);
-
-        if (!acceptResponse)
-          throw new Exception("Share response not accepted.");
+        if (!signedShareResponse.Verify(this.certificateStorage))
+          throw new PiSecurityException(ExceptionCode.ShareResponseBadSignature, "Share response has bad signature.");
+        if (!signedShareResponse.Certificate.IsIdentic(this.authorities[shareResponse.AuthorityIndex]))
+          throw new PiSecurityException(ExceptionCode.ShareResponseWrongAuthority, "Share response is from wrong authority.");
+        if (!shareResponse.AcceptShares)
+          throw new PiSecurityException(ExceptionCode.ShareResponseNotAccepted, "Share response does not accept.");
+        if (!shareResponse.Verify(votingMaterial.Parameters))
+          throw new PiSecurityException(ExceptionCode.ShareResponseParametersDontMatch, "Share response does not match voting parameters.");
 
         publicKey = (publicKey * shareResponse.PublicKeyPart).Mod(this.parameters.P);
       }

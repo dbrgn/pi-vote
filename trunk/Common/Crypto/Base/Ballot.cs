@@ -35,6 +35,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="vota">Vota the voter wishes to cast for each option.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <param name="publicKey">Public key of voting authorities.</param>
+    /// <param name="progress">Report progress up.</param>
     public Ballot(IEnumerable<int> vota, BaseParameters parameters, Question questionParameters, BigInt publicKey, Progress progress)
     {
       if (progress == null)
@@ -56,25 +57,38 @@ namespace Pirate.PiVote.Crypto
       BigInt nonceSum = new BigInt(0);
       Vote voteSum = null;
 
+      List<Tuple<int, BigInt, BaseParameters, BigInt>> voteWorkList = new List<Tuple<int, BigInt, BaseParameters, BigInt>>();
+
       foreach (int votum in vota)
       {
         BigInt nonce = parameters.Random();
         nonceSum += nonce;
-        Vote vote = new Vote(votum, nonce, parameters, publicKey);
-        voteSum = voteSum == null ? vote : voteSum + vote;
-        Votes.Add(vote);
-
-        progress.Add(1d / (double)(vota.Count() + 1));
+        voteWorkList.Add(new Tuple<int, BigInt, BaseParameters, BigInt>(votum, nonce, parameters, publicKey));
       }
 
-      SumProves = new List<Proof>();
+      progress.Down(1d / (vota.Count() + 1) * vota.Count());
+      List<Vote> voteList = Parallel.Work(CreateVote, voteWorkList, progress.Set); 
+      progress.Up();
 
+      foreach (Vote vote in voteList)
+      {
+        voteSum = voteSum == null ? vote : voteSum + vote;
+        Votes.Add(vote);
+      }
+
+      progress.Down(1d / (double)(vota.Count() + 1));
+      SumProves = new List<Proof>();
       for (int proofIndex = 0; proofIndex < parameters.ProofCount; proofIndex++)
       {
         SumProves.Add(new Proof(nonceSum * 12, voteSum, publicKey, parameters));
+        progress.Add(1d / (double)parameters.ProofCount);
       }
+      progress.Up();
+    }
 
-      progress.Add(1d / (double)(vota.Count() + 1));
+    private Vote CreateVote(Tuple<int, BigInt, BaseParameters, BigInt> input, ProgressHandler progressHandler)
+    {
+      return new Vote(input.First, input.Second, input.Third, input.Fourth, new Progress(progressHandler));
     }
 
     /// <summary>
