@@ -28,48 +28,25 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.typeTextBox = new System.Windows.Forms.TextBox();
-      this.typeLabel = new System.Windows.Forms.Label();
       this.nameTextBox = new System.Windows.Forms.TextBox();
       this.nameLabel = new System.Windows.Forms.Label();
       this.detailButton = new System.Windows.Forms.Button();
-      this.statusLabel = new System.Windows.Forms.Label();
-      this.statusTextBox = new System.Windows.Forms.TextBox();
       this.SuspendLayout();
-      // 
-      // typeTextBox
-      // 
-      this.typeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.typeTextBox.Location = new System.Drawing.Point(66, 0);
-      this.typeTextBox.Name = "typeTextBox";
-      this.typeTextBox.ReadOnly = true;
-      this.typeTextBox.Size = new System.Drawing.Size(258, 20);
-      this.typeTextBox.TabIndex = 0;
-      // 
-      // typeLabel
-      // 
-      this.typeLabel.AutoSize = true;
-      this.typeLabel.Location = new System.Drawing.Point(-3, 2);
-      this.typeLabel.Name = "typeLabel";
-      this.typeLabel.Size = new System.Drawing.Size(34, 13);
-      this.typeLabel.TabIndex = 1;
-      this.typeLabel.Text = "Type:";
       // 
       // nameTextBox
       // 
       this.nameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.nameTextBox.Location = new System.Drawing.Point(65, 26);
+      this.nameTextBox.Location = new System.Drawing.Point(65, 0);
       this.nameTextBox.Name = "nameTextBox";
       this.nameTextBox.ReadOnly = true;
-      this.nameTextBox.Size = new System.Drawing.Size(536, 20);
+      this.nameTextBox.Size = new System.Drawing.Size(458, 20);
       this.nameTextBox.TabIndex = 3;
       // 
       // nameLabel
       // 
       this.nameLabel.AutoSize = true;
-      this.nameLabel.Location = new System.Drawing.Point(-3, 26);
+      this.nameLabel.Location = new System.Drawing.Point(-3, 4);
       this.nameLabel.Name = "nameLabel";
       this.nameLabel.Size = new System.Drawing.Size(38, 13);
       this.nameLabel.TabIndex = 7;
@@ -86,38 +63,15 @@
       this.detailButton.UseVisualStyleBackColor = true;
       this.detailButton.Click += new System.EventHandler(this.detailButton_Click);
       // 
-      // statusLabel
-      // 
-      this.statusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.statusLabel.AutoSize = true;
-      this.statusLabel.Location = new System.Drawing.Point(328, 2);
-      this.statusLabel.Name = "statusLabel";
-      this.statusLabel.Size = new System.Drawing.Size(40, 13);
-      this.statusLabel.TabIndex = 9;
-      this.statusLabel.Text = "Status:";
-      // 
-      // statusTextBox
-      // 
-      this.statusTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.statusTextBox.Location = new System.Drawing.Point(406, 0);
-      this.statusTextBox.Name = "statusTextBox";
-      this.statusTextBox.ReadOnly = true;
-      this.statusTextBox.Size = new System.Drawing.Size(119, 20);
-      this.statusTextBox.TabIndex = 10;
-      // 
       // SmallCertificateControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.Controls.Add(this.statusTextBox);
-      this.Controls.Add(this.statusLabel);
       this.Controls.Add(this.detailButton);
       this.Controls.Add(this.nameLabel);
       this.Controls.Add(this.nameTextBox);
-      this.Controls.Add(this.typeLabel);
-      this.Controls.Add(this.typeTextBox);
       this.Name = "SmallCertificateControl";
-      this.Size = new System.Drawing.Size(601, 48);
+      this.Size = new System.Drawing.Size(601, 21);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -125,12 +79,8 @@
 
     #endregion
 
-    private System.Windows.Forms.TextBox typeTextBox;
-    private System.Windows.Forms.Label typeLabel;
     private System.Windows.Forms.TextBox nameTextBox;
     private System.Windows.Forms.Label nameLabel;
     private System.Windows.Forms.Button detailButton;
-    private System.Windows.Forms.Label statusLabel;
-    private System.Windows.Forms.TextBox statusTextBox;
   }
 }

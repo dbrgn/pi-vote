@@ -197,14 +197,27 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Send vote to server.
     /// </summary>
-    /// <param name="votingid">Id of the voting.</param>
+    /// <param name="votingMaterial">Material to vote.</param>
     /// <param name="optionIndex">Index of selected option.</param>
     /// <param name="callBack">Callback upon completion.</param>
-    public void Vote(Guid votingid, IEnumerable<IEnumerable<bool>> vota, VoteCallBack callBack)
+    public void Vote(VotingMaterial votingMaterial, IEnumerable<IEnumerable<bool>> vota, VoteCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new VoteOperation(votingid, vota, callBack));
+        this.operations.Enqueue(new VoteOperation(votingMaterial, vota, callBack));
+      }
+    }
+
+    /// <summary>
+    /// Gets the voting material.
+    /// </summary>
+    /// <param name="votingid">Id of the voting.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void GetVotingMaterial(Guid votingid, GetVotingMaterialCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new GetVotingMaterialOperation(votingid, callBack));
       }
     }
 

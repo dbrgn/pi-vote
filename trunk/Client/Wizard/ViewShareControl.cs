@@ -45,23 +45,13 @@ namespace Pirate.PiVote.Client
         var signedSharePart = Proof.AllShareParts.ShareParts.Where(x => x.Value.AuthorityIndex == AuthorityIndex).First();
         var sharePart = signedSharePart.Value;
 
-        if (signedSharePart.Verify(Proof.CertificateStorage, ValidationDate) &&
-            signedSharePart.Certificate.IsIdentic(authorityCertificate))
-        {
-          this.signatureTextBox.Text = Resources.CertificateValid;
-          this.signatureTextBox.BackColor = Color.Green;
-        }
-        else
-        {
-          this.signatureTextBox.Text = Resources.CertificateInvalid;
-          this.signatureTextBox.BackColor = Color.Red;
-        }
-
         TrapDoor trapDoor = Proof.TrapDoors[AuthorityIndex];
         Encrypted<Share> encryptedShare = sharePart.EncryptedShares[Proof.ComplainingAuthorityIndex - 1];
         Share share = encryptedShare.DecryptWithTrapDoor(trapDoor, ComplainingAuthorityCertificate);
 
-        if (share.Verify(Proof.ComplainingAuthorityIndex, Proof.Parameters, sharePart.VerificationValues))
+        if (signedSharePart.Verify(Proof.CertificateStorage, ValidationDate) &&
+            signedSharePart.Certificate.IsIdentic(authorityCertificate) &&
+            share.Verify(Proof.ComplainingAuthorityIndex, Proof.Parameters, sharePart.VerificationValues))
         {
           this.dataTextBox.Text = Resources.CertificateValid;
           this.dataTextBox.BackColor = Color.Green;
@@ -81,7 +71,6 @@ namespace Pirate.PiVote.Client
 
     public void SetLanguage()
     {
-      this.signatureLabel.Text = Resources.ViewShareSignature;
       this.dataLabel.Text = Resources.ViewShareData;
 
       this.certificateControl.SetLanguage();

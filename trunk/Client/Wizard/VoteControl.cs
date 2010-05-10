@@ -32,17 +32,16 @@ namespace Pirate.PiVote.Client
       InitializeComponent();
     }
 
-    public void Display()
+    public void Display(bool enable)
     {
       if (Voting == null)
         throw new InvalidOperationException("Voting must not be null.");
 
       this.titleLabel.Text = Voting.Title.Text;
-      this.questionLabel.Text = Voting.Description.Text;
       this.descriptionButton.Text = Resources.VoteDescriptionButton;
 
-      int space = 10;
-      int top = this.questionLabel.Top + this.questionLabel.Height + space;
+      int space = 2;
+      int top = this.descriptionButton.Top + this.descriptionButton.Height + space;
       this.questionControls = new List<QuestionControl>();
 
       foreach (QuestionDescriptor question in Voting.Questions)
@@ -53,7 +52,7 @@ namespace Pirate.PiVote.Client
         questionControl.Width = Width;
         questionControl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
         questionControl.ValidChanged += new EventHandler(questionControl_ValidChanged);
-        questionControl.Display();
+        questionControl.Display(enable);
         Controls.Add(questionControl);
         this.questionControls.Add(questionControl);
 

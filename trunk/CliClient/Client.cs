@@ -383,7 +383,14 @@ namespace Pirate.PiVote.CliClient
               vota.Add(votaItem);
             }
 
-            this.voterClient.Vote(selectedVoting.Id, vota, VoteCallBack);
+            this.voterClient.GetVotingMaterial(selectedVoting.Id, GetVotingMaterialComplete);
+
+            while (this.votingMaterial == null)
+            {
+              Thread.Sleep(1);
+            }
+
+            this.voterClient.Vote(votingMaterial, vota, VoteCallBack);
 
             break;
           case VotingStatus.Finished:
@@ -392,6 +399,13 @@ namespace Pirate.PiVote.CliClient
             break;
         }
       }
+    }
+
+    VotingMaterial votingMaterial;
+
+    private void GetVotingMaterialComplete(VotingMaterial votingMaterial, Exception exception)
+    {
+      this.votingMaterial = votingMaterial;
     }
 
     private void VoteCallBack(Signed<VoteReceipt> voteReceipt, Exception exception)

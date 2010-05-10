@@ -23,10 +23,9 @@ namespace Pirate.PiVote.Client
   {
     private bool run;
     private Exception exception;
-    private bool accept;
-    private Signed<BadShareProof> signedBadShareProof;
     private VotingDescriptor votingDescriptor;
     private IEnumerable<VotingDescriptor> votings;
+    private WizardItem nextItem;
 
     public AuthorityListVotingsItem()
     {
@@ -35,17 +34,7 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      if (this.signedBadShareProof == null)
-      {
-        return null;
-      }
-      else
-      {
-        var badShareProofItem = new BadShareProofItem();
-        badShareProofItem.IsAuthority = true;
-        badShareProofItem.SignedBadShareProof = this.signedBadShareProof;
-        return badShareProofItem;
-      }
+      return nextItem;
     }
 
     public override WizardItem Previous()
@@ -65,7 +54,7 @@ namespace Pirate.PiVote.Client
 
     public override bool CanNext
     {
-      get { return this.signedBadShareProof != null; }
+      get { return this.nextItem != null; }
     }
 
     public override bool CancelIsDone
@@ -223,66 +212,12 @@ namespace Pirate.PiVote.Client
         ListViewItem item = this.votingList.SelectedItems[0];
         VotingDescriptor voting = (VotingDescriptor)item.Tag;
 
-        string fileName = string.Format("{0}@{1}.pi-auth", Status.Certificate.Id.ToString(), voting.Id.ToString());
-        string filePath = Path.Combine(Status.DataPath, fileName);
+        var authorityVotePreviewItem = new AuthorityVotePreviewItem();
+        authorityVotePreviewItem.VotingDescriptor = voting;
 
-        if (File.Exists(filePath))
-        {
-          this.run = true;
-          OnUpdateWizard();
-
-          Status.VotingClient.CheckShares(voting.Id, (AuthorityCertificate)Status.Certificate, filePath, CheckSharesCompleteCallBack);
-
-          while (this.run)
-          {
-            Status.UpdateProgress();
-            Thread.Sleep(10);
-          }
-
-          Status.UpdateProgress();
-
-          if (this.exception == null)
-          {
-            item.Tag = this.votingDescriptor;
-            item.SubItems[1].Text = this.votingDescriptor.Status.Text();
-            item.SubItems[4].Text = this.votingDescriptor.AuthoritiesDone == null ? string.Empty : 
-              this.votingDescriptor.AuthoritiesDone.Count().ToString() + " / " + this.votingDescriptor.AuthorityCount.ToString();
-            votingList_SelectedIndexChanged(this.votingList, new EventArgs());
-
-            if (this.accept)
-            {
-              Status.SetMessage(Resources.AuthorityCheckSharesAccept, MessageType.Success);
-            }
-            else
-            {
-              Status.SetMessage(Resources.AuthorityCheckSharesDecline, MessageType.Warning);
-            }
-
-            OnNextStep();
-          }
-          else
-          {
-            Status.SetMessage(this.exception.Message, MessageType.Error);
-            OnUpdateWizard();
-          }
-        }
-        else
-        {
-          Status.SetMessage(Resources.CreateVotingAuthFileMissing, MessageType.Error);
-          OnUpdateWizard();
-        }
-
-        SetGuiEnable(true);
+        this.nextItem = authorityVotePreviewItem;
+        OnNextStep();
       }
-    }
-
-    private void CheckSharesCompleteCallBack(VotingDescriptor votingDescriptor, bool accept, Signed<BadShareProof> signedBadShareProof, Exception exception)
-    {
-      this.exception = exception;
-      this.votingDescriptor = votingDescriptor;
-      this.accept = accept;
-      this.signedBadShareProof = signedBadShareProof;
-      this.run = false;
     }
 
     private void SetGuiEnable(bool enable)

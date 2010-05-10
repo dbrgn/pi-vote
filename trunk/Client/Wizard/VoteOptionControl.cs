@@ -31,7 +31,7 @@ namespace Pirate.PiVote.Client
       InitializeComponent();
     }
 
-    public void Display()
+    public void Display(bool enable)
     {
       if (Option == null)
         throw new InvalidOperationException("Option must not be null.");
@@ -41,6 +41,9 @@ namespace Pirate.PiVote.Client
 
       this.optionCheckBox.Text = Option.Text.Text;
       this.optionRadioButton.Text = Option.Text.Text;
+
+      this.optionCheckBox.Enabled = enable;
+      this.optionRadioButton.Enabled = enable;
 
       this.descriptionButton.Text = Resources.VoteDescriptionButton;
     }

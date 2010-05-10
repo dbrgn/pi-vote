@@ -164,6 +164,24 @@
     <Compile Include="Wizard\BadShareProofItem.designer.cs">
       <DependentUpon>BadShareProofItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wizard\AuthorityVotePreviewItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\AuthorityVotePreviewItem.designer.cs">
+      <DependentUpon>AuthorityVotePreviewItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\ViewShareResponseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\ViewShareResponseControl.Designer.cs">
+      <DependentUpon>ViewShareResponseControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\ViewVotingAuthorities.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\ViewVotingAuthorities.designer.cs">
+      <DependentUpon>ViewVotingAuthorities.cs</DependentUpon>
+    </Compile>
     <Compile Include="Wizard\QuestionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -333,6 +351,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\ChooseCertificateItem.resx">
       <DependentUpon>ChooseCertificateItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\AuthorityVotePreviewItem.resx">
+      <DependentUpon>AuthorityVotePreviewItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\ViewShareResponseControl.resx">
+      <DependentUpon>ViewShareResponseControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\ViewVotingAuthorities.resx">
+      <DependentUpon>ViewVotingAuthorities.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\QuestionControl.resx">
       <DependentUpon>QuestionControl.cs</DependentUpon>

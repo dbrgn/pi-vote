@@ -36,9 +36,9 @@ namespace Pirate.PiVote.Rpc
     private class VoteOperation : Operation
     {
       /// <summary>
-      /// Id of the voting.
+      /// Material to vote.
       /// </summary>
-      private Guid votingId;
+      private VotingMaterial votingMaterial;
 
       /// <summary>
       /// Selected options.
@@ -58,12 +58,12 @@ namespace Pirate.PiVote.Rpc
       /// <summary>
       /// Create a new vote cast opeation.
       /// </summary>
-      /// <param name="votingId">Id of the voting.</param>
+      /// <param name="votingId">Material to vote.</param>
       /// <param name="optionIndex">Selected options.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public VoteOperation(Guid votingId, IEnumerable<IEnumerable<bool>> vota, VoteCallBack callBack)
+      public VoteOperation(VotingMaterial votingMaterial, IEnumerable<IEnumerable<bool>> vota, VoteCallBack callBack)
       {
-        this.votingId = votingId;
+        this.votingMaterial = votingMaterial;
         this.vota = vota;
         this.callBack = callBack;
       }
@@ -83,10 +83,9 @@ namespace Pirate.PiVote.Rpc
           SubText = LibraryResources.ClientVoteFetchMaterial;
           SubProgress = 0d;
 
-          var material = client.proxy.FetchVotingMaterial(this.votingId);
-          if (!material.Valid(client.voterEntity.CertificateStorage))
+          if (!votingMaterial.Valid(client.voterEntity.CertificateStorage))
             throw new InvalidOperationException(LibraryResources.ClientVoteMaterialInvalid);
-          var parameters = material.Parameters.Value;
+          var parameters = votingMaterial.Parameters.Value;
 
           IEnumerable<IEnumerable<int>> vota = this.vota.Select(questionVota => questionVota.Select(votum => votum ? 1 : 0));
 
@@ -94,19 +93,19 @@ namespace Pirate.PiVote.Rpc
           SubText = LibraryResources.ClientVoteCalcVote;
           SubProgress = 0d;
 
-          var envelope = client.voterEntity.Vote(material, vota, VoteProgressHandler);
+          var envelope = client.voterEntity.Vote(votingMaterial, vota, VoteProgressHandler);
 
           Progress = 0.7d;
           SubText = LibraryResources.ClientVotePushVote;
           SubProgress = 0d;
 
-          var voteReceipt = client.proxy.PushEnvelope(this.votingId, envelope);
+          var voteReceipt = client.proxy.PushEnvelope(parameters.VotingId, envelope);
 
           if (voteReceipt == null ||
               !voteReceipt.Verify(client.voterEntity.CertificateStorage) ||
               !(voteReceipt.Certificate is ServerCertificate) ||
               voteReceipt.Value.VoterId != envelope.Certificate.Id ||
-              voteReceipt.Value.VotingId != this.votingId ||
+              voteReceipt.Value.VotingId != parameters.VotingId ||
               !voteReceipt.Value.Verify(envelope))
           {
             throw new PiSecurityException(ExceptionCode.InvalidVoteReceipt, "Invalid vote receipt");

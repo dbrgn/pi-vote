@@ -113,10 +113,11 @@ namespace Pirate.PiVote.Rpc
       while (this.run)
       {
         bool doneSomeWork = false;
-        TcpRpcConnection connection = null;
 
         for (int processIndex = 0; processIndex < this.connections.Count; processIndex++)
         {
+          TcpRpcConnection connection = null;
+
           lock (this.connections)
           {
             if (this.connections.Count > 0)
@@ -133,8 +134,8 @@ namespace Pirate.PiVote.Rpc
 
               if (connection.Overdue)
               {
-                connection.Close();
                 this.logger.Log(LogLevel.Info, "Connection from {0} was overdue and therefore dropped.", connection.RemoteEndPointText);
+                connection.Close();
               }
               else
               {
@@ -144,8 +145,9 @@ namespace Pirate.PiVote.Rpc
                 }
               }
             }
-            catch
+            catch (Exception exception)
             {
+              this.logger.Log(LogLevel.Warning, "Connection from {0} faild and was therefore dropped. Exception: {1}", connection.RemoteEndPointText, exception.ToString());
               connection.Close();
             }
           }

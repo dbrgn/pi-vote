@@ -41,9 +41,9 @@ namespace Pirate.PiVote.Client
           switch (votingDescriptor.Status)
           {
             case VotingStatus.Voting:
-              VoteItem voteItem = new VoteItem();
-              voteItem.VotingDescriptor = votingDescriptor;
-              return voteItem;
+              ViewVotingAuthoritiesItem viewVotingAuthoritiesItem = new ViewVotingAuthoritiesItem();
+              viewVotingAuthoritiesItem.VotingDescriptor = votingDescriptor;
+              return viewVotingAuthoritiesItem;
             case VotingStatus.Finished:
               TallyItem tallyItem = new TallyItem();
               tallyItem.VotingDescriptor = votingDescriptor;

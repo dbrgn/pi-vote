@@ -65,6 +65,11 @@ namespace Pirate.PiVote.Rpc
     private MemoryBuffer outBuffer;
 
     /// <summary>
+    /// Text identifiing the remote endpoint.
+    /// </summary>
+    public string RemoteEndPointText { get; private set; }
+
+    /// <summary>
     /// Creates a new TCP RPC server connection.
     /// </summary>
     /// <param name="client">TCP client.</param>
@@ -79,6 +84,16 @@ namespace Pirate.PiVote.Rpc
       this.rpcServer = rpcServer;
       this.inBuffer = new MemoryBuffer(32768);
       this.outBuffer = new MemoryBuffer(32768);
+
+      if (this.client.Client.RemoteEndPoint is IPEndPoint)
+      {
+        IPEndPoint ipEndPoint = (IPEndPoint)this.client.Client.RemoteEndPoint;
+        RemoteEndPointText = ipEndPoint.Address.ToString() + ":" + ipEndPoint.Port.ToString();
+      }
+      else
+      {
+        RemoteEndPointText = "Unknown";
+      }
     }
 
     /// <summary>
@@ -138,30 +153,20 @@ namespace Pirate.PiVote.Rpc
       return doneSomeWork;
     }
 
+    /// <summary>
+    /// Has the connection been inactive too long?
+    /// </summary>
     public bool Overdue
     {
-      get { return DateTime.Now.Subtract(this.lastActivity).TotalMinutes > 10d; }
+      get { return DateTime.Now.Subtract(this.lastActivity).TotalMinutes > 2d; }
     }
 
+    /// <summary>
+    /// Close the connection.
+    /// </summary>
     public void Close()
     {
       this.client.Close();
-    }
-
-    public string RemoteEndPointText
-    { 
-      get
-      {
-        if (this.client.Client.RemoteEndPoint is IPEndPoint)
-        {
-          IPEndPoint ipEndPoint = (IPEndPoint)this.client.Client.RemoteEndPoint;
-          return ipEndPoint.Address.ToString() + ":" + ipEndPoint.Port.ToString();
-        }
-        else
-        {
-          return "Unknown";
-        }
-      }
     }
   }
 }

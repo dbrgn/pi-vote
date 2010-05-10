@@ -1,6 +1,6 @@
 ﻿namespace Pirate.PiVote.Client
 {
-  partial class ViewShareControl
+  partial class ViewShareResponseControl
   {
     /// <summary> 
     /// Required designer variable.

@@ -21,6 +21,7 @@ namespace Pirate.PiVote.Client
 {
   public partial class VoteItem : WizardItem
   {
+    public VotingMaterial VotingMaterial { get; set; }
     public VotingDescriptor VotingDescriptor { get; set; }
 
     public VoteItem()
@@ -34,6 +35,7 @@ namespace Pirate.PiVote.Client
       {
         VoteCompleteItem item = new VoteCompleteItem();
         item.Vota = this.voteControl.Vota;
+        item.VotingMaterial = VotingMaterial;
         item.VotingDescriptor = VotingDescriptor;
         return item;
       }
@@ -66,7 +68,7 @@ namespace Pirate.PiVote.Client
     public override void Begin()
     {
       this.voteControl.Voting = VotingDescriptor;
-      this.voteControl.Display();
+      this.voteControl.Display(true);
       this.voteControl.ValidChanged += VoteControl_ValidChanged;
     }
 

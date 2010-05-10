@@ -32,7 +32,7 @@ namespace Pirate.PiVote.Client
       InitializeComponent();
     }
 
-    public void Display()
+    public void Display(bool enable)
     {
       if (Question == null)
         throw new InvalidOperationException("Question must not be null.");
@@ -40,7 +40,7 @@ namespace Pirate.PiVote.Client
       this.questionLabel.Text = Question.Text.Text;
       this.descriptionButton.Text = Resources.VoteDescriptionButton;
 
-      int space = 10;
+      int space = 2;
       int top = this.questionLabel.Top + this.questionLabel.Height + space;
       this.optionControls = new List<VoteOptionControl>();
 
@@ -53,14 +53,14 @@ namespace Pirate.PiVote.Client
         optionControl.Width = Width;
         optionControl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
         optionControl.CheckedChanged += OptionControl_CheckedChanged;
-        optionControl.Display();
+        optionControl.Display(enable);
         Controls.Add(optionControl);
         this.optionControls.Add(optionControl);
 
         top += optionControl.Height + space;
       }
 
-      this.Height = top;
+      this.Height = top + this.optionControls.First().Height;
     }
 
     private void OptionControl_CheckedChanged(object sender, EventArgs e)
@@ -98,10 +98,6 @@ namespace Pirate.PiVote.Client
       {
         return Question == null ? false : this.optionControls.Where(optionControl => optionControl.Checked).Count() == Question.MaxOptions;
       }
-    }
-
-    private void descriptionButton_Click(object sender, EventArgs e)
-    {
     }
 
     public IEnumerable<bool> Vota

@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Pirate.PiVote.Client
 {
-  partial class BadShareProofItem
+  partial class ViewVotingAuthoritiesItem
   {
     /// <summary> 
     /// Required designer variable.
@@ -42,18 +42,14 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
-      this.share0 = new Pirate.PiVote.Client.ViewShareControl();
+      this.response0 = new Pirate.PiVote.Client.ViewShareResponseControl();
       this.organizingCertificate = new Pirate.PiVote.Client.SmallCertificateControl();
-      this.share1 = new Pirate.PiVote.Client.ViewShareControl();
-      this.share2 = new Pirate.PiVote.Client.ViewShareControl();
-      this.share3 = new Pirate.PiVote.Client.ViewShareControl();
-      this.share4 = new Pirate.PiVote.Client.ViewShareControl();
+      this.response1 = new Pirate.PiVote.Client.ViewShareResponseControl();
+      this.response2 = new Pirate.PiVote.Client.ViewShareResponseControl();
+      this.response3 = new Pirate.PiVote.Client.ViewShareResponseControl();
+      this.response4 = new Pirate.PiVote.Client.ViewShareResponseControl();
       this.organizingSignatureBox = new System.Windows.Forms.TextBox();
       this.organizingSignatureLabel = new System.Windows.Forms.Label();
-      this.reportingSignatureBox = new System.Windows.Forms.TextBox();
-      this.reportingSignatureLabel = new System.Windows.Forms.Label();
-      this.reportingCertificate = new Pirate.PiVote.Client.SmallCertificateControl();
-      this.reportingLabel = new System.Windows.Forms.Label();
       this.organizingLabel = new System.Windows.Forms.Label();
       this.controlingAuthoritiesLabel = new System.Windows.Forms.Label();
       this.votingLabel = new System.Windows.Forms.Label();
@@ -65,17 +61,17 @@ namespace Pirate.PiVote.Client
       // 
       // share0
       // 
-      this.share0.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+      this.response0.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.share0.AuthorityIndex = 0;
-      this.share0.ComplainingAuthorityCertificate = null;
-      this.share0.Location = new System.Drawing.Point(6, 182);
-      this.share0.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-      this.share0.Name = "share0";
-      this.share0.Proof = null;
-      this.share0.Size = new System.Drawing.Size(644, 20);
-      this.share0.TabIndex = 4;
-      this.share0.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
+      this.response0.CertificateStorage = null;
+      this.response0.Location = new System.Drawing.Point(6, 133);
+      this.response0.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.response0.Name = "share0";
+      this.response0.Parameters = null;
+      this.response0.SignedShareReponse = null;
+      this.response0.Size = new System.Drawing.Size(644, 20);
+      this.response0.TabIndex = 4;
+      this.response0.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
       // 
       // organizingCertificate
       // 
@@ -83,7 +79,7 @@ namespace Pirate.PiVote.Client
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.organizingCertificate.Certificate = null;
       this.organizingCertificate.CertificateStorage = null;
-      this.organizingCertificate.Location = new System.Drawing.Point(6, 135);
+      this.organizingCertificate.Location = new System.Drawing.Point(6, 86);
       this.organizingCertificate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.organizingCertificate.Name = "organizingCertificate";
       this.organizingCertificate.Size = new System.Drawing.Size(456, 20);
@@ -92,64 +88,64 @@ namespace Pirate.PiVote.Client
       // 
       // share1
       // 
-      this.share1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+      this.response1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.share1.AuthorityIndex = 0;
-      this.share1.ComplainingAuthorityCertificate = null;
-      this.share1.Location = new System.Drawing.Point(6, 212);
-      this.share1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-      this.share1.Name = "share1";
-      this.share1.Proof = null;
-      this.share1.Size = new System.Drawing.Size(644, 20);
-      this.share1.TabIndex = 6;
-      this.share1.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
+      this.response1.CertificateStorage = null;
+      this.response1.Location = new System.Drawing.Point(6, 163);
+      this.response1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.response1.Name = "share1";
+      this.response1.Parameters = null;
+      this.response1.SignedShareReponse = null;
+      this.response1.Size = new System.Drawing.Size(644, 20);
+      this.response1.TabIndex = 6;
+      this.response1.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
       // 
       // share2
       // 
-      this.share2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+      this.response2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.share2.AuthorityIndex = 0;
-      this.share2.ComplainingAuthorityCertificate = null;
-      this.share2.Location = new System.Drawing.Point(6, 242);
-      this.share2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-      this.share2.Name = "share2";
-      this.share2.Proof = null;
-      this.share2.Size = new System.Drawing.Size(644, 20);
-      this.share2.TabIndex = 7;
-      this.share2.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
+      this.response2.CertificateStorage = null;
+      this.response2.Location = new System.Drawing.Point(6, 193);
+      this.response2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.response2.Name = "share2";
+      this.response2.Parameters = null;
+      this.response2.SignedShareReponse = null;
+      this.response2.Size = new System.Drawing.Size(644, 20);
+      this.response2.TabIndex = 7;
+      this.response2.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
       // 
       // share3
       // 
-      this.share3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+      this.response3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.share3.AuthorityIndex = 0;
-      this.share3.ComplainingAuthorityCertificate = null;
-      this.share3.Location = new System.Drawing.Point(6, 272);
-      this.share3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-      this.share3.Name = "share3";
-      this.share3.Proof = null;
-      this.share3.Size = new System.Drawing.Size(644, 20);
-      this.share3.TabIndex = 8;
-      this.share3.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
+      this.response3.CertificateStorage = null;
+      this.response3.Location = new System.Drawing.Point(6, 223);
+      this.response3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.response3.Name = "share3";
+      this.response3.Parameters = null;
+      this.response3.SignedShareReponse = null;
+      this.response3.Size = new System.Drawing.Size(644, 20);
+      this.response3.TabIndex = 8;
+      this.response3.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
       // 
       // share4
       // 
-      this.share4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+      this.response4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.share4.AuthorityIndex = 0;
-      this.share4.ComplainingAuthorityCertificate = null;
-      this.share4.Location = new System.Drawing.Point(6, 302);
-      this.share4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-      this.share4.Name = "share4";
-      this.share4.Proof = null;
-      this.share4.Size = new System.Drawing.Size(644, 20);
-      this.share4.TabIndex = 9;
-      this.share4.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
+      this.response4.CertificateStorage = null;
+      this.response4.Location = new System.Drawing.Point(6, 253);
+      this.response4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.response4.Name = "share4";
+      this.response4.Parameters = null;
+      this.response4.SignedShareReponse = null;
+      this.response4.Size = new System.Drawing.Size(644, 20);
+      this.response4.TabIndex = 9;
+      this.response4.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
       // 
       // organizingSignatureBox
       // 
       this.organizingSignatureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.organizingSignatureBox.Location = new System.Drawing.Point(556, 135);
+      this.organizingSignatureBox.Location = new System.Drawing.Point(556, 86);
       this.organizingSignatureBox.Name = "organizingSignatureBox";
       this.organizingSignatureBox.ReadOnly = true;
       this.organizingSignatureBox.Size = new System.Drawing.Size(94, 20);
@@ -159,59 +155,17 @@ namespace Pirate.PiVote.Client
       // 
       this.organizingSignatureLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.organizingSignatureLabel.AutoSize = true;
-      this.organizingSignatureLabel.Location = new System.Drawing.Point(469, 138);
+      this.organizingSignatureLabel.Location = new System.Drawing.Point(469, 89);
       this.organizingSignatureLabel.Name = "organizingSignatureLabel";
       this.organizingSignatureLabel.Size = new System.Drawing.Size(56, 14);
       this.organizingSignatureLabel.TabIndex = 10;
       this.organizingSignatureLabel.Text = "Signature:";
       // 
-      // reportingSignatureBox
-      // 
-      this.reportingSignatureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.reportingSignatureBox.Location = new System.Drawing.Point(556, 90);
-      this.reportingSignatureBox.Name = "reportingSignatureBox";
-      this.reportingSignatureBox.ReadOnly = true;
-      this.reportingSignatureBox.Size = new System.Drawing.Size(94, 20);
-      this.reportingSignatureBox.TabIndex = 14;
-      // 
-      // reportingSignatureLabel
-      // 
-      this.reportingSignatureLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.reportingSignatureLabel.AutoSize = true;
-      this.reportingSignatureLabel.Location = new System.Drawing.Point(469, 93);
-      this.reportingSignatureLabel.Name = "reportingSignatureLabel";
-      this.reportingSignatureLabel.Size = new System.Drawing.Size(56, 14);
-      this.reportingSignatureLabel.TabIndex = 13;
-      this.reportingSignatureLabel.Text = "Signature:";
-      // 
-      // reportingCertificate
-      // 
-      this.reportingCertificate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.reportingCertificate.Certificate = null;
-      this.reportingCertificate.CertificateStorage = null;
-      this.reportingCertificate.Location = new System.Drawing.Point(5, 90);
-      this.reportingCertificate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-      this.reportingCertificate.Name = "reportingCertificate";
-      this.reportingCertificate.Size = new System.Drawing.Size(457, 20);
-      this.reportingCertificate.TabIndex = 12;
-      this.reportingCertificate.ValidationDate = new System.DateTime(2010, 4, 23, 0, 3, 14, 100);
-      // 
-      // reportingLabel
-      // 
-      this.reportingLabel.AutoSize = true;
-      this.reportingLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.reportingLabel.Location = new System.Drawing.Point(2, 71);
-      this.reportingLabel.Name = "reportingLabel";
-      this.reportingLabel.Size = new System.Drawing.Size(115, 14);
-      this.reportingLabel.TabIndex = 15;
-      this.reportingLabel.Text = "Reporting Authority";
-      // 
       // organizingLabel
       // 
       this.organizingLabel.AutoSize = true;
       this.organizingLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.organizingLabel.Location = new System.Drawing.Point(3, 116);
+      this.organizingLabel.Location = new System.Drawing.Point(3, 67);
       this.organizingLabel.Name = "organizingLabel";
       this.organizingLabel.Size = new System.Drawing.Size(146, 14);
       this.organizingLabel.TabIndex = 16;
@@ -221,7 +175,7 @@ namespace Pirate.PiVote.Client
       // 
       this.controlingAuthoritiesLabel.AutoSize = true;
       this.controlingAuthoritiesLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.controlingAuthoritiesLabel.Location = new System.Drawing.Point(3, 163);
+      this.controlingAuthoritiesLabel.Location = new System.Drawing.Point(3, 114);
       this.controlingAuthoritiesLabel.Name = "controlingAuthoritiesLabel";
       this.controlingAuthoritiesLabel.Size = new System.Drawing.Size(130, 14);
       this.controlingAuthoritiesLabel.TabIndex = 17;
@@ -279,7 +233,7 @@ namespace Pirate.PiVote.Client
       this.votingTitleLabel.TabIndex = 22;
       this.votingTitleLabel.Text = "Title:";
       // 
-      // BadShareProofItem
+      // ViewVotingAuthorities
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -290,21 +244,17 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.votingLabel);
       this.Controls.Add(this.controlingAuthoritiesLabel);
       this.Controls.Add(this.organizingLabel);
-      this.Controls.Add(this.reportingLabel);
-      this.Controls.Add(this.reportingSignatureBox);
-      this.Controls.Add(this.reportingSignatureLabel);
-      this.Controls.Add(this.reportingCertificate);
       this.Controls.Add(this.organizingSignatureBox);
       this.Controls.Add(this.organizingSignatureLabel);
-      this.Controls.Add(this.share4);
-      this.Controls.Add(this.share3);
-      this.Controls.Add(this.share2);
-      this.Controls.Add(this.share1);
+      this.Controls.Add(this.response4);
+      this.Controls.Add(this.response3);
+      this.Controls.Add(this.response2);
+      this.Controls.Add(this.response1);
       this.Controls.Add(this.organizingCertificate);
-      this.Controls.Add(this.share0);
+      this.Controls.Add(this.response0);
       this.Margin = new System.Windows.Forms.Padding(3);
-      this.Name = "BadShareProofItem";
-      this.Size = new System.Drawing.Size(654, 333);
+      this.Name = "ViewVotingAuthorities";
+      this.Size = new System.Drawing.Size(654, 281);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -312,18 +262,14 @@ namespace Pirate.PiVote.Client
 
     #endregion
 
-    private ViewShareControl share0;
+    private ViewShareResponseControl response0;
     private SmallCertificateControl organizingCertificate;
-    private ViewShareControl share1;
-    private ViewShareControl share2;
-    private ViewShareControl share3;
-    private ViewShareControl share4;
+    private ViewShareResponseControl response1;
+    private ViewShareResponseControl response2;
+    private ViewShareResponseControl response3;
+    private ViewShareResponseControl response4;
     private TextBox organizingSignatureBox;
     private Label organizingSignatureLabel;
-    private TextBox reportingSignatureBox;
-    private Label reportingSignatureLabel;
-    private SmallCertificateControl reportingCertificate;
-    private Label reportingLabel;
     private Label organizingLabel;
     private Label controlingAuthoritiesLabel;
     private Label votingLabel;

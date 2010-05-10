@@ -22,6 +22,7 @@ namespace Pirate.PiVote.Client
   public partial class VoteCompleteItem : WizardItem
   {
     public VotingDescriptor VotingDescriptor { get; set; }
+    public VotingMaterial VotingMaterial { get; set; }
     public IEnumerable<IEnumerable<bool>> Vota;
 
     private bool done = false;
@@ -65,7 +66,7 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
 
       Status.VotingClient.ActivateVoter((VoterCertificate)Status.Certificate);
-      Status.VotingClient.Vote(VotingDescriptor.Id, Vota, VoteCompleted);
+      Status.VotingClient.Vote(VotingMaterial, Vota, VoteCompleted);
 
       while (this.run)
       {
