@@ -43,13 +43,21 @@ namespace Pirate.PiVote.Crypto
     private Certificate rootCertificate;
 
     /// <summary>
+    /// Checked database connections.
+    /// </summary>
+    private MySqlConnection DbConnection
+    {
+      get { return this.dbConnection.Check(); }
+    }
+
+    /// <summary>
     /// Signed certificate revocation lists for certificate authorities.
     /// </summary>
     public IEnumerable<Signed<RevocationList>> SignedRevocationLists
     {
       get
       {
-        MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist", this.dbConnection);
+        MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist", DbConnection);
         MySqlDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
@@ -70,7 +78,7 @@ namespace Pirate.PiVote.Crypto
       get
       {
         List<Certificate> certificates = new List<Certificate>();
-        MySqlCommand command = new MySqlCommand("SELECT Value FROM certificate", this.dbConnection);
+        MySqlCommand command = new MySqlCommand("SELECT Value FROM certificate", DbConnection);
         MySqlDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
@@ -100,7 +108,7 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Certificate for id.</returns>
     public Certificate Get(Guid id)
     {
-      MySqlCommand command = new MySqlCommand("SELECT Value FROM certificate WHERE Id = @Id", this.dbConnection);
+      MySqlCommand command = new MySqlCommand("SELECT Value FROM certificate WHERE Id = @Id", DbConnection);
       command.Parameters.AddWithValue("@Id", id.ToByteArray());
       MySqlDataReader reader = command.ExecuteReader();
 
@@ -124,7 +132,7 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Is it there?</returns>
     public bool Has(Guid id)
     {
-      MySqlCommand command = new MySqlCommand("SELECT Id FROM certificate WHERE Id = @Id", this.dbConnection);
+      MySqlCommand command = new MySqlCommand("SELECT Id FROM certificate WHERE Id = @Id", DbConnection);
       command.Parameters.AddWithValue("@Id", id.ToByteArray());
 
       MySqlDataReader reader = command.ExecuteReader();
@@ -141,7 +149,7 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Was it already added?</returns>
     public bool Has(RevocationList revocationList)
     {
-      MySqlCommand command = new MySqlCommand("SELECT count(*) FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", this.dbConnection);
+      MySqlCommand command = new MySqlCommand("SELECT count(*) FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
       command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
       command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
@@ -162,14 +170,14 @@ namespace Pirate.PiVote.Crypto
         Certificate storedCertificate = Get(certificate.Id);
         storedCertificate.Merge(certificate);
 
-        MySqlCommand command = new MySqlCommand("UPDATE certificate SET Value = @Value WHERE Id = @Id", this.dbConnection);
+        MySqlCommand command = new MySqlCommand("UPDATE certificate SET Value = @Value WHERE Id = @Id", DbConnection);
         command.Parameters.AddWithValue("@Id", certificate.Id.ToByteArray());
         command.Parameters.AddWithValue("@Value", certificate.ToBinary());
         command.ExecuteNonQuery();
       }
       else
       {
-        MySqlCommand command = new MySqlCommand("INSERT INTO certificate (Id, Value, Root) VALUES (@Id, @Value, @Root)", this.dbConnection);
+        MySqlCommand command = new MySqlCommand("INSERT INTO certificate (Id, Value, Root) VALUES (@Id, @Value, @Root)", DbConnection);
         command.Parameters.AddWithValue("@Id", certificate.Id.ToByteArray());
         command.Parameters.AddWithValue("@Value", certificate.ToBinary());
         command.Parameters.AddWithValue("@Root", 0);
@@ -185,7 +193,7 @@ namespace Pirate.PiVote.Crypto
     {
       if (!Has(certificate.Id))
       {
-        MySqlCommand command = new MySqlCommand("INSERT INTO certificate (Id, Value, Root) VALUES (@Id, @Value, @Root)", this.dbConnection);
+        MySqlCommand command = new MySqlCommand("INSERT INTO certificate (Id, Value, Root) VALUES (@Id, @Value, @Root)", DbConnection);
         command.Parameters.AddWithValue("@Id", certificate.Id.ToByteArray());
         command.Parameters.AddWithValue("@Value", certificate.ToBinary());
         command.Parameters.AddWithValue("@Root", 1);
@@ -196,7 +204,7 @@ namespace Pirate.PiVote.Crypto
         Certificate storedCertificate = Get(certificate.Id);
         storedCertificate.Merge(certificate);
 
-        MySqlCommand command = new MySqlCommand("UPDATE certificate SET Value = @Value, Root = @Root WHERE Id = @Id", this.dbConnection);
+        MySqlCommand command = new MySqlCommand("UPDATE certificate SET Value = @Value, Root = @Root WHERE Id = @Id", DbConnection);
         command.Parameters.AddWithValue("@Id", certificate.Id.ToByteArray());
         command.Parameters.AddWithValue("@Value", certificate.ToBinary());
         command.Parameters.AddWithValue("@Root", 1);
@@ -226,7 +234,7 @@ namespace Pirate.PiVote.Crypto
       if (!signedRevocationList.Verify(this))
         throw new ArgumentException("Bad signature on revocation list.");
 
-      MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", this.dbConnection);
+      MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
       command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
       command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
@@ -236,7 +244,7 @@ namespace Pirate.PiVote.Crypto
       {
         reader.Close();
 
-        MySqlCommand insertCommand = new MySqlCommand("INSERT INTO revocationlist (IssuerId, ValidFrom, ValidUntil, Value) VALUES (@IssuerId, @ValidFrom, @ValidUntil, @Value)", this.dbConnection);
+        MySqlCommand insertCommand = new MySqlCommand("INSERT INTO revocationlist (IssuerId, ValidFrom, ValidUntil, Value) VALUES (@IssuerId, @ValidFrom, @ValidUntil, @Value)", DbConnection);
         insertCommand.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
         insertCommand.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
         insertCommand.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
@@ -256,7 +264,7 @@ namespace Pirate.PiVote.Crypto
     {
       RevocationList revocationList = signedRevocationList.Value;
 
-      MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", this.dbConnection);
+      MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
       command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
       command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
@@ -266,7 +274,7 @@ namespace Pirate.PiVote.Crypto
       {
         reader.Close();
 
-        MySqlCommand insertCommand = new MySqlCommand("INSERT INTO revocationlist (IssuerId, ValidFrom, ValidUntil, Value) VALUES (@IssuerId, @ValidFrom, @ValidUntil, @Value)", this.dbConnection);
+        MySqlCommand insertCommand = new MySqlCommand("INSERT INTO revocationlist (IssuerId, ValidFrom, ValidUntil, Value) VALUES (@IssuerId, @ValidFrom, @ValidUntil, @Value)", DbConnection);
         insertCommand.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
         insertCommand.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
         insertCommand.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
@@ -287,7 +295,7 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Is it revoked.</returns>
     public bool IsRevoked(Guid issuerId, Guid certificateId, DateTime date)
     {
-      MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom <= @FromDate AND ValidUntil >= @UntilDate", this.dbConnection);
+      MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom <= @FromDate AND ValidUntil >= @UntilDate", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", issuerId.ToByteArray());
       command.Parameters.AddWithValue("@FromDate", date.Date.AddDays(1));
       command.Parameters.AddWithValue("@UntilDate", date.Date);
@@ -388,7 +396,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public void ImportStorageIfNeed()
     {
-      long certificateCount = (long)this.dbConnection.ExecuteScalar("SELECT count(*) FROM certificate");
+      long certificateCount = (long)DbConnection.ExecuteScalar("SELECT count(*) FROM certificate");
 
       if (certificateCount < 2)
       {

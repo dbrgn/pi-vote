@@ -37,7 +37,7 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      return null;
+      return new ListVotingsItem();
     }
 
     public override WizardItem Previous()
@@ -48,6 +48,11 @@ namespace Pirate.PiVote.Client
     public override WizardItem Cancel()
     {
       return null;
+    }
+
+    public override bool CanNext
+    {
+      get { return this.done; }
     }
 
     public override bool CanCancel

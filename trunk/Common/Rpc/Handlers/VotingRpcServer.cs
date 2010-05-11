@@ -61,6 +61,14 @@ namespace Pirate.PiVote.Rpc
     public override Logger Logger { get { return this.logger; } }
 
     /// <summary>
+    /// Checked database connections.
+    /// </summary>
+    private MySqlConnection DbConnection
+    {
+      get { return this.dbConnection.Check(); }
+    }
+
+    /// <summary>
     /// Create the voting server.
     /// </summary>
     public VotingRpcServer()
@@ -94,7 +102,7 @@ namespace Pirate.PiVote.Rpc
     {
       this.votings = new Dictionary<Guid, VotingServerEntity>();
 
-      MySqlCommand selectCommand = new MySqlCommand("SELECT Id, Parameters, Status FROM voting", this.dbConnection);
+      MySqlCommand selectCommand = new MySqlCommand("SELECT Id, Parameters, Status FROM voting", DbConnection);
       MySqlDataReader reader = selectCommand.ExecuteReader();
 
       while (reader.Read())
@@ -180,7 +188,7 @@ namespace Pirate.PiVote.Rpc
       if (!authorities.All(authority => authority.Valid(CertificateStorage)))
         throw new PiArgumentException(ExceptionCode.AuthorityInvalid, "Authority certificate invalid or not recognized.");
 
-      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO voting (Id, Parameters, Status) VALUES (@Id, @Parameters, @Status)", this.dbConnection);
+      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO voting (Id, Parameters, Status) VALUES (@Id, @Parameters, @Status)", DbConnection);
       insertCommand.Parameters.AddWithValue("@Id", votingParameters.VotingId.ToByteArray());
       insertCommand.Parameters.AddWithValue("@Parameters", signedVotingParameters.ToBinary());
       insertCommand.Parameters.AddWithValue("@Status", (int)VotingStatus.New);
@@ -227,12 +235,12 @@ namespace Pirate.PiVote.Rpc
       if (!signatureRequest.VerifySimple())
         throw new PiArgumentException(ExceptionCode.SignatureRequestInvalid, "Signature request invalid.");
 
-      MySqlCommand replaceCommand = new MySqlCommand("REPLACE INTO signaturerequest (Id, Value) VALUES (@Id, @Value)", this.dbConnection);
+      MySqlCommand replaceCommand = new MySqlCommand("REPLACE INTO signaturerequest (Id, Value) VALUES (@Id, @Value)", DbConnection);
       replaceCommand.Parameters.AddWithValue("@Id", id.ToByteArray());
       replaceCommand.Parameters.AddWithValue("@Value", signatureRequest.ToBinary());
       replaceCommand.ExecuteNonQuery();
 
-      MySqlCommand deleteCommand = new MySqlCommand("DELETE FROM signatureresponse WHERE Id = @Id", this.dbConnection);
+      MySqlCommand deleteCommand = new MySqlCommand("DELETE FROM signatureresponse WHERE Id = @Id", DbConnection);
       deleteCommand.Parameters.AddWithValue("@Id", id.ToByteArray());
       deleteCommand.ExecuteNonQuery();
 
@@ -248,7 +256,7 @@ namespace Pirate.PiVote.Rpc
     /// <returns>List of signature request ids.</returns>
     public List<Guid> GetSignatureRequestList()
     {
-      MySqlDataReader reader = this.dbConnection
+      MySqlDataReader reader = DbConnection
         .ExecuteReader("SELECT Id FROM signaturerequest WHERE NOT Id IN (SELECT Id FROM signatureresponse)");
       List<Guid> signatureRequestList = new List<Guid>();
 
@@ -269,7 +277,7 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Signed signature request.</returns>
     public Signed<SignatureRequest> GetSignatureRequest(Guid id)
     {
-      MySqlDataReader reader = this.dbConnection
+      MySqlDataReader reader = DbConnection
         .ExecuteReader("SELECT Value FROM signaturerequest WHERE Id = @Id",
         "@Id", id.ToByteArray());
 
@@ -294,7 +302,7 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Status of the signature response.</returns>
     public SignatureResponseStatus GetSignatureResponseStatus(Guid certificateId, out Signed<SignatureResponse> signatureResponse)
     {
-      MySqlCommand selectResponseCommand = new MySqlCommand("SELECT Value FROM signatureresponse WHERE Id = @Id", this.dbConnection);
+      MySqlCommand selectResponseCommand = new MySqlCommand("SELECT Value FROM signatureresponse WHERE Id = @Id", DbConnection);
       selectResponseCommand.Parameters.AddWithValue("@Id", certificateId.ToByteArray());
       MySqlDataReader selectResponseReader = selectResponseCommand.ExecuteReader();
 
@@ -309,7 +317,7 @@ namespace Pirate.PiVote.Rpc
       {
         selectResponseReader.Close();
 
-        MySqlCommand selectRequestCommand = new MySqlCommand("SELECT count(*) FROM signaturerequest WHERE Id = @Id", this.dbConnection);
+        MySqlCommand selectRequestCommand = new MySqlCommand("SELECT count(*) FROM signaturerequest WHERE Id = @Id", DbConnection);
         selectRequestCommand.Parameters.AddWithValue("@Id", certificateId.ToByteArray());
 
         if (selectRequestCommand.ExecuteHasRows())
@@ -339,7 +347,7 @@ namespace Pirate.PiVote.Rpc
       
       SignatureResponse signatureResponse = signedSignatureResponse.Value;
 
-      MySqlCommand replaceCommand = new MySqlCommand("REPLACE INTO signatureresponse (Id, Value) VALUES (@Id, @Value)", this.dbConnection);
+      MySqlCommand replaceCommand = new MySqlCommand("REPLACE INTO signatureresponse (Id, Value) VALUES (@Id, @Value)", DbConnection);
       replaceCommand.Parameters.AddWithValue("@Id", signatureResponse.SubjectId.ToByteArray());
       replaceCommand.Parameters.AddWithValue("@Value", signedSignatureResponse.ToBinary());
       replaceCommand.ExecuteNonQuery();

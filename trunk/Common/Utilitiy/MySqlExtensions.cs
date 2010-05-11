@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Data;
+using System.Threading;
 
 namespace MySql.Data.MySqlClient
 {
@@ -125,6 +127,37 @@ namespace MySql.Data.MySqlClient
       command.Parameters.AddWithValue(parameterName1, parameterValue1);
       command.Parameters.AddWithValue(parameterName2, parameterValue2);
       return command.ExecuteHasRows();
+    }
+
+    public static MySqlConnection Check(this MySqlConnection dbConnection)
+    {
+      bool done = false;
+      int retryCounter = 0;
+
+      while (!done && retryCounter < 5)
+      {
+        try
+        {
+          dbConnection.Ping();
+          done = true;
+        }
+        catch (MySqlException)
+        {
+          Thread.Sleep(100);
+          retryCounter++;
+          dbConnection.Close();
+          dbConnection.Open();
+        }
+      }
+
+      if (done)
+      {
+        return dbConnection;
+      }
+      else
+      {
+        throw new Exception("Database connection is broken cannot be repaired.");
+      }
     }
   }
 }

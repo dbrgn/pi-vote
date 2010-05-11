@@ -76,13 +76,21 @@ namespace Pirate.PiVote.Crypto
       private set
       {
         this.status = value;
-        MySqlCommand updateCommand = new MySqlCommand("UPDATE voting SET Status = @Status WHERE Id = @Id", this.dbConnection);
+        MySqlCommand updateCommand = new MySqlCommand("UPDATE voting SET Status = @Status WHERE Id = @Id", DbConnection);
         updateCommand.Add("@Id", Id.ToByteArray());
         updateCommand.Add("@Status", (int)this.status);
         updateCommand.ExecuteNonQuery();
 
         this.logger.Log(LogLevel.Info, "Status of voting {0} changed to {1}.", Id.ToString(), this.status.ToString());
       }
+    }
+
+    /// <summary>
+    /// Checked database connections.
+    /// </summary>
+    private MySqlConnection DbConnection
+    {
+      get { return this.dbConnection.Check(); }
     }
 
     /// <summary>
@@ -99,7 +107,7 @@ namespace Pirate.PiVote.Crypto
         switch (Status)
         {
           case VotingStatus.New:
-            reader = this.dbConnection.ExecuteReader(
+            reader = DbConnection.ExecuteReader(
               "SELECT authority.AuthorityId FROM authority, sharepart WHERE authority.VotingId = @VotingId AND sharepart.VotingId = @VotingId AND authority.AuthorityIndex = sharepart.AuthorityIndex",
               "@VotingId", Id.ToByteArray());
 
@@ -112,7 +120,7 @@ namespace Pirate.PiVote.Crypto
 
             return authorityIds;
           case VotingStatus.Sharing:
-            reader = this.dbConnection.ExecuteReader(
+            reader = DbConnection.ExecuteReader(
               "SELECT authority.AuthorityId FROM authority, shareresponse WHERE authority.VotingId = @VotingId AND shareresponse.VotingId = @VotingId AND authority.AuthorityIndex = shareresponse.AuthorityIndex",
               "@VotingId", Id.ToByteArray());
 
@@ -125,7 +133,7 @@ namespace Pirate.PiVote.Crypto
 
             return authorityIds;
           case VotingStatus.Deciphering:
-            reader = this.dbConnection.ExecuteReader(
+            reader = DbConnection.ExecuteReader(
               "SELECT authority.AuthorityId FROM authority, deciphers WHERE authority.VotingId = @VotingId AND deciphers.VotingId = @VotingId AND authority.AuthorityIndex = deciphers.AuthorityIndex",
               "@VotingId", Id.ToByteArray());
 
@@ -223,7 +231,7 @@ namespace Pirate.PiVote.Crypto
       if (!certificate.Valid(this.certificateStorage))
         throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Authority certificate invalid.");
 
-      MySqlCommand command = new MySqlCommand("SELECT AuthorityIndex FROM authority WHERE VotingId = @VotingId AND AuthorityId = @AuthorityId", this.dbConnection);
+      MySqlCommand command = new MySqlCommand("SELECT AuthorityIndex FROM authority WHERE VotingId = @VotingId AND AuthorityId = @AuthorityId", DbConnection);
       command.Parameters.AddWithValue("@VotingId", this.parameters.VotingId.ToByteArray());
       command.Parameters.AddWithValue("@AuthorityId", certificate.Id.ToByteArray());
       MySqlDataReader reader = command.ExecuteReader();
@@ -255,25 +263,25 @@ namespace Pirate.PiVote.Crypto
       if (!(certificate is AuthorityCertificate))
         throw new PiSecurityException(ExceptionCode.NoAuthorizedAuthority, "No an authority certificate.");
 
-      MySqlTransaction transaction = this.dbConnection.BeginTransaction();
+      MySqlTransaction transaction = DbConnection.BeginTransaction();
 
-      MySqlCommand countCommand = new MySqlCommand("SELECT count(*) FROM authority WHERE VotingId = @VotingId", this.dbConnection, transaction);
+      MySqlCommand countCommand = new MySqlCommand("SELECT count(*) FROM authority WHERE VotingId = @VotingId", DbConnection, transaction);
       countCommand.Add("@VotingId", this.parameters.VotingId.ToByteArray());
       if ((long)countCommand.ExecuteScalar() >= this.parameters.AuthorityCount)
         throw new PiArgumentException(ExceptionCode.AlreadyEnoughAuthorities, "Already enough authorities.");
 
-      MySqlCommand addedCommand = new MySqlCommand("SELECT count(*) FROM authority WHERE VotingId = @VotingId AND AuthorityId = @AuthorityId", this.dbConnection, transaction);
+      MySqlCommand addedCommand = new MySqlCommand("SELECT count(*) FROM authority WHERE VotingId = @VotingId AND AuthorityId = @AuthorityId", DbConnection, transaction);
       addedCommand.Add("@VotingId", this.parameters.VotingId.ToByteArray());
       addedCommand.Add("@AuthorityId", certificate.Id.ToByteArray());
       if (addedCommand.ExecuteHasRows())
         throw new PiArgumentException(ExceptionCode.AuthorityAlreadyInVoting, "Already an authority of the voting.");
 
-      MySqlCommand indexCommand = new MySqlCommand("SELECT max(AuthorityIndex) + 1 FROM authority WHERE VotingId = @VotingId", this.dbConnection, transaction);
+      MySqlCommand indexCommand = new MySqlCommand("SELECT max(AuthorityIndex) + 1 FROM authority WHERE VotingId = @VotingId", DbConnection, transaction);
       indexCommand.Add("@VotingId", this.parameters.VotingId.ToByteArray());
       object authorityIndexNull = indexCommand.ExecuteScalar();
       int authorityIndex = authorityIndexNull == DBNull.Value ? 1 : Convert.ToInt32((long)authorityIndexNull);
 
-      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO authority (VotingId, AuthorityIndex, AuthorityId, Certificate) VALUES (@VotingId, @AuthorityIndex, @AuthorityId, @Certificate)", this.dbConnection, transaction);
+      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO authority (VotingId, AuthorityIndex, AuthorityId, Certificate) VALUES (@VotingId, @AuthorityIndex, @AuthorityId, @Certificate)", DbConnection, transaction);
       insertCommand.Parameters.AddWithValue("@VotingId", this.parameters.VotingId.ToByteArray());
       insertCommand.Parameters.AddWithValue("@AuthorityIndex", authorityIndex);
       insertCommand.Parameters.AddWithValue("@AuthorityId", certificate.Id.ToByteArray());
@@ -292,7 +300,7 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
-        MySqlDataReader reader = this.dbConnection.ExecuteReader(
+        MySqlDataReader reader = DbConnection.ExecuteReader(
           "SELECT Certificate FROM authority WHERE VotingId = @VotingId",
           "@VotingId", Id.ToByteArray());
 
@@ -323,7 +331,7 @@ namespace Pirate.PiVote.Crypto
 
     private Certificate GetAuthority(int authorityIndex)
     {
-      MySqlDataReader reader = this.dbConnection.ExecuteReader(
+      MySqlDataReader reader = DbConnection.ExecuteReader(
         "SELECT Certificate FROM authority WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
         "@VotingId", this.parameters.VotingId.ToByteArray(),
         "@AuthorityIndex", authorityIndex);
@@ -361,20 +369,20 @@ namespace Pirate.PiVote.Crypto
       if (!signedSharePart.Certificate.IsIdentic(certificate))
         throw new PiSecurityException(ExceptionCode.NoAuthorizedAuthority, "Not signed by proper authority.");
 
-      bool exists = this.dbConnection.ExecuteHasRows(
+      bool exists = DbConnection.ExecuteHasRows(
         "SELECT count(*) FROM sharepart WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
         "@VotingId", Id.ToByteArray(),
         "@AuthorityIndex", sharePart.AuthorityIndex);
       if (exists)
         throw new PiArgumentException(ExceptionCode.AuthorityHasAlreadyDeposited, "Authority has already deposited shares.");
 
-      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO sharepart (VotingId, AuthorityIndex, Value) VALUES (@VotingId, @AuthorityIndex, @Value)", this.dbConnection);
+      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO sharepart (VotingId, AuthorityIndex, Value) VALUES (@VotingId, @AuthorityIndex, @Value)", DbConnection);
       insertCommand.Add("@VotingId", Id.ToByteArray());
       insertCommand.Add("@AuthorityIndex", sharePart.AuthorityIndex);
       insertCommand.Add("@Value", signedSharePart.ToBinary());
       insertCommand.ExecuteNonQuery();
 
-      long depositedSharePartCount = (long)this.dbConnection.ExecuteScalar(
+      long depositedSharePartCount = (long)DbConnection.ExecuteScalar(
         "SELECT count(*) FROM sharepart WHERE VotingId = @VotingId",
         "@VotingId", Id.ToByteArray());
 
@@ -403,7 +411,7 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
-        MySqlDataReader reader = this.dbConnection.ExecuteReader(
+        MySqlDataReader reader = DbConnection.ExecuteReader(
           "SELECT Value FROM sharepart WHERE VotingId = @VotingId ORDER BY AuthorityIndex DESC",
           "@VotingId", Id.ToByteArray());
 
@@ -437,20 +445,20 @@ namespace Pirate.PiVote.Crypto
       if (!signedShareResponse.Certificate.IsIdentic(certificate))
         throw new PiSecurityException(ExceptionCode.NoAuthorizedAuthority, "Not signed by proper authority.");
 
-      bool exists = this.dbConnection.ExecuteHasRows(
+      bool exists = DbConnection.ExecuteHasRows(
         "SELECT count(*) FROM shareresponse WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
         "@VotingId", Id.ToByteArray(),
         "@AuthorityIndex", shareResponse.AuthorityIndex);
       if (exists)
         throw new PiArgumentException(ExceptionCode.AuthorityHasAlreadyDeposited, "Authority has already deposited share responses.");
 
-      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO shareresponse (VotingId, AuthorityIndex, Value) VALUES (@VotingId, @AuthorityIndex, @Value)", this.dbConnection);
+      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO shareresponse (VotingId, AuthorityIndex, Value) VALUES (@VotingId, @AuthorityIndex, @Value)", DbConnection);
       insertCommand.Add("@VotingId", Id.ToByteArray());
       insertCommand.Add("@AuthorityIndex", shareResponse.AuthorityIndex);
       insertCommand.Add("@Value", signedShareResponse.ToBinary());
       insertCommand.ExecuteNonQuery();
 
-      long depositedShareResponseCount = (long)this.dbConnection.ExecuteScalar(
+      long depositedShareResponseCount = (long)DbConnection.ExecuteScalar(
         "SELECT count(*) FROM shareresponse WHERE VotingId = @VotingId",
         "@VotingId", Id.ToByteArray());
 
@@ -467,7 +475,7 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
-        MySqlDataReader reader = this.dbConnection.ExecuteReader(
+        MySqlDataReader reader = DbConnection.ExecuteReader(
           "SELECT Value FROM shareresponse WHERE VotingId = @VotingId ORDER BY AuthorityIndex DESC",
           "@VotingId", Id.ToByteArray());
 
@@ -509,18 +517,18 @@ namespace Pirate.PiVote.Crypto
       if (!(signedEnvelope.Certificate is VoterCertificate))
         throw new PiArgumentException(ExceptionCode.NoVoterCertificate, "Not a voter certificate.");
 
-      bool hasVoted = this.dbConnection.ExecuteHasRows(
+      bool hasVoted = DbConnection.ExecuteHasRows(
         "SELECT count(*) FROM envelope WHERE VotingId = @VotingId AND VoterId = @VoterId",
         "@VotingId", Id.ToByteArray(),
         "@VoterId", signedEnvelope.Certificate.Id.ToByteArray());
       if (hasVoted)
         throw new PiArgumentException(ExceptionCode.AlreadyVoted, "Voter has already voted.");
 
-      MySqlTransaction transaction = this.dbConnection.BeginTransaction();
+      MySqlTransaction transaction = DbConnection.BeginTransaction();
 
       MySqlCommand indexCommand = new MySqlCommand(
         "SELECT max(EnvelopeIndex) + 1 FROM envelope WHERE VotingId = @VotingId",
-        this.dbConnection,
+        DbConnection,
         transaction);
       indexCommand.Add("@VotingId", Id.ToByteArray());
       object indexObject = indexCommand.ExecuteScalar();
@@ -528,7 +536,7 @@ namespace Pirate.PiVote.Crypto
 
       MySqlCommand insertCommand = new MySqlCommand(
         "INSERT INTO envelope (VotingId, EnvelopeIndex, VoterId, Value) VALUES (@VotingId, @EnvelopeIndex, @VoterId, @Value)",
-        this.dbConnection,
+        DbConnection,
         transaction);
       insertCommand.Add("@VotingId", Id.ToByteArray());
       insertCommand.Add("@VoterId", signedEnvelope.Certificate.Id.ToByteArray());
@@ -574,20 +582,20 @@ namespace Pirate.PiVote.Crypto
       if (!signedPartialDecipherList.Certificate.IsIdentic(certificate))
         throw new ArgumentException("Not signed by proper authority.");
 
-      bool exists = this.dbConnection.ExecuteHasRows(
+      bool exists = DbConnection.ExecuteHasRows(
         "SELECT count(*) FROM deciphers WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
         "@VotingId", Id.ToByteArray(),
         "@AuthorityIndex", partialDecipherList.AuthorityIndex);
       if (exists)
         throw new ArgumentException("Authority has already deposited shares.");
 
-      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO deciphers (VotingId, AuthorityIndex, Value) VALUES (@VotingId, @AuthorityIndex, @Value)", this.dbConnection);
+      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO deciphers (VotingId, AuthorityIndex, Value) VALUES (@VotingId, @AuthorityIndex, @Value)", DbConnection);
       insertCommand.Add("@VotingId", Id.ToByteArray());
       insertCommand.Add("@AuthorityIndex", partialDecipherList.AuthorityIndex);
       insertCommand.Add("@Value", signedPartialDecipherList.ToBinary());
       insertCommand.ExecuteNonQuery();
 
-      long depositedShareResponseCount = (long)this.dbConnection.ExecuteScalar(
+      long depositedShareResponseCount = (long)DbConnection.ExecuteScalar(
         "SELECT count(*) FROM deciphers WHERE VotingId = @VotingId",
         "@VotingId", Id.ToByteArray());
 
@@ -604,7 +612,7 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Signed envelope.</returns>
     public Signed<Envelope> GetEnvelope(int envelopeIndex)
     {
-      MySqlDataReader reader = this.dbConnection.ExecuteReader(
+      MySqlDataReader reader = DbConnection.ExecuteReader(
         "SELECT Value FROM envelope WHERE VotingId = @VotingId AND EnvelopeIndex = @EnvelopeIndex",
         "@VotingId", Id.ToByteArray(),
         "@EnvelopeIndex", envelopeIndex + 1);
@@ -629,7 +637,7 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Partial decipher list.</returns>
     public Signed<PartialDecipherList> GetPartialDecipher(int authorityIndex)
     {
-      MySqlDataReader reader = this.dbConnection.ExecuteReader(
+      MySqlDataReader reader = DbConnection.ExecuteReader(
         "SELECT Value FROM deciphers WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
         "@VotingId", Id.ToByteArray(),
         "@AuthorityIndex", authorityIndex);
@@ -653,7 +661,7 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Envelope count.</returns>
     public int GetEnvelopeCount()
     {
-      return Convert.ToInt32((long)this.dbConnection.ExecuteScalar(
+      return Convert.ToInt32((long)DbConnection.ExecuteScalar(
         "SELECT count(*) FROM envelope WHERE VotingId = @VotingId",
         "@VotingId", Id.ToByteArray()));
     }
