@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Net;
+using System.IO;
 using Pirate.PiVote.Serialization;
 using Pirate.PiVote.Crypto;
 
@@ -48,6 +49,11 @@ namespace Pirate.PiVote.Rpc
       /// Id of the voting.
       /// </summary>
       private Guid votingId;
+
+      /// <summary>
+      /// Path for offline checking files.
+      /// </summary>
+      private string offlinePath;
 
       /// <summary>
       /// Callback upon completion.
@@ -117,6 +123,23 @@ namespace Pirate.PiVote.Rpc
       }
 
       /// <summary>
+      /// Create a new result get operation.
+      /// </summary>
+      /// <param name="offlinePath">Path for offline checking files.</param>
+      /// <param name="callBack">Callback upon completion.</param>
+      public GetResultOperation(string offlinePath, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, GetResultCallBack callBack)
+      {
+        this.offlinePath = offlinePath;
+        this.callBack = callBack;
+
+        this.voteReceipts = new Dictionary<Guid, Signed<VoteReceipt>>();
+        signedVoteReceipts.Foreach(signedVoteReceipt => this.voteReceipts.Add(signedVoteReceipt.Value.VoterId, signedVoteReceipt));
+
+        this.voteReceiptsStatus = new Dictionary<Guid, VoteReceiptStatus>();
+        signedVoteReceipts.Foreach(signedVoteReceipt => this.voteReceiptsStatus.Add(signedVoteReceipt.Value.VoterId, VoteReceiptStatus.NotFound));
+      }
+
+      /// <summary>
       /// Execute the operation.
       /// </summary>
       /// <param name="client">Voter client to execute against.</param>
@@ -129,7 +152,17 @@ namespace Pirate.PiVote.Rpc
           SubText = string.Empty;
           SubProgress = 0d;
 
-          var material = client.proxy.FetchVotingMaterial(votingId);
+          VotingMaterial material = null;
+
+          if (this.offlinePath.IsNullOrEmpty())
+          {
+            material = client.proxy.FetchVotingMaterial(votingId);
+          }
+          else
+          {
+            material = Serializable.Load<VotingMaterial>(Path.Combine(this.offlinePath, Files.VotingMaterialFileName));
+          }
+
           if (!material.Valid(client.voterEntity.CertificateStorage))
             throw new InvalidOperationException(LibraryResources.ClientGetResultMaterialInvalid);
           var parameters = material.Parameters.Value;
@@ -137,7 +170,15 @@ namespace Pirate.PiVote.Rpc
           Progress = 0.1d;
           Text = LibraryResources.ClientGetResultFetchEnvelopeCount;
 
-          this.envelopeCount = client.proxy.FetchEnvelopeCount(votingId);
+          if (this.offlinePath.IsNullOrEmpty())
+          {
+            this.envelopeCount = client.proxy.FetchEnvelopeCount(votingId);
+          }
+          else
+          {
+            var directory = new DirectoryInfo(this.offlinePath);
+            this.envelopeCount = directory.GetFiles(Files.EnvelopeFilePattern).Count();
+          }
 
           Progress = 0.2d;
           Text = LibraryResources.ClientGetResultFetchEnvelopes;
@@ -184,7 +225,16 @@ namespace Pirate.PiVote.Rpc
 
           for (int authorityIndex = 1; authorityIndex < parameters.AuthorityCount + 1; authorityIndex++)
           {
-            var partialDecipher = client.proxy.FetchPartialDecipher(votingId, authorityIndex);
+            Signed<PartialDecipherList> partialDecipher = null;
+
+            if (this.offlinePath.IsNullOrEmpty())
+            {
+              partialDecipher = client.proxy.FetchPartialDecipher(votingId, authorityIndex);
+            }
+            else
+            {
+              partialDecipher = Serializable.Load<Signed<PartialDecipherList>>(Path.Combine(this.offlinePath, string.Format(Files.PartialDecipherFileString)));
+            }
 
             if (partialDecipher != null)
             {
@@ -224,7 +274,17 @@ namespace Pirate.PiVote.Rpc
             Thread.Sleep(1);
           }
 
-          var envelope = this.client.proxy.FetchEnvelope(votingId, envelopeIndex);
+          Signed<Envelope> envelope = null;
+
+          if (this.offlinePath.IsNullOrEmpty())
+          {
+            envelope = this.client.proxy.FetchEnvelope(votingId, envelopeIndex);
+          }
+          else
+          {
+            string fileName = Path.Combine(this.offlinePath, string.Format(Files.EnvelopeFileString));
+            envelope = Serializable.Load<Signed<Envelope>>(fileName);
+          }
 
           lock (this.envelopeQueue)
           {

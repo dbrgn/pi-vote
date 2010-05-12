@@ -236,6 +236,20 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Get result from server.
+    /// </summary>
+    /// <param name="offlinePath">Path to the offline voting files.</param>
+    /// <param name="signedVoteReceipts">Vote receipts signed by the server to check.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void GetResult(string offlinePath, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, GetResultCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new GetResultOperation(offlinePath, signedVoteReceipts, callBack));
+      }
+    }
+
+    /// <summary>
     /// Get signature response from server.
     /// </summary>
     /// <param name="certificateId">Id of the certificate.</param>

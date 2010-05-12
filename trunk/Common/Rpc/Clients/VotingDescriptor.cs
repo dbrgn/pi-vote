@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Net;
+using System.IO;
 using Pirate.PiVote.Serialization;
 using Pirate.PiVote.Crypto;
 
@@ -32,6 +33,7 @@ namespace Pirate.PiVote.Rpc
     private readonly int authorityCount;
     private readonly int envelopeCount;
     private readonly List<QuestionDescriptor> questions;
+    private readonly string offlinePath;
 
     /// <summary>
     /// Id of the voting.
@@ -83,6 +85,40 @@ namespace Pirate.PiVote.Rpc
     /// Questions posed in that voting.
     /// </summary>
     public IEnumerable<QuestionDescriptor> Questions { get { return this.questions; } }
+
+    /// <summary>
+    /// Offline file path where the voting files are storaged.
+    /// </summary>
+    public string OfflinePath { get { return this.offlinePath; } }
+
+    /// <summary>
+    /// Creates a new voting descriptor from offline files.
+    /// </summary>
+    /// <param name="offlinePath">Path to the offline files.</param>
+    public VotingDescriptor(string offlinePath)
+    {
+      string materialFileName = Path.Combine(offlinePath, Files.VotingMaterialFileName);
+
+      if (!File.Exists(materialFileName))
+        throw new ArgumentException("Offline voting material file not found.");
+
+      DirectoryInfo offlineDirectory = new DirectoryInfo(offlinePath);
+      VotingMaterial material = Serializable.Load<VotingMaterial>(materialFileName);
+      VotingParameters parameters = material.Parameters.Value;
+
+      this.offlinePath = offlinePath;
+      this.id = parameters.VotingId;
+      this.title = parameters.Title;
+      this.descripton = parameters.Description;
+      this.status = VotingStatus.Finished;
+      this.authoritiesDone = new List<Guid>();
+      this.voteFrom = parameters.VotingBeginDate;
+      this.voteUntil = parameters.VotingEndDate;
+      this.authorityCount = status == VotingStatus.Deciphering ? parameters.Thereshold + 1 : parameters.AuthorityCount;
+      this.envelopeCount = offlineDirectory.GetFiles(Files.EnvelopeFilePattern).Count();
+      this.questions = new List<QuestionDescriptor>();
+      this.questions.AddRange(parameters.Questions.Select(question => new QuestionDescriptor(question)));
+    }
 
     /// <summary>
     /// Create a new voting descriptor.

@@ -306,12 +306,6 @@
     <Compile Include="Wizard\WizardStatus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Pirate.PiVote.csproj">
-      <Project>{3A570D23-A292-4B5C-A62E-C7295888EAA0}</Project>
-      <Name>Pirate.PiVote</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources.fr-FR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.fr-FR.Designer.cs</LastGenOutput>
@@ -444,5 +438,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ballot.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Pirate.PiVote.csproj">
+      <Project>{3A570D23-A292-4B5C-A62E-C7295888EAA0}</Project>
+      <Name>Pirate.PiVote</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

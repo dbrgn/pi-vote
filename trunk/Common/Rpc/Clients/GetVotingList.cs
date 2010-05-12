@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Net;
+using System.IO;
 using Pirate.PiVote.Serialization;
 using Pirate.PiVote.Crypto;
 
@@ -72,7 +73,7 @@ namespace Pirate.PiVote.Rpc
           IEnumerable<Guid> votingIds = client.proxy.FetchVotingIds();
 
           int counter = 0;
-          Progress = 0.5d;
+          Progress = 0.2d;
           SubText = string.Format(LibraryResources.ClientGetVotingListFetchVoting, counter, votingIds.Count());
           SubProgress = 0d;
 
@@ -93,8 +94,18 @@ namespace Pirate.PiVote.Rpc
             SubProgress = 1d / (double)votingIds.Count() * (double)counter;
           }
 
-          Progress = 1d;
+          Progress = 0.6d;
           SubProgress = 1d;
+
+          DirectoryInfo appDataDirectory = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+
+          foreach (DirectoryInfo offlineDirectory in appDataDirectory.GetDirectories())
+          {
+            if (File.Exists(Path.Combine(offlineDirectory.FullName, Files.VotingMaterialFileName)))
+            {
+              votingList.Add(new VotingDescriptor(offlineDirectory.FullName));
+            }
+          }
 
           this.callBack(votingList, null);
         }

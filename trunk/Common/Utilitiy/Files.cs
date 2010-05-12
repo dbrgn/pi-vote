@@ -26,5 +26,9 @@ namespace Pirate.PiVote
     public const string SignatureResponseFileFilter = "Pi-Vote Signature Response|*.pi-sig-resp";
     public const string AuthorityDataFileFilter = "Pi-Vote Certificate|*.pi-auth";
     public const string BadShareProofFileFilter = "Pi-Vote Share Proof|*.pi-shareproof";
+    public const string VotingMaterialFileName = "voting.pi-material";
+    public const string EnvelopeFilePattern = "*.pi-envelope";
+    public const string PartialDecipherFileString = "{0:00}.pi-partialdecipher";
+    public const string EnvelopeFileString = "{0:00000000}.pi-envelope";
   }
 }
