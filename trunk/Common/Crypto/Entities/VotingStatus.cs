@@ -26,6 +26,7 @@ namespace Pirate.PiVote.Crypto
     Ready,
     Deciphering,
     Finished,
+    Offline
   }
 
   public static class VotingStatusExtension
@@ -48,6 +49,8 @@ namespace Pirate.PiVote.Crypto
           return LibraryResources.VotingStatusSharing;
         case VotingStatus.Voting:
           return LibraryResources.VotingStatusVoting;
+        case VotingStatus.Offline:
+          return LibraryResources.VotingStatusOffline;
         default:
           throw new ArgumentException("Unkown voting status.");
       }

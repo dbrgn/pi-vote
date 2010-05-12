@@ -427,4 +427,10 @@
   <data name="ExceptionShareResponseWrongAuthority" xml:space="preserve">
     <value>Share response is from wrong athority.</value>
   </data>
+  <data name="ClientDownloadVotingFetchEnvelopesOf" xml:space="preserve">
+    <value>Fetching envelopes {0} / {1}</value>
+  </data>
+  <data name="VotingStatusOffline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
 </root>

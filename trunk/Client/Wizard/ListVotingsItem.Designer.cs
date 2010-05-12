@@ -42,13 +42,17 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       this.votingList = new System.Windows.Forms.ListView();
-      this.titleColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.statusColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.voteFromColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.voteUntilColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.authoritiesColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.envelopesColumnHeader = new System.Windows.Forms.ColumnHeader();
+      this.titleColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.statusColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.voteFromColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.voteUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.authoritiesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.envelopesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.votingListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.downloadVotingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.votingListContextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
       // votingList
@@ -63,12 +67,14 @@ namespace Pirate.PiVote.Client
             this.voteUntilColumnHeader,
             this.authoritiesColumnHeader,
             this.envelopesColumnHeader});
+      this.votingList.ContextMenuStrip = this.votingListContextMenu;
       this.votingList.Enabled = false;
       this.votingList.FullRowSelect = true;
-      this.votingList.Location = new System.Drawing.Point(3, 3);
+      this.votingList.Location = new System.Drawing.Point(4, 4);
+      this.votingList.Margin = new System.Windows.Forms.Padding(4);
       this.votingList.MultiSelect = false;
       this.votingList.Name = "votingList";
-      this.votingList.Size = new System.Drawing.Size(694, 482);
+      this.votingList.Size = new System.Drawing.Size(1039, 721);
       this.votingList.TabIndex = 0;
       this.votingList.UseCompatibleStateImageBehavior = false;
       this.votingList.View = System.Windows.Forms.View.Details;
@@ -104,14 +110,30 @@ namespace Pirate.PiVote.Client
       this.envelopesColumnHeader.Text = "Votes";
       this.envelopesColumnHeader.Width = 70;
       // 
+      // votingListContextMenu
+      // 
+      this.votingListContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.downloadVotingMenuItem});
+      this.votingListContextMenu.Name = "votingListContextMenu";
+      this.votingListContextMenu.Size = new System.Drawing.Size(155, 30);
+      this.votingListContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.votingListContextMenu_Opening);
+      // 
+      // downloadVotingMenuItem
+      // 
+      this.downloadVotingMenuItem.Name = "downloadVotingMenuItem";
+      this.downloadVotingMenuItem.Size = new System.Drawing.Size(154, 26);
+      this.downloadVotingMenuItem.Text = "&Download";
+      this.downloadVotingMenuItem.Click += new System.EventHandler(this.downloadVotingMenuItem_Click);
+      // 
       // ListVotingsItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.votingList);
-      this.Margin = new System.Windows.Forms.Padding(3);
+      this.Margin = new System.Windows.Forms.Padding(4);
       this.Name = "ListVotingsItem";
-      this.Size = new System.Drawing.Size(700, 487);
+      this.Size = new System.Drawing.Size(1050, 730);
+      this.votingListContextMenu.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -125,6 +147,8 @@ namespace Pirate.PiVote.Client
     private ColumnHeader voteUntilColumnHeader;
     private ColumnHeader authoritiesColumnHeader;
     private ColumnHeader envelopesColumnHeader;
+    private ContextMenuStrip votingListContextMenu;
+    private ToolStripMenuItem downloadVotingMenuItem;
 
 
 

@@ -185,12 +185,14 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Get voting list from server.
     /// </summary>
+    /// <param name="certificateStorage">Certificate storage.</param>
+    /// <param name="dataPath">Path where program data is stored.</param>
     /// <param name="callBack">Callback upon completion.</param>
-    public void GetVotingList(CertificateStorage certificateStorage, GetVotingListCallBack callBack)
+    public void GetVotingList(CertificateStorage certificateStorage, string dataPath, GetVotingListCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new GetVotingListOperation(certificateStorage, callBack));
+        this.operations.Enqueue(new GetVotingListOperation(certificateStorage, dataPath, callBack));
       }
     }
 
@@ -218,6 +220,21 @@ namespace Pirate.PiVote.Rpc
       lock (this.operations)
       {
         this.operations.Enqueue(new GetVotingMaterialOperation(votingid, callBack));
+      }
+    }
+
+    /// <summary>
+    /// Download the whole voting from the server and
+    /// store it in files.
+    /// </summary>
+    /// <param name="votingId">Id of the voting.</param>
+    /// <param name="votingId">Path where program data is stored.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void DownloadVoting(Guid votingId, string dataPath, DownloadVotingCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new DownloadVotingOperation(votingId, dataPath, callBack));
       }
     }
 

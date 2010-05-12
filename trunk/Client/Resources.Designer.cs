@@ -869,6 +869,24 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Download.
+        /// </summary>
+        internal static string ListVotingDownloadMenu {
+            get {
+                return ResourceManager.GetString("ListVotingDownloadMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The voting was downloaded successfully.
+        /// </summary>
+        internal static string ListVotingDownloadSuccess {
+            get {
+                return ResourceManager.GetString("ListVotingDownloadSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Voted.
         /// </summary>
         internal static string ListVotingsVoted {

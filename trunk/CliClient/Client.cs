@@ -321,7 +321,7 @@ namespace Pirate.PiVote.CliClient
         Console.WriteLine();
         Console.WriteLine("Connected to voting server.");
 
-        this.voterClient.GetVotingList(certs, VotingList);
+        this.voterClient.GetVotingList(certs, string.Empty, VotingList);
       }
       else
       {

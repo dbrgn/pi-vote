@@ -46,13 +46,20 @@ namespace Pirate.PiVote.Rpc
       private GetVotingListCallBack callBack;
 
       /// <summary>
+      /// Path where program data is stored.
+      /// </summary>
+      private string dataPath;
+
+      /// <summary>
       /// Create a new voting list get operation.
       /// </summary>
       /// <param name="certificateStorage">Certificate storage to check against.</param>
+      /// <param name="dataPath">Path where program data is stored.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public GetVotingListOperation(CertificateStorage certificateStorage, GetVotingListCallBack callBack)
+      public GetVotingListOperation(CertificateStorage certificateStorage, string dataPath, GetVotingListCallBack callBack)
       {
         this.certificateStorage = certificateStorage;
+        this.dataPath = dataPath;
         this.callBack = callBack;
       }
 
@@ -97,7 +104,7 @@ namespace Pirate.PiVote.Rpc
           Progress = 0.6d;
           SubProgress = 1d;
 
-          DirectoryInfo appDataDirectory = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+          DirectoryInfo appDataDirectory = new DirectoryInfo(this.dataPath);
 
           foreach (DirectoryInfo offlineDirectory in appDataDirectory.GetDirectories())
           {

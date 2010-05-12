@@ -571,4 +571,10 @@
   <data name="ServerIpAddress" xml:space="preserve">
     <value>pivote.piratenpartei.ch</value>
   </data>
+  <data name="ListVotingDownloadMenu" xml:space="preserve">
+    <value>&amp;Download</value>
+  </data>
+  <data name="ListVotingDownloadSuccess" xml:space="preserve">
+    <value>The voting was downloaded successfully</value>
+  </data>
 </root>

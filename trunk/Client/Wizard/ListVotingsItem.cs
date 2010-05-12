@@ -45,6 +45,7 @@ namespace Pirate.PiVote.Client
               viewVotingAuthoritiesItem.VotingDescriptor = votingDescriptor;
               return viewVotingAuthoritiesItem;
             case VotingStatus.Finished:
+            case VotingStatus.Offline:
               TallyItem tallyItem = new TallyItem();
               tallyItem.VotingDescriptor = votingDescriptor;
               tallyItem.VoteReceipts = 
@@ -89,6 +90,7 @@ namespace Pirate.PiVote.Client
           {
             case VotingStatus.Voting:
             case VotingStatus.Finished:
+            case VotingStatus.Offline:
               return true;
             default:
               return false;
@@ -103,10 +105,15 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
+      UpdateVotingList();
+    }
+
+    private void UpdateVotingList()
+    {
       this.run = true;
       OnUpdateWizard();
 
-      Status.VotingClient.GetVotingList(Status.CertificateStorage, GetVotingListCompleted);
+      Status.VotingClient.GetVotingList(Status.CertificateStorage, Status.DataPath, GetVotingListCompleted);
 
       while (this.run)
       {
@@ -120,66 +127,13 @@ namespace Pirate.PiVote.Client
       {
         if (this.votings != null)
         {
-          DirectoryInfo dataDirectory = new DirectoryInfo(Status.DataPath);
-          this.voteReceipts = new Dictionary<Guid, List<Signed<VoteReceipt>>>();
+          LoadVoteReceipts();
 
-          foreach (FileInfo file in dataDirectory.GetFiles("*.pi-receipt"))
-          {
-            Signed<VoteReceipt> signedVoteReceipt = Serializable.Load<Signed<VoteReceipt>>(file.FullName);
-            VoteReceipt voteReceipt = signedVoteReceipt.Value;
-
-            if (!this.voteReceipts.ContainsKey(voteReceipt.VotingId))
-            {
-              this.voteReceipts.Add(voteReceipt.VotingId, new List<Signed<VoteReceipt>>());
-            }
-
-            this.voteReceipts[voteReceipt.VotingId].Add(signedVoteReceipt);
-          }
+          this.votingList.Items.Clear();
 
           foreach (VotingDescriptor voting in this.votings)
-          {
-            ListViewItem item = new ListViewItem(voting.Title.Text);
-            item.SubItems.Add(voting.Status.Text());
-            item.SubItems.Add(voting.VoteFrom.ToShortDateString());
-            item.SubItems.Add(voting.VoteUntil.ToShortDateString());
-            if (voting.AuthoritiesDone == null)
-            {
-              item.SubItems.Add(string.Empty);
-            }
-            else
-            {
-              item.SubItems.Add(voting.AuthoritiesDone.Count().ToString() + " / " + voting.AuthorityCount.ToString());
-            }
-            if (voting.Status == VotingStatus.Voting ||
-                voting.Status == VotingStatus.Deciphering ||
-                voting.Status == VotingStatus.Finished)
-            {
-              item.SubItems.Add(voting.EnvelopeCount.ToString());
-            }
-            else
-            {
-              item.SubItems.Add(string.Empty);
-            }
-            if (this.voteReceipts.ContainsKey(voting.Id))
-            {
-              var voteReceiptList = this.voteReceipts[voting.Id];
-
-              if (voteReceiptList.Count > 1)
-              {
-                item.SubItems.Add(voteReceiptList.Count.ToString());
-              }
-              else
-              {
-                item.SubItems.Add(Resources.ListVotingsVotedYes);
-              }
-            }
-            else
-            {
-              item.SubItems.Add(Resources.ListVotingsVotedNo);
-            }
-
-            item.Tag = voting;
-            this.votingList.Items.Add(item);
+          { 
+            AddVotingToList(voting);
           }
         }
 
@@ -192,6 +146,73 @@ namespace Pirate.PiVote.Client
       }
 
       OnUpdateWizard();
+    }
+
+    private void AddVotingToList(VotingDescriptor voting)
+    {
+      ListViewItem item = new ListViewItem(voting.Title.Text);
+      item.SubItems.Add(voting.Status.Text());
+      item.SubItems.Add(voting.VoteFrom.ToShortDateString());
+      item.SubItems.Add(voting.VoteUntil.ToShortDateString());
+      if (voting.AuthoritiesDone == null)
+      {
+        item.SubItems.Add(string.Empty);
+      }
+      else
+      {
+        item.SubItems.Add(voting.AuthoritiesDone.Count().ToString() + " / " + voting.AuthorityCount.ToString());
+      }
+      if (voting.Status == VotingStatus.Voting ||
+          voting.Status == VotingStatus.Deciphering ||
+          voting.Status == VotingStatus.Finished ||
+          voting.Status == VotingStatus.Offline)
+      {
+        item.SubItems.Add(voting.EnvelopeCount.ToString());
+      }
+      else
+      {
+        item.SubItems.Add(string.Empty);
+      }
+
+      if (this.voteReceipts.ContainsKey(voting.Id))
+      {
+        var voteReceiptList = this.voteReceipts[voting.Id];
+
+        if (voteReceiptList.Count > 1)
+        {
+          item.SubItems.Add(voteReceiptList.Count.ToString());
+        }
+        else
+        {
+          item.SubItems.Add(Resources.ListVotingsVotedYes);
+        }
+      }
+      else
+      {
+        item.SubItems.Add(Resources.ListVotingsVotedNo);
+      }
+
+      item.Tag = voting;
+      this.votingList.Items.Add(item);
+    }
+
+    private void LoadVoteReceipts()
+    {
+      DirectoryInfo dataDirectory = new DirectoryInfo(Status.DataPath);
+      this.voteReceipts = new Dictionary<Guid, List<Signed<VoteReceipt>>>();
+
+      foreach (FileInfo file in dataDirectory.GetFiles("*.pi-receipt"))
+      {
+        Signed<VoteReceipt> signedVoteReceipt = Serializable.Load<Signed<VoteReceipt>>(file.FullName);
+        VoteReceipt voteReceipt = signedVoteReceipt.Value;
+
+        if (!this.voteReceipts.ContainsKey(voteReceipt.VotingId))
+        {
+          this.voteReceipts.Add(voteReceipt.VotingId, new List<Signed<VoteReceipt>>());
+        }
+
+        this.voteReceipts[voteReceipt.VotingId].Add(signedVoteReceipt);
+      }
     }
 
     private void GetVotingListCompleted(IEnumerable<VotingDescriptor> votingList, Exception exception)
@@ -216,6 +237,66 @@ namespace Pirate.PiVote.Client
       this.voteUntilColumnHeader.Text = Resources.VotingListVoteUntil;
       this.authoritiesColumnHeader.Text = Resources.VotingListAuthorities;
       this.envelopesColumnHeader.Text = Resources.VotingListEnvelopes;
+    }
+
+    private void downloadVotingMenuItem_Click(object sender, EventArgs e)
+    {
+      if (this.votingList.SelectedIndices.Count > 0)
+      {
+        var votingDescriptor = (VotingDescriptor)this.votingList.SelectedItems[0].Tag;
+
+        if (votingDescriptor.Status == VotingStatus.Finished)
+        {
+          DownloadVoting(votingDescriptor);
+        }
+      }
+    }
+
+    private void DownloadVoting(VotingDescriptor votingDescriptor)
+    {
+      this.run = true;
+      this.votingList.Enabled = false;
+      OnUpdateWizard();
+
+      Status.VotingClient.DownloadVoting(votingDescriptor.Id, Status.DataPath, DownloadVotingComplete);
+
+      while (this.run)
+      {
+        Status.UpdateProgress();
+        Thread.Sleep(10);
+      }
+
+      if (this.exception == null)
+      {
+        UpdateVotingList();
+
+        Status.SetMessage(Resources.ListVotingDownloadSuccess, MessageType.Success);
+      }
+      else
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
+      }
+
+      this.votingList.Enabled = true;
+      OnUpdateWizard();
+    }
+
+    private void DownloadVotingComplete(Exception exception)
+    {
+      this.run = false;
+      this.exception = exception;
+    }
+
+    private void votingListContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+      this.downloadVotingMenuItem.Text = Resources.ListVotingDownloadMenu;
+
+      if (this.votingList.SelectedIndices.Count > 0)
+      {
+        var votingDescriptor = (VotingDescriptor)this.votingList.SelectedItems[0].Tag;
+
+        this.downloadVotingMenuItem.Enabled = votingDescriptor.Status == VotingStatus.Finished;
+      }
     }
   }
 }

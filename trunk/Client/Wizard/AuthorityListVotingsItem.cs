@@ -67,7 +67,7 @@ namespace Pirate.PiVote.Client
       this.run = true;
       OnUpdateWizard();
 
-      Status.VotingClient.GetVotingList(Status.CertificateStorage, GetVotingListCompleted);
+      Status.VotingClient.GetVotingList(Status.CertificateStorage, Status.DataPath, GetVotingListCompleted);
 
       while (this.run)
       {

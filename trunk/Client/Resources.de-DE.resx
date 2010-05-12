@@ -567,4 +567,10 @@
   <data name="SigningRequestDocumentSignSignature" xml:space="preserve">
     <value>Unterschrift</value>
   </data>
+  <data name="ListVotingDownloadMenu" xml:space="preserve">
+    <value>&amp;Herunterladen</value>
+  </data>
+  <data name="ListVotingDownloadSuccess" xml:space="preserve">
+    <value>Die Abstimmung wurde erfolgreich heruntergeladen</value>
+  </data>
 </root>

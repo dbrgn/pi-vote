@@ -313,6 +313,15 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fetching envelopes {0} / {1}.
+        /// </summary>
+        public static string ClientDownloadVotingFetchEnvelopesOf {
+            get {
+                return ResourceManager.GetString("ClientDownloadVotingFetchEnvelopesOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Getting authority certificates.
         /// </summary>
         public static string ClientGetAuthorityCertificates {
@@ -955,6 +964,15 @@ namespace Pirate.PiVote {
         public static string VotingStatusNew {
             get {
                 return ResourceManager.GetString("VotingStatusNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offline.
+        /// </summary>
+        public static string VotingStatusOffline {
+            get {
+                return ResourceManager.GetString("VotingStatusOffline", resourceCulture);
             }
         }
         

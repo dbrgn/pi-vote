@@ -423,4 +423,10 @@
   <data name="ExceptionShareResponseWrongAuthority" xml:space="preserve">
     <value>Teilantwort stammt von falscher Autorität.</value>
   </data>
+  <data name="ClientDownloadVotingFetchEnvelopesOf" xml:space="preserve">
+    <value>Lade umschläge herunter {0} / {1}</value>
+  </data>
+  <data name="VotingStatusOffline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
 </root>

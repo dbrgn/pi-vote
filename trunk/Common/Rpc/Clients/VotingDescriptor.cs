@@ -110,11 +110,11 @@ namespace Pirate.PiVote.Rpc
       this.id = parameters.VotingId;
       this.title = parameters.Title;
       this.descripton = parameters.Description;
-      this.status = VotingStatus.Finished;
-      this.authoritiesDone = new List<Guid>();
+      this.status = VotingStatus.Offline;
+      this.authoritiesDone = null;
       this.voteFrom = parameters.VotingBeginDate;
       this.voteUntil = parameters.VotingEndDate;
-      this.authorityCount = status == VotingStatus.Deciphering ? parameters.Thereshold + 1 : parameters.AuthorityCount;
+      this.authorityCount = parameters.AuthorityCount;
       this.envelopeCount = offlineDirectory.GetFiles(Files.EnvelopeFilePattern).Count();
       this.questions = new List<QuestionDescriptor>();
       this.questions.AddRange(parameters.Questions.Select(question => new QuestionDescriptor(question)));

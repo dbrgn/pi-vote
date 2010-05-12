@@ -233,7 +233,12 @@ namespace Pirate.PiVote.Rpc
             }
             else
             {
-              partialDecipher = Serializable.Load<Signed<PartialDecipherList>>(Path.Combine(this.offlinePath, string.Format(Files.PartialDecipherFileString)));
+              string partialDecipherFileName = Path.Combine(this.offlinePath, string.Format(Files.PartialDecipherFileString, authorityIndex));
+
+              if (File.Exists(partialDecipherFileName))
+              {
+                partialDecipher = Serializable.Load<Signed<PartialDecipherList>>(partialDecipherFileName);
+              }
             }
 
             if (partialDecipher != null)
@@ -282,7 +287,7 @@ namespace Pirate.PiVote.Rpc
           }
           else
           {
-            string fileName = Path.Combine(this.offlinePath, string.Format(Files.EnvelopeFileString));
+            string fileName = Path.Combine(this.offlinePath, string.Format(Files.EnvelopeFileString, envelopeIndex));
             envelope = Serializable.Load<Signed<Envelope>>(fileName);
           }
 

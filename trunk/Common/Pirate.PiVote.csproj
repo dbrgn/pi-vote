@@ -183,6 +183,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exception\PiException.cs" />
     <Compile Include="Rpc\Clients\CheckShares.cs" />
+    <Compile Include="Rpc\Clients\DownloadVoting.cs" />
     <Compile Include="Rpc\Clients\GetVotingMaterial.cs" />
     <Compile Include="Rpc\Clients\QuestionDescriptor.cs" />
     <Compile Include="Rpc\Clients\OptionDescriptor.cs" />

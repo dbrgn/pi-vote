@@ -141,7 +141,7 @@ namespace MySql.Data.MySqlClient
           dbConnection.Ping();
           done = true;
         }
-        catch (MySqlException)
+        catch (InvalidOperationException)
         {
           Thread.Sleep(100);
           retryCounter++;
