@@ -114,6 +114,9 @@ namespace Pirate.PiVote.Rpc
             }
           }
 
+          Progress = 1d;
+          SubProgress = 1d;
+
           this.callBack(votingList, null);
         }
         catch (Exception exception)

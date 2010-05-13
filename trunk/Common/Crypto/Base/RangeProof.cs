@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
+using System.IO;
 using Emil.GMP;
 using Pirate.PiVote.Serialization;
 
@@ -77,30 +78,62 @@ namespace Pirate.PiVote.Crypto
       BigInt r0 = parameters.Random();
       BigInt r1 = parameters.Random();
 
-      T0 = publicKey.PowerMod(r0, parameters.P);
-      T1 = publicKey.PowerMod(r1, parameters.P);
-
-      SHA512Managed sha512 = new SHA512Managed();
-      byte[] hash = sha512.ComputeHash(T0.ToByteArray().Concat(T1.ToByteArray()));
-      C = ((hash[0] & 1) == 1) ? 1 : 0;
-
       switch (votum)
       {
         case 0:
-          C1 = 0;
-          S1 = r1;
-          C0 = C - C1;
-          S0 = r0 + r * C0;
+          //Create the fake proof.
+          C1 = (int)Prime.RandomNumber(16);
+          S1 = parameters.Random();
+          T1 = (vote.Ciphertext.DivideMod(parameters.F.PowerMod(1, parameters.P), parameters.P).PowerMod(C1, parameters.P).InvertMod(parameters.P) * publicKey.PowerMod(S1, parameters.P)).Mod(parameters.P);
+
+          //First part of the real proof
+          T0 = publicKey.PowerMod(r0, parameters.P);
           break;
         case 1:
-          C0 = 0;
-          S0 = r0;
-          C1 = C - C0;
-          S1 = r1 + r * C1;
+          //Create the fake proof.
+          C0 = (int)Prime.RandomNumber(16);
+          S0 = parameters.Random();
+          T0 = (vote.Ciphertext.DivideMod(parameters.F.PowerMod(0, parameters.P), parameters.P).PowerMod(C0, parameters.P).InvertMod(parameters.P) * publicKey.PowerMod(S0, parameters.P)).Mod(parameters.P);
+
+          //First part of the real proof
+          T1 = publicKey.PowerMod(r1, parameters.P);
           break;
         default:
           throw new ArgumentException("Bad votum.");
       }
+
+      //Put togeather the data to be hashed.
+      MemoryStream serializeStream = new MemoryStream();
+      SerializeContext serializer = new SerializeContext(serializeStream);
+      serializer.Write(vote.Ciphertext);
+      serializer.Write(vote.HalfKey);
+      serializer.Write(publicKey);
+      serializer.Write(T0);
+      serializer.Write(T1);
+      serializer.Close();
+      serializeStream.Close();
+
+      //Hash the proof data.
+      SHA512Managed sha512 = new SHA512Managed();
+      byte[] hash = sha512.ComputeHash(serializeStream.ToArray());
+      //Take the first 16 bits.
+      C = hash[0] | (hash[1] << 8);
+
+      switch (votum)
+      {
+        case 0:
+          //Second part of the real proof
+          C0 = (int)((BigInt)(C - C1)).Mod(0xffff);
+          S0 = r0 + r * C0;
+          break;
+        case 1:
+          //Second part of the real proof
+          C1 = (int)((BigInt)(C - C0)).Mod(0xffff);
+          S1 = r1 + r * C1;
+          break;
+        default:
+          throw new ArgumentException("Bad votum.");
+      } 
     }
 
     /// <summary>
@@ -119,21 +152,25 @@ namespace Pirate.PiVote.Crypto
       if (parameters == null)
         throw new ArgumentNullException("parameters");
 
-      if (C != 0 && C != 1)
+      if (!C.InRange(0, 0xffff))
         return false;
 
-      if (C0 != 0 && C0 != 1)
-        return false;
+      MemoryStream serializeStream = new MemoryStream();
+      SerializeContext serializer = new SerializeContext(serializeStream);
+      serializer.Write(vote.Ciphertext);
+      serializer.Write(vote.HalfKey);
+      serializer.Write(publicKey);
+      serializer.Write(T0);
+      serializer.Write(T1);
+      serializer.Close();
+      serializeStream.Close();
 
-      if (C1 != 0 && C1 != 1)
-        return false;
-      
       SHA512Managed sha512 = new SHA512Managed();
-      byte[] hash = sha512.ComputeHash(T0.ToByteArray().Concat(T1.ToByteArray()));
-      if (C != (((hash[0] & 1) == 1) ? 1 : 0))
+      byte[] hash = sha512.ComputeHash(serializeStream.ToArray());
+      if (C != (hash[0] | (hash[1] << 8)))
         return false;
 
-      if (C0 + C1 != C)
+      if (((C0 + C1) % 0xffff) != C)
         return false;
 
       if (publicKey.PowerMod(S0, parameters.P) !=

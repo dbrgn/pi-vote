@@ -23,7 +23,7 @@ namespace Pirate.PiVote.Crypto
     public const int PrimeBits = 4096;
     public const int StandardAuthorityCount = 5;
     public const int StandardThereshold = 3;
-    public const int StandardProofCount = 40;
+    public const int StandardProofCount = 8;
 
     /// <summary>
     /// Questions in the voting.
@@ -164,6 +164,17 @@ namespace Pirate.PiVote.Crypto
       this.questions = new List<Question>();
 
       GenerateNumbers(PrimeBits);
+      SetParameters(StandardThereshold, StandardAuthorityCount, StandardProofCount);
+    }
+
+    /// <summary>
+    /// Creates new parameters using non-standard parameters.
+    /// </summary>
+    public BaseParameters(int primeBits)
+    {
+      this.questions = new List<Question>();
+
+      GenerateNumbers(primeBits);
       SetParameters(StandardThereshold, StandardAuthorityCount, StandardProofCount);
     }
 

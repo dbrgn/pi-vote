@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
+using System.IO;
 using Emil.GMP;
 using Pirate.PiVote.Serialization;
 
@@ -58,9 +59,18 @@ namespace Pirate.PiVote.Crypto
 
       T0 = publicKey.PowerMod(r0, parameters.P);
 
+      MemoryStream serializeStream = new MemoryStream();
+      SerializeContext serializer = new SerializeContext(serializeStream);
+      serializer.Write(vote.Ciphertext);
+      serializer.Write(vote.HalfKey);
+      serializer.Write(publicKey);
+      serializer.Write(T0);
+      serializer.Close();
+      serializeStream.Close();
+
       SHA512Managed sha512 = new SHA512Managed();
-      byte[] hash = sha512.ComputeHash(T0.ToByteArray());
-      C0 = ((hash[0] & 1) == 1) ? 1 : 0;
+      byte[] hash = sha512.ComputeHash(serializeStream.ToArray());
+      C0 = hash[0] | (hash[1] << 8);
 
       S0 = r0 + r * C0;
     }
@@ -81,12 +91,21 @@ namespace Pirate.PiVote.Crypto
       if (parameters == null)
         throw new ArgumentNullException("parameters");
 
-      if (C0 != 0 && C0 != 1)
+      if (!C0.InRange(0, 0xffff))
         return false;
 
+      MemoryStream serializeStream = new MemoryStream();
+      SerializeContext serializer = new SerializeContext(serializeStream);
+      serializer.Write(vote.Ciphertext);
+      serializer.Write(vote.HalfKey);
+      serializer.Write(publicKey);
+      serializer.Write(T0);
+      serializer.Close();
+      serializeStream.Close();
+
       SHA512Managed sha512 = new SHA512Managed();
-      byte[] hash = sha512.ComputeHash(T0.ToByteArray());
-      if (C0 != (((hash[0] & 1) == 1) ? 1 : 0))
+      byte[] hash = sha512.ComputeHash(serializeStream.ToArray());
+      if (C0 != (hash[0] | (hash[1] << 8)))
         return false;
 
       if (publicKey.PowerMod(S0, parameters.P) !=

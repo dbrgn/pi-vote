@@ -85,9 +85,7 @@ namespace Pirate.PiVote.Crypto
       byte[] votingParametersData = signedVotingParameters.ToBinary();
       SHA256Managed sha256 = new SHA256Managed();
       byte[] votingParametersHash = sha256.ComputeHash(votingParametersData);
-      //TODO engage hash. Breaks binary compatiblity!
-      //return VotingParametersHash.Equal(votingParametersHash);
-      return true;
+      return VotingParametersHash.Equal(votingParametersHash);
     }
 
     /// <summary>
@@ -109,8 +107,7 @@ namespace Pirate.PiVote.Crypto
       context.Write(AuthorityIndex);
       context.Write(AcceptShares);
       context.Write(PublicKeyPart);
-      //TODO engage hash. Breaks binary compatiblity!
-      //context.Write(VotingParametersHash);
+      context.Write(VotingParametersHash);
     }
 
     /// <summary>
@@ -124,8 +121,7 @@ namespace Pirate.PiVote.Crypto
       AuthorityIndex = context.ReadInt32();
       AcceptShares = context.ReadBoolean();
       PublicKeyPart = context.ReadBigInt();
-      //TODO engage hash. Breaks binary compatiblity!
-      //VotingParametersHash = context.ReadBytes();
+      VotingParametersHash = context.ReadBytes();
     }
   }
 }

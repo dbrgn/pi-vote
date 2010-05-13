@@ -66,30 +66,38 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
-    /// Initialize this voting.
+    /// Creates a set of test parameters.
+    /// </summary>
+    /// <returns>Test voting parameters</returns>
+    public static VotingParameters CreateTestParameters()
+    {
+      VotingParameters parameters = new VotingParameters(512);
+      Question question = new Question(new MultiLanguageString("?"), new MultiLanguageString(string.Empty), 2);
+      question.AddOption(new Option(new MultiLanguageString("A"), new MultiLanguageString(string.Empty)));
+      question.AddOption(new Option(new MultiLanguageString("B"), new MultiLanguageString(string.Empty)));
+      question.AddOption(new Option(new MultiLanguageString("C"), new MultiLanguageString(string.Empty)));
+      question.AddOption(new Option(new MultiLanguageString("D"), new MultiLanguageString(string.Empty)));
+      parameters.AddQuestion(question);
+
+      return parameters;
+    }
+
+    /// <summary>
+    /// Create a new voting with test parameters.
     /// </summary>
     /// <remarks>
-    /// Only allowed once.
+    /// Must only be used for testing.
     /// </remarks>
-    /// <param name="votesPerVoter">How many votes does each voter have?</param>
-    ////public void Initialize(int votesPerVoter)
-    ////{
-    ////  if (Crypto != null)
-    ////    throw new InvalidOperationException("Already initialized.");
-
-    ////  BigInt prime = null;
-    ////  BigInt safePrime = null;
-
-    ////  DateTime start = DateTime.Now;
-    ////  Prime.FindPrimeAndSafePrimeThreaded(PrimeBits, out prime, out safePrime);
-    ////  System.Diagnostics.Debug.WriteLine("Found safe prime after " + DateTime.Now.Subtract(start).ToString());
-    ////  //Prime.FindPrimeAndSafePrime(PrimeBits, out prime, out safePrime);
-
-    ////  InitilizeCrypto(
-    ////    new CryptoParameters(prime, safePrime),
-    ////    new QuestionParameters(Options.Count(), votesPerVoter),
-    ////    new VotingBaseParameters(StandardThereshold, StandardAuthorityCount, StandardProofCount));
-    ////}
+    /// <param name="primeBits">Number of bits of the safe prime.</param>
+    private VotingParameters(int primeBits)
+      : base(primeBits)
+    {
+      VotingId = Guid.NewGuid();
+      Title = new MultiLanguageString("Test");
+      Description = new MultiLanguageString(string.Empty);
+      VotingBeginDate = DateTime.Now;
+      VotingEndDate = DateTime.Now.AddDays(1);
+    }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.

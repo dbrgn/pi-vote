@@ -71,12 +71,15 @@ namespace Pirate.PiVote.Rpc
         {
           this.client = client;
 
-          Text = LibraryResources.ClientVote;
+          Text = LibraryResources.ClientVoteFetchMaterial;
           Progress = 0d;
-          SubText = LibraryResources.ClientVoteFetchMaterial;
+          SubText = string.Empty;
           SubProgress = 0d;
 
           var material = client.proxy.FetchVotingMaterial(this.votingId);
+
+          Progress = 1d;
+          SubProgress = 1d;
 
           this.callBack(material, null);
         }

@@ -117,7 +117,21 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
-      IPAddress serverIpAddress = Dns.GetHostEntry(Resources.ServerIpAddress).AddressList.First();
+      IPAddress serverIpAddress = null;
+
+#if DEBUG
+      serverIpAddress = IPAddress.Loopback;
+#else
+      try
+      {
+        serverIpAddress = Dns.GetHostEntry(Resources.ServerIpAddress).AddressList.First();
+      }
+      catch (System.Net.Sockets.SocketException socketException)
+      {
+        Status.SetMessage(socketException.Message, MessageType.Error);
+        return;
+      }
+#endif
 
       this.status = CheckStatus.Connect;
       Status.VotingClient.Connect(serverIpAddress, ConnectComplete);

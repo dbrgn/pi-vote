@@ -147,6 +147,8 @@ namespace Pirate.PiVote.Crypto
     {
       if (certificate == null)
         throw new ArgumentNullException("certificate");
+      if (certificate.HasPrivateKey)
+        throw new ArgumentException("You must not add private key to certificate storages.");
 
       if (this.certificates.ContainsKey(certificate.Id))
       {
@@ -164,6 +166,11 @@ namespace Pirate.PiVote.Crypto
     /// <param name="certificate">Root certificate to add.</param>
     public void AddRoot(Certificate certificate)
     {
+      if (certificate == null)
+        throw new ArgumentNullException("certificate");
+      if (certificate.HasPrivateKey)
+        throw new ArgumentException("You must not add private key to certificate storages.");
+
       Add(certificate);
 
       if (!this.rootCertificateIds.Contains(certificate.Id))

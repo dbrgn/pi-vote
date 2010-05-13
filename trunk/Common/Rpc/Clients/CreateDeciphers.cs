@@ -154,6 +154,9 @@ namespace Pirate.PiVote.Rpc
             Thread.Sleep(100);
           }
 
+          this.workerRun = false;
+          workers.ForEach(worker => worker.Join());
+
           Text = LibraryResources.ClientCreateDeciphersCreatePartialDecipher;
           Progress = 0.7d;
 
