@@ -582,4 +582,7 @@
   <data name="AdminChooseUploadCertificateStorage" xml:space="preserve">
     <value>Zertifikatsspeicher auf den Server heraufladen...</value>
   </data>
+  <data name="SigningRequestDocumentSignThirdAuthority" xml:space="preserve">
+    <value>Dritte Autorität</value>
+  </data>
 </root>

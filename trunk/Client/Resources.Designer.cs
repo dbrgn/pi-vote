@@ -1202,6 +1202,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Third Authority.
+        /// </summary>
+        internal static string SigningRequestDocumentSignThirdAuthority {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentSignThirdAuthority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alpha Version.
         /// </summary>
         internal static string StartAlphaTitle {

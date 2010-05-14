@@ -586,4 +586,7 @@
   <data name="AdminChooseUploadCertificateStorage" xml:space="preserve">
     <value>Upload certificate storage to server...</value>
   </data>
+  <data name="SigningRequestDocumentSignThirdAuthority" xml:space="preserve">
+    <value>Third Authority</value>
+  </data>
 </root>
