@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pirate.PiVote;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Serialization;
 
 namespace PiVoteUnitTest
 {
@@ -57,12 +58,30 @@ namespace PiVoteUnitTest
     {
       Option option = new Option(new MultiLanguageString("Test"), new MultiLanguageString(string.Empty));
 
-      Signed<Option> signed = new Signed<Option>(option, this.root);
+      Signed<Option> signed = new Signed<Option>(option, this.admin);
 
       Assert.IsTrue(signed.VerifySimple());
       Assert.IsTrue(signed.Verify(this.storage));
 
       Assert.IsTrue(signed.Value.ToBinary().Equal(option.ToBinary()));
+    }
+
+    [TestMethod]
+    public void SignedDontVerifyTest()
+    {
+      Option option = new Option(new MultiLanguageString("Test"), new MultiLanguageString(string.Empty));
+
+      Signed<Option> signed = new Signed<Option>(option, this.admin);
+
+      Assert.IsTrue(signed.VerifySimple());
+      Assert.IsFalse(signed.Verify(this.storage, DateTime.Now.AddYears(5)));
+
+      byte[] data = signed.ToBinary();
+      data[data.Length / 8]++;
+      Signed<Option> badSigned = Serializable.FromBinary<Signed<Option>>(data);
+
+      Assert.IsFalse(badSigned.VerifySimple());
+      Assert.IsFalse(badSigned.Verify(this.storage));
     }
   }
 }

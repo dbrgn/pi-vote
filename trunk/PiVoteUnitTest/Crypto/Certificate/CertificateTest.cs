@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pirate.PiVote;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Serialization;
 
 namespace PiVoteUnitTest
 {
@@ -59,6 +60,38 @@ namespace PiVoteUnitTest
 
       test.AddSignature(intermediate, DateTime.Now.AddDays(1));
       Assert.IsTrue(test.Valid(storage));
+    }
+
+    [TestMethod]
+    public void DataTest()
+    {
+      CertificateStorage storage = new CertificateStorage();
+
+      CACertificate root = new CACertificate("Root");
+      root.CreateSelfSignature();
+      storage.AddRoot(root.OnlyPublicPart);
+
+      var rootCrl = new RevocationList(root.Id, DateTime.Now, DateTime.Now.AddDays(1), new Guid[] { });
+      var signedRootCrl = new Signed<RevocationList>(rootCrl, root);
+      storage.AddRevocationList(signedRootCrl);
+
+      CACertificate intermediate = new CACertificate("Intermediate");
+      intermediate.CreateSelfSignature();
+      intermediate.AddSignature(root, DateTime.Now.AddDays(1));
+      storage.Add(intermediate.OnlyPublicPart);
+
+      var intermediateCrl = new RevocationList(intermediate.Id, DateTime.Now, DateTime.Now.AddDays(1), new Guid[] { });
+      var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
+      storage.AddRevocationList(signedIntermediateCrl);
+
+      AdminCertificate test = new AdminCertificate("Test");
+      test.CreateSelfSignature();
+      test.AddSignature(intermediate, DateTime.Now.AddDays(1));
+
+      byte[] data = test.ToBinary();
+      data[data.Length - 3]++;
+      AdminCertificate other = Serializable.FromBinary<AdminCertificate>(data);
+      Assert.IsFalse(other.Valid(storage));
     }
 
     [TestMethod]
