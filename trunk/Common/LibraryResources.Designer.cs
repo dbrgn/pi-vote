@@ -484,6 +484,15 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uploading certificate storage to the server..
+        /// </summary>
+        public static string ClientSetCertificateStorage {
+            get {
+                return ResourceManager.GetString("ClientSetCertificateStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set signature request..
         /// </summary>
         public static string ClientSetSignatureRequest {

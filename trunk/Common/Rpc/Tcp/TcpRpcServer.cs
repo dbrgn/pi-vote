@@ -26,7 +26,7 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Server TCP port.
     /// </summary>
-    private const int Port = 2323;
+    private const int Port = 4242;
 
     /// <summary>
     /// TCP listener for new connection.

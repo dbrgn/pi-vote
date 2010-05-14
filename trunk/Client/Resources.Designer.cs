@@ -97,20 +97,29 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download signature requests from server.
+        ///   Looks up a localized string similar to Download signature requests from server....
         /// </summary>
-        internal static string AdminChooseDownloadRequest {
+        internal static string AdminChooseDownloadSignatureRequests {
             get {
-                return ResourceManager.GetString("AdminChooseDownloadRequest", resourceCulture);
+                return ResourceManager.GetString("AdminChooseDownloadSignatureRequests", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload signature response to server.
+        ///   Looks up a localized string similar to Upload certificate storage to server....
         /// </summary>
-        internal static string AdminChooseUploadResponse {
+        internal static string AdminChooseUploadCertificateStorage {
             get {
-                return ResourceManager.GetString("AdminChooseUploadResponse", resourceCulture);
+                return ResourceManager.GetString("AdminChooseUploadCertificateStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload signature response to server....
+        /// </summary>
+        internal static string AdminChooseUploadSignatureRessponse {
+            get {
+                return ResourceManager.GetString("AdminChooseUploadSignatureRessponse", resourceCulture);
             }
         }
         
@@ -442,6 +451,15 @@ namespace Pirate.PiVote.Client {
         internal static string CertificateStatus {
             get {
                 return ResourceManager.GetString("CertificateStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate storage upload complete.
+        /// </summary>
+        internal static string CertificateStorageUploaded {
+            get {
+                return ResourceManager.GetString("CertificateStorageUploaded", resourceCulture);
             }
         }
         
@@ -919,6 +937,15 @@ namespace Pirate.PiVote.Client {
         internal static string OkButton {
             get {
                 return ResourceManager.GetString("OkButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Certificate Storage.
+        /// </summary>
+        internal static string OpenCertificateStorageDialog {
+            get {
+                return ResourceManager.GetString("OpenCertificateStorageDialog", resourceCulture);
             }
         }
         

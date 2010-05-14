@@ -237,23 +237,11 @@
     <Compile Include="Wizard\CreateVotingItem.designer.cs">
       <DependentUpon>CreateVotingItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="Wizard\GetSignatureRequestsItem.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Wizard\GetSignatureRequestsItem.designer.cs">
-      <DependentUpon>GetSignatureRequestsItem.cs</DependentUpon>
-    </Compile>
     <Compile Include="Wizard\ListVotingsItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Wizard\ListVotingsItem.designer.cs">
       <DependentUpon>ListVotingsItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Wizard\SetSignatureResponsesItem.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Wizard\SetSignatureResponsesItem.designer.cs">
-      <DependentUpon>SetSignatureResponsesItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Wizard\StartItem.cs">
       <SubType>UserControl</SubType>
@@ -382,14 +370,8 @@
     <EmbeddedResource Include="Wizard\CreateVotingItem.resx">
       <DependentUpon>CreateVotingItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Wizard\GetSignatureRequestsItem.resx">
-      <DependentUpon>GetSignatureRequestsItem.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Wizard\ListVotingsItem.resx">
       <DependentUpon>ListVotingsItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Wizard\SetSignatureResponsesItem.resx">
-      <DependentUpon>SetSignatureResponsesItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\StartItem.resx">
       <DependentUpon>StartItem.cs</DependentUpon>

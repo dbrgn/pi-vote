@@ -16,11 +16,15 @@ using System.Net;
 using System.Threading;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Client
 {
   public partial class AdminChooseItem : WizardItem
   {
+    private bool run = false;
+    private Exception exception;
+
     public AdminChooseItem()
     {
       InitializeComponent();
@@ -28,22 +32,7 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      if (this.setSignatureResponsesRadio.Checked)
-      {
-        return new SetSignatureResponsesItem();
-      }
-      else if (this.getSignatureRequestsRadio.Checked)
-      {
-        return new GetSignatureRequestsItem();
-      }
-      else if (this.createVotingRadio.Checked)
-      {
-        return new CreateVotingItem();
-      }
-      else
-      {
-        return null;
-      }
+      return new CreateVotingItem();
     }
 
     public override WizardItem Previous()
@@ -63,13 +52,12 @@ namespace Pirate.PiVote.Client
 
     public override bool CanNext
     {
-      get
-      {
-        return
-          this.getSignatureRequestsRadio.Checked |
-          this.setSignatureResponsesRadio.Checked |
-          this.createVotingRadio.Checked;
-      }
+      get { return false; }
+    }
+
+    public override bool CancelIsDone
+    {
+      get { return true; }
     }
 
     public override void Begin()
@@ -96,9 +84,141 @@ namespace Pirate.PiVote.Client
     {
       base.UpdateLanguage();
 
-      this.getSignatureRequestsRadio.Text = Resources.AdminChooseDownloadRequest;
-      this.setSignatureResponsesRadio.Text = Resources.AdminChooseUploadResponse;
-      this.createVotingRadio.Text = Resources.AdminChooseCreateVoting;
+      this.createVotingButton.Text = Resources.AdminChooseCreateVoting;
+      this.downloadSignatureRequestsButton.Text = Resources.AdminChooseDownloadSignatureRequests;
+      this.uploadSignatureResponsesButton.Text = Resources.AdminChooseUploadSignatureRessponse;
+      this.uploadCertificateStorageButton.Text = Resources.AdminChooseUploadCertificateStorage; 
+    }
+
+    private void saveToButton_Click(object sender, EventArgs e)
+    {
+      SaveFileDialog dialog = new SaveFileDialog();
+      dialog.Title = Resources.SaveSignatureRequestDialog;
+      dialog.CheckPathExists = true;
+      dialog.Filter = Files.SignatureRequestFileFilter;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        string savePath = Path.GetDirectoryName(dialog.FileName);
+
+        this.run = true;
+        OnUpdateWizard();
+
+        Status.VotingClient.GetSignatureRequests(savePath, GetSignatureRequestsComplete);
+
+        while (this.run)
+        {
+          Status.UpdateProgress();
+          Thread.Sleep(10);
+        }
+
+        Status.UpdateProgress();
+
+        if (this.exception != null)
+        {
+          Status.SetMessage(this.exception.Message, MessageType.Error);
+        }
+
+        OnUpdateWizard();
+      }
+    }
+
+    private void GetSignatureRequestsComplete(Exception exception)
+    {
+      this.exception = exception;
+      this.run = false;
+    }
+
+    private void openButton_Click(object sender, EventArgs e)
+    {
+      OpenFileDialog dialog = new OpenFileDialog();
+      dialog.Title = Resources.OpenSignatureResponseDialog;
+      dialog.CheckPathExists = true;
+      dialog.CheckFileExists = true;
+      dialog.Multiselect = true;
+      dialog.Filter = Files.SignatureResponseFileFilter;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        this.run = true;
+        OnUpdateWizard();
+
+        Status.VotingClient.SetSignatureResponses(dialog.FileNames, SetSignatureResponsesComplete);
+
+        while (this.run)
+        {
+          Status.UpdateProgress();
+          Thread.Sleep(10);
+        }
+
+        Status.UpdateProgress();
+
+        if (this.exception == null)
+        {
+          Status.SetMessage(Resources.SignatureResponseUploaded, MessageType.Success);
+        }
+        else
+        {
+          Status.SetMessage(this.exception.Message, MessageType.Error);
+        }
+
+        OnUpdateWizard();
+      }
+    }
+
+    private void SetSignatureResponsesComplete(Exception exception)
+    {
+      this.exception = exception;
+      this.run = false;
+    }
+
+    private void createVotingButton_Click(object sender, EventArgs e)
+    {
+      OnNextStep();
+    }
+
+    private void uploadCertificateStorageButton_Click(object sender, EventArgs e)
+    {
+      OpenFileDialog dialog = new OpenFileDialog();
+      dialog.Title = Resources.OpenCertificateStorageDialog;
+      dialog.CheckPathExists = true;
+      dialog.CheckFileExists = true;
+      dialog.Multiselect = false;
+      dialog.Filter = Files.CertificateStorageFileFilter;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        this.run = true;
+        OnUpdateWizard();
+
+        CertificateStorage certificateStorage = Serializable.Load<CertificateStorage>(dialog.FileName);
+        Status.VotingClient.SetCertificateStorage(certificateStorage, SetCertificateStorageComplete);
+
+        while (this.run)
+        {
+          Status.UpdateProgress();
+          Thread.Sleep(10);
+        }
+
+        Status.UpdateProgress();
+
+        if (this.exception == null)
+        {
+          Status.SetMessage(Resources.CertificateStorageUploaded, MessageType.Success);
+        }
+        else
+        {
+          Status.SetMessage(this.exception.Message, MessageType.Error);
+        }
+
+        OnUpdateWizard();
+      }
+    }
+
+    private void SetCertificateStorageComplete(Exception exception)
+    {
+      this.exception = exception;
+      this.run = false;
     }
   }
 }

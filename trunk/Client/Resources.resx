@@ -135,11 +135,11 @@
   <data name="AdminChooseCreateVoting" xml:space="preserve">
     <value>Create a voting procedure</value>
   </data>
-  <data name="AdminChooseDownloadRequest" xml:space="preserve">
-    <value>Download signature requests from server</value>
+  <data name="AdminChooseDownloadSignatureRequests" xml:space="preserve">
+    <value>Download signature requests from server...</value>
   </data>
-  <data name="AdminChooseUploadResponse" xml:space="preserve">
-    <value>Upload signature response to server</value>
+  <data name="AdminChooseUploadSignatureRessponse" xml:space="preserve">
+    <value>Upload signature response to server...</value>
   </data>
   <data name="AuthorityCheckShares" xml:space="preserve">
     <value>C&amp;heck Shares</value>
@@ -576,5 +576,14 @@
   </data>
   <data name="ListVotingDownloadSuccess" xml:space="preserve">
     <value>The voting was downloaded successfully</value>
+  </data>
+  <data name="CertificateStorageUploaded" xml:space="preserve">
+    <value>Certificate storage upload complete</value>
+  </data>
+  <data name="OpenCertificateStorageDialog" xml:space="preserve">
+    <value>Open Certificate Storage</value>
+  </data>
+  <data name="AdminChooseUploadCertificateStorage" xml:space="preserve">
+    <value>Upload certificate storage to server...</value>
   </data>
 </root>

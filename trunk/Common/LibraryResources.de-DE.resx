@@ -429,4 +429,7 @@
   <data name="VotingStatusOffline" xml:space="preserve">
     <value>Offline</value>
   </data>
+  <data name="ClientSetCertificateStorage" xml:space="preserve">
+    <value>Lade Zertifikatsspeicher auf den server herauf.</value>
+  </data>
 </root>

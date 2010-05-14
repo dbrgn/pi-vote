@@ -433,4 +433,7 @@
   <data name="VotingStatusOffline" xml:space="preserve">
     <value>Offline</value>
   </data>
+  <data name="ClientSetCertificateStorage" xml:space="preserve">
+    <value>Uploading certificate storage to the server.</value>
+  </data>
 </root>

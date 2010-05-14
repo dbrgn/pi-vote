@@ -183,6 +183,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exception\PiException.cs" />
     <Compile Include="Rpc\Clients\CheckShares.cs" />
+    <Compile Include="Rpc\Clients\SetCertificateStorage.cs" />
     <Compile Include="Rpc\Clients\DownloadVoting.cs" />
     <Compile Include="Rpc\Clients\GetVotingMaterial.cs" />
     <Compile Include="Rpc\Clients\QuestionDescriptor.cs" />
@@ -208,6 +209,8 @@
     <Compile Include="Rpc\Generic\RpcRequest.cs" />
     <Compile Include="Rpc\Generic\RpcMessage.cs" />
     <Compile Include="Rpc\Handlers\IBinaryRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\PushCertificateStorageRequest.cs" />
+    <Compile Include="Rpc\Messages\PushCertificateStorageResponse.cs" />
     <Compile Include="Rpc\Messages\KeepAliveRequest.cs" />
     <Compile Include="Rpc\Messages\KeepAliveResponse.cs" />
     <Compile Include="Rpc\Messages\FetchAuthorityCertificatesRequest.cs" />

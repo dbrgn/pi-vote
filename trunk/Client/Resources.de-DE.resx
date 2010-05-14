@@ -135,10 +135,10 @@
   <data name="AdminChooseCreateVoting" xml:space="preserve">
     <value>Abstimmungsprozedur erstellen</value>
   </data>
-  <data name="AdminChooseDownloadRequest" xml:space="preserve">
+  <data name="AdminChooseDownloadSignatureRequests" xml:space="preserve">
     <value>Zertifizierungsanfragen vom Server herunterladen</value>
   </data>
-  <data name="AdminChooseUploadResponse" xml:space="preserve">
+  <data name="AdminChooseUploadSignatureRessponse" xml:space="preserve">
     <value>Antworten auf Zertifizierungsanfragen auf den Server heraufladen</value>
   </data>
   <data name="AuthorityCheckShares" xml:space="preserve">
@@ -572,5 +572,14 @@
   </data>
   <data name="ListVotingDownloadSuccess" xml:space="preserve">
     <value>Die Abstimmung wurde erfolgreich heruntergeladen</value>
+  </data>
+  <data name="CertificateStorageUploaded" xml:space="preserve">
+    <value>Heraufladen des Zertifikatsspeichers komplett</value>
+  </data>
+  <data name="OpenCertificateStorageDialog" xml:space="preserve">
+    <value>Zertifikatsspeicher öffnen</value>
+  </data>
+  <data name="AdminChooseUploadCertificateStorage" xml:space="preserve">
+    <value>Zertifikatsspeicher auf den Server heraufladen...</value>
   </data>
 </root>

@@ -36,7 +36,7 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      return null;
+      return new AdminChooseItem();
     }
 
     public override WizardItem Previous()
@@ -57,6 +57,11 @@ namespace Pirate.PiVote.Client
     public override bool CanPrevious
     {
       get { return !this.run; }
+    }
+
+    public override bool CanNext
+    {
+      get { return this.done; }
     }
 
     public override bool CancelIsDone
@@ -101,7 +106,6 @@ namespace Pirate.PiVote.Client
       }
 
       SetEnable(true);
-      this.done = true;
       this.run = false;
       OnUpdateWizard();
     }
@@ -201,6 +205,7 @@ namespace Pirate.PiVote.Client
 
       Application.DoEvents();
 
+      this.done = true;
       OnUpdateWizard();
     }
 

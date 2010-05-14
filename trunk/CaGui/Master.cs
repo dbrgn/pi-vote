@@ -281,7 +281,7 @@ namespace Pirate.PiVote.CaGui
       SaveFileDialog dialog = new SaveFileDialog();
       dialog.Title = "Export certificate storage";
       dialog.CheckPathExists = true;
-      dialog.Filter = "Pi-Vote Certificate Storage|*.pi-cert-storage";
+      dialog.Filter = Files.CertificateStorageFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -295,7 +295,7 @@ namespace Pirate.PiVote.CaGui
       dialog.Title = "Import Certificate Storage";
       dialog.CheckPathExists = true;
       dialog.CheckFileExists = true;
-      dialog.Filter = "Pi-Vote Certificate Storage|*.pi-cert-storage";
+      dialog.Filter = Files.CertificateStorageFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {

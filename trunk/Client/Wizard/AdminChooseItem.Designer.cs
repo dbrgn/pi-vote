@@ -42,72 +42,76 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
-      this.getSignatureRequestsRadio = new System.Windows.Forms.RadioButton();
-      this.setSignatureResponsesRadio = new System.Windows.Forms.RadioButton();
-      this.createVotingRadio = new System.Windows.Forms.RadioButton();
       this.spaceLabel = new System.Windows.Forms.Label();
+      this.downloadSignatureRequestsButton = new System.Windows.Forms.Button();
+      this.uploadSignatureResponsesButton = new System.Windows.Forms.Button();
+      this.createVotingButton = new System.Windows.Forms.Button();
+      this.uploadCertificateStorageButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
-      // 
-      // getSignatureRequestsRadio
-      // 
-      this.getSignatureRequestsRadio.AutoSize = true;
-      this.getSignatureRequestsRadio.Location = new System.Drawing.Point(18, 18);
-      this.getSignatureRequestsRadio.Margin = new System.Windows.Forms.Padding(2);
-      this.getSignatureRequestsRadio.Name = "getSignatureRequestsRadio";
-      this.getSignatureRequestsRadio.Size = new System.Drawing.Size(228, 18);
-      this.getSignatureRequestsRadio.TabIndex = 0;
-      this.getSignatureRequestsRadio.TabStop = true;
-      this.getSignatureRequestsRadio.Text = "Download signature requests from server";
-      this.getSignatureRequestsRadio.UseVisualStyleBackColor = true;
-      this.getSignatureRequestsRadio.CheckedChanged += new System.EventHandler(this.getSignatureRequestsRadio_CheckedChanged);
-      // 
-      // setSignatureResponsesRadio
-      // 
-      this.setSignatureResponsesRadio.AutoSize = true;
-      this.setSignatureResponsesRadio.Location = new System.Drawing.Point(18, 40);
-      this.setSignatureResponsesRadio.Margin = new System.Windows.Forms.Padding(2);
-      this.setSignatureResponsesRadio.Name = "setSignatureResponsesRadio";
-      this.setSignatureResponsesRadio.Size = new System.Drawing.Size(204, 18);
-      this.setSignatureResponsesRadio.TabIndex = 1;
-      this.setSignatureResponsesRadio.TabStop = true;
-      this.setSignatureResponsesRadio.Text = "Upload signature response to server.";
-      this.setSignatureResponsesRadio.UseVisualStyleBackColor = true;
-      this.setSignatureResponsesRadio.CheckedChanged += new System.EventHandler(this.setSignatureResponsesRadio_CheckedChanged);
-      // 
-      // createVotingRadio
-      // 
-      this.createVotingRadio.AutoSize = true;
-      this.createVotingRadio.Location = new System.Drawing.Point(18, 62);
-      this.createVotingRadio.Margin = new System.Windows.Forms.Padding(2);
-      this.createVotingRadio.Name = "createVotingRadio";
-      this.createVotingRadio.Size = new System.Drawing.Size(151, 18);
-      this.createVotingRadio.TabIndex = 2;
-      this.createVotingRadio.TabStop = true;
-      this.createVotingRadio.Text = "Create a voting procedure";
-      this.createVotingRadio.UseVisualStyleBackColor = true;
-      this.createVotingRadio.CheckedChanged += new System.EventHandler(this.createVotingRadio_CheckedChanged);
       // 
       // spaceLabel
       // 
       this.spaceLabel.AutoSize = true;
       this.spaceLabel.ForeColor = System.Drawing.Color.Red;
-      this.spaceLabel.Location = new System.Drawing.Point(96, 172);
+      this.spaceLabel.Location = new System.Drawing.Point(144, 258);
+      this.spaceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.spaceLabel.Name = "spaceLabel";
-      this.spaceLabel.Size = new System.Drawing.Size(274, 14);
+      this.spaceLabel.Size = new System.Drawing.Size(414, 19);
       this.spaceLabel.TabIndex = 3;
       this.spaceLabel.Text = "This space shall be occupied by an appropriate picture.";
       // 
+      // downloadSignatureRequestsButton
+      // 
+      this.downloadSignatureRequestsButton.Location = new System.Drawing.Point(3, 3);
+      this.downloadSignatureRequestsButton.Name = "downloadSignatureRequestsButton";
+      this.downloadSignatureRequestsButton.Size = new System.Drawing.Size(617, 37);
+      this.downloadSignatureRequestsButton.TabIndex = 5;
+      this.downloadSignatureRequestsButton.Text = "Download signature requests from server...";
+      this.downloadSignatureRequestsButton.UseVisualStyleBackColor = true;
+      this.downloadSignatureRequestsButton.Click += new System.EventHandler(this.saveToButton_Click);
+      // 
+      // uploadSignatureResponsesButton
+      // 
+      this.uploadSignatureResponsesButton.Location = new System.Drawing.Point(3, 46);
+      this.uploadSignatureResponsesButton.Name = "uploadSignatureResponsesButton";
+      this.uploadSignatureResponsesButton.Size = new System.Drawing.Size(617, 38);
+      this.uploadSignatureResponsesButton.TabIndex = 6;
+      this.uploadSignatureResponsesButton.Text = "Upload signature responses to server...";
+      this.uploadSignatureResponsesButton.UseVisualStyleBackColor = true;
+      this.uploadSignatureResponsesButton.Click += new System.EventHandler(this.openButton_Click);
+      // 
+      // createVotingButton
+      // 
+      this.createVotingButton.Location = new System.Drawing.Point(3, 134);
+      this.createVotingButton.Name = "createVotingButton";
+      this.createVotingButton.Size = new System.Drawing.Size(617, 38);
+      this.createVotingButton.TabIndex = 7;
+      this.createVotingButton.Text = "Create a voting procedure";
+      this.createVotingButton.UseVisualStyleBackColor = true;
+      this.createVotingButton.Click += new System.EventHandler(this.createVotingButton_Click);
+      // 
+      // uploadCertificateStorageButton
+      // 
+      this.uploadCertificateStorageButton.Location = new System.Drawing.Point(3, 90);
+      this.uploadCertificateStorageButton.Name = "uploadCertificateStorageButton";
+      this.uploadCertificateStorageButton.Size = new System.Drawing.Size(617, 38);
+      this.uploadCertificateStorageButton.TabIndex = 8;
+      this.uploadCertificateStorageButton.Text = "Upload certificate storage to server...";
+      this.uploadCertificateStorageButton.UseVisualStyleBackColor = true;
+      this.uploadCertificateStorageButton.Click += new System.EventHandler(this.uploadCertificateStorageButton_Click);
+      // 
       // AdminChooseItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.uploadCertificateStorageButton);
+      this.Controls.Add(this.createVotingButton);
+      this.Controls.Add(this.uploadSignatureResponsesButton);
+      this.Controls.Add(this.downloadSignatureRequestsButton);
       this.Controls.Add(this.spaceLabel);
-      this.Controls.Add(this.createVotingRadio);
-      this.Controls.Add(this.setSignatureResponsesRadio);
-      this.Controls.Add(this.getSignatureRequestsRadio);
-      this.Margin = new System.Windows.Forms.Padding(1);
+      this.Margin = new System.Windows.Forms.Padding(2);
       this.Name = "AdminChooseItem";
-      this.Size = new System.Drawing.Size(467, 359);
+      this.Size = new System.Drawing.Size(700, 538);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -115,10 +119,11 @@ namespace Pirate.PiVote.Client
 
     #endregion
 
-    private RadioButton getSignatureRequestsRadio;
-    private RadioButton setSignatureResponsesRadio;
-    private RadioButton createVotingRadio;
     private Label spaceLabel;
+    private Button downloadSignatureRequestsButton;
+    private Button uploadSignatureResponsesButton;
+    private Button createVotingButton;
+    private Button uploadCertificateStorageButton;
 
 
 

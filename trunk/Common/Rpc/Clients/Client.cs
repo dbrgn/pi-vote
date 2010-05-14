@@ -400,5 +400,18 @@ namespace Pirate.PiVote.Rpc
         this.operations.Enqueue(new CreateDeciphersOperation(votingId, authorityCertificate, authorityFileName, callBack));
       }
     }
+
+    /// <summary>
+    /// Set a certificate storage on the server.
+    /// </summary>
+    /// <param name="certificateStorage">Certificate storage to add to the server's data.</param>
+    /// <param name="callBack">Callback upon completion</param>
+    public void SetCertificateStorage(CertificateStorage certificateStorage, SetCertificateStorageCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new SetCertificateStorageOperation(certificateStorage, callBack));
+      }
+    }
   }
 }

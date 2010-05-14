@@ -88,5 +88,15 @@ namespace Pirate.PiVote.Rpc
 
       return response.AuthorityCertificates;
     }
+
+    /// <summary>
+    /// Push certificate storage to the server.
+    /// </summary>
+    /// <param name="certificateStorage">Certificate storage to add to the server's data.</param>
+    public void PushCertificateStorage(CertificateStorage certificateStorage)
+    {
+      var request = new PushCertificateStorageRequest(Guid.NewGuid(), certificateStorage);
+      var response = Execute<PushCertificateStorageResponse>(request);
+    }
   }
 }

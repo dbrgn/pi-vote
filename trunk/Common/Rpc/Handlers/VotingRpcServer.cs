@@ -381,5 +381,22 @@ namespace Pirate.PiVote.Rpc
 
       return authorityCertificates;
     }
+
+    /// <summary>
+    /// Add a certificate storage to the server's data.
+    /// </summary>
+    /// <remarks>
+    /// Used to add new CRLs.
+    /// </remarks>
+    /// <param name="certificateStorage">Certificate storage to add.</param>
+    public void AddCertificateStorage(CertificateStorage certificateStorage)
+    {
+      if (!certificateStorage.SignedRevocationLists.All(crl => crl.Verify(CertificateStorage)))
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature on CRL not valid.");
+      if (!certificateStorage.Certificates.All(certificate => certificate.Valid(CertificateStorage)))
+        throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Certificate not valid.");
+
+      CertificateStorage.Add(certificateStorage);
+    }
   }
 }
