@@ -35,6 +35,14 @@ namespace Pirate.PiVote.Crypto
     public string EmailAddress { get; private set; }
 
     /// <summary>
+    /// Full name of the requester for display.
+    /// </summary>
+    public string FullName
+    {
+      get { return string.Format("{0}, {1}", FamilyName, FirstName); }
+    }
+
+    /// <summary>
     /// Create a new signature request.
     /// </summary>
     /// <param name="firstName">First name of requester.</param>

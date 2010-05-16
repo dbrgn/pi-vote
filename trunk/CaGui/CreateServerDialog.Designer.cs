@@ -38,10 +38,9 @@
       // 
       // cancelButton
       // 
-      this.cancelButton.Location = new System.Drawing.Point(462, 90);
-      this.cancelButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.cancelButton.Location = new System.Drawing.Point(309, 62);
       this.cancelButton.Name = "cancelButton";
-      this.cancelButton.Size = new System.Drawing.Size(112, 35);
+      this.cancelButton.Size = new System.Drawing.Size(75, 23);
       this.cancelButton.TabIndex = 5;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
@@ -50,10 +49,9 @@
       // okButton
       // 
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(342, 90);
-      this.okButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.okButton.Location = new System.Drawing.Point(228, 62);
       this.okButton.Name = "okButton";
-      this.okButton.Size = new System.Drawing.Size(112, 35);
+      this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 4;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
@@ -61,46 +59,42 @@
       // 
       // nameTextBox
       // 
-      this.nameTextBox.Location = new System.Drawing.Point(140, 18);
-      this.nameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.nameTextBox.Location = new System.Drawing.Point(93, 12);
       this.nameTextBox.Name = "nameTextBox";
-      this.nameTextBox.Size = new System.Drawing.Size(434, 26);
+      this.nameTextBox.Size = new System.Drawing.Size(291, 20);
       this.nameTextBox.TabIndex = 0;
       this.nameTextBox.TextChanged += new System.EventHandler(this.firstNameTextBox_TextChanged);
       // 
       // nameLabel
       // 
       this.nameLabel.AutoSize = true;
-      this.nameLabel.Location = new System.Drawing.Point(18, 21);
-      this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.nameLabel.Location = new System.Drawing.Point(12, 14);
       this.nameLabel.Name = "nameLabel";
-      this.nameLabel.Size = new System.Drawing.Size(55, 20);
+      this.nameLabel.Size = new System.Drawing.Size(38, 13);
       this.nameLabel.TabIndex = 6;
       this.nameLabel.Text = "Name:";
       // 
       // validUntilPicker
       // 
-      this.validUntilPicker.Location = new System.Drawing.Point(140, 54);
-      this.validUntilPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.validUntilPicker.Location = new System.Drawing.Point(93, 36);
       this.validUntilPicker.Name = "validUntilPicker";
-      this.validUntilPicker.Size = new System.Drawing.Size(434, 26);
+      this.validUntilPicker.Size = new System.Drawing.Size(291, 20);
       this.validUntilPicker.TabIndex = 14;
       // 
       // validUntilLabel
       // 
       this.validUntilLabel.AutoSize = true;
-      this.validUntilLabel.Location = new System.Drawing.Point(18, 59);
-      this.validUntilLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.validUntilLabel.Location = new System.Drawing.Point(12, 39);
       this.validUntilLabel.Name = "validUntilLabel";
-      this.validUntilLabel.Size = new System.Drawing.Size(81, 20);
+      this.validUntilLabel.Size = new System.Drawing.Size(55, 13);
       this.validUntilLabel.TabIndex = 15;
       this.validUntilLabel.Text = "Valid until:";
       // 
       // CreateServerDialog
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(594, 147);
+      this.ClientSize = new System.Drawing.Size(396, 97);
       this.ControlBox = false;
       this.Controls.Add(this.validUntilPicker);
       this.Controls.Add(this.validUntilLabel);
@@ -110,7 +104,6 @@
       this.Controls.Add(this.cancelButton);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
-      this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "CreateServerDialog";

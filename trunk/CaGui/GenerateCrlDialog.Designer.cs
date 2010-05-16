@@ -42,10 +42,9 @@
       // 
       // cancelButton
       // 
-      this.cancelButton.Location = new System.Drawing.Point(464, 188);
-      this.cancelButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.cancelButton.Location = new System.Drawing.Point(309, 118);
       this.cancelButton.Name = "cancelButton";
-      this.cancelButton.Size = new System.Drawing.Size(112, 35);
+      this.cancelButton.Size = new System.Drawing.Size(75, 23);
       this.cancelButton.TabIndex = 2;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
@@ -54,10 +53,9 @@
       // okButton
       // 
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(342, 188);
-      this.okButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.okButton.Location = new System.Drawing.Point(228, 118);
       this.okButton.Name = "okButton";
-      this.okButton.Size = new System.Drawing.Size(112, 35);
+      this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 1;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
@@ -65,85 +63,77 @@
       // 
       // idTextBox
       // 
-      this.idTextBox.Location = new System.Drawing.Point(123, 18);
-      this.idTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.idTextBox.Location = new System.Drawing.Point(82, 12);
       this.idTextBox.Name = "idTextBox";
       this.idTextBox.ReadOnly = true;
-      this.idTextBox.Size = new System.Drawing.Size(451, 26);
+      this.idTextBox.Size = new System.Drawing.Size(302, 20);
       this.idTextBox.TabIndex = 3;
       // 
       // nameTextBox
       // 
-      this.nameTextBox.Location = new System.Drawing.Point(123, 58);
-      this.nameTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.nameTextBox.Location = new System.Drawing.Point(82, 39);
       this.nameTextBox.Name = "nameTextBox";
       this.nameTextBox.ReadOnly = true;
-      this.nameTextBox.Size = new System.Drawing.Size(451, 26);
+      this.nameTextBox.Size = new System.Drawing.Size(302, 20);
       this.nameTextBox.TabIndex = 4;
       // 
       // nameLabel
       // 
       this.nameLabel.AutoSize = true;
-      this.nameLabel.Location = new System.Drawing.Point(18, 63);
-      this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.nameLabel.Location = new System.Drawing.Point(12, 42);
       this.nameLabel.Name = "nameLabel";
-      this.nameLabel.Size = new System.Drawing.Size(55, 20);
+      this.nameLabel.Size = new System.Drawing.Size(38, 13);
       this.nameLabel.TabIndex = 5;
       this.nameLabel.Text = "Name:";
       // 
       // idLabel
       // 
       this.idLabel.AutoSize = true;
-      this.idLabel.Location = new System.Drawing.Point(18, 23);
-      this.idLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.idLabel.Location = new System.Drawing.Point(12, 15);
       this.idLabel.Name = "idLabel";
-      this.idLabel.Size = new System.Drawing.Size(27, 20);
+      this.idLabel.Size = new System.Drawing.Size(19, 13);
       this.idLabel.TabIndex = 6;
       this.idLabel.Text = "Id:";
       // 
       // validUntilPicker
       // 
-      this.validUntilPicker.Location = new System.Drawing.Point(123, 138);
-      this.validUntilPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.validUntilPicker.Location = new System.Drawing.Point(82, 92);
       this.validUntilPicker.Name = "validUntilPicker";
-      this.validUntilPicker.Size = new System.Drawing.Size(451, 26);
+      this.validUntilPicker.Size = new System.Drawing.Size(302, 20);
       this.validUntilPicker.TabIndex = 1;
       this.validUntilPicker.ValueChanged += new System.EventHandler(this.validUntilPicker_ValueChanged);
       // 
       // validUntilLabel
       // 
       this.validUntilLabel.AutoSize = true;
-      this.validUntilLabel.Location = new System.Drawing.Point(18, 143);
-      this.validUntilLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.validUntilLabel.Location = new System.Drawing.Point(12, 95);
       this.validUntilLabel.Name = "validUntilLabel";
-      this.validUntilLabel.Size = new System.Drawing.Size(81, 20);
+      this.validUntilLabel.Size = new System.Drawing.Size(55, 13);
       this.validUntilLabel.TabIndex = 8;
       this.validUntilLabel.Text = "Valid until:";
       // 
       // validFromPicker
       // 
-      this.validFromPicker.Location = new System.Drawing.Point(123, 98);
-      this.validFromPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.validFromPicker.Location = new System.Drawing.Point(82, 65);
       this.validFromPicker.Name = "validFromPicker";
-      this.validFromPicker.Size = new System.Drawing.Size(451, 26);
+      this.validFromPicker.Size = new System.Drawing.Size(302, 20);
       this.validFromPicker.TabIndex = 0;
       this.validFromPicker.ValueChanged += new System.EventHandler(this.validFromPicker_ValueChanged);
       // 
       // validFromLabel
       // 
       this.validFromLabel.AutoSize = true;
-      this.validFromLabel.Location = new System.Drawing.Point(18, 103);
-      this.validFromLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+      this.validFromLabel.Location = new System.Drawing.Point(12, 69);
       this.validFromLabel.Name = "validFromLabel";
-      this.validFromLabel.Size = new System.Drawing.Size(84, 20);
+      this.validFromLabel.Size = new System.Drawing.Size(56, 13);
       this.validFromLabel.TabIndex = 10;
       this.validFromLabel.Text = "Valid from:";
       // 
       // GenerateCrlDialog
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(594, 242);
+      this.ClientSize = new System.Drawing.Size(396, 154);
       this.ControlBox = false;
       this.Controls.Add(this.validFromPicker);
       this.Controls.Add(this.validFromLabel);
@@ -157,7 +147,6 @@
       this.Controls.Add(this.cancelButton);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
-      this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "GenerateCrlDialog";

@@ -27,9 +27,11 @@ namespace Pirate.PiVote.CaGui
 
     private string dataPath;
 
-    private CACertificate Certificate;
+    private CACertificate Certificate { get; set; }
 
-    private CertificateStorage CertificateStorage;
+    private CertificateStorage CertificateStorage { get; set; }
+
+    private Dictionary<CertificateAuthorityEntry, ListViewItem> Items { get; set; }
 
     public Master()
     {
@@ -39,8 +41,88 @@ namespace Pirate.PiVote.CaGui
     private void Master_Load(object sender, EventArgs e)
     {
       CenterToScreen();
+      PrepareSearch();
       LoadFiles();
       LoadEntries();
+    }
+
+    private void PrepareSearch()
+    {
+      this.searchTypeBox.Items.Add("All Types");
+      this.searchTypeBox.Items.Add("CA");
+      this.searchTypeBox.Items.Add("Admin");
+      this.searchTypeBox.Items.Add("Authority");
+      this.searchTypeBox.Items.Add("Voter");
+      this.searchTypeBox.Items.Add("Server");
+      this.searchTypeBox.SelectedIndex = 0;
+
+      this.searchStatusBox.Items.Add("All Status");
+      this.searchStatusBox.Items.Add("New");
+      this.searchStatusBox.Items.Add("Valid");
+      this.searchStatusBox.Items.Add("Revoked");
+      this.searchStatusBox.Items.Add("Refused");
+      this.searchStatusBox.SelectedIndex = 0;
+    }
+
+    private bool IsOfSearchedStatus(CertificateAuthorityEntry entry)
+    {
+      if (this.searchStatusBox.SelectedIndex == 0)
+        return true;
+
+      if (entry.Response == null)
+      {
+        return this.searchStatusBox.SelectedIndex == 1;
+      }
+      else if (entry.Response.Value.Status == SignatureResponseStatus.Accepted)
+      {
+        if (entry.Revoked)
+        {
+          return this.searchStatusBox.SelectedIndex == 3;
+        }
+        else
+        {
+          return this.searchStatusBox.SelectedIndex == 2;
+        }
+      }
+      else if (entry.Response.Value.Status == SignatureResponseStatus.Declined)
+      {
+        return this.searchStatusBox.SelectedIndex == 4;
+      }
+      else
+      {
+        return true;
+      }
+    }
+
+    private bool IsOfSearchedType(Certificate certificate)
+    {
+      if (this.searchTypeBox.SelectedIndex == 0)
+        return true;
+
+      if (certificate is CACertificate)
+      {
+        return this.searchTypeBox.SelectedIndex == 1;
+      }
+      else if (certificate is AdminCertificate)
+      {
+        return this.searchTypeBox.SelectedIndex == 2;
+      }
+      else if (certificate is AuthorityCertificate)
+      {
+        return this.searchTypeBox.SelectedIndex == 3;
+      }
+      else if (certificate is VoterCertificate)
+      {
+        return this.searchTypeBox.SelectedIndex == 4;
+      }
+      else if (certificate is ServerCertificate)
+      {
+        return this.searchTypeBox.SelectedIndex == 5;
+      }
+      else
+      {
+        return true;
+      }
     }
 
     private string DataPath(string fileName)
@@ -88,6 +170,7 @@ namespace Pirate.PiVote.CaGui
 
     private void LoadEntries()
     {
+      Items = new Dictionary<CertificateAuthorityEntry, ListViewItem>();
       DirectoryInfo directory = new DirectoryInfo(this.dataPath);
 
       foreach (FileInfo file in directory.GetFiles("*.pi-ca-entry"))
@@ -125,6 +208,43 @@ namespace Pirate.PiVote.CaGui
       }
     }
 
+    private bool IsOfSearchedDate(CertificateAuthorityEntry entry)
+    {
+      if (this.searchDateActive.Checked)
+      {
+        if (entry.Response == null)
+        {
+          return false;
+        }
+        else if (entry.Response.Value.Status == SignatureResponseStatus.Accepted)
+        {
+          return entry.Response.Value.Signature.ValidFrom <= this.searchDateBox.Value &&
+                 entry.Response.Value.Signature.ValidUntil >= this.searchDateBox.Value;
+        }
+        else
+        {
+          return false;
+        }
+      }
+      else
+      {
+        return true;
+      }
+    }
+
+    private void UpdateList()
+    {
+      this.entryListView.Items.Clear();
+
+      Items
+        .Where(entry => entry.Key.Request.Value.FullName.ToLower().Contains(this.searchTestBox.Text.ToLower()) || entry.Key.Request.Certificate.Id.ToString().ToLower().Contains(this.searchTestBox.Text.ToLower()))
+        .Where(entry => IsOfSearchedType(entry.Key.Request.Certificate))
+        .Where(entry => IsOfSearchedStatus(entry.Key))
+        .Where(entry => IsOfSearchedDate(entry.Key))
+        .Select(entry => entry.Value)
+        .Foreach(item => this.entryListView.Items.Add(item));
+    }
+
     private void AddEntry(CertificateAuthorityEntry entry, string fileName)
     {
       SignatureRequest request = entry.Request.Value;
@@ -145,7 +265,7 @@ namespace Pirate.PiVote.CaGui
       {
         item.SubItems.Add(string.Empty);
         item.SubItems.Add(string.Empty);
-        item.SubItems.Add(string.Empty);
+        item.SubItems.Add("New");
       }
       else
       {
@@ -177,7 +297,8 @@ namespace Pirate.PiVote.CaGui
 
       item.Tag = fileName;
 
-      this.entryListView.Items.Add(item);
+      Items.Add(entry, item);
+      UpdateList();
     }
 
     private void createToolStripMenuItem_Click(object sender, EventArgs e)
@@ -323,17 +444,7 @@ namespace Pirate.PiVote.CaGui
 
           if (signedRequest.VerifySimple())
           {
-            bool alreadyAdded = false;
-
-            foreach (ListViewItem item in this.entryListView.Items)
-            {
-              if (item.Text == signedRequest.Certificate.Id.ToString())
-              {
-                alreadyAdded = true;
-              }
-            }
-
-            if (!alreadyAdded)
+            if (Items.Where(entry => entry.Key.Certificate.Id ==  signedRequest.Certificate.Id).Count() < 1)
             {
               CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
               string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
@@ -606,6 +717,46 @@ namespace Pirate.PiVote.CaGui
 
           certificate.Save(saveDialog.FileName);
         }
+      }
+    }
+
+    private void searchTestBox_TextChanged(object sender, EventArgs e)
+    {
+      if (Items != null)
+      {
+        UpdateList();
+      }
+    }
+
+    private void searchTypeBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      if (Items != null)
+      {
+        UpdateList();
+      }
+    }
+
+    private void searchStatusBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      if (Items != null)
+      {
+        UpdateList();
+      }
+    }
+
+    private void searchDateActive_CheckedChanged(object sender, EventArgs e)
+    {
+      if (Items != null)
+      {
+        UpdateList();
+      }
+    }
+
+    private void searchDateBox_ValueChanged(object sender, EventArgs e)
+    {
+      if (Items != null)
+      {
+        UpdateList();
       }
     }
   }
