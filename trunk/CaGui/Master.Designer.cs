@@ -29,6 +29,7 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Master));
       this.mainMenu = new System.Windows.Forms.MenuStrip();
       this.selfToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.cAPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -423,6 +424,7 @@
       this.ClientSize = new System.Drawing.Size(1050, 671);
       this.Controls.Add(this.splitContainer1);
       this.Controls.Add(this.mainMenu);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.mainMenu;
       this.Name = "Master";
       this.Text = "PiVote Certificate Authority";

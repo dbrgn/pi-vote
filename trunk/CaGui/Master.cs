@@ -686,6 +686,7 @@ namespace Pirate.PiVote.CaGui
       this.exportRootCertificateToolStripMenuItem.Enabled = haveCertificate;
       this.cAPropertiesToolStripMenuItem.Enabled = haveCertificate;
       this.createAdminCertificateToolStripMenuItem.Enabled = canSign;
+      this.createServerCertifiToolStripMenuItem.Enabled = canSign;
     }
 
     private void createServerCertifiToolStripMenuItem_Click(object sender, EventArgs e)

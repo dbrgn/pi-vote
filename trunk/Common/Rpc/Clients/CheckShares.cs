@@ -98,7 +98,7 @@ namespace Pirate.PiVote.Rpc
           Progress = 0.5d;
 
           Signed<BadShareProof> signedBadShareProof = client.authorityEntity.CreateBadShareProof(allShareParts);
-          signedShareResponse.Save(Path.Combine(Path.GetDirectoryName(this.authorityFileName), signedBadShareProof.Value.FileName(signedBadShareProof.Certificate.Id)));
+          signedBadShareProof.Save(Path.Combine(Path.GetDirectoryName(this.authorityFileName), signedBadShareProof.Value.FileName(signedBadShareProof.Certificate.Id)));
 
           client.SaveAuthority(this.authorityFileName);
 
