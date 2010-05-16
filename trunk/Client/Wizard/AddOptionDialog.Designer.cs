@@ -75,7 +75,7 @@ namespace Pirate.PiVote.Client
       this.textTextBox.Name = "textTextBox";
       this.textTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
       this.textTextBox.Size = new System.Drawing.Size(333, 20);
-      this.textTextBox.TabIndex = 1;
+      this.textTextBox.TabIndex = 0;
       this.textTextBox.TextChanged += new System.EventHandler(this.textTextBox_TextChanged);
       // 
       // descriptionTextBox
@@ -88,8 +88,8 @@ namespace Pirate.PiVote.Client
       this.descriptionTextBox.Multiline = true;
       this.descriptionTextBox.Name = "descriptionTextBox";
       this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.descriptionTextBox.Size = new System.Drawing.Size(333, 90);
-      this.descriptionTextBox.TabIndex = 2;
+      this.descriptionTextBox.Size = new System.Drawing.Size(333, 99);
+      this.descriptionTextBox.TabIndex = 1;
       // 
       // descriptionLabel
       // 
@@ -104,7 +104,7 @@ namespace Pirate.PiVote.Client
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(360, 126);
+      this.cancelButton.Location = new System.Drawing.Point(360, 135);
       this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(80, 23);
@@ -117,11 +117,11 @@ namespace Pirate.PiVote.Client
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(276, 126);
+      this.okButton.Location = new System.Drawing.Point(276, 135);
       this.okButton.Margin = new System.Windows.Forms.Padding(2);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(80, 23);
-      this.okButton.TabIndex = 5;
+      this.okButton.TabIndex = 3;
       this.okButton.Text = "button2";
       this.okButton.UseVisualStyleBackColor = true;
       this.okButton.Click += new System.EventHandler(this.okButton_Click);
@@ -130,7 +130,7 @@ namespace Pirate.PiVote.Client
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(451, 160);
+      this.ClientSize = new System.Drawing.Size(451, 169);
       this.ControlBox = false;
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);

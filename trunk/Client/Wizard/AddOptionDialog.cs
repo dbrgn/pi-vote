@@ -30,6 +30,8 @@ namespace Pirate.PiVote.Client
       this.textLabel.Text = Resources.AddOptionText;
       this.descriptionLabel.Text = Resources.AddOptionDescription;
       Text = Resources.AddOptionTitle;
+
+      CenterToScreen();
     }
 
     private void AddOptionDialog_Load(object sender, EventArgs e)
