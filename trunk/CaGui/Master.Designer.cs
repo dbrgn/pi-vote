@@ -60,6 +60,7 @@
       this.exportResponseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.revokeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.searchDateActive = new System.Windows.Forms.CheckBox();
       this.searchTestBox = new System.Windows.Forms.TextBox();
       this.searchTypeBox = new System.Windows.Forms.ComboBox();
       this.searchStatusBox = new System.Windows.Forms.ComboBox();
@@ -68,7 +69,6 @@
       this.crlValidFromColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.crlValidUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.revokedCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.searchDateActive = new System.Windows.Forms.CheckBox();
       this.mainMenu.SuspendLayout();
       this.entryListContextMenu.SuspendLayout();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -216,6 +216,9 @@
       // 
       // entryListView
       // 
+      this.entryListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.entryListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.idColumnHeader,
             this.typeColumnHeader,
@@ -224,7 +227,6 @@
             this.validUntilColumnHeader,
             this.statusColumnHeader});
       this.entryListView.ContextMenuStrip = this.entryListContextMenu;
-      this.entryListView.Dock = System.Windows.Forms.DockStyle.Bottom;
       this.entryListView.FullRowSelect = true;
       this.entryListView.HideSelection = false;
       this.entryListView.Location = new System.Drawing.Point(0, 31);
@@ -328,6 +330,17 @@
       this.splitContainer1.SplitterDistance = 437;
       this.splitContainer1.TabIndex = 2;
       // 
+      // searchDateActive
+      // 
+      this.searchDateActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.searchDateActive.AutoSize = true;
+      this.searchDateActive.Location = new System.Drawing.Point(754, 7);
+      this.searchDateActive.Name = "searchDateActive";
+      this.searchDateActive.Size = new System.Drawing.Size(15, 14);
+      this.searchDateActive.TabIndex = 6;
+      this.searchDateActive.UseVisualStyleBackColor = true;
+      this.searchDateActive.CheckedChanged += new System.EventHandler(this.searchDateActive_CheckedChanged);
+      // 
       // searchTestBox
       // 
       this.searchTestBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -402,16 +415,6 @@
       // 
       this.revokedCount.Text = "# Revoked";
       this.revokedCount.Width = 100;
-      // 
-      // searchDateActive
-      // 
-      this.searchDateActive.AutoSize = true;
-      this.searchDateActive.Location = new System.Drawing.Point(754, 7);
-      this.searchDateActive.Name = "searchDateActive";
-      this.searchDateActive.Size = new System.Drawing.Size(15, 14);
-      this.searchDateActive.TabIndex = 6;
-      this.searchDateActive.UseVisualStyleBackColor = true;
-      this.searchDateActive.CheckedChanged += new System.EventHandler(this.searchDateActive_CheckedChanged);
       // 
       // Master
       // 
