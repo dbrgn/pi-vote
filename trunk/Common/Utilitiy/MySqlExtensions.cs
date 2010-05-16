@@ -131,26 +131,17 @@ namespace MySql.Data.MySqlClient
 
     public static MySqlConnection Check(this MySqlConnection dbConnection)
     {
-      bool done = false;
       int retryCounter = 0;
 
-      while (!done && retryCounter < 5)
+      while (dbConnection.State != ConnectionState.Open && retryCounter < 5)
       {
-        try
-        {
-          dbConnection.Ping();
-          done = true;
-        }
-        catch (InvalidOperationException)
-        {
-          Thread.Sleep(100);
-          retryCounter++;
-          dbConnection.Close();
-          dbConnection.Open();
-        }
+        Thread.Sleep(100);
+        retryCounter++;
+        dbConnection.Close();
+        dbConnection.Open();
       }
 
-      if (done)
+      if (dbConnection.State == ConnectionState.Open)
       {
         return dbConnection;
       }
