@@ -48,7 +48,7 @@
       this.nameLabel.AutoSize = true;
       this.nameLabel.Location = new System.Drawing.Point(-3, 4);
       this.nameLabel.Name = "nameLabel";
-      this.nameLabel.Size = new System.Drawing.Size(38, 13);
+      this.nameLabel.Size = new System.Drawing.Size(37, 14);
       this.nameLabel.TabIndex = 7;
       this.nameLabel.Text = "Name:";
       // 
@@ -70,6 +70,7 @@
       this.Controls.Add(this.detailButton);
       this.Controls.Add(this.nameLabel);
       this.Controls.Add(this.nameTextBox);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "SmallCertificateControl";
       this.Size = new System.Drawing.Size(601, 21);
       this.ResumeLayout(false);

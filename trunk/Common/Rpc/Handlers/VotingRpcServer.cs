@@ -65,7 +65,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     private MySqlConnection DbConnection
     {
-      get { return this.dbConnection.Check(); }
+      get { return this.dbConnection; }
     }
 
     /// <summary>
@@ -397,6 +397,16 @@ namespace Pirate.PiVote.Rpc
         throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Certificate not valid.");
 
       CertificateStorage.Add(certificateStorage);
+    }
+
+    /// <summary>
+    /// Called from time to time when idle.
+    /// Has to keep the DB connection alive.
+    /// </summary>
+    public void Idle()
+    {
+      int certificateCount = CertificateStorage.Certificates.Count();
+      Logger.Log(LogLevel.Debug, "Worker idling at {0}.", certificateCount);
     }
   }
 }

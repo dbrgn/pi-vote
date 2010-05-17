@@ -41,7 +41,7 @@
       this.nameLabel.AutoSize = true;
       this.nameLabel.Location = new System.Drawing.Point(21, 15);
       this.nameLabel.Name = "nameLabel";
-      this.nameLabel.Size = new System.Drawing.Size(55, 13);
+      this.nameLabel.Size = new System.Drawing.Size(54, 14);
       this.nameLabel.TabIndex = 0;
       this.nameLabel.Text = "CA Name:";
       // 
@@ -79,7 +79,7 @@
       this.rootCaLabel.AutoSize = true;
       this.rootCaLabel.Location = new System.Drawing.Point(21, 50);
       this.rootCaLabel.Name = "rootCaLabel";
-      this.rootCaLabel.Size = new System.Drawing.Size(50, 13);
+      this.rootCaLabel.Size = new System.Drawing.Size(50, 14);
       this.rootCaLabel.TabIndex = 4;
       this.rootCaLabel.Text = "Root CA:";
       // 
@@ -104,6 +104,7 @@
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.nameTextBox);
       this.Controls.Add(this.nameLabel);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;

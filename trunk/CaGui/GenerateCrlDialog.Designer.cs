@@ -82,7 +82,7 @@
       this.nameLabel.AutoSize = true;
       this.nameLabel.Location = new System.Drawing.Point(12, 42);
       this.nameLabel.Name = "nameLabel";
-      this.nameLabel.Size = new System.Drawing.Size(38, 13);
+      this.nameLabel.Size = new System.Drawing.Size(37, 14);
       this.nameLabel.TabIndex = 5;
       this.nameLabel.Text = "Name:";
       // 
@@ -91,7 +91,7 @@
       this.idLabel.AutoSize = true;
       this.idLabel.Location = new System.Drawing.Point(12, 15);
       this.idLabel.Name = "idLabel";
-      this.idLabel.Size = new System.Drawing.Size(19, 13);
+      this.idLabel.Size = new System.Drawing.Size(18, 14);
       this.idLabel.TabIndex = 6;
       this.idLabel.Text = "Id:";
       // 
@@ -108,7 +108,7 @@
       this.validUntilLabel.AutoSize = true;
       this.validUntilLabel.Location = new System.Drawing.Point(12, 95);
       this.validUntilLabel.Name = "validUntilLabel";
-      this.validUntilLabel.Size = new System.Drawing.Size(55, 13);
+      this.validUntilLabel.Size = new System.Drawing.Size(55, 14);
       this.validUntilLabel.TabIndex = 8;
       this.validUntilLabel.Text = "Valid until:";
       // 
@@ -125,7 +125,7 @@
       this.validFromLabel.AutoSize = true;
       this.validFromLabel.Location = new System.Drawing.Point(12, 69);
       this.validFromLabel.Name = "validFromLabel";
-      this.validFromLabel.Size = new System.Drawing.Size(56, 13);
+      this.validFromLabel.Size = new System.Drawing.Size(58, 14);
       this.validFromLabel.TabIndex = 10;
       this.validFromLabel.Text = "Valid from:";
       // 
@@ -145,6 +145,7 @@
       this.Controls.Add(this.idTextBox);
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;

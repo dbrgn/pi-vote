@@ -128,27 +128,5 @@ namespace MySql.Data.MySqlClient
       command.Parameters.AddWithValue(parameterName2, parameterValue2);
       return command.ExecuteHasRows();
     }
-
-    public static MySqlConnection Check(this MySqlConnection dbConnection)
-    {
-      int retryCounter = 0;
-
-      while (dbConnection.State != ConnectionState.Open && retryCounter < 5)
-      {
-        Thread.Sleep(100);
-        retryCounter++;
-        dbConnection.Close();
-        dbConnection.Open();
-      }
-
-      if (dbConnection.State == ConnectionState.Open)
-      {
-        return dbConnection;
-      }
-      else
-      {
-        throw new Exception("Database connection is broken cannot be repaired.");
-      }
-    }
   }
 }

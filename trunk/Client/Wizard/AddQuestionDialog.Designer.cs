@@ -51,10 +51,10 @@
       // optionLabel
       // 
       this.optionLabel.AutoSize = true;
-      this.optionLabel.Location = new System.Drawing.Point(5, 81);
+      this.optionLabel.Location = new System.Drawing.Point(5, 88);
       this.optionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.optionLabel.Name = "optionLabel";
-      this.optionLabel.Size = new System.Drawing.Size(47, 13);
+      this.optionLabel.Size = new System.Drawing.Size(53, 14);
       this.optionLabel.TabIndex = 39;
       this.optionLabel.Text = "Answers";
       // 
@@ -68,11 +68,11 @@
             this.descriptionColumnHeader});
       this.optionListView.ContextMenuStrip = this.optionListContextMenu;
       this.optionListView.FullRowSelect = true;
-      this.optionListView.Location = new System.Drawing.Point(108, 77);
-      this.optionListView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.optionListView.Location = new System.Drawing.Point(108, 84);
+      this.optionListView.Margin = new System.Windows.Forms.Padding(2);
       this.optionListView.MultiSelect = false;
       this.optionListView.Name = "optionListView";
-      this.optionListView.Size = new System.Drawing.Size(591, 144);
+      this.optionListView.Size = new System.Drawing.Size(684, 196);
       this.optionListView.TabIndex = 42;
       this.optionListView.UseCompatibleStateImageBehavior = false;
       this.optionListView.View = System.Windows.Forms.View.Details;
@@ -118,16 +118,16 @@
       this.textTextBox.Multiline = false;
       this.textTextBox.Name = "textTextBox";
       this.textTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-      this.textTextBox.Size = new System.Drawing.Size(591, 19);
+      this.textTextBox.Size = new System.Drawing.Size(683, 20);
       this.textTextBox.TabIndex = 38;
       // 
       // textLabel
       // 
       this.textLabel.AutoSize = true;
-      this.textLabel.Location = new System.Drawing.Point(5, 7);
+      this.textLabel.Location = new System.Drawing.Point(5, 8);
       this.textLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.textLabel.Name = "textLabel";
-      this.textLabel.Size = new System.Drawing.Size(49, 13);
+      this.textLabel.Size = new System.Drawing.Size(50, 14);
       this.textLabel.TabIndex = 37;
       this.textLabel.Text = "Question";
       // 
@@ -135,18 +135,18 @@
       // 
       this.optionNumberLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.optionNumberLabel.AutoSize = true;
-      this.optionNumberLabel.Location = new System.Drawing.Point(5, 225);
+      this.optionNumberLabel.Location = new System.Drawing.Point(5, 286);
       this.optionNumberLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.optionNumberLabel.Name = "optionNumberLabel";
-      this.optionNumberLabel.Size = new System.Drawing.Size(83, 13);
+      this.optionNumberLabel.Size = new System.Drawing.Size(88, 14);
       this.optionNumberLabel.TabIndex = 40;
       this.optionNumberLabel.Text = "Answers / Voter";
       // 
       // optionNumberUpDown
       // 
       this.optionNumberUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.optionNumberUpDown.Location = new System.Drawing.Point(108, 224);
-      this.optionNumberUpDown.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.optionNumberUpDown.Location = new System.Drawing.Point(108, 284);
+      this.optionNumberUpDown.Margin = new System.Windows.Forms.Padding(2);
       this.optionNumberUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -166,30 +166,30 @@
       // 
       this.descriptionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.descriptionTextBox.Location = new System.Drawing.Point(108, 28);
+      this.descriptionTextBox.Location = new System.Drawing.Point(108, 31);
       this.descriptionTextBox.Multiline = true;
       this.descriptionTextBox.Name = "descriptionTextBox";
       this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.descriptionTextBox.Size = new System.Drawing.Size(591, 45);
+      this.descriptionTextBox.Size = new System.Drawing.Size(684, 48);
       this.descriptionTextBox.TabIndex = 44;
       // 
       // descriptionLabel
       // 
       this.descriptionLabel.AutoSize = true;
-      this.descriptionLabel.Location = new System.Drawing.Point(5, 31);
+      this.descriptionLabel.Location = new System.Drawing.Point(5, 35);
       this.descriptionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.descriptionLabel.Name = "descriptionLabel";
-      this.descriptionLabel.Size = new System.Drawing.Size(60, 13);
+      this.descriptionLabel.Size = new System.Drawing.Size(61, 14);
       this.descriptionLabel.TabIndex = 43;
       this.descriptionLabel.Text = "Description";
       // 
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(602, 239);
-      this.cancelButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.cancelButton.Location = new System.Drawing.Point(707, 312);
+      this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
       this.cancelButton.Name = "cancelButton";
-      this.cancelButton.Size = new System.Drawing.Size(85, 23);
+      this.cancelButton.Size = new System.Drawing.Size(85, 25);
       this.cancelButton.TabIndex = 45;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
@@ -198,10 +198,10 @@
       // okButton
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.okButton.Location = new System.Drawing.Point(513, 239);
-      this.okButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.okButton.Location = new System.Drawing.Point(618, 312);
+      this.okButton.Margin = new System.Windows.Forms.Padding(2);
       this.okButton.Name = "okButton";
-      this.okButton.Size = new System.Drawing.Size(85, 23);
+      this.okButton.Size = new System.Drawing.Size(85, 25);
       this.okButton.TabIndex = 46;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
@@ -209,20 +209,21 @@
       // 
       // AddQuestionDialog
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(698, 273);
-      this.Controls.Add(this.cancelButton);
-      this.Controls.Add(this.descriptionTextBox);
-      this.Controls.Add(this.okButton);
-      this.Controls.Add(this.descriptionLabel);
+      this.ClientSize = new System.Drawing.Size(803, 348);
       this.Controls.Add(this.optionLabel);
-      this.Controls.Add(this.optionListView);
+      this.Controls.Add(this.descriptionTextBox);
       this.Controls.Add(this.textTextBox);
+      this.Controls.Add(this.cancelButton);
+      this.Controls.Add(this.descriptionLabel);
+      this.Controls.Add(this.okButton);
       this.Controls.Add(this.textLabel);
-      this.Controls.Add(this.optionNumberLabel);
+      this.Controls.Add(this.optionListView);
       this.Controls.Add(this.optionNumberUpDown);
-      this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+      this.Controls.Add(this.optionNumberLabel);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.Margin = new System.Windows.Forms.Padding(2);
       this.Name = "AddQuestionDialog";
       this.Text = "AddQuestionDialog";
       this.optionListContextMenu.ResumeLayout(false);

@@ -37,7 +37,7 @@
       // 
       this.textTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.textTextBox.Location = new System.Drawing.Point(12, 12);
+      this.textTextBox.Location = new System.Drawing.Point(12, 13);
       this.textTextBox.Name = "textTextBox";
       this.textTextBox.ReadOnly = true;
       this.textTextBox.Size = new System.Drawing.Size(505, 20);
@@ -48,37 +48,38 @@
       this.descriptionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.descriptionTextBox.Location = new System.Drawing.Point(12, 38);
+      this.descriptionTextBox.Location = new System.Drawing.Point(12, 41);
       this.descriptionTextBox.Multiline = true;
       this.descriptionTextBox.Name = "descriptionTextBox";
       this.descriptionTextBox.ReadOnly = true;
       this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.descriptionTextBox.Size = new System.Drawing.Size(505, 290);
+      this.descriptionTextBox.Size = new System.Drawing.Size(505, 312);
       this.descriptionTextBox.TabIndex = 1;
       // 
       // closeButton
       // 
       this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.closeButton.Location = new System.Drawing.Point(430, 334);
+      this.closeButton.Location = new System.Drawing.Point(430, 360);
       this.closeButton.Name = "closeButton";
-      this.closeButton.Size = new System.Drawing.Size(87, 23);
+      this.closeButton.Size = new System.Drawing.Size(87, 25);
       this.closeButton.TabIndex = 2;
       this.closeButton.Text = "&Close";
       this.closeButton.UseVisualStyleBackColor = true;
       this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
       // 
-      // VoteOptionDescriptionForm
+      // VoteDescriptionForm
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(529, 369);
+      this.ClientSize = new System.Drawing.Size(529, 397);
       this.ControlBox = false;
       this.Controls.Add(this.closeButton);
       this.Controls.Add(this.descriptionTextBox);
       this.Controls.Add(this.textTextBox);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
-      this.Name = "VoteOptionDescriptionForm";
+      this.Name = "VoteDescriptionForm";
       this.Text = "Option Description";
       this.ResumeLayout(false);
       this.PerformLayout();

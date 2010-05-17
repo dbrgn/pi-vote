@@ -110,6 +110,8 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     private void Worker()
     {
+      DateTime lastWorkDone = DateTime.Now;
+
       while (this.run)
       {
         bool doneSomeWork = false;
@@ -155,10 +157,21 @@ namespace Pirate.PiVote.Rpc
 
         if (doneSomeWork)
         {
+          lastWorkDone = DateTime.Now;
           Thread.Sleep(1);
         }
         else
         {
+          if (DateTime.Now.Subtract(lastWorkDone).TotalMinutes > 5d)
+          {
+            lock (this.rpcServer)
+            {
+              this.rpcServer.Idle();
+            }
+
+            lastWorkDone = DateTime.Now;
+          }
+
           Thread.Sleep(100);
         }
       }

@@ -54,7 +54,7 @@
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.descriptionButton.Location = new System.Drawing.Point(385, 0);
       this.descriptionButton.Name = "descriptionButton";
-      this.descriptionButton.Size = new System.Drawing.Size(111, 24);
+      this.descriptionButton.Size = new System.Drawing.Size(111, 26);
       this.descriptionButton.TabIndex = 1;
       this.descriptionButton.Text = "&Description";
       this.descriptionButton.UseVisualStyleBackColor = true;
@@ -74,13 +74,14 @@
       // 
       // VoteOptionControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.optionCheckBox);
       this.Controls.Add(this.descriptionButton);
       this.Controls.Add(this.optionRadioButton);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "VoteOptionControl";
-      this.Size = new System.Drawing.Size(496, 24);
+      this.Size = new System.Drawing.Size(496, 26);
       this.ResumeLayout(false);
       this.PerformLayout();
 

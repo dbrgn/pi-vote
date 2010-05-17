@@ -93,6 +93,7 @@
       this.Controls.Add(this.parentsPanel);
       this.Controls.Add(this.caPanel);
       this.Controls.Add(this.okPanel);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;

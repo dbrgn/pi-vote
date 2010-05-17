@@ -37,7 +37,7 @@
       this.descriptionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.descriptionButton.Location = new System.Drawing.Point(440, 0);
       this.descriptionButton.Name = "descriptionButton";
-      this.descriptionButton.Size = new System.Drawing.Size(111, 24);
+      this.descriptionButton.Size = new System.Drawing.Size(111, 26);
       this.descriptionButton.TabIndex = 2;
       this.descriptionButton.Text = "&Description";
       this.descriptionButton.UseVisualStyleBackColor = true;
@@ -55,12 +55,13 @@
       // 
       // VoteControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.titleLabel);
       this.Controls.Add(this.descriptionButton);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "VoteControl";
-      this.Size = new System.Drawing.Size(551, 239);
+      this.Size = new System.Drawing.Size(551, 257);
       this.ResumeLayout(false);
       this.PerformLayout();
 

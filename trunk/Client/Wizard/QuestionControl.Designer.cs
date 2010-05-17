@@ -36,7 +36,7 @@
       // 
       this.questionLabel.AutoSize = true;
       this.questionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.questionLabel.Location = new System.Drawing.Point(-3, 7);
+      this.questionLabel.Location = new System.Drawing.Point(-3, 8);
       this.questionLabel.Name = "questionLabel";
       this.questionLabel.Size = new System.Drawing.Size(61, 16);
       this.questionLabel.TabIndex = 6;
@@ -47,7 +47,7 @@
       this.descriptionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.descriptionButton.Location = new System.Drawing.Point(467, 3);
       this.descriptionButton.Name = "descriptionButton";
-      this.descriptionButton.Size = new System.Drawing.Size(111, 24);
+      this.descriptionButton.Size = new System.Drawing.Size(111, 26);
       this.descriptionButton.TabIndex = 5;
       this.descriptionButton.Text = "&Description";
       this.descriptionButton.UseVisualStyleBackColor = true;
@@ -55,12 +55,13 @@
       // 
       // QuestionControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.questionLabel);
       this.Controls.Add(this.descriptionButton);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "QuestionControl";
-      this.Size = new System.Drawing.Size(581, 180);
+      this.Size = new System.Drawing.Size(581, 194);
       this.ResumeLayout(false);
       this.PerformLayout();
 

@@ -359,7 +359,7 @@
       this.searchTypeBox.FormattingEnabled = true;
       this.searchTypeBox.Location = new System.Drawing.Point(556, 4);
       this.searchTypeBox.Name = "searchTypeBox";
-      this.searchTypeBox.Size = new System.Drawing.Size(192, 21);
+      this.searchTypeBox.Size = new System.Drawing.Size(192, 22);
       this.searchTypeBox.TabIndex = 4;
       this.searchTypeBox.SelectedIndexChanged += new System.EventHandler(this.searchTypeBox_SelectedIndexChanged);
       // 
@@ -370,7 +370,7 @@
       this.searchStatusBox.FormattingEnabled = true;
       this.searchStatusBox.Location = new System.Drawing.Point(882, 4);
       this.searchStatusBox.Name = "searchStatusBox";
-      this.searchStatusBox.Size = new System.Drawing.Size(168, 21);
+      this.searchStatusBox.Size = new System.Drawing.Size(168, 22);
       this.searchStatusBox.TabIndex = 3;
       this.searchStatusBox.SelectedIndexChanged += new System.EventHandler(this.searchStatusBox_SelectedIndexChanged);
       // 
@@ -424,6 +424,7 @@
       this.ClientSize = new System.Drawing.Size(1050, 671);
       this.Controls.Add(this.splitContainer1);
       this.Controls.Add(this.mainMenu);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.mainMenu;
       this.Name = "Master";

@@ -90,7 +90,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     private MySqlConnection DbConnection
     {
-      get { return this.dbConnection.Check(); }
+      get { return this.dbConnection; }
     }
 
     /// <summary>

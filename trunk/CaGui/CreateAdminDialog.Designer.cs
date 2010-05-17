@@ -84,7 +84,7 @@
       this.emailAddressLabel.AutoSize = true;
       this.emailAddressLabel.Location = new System.Drawing.Point(16, 86);
       this.emailAddressLabel.Name = "emailAddressLabel";
-      this.emailAddressLabel.Size = new System.Drawing.Size(75, 13);
+      this.emailAddressLabel.Size = new System.Drawing.Size(77, 14);
       this.emailAddressLabel.TabIndex = 5;
       this.emailAddressLabel.Text = "Email address:";
       // 
@@ -93,7 +93,7 @@
       this.firstNameLabel.AutoSize = true;
       this.firstNameLabel.Location = new System.Drawing.Point(12, 14);
       this.firstNameLabel.Name = "firstNameLabel";
-      this.firstNameLabel.Size = new System.Drawing.Size(58, 13);
+      this.firstNameLabel.Size = new System.Drawing.Size(60, 14);
       this.firstNameLabel.TabIndex = 6;
       this.firstNameLabel.Text = "First name:";
       // 
@@ -102,7 +102,7 @@
       this.familyNameLabel.AutoSize = true;
       this.familyNameLabel.Location = new System.Drawing.Point(12, 38);
       this.familyNameLabel.Name = "familyNameLabel";
-      this.familyNameLabel.Size = new System.Drawing.Size(68, 13);
+      this.familyNameLabel.Size = new System.Drawing.Size(69, 14);
       this.familyNameLabel.TabIndex = 11;
       this.familyNameLabel.Text = "Family name:";
       // 
@@ -119,7 +119,7 @@
       this.functionLabel.AutoSize = true;
       this.functionLabel.Location = new System.Drawing.Point(16, 62);
       this.functionLabel.Name = "functionLabel";
-      this.functionLabel.Size = new System.Drawing.Size(51, 13);
+      this.functionLabel.Size = new System.Drawing.Size(51, 14);
       this.functionLabel.TabIndex = 13;
       this.functionLabel.Text = "Function:";
       // 
@@ -143,7 +143,7 @@
       this.validUntilLabel.AutoSize = true;
       this.validUntilLabel.Location = new System.Drawing.Point(16, 111);
       this.validUntilLabel.Name = "validUntilLabel";
-      this.validUntilLabel.Size = new System.Drawing.Size(55, 13);
+      this.validUntilLabel.Size = new System.Drawing.Size(55, 14);
       this.validUntilLabel.TabIndex = 15;
       this.validUntilLabel.Text = "Valid until:";
       // 
@@ -165,6 +165,7 @@
       this.Controls.Add(this.firstNameTextBox);
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;

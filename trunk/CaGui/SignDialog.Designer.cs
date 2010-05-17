@@ -45,7 +45,7 @@
       this.validUntilLabel.AutoSize = true;
       this.validUntilLabel.Location = new System.Drawing.Point(11, 95);
       this.validUntilLabel.Name = "validUntilLabel";
-      this.validUntilLabel.Size = new System.Drawing.Size(55, 13);
+      this.validUntilLabel.Size = new System.Drawing.Size(55, 14);
       this.validUntilLabel.TabIndex = 0;
       this.validUntilLabel.Text = "Valid until:";
       // 
@@ -91,7 +91,7 @@
       this.nameLabel.AutoSize = true;
       this.nameLabel.Location = new System.Drawing.Point(11, 69);
       this.nameLabel.Name = "nameLabel";
-      this.nameLabel.Size = new System.Drawing.Size(38, 13);
+      this.nameLabel.Size = new System.Drawing.Size(37, 14);
       this.nameLabel.TabIndex = 5;
       this.nameLabel.Text = "Name:";
       // 
@@ -100,7 +100,7 @@
       this.idLabel.AutoSize = true;
       this.idLabel.Location = new System.Drawing.Point(12, 15);
       this.idLabel.Name = "idLabel";
-      this.idLabel.Size = new System.Drawing.Size(19, 13);
+      this.idLabel.Size = new System.Drawing.Size(18, 14);
       this.idLabel.TabIndex = 6;
       this.idLabel.Text = "Id:";
       // 
@@ -117,7 +117,7 @@
       this.typeLabel.AutoSize = true;
       this.typeLabel.Location = new System.Drawing.Point(11, 42);
       this.typeLabel.Name = "typeLabel";
-      this.typeLabel.Size = new System.Drawing.Size(34, 13);
+      this.typeLabel.Size = new System.Drawing.Size(33, 14);
       this.typeLabel.TabIndex = 9;
       this.typeLabel.Text = "Type:";
       // 
@@ -145,6 +145,7 @@
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.validUntilLabel);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;

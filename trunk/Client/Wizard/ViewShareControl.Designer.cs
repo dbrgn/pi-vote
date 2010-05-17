@@ -48,7 +48,7 @@
       this.dataLabel.AutoSize = true;
       this.dataLabel.Location = new System.Drawing.Point(478, 3);
       this.dataLabel.Name = "dataLabel";
-      this.dataLabel.Size = new System.Drawing.Size(33, 13);
+      this.dataLabel.Size = new System.Drawing.Size(32, 14);
       this.dataLabel.TabIndex = 6;
       this.dataLabel.Text = "Data:";
       // 
@@ -72,6 +72,7 @@
       this.Controls.Add(this.dataLabel);
       this.Controls.Add(this.dataTextBox);
       this.Controls.Add(this.certificateControl);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "ViewShareControl";
       this.Size = new System.Drawing.Size(662, 22);
       this.ResumeLayout(false);
