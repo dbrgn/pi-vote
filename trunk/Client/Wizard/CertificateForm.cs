@@ -41,9 +41,9 @@ namespace Pirate.PiVote.Client
     {
       CertificateForm form = new CertificateForm();
       form.SetLanguage();
+      form.certificateControl.ValidationDate = validationDate;
       form.certificateControl.CertificateStorage = certificateStorage;
       form.certificateControl.Certificate = certificate;
-      form.certificateControl.ValidationDate = validationDate;
       form.ShowDialog();
     }
   }

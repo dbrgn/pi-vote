@@ -119,9 +119,6 @@ namespace Pirate.PiVote.Client
     {
       IPAddress serverIpAddress = null;
 
-#if DEBUG
-      serverIpAddress = IPAddress.Loopback;
-#else
       try
       {
         serverIpAddress = Dns.GetHostEntry(Resources.ServerIpAddress).AddressList.First();
@@ -131,7 +128,6 @@ namespace Pirate.PiVote.Client
         Status.SetMessage(socketException.Message, MessageType.Error);
         return;
       }
-#endif
 
       this.status = CheckStatus.Connect;
       Status.VotingClient.Connect(serverIpAddress, ConnectComplete);

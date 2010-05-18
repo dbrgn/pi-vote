@@ -93,7 +93,7 @@ namespace Pirate.PiVote.Crypto
 
         return
           signer.Verify(AssmblySigningData(objectData), Data, certificateStorage) &&
-          signer.Valid(certificateStorage) &&
+          signer.Valid(certificateStorage, date) &&
           ValidFrom.Date <= date.Date &&
           ValidUntil.Date >= date.Date;
       }

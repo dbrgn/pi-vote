@@ -13,7 +13,6 @@ namespace PiVoteUnitTest
   public class BaseVotingTest
   {
     private VotingParameters parameters;
-    private BigInt publicKey;
 
     public BaseVotingTest()
     {
