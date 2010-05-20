@@ -257,7 +257,7 @@ namespace Pirate.PiVote.Rpc
         request.EmailAddress, 
         signatureRequest.Certificate.Id.ToString(), 
         signatureRequest.Certificate.TypeText);
-      if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody))
+      if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody, this.logger))
       {
         Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
       }
@@ -269,7 +269,7 @@ namespace Pirate.PiVote.Rpc
         request.EmailAddress,
         signatureRequest.Certificate.Id.ToString(),
         signatureRequest.Certificate.TypeText);
-      if (!Mailer.TrySend(Mailer.Sender, LibraryResources.MailAdminNewRequestHeader, adminBody))
+      if (!Mailer.TrySend(Mailer.Sender, LibraryResources.MailAdminNewRequestHeader, adminBody, this.logger))
       {
         Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
       }
@@ -395,7 +395,7 @@ namespace Pirate.PiVote.Rpc
           request.EmailAddress,
           signatureRequest.Certificate.Id.ToString(),
           signatureRequest.Certificate.TypeText);
-        if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody))
+        if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody, this.logger))
         {
           Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
         }
@@ -412,7 +412,7 @@ namespace Pirate.PiVote.Rpc
           signatureRequest.Certificate.Id.ToString(),
           signatureRequest.Certificate.TypeText,
           signatureResponse.Reason);
-        if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody))
+        if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody, this.logger))
         {
           Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
         }

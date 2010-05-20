@@ -90,6 +90,7 @@ namespace Pirate.PiVote
       {
         lock (this.logWriter)
         {
+          Console.WriteLine(DateTime.Now.ToString("s") + " \t" + logLevel.ToString() + " \t" + message, values);
           this.logWriter.WriteLine(DateTime.Now.ToString("s") + " \t" + logLevel.ToString() + " \t" + message, values);
           this.logWriter.Flush();
         }

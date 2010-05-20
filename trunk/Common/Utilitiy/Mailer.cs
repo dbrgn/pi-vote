@@ -19,8 +19,13 @@ namespace Pirate.PiVote
   {
     public const string Sender = "pivote@piratenpartei.ch";
 
-    public static bool TrySend(string recipient, string subject, string body)
+    public static bool TrySend(string recipient, string subject, string body, Logger logger)
     {
+      if (logger == null)
+        throw new ArgumentNullException("logger");
+
+      logger.Log(LogLevel.Debug, "Sending mail to {0}.", recipient);
+
       try
       {
         MailMessage message = new MailMessage(Sender, recipient, subject, body);
@@ -28,10 +33,13 @@ namespace Pirate.PiVote
         SmtpClient client = new SmtpClient("wally.piratenpartei.ch", 25);
         client.Send(message);
 
+        logger.Log(LogLevel.Debug, "Mail to {0} sent.", recipient);
+
         return true;
       }
-      catch
+      catch (Exception exception)
       {
+        logger.Log(LogLevel.Debug, "Sending mail to {0} failed: {1}", recipient, exception.ToString());
         return false;
       }
     }
