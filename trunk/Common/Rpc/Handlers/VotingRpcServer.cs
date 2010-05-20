@@ -51,6 +51,19 @@ namespace Pirate.PiVote.Rpc
     private ServerConfig serverConfig;
 
     /// <summary>
+    /// Server config file.
+    /// </summary>
+    public override ServerConfig ServerConfig
+    {
+      get { return this.serverConfig; }
+    }
+
+    /// <summary>
+    /// Sends emails to users and admins.
+    /// </summary>
+    public Mailer Mailer { get; private set; }
+
+    /// <summary>
     /// Logs messages to file.
     /// </summary>
     private Logger logger;
@@ -78,6 +91,9 @@ namespace Pirate.PiVote.Rpc
 
       this.serverConfig = new ServerConfig(ServerConfigFileName);
       Logger.Log(LogLevel.Info, "Config file is read.");
+
+      Mailer = new Mailer(this.serverConfig, this.logger);
+      Logger.Log(LogLevel.Info, "Mailer is set up.");
 
       this.dbConnection = new MySqlConnection(this.serverConfig.MySqlConnectionString);
       this.dbConnection.Open();
@@ -111,7 +127,7 @@ namespace Pirate.PiVote.Rpc
         byte[] signedParametersData = reader.GetBlob(1);
         Signed<VotingParameters> signedParameters = Serializable.FromBinary<Signed<VotingParameters>>(signedParametersData);
         VotingStatus status = (VotingStatus)reader.GetInt32(2);
-        VotingServerEntity entity = new VotingServerEntity(Logger, this.dbConnection, signedParameters, this.CertificateStorage, this.serverCertificate, status);
+        VotingServerEntity entity = new VotingServerEntity(this, signedParameters, this.CertificateStorage, this.serverCertificate, status);
         this.votings.Add(id, entity);
       }
 
@@ -194,7 +210,7 @@ namespace Pirate.PiVote.Rpc
       insertCommand.Parameters.AddWithValue("@Status", (int)VotingStatus.New);
       insertCommand.ExecuteNonQuery();
 
-      VotingServerEntity voting = new VotingServerEntity(Logger, this.dbConnection, signedVotingParameters, CertificateStorage, this.serverCertificate);
+      VotingServerEntity voting = new VotingServerEntity(this, signedVotingParameters, CertificateStorage, this.serverCertificate);
       authorities.Foreach(authority => voting.AddAuthority(authority));
       this.votings.Add(voting.Id, voting);
     }
@@ -251,28 +267,22 @@ namespace Pirate.PiVote.Rpc
 
       SignatureRequest request = signatureRequest.Value;
       string userBody = string.Format(
-        LibraryResources.MailRequestDepositedBody, 
+        this.serverConfig.MailRequestDepositedBody, 
         request.FirstName, 
         request.FamilyName, 
         request.EmailAddress, 
         signatureRequest.Certificate.Id.ToString(), 
         signatureRequest.Certificate.TypeText);
-      if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody, this.logger))
-      {
-        Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
-      }
+      Mailer.TrySend(request.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
 
       string adminBody = string.Format(
-        LibraryResources.MailAdminNewRequestBody,
+        this.serverConfig.MailAdminNewRequestBody,
         request.FirstName,
         request.FamilyName,
         request.EmailAddress,
         signatureRequest.Certificate.Id.ToString(),
         signatureRequest.Certificate.TypeText);
-      if (!Mailer.TrySend(Mailer.Sender, LibraryResources.MailAdminNewRequestHeader, adminBody, this.logger))
-      {
-        Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
-      }
+      Mailer.TrySend(this.serverConfig.MailAdminAddress, this.serverConfig.MailAdminNewRequestSubject, adminBody);
     }
 
     /// <summary>
@@ -317,6 +327,18 @@ namespace Pirate.PiVote.Rpc
         reader.Close();
         throw new PiArgumentException(ExceptionCode.SignatureRequestNotFound, "Signature request not found.");
       }
+    }
+
+    /// <summary>
+    /// Get a signature request.
+    /// </summary>
+    /// <param name="id">Id of the signature request.</param>
+    /// <returns>Is there a signature request.</returns>
+    public bool HasSignatureRequest(Guid id)
+    {
+      return DbConnection
+        .ExecuteHasRows("SELECT count(*) FROM signaturerequest WHERE Id = @Id",
+        "@Id", id.ToByteArray());
     }
 
     /// <summary>
@@ -389,33 +411,27 @@ namespace Pirate.PiVote.Rpc
         Signed<SignatureRequest> signatureRequest = GetSignatureRequest(signatureResponse.SubjectId);
         SignatureRequest request = signatureRequest.Value;
         string userBody = string.Format(
-          LibraryResources.MailRequestApprovedBody,
+          this.serverConfig.MailRequestApprovedBody,
           request.FirstName,
           request.FamilyName,
           request.EmailAddress,
           signatureRequest.Certificate.Id.ToString(),
           signatureRequest.Certificate.TypeText);
-        if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody, this.logger))
-        {
-          Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
-        }
+        Mailer.TrySend(request.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
       }
       else
       {
         Signed<SignatureRequest> signatureRequest = GetSignatureRequest(signatureResponse.SubjectId);
         SignatureRequest request = signatureRequest.Value;
         string userBody = string.Format(
-          LibraryResources.MailRequestDeclinedBody,
+          this.serverConfig.MailRequestDeclinedBody,
           request.FirstName,
           request.FamilyName,
           request.EmailAddress,
           signatureRequest.Certificate.Id.ToString(),
           signatureRequest.Certificate.TypeText,
           signatureResponse.Reason);
-        if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody, this.logger))
-        {
-          Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
-        }
+        Mailer.TrySend(request.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
       }
     }
 

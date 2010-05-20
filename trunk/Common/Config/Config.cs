@@ -31,6 +31,11 @@ namespace Pirate.PiVote
     private XDocument document;
 
     /// <summary>
+    /// Caches config values.
+    /// </summary>
+    private Dictionary<string, string> cache;
+
+    /// <summary>
     /// Format string for dates and times.
     /// </summary>
     private const string DateTimeFormatString = "YYYYMdd-hhmmss";
@@ -42,6 +47,7 @@ namespace Pirate.PiVote
     public Config(string fileName)
     {
       this.fileName = fileName;
+      this.cache = new Dictionary<string, string>();
 
       if (File.Exists(this.fileName))
       {
@@ -79,9 +85,13 @@ namespace Pirate.PiVote
     /// <returns>Saved or default value.</returns>
     protected string ReadString(string name, string defaultValue)
     {
-      if (ConfigRoot.Elements(name).Count() > 0)
+      if (this.cache.ContainsKey(name))
       {
-        return ConfigRoot.Element(name).Value;
+        return this.cache[name];
+      }
+      else if (ConfigRoot.Elements(name).Count() > 0)
+      {
+        return ConfigRoot.Element(name).Value.Trim();
       }
       else
       {

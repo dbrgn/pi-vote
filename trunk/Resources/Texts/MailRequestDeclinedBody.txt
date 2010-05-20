@@ -1,0 +1,32 @@
+* English version below *
+
+Lieber {0}
+
+Die Zertifizierungsstelle hat deine Zertifizierungsanfrage abgelehnt. Als Grund hat die Zertifizierungsstelle angegeben: {5}
+
+Wenn du glaubst, dass deine Anfrage fälschlicherweise abgelehnt wurde, bitte antworte auf diese Nachricht mit einer Beschwerde.
+
+Vorname: {0}
+Nachname: {1}
+Email-Adresse: {2}
+Zertifikats-Id: {3}
+Zertifikatstyp: {4}
+
+Mit freundlichen Grüssen
+Dein Pi-Vote Server
+
+
+Dear {0}
+
+The certificate authority has declined your certificate signing request. The certificate authority has stated the reason as: {5}
+
+If you feel your request was declined in error, please respond to this message with your grievance.
+
+First name: {0}
+Family name: {1}
+Email address: {2}
+Certificate Id: {3}
+Certificate Type: {4}
+
+Kind regards
+Your Pi-Vote Server

@@ -1,0 +1,18 @@
+Abstimmung / Voting
+
+* English version below *
+
+Liebe Autoritäten
+
+Der Status von Abstimmung {0}, {1} hat auf {2} geändert. Bitte helft bei der weiteren Verarbeitung mit.
+
+Mit freundlichen Grüssen
+Dein Pi-Vote Server
+
+
+Dear Authorities
+
+The state of voting {0}, {1} changed to {2}. Please help processing the voting further.
+
+Kind regards
+Your Pi-Vote Server

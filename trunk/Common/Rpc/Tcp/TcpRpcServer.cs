@@ -26,7 +26,32 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Server TCP port.
     /// </summary>
-    private const int Port = 4242;
+    private int port;
+
+    /// <summary>
+    /// Number of worker threads.
+    /// </summary>
+    private int workerCount;
+
+    /// <summary>
+    /// Short worker sleep period in milliseconds;
+    /// </summary>
+    private int workerShortWait;
+
+    /// <summary>
+    /// Long worker sleep period in milliseconds;
+    /// </summary>
+    private int workerLongWait;
+
+    /// <summary>
+    /// Time until idle clients are disconnected in seconds.
+    /// </summary>
+    private double clientTimeOut;
+
+    /// <summary>
+    /// Time between SQL keep alive queries in seconds.
+    /// </summary>
+    private double sqlKeepAliveTime;
 
     /// <summary>
     /// TCP listener for new connection.
@@ -70,7 +95,15 @@ namespace Pirate.PiVote.Rpc
     public TcpRpcServer(VotingRpcServer rpcServer)
     {
       this.logger = rpcServer.Logger;
-      this.listener = new TcpListener(new IPEndPoint(IPAddress.Any, Port));
+
+      this.port = rpcServer.ServerConfig.Port;
+      this.workerCount = rpcServer.ServerConfig.WorkerCount;
+      this.workerShortWait = rpcServer.ServerConfig.WorkerShortWait;
+      this.workerLongWait = rpcServer.ServerConfig.WorkerLongWait;
+      this.sqlKeepAliveTime = rpcServer.ServerConfig.SqlKeepAliveTime;
+      this.clientTimeOut = rpcServer.ServerConfig.ClientTimeOut;
+
+      this.listener = new TcpListener(new IPEndPoint(IPAddress.Any, this.port));
       this.connections = new Queue<TcpRpcConnection>();
       this.rpcServer = rpcServer;
     }
@@ -87,7 +120,7 @@ namespace Pirate.PiVote.Rpc
 
       this.workerThreads = new List<Thread>();
 
-      for (int threadIndex = 0; threadIndex < 2; threadIndex++)
+      for (int threadIndex = 0; threadIndex < this.workerCount; threadIndex++)
       {
         Thread workerThread = new Thread(Worker);
         workerThread.Start();
@@ -158,11 +191,11 @@ namespace Pirate.PiVote.Rpc
         if (doneSomeWork)
         {
           lastWorkDone = DateTime.Now;
-          Thread.Sleep(1);
+          Thread.Sleep(this.workerShortWait);
         }
         else
         {
-          if (DateTime.Now.Subtract(lastWorkDone).TotalMinutes > 5d)
+          if (DateTime.Now.Subtract(lastWorkDone).TotalSeconds > this.sqlKeepAliveTime)
           {
             lock (this.rpcServer)
             {
@@ -172,7 +205,7 @@ namespace Pirate.PiVote.Rpc
             lastWorkDone = DateTime.Now;
           }
 
-          Thread.Sleep(100);
+          Thread.Sleep(this.workerLongWait);
         }
       }
     }
@@ -189,7 +222,7 @@ namespace Pirate.PiVote.Rpc
         while (this.listener.Pending())
         {
           TcpClient client = this.listener.AcceptTcpClient();
-          TcpRpcConnection connection = new TcpRpcConnection(client, rpcServer);
+          TcpRpcConnection connection = new TcpRpcConnection(client, rpcServer, this.clientTimeOut);
 
           lock (this.connections)
           {

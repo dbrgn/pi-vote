@@ -1,0 +1,27 @@
+* English version below *
+
+Lieber {0}
+
+Deine Zertifizierungsanfrage wurde auf dem Pi-Vote Server gespeichert. Du wirst informiert, wenn die Zertifizierungsstelle die Anfrage beantwortet hat.
+
+Vorname: {0}
+Nachname: {1}
+Email-Adresse: {2}
+Zertifikats-Id: {3}
+Zertifikatstyp: {4}
+
+Mit freundlichen Grüssen
+Dein Pi-Vote Server
+
+Dear {0}
+
+Your certificate signing request has been deposited on the server. You will be notified once the certificate authority has responded.
+
+First name: {0}
+Family name: {1}
+Email address: {2}
+Certificate Id: {3}
+Certificate Type: {4}
+
+Kind regards
+Your Pi-Vote Server

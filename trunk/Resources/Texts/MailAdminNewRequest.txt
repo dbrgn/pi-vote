@@ -1,0 +1,14 @@
+New certificate signing request
+
+Dear Admin
+
+A new certificate signing request has been deposited on the Pi-Vote server.
+
+First name: {0}
+Family name: {1}
+Email address: {2}
+Certificate Id: {3}
+Certificate Type: {4}
+
+Kind regards
+Your Pi-Vote Server

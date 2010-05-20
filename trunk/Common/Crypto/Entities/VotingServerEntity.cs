@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using MySql.Data.MySqlClient;
 using Pirate.PiVote.Serialization;
+using Pirate.PiVote.Rpc;
 
 namespace Pirate.PiVote.Crypto
 {
@@ -20,9 +21,24 @@ namespace Pirate.PiVote.Crypto
   public class VotingServerEntity
   {
     /// <summary>
+    /// Voting RPC server.
+    /// </summary>
+    private VotingRpcServer Server { get; set; }
+
+    /// <summary>
     /// Logs information to file.
     /// </summary>
-    private Logger logger;
+    private Logger Logger { get { return Server.Logger; } }
+
+    /// <summary>
+    /// Configuration of the server.
+    /// </summary>
+    private ServerConfig ServerConfig { get { return Server.ServerConfig; } }
+
+    /// <summary>
+    /// Sends mails to users;
+    /// </summary>
+    private Mailer Mailer { get { return Server.Mailer; } }
 
     /// <summary>
     /// MySQL database connection.
@@ -81,7 +97,22 @@ namespace Pirate.PiVote.Crypto
         updateCommand.Add("@Status", (int)this.status);
         updateCommand.ExecuteNonQuery();
 
-        this.logger.Log(LogLevel.Info, "Status of voting {0} changed to {1}.", Id.ToString(), this.status.ToString());
+        Logger.Log(LogLevel.Info, "Status of voting {0} changed to {1}.", Id.ToString(), this.status.ToString());
+
+        string body = string.Format(
+          ServerConfig.MailAdminVotingStatusBody,
+          Id.ToString(),
+          Parameters.Title.Text,
+          this.status.ToString());
+        Mailer.TrySend(ServerConfig.MailAdminAddress, ServerConfig.MailAdminVotingStatusSubject, body);
+
+        switch (this.status)
+        {
+          case VotingStatus.Sharing:
+          case VotingStatus.Deciphering:
+            SendAuthorityActionRequiredMail();
+            break;
+        }
       }
     }
 
@@ -167,13 +198,31 @@ namespace Pirate.PiVote.Crypto
     /// <param name="parameters">Voting parameters.</param>
     /// <param name="rootCertificate">Certificate storage.</param>
     public VotingServerEntity(
-      Logger logger,
-      MySqlConnection dbConnection,
+      VotingRpcServer server,
       Signed<VotingParameters> signedParameters,
       ICertificateStorage certificateStorage,
       ServerCertificate serverCertificate)
-      : this(logger, dbConnection, signedParameters, certificateStorage, serverCertificate, VotingStatus.New)
-    { }
+      : this(server, signedParameters, certificateStorage, serverCertificate, VotingStatus.New)
+    {
+      SendAuthorityActionRequiredMail();
+    }
+
+    /// <summary>
+    /// Send action required mail to all authorities
+    /// </summary>
+    private void SendAuthorityActionRequiredMail()
+    {
+      IEnumerable<string> authorities = 
+        Authorities
+        .Where(authority => Server.HasSignatureRequest(authority.Id))
+        .Select(authority => Server.GetSignatureRequest(authority.Id).Value.EmailAddress);
+      string authorityBody = string.Format(
+        ServerConfig.MailAuthorityActionRequiredBody,
+        Id.ToString(),
+        Parameters.Title.Text,
+        this.status.ToString());
+      Mailer.TrySend(authorities, ServerConfig.MailAuthorityActionRequiredSubject, authorityBody);
+    }
 
     /// <summary>
     /// Create a new voting procedure.
@@ -184,24 +233,20 @@ namespace Pirate.PiVote.Crypto
     /// <param name="rootCertificate">Certificate storage.</param>
     /// <param name="status">Voting status.</param>
     public VotingServerEntity(
-      Logger logger,
-      MySqlConnection dbConnection,
+      VotingRpcServer server,
       Signed<VotingParameters> signedParameters,
       ICertificateStorage certificateStorage,
       ServerCertificate serverCertificate,
       VotingStatus status)
     {
-      if (logger == null)
-        throw new ArgumentNullException("logger");
-      if (dbConnection == null)
-        throw new ArgumentNullException("dbConnection");
+      if (server == null)
+        throw new ArgumentNullException("server");
       if (signedParameters == null)
         throw new ArgumentNullException("signedParameters");
       if (serverCertificate == null)
         throw new ArgumentNullException("serverCertificate");
 
-      this.logger = logger;
-      this.dbConnection = dbConnection;
+      Server = server;
       this.certificateStorage = certificateStorage;
       this.serverCertificate = serverCertificate;
       this.signedParameters = signedParameters;
@@ -386,10 +431,23 @@ namespace Pirate.PiVote.Crypto
         "SELECT count(*) FROM sharepart WHERE VotingId = @VotingId",
         "@VotingId", Id.ToByteArray());
 
+      SendAdminAuthorityActivityMail(certificate, "deposited shares");
+
       if (depositedSharePartCount == this.parameters.AuthorityCount)
       {
         Status = VotingStatus.Sharing;
       }
+    }
+
+    private void SendAdminAuthorityActivityMail(Certificate authority, string activity)
+    {
+      string body = string.Format(
+        ServerConfig.MailAdminAuthorityActivityBody,
+        Id.ToString(),
+        Parameters.Title.Text,
+        authority.FullName,
+        activity);
+      Mailer.TrySend(ServerConfig.MailAdminAddress, ServerConfig.MailAdminAuthorityActivitySubject, body);
     }
 
     /// <summary>
@@ -461,6 +519,8 @@ namespace Pirate.PiVote.Crypto
       long depositedShareResponseCount = (long)DbConnection.ExecuteScalar(
         "SELECT count(*) FROM shareresponse WHERE VotingId = @VotingId",
         "@VotingId", Id.ToByteArray());
+
+      SendAdminAuthorityActivityMail(certificate, "deposited share response");
 
       if (depositedShareResponseCount == this.parameters.AuthorityCount)
       {
@@ -598,6 +658,8 @@ namespace Pirate.PiVote.Crypto
       long depositedShareResponseCount = (long)DbConnection.ExecuteScalar(
         "SELECT count(*) FROM deciphers WHERE VotingId = @VotingId",
         "@VotingId", Id.ToByteArray());
+
+      SendAdminAuthorityActivityMail(certificate, "deposited partial deciphers");
 
       if (depositedShareResponseCount == this.parameters.Thereshold + 1)
       {

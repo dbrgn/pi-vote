@@ -1,0 +1,8 @@
+Voting status changed
+
+Dear Admin
+
+The voting status changed of {0}, {1} changed to {2}.
+
+Kind regards
+Your Pi-Vote Server

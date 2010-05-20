@@ -1,0 +1,28 @@
+* English version below *
+
+Lieber {0}
+
+Die Zertifizierungsstelle hat deine Zertifizierungsanfrage gutgeheissen. Du kannst dein Zertifikat jetzt gebrauchen, um abzustimmen.
+
+Vorname: {0}
+Nachname: {1}
+Email-Adresse: {2}
+Zertifikats-Id: {3}
+Zertifikatstyp: {4}
+
+Mit freundlichen Grüssen
+Dein Pi-Vote Server
+
+
+Dear {0}
+
+The certificate authority has approved your certificate signing request. You can now use your certificate to vote.
+
+First name: {0}
+Family name: {1}
+Email address: {2}
+Certificate Id: {3}
+Certificate Type: {4}
+
+Kind regards
+Your Pi-Vote Server

@@ -55,6 +55,11 @@ namespace Pirate.PiVote.Rpc
     private DateTime lastActivity;
 
     /// <summary>
+    /// Time until idle client is disconnected in seconds.
+    /// </summary>
+    private double clientTimeOut;
+
+    /// <summary>
     /// Buffer for incoming request data.
     /// </summary>
     private MemoryBuffer inBuffer;
@@ -74,8 +79,10 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="client">TCP client.</param>
     /// <param name="rpcServer">Voting RPC server.</param>
-    public TcpRpcConnection(TcpClient client, VotingRpcServer rpcServer)
+    /// <param name="clientTimeOut">Time until idle client is disconnected in seconds.</param>
+    public TcpRpcConnection(TcpClient client, VotingRpcServer rpcServer, double clientTimeOut)
     {
+      this.clientTimeOut = clientTimeOut;
       this.lastActivity = DateTime.Now;
       this.client = client;
       this.stream = this.client.GetStream();
@@ -158,7 +165,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     public bool Overdue
     {
-      get { return DateTime.Now.Subtract(this.lastActivity).TotalMinutes > 2d; }
+      get { return DateTime.Now.Subtract(this.lastActivity).TotalMinutes > this.clientTimeOut; }
     }
 
     /// <summary>
