@@ -131,7 +131,18 @@ namespace Pirate.PiVote.Client
           !this.germanRadio.Checked &&
           !this.frenchRadio.Checked)
       {
-        this.englishRadio.Checked = true;
+        if (CultureInfo.CurrentCulture.Name.StartsWith("de"))
+        {
+          this.germanRadio.Checked = true;
+        }
+        else if (CultureInfo.CurrentCulture.Name.StartsWith("fr"))
+        {
+          this.frenchRadio.Checked = true;
+        }
+        else
+        {
+          this.englishRadio.Checked = true;
+        }
       }
 
       OnUpdateWizard();
