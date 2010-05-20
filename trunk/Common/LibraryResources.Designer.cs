@@ -933,6 +933,134 @@ namespace Pirate.PiVote {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Dear Admin
+        ///
+        ///A new certificate signing request has been deposited on the Pi-Vote server.
+        ///
+        ///First name: {0}
+        ///Family name: {1}
+        ///Email address: {2}
+        ///Certificate Id: {3}
+        ///Certificate Type: {4}
+        ///
+        ///Kind regards
+        ///Your Pi-Vote Server.
+        /// </summary>
+        public static string MailAdminNewRequestBody {
+            get {
+                return ResourceManager.GetString("MailAdminNewRequestBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New certificate signing request.
+        /// </summary>
+        public static string MailAdminNewRequestHeader {
+            get {
+                return ResourceManager.GetString("MailAdminNewRequestHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * English version below *
+        ///
+        ///Lieber {0}
+        ///
+        ///Die Zertifizierungsstelle hat deine Zertifizierungsanfrage gutgeheissen. Du kannst dein Zertifikat jetzt gebrauchen, um abzustimmen.
+        ///
+        ///Vorname: {0}
+        ///Nachname: {1}
+        ///Email-Adresse: {2}
+        ///Zertifikats-Id: {3}
+        ///Zertifikatstyp: {4}
+        ///
+        ///Mit freundlichen Grüssen
+        ///Dein Pi-Vote Server
+        ///
+        ///
+        ///Dear {0}
+        ///
+        ///The certificate authority has approved your certificate signing request. You can now use your certificate to vote.
+        ///
+        ///First name: {0}
+        ///Family name: {1}
+        ///Email address: {2}
+        ///Cert [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string MailRequestApprovedBody {
+            get {
+                return ResourceManager.GetString("MailRequestApprovedBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * English version below *
+        ///
+        ///Lieber {0}
+        ///
+        ///Die Zertifizierungsstelle hat deine Zertifizierungsanfrage abgelehnt. Als Grund hat die Zertifizierungsstelle angegeben: {5}
+        ///
+        ///Wenn du glaubst, dass deine Anfrage fälschlicherweise abgelehnt wurde, bitte antworte auf diese Nachricht mit einer Beschwerde.
+        ///
+        ///Vorname: {0}
+        ///Nachname: {1}
+        ///Email-Adresse: {2}
+        ///Zertifikats-Id: {3}
+        ///Zertifikatstyp: {4}
+        ///
+        ///Mit freundlichen Grüssen
+        ///Dein Pi-Vote Server
+        ///
+        ///
+        ///Dear {0}
+        ///
+        ///The certificate authority has declined your certificat [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string MailRequestDeclinedBody {
+            get {
+                return ResourceManager.GetString("MailRequestDeclinedBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to * English version below *
+        ///
+        ///Lieber {0}
+        ///
+        ///Deine Zertifizierungsanfrage wurde auf dem Pi-Vote Server gespeichert. Du wirst informiert, wenn die Zertifizierungsstelle die Anfrage beantwortet hat.
+        ///
+        ///Vorname: {0}
+        ///Nachname: {1}
+        ///Email-Adresse: {2}
+        ///Zertifikats-Id: {3}
+        ///Zertifikatstyp: {4}
+        ///
+        ///Mit freundlichen Grüssen
+        ///Dein Pi-Vote Server
+        ///
+        ///Dear {0}
+        ///
+        ///Your certificate signing request has been deposited on the server. You will be notified once the certificate authority has responded.
+        ///
+        ///First name: {0}
+        ///Family [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string MailRequestDepositedBody {
+            get {
+                return ResourceManager.GetString("MailRequestDepositedBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zertifizierungsanfrage / Certificate signing request.
+        /// </summary>
+        public static string MailRequestHeader {
+            get {
+                return ResourceManager.GetString("MailRequestHeader", resourceCulture);
+            }
+        }
+        
         public static byte[] root {
             get {
                 object obj = ResourceManager.GetObject("root", resourceCulture);

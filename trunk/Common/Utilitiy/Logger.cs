@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
  *  <project description>
  * 
  *  Copyright (c) 2008-2009 Stefan Thöni <stefan@savvy.ch> 

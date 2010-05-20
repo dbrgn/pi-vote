@@ -248,6 +248,31 @@ namespace Pirate.PiVote.Rpc
       {
         CertificateStorage.Add(signatureRequest.Certificate);
       }
+
+      SignatureRequest request = signatureRequest.Value;
+      string userBody = string.Format(
+        LibraryResources.MailRequestDepositedBody, 
+        request.FirstName, 
+        request.FamilyName, 
+        request.EmailAddress, 
+        signatureRequest.Certificate.Id.ToString(), 
+        signatureRequest.Certificate.TypeText);
+      if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody))
+      {
+        Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
+      }
+
+      string adminBody = string.Format(
+        LibraryResources.MailAdminNewRequestBody,
+        request.FirstName,
+        request.FamilyName,
+        request.EmailAddress,
+        signatureRequest.Certificate.Id.ToString(),
+        signatureRequest.Certificate.TypeText);
+      if (!Mailer.TrySend(Mailer.Sender, LibraryResources.MailAdminNewRequestHeader, adminBody))
+      {
+        Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
+      }
     }
 
     /// <summary>
@@ -359,6 +384,37 @@ namespace Pirate.PiVote.Rpc
           Certificate certificate = CertificateStorage.Get(signatureResponse.SubjectId);
           certificate.AddSignature(signatureResponse.Signature);
           CertificateStorage.Add(certificate);
+        }
+
+        Signed<SignatureRequest> signatureRequest = GetSignatureRequest(signatureResponse.SubjectId);
+        SignatureRequest request = signatureRequest.Value;
+        string userBody = string.Format(
+          LibraryResources.MailRequestApprovedBody,
+          request.FirstName,
+          request.FamilyName,
+          request.EmailAddress,
+          signatureRequest.Certificate.Id.ToString(),
+          signatureRequest.Certificate.TypeText);
+        if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody))
+        {
+          Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
+        }
+      }
+      else
+      {
+        Signed<SignatureRequest> signatureRequest = GetSignatureRequest(signatureResponse.SubjectId);
+        SignatureRequest request = signatureRequest.Value;
+        string userBody = string.Format(
+          LibraryResources.MailRequestDeclinedBody,
+          request.FirstName,
+          request.FamilyName,
+          request.EmailAddress,
+          signatureRequest.Certificate.Id.ToString(),
+          signatureRequest.Certificate.TypeText,
+          signatureResponse.Reason);
+        if (!Mailer.TrySend(request.EmailAddress, LibraryResources.MailRequestHeader, userBody))
+        {
+          Logger.Log(LogLevel.Warning, "Could not send email to {0}.", request.EmailAddress);
         }
       }
     }
