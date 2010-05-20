@@ -24,12 +24,6 @@ namespace Pirate.PiVote.Client
     public enum CheckStatus
     {
       Unknown,
-      Connect,
-      ConnectDone,
-      ConnectFailed,
-      GetCertificates,
-      GetCertificatesDone,
-      GetCertificatesFailed,
       CheckCertificate,
       CheckCertificateAccepted,
       CheckCertificateDeclined,
@@ -40,6 +34,7 @@ namespace Pirate.PiVote.Client
     private CheckStatus status;
     private string message;
     private Exception exception;
+    public WizardItem PreviousItem { get; set; }
 
     public CheckCertificateItem()
     {
@@ -69,14 +64,16 @@ namespace Pirate.PiVote.Client
           {
             return new ChooseCertificateItem();
           }
-        default:
+        case CheckStatus.CheckCertificateDeclined:
           return new ChooseCertificateItem();
+        default:
+          return null;
       }
     }
 
     public override WizardItem Previous()
     {
-      return null;
+      return PreviousItem;
     }
 
     public override WizardItem Cancel()
@@ -90,8 +87,6 @@ namespace Pirate.PiVote.Client
       {
         switch (this.status)
         {
-          case CheckStatus.ConnectFailed:
-          case CheckStatus.GetCertificatesFailed:
           case CheckStatus.CheckCertificateAccepted:
           case CheckStatus.CheckCertificateDeclined:
           case CheckStatus.CheckCertificateFailed:
@@ -109,60 +104,31 @@ namespace Pirate.PiVote.Client
       {
         return
           this.status == CheckStatus.CheckCertificateAccepted ||
-          this.status == CheckStatus.CheckCertificateNeeded ||
-          this.status == CheckStatus.CheckCertificateDeclined ||
-          this.status == CheckStatus.CheckCertificateFailed;
+          this.status == CheckStatus.CheckCertificateNeeded;
+      }
+    }
+
+    public override bool CanPrevious
+    {
+      get { return PreviousItem != null; }
+    }
+
+    public override bool CancelIsDone
+    {
+      get
+      {
+        switch (this.status)
+        {
+          case CheckStatus.CheckCertificateFailed:
+            return true;
+          default:
+            return false;
+        }
       }
     }
 
     public override void Begin()
     {
-      IPAddress serverIpAddress = null;
-
-      try
-      {
-        serverIpAddress = Dns.GetHostEntry(Resources.ServerIpAddress).AddressList.First();
-      }
-      catch (System.Net.Sockets.SocketException socketException)
-      {
-        Status.SetMessage(socketException.Message, MessageType.Error);
-        return;
-      }
-
-      this.status = CheckStatus.Connect;
-      Status.VotingClient.Connect(serverIpAddress, ConnectComplete);
-      Status.UpdateProgress();
-
-      while (this.status == CheckStatus.Connect)
-      {
-        Status.UpdateProgress();
-        Thread.Sleep(1);
-      }
-
-      if (this.status == CheckStatus.ConnectFailed)
-      {
-        Status.SetMessage(this.exception.Message, MessageType.Error);
-        OnUpdateWizard();
-        return;
-      }
-
-      this.status = CheckStatus.GetCertificates;
-      Status.UpdateProgress();
-      Status.VotingClient.GetCertificateStorage(GetCertificateStorageComplete);
-
-      while (this.status == CheckStatus.GetCertificates)
-      {
-        Status.UpdateProgress();
-        Thread.Sleep(1);
-      }
-
-      if (this.status == CheckStatus.GetCertificatesFailed)
-      {
-        Status.SetMessage(this.exception.Message, MessageType.Error);
-        OnUpdateWizard();
-        return;
-      }
-
       this.status = CheckStatus.CheckCertificate;
       Status.UpdateProgress();
 
@@ -209,35 +175,6 @@ namespace Pirate.PiVote.Client
         Status.SetMessage(this.message, type);
 
         OnUpdateWizard();
-      }
-    }
-
-    private void ConnectComplete(Exception exception)
-    {
-      this.exception = exception;
-
-      if (exception == null)
-      {
-        this.status = CheckStatus.ConnectDone;
-      }
-      else
-      {
-        this.status = CheckStatus.ConnectFailed;
-      }
-    }
-
-    private void GetCertificateStorageComplete(CertificateStorage certificateStorage, Exception exception)
-    {
-      this.exception = exception;
-
-      if (exception == null)
-      {
-        Status.CertificateStorage.Add(certificateStorage);
-        this.status = CheckStatus.GetCertificatesDone;
-      }
-      else
-      {
-        this.status = CheckStatus.GetCertificatesFailed;
       }
     }
 

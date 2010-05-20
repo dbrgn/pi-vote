@@ -170,6 +170,14 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Are we connected to the server?
+    /// </summary>
+    public bool Connected
+    {
+      get { return this.client.Connected; }
+    }
+
+    /// <summary>
     /// Connect to the server.
     /// </summary>
     /// <param name="serverIpAddress">IP address of the server.</param>

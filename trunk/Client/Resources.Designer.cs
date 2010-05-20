@@ -635,6 +635,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email address:.
+        /// </summary>
+        internal static string CreateCertificateEmailAddress {
+            get {
+                return ResourceManager.GetString("CreateCertificateEmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Firstname.
         /// </summary>
         internal static string CreateCertificateFirstname {
@@ -649,6 +658,24 @@ namespace Pirate.PiVote.Client {
         internal static string CreateCertificateFunction {
             get {
                 return ResourceManager.GetString("CreateCertificateFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        internal static string CreateCertificateId {
+            get {
+                return ResourceManager.GetString("CreateCertificateId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Print and Save.
+        /// </summary>
+        internal static string CreateCertificatePrintAndSend {
+            get {
+                return ResourceManager.GetString("CreateCertificatePrintAndSend", resourceCulture);
             }
         }
         
@@ -1211,6 +1238,100 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show me more options.
+        /// </summary>
+        internal static string SimpleChooseCertificateAdvancedOption {
+            get {
+                return ResourceManager.GetString("SimpleChooseCertificateAdvancedOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Create.
+        /// </summary>
+        internal static string SimpleChooseCertificateCreateButton {
+            get {
+                return ResourceManager.GetString("SimpleChooseCertificateCreateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To get a certificate signed by the certificate authority you first need to create your certificate.
+        ///
+        ///Then you must fill in your personal data which is then included in your request for certificate signing. This request will be printed out and you need to meet three voting authorities which will check your identity, sign your paper request and forward it to the certificate authority.
+        ///
+        ///Finally you need to upload your request for certificate signing to the server to facilitate the signing process. You will [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SimpleChooseCertificateCreateExplain {
+            get {
+                return ResourceManager.GetString("SimpleChooseCertificateCreateExplain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I need a new certificate.
+        /// </summary>
+        internal static string SimpleChooseCertificateCreateOption {
+            get {
+                return ResourceManager.GetString("SimpleChooseCertificateCreateOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In order to vote you need a certificate proofing your identitiy..
+        /// </summary>
+        internal static string SimpleChooseCertificateHeader {
+            get {
+                return ResourceManager.GetString("SimpleChooseCertificateHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Import.
+        /// </summary>
+        internal static string SimpleChooseCertificateImportButton {
+            get {
+                return ResourceManager.GetString("SimpleChooseCertificateImportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I already have a certificate.
+        /// </summary>
+        internal static string SimpleChooseCertificateImportOption {
+            get {
+                return ResourceManager.GetString("SimpleChooseCertificateImportOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Print.
+        /// </summary>
+        internal static string SimpleChooseCertificatePrintButton {
+            get {
+                return ResourceManager.GetString("SimpleChooseCertificatePrintButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Upload.
+        /// </summary>
+        internal static string SimpleChooseCertificateUploadButton {
+            get {
+                return ResourceManager.GetString("SimpleChooseCertificateUploadButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced Options.
+        /// </summary>
+        internal static string StartAdvancedOptions {
+            get {
+                return ResourceManager.GetString("StartAdvancedOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alpha Version.
         /// </summary>
         internal static string StartAlphaTitle {
@@ -1225,6 +1346,51 @@ namespace Pirate.PiVote.Client {
         internal static string StartAlphaWarning {
             get {
                 return ResourceManager.GetString("StartAlphaWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection to server could not be established.
+        /// </summary>
+        internal static string StartConnectError {
+            get {
+                return ResourceManager.GetString("StartConnectError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connecting to server....
+        /// </summary>
+        internal static string StartConnecting {
+            get {
+                return ResourceManager.GetString("StartConnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNS lookup of server IP address failed.
+        /// </summary>
+        internal static string StartDnsError {
+            get {
+                return ResourceManager.GetString("StartDnsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating certificate storage....
+        /// </summary>
+        internal static string StartGettingCertificates {
+            get {
+                return ResourceManager.GetString("StartGettingCertificates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server connection established.
+        /// </summary>
+        internal static string StartReady {
+            get {
+                return ResourceManager.GetString("StartReady", resourceCulture);
             }
         }
         

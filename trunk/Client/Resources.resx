@@ -589,4 +589,62 @@
   <data name="SigningRequestDocumentSignThirdAuthority" xml:space="preserve">
     <value>Third Authority</value>
   </data>
+  <data name="SimpleChooseCertificateAdvancedOption" xml:space="preserve">
+    <value>Show me more options</value>
+  </data>
+  <data name="SimpleChooseCertificateCreateButton" xml:space="preserve">
+    <value>&amp;Create</value>
+  </data>
+  <data name="SimpleChooseCertificateCreateExplain" xml:space="preserve">
+    <value>To get a certificate signed by the certificate authority you first need to create your certificate.
+
+Then you must fill in your personal data which is then included in your request for certificate signing. This request will be printed out and you need to meet three voting authorities which will check your identity, sign your paper request and forward it to the certificate authority.
+
+Finally you need to upload your request for certificate signing to the server to facilitate the signing process. You will be notified by the certificate authority via email once you certificate is signed and the response is uploaded to the server.</value>
+  </data>
+  <data name="SimpleChooseCertificateCreateOption" xml:space="preserve">
+    <value>I need a new certificate</value>
+  </data>
+  <data name="SimpleChooseCertificateHeader" xml:space="preserve">
+    <value>In order to vote you need a certificate proofing your identitiy.</value>
+  </data>
+  <data name="SimpleChooseCertificateImportButton" xml:space="preserve">
+    <value>&amp;Import</value>
+  </data>
+  <data name="SimpleChooseCertificateImportOption" xml:space="preserve">
+    <value>I already have a certificate</value>
+  </data>
+  <data name="SimpleChooseCertificatePrintButton" xml:space="preserve">
+    <value>&amp;Print</value>
+  </data>
+  <data name="SimpleChooseCertificateUploadButton" xml:space="preserve">
+    <value>&amp;Upload</value>
+  </data>
+  <data name="CreateCertificateEmailAddress" xml:space="preserve">
+    <value>Email address:</value>
+  </data>
+  <data name="CreateCertificateId" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="CreateCertificatePrintAndSend" xml:space="preserve">
+    <value>&amp;Print and Save</value>
+  </data>
+  <data name="StartConnecting" xml:space="preserve">
+    <value>Connecting to server...</value>
+  </data>
+  <data name="StartGettingCertificates" xml:space="preserve">
+    <value>Updating certificate storage...</value>
+  </data>
+  <data name="StartReady" xml:space="preserve">
+    <value>Server connection established</value>
+  </data>
+  <data name="StartConnectError" xml:space="preserve">
+    <value>Connection to server could not be established</value>
+  </data>
+  <data name="StartDnsError" xml:space="preserve">
+    <value>DNS lookup of server IP address failed</value>
+  </data>
+  <data name="StartAdvancedOptions" xml:space="preserve">
+    <value>Advanced Options</value>
+  </data>
 </root>

@@ -80,6 +80,19 @@ namespace Pirate.PiVote.Client
       this.sendButton.Enabled = enable;
     }
 
+    public override void UpdateLanguage()
+    {
+      base.UpdateLanguage();
+
+      this.idLabel.Text = Resources.CreateCertificateId;
+      this.typeLabel.Text = Resources.CreateCertificateType;
+      this.firstNameLabel.Text = Resources.CreateCertificateFirstname;
+      this.familyNameLabel.Text = Resources.CreateCertificateSurname;
+      this.emailAddressLabel.Text = Resources.CreateCertificateEmailAddress;
+
+      this.sendButton.Text = Resources.CreateCertificatePrintAndSend;
+    }
+
     private void sendButton_Click(object sender, EventArgs e)
     {
       SetEnable(false);

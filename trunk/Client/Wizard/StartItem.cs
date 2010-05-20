@@ -13,13 +13,22 @@ using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Globalization;
+using System.Threading;
+using System.Net;
+using System.Net.Sockets;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Rpc;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Client
 {
   public partial class StartItem : WizardItem
   {
+    private bool run = false;
+    private Exception exception;
+    private bool canNext = false;
+    private bool dnsError = false;
+
     public StartItem()
     {
       InitializeComponent();
@@ -27,7 +36,45 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      return new ChooseCertificateItem();
+      DirectoryInfo directory = new DirectoryInfo(Status.DataPath);
+      IEnumerable<FileInfo> certificateFiles = directory.GetFiles("*.pi-cert");
+
+      if (certificateFiles.Count() == 0)
+      {
+        if (this.advancedOptionsCheckBox.Checked)
+        {
+          return new ChooseCertificateItem();
+        }
+        else
+        {
+          return new SimpleChooseCertificateItem();
+        }
+      }
+      else if (certificateFiles.Count() == 1)
+      {
+        if (this.advancedOptionsCheckBox.Checked)
+        {
+          return new ChooseCertificateItem();
+        }
+        else
+        {
+          try
+          {
+            Status.Certificate = Serializable.Load<Certificate>(certificateFiles.Single().FullName);
+            CheckCertificateItem item = new CheckCertificateItem();
+            item.PreviousItem = this;
+            return item;
+          }
+          catch
+          {
+            return new ChooseCertificateItem();
+          }
+        }
+      }
+      else
+      {
+        return new ChooseCertificateItem();
+      }
     }
 
     public override WizardItem Previous()
@@ -71,7 +118,96 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
-      this.englishRadio.Checked = true;
+      DirectoryInfo directory = new DirectoryInfo(Status.DataPath);
+      IEnumerable<FileInfo> certificateFiles = directory.GetFiles("*.pi-cert");
+
+      if (certificateFiles.Count() > 1)
+      {
+        this.advancedOptionsCheckBox.Checked = true;
+        this.advancedOptionsCheckBox.Enabled = false;
+      }
+      
+      if (!this.englishRadio.Checked &&
+          !this.germanRadio.Checked &&
+          !this.frenchRadio.Checked)
+      {
+        this.englishRadio.Checked = true;
+      }
+
+      OnUpdateWizard();
+
+      if (!Status.VotingClient.Connected)
+      {
+        IPAddress serverIpAddress = Status.ServerIpAddress;
+
+        if (serverIpAddress == null)
+        {
+          Status.SetMessage(Resources.StartDnsError, MessageType.Error);
+          this.dnsError = true;
+          return;
+        }
+
+        Status.SetProgress(Resources.StartConnecting, 0d);
+        this.run = true;
+        Status.VotingClient.Connect(serverIpAddress, ConnectComplete);
+
+        while (this.run)
+        {
+          Status.UpdateProgress();
+          Thread.Sleep(10);
+        }
+
+        if (this.exception != null)
+        {
+          if (this.exception is SocketException)
+          {
+            Status.SetMessage(Resources.StartConnectError, MessageType.Error);
+          }
+          else
+          {
+            Status.SetMessage(this.exception.Message, MessageType.Error);
+          }
+          return;
+        }
+
+        Status.SetProgress(Resources.StartGettingCertificates, 0.5d);
+        this.run = true;
+        Status.VotingClient.GetCertificateStorage(GetCertificateStorageComplete);
+
+        while (this.run)
+        {
+          Status.UpdateProgress();
+          Thread.Sleep(10);
+        }
+
+        if (this.exception == null)
+        {
+          Status.SetMessage(Resources.StartReady, MessageType.Success);
+          this.canNext = true;
+        }
+        else
+        {
+          Status.SetMessage(this.exception.Message, MessageType.Error);
+        }
+
+        OnUpdateWizard();
+      }
+      else
+      {
+        Status.SetMessage(Resources.StartReady, MessageType.Success);
+      }
+    }
+
+    private void GetCertificateStorageComplete(CertificateStorage certificateStorage, Exception exception)
+    {
+      this.exception = exception;
+      this.run = false;
+    }
+    
+    private void ConnectComplete(Exception exception)
+    {
+      this.exception = exception;
+      this.run = false;
     }
 
     public override void UpdateLanguage()
@@ -81,6 +217,20 @@ namespace Pirate.PiVote.Client
       this.titlelLabel.Text = Resources.StartTitle;
       this.alphaTitleLabel.Text = Resources.StartAlphaTitle;
       this.alphaWarningLabel.Text = Resources.StartAlphaWarning;
+      this.advancedOptionsCheckBox.Text = Resources.StartAdvancedOptions;
+
+      if (this.canNext)
+      {
+        Status.SetMessage(Resources.StartReady, MessageType.Success);
+      }
+      else if (this.dnsError)
+      {
+        Status.SetMessage(Resources.StartDnsError, MessageType.Error);
+      }
+      else
+      {
+        Status.SetMessage(Resources.StartConnectError, MessageType.Error);
+      }
     }
 
     private void englishRadio_CheckedChanged(object sender, EventArgs e)

@@ -62,6 +62,7 @@ namespace Pirate.PiVote.Client
       this.Width = 800;
 
       CenterToScreen();
+      Show();
 
       SetItem(new StartItem());
     }

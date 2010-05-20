@@ -585,4 +585,62 @@
   <data name="SigningRequestDocumentSignThirdAuthority" xml:space="preserve">
     <value>Dritte Autorität</value>
   </data>
+  <data name="SimpleChooseCertificateAdvancedOption" xml:space="preserve">
+    <value>Zeig mir mehr Optionen</value>
+  </data>
+  <data name="SimpleChooseCertificateCreateButton" xml:space="preserve">
+    <value>&amp;Erstellen</value>
+  </data>
+  <data name="SimpleChooseCertificateCreateExplain" xml:space="preserve">
+    <value>Um ein von der Zertifizierungstelle signiertes Zertifikat zu erhalten, musst du zunächst ein Zertifikat erstellen.
+
+Dann musst du deine persönlichen Daten eingeben, die dann in der Zertifizierungsanfrage erwähnt werden. Die Zertifizierungsanfrage wird dann ausgedruckt. Dann musst du das Forumlar zu einem Treffen mit drei Abstimmungsautoritäten mitnehmen. Diese prüfen dann deine Identität, Unterschreiben die Zertifizierungsanfrage und leiten diese an die Zertifizierungstelle weiter.
+
+Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit die Zertifizierungstelle diese beantworten kann. Du wirst via Email benachrichtigt, wenn deine Zertifizierungsanfrage beantwortet wurde.</value>
+  </data>
+  <data name="SimpleChooseCertificateCreateOption" xml:space="preserve">
+    <value>Ich brauche ein neues Zertifikat</value>
+  </data>
+  <data name="SimpleChooseCertificateHeader" xml:space="preserve">
+    <value>Um Abstimmen zu können benötigst du ein Zertifikat, das deine Identität beweist.</value>
+  </data>
+  <data name="SimpleChooseCertificateImportButton" xml:space="preserve">
+    <value>&amp;Importieren</value>
+  </data>
+  <data name="SimpleChooseCertificateImportOption" xml:space="preserve">
+    <value>Ich habe schon ein Zertifikat</value>
+  </data>
+  <data name="SimpleChooseCertificatePrintButton" xml:space="preserve">
+    <value>&amp;Drucken</value>
+  </data>
+  <data name="SimpleChooseCertificateUploadButton" xml:space="preserve">
+    <value>&amp;Heraufladen</value>
+  </data>
+  <data name="CreateCertificateEmailAddress" xml:space="preserve">
+    <value>E-Mail Adresse:</value>
+  </data>
+  <data name="CreateCertificateId" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="CreateCertificatePrintAndSend" xml:space="preserve">
+    <value>&amp;Drucken und Speichern</value>
+  </data>
+  <data name="StartConnecting" xml:space="preserve">
+    <value>Verbinde mit Server...</value>
+  </data>
+  <data name="StartGettingCertificates" xml:space="preserve">
+    <value>Update Zertifikatsspeicher...</value>
+  </data>
+  <data name="StartReady" xml:space="preserve">
+    <value>Serververbindung hergestellt</value>
+  </data>
+  <data name="StartConnectError" xml:space="preserve">
+    <value>Verbindung zum Server konnte nicht hergestellt werden</value>
+  </data>
+  <data name="StartDnsError" xml:space="preserve">
+    <value>DNS-Abfrage der Serveraddresse fehlgeschlagen</value>
+  </data>
+  <data name="StartAdvancedOptions" xml:space="preserve">
+    <value>Erweiterte Optionen</value>
+  </data>
 </root>

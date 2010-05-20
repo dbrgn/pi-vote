@@ -170,6 +170,12 @@
     <Compile Include="Wizard\AuthorityVotePreviewItem.designer.cs">
       <DependentUpon>AuthorityVotePreviewItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wizard\SimpleChooseCertificateItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\SimpleChooseCertificateItem.designer.cs">
+      <DependentUpon>SimpleChooseCertificateItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Wizard\ViewShareResponseControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -336,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\AuthorityVotePreviewItem.resx">
       <DependentUpon>AuthorityVotePreviewItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\SimpleChooseCertificateItem.resx">
+      <DependentUpon>SimpleChooseCertificateItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\ViewShareResponseControl.resx">
       <DependentUpon>ViewShareResponseControl.cs</DependentUpon>

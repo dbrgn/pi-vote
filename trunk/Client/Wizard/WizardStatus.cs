@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Rpc;
@@ -39,6 +41,21 @@ namespace Pirate.PiVote.Client
     public string FirstName = null;
 
     public string FamilyName = null;
+
+    public IPAddress ServerIpAddress
+    {
+      get
+      {
+        try
+        {
+          return Dns.GetHostEntry(Resources.ServerIpAddress).AddressList.First();
+        }
+        catch (System.Net.Sockets.SocketException socketException)
+        {
+          return null;
+        }
+      }
+    }
 
     public WizardStatus(Message message, Progress progress)
     {

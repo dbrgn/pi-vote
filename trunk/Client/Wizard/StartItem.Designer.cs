@@ -49,14 +49,16 @@ namespace Pirate.PiVote.Client
       this.titlelLabel = new System.Windows.Forms.Label();
       this.alphaWarningLabel = new System.Windows.Forms.Label();
       this.alphaBugLink = new System.Windows.Forms.LinkLabel();
+      this.advancedOptionsCheckBox = new System.Windows.Forms.CheckBox();
       this.SuspendLayout();
       // 
       // frenchRadio
       // 
       this.frenchRadio.AutoSize = true;
-      this.frenchRadio.Location = new System.Drawing.Point(40, 372);
+      this.frenchRadio.Location = new System.Drawing.Point(60, 558);
+      this.frenchRadio.Margin = new System.Windows.Forms.Padding(4);
       this.frenchRadio.Name = "frenchRadio";
-      this.frenchRadio.Size = new System.Drawing.Size(67, 18);
+      this.frenchRadio.Size = new System.Drawing.Size(97, 23);
       this.frenchRadio.TabIndex = 2;
       this.frenchRadio.TabStop = true;
       this.frenchRadio.Text = "Français";
@@ -66,9 +68,10 @@ namespace Pirate.PiVote.Client
       // germanRadio
       // 
       this.germanRadio.AutoSize = true;
-      this.germanRadio.Location = new System.Drawing.Point(40, 334);
+      this.germanRadio.Location = new System.Drawing.Point(60, 501);
+      this.germanRadio.Margin = new System.Windows.Forms.Padding(4);
       this.germanRadio.Name = "germanRadio";
-      this.germanRadio.Size = new System.Drawing.Size(65, 18);
+      this.germanRadio.Size = new System.Drawing.Size(93, 23);
       this.germanRadio.TabIndex = 1;
       this.germanRadio.TabStop = true;
       this.germanRadio.Text = "Deutsch";
@@ -78,9 +81,10 @@ namespace Pirate.PiVote.Client
       // englishRadio
       // 
       this.englishRadio.AutoSize = true;
-      this.englishRadio.Location = new System.Drawing.Point(40, 298);
+      this.englishRadio.Location = new System.Drawing.Point(60, 447);
+      this.englishRadio.Margin = new System.Windows.Forms.Padding(4);
       this.englishRadio.Name = "englishRadio";
-      this.englishRadio.Size = new System.Drawing.Size(59, 18);
+      this.englishRadio.Size = new System.Drawing.Size(86, 23);
       this.englishRadio.TabIndex = 0;
       this.englishRadio.TabStop = true;
       this.englishRadio.Text = "English";
@@ -93,9 +97,10 @@ namespace Pirate.PiVote.Client
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.alphaTitleLabel.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.alphaTitleLabel.ForeColor = System.Drawing.Color.Red;
-      this.alphaTitleLabel.Location = new System.Drawing.Point(209, 35);
+      this.alphaTitleLabel.Location = new System.Drawing.Point(314, 52);
+      this.alphaTitleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.alphaTitleLabel.Name = "alphaTitleLabel";
-      this.alphaTitleLabel.Size = new System.Drawing.Size(491, 27);
+      this.alphaTitleLabel.Size = new System.Drawing.Size(736, 40);
       this.alphaTitleLabel.TabIndex = 3;
       this.alphaTitleLabel.Text = "Alpha Version";
       // 
@@ -104,9 +109,10 @@ namespace Pirate.PiVote.Client
       this.titlelLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.titlelLabel.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.titlelLabel.Location = new System.Drawing.Point(209, 3);
+      this.titlelLabel.Location = new System.Drawing.Point(314, 4);
+      this.titlelLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.titlelLabel.Name = "titlelLabel";
-      this.titlelLabel.Size = new System.Drawing.Size(488, 32);
+      this.titlelLabel.Size = new System.Drawing.Size(732, 48);
       this.titlelLabel.TabIndex = 4;
       this.titlelLabel.Text = "Pirate Party Switzerland eVoting";
       // 
@@ -114,9 +120,10 @@ namespace Pirate.PiVote.Client
       // 
       this.alphaWarningLabel.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.alphaWarningLabel.ForeColor = System.Drawing.Color.Red;
-      this.alphaWarningLabel.Location = new System.Drawing.Point(209, 62);
+      this.alphaWarningLabel.Location = new System.Drawing.Point(314, 93);
+      this.alphaWarningLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.alphaWarningLabel.Name = "alphaWarningLabel";
-      this.alphaWarningLabel.Size = new System.Drawing.Size(488, 105);
+      this.alphaWarningLabel.Size = new System.Drawing.Size(732, 158);
       this.alphaWarningLabel.TabIndex = 5;
       this.alphaWarningLabel.Text = "This is alpha verion of this software. All voting are just for test purposes. Ple" +
           "ase report all bugs to:";
@@ -124,17 +131,29 @@ namespace Pirate.PiVote.Client
       // alphaBugLink
       // 
       this.alphaBugLink.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.alphaBugLink.Location = new System.Drawing.Point(209, 167);
+      this.alphaBugLink.Location = new System.Drawing.Point(314, 250);
+      this.alphaBugLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.alphaBugLink.Name = "alphaBugLink";
-      this.alphaBugLink.Size = new System.Drawing.Size(488, 36);
+      this.alphaBugLink.Size = new System.Drawing.Size(732, 54);
       this.alphaBugLink.TabIndex = 7;
       this.alphaBugLink.TabStop = true;
       this.alphaBugLink.Text = "http://pi-vote.origo.ethz.ch/";
       // 
+      // advancedOptionsCheckBox
+      // 
+      this.advancedOptionsCheckBox.AutoSize = true;
+      this.advancedOptionsCheckBox.Location = new System.Drawing.Point(389, 448);
+      this.advancedOptionsCheckBox.Name = "advancedOptionsCheckBox";
+      this.advancedOptionsCheckBox.Size = new System.Drawing.Size(166, 23);
+      this.advancedOptionsCheckBox.TabIndex = 8;
+      this.advancedOptionsCheckBox.Text = "Advanced Options";
+      this.advancedOptionsCheckBox.UseVisualStyleBackColor = true;
+      // 
       // StartItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.advancedOptionsCheckBox);
       this.Controls.Add(this.alphaBugLink);
       this.Controls.Add(this.alphaWarningLabel);
       this.Controls.Add(this.titlelLabel);
@@ -142,9 +161,9 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.frenchRadio);
       this.Controls.Add(this.germanRadio);
       this.Controls.Add(this.englishRadio);
-      this.Margin = new System.Windows.Forms.Padding(3);
+      this.Margin = new System.Windows.Forms.Padding(4);
       this.Name = "StartItem";
-      this.Size = new System.Drawing.Size(700, 487);
+      this.Size = new System.Drawing.Size(1050, 730);
       this.Load += new System.EventHandler(this.StartItem_Load);
       this.ResumeLayout(false);
       this.PerformLayout();
@@ -160,5 +179,6 @@ namespace Pirate.PiVote.Client
     private Label titlelLabel;
     private Label alphaWarningLabel;
     private LinkLabel alphaBugLink;
+    private CheckBox advancedOptionsCheckBox;
   }
 }
