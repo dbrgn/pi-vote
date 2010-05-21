@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Drawing;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Rpc;
@@ -58,8 +59,9 @@ namespace Pirate.PiVote.Client
 
       this.status.VotingClient = new VotingClient(this.status.CertificateStorage);
 
-      this.Height = 600;
-      this.Width = 800;
+      float dpiScale = Graphics.FromHwnd(Handle).DpiX / 96f;
+      this.Height = Convert.ToInt32(600f * dpiScale);
+      this.Width = Convert.ToInt32(800f * dpiScale);
 
       CenterToScreen();
       Show();

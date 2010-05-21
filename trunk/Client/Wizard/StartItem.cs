@@ -211,6 +211,7 @@ namespace Pirate.PiVote.Client
 
     private void GetCertificateStorageComplete(CertificateStorage certificateStorage, Exception exception)
     {
+      Status.CertificateStorage.Add(certificateStorage);
       this.exception = exception;
       this.run = false;
     }
