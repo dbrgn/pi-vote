@@ -76,7 +76,7 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Checked database connections.
     /// </summary>
-    private MySqlConnection DbConnection
+    public MySqlConnection DbConnection
     {
       get { return this.dbConnection; }
     }

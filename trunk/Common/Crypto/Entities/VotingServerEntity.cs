@@ -41,11 +41,6 @@ namespace Pirate.PiVote.Crypto
     private Mailer Mailer { get { return Server.Mailer; } }
 
     /// <summary>
-    /// MySQL database connection.
-    /// </summary>
-    private MySqlConnection dbConnection;
-
-    /// <summary>
     /// Voting parameters.
     /// </summary>
     private VotingParameters parameters;
@@ -121,7 +116,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     private MySqlConnection DbConnection
     {
-      get { return this.dbConnection; }
+      get { return Server.DbConnection; }
     }
 
     /// <summary>
