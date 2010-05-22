@@ -1,18 +1,24 @@
-	rm *.deb
-	rm *.zip
+	rm $output\*.deb
+	rm $output\*.zip
+	mkif $output\
 
 	$name = "PiVote_Client_Debian_x86_" + $version + ".deb"
 	cp debian/pivote-client.deb $name
+	mv -force $name $output\
 	
-	rm -r ./pivote-client
-	mkdir ./pivote-client
-	cp -r ../client/bin/release/* ./pivote-client/
-	rm ./pivote-client/*vshost*
+	$tmp = "./pivote-client"
+	rmif $tmp
+	mkif $tmp
+	cp -r ../client/bin/release/* $tmp/
+	rm $tmp/*vshost*
 	$name = "PiVote_Client_Linux_x86_" + $version + ".zip"
-	cd pivote-client
-	& 'C:\Program Files (x86)\7-Zip\7z.exe' a -tzip -r $name *
-	cd ..
-	mv .\pivote-client\*.zip .
+	pushd
+	cd $tmp
+	& $zip a -tzip -r $name *
+	popd
+	mv -force $tmp\$name $output\
+	rmif $tmp
 
 	$name = "PiVote_Client_Windows_x86_" + $version + ".zip"
-	& 'C:\Program Files (x86)\7-Zip\7z.exe' a -tzip $name ..\PiVoteClientSetup\Release\PiVoteClientSetup.msi
+	& $zip a -tzip $name ..\PiVoteClientSetup\Release\PiVoteClientSetup.msi
+	mv -force $name $output\
