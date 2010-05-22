@@ -27,13 +27,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2D4E5FD8716AE59CFF4AFECD7A24F965"
-        "OwnerKey" = "8:_E2CA02A4DAF3273ABAC6BAAF0E36899D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2D4E5FD8716AE59CFF4AFECD7A24F965"
+        "MsmKey" = "8:_311216A95298AB80794B365B9A439226"
         "OwnerKey" = "8:_C88DC3E5B882451E94F1B87DD9A5CF90"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -75,7 +69,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E2CA02A4DAF3273ABAC6BAAF0E36899D"
+        "MsmKey" = "8:_EE863EB2346E4916DA2A911C59F0CDC2"
         "OwnerKey" = "8:_C88DC3E5B882451E94F1B87DD9A5CF90"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -88,7 +82,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E2CA02A4DAF3273ABAC6BAAF0E36899D"
+        "OwnerKey" = "8:_EE863EB2346E4916DA2A911C59F0CDC2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -112,13 +106,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2D4E5FD8716AE59CFF4AFECD7A24F965"
+        "OwnerKey" = "8:_311216A95298AB80794B365B9A439226"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_18F26FADC1A54820BF71B7F626F26142"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C88DC3E5B882451E94F1B87DD9A5CF90"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -250,7 +250,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.resources, Version=0.2.3793.18623, Culture=de-DE, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.resources, Version=0.2.3.0, Culture=de-DE, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_18F26FADC1A54820BF71B7F626F26142"
@@ -277,14 +277,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2D4E5FD8716AE59CFF4AFECD7A24F965"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_311216A95298AB80794B365B9A439226"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Emil.GMP, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_2D4E5FD8716AE59CFF4AFECD7A24F965"
+                    "_311216A95298AB80794B365B9A439226"
                     {
                     "Name" = "8:Emil.GMP.dll"
                     "Attributes" = "3:512"
@@ -312,7 +312,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client.resources, Version=0.2.3793.18624, Culture=de-DE, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client.resources, Version=0.2.3.0, Culture=de-DE, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_360A6B59FE6549E68F034A5EF8E3949F"
@@ -363,7 +363,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client.resources, Version=0.2.3793.18624, Culture=fr-FR, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client.resources, Version=0.2.3.0, Culture=fr-FR, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_62249F58F277463BBE827B1898679DE6"
@@ -394,7 +394,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.resources, Version=0.2.3793.18623, Culture=fr-FR, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.resources, Version=0.2.3.0, Culture=fr-FR, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_B34CBB58876843B7BBE1094F48AFF3E0"
@@ -441,15 +441,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E2CA02A4DAF3273ABAC6BAAF0E36899D"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EE863EB2346E4916DA2A911C59F0CDC2"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote, Version=0.1.3783.24317, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.2.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_EE863EB2346E4916DA2A911C59F0CDC2"
+                    {
+                    "Name" = "8:MySql.Data.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
-            "SourcePath" = "8:Pirate.PiVote.dll"
+            "SourcePath" = "8:MySql.Data.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
@@ -545,15 +550,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PiVote Client"
-        "ProductCode" = "8:{68B8FCA9-F3CA-424E-A235-B9A06B49F4D9}"
-        "PackageCode" = "8:{2FF9B59B-7703-4144-A41F-16BB0747B859}"
+        "ProductCode" = "8:{46229E64-8397-490D-B2DA-4B7D6F73BD04}"
+        "PackageCode" = "8:{46BCCB83-B5F6-40A2-923F-00C8C1E87760}"
         "UpgradeCode" = "8:{7F36B602-1CBB-449B-AA17-69145F1FFB38}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.2.2"
+        "ProductVersion" = "8:0.2.3"
         "Manufacturer" = "8:Pirate Party Switzerland"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.pirateparty.ch"

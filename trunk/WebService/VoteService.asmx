@@ -1,1 +1,0 @@
-﻿<%@ WebService Language="C#" CodeBehind="VoteService.asmx.cs" Class="Pirate.PiVote.WebService.VoteService" %>
