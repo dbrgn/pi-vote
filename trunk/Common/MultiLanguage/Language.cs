@@ -56,16 +56,23 @@ namespace Pirate.PiVote
     /// <returns>Language of the culture.</returns>
     public static Language ToLanguage(this CultureInfo culture)
     {
-      switch (culture.Name)
+      if (culture == null)
       {
-        case "en-US":
-          return Language.English;
-        case "de-DE":
-          return Language.German;
-        case "fr-FR":
-          return Language.French;
-        default:
-          throw new ArgumentException("Unknown language");
+        return Language.English;
+      }
+      else
+      {
+        switch (culture.Name)
+        {
+          case "en-US":
+            return Language.English;
+          case "de-DE":
+            return Language.German;
+          case "fr-FR":
+            return Language.French;
+          default:
+            throw new ArgumentException("Unknown language");
+        }
       }
     }
   }
