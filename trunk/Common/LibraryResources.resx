@@ -436,4 +436,7 @@
   <data name="ClientSetCertificateStorage" xml:space="preserve">
     <value>Uploading certificate storage to the server.</value>
   </data>
+  <data name="ExceptionInvalidSignatureRequest" xml:space="preserve">
+    <value>Signature request data not valid.</value>
+  </data>
 </root>

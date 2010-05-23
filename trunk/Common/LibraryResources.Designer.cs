@@ -682,6 +682,15 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Signature request data not valid..
+        /// </summary>
+        public static string ExceptionInvalidSignatureRequest {
+            get {
+                return ResourceManager.GetString("ExceptionInvalidSignatureRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid vote receipt..
         /// </summary>
         public static string ExceptionInvalidVoteReceipt {

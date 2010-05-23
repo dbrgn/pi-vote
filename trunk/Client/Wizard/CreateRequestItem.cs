@@ -150,28 +150,27 @@ namespace Pirate.PiVote.Client
       this.exception = exception;
     }
 
-    private void firstNameTextBox_TextChanged(object sender, EventArgs e)
+    private void CheckValid()
     {
       this.sendButton.Enabled =
         !this.firstNameTextBox.Text.IsNullOrEmpty() &&
         !this.familyNameTextBox.Text.IsNullOrEmpty() &&
-        !this.emailAddressTextBox.Text.IsNullOrEmpty();
+        Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text);
+    }
+
+    private void firstNameTextBox_TextChanged(object sender, EventArgs e)
+    {
+      CheckValid();
     }
 
     private void familyNameTextBox_TextChanged(object sender, EventArgs e)
     {
-      this.sendButton.Enabled =
-        !this.firstNameTextBox.Text.IsNullOrEmpty() &&
-        !this.familyNameTextBox.Text.IsNullOrEmpty() &&
-        !this.emailAddressTextBox.Text.IsNullOrEmpty();
+      CheckValid();
     }
 
     private void functionTextBox_TextChanged(object sender, EventArgs e)
     {
-      this.sendButton.Enabled =
-        !this.firstNameTextBox.Text.IsNullOrEmpty() &&
-        !this.familyNameTextBox.Text.IsNullOrEmpty() &&
-        !this.emailAddressTextBox.Text.IsNullOrEmpty();
+      CheckValid();
     }
   }
 }

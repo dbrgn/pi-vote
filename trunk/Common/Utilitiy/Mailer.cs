@@ -12,6 +12,7 @@ using System.Text;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 
 namespace Pirate.PiVote
 {
@@ -89,6 +90,23 @@ namespace Pirate.PiVote
         this.logger.Log(LogLevel.Warning, "Sending mail to {0} failed: {1}", string.Join(", ", recipients.ToArray()), exception.ToString());
         return false;
       }
+    }
+
+    /// <summary>
+    /// Checks weather an email address is valid.
+    /// </summary>
+    /// <param name="emailAddress">Email address to check.</param>
+    /// <returns>Is it valid?</returns>
+    public static bool IsEmailAddressValid(string emailAddress)
+    {
+      string emailPatttern = @"^(([^<>()[\]\\.,;:\s@\""]+"
+         + @"(\.[^<>()[\]\\.,;:\s@\""]+)*)|(\"".+\""))@"
+         + @"((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}"
+         + @"\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+"
+         + @"[a-zA-Z]{2,}))$";
+      Regex emailRegex = new Regex(emailPatttern);
+
+      return emailRegex.IsMatch(emailAddress);
     }
   }
 }

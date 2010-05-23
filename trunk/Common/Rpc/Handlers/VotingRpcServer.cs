@@ -251,6 +251,10 @@ namespace Pirate.PiVote.Rpc
       if (!signatureRequest.VerifySimple())
         throw new PiArgumentException(ExceptionCode.SignatureRequestInvalid, "Signature request invalid.");
 
+      SignatureRequest request = signatureRequest.Value;
+      if (!request.Valid)
+        throw new PiArgumentException(ExceptionCode.InvalidSignatureRequest, "Signature request data not valid.");
+
       MySqlCommand replaceCommand = new MySqlCommand("REPLACE INTO signaturerequest (Id, Value) VALUES (@Id, @Value)", DbConnection);
       replaceCommand.Parameters.AddWithValue("@Id", id.ToByteArray());
       replaceCommand.Parameters.AddWithValue("@Value", signatureRequest.ToBinary());
@@ -265,7 +269,6 @@ namespace Pirate.PiVote.Rpc
         CertificateStorage.Add(signatureRequest.Certificate);
       }
 
-      SignatureRequest request = signatureRequest.Value;
       string userBody = string.Format(
         this.serverConfig.MailRequestDepositedBody, 
         request.FirstName, 

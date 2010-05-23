@@ -43,6 +43,19 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Is this request valid?
+    /// </summary>
+    public bool Valid
+    {
+      get
+      {
+        return !FirstName.IsNullOrEmpty() &&
+               !FamilyName.IsNormalized() &&
+               Mailer.IsEmailAddressValid(EmailAddress);
+      }
+    }
+
+    /// <summary>
     /// Create a new signature request.
     /// </summary>
     /// <param name="firstName">First name of requester.</param>

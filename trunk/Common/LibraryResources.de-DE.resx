@@ -432,4 +432,7 @@
   <data name="ClientSetCertificateStorage" xml:space="preserve">
     <value>Lade Zertifikatsspeicher auf den server herauf.</value>
   </data>
+  <data name="ExceptionInvalidSignatureRequest" xml:space="preserve">
+    <value>Daten der Zertifizierungsanfrage nicht gültig.</value>
+  </data>
 </root>

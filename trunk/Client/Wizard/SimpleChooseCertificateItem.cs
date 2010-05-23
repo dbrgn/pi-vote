@@ -187,7 +187,7 @@ namespace Pirate.PiVote.Client
       this.createButton.Enabled =
         !this.firstNameTextBox.Text.IsNullOrEmpty() &&
         !this.familyNameLabel.Text.IsNullOrEmpty() &&
-        !this.emailAddressLabel.Text.IsNullOrEmpty();
+        Mailer.IsEmailAddressValid(this.emailAddressLabel.Text);
     }
 
     private void firstNameTextBox_TextChanged(object sender, EventArgs e)

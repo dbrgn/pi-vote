@@ -28,6 +28,7 @@ namespace Pirate.PiVote
     NoAuthorizedAdmin                 = 7,
     BadVotingMaterial                 = 8,
     InvalidSignature                  = 9,
+    InvalidSignatureRequest           = 10,
 
     AuthorityCountOutOfRange          = 1000001,
     TheresholdOutOfRange              = 1000002,
@@ -151,13 +152,15 @@ namespace Pirate.PiVote
         case ExceptionCode.PartialDecipherBadEnvelopeHash:
           return LibraryResources.ExceptionPartialDecipherBadEnvelopeHash;
         case ExceptionCode.ShareResponseBadSignature:
-          return string.Empty;
+          return LibraryResources.ExceptionShareResponseBadSignature;
         case ExceptionCode.ShareResponseNotAccepted:
-          return string.Empty;
+          return LibraryResources.ExceptionShareResponseNotAccepted;
         case ExceptionCode.ShareResponseParametersDontMatch:
-          return string.Empty;
+          return LibraryResources.ExceptionShareResponseParametersDontMatch;
         case ExceptionCode.ShareResponseWrongAuthority:
-          return string.Empty;
+          return LibraryResources.ExceptionShareResponseWrongAuthority;
+        case ExceptionCode.InvalidSignatureRequest:
+          return LibraryResources.ExceptionInvalidSignatureRequest;
         default:
           return LibraryResources.ExceptionUnknown;
       }
