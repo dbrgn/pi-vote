@@ -6,7 +6,7 @@ rmif ./package/opt
 mkdir ./package/opt/pivote
 cp -r ../../client/bin/release/* ./package/opt/pivote/
 rmif ./package/opt/pivote/*vshost*
-$svndirs = ls -r -force -filter .svn
+$svndirs = ls -r -force -filter .svn ./package/opt
 foreach ($svndir in $svndirs)
 {
 	rmif $svndir.FullName
