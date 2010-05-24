@@ -6,18 +6,23 @@ rmif ./package/opt
 mkdir ./package/opt/pivote
 cp -r ../../client/bin/release/* ./package/opt/pivote/
 rmif ./package/opt/pivote/*vshost*
-$svndirs = ls -r -force -filter .svn ./package/opt
+
+cp -r package packagetmp
+$svndirs = ls -r -force -filter .svn ./packagetmp
 foreach ($svndir in $svndirs)
 {
 	rmif $svndir.FullName
 }
 
 rmif pivote-client.deb
-plink -i $key -pw $pass -P $port $tgt rm -r package
+plink -i $key -pw $pass -P $port $tgt rm -r packagetmp
 plink -i $key -pw $pass -P $port $tgt rm pivote-client.deb
-pscp -i $key -pw $pass -P $port -r package $tgt
-plink -i $key -pw $pass -P $port $tgt chmod u+x package/usr/bin/pivote
-plink -i $key -pw $pass -P $port $tgt dpkg -b package pivote-client.deb
+pscp -i $key -pw $pass -P $port -r packagetmp $tgt
+plink -i $key -pw $pass -P $port $tgt chmod u+x packagetmp/usr/bin/pivote
+plink -i $key -pw $pass -P $port $tgt dpkg -b packagetmp pivote-client.deb
 pscp -i $key -pw $pass -P $port $tgt/pivote-client.deb .
+plink -i $key -pw $pass -P $port $tgt rm -r packagetmp
+plink -i $key -pw $pass -P $port $tgt rm pivote-client.deb
 
+rmif ./packagetmp
 rmif ./package/opt
