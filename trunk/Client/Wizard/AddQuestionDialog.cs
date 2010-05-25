@@ -26,6 +26,7 @@ namespace Pirate.PiVote.Client
     {
       InitializeComponent();
 
+      Text = Resources.CreateVotingQuestion;
       this.textLabel.Text = Resources.CreateVotingQuestion;
       this.descriptionLabel.Text = Resources.CreateVotingDescription;
       this.optionLabel.Text = Resources.CreateVotingAnswers;
@@ -34,6 +35,7 @@ namespace Pirate.PiVote.Client
       this.descriptionColumnHeader.Text = Resources.CreateVotingOptionDescription;
       this.okButton.Text = Resources.OkButton;
       this.cancelButton.Text = Resources.CancelButton;
+      this.abstentionLabel.Text = Resources.CreateQuestionAbstentionAuto;
 
       TextChanged += new EventHandler(TextBox_TextChanged);
 

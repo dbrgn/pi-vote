@@ -117,15 +117,33 @@ namespace Pirate.PiVote.Client
             space.SubItems.Add(string.Empty);
             this.resultList.Items.Add(space);
 
-            space = new ListViewItem(question.Text.Text);
-            space.SubItems.Add(string.Empty);
-            this.resultList.Items.Add(space);
+            ListViewItem questionItem = new ListViewItem(question.Text.Text);
+            questionItem.SubItems.Add(string.Empty);
+            this.resultList.Items.Add(questionItem);
+
+            int abstainCount = 0;
+            bool hasAbstain = false;
 
             foreach (OptionResult option in question.Options)
             {
-              ListViewItem optionBallots = new ListViewItem(option.Text.Text);
-              optionBallots.SubItems.Add(option.Result.ToString());
-              this.resultList.Items.Add(optionBallots);
+              if (option.Text.Text == Resources.OptionAbstainSpecial)
+              {
+                hasAbstain = true;
+                abstainCount += option.Result;
+              }
+              else
+              {
+                ListViewItem optionBallots = new ListViewItem(option.Text.Text);
+                optionBallots.SubItems.Add(option.Result.ToString());
+                this.resultList.Items.Add(optionBallots);
+              }
+            }
+
+            if (hasAbstain)
+            {
+              ListViewItem abstainBallots = new ListViewItem(Resources.OptionAbstain);
+              abstainBallots.SubItems.Add(abstainCount.ToString());
+              this.resultList.Items.Add(abstainBallots);
             }
           }
 

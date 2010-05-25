@@ -942,6 +942,33 @@ namespace Pirate.PiVote {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string LanguageEnglish {
+            get {
+                return ResourceManager.GetString("LanguageEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to French.
+        /// </summary>
+        public static string LanguageFrench {
+            get {
+                return ResourceManager.GetString("LanguageFrench", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to German.
+        /// </summary>
+        public static string LanguageGerman {
+            get {
+                return ResourceManager.GetString("LanguageGerman", resourceCulture);
+            }
+        }
+        
         public static byte[] root {
             get {
                 object obj = ResourceManager.GetObject("root", resourceCulture);

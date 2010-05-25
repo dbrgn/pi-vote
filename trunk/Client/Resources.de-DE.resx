@@ -643,4 +643,16 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="StartAdvancedOptions" xml:space="preserve">
     <value>Erweiterte Optionen</value>
   </data>
+  <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
+    <value>Enthaltung wird automatisch hinzugefügt.</value>
+  </data>
+  <data name="OptionAbstain" xml:space="preserve">
+    <value>Enthaltung</value>
+  </data>
+  <data name="VoteMaxOptions" xml:space="preserve">
+    <value>Du kannst für bis zu {0} Optionen stimmen. Wenn du für weniger Optionen stimmst, werden die restlichen als Enthaltung gewertet.</value>
+  </data>
+  <data name="VoteSingleOption" xml:space="preserve">
+    <value>Du must für eine Option stimmen.</value>
+  </data>
 </root>

@@ -21,7 +21,7 @@ namespace Pirate.PiVote.Client
 {
   public partial class QuestionControl : UserControl
   {
-    private List<VoteOptionControl> optionControls;
+    private Dictionary<OptionDescriptor, VoteOptionControl> optionControls;
 
     public QuestionDescriptor Question { get; set; }
 
@@ -40,27 +40,43 @@ namespace Pirate.PiVote.Client
       this.questionLabel.Text = Question.Text.Text;
       this.descriptionButton.Text = Resources.VoteDescriptionButton;
 
+      if (Question.MaxOptions > 1)
+      {
+        this.maxOptionsLabel.Text = string.Format(Resources.VoteMaxOptions, Question.MaxOptions);
+      }
+      else
+      {
+        this.maxOptionsLabel.Text = Resources.VoteSingleOption;
+      }
+
       int space = 2;
-      int top = this.questionLabel.Top + this.questionLabel.Height + space;
-      this.optionControls = new List<VoteOptionControl>();
+      int top = this.maxOptionsLabel.Top + this.maxOptionsLabel.Height + space;
+      this.optionControls = new Dictionary<OptionDescriptor, VoteOptionControl>();
 
       foreach (OptionDescriptor option in Question.Options)
       {
-        VoteOptionControl optionControl = new VoteOptionControl();
-        optionControl.Option = option;
-        optionControl.MultiOption = Question.MaxOptions > 1;
-        optionControl.Top = top;
-        optionControl.Width = Width;
-        optionControl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-        optionControl.CheckedChanged += OptionControl_CheckedChanged;
-        optionControl.Display(enable);
-        Controls.Add(optionControl);
-        this.optionControls.Add(optionControl);
+        if (option.Text.Text == Resources.OptionAbstainSpecial)
+        {
+          this.optionControls.Add(option, null);
+        }
+        else
+        {
+          VoteOptionControl optionControl = new VoteOptionControl();
+          optionControl.Option = option;
+          optionControl.MultiOption = Question.MaxOptions > 1;
+          optionControl.Top = top;
+          optionControl.Width = Width;
+          optionControl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+          optionControl.CheckedChanged += OptionControl_CheckedChanged;
+          optionControl.Display(enable);
+          Controls.Add(optionControl);
+          this.optionControls.Add(option, optionControl);
 
-        top += optionControl.Height + space;
+          top += optionControl.Height + space;
+        }
       }
 
-      this.Height = top + this.optionControls.First().Height;
+      this.Height = top + this.optionControls.Values.First().Height;
     }
 
     private void OptionControl_CheckedChanged(object sender, EventArgs e)
@@ -71,7 +87,7 @@ namespace Pirate.PiVote.Client
 
         if (activeControl.Checked)
         {
-          foreach (VoteOptionControl optionControl in this.optionControls)
+          foreach (VoteOptionControl optionControl in this.optionControls.Values)
           {
             if (optionControl != activeControl)
             {
@@ -96,7 +112,14 @@ namespace Pirate.PiVote.Client
     {
       get
       {
-        return Question == null ? false : this.optionControls.Where(optionControl => optionControl.Checked).Count() == Question.MaxOptions;
+        if (Question == null)
+        {
+          return false;
+        }
+        else
+        {
+          return this.optionControls.Values.Count(optionControl => optionControl != null && optionControl.Checked) <= Question.MaxOptions;
+        }
       }
     }
 
@@ -104,11 +127,31 @@ namespace Pirate.PiVote.Client
     {
       get
       {
-        return this.optionControls.Select(optionControl => optionControl.Checked);
+        List<bool> vota = new List<bool>();
+        int abstainCount = Question.MaxOptions - this.optionControls.Values.Count(optionControl => optionControl != null && optionControl.Checked);
+
+        foreach (OptionDescriptor option in Question.Options)
+        {
+          if (this.optionControls[option] != null)
+          {
+            vota.Add(this.optionControls[option].Checked);
+          }
+          else if (abstainCount > 0)
+          {
+            abstainCount--;
+            vota.Add(true);
+          }
+          else
+          {
+            vota.Add(false);
+          }
+        }
+
+        return vota.ToArray();
       }
     }
 
-    private void descriptionButton_Click_1(object sender, EventArgs e)
+    private void DescriptionButton_Click(object sender, EventArgs e)
     {
       VoteDescriptionForm.ShowDescription(Question.Text.Text, Question.Description.Text);
     }

@@ -68,26 +68,58 @@ namespace Pirate.PiVote
     /// <returns>Successful sending?</returns>
     public bool TrySend(IEnumerable<string> recipients, string subject, string body)
     {
-      this.logger.Log(LogLevel.Debug, "Sending mail to {0}.", string.Join(", ", recipients.ToArray()));
+      if (recipients == null)
+        throw new ArgumentNullException("recipients");
+      if (subject == null)
+        throw new ArgumentNullException("subject");
+      if (body == null)
+        throw new ArgumentNullException("body");
 
-      try
+      List<string> goodRecipients = new List<string>();
+      foreach (string recipient in recipients)
       {
-        MailMessage message = new MailMessage();
-        message.From = new MailAddress(this.serverConfig.MailAdminAddress);
-        message.Subject = subject;
-        message.Body = body;
-        recipients.Foreach(recipient => message.To.Add(recipient));
-
-        SmtpClient client = new SmtpClient(this.serverConfig.MailServerAddress, this.serverConfig.MailServerPort);
-        client.Send(message);
-
-        this.logger.Log(LogLevel.Debug, "Mail to {0} sent.", string.Join(", ", recipients.ToArray()));
-
-        return true;
+        if (recipient.IsNullOrEmpty())
+        {
+          this.logger.Log(LogLevel.Warning, "Recpient is null or empty.");
+        }
+        else if (!Mailer.IsEmailAddressValid(recipient))
+        {
+          this.logger.Log(LogLevel.Warning, "Recpient {0} is not valid.", recipient);
+        }
+        else
+        {
+          goodRecipients.Add(recipient);
+        }
       }
-      catch (Exception exception)
+
+      if (goodRecipients.Count > 0)
       {
-        this.logger.Log(LogLevel.Warning, "Sending mail to {0} failed: {1}", string.Join(", ", recipients.ToArray()), exception.ToString());
+        this.logger.Log(LogLevel.Debug, "Sending mail to {0}.", string.Join(", ", goodRecipients.ToArray()));
+
+        try
+        {
+          MailMessage message = new MailMessage();
+          message.From = new MailAddress(this.serverConfig.MailAdminAddress);
+          message.Subject = subject;
+          message.Body = body;
+          goodRecipients.Foreach(recipient => message.To.Add(recipient));
+
+          SmtpClient client = new SmtpClient(this.serverConfig.MailServerAddress, this.serverConfig.MailServerPort);
+          client.Send(message);
+
+          this.logger.Log(LogLevel.Debug, "Mail to {0} sent.", string.Join(", ", recipients.ToArray()));
+
+          return true;
+        }
+        catch (Exception exception)
+        {
+          this.logger.Log(LogLevel.Warning, "Sending mail to {0} failed: {1}", string.Join(", ", recipients.ToArray()), exception.ToString());
+          return false;
+        }
+      }
+      else
+      {
+        this.logger.Log(LogLevel.Warning, "Sending no mail since no acceptable recipient found.");
         return false;
       }
     }

@@ -224,6 +224,8 @@ namespace Pirate.PiVote
       dummy = MailAdminVotingStatusBody;
       dummy = MailAdminVotingStatusSubject;
       dummy = MailServerPort.ToString();
+      dummy = MailAuthorityActionRequiredBody;
+      dummy = MailAuthorityActionRequiredSubject;
 
       dummy = Port.ToString();
       dummy = WorkerCount.ToString();

@@ -119,6 +119,7 @@ namespace Pirate.PiVote.Rpc
           this.client = client;
           this.workerRun = true;
           Thread fetcher = new Thread(FetchWorker);
+          fetcher.Priority = ThreadPriority.Lowest;
           fetcher.Start();
 
           while (this.fetchedEnvelopes < this.envelopeCount)

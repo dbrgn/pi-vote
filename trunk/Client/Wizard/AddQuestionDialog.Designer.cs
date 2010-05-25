@@ -44,6 +44,7 @@
       this.descriptionLabel = new System.Windows.Forms.Label();
       this.cancelButton = new System.Windows.Forms.Button();
       this.okButton = new System.Windows.Forms.Button();
+      this.abstentionLabel = new System.Windows.Forms.Label();
       this.optionListContextMenu.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.optionNumberUpDown)).BeginInit();
       this.SuspendLayout();
@@ -72,7 +73,7 @@
       this.optionListView.Margin = new System.Windows.Forms.Padding(2);
       this.optionListView.MultiSelect = false;
       this.optionListView.Name = "optionListView";
-      this.optionListView.Size = new System.Drawing.Size(684, 196);
+      this.optionListView.Size = new System.Drawing.Size(684, 182);
       this.optionListView.TabIndex = 42;
       this.optionListView.UseCompatibleStateImageBehavior = false;
       this.optionListView.View = System.Windows.Forms.View.Details;
@@ -207,11 +208,22 @@
       this.okButton.UseVisualStyleBackColor = true;
       this.okButton.Click += new System.EventHandler(this.okButton_Click);
       // 
+      // abstentionLabel
+      // 
+      this.abstentionLabel.AutoSize = true;
+      this.abstentionLabel.Location = new System.Drawing.Point(105, 268);
+      this.abstentionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+      this.abstentionLabel.Name = "abstentionLabel";
+      this.abstentionLabel.Size = new System.Drawing.Size(193, 14);
+      this.abstentionLabel.TabIndex = 47;
+      this.abstentionLabel.Text = "Abstention will be added automatically.";
+      // 
       // AddQuestionDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(803, 348);
+      this.Controls.Add(this.abstentionLabel);
       this.Controls.Add(this.optionLabel);
       this.Controls.Add(this.descriptionTextBox);
       this.Controls.Add(this.textTextBox);
@@ -250,5 +262,6 @@
     private System.Windows.Forms.ContextMenuStrip optionListContextMenu;
     private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
+    private System.Windows.Forms.Label abstentionLabel;
   }
 }

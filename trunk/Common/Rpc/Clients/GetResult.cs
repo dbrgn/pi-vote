@@ -191,10 +191,12 @@ namespace Pirate.PiVote.Rpc
           this.envelopeQueue = new Queue<Tuple<int, Signed<Envelope>>>();
           this.workerRun = true;
           Thread fetcher = new Thread(FetchWorker);
+          fetcher.Priority = ThreadPriority.Lowest;
           fetcher.Start();
           List<Thread> workers = new List<Thread>();
           Environment.ProcessorCount.Times(() => workers.Add(new Thread(TallyAddWorker)));
           this.threadProgress = new Dictionary<int, double>();
+          workers.ForEach(worker => worker.Priority = ThreadPriority.Lowest);
           workers.ForEach(worker => this.threadProgress.Add(worker.ManagedThreadId, 0d));
           workers.ForEach(worker => worker.Start());
 

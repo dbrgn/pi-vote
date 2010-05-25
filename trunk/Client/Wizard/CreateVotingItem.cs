@@ -135,11 +135,11 @@ namespace Pirate.PiVote.Client
 
       if (enable)
       {
-        this.createButton.Enabled = false;
+        CheckEnable();
       }
       else
       {
-        CheckEnable();
+        this.createButton.Enabled = false;
       }
     }
 
@@ -175,7 +175,43 @@ namespace Pirate.PiVote.Client
 
       foreach (ListViewItem item in this.questionListView.Items)
       {
-        votingParameters.AddQuestion((Question)item.Tag);
+        Question question = (Question)item.Tag;
+
+        if (question.MaxVota == 1)
+        {
+          MultiLanguageString abstainString = new MultiLanguageString();
+          abstainString.Set(Language.English, Resources.OptionAbstainEnglish);
+          abstainString.Set(Language.German, Resources.OptionAbstainGerman);
+          abstainString.Set(Language.French, Resources.OptionAbstainFrench);
+
+          MultiLanguageString descriptionString = new MultiLanguageString();
+          descriptionString.Set(Language.English, string.Empty);
+          descriptionString.Set(Language.German, string.Empty);
+          descriptionString.Set(Language.French, string.Empty);
+
+          Option abstain = new Option(abstainString, descriptionString);
+          question.AddOption(abstain);
+        }
+        else
+        {
+          for (int index = 0; index < question.MaxVota; index++)
+          {
+            MultiLanguageString abstainString = new MultiLanguageString();
+            abstainString.Set(Language.English, Resources.OptionAbstainSpecial);
+            abstainString.Set(Language.German, Resources.OptionAbstainSpecial);
+            abstainString.Set(Language.French, Resources.OptionAbstainSpecial);
+
+            MultiLanguageString descriptionString = new MultiLanguageString();
+            descriptionString.Set(Language.English, string.Empty);
+            descriptionString.Set(Language.German, string.Empty);
+            descriptionString.Set(Language.French, string.Empty);
+
+            Option abstain = new Option(abstainString, descriptionString);
+            question.AddOption(abstain);
+          }
+        }
+
+        votingParameters.AddQuestion(question);
       }
 
       Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);

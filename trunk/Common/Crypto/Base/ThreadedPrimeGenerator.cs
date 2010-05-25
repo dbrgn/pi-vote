@@ -85,12 +85,14 @@ namespace Pirate.PiVote.Crypto
 
       List<Thread> threads = new List<Thread>();
       Environment.ProcessorCount.Times(() => threads.Add(new Thread(FindPrime)));
+      threads.ForEach(thread => thread.Priority = ThreadPriority.Lowest);
       threads.ForEach(thread => thread.Start());
       while (this.prime == null) { Thread.Sleep(100); }
       threads.ForEach(thread => thread.Join());
 
       threads = new List<Thread>();
       Environment.ProcessorCount.Times(() => threads.Add(new Thread(FindSafePrime)));
+      threads.ForEach(thread => thread.Priority = ThreadPriority.Lowest); 
       threads.ForEach(thread => thread.Start());
       while (this.safePrime == null) { Thread.Sleep(100); }
       threads.ForEach(thread => thread.Join());

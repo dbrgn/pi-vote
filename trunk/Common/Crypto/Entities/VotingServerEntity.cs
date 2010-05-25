@@ -207,10 +207,10 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     private void SendAuthorityActionRequiredMail()
     {
-      IEnumerable<string> authorities = 
+      List<string> authorities = new List<string>(
         Authorities
         .Where(authority => Server.HasSignatureRequest(authority.Id))
-        .Select(authority => Server.GetSignatureRequest(authority.Id).Value.EmailAddress);
+        .Select(authority => Server.GetSignatureRequest(authority.Id).Value.EmailAddress));
       string authorityBody = string.Format(
         ServerConfig.MailAuthorityActionRequiredBody,
         Id.ToString(),
@@ -340,6 +340,7 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
+        List<Certificate> authorities = new List<Certificate>();
         MySqlDataReader reader = DbConnection.ExecuteReader(
           "SELECT Certificate FROM authority WHERE VotingId = @VotingId",
           "@VotingId", Id.ToByteArray());
@@ -347,10 +348,12 @@ namespace Pirate.PiVote.Crypto
         while (reader.Read())
         {
           byte[] certificateData = reader.GetBlob(0);
-          yield return Serializable.FromBinary<Certificate>(certificateData);
+          authorities.Add(Serializable.FromBinary<Certificate>(certificateData));
         }
 
         reader.Close();
+
+        return authorities;
       }
     }
 
@@ -464,6 +467,7 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
+        List<Signed<SharePart>> signedShareParts = new List<Signed<SharePart>>();
         MySqlDataReader reader = DbConnection.ExecuteReader(
           "SELECT Value FROM sharepart WHERE VotingId = @VotingId ORDER BY AuthorityIndex DESC",
           "@VotingId", Id.ToByteArray());
@@ -471,10 +475,12 @@ namespace Pirate.PiVote.Crypto
         while (reader.Read())
         {
           byte[] signedSharePartDate = reader.GetBlob(0);
-          yield return Serializable.FromBinary<Signed<SharePart>>(signedSharePartDate);
+          signedShareParts.Add(Serializable.FromBinary<Signed<SharePart>>(signedSharePartDate));
         }
 
         reader.Close();
+
+        return signedShareParts;
       }
     }
 
@@ -530,6 +536,7 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
+        List<Signed<ShareResponse>> signedShareResponses = new List<Signed<ShareResponse>>();
         MySqlDataReader reader = DbConnection.ExecuteReader(
           "SELECT Value FROM shareresponse WHERE VotingId = @VotingId ORDER BY AuthorityIndex DESC",
           "@VotingId", Id.ToByteArray());
@@ -537,10 +544,12 @@ namespace Pirate.PiVote.Crypto
         while (reader.Read())
         {
           byte[] signedShareResponse = reader.GetBlob(0);
-          yield return Serializable.FromBinary<Signed<ShareResponse>>(signedShareResponse);
+          signedShareResponses.Add(Serializable.FromBinary<Signed<ShareResponse>>(signedShareResponse));
         }
 
         reader.Close();
+
+        return signedShareResponses;
       }
     }
 

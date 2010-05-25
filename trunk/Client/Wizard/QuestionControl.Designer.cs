@@ -30,6 +30,7 @@
     {
       this.questionLabel = new System.Windows.Forms.Label();
       this.descriptionButton = new System.Windows.Forms.Button();
+      this.maxOptionsLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // questionLabel
@@ -51,12 +52,22 @@
       this.descriptionButton.TabIndex = 5;
       this.descriptionButton.Text = "&Description";
       this.descriptionButton.UseVisualStyleBackColor = true;
-      this.descriptionButton.Click += new System.EventHandler(this.descriptionButton_Click_1);
+      this.descriptionButton.Click += new System.EventHandler(this.DescriptionButton_Click);
+      // 
+      // maxOptionsLabel
+      // 
+      this.maxOptionsLabel.AutoSize = true;
+      this.maxOptionsLabel.Location = new System.Drawing.Point(-3, 34);
+      this.maxOptionsLabel.Name = "maxOptionsLabel";
+      this.maxOptionsLabel.Size = new System.Drawing.Size(65, 14);
+      this.maxOptionsLabel.TabIndex = 7;
+      this.maxOptionsLabel.Text = "max options";
       // 
       // QuestionControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.maxOptionsLabel);
       this.Controls.Add(this.questionLabel);
       this.Controls.Add(this.descriptionButton);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
@@ -71,5 +82,6 @@
 
     private System.Windows.Forms.Label questionLabel;
     private System.Windows.Forms.Button descriptionButton;
+    private System.Windows.Forms.Label maxOptionsLabel;
   }
 }

@@ -435,4 +435,13 @@
   <data name="ExceptionInvalidSignatureRequest" xml:space="preserve">
     <value>Daten der Zertifizierungsanfrage nicht gültig.</value>
   </data>
+  <data name="LanguageEnglish" xml:space="preserve">
+    <value>Englisch</value>
+  </data>
+  <data name="LanguageFrench" xml:space="preserve">
+    <value>Französisch</value>
+  </data>
+  <data name="LanguageGerman" xml:space="preserve">
+    <value>Deutsch</value>
+  </data>
 </root>

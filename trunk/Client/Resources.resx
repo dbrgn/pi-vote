@@ -647,4 +647,28 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="StartAdvancedOptions" xml:space="preserve">
     <value>Advanced Options</value>
   </data>
+  <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
+    <value>Abstention will be added automatically.</value>
+  </data>
+  <data name="OptionAbstain" xml:space="preserve">
+    <value>Abstention</value>
+  </data>
+  <data name="OptionAbstainEnglish" xml:space="preserve">
+    <value>Abstention</value>
+  </data>
+  <data name="OptionAbstainGerman" xml:space="preserve">
+    <value>Enthaltung</value>
+  </data>
+  <data name="OptionAbstainSpecial" xml:space="preserve">
+    <value>Abstain_@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</value>
+  </data>
+  <data name="VoteMaxOptions" xml:space="preserve">
+    <value>You can vote for up to {0} options. If you don't spend them all, the remaining ones will be counted as absteentions.</value>
+  </data>
+  <data name="OptionAbstainFrench" xml:space="preserve">
+    <value>Abstention</value>
+  </data>
+  <data name="VoteSingleOption" xml:space="preserve">
+    <value>You must select one option to vote for.</value>
+  </data>
 </root>

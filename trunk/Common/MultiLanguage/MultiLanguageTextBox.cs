@@ -24,11 +24,35 @@ namespace Pirate.PiVote
       {
         Controls.Add(textBox);
         textBox.TextChanged += new EventHandler(TextBox_TextChanged);
+        textBox.Enter += new EventHandler(TextBox_Enter);
       }
+
+      this.textBoxes[Language.English].Text = LibraryResources.LanguageEnglish;
+      this.textBoxes[Language.German].Text = LibraryResources.LanguageGerman;
+      this.textBoxes[Language.French].Text = LibraryResources.LanguageFrench;
 
       OnResize(new EventArgs());
 
       InitializeComponent();
+    }
+
+    private void TextBox_Enter(object sender, EventArgs e)
+    {
+      if (sender == this.textBoxes[Language.English] &&
+          this.textBoxes[Language.English].Text == LibraryResources.LanguageEnglish)
+      {
+        this.textBoxes[Language.English].Text = string.Empty;
+      }
+      else if (sender == this.textBoxes[Language.German] &&
+          this.textBoxes[Language.German].Text == LibraryResources.LanguageGerman)
+      {
+        this.textBoxes[Language.German].Text = string.Empty;
+      }
+      else if (sender == this.textBoxes[Language.French] &&
+          this.textBoxes[Language.French].Text == LibraryResources.LanguageFrench)
+      {
+        this.textBoxes[Language.French].Text = string.Empty;
+      }
     }
 
     private void TextBox_TextChanged(object sender, EventArgs e)

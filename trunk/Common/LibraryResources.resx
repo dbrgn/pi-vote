@@ -439,4 +439,13 @@
   <data name="ExceptionInvalidSignatureRequest" xml:space="preserve">
     <value>Signature request data not valid.</value>
   </data>
+  <data name="LanguageEnglish" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguageFrench" xml:space="preserve">
+    <value>French</value>
+  </data>
+  <data name="LanguageGerman" xml:space="preserve">
+    <value>German</value>
+  </data>
 </root>

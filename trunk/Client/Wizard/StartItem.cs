@@ -227,7 +227,7 @@ namespace Pirate.PiVote.Client
       base.UpdateLanguage();
 
       this.titlelLabel.Text = Resources.StartTitle;
-      this.alphaTitleLabel.Text = Resources.StartAlphaTitle;
+      this.alphaTitleLabel.Text = Resources.StartAlphaTitle + " " + GetType().Assembly.GetName().Version.ToString();
       this.alphaWarningLabel.Text = Resources.StartAlphaWarning;
       this.advancedOptionsCheckBox.Text = Resources.StartAdvancedOptions;
 

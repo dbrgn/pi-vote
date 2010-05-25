@@ -70,6 +70,7 @@ namespace Pirate.PiVote.Client
       this.voteControl.Voting = VotingDescriptor;
       this.voteControl.Display(true);
       this.voteControl.ValidChanged += VoteControl_ValidChanged;
+      OnUpdateWizard();
     }
 
     private void VoteControl_ValidChanged(object sender, EventArgs e)

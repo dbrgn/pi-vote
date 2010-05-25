@@ -743,6 +743,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abstention will be added automatically..
+        /// </summary>
+        internal static string CreateQuestionAbstentionAuto {
+            get {
+                return ResourceManager.GetString("CreateQuestionAbstentionAuto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Answers.
         /// </summary>
         internal static string CreateVotingAnswers {
@@ -991,6 +1000,51 @@ namespace Pirate.PiVote.Client {
         internal static string OpenSignatureResponseDialog {
             get {
                 return ResourceManager.GetString("OpenSignatureResponseDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abstention.
+        /// </summary>
+        internal static string OptionAbstain {
+            get {
+                return ResourceManager.GetString("OptionAbstain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abstention.
+        /// </summary>
+        internal static string OptionAbstainEnglish {
+            get {
+                return ResourceManager.GetString("OptionAbstainEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abstention.
+        /// </summary>
+        internal static string OptionAbstainFrench {
+            get {
+                return ResourceManager.GetString("OptionAbstainFrench", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enthaltung.
+        /// </summary>
+        internal static string OptionAbstainGerman {
+            get {
+                return ResourceManager.GetString("OptionAbstainGerman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abstain_@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.
+        /// </summary>
+        internal static string OptionAbstainSpecial {
+            get {
+                return ResourceManager.GetString("OptionAbstainSpecial", resourceCulture);
             }
         }
         
@@ -1535,6 +1589,24 @@ namespace Pirate.PiVote.Client {
         internal static string VoteDescriptionTitle {
             get {
                 return ResourceManager.GetString("VoteDescriptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can vote for up to {0} options. If you don&apos;t spend them all, the remaining ones will be counted as absteentions..
+        /// </summary>
+        internal static string VoteMaxOptions {
+            get {
+                return ResourceManager.GetString("VoteMaxOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must select one option to vote for..
+        /// </summary>
+        internal static string VoteSingleOption {
+            get {
+                return ResourceManager.GetString("VoteSingleOption", resourceCulture);
             }
         }
         

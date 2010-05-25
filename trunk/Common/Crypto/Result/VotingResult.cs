@@ -78,12 +78,12 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Number of valid ballots.
     /// </summary>
-    public int ValidBallots { get { return Questions.First().Options.Sum(option => option.Result); } }
+    public int ValidBallots { get { return Voters.Where(voter => voter.Valid).Count(); } }
 
     /// <summary>
     /// Total number of cast ballots.
     /// </summary>
-    public int TotalBallots { get { return ValidBallots + InvalidBallots; } }
+    public int TotalBallots { get { return Voters.Count(); } }
 
     /// <summary>
     /// Creates a new voting result.

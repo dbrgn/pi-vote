@@ -57,16 +57,19 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
+        List<Signed<RevocationList>> signedRevocationLists = new List<Signed<RevocationList>>();
         MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist", DbConnection);
         MySqlDataReader reader = command.ExecuteReader();
 
         while (reader.Read())
         {
           byte[] revocationListData = reader.GetBlob(0);
-          yield return Serializable.FromBinary<Signed<RevocationList>>(revocationListData);
+          signedRevocationLists.Add(Serializable.FromBinary<Signed<RevocationList>>(revocationListData));
         }
 
         reader.Close();
+
+        return signedRevocationLists;
       }
     }
 

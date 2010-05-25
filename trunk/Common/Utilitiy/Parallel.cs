@@ -85,6 +85,7 @@ namespace System
     /// </summary>
     public void Start()
     {
+      this.workers.ForEach(worker => worker.Priority = ThreadPriority.Lowest);
       this.workers.ForEach(worker => worker.Start());
     }
 
