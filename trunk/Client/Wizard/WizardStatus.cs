@@ -50,7 +50,7 @@ namespace Pirate.PiVote.Client
         {
           return Dns.GetHostEntry(Resources.ServerIpAddress).AddressList.First();
         }
-        catch (System.Net.Sockets.SocketException socketException)
+        catch (System.Net.Sockets.SocketException)
         {
           return null;
         }

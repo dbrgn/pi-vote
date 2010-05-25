@@ -12,6 +12,7 @@ namespace Pirate.PiVote
   public partial class MultiLanguageTextBox : UserControl
   {
     private Dictionary<Language, TextBox> textBoxes;
+    private Dictionary<TextBox, bool> langaugeDisplay;
 
     public MultiLanguageTextBox()
     {
@@ -27,9 +28,15 @@ namespace Pirate.PiVote
         textBox.Enter += new EventHandler(TextBox_Enter);
       }
 
+      langaugeDisplay = new Dictionary<TextBox, bool>();
+      this.langaugeDisplay.Add(this.textBoxes[Language.English], true);
+      this.langaugeDisplay.Add(this.textBoxes[Language.German], true);
+      this.langaugeDisplay.Add(this.textBoxes[Language.French], true);
       this.textBoxes[Language.English].Text = LibraryResources.LanguageEnglish;
       this.textBoxes[Language.German].Text = LibraryResources.LanguageGerman;
       this.textBoxes[Language.French].Text = LibraryResources.LanguageFrench;
+
+      this.textBoxes.Values.Foreach(textBox => textBox.ForeColor = Color.Gray);
 
       OnResize(new EventArgs());
 
@@ -38,20 +45,16 @@ namespace Pirate.PiVote
 
     private void TextBox_Enter(object sender, EventArgs e)
     {
-      if (sender == this.textBoxes[Language.English] &&
-          this.textBoxes[Language.English].Text == LibraryResources.LanguageEnglish)
+      if (sender is TextBox)
       {
-        this.textBoxes[Language.English].Text = string.Empty;
-      }
-      else if (sender == this.textBoxes[Language.German] &&
-          this.textBoxes[Language.German].Text == LibraryResources.LanguageGerman)
-      {
-        this.textBoxes[Language.German].Text = string.Empty;
-      }
-      else if (sender == this.textBoxes[Language.French] &&
-          this.textBoxes[Language.French].Text == LibraryResources.LanguageFrench)
-      {
-        this.textBoxes[Language.French].Text = string.Empty;
+        TextBox textBox = (TextBox)sender;
+        if (this.langaugeDisplay.ContainsKey(textBox) &&
+            this.langaugeDisplay[textBox])
+        {
+          textBox.Text = string.Empty;
+          textBox.ForeColor = Color.Black;
+          this.langaugeDisplay[textBox] = false;
+        }
       }
     }
 
@@ -80,7 +83,8 @@ namespace Pirate.PiVote
     {
       get
       {
-        return this.textBoxes.Values.Any(textBox => textBox.Text.IsNullOrEmpty());
+        return this.langaugeDisplay.Values.Any(value => value) ||
+          this.textBoxes.Values.Any(textBox => textBox.Text.IsNullOrEmpty());
       }
     }
 
@@ -92,7 +96,14 @@ namespace Pirate.PiVote
 
         foreach (KeyValuePair<Language, TextBox> item in this.textBoxes)
         {
-          value.Set(item.Key, item.Value.Text);
+          if (this.langaugeDisplay[item.Value])
+          {
+            value.Set(item.Key, string.Empty);
+          }
+          else
+          {
+            value.Set(item.Key, item.Value.Text);
+          }
         }
 
         return value;

@@ -74,7 +74,7 @@
       this.optionListView.MultiSelect = false;
       this.optionListView.Name = "optionListView";
       this.optionListView.Size = new System.Drawing.Size(684, 182);
-      this.optionListView.TabIndex = 42;
+      this.optionListView.TabIndex = 2;
       this.optionListView.UseCompatibleStateImageBehavior = false;
       this.optionListView.View = System.Windows.Forms.View.Details;
       // 
@@ -120,7 +120,7 @@
       this.textTextBox.Name = "textTextBox";
       this.textTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
       this.textTextBox.Size = new System.Drawing.Size(683, 20);
-      this.textTextBox.TabIndex = 38;
+      this.textTextBox.TabIndex = 0;
       // 
       // textLabel
       // 
@@ -155,7 +155,7 @@
             0});
       this.optionNumberUpDown.Name = "optionNumberUpDown";
       this.optionNumberUpDown.Size = new System.Drawing.Size(77, 20);
-      this.optionNumberUpDown.TabIndex = 41;
+      this.optionNumberUpDown.TabIndex = 3;
       this.optionNumberUpDown.Value = new decimal(new int[] {
             1,
             0,
@@ -172,7 +172,7 @@
       this.descriptionTextBox.Name = "descriptionTextBox";
       this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
       this.descriptionTextBox.Size = new System.Drawing.Size(684, 48);
-      this.descriptionTextBox.TabIndex = 44;
+      this.descriptionTextBox.TabIndex = 1;
       // 
       // descriptionLabel
       // 
@@ -191,7 +191,7 @@
       this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(85, 25);
-      this.cancelButton.TabIndex = 45;
+      this.cancelButton.TabIndex = 5;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
       this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -203,7 +203,7 @@
       this.okButton.Margin = new System.Windows.Forms.Padding(2);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(85, 25);
-      this.okButton.TabIndex = 46;
+      this.okButton.TabIndex = 4;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
       this.okButton.Click += new System.EventHandler(this.okButton_Click);

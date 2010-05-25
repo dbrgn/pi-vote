@@ -146,7 +146,6 @@ namespace Pirate.PiVote.Client
       this.MinimizeBox = false;
       this.Name = "AddOptionDialog";
       this.Text = "AddOptionDialog";
-      this.Load += new System.EventHandler(this.AddOptionDialog_Load);
       this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddOptionDialog_KeyDown);
       this.ResumeLayout(false);
       this.PerformLayout();

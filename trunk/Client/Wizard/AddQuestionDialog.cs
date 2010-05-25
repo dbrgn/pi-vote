@@ -37,9 +37,20 @@ namespace Pirate.PiVote.Client
       this.cancelButton.Text = Resources.CancelButton;
       this.abstentionLabel.Text = Resources.CreateQuestionAbstentionAuto;
 
-      TextChanged += new EventHandler(TextBox_TextChanged);
+      this.textTextBox.TextChanged += new EventHandler(textTextBox_TextChanged);
+      this.descriptionTextBox.TextChanged += new EventHandler(descriptionTextBox_TextChanged);
 
       CenterToScreen();
+    }
+
+    private void descriptionTextBox_TextChanged(object sender, EventArgs e)
+    {
+      CheckValid();
+    }
+
+    private void textTextBox_TextChanged(object sender, EventArgs e)
+    {
+      CheckValid();
     }
 
     private void addToolStripMenuItem_Click(object sender, EventArgs e)
@@ -94,6 +105,8 @@ namespace Pirate.PiVote.Client
         }
       }
 
+      dialog.CheckValid();
+
       if (dialog.ShowDialog() == DialogResult.OK)
       {
         Question question = new Question(
@@ -135,11 +148,6 @@ namespace Pirate.PiVote.Client
     {
       DialogResult = DialogResult.Cancel;
       Close();
-    }
-
-    private void TextBox_TextChanged(object sender, EventArgs e)
-    {
-      CheckValid();
     }
 
     private void optionNumberUpDown_ValueChanged(object sender, EventArgs e)

@@ -34,11 +34,6 @@ namespace Pirate.PiVote.Client
       CenterToScreen();
     }
 
-    private void AddOptionDialog_Load(object sender, EventArgs e)
-    {
-
-    }
-
     private void okButton_Click(object sender, EventArgs e)
     {
       DialogResult = DialogResult.OK;
