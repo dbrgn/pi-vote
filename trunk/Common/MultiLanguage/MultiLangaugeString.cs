@@ -63,6 +63,33 @@ namespace Pirate.PiVote
     }
 
     /// <summary>
+    /// Gets a string in a specific language.
+    /// </summary>
+    /// <param name="language">Language of the string to retrieve.</param>
+    /// <returns>String in that language.</returns>
+    public string GetOrEmpty(Language language)
+    {
+      if (this.content.ContainsKey(language))
+      {
+        return this.content[language];
+      }
+      else
+      {
+        return string.Empty;
+      }
+    }
+
+    /// <summary>
+    /// Has it a string for this language.
+    /// </summary>
+    /// <param name="language">Language in question.</param>
+    /// <returns>Is there a string in this language.</returns>
+    public bool Has(Language language)
+    {
+      return this.content.ContainsKey(language);
+    }
+
+    /// <summary>
     /// Sets a string value for a language.
     /// </summary>
     /// <param name="language">Language of the string.</param>
@@ -73,7 +100,7 @@ namespace Pirate.PiVote
       {
         this.content[language] = value;
       }
-      else
+      else if (!value.IsNullOrEmpty()) 
       {
         this.content.Add(language, value);
       }

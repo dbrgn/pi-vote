@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       this.pathTextBox = new System.Windows.Forms.TextBox();
       this.loadButton = new System.Windows.Forms.Button();
       this.loadList = new System.Windows.Forms.ListView();
@@ -35,39 +36,45 @@
       this.englishColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.germanColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.frenchColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.importList = new System.Windows.Forms.ListView();
-      this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.exportButton = new System.Windows.Forms.Button();
-      this.importButton = new System.Windows.Forms.Button();
-      this.saveButton = new System.Windows.Forms.Button();
+      this.loadContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.loadContextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
       // pathTextBox
       // 
+      this.pathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.pathTextBox.Location = new System.Drawing.Point(12, 12);
       this.pathTextBox.Name = "pathTextBox";
       this.pathTextBox.Size = new System.Drawing.Size(459, 20);
       this.pathTextBox.TabIndex = 0;
+      this.pathTextBox.TextChanged += new System.EventHandler(this.pathTextBox_TextChanged);
       // 
       // loadButton
       // 
+      this.loadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.loadButton.Location = new System.Drawing.Point(477, 12);
       this.loadButton.Name = "loadButton";
       this.loadButton.Size = new System.Drawing.Size(75, 20);
       this.loadButton.TabIndex = 1;
       this.loadButton.Text = "Load";
       this.loadButton.UseVisualStyleBackColor = true;
+      this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
       // 
       // loadList
       // 
+      this.loadList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.loadList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.fileColumnHeader,
             this.englishColumnHeader,
             this.germanColumnHeader,
             this.frenchColumnHeader});
+      this.loadList.ContextMenuStrip = this.loadContextMenu;
       this.loadList.FullRowSelect = true;
       this.loadList.Location = new System.Drawing.Point(12, 38);
       this.loadList.MultiSelect = false;
@@ -97,83 +104,48 @@
       this.frenchColumnHeader.Text = "French";
       this.frenchColumnHeader.Width = 100;
       // 
-      // importList
+      // loadContextMenu
       // 
-      this.importList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4});
-      this.importList.FullRowSelect = true;
-      this.importList.Location = new System.Drawing.Point(12, 246);
-      this.importList.MultiSelect = false;
-      this.importList.Name = "importList";
-      this.importList.Size = new System.Drawing.Size(540, 173);
-      this.importList.TabIndex = 3;
-      this.importList.UseCompatibleStateImageBehavior = false;
-      this.importList.View = System.Windows.Forms.View.Details;
+      this.loadContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exportToolStripMenuItem,
+            this.importToolStripMenuItem,
+            this.saveToolStripMenuItem});
+      this.loadContextMenu.Name = "loadContextMenu";
+      this.loadContextMenu.Size = new System.Drawing.Size(107, 70);
+      this.loadContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.loadContextMenu_Opening);
       // 
-      // columnHeader1
+      // exportToolStripMenuItem
       // 
-      this.columnHeader1.Text = "File";
-      this.columnHeader1.Width = 200;
+      this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+      this.exportToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+      this.exportToolStripMenuItem.Text = "&Export";
+      this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
       // 
-      // columnHeader2
+      // importToolStripMenuItem
       // 
-      this.columnHeader2.Text = "English";
-      this.columnHeader2.Width = 100;
+      this.importToolStripMenuItem.Name = "importToolStripMenuItem";
+      this.importToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+      this.importToolStripMenuItem.Text = "&Import";
+      this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
       // 
-      // columnHeader3
+      // saveToolStripMenuItem
       // 
-      this.columnHeader3.Text = "German";
-      this.columnHeader3.Width = 100;
+      this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+      this.saveToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+      this.saveToolStripMenuItem.Text = "&Save";
+      this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
       // 
-      // columnHeader4
-      // 
-      this.columnHeader4.Text = "French";
-      this.columnHeader4.Width = 100;
-      // 
-      // exportButton
-      // 
-      this.exportButton.Location = new System.Drawing.Point(12, 217);
-      this.exportButton.Name = "exportButton";
-      this.exportButton.Size = new System.Drawing.Size(103, 23);
-      this.exportButton.TabIndex = 4;
-      this.exportButton.Text = "Export";
-      this.exportButton.UseVisualStyleBackColor = true;
-      // 
-      // importButton
-      // 
-      this.importButton.Location = new System.Drawing.Point(121, 217);
-      this.importButton.Name = "importButton";
-      this.importButton.Size = new System.Drawing.Size(103, 23);
-      this.importButton.TabIndex = 5;
-      this.importButton.Text = "Import";
-      this.importButton.UseVisualStyleBackColor = true;
-      // 
-      // saveButton
-      // 
-      this.saveButton.Location = new System.Drawing.Point(12, 425);
-      this.saveButton.Name = "saveButton";
-      this.saveButton.Size = new System.Drawing.Size(103, 23);
-      this.saveButton.TabIndex = 6;
-      this.saveButton.Text = "Save";
-      this.saveButton.UseVisualStyleBackColor = true;
-      // 
-      // Form1
+      // Master
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(564, 455);
-      this.Controls.Add(this.saveButton);
-      this.Controls.Add(this.importButton);
-      this.Controls.Add(this.exportButton);
-      this.Controls.Add(this.importList);
+      this.ClientSize = new System.Drawing.Size(564, 224);
       this.Controls.Add(this.loadList);
       this.Controls.Add(this.loadButton);
       this.Controls.Add(this.pathTextBox);
-      this.Name = "Form1";
-      this.Text = "Form1";
+      this.Name = "Master";
+      this.Text = "Resource Manager";
+      this.loadContextMenu.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -188,14 +160,10 @@
     private System.Windows.Forms.ColumnHeader englishColumnHeader;
     private System.Windows.Forms.ColumnHeader germanColumnHeader;
     private System.Windows.Forms.ColumnHeader frenchColumnHeader;
-    private System.Windows.Forms.ListView importList;
-    private System.Windows.Forms.ColumnHeader columnHeader1;
-    private System.Windows.Forms.ColumnHeader columnHeader2;
-    private System.Windows.Forms.ColumnHeader columnHeader3;
-    private System.Windows.Forms.ColumnHeader columnHeader4;
-    private System.Windows.Forms.Button exportButton;
-    private System.Windows.Forms.Button importButton;
-    private System.Windows.Forms.Button saveButton;
+    private System.Windows.Forms.ContextMenuStrip loadContextMenu;
+    private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
   }
 }
 

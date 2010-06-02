@@ -51,11 +51,6 @@ namespace Pirate.PiVote.Rpc
       private DownloadVotingCallBack callBack;
 
       /// <summary>
-      /// Continue to run worker threads?
-      /// </summary>
-      private bool workerRun;
-
-      /// <summary>
       /// Voter client to work with.
       /// </summary>
       private VotingClient client;
@@ -117,7 +112,6 @@ namespace Pirate.PiVote.Rpc
           SubProgress = 0d;
 
           this.client = client;
-          this.workerRun = true;
           Thread fetcher = new Thread(FetchWorker);
           fetcher.Priority = ThreadPriority.Lowest;
           fetcher.Start();
