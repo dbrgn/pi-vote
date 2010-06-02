@@ -168,12 +168,6 @@
   <data name="AuthorityListTitle" xml:space="preserve">
     <value>Title</value>
   </data>
-  <data name="AuthorityLoadData" xml:space="preserve">
-    <value>Load Authority Data</value>
-  </data>
-  <data name="AuthoritySaveData" xml:space="preserve">
-    <value>Save Authority Data</value>
-  </data>
   <data name="CertificateCreationDate" xml:space="preserve">
     <value>Creation Date:</value>
   </data>
@@ -221,9 +215,6 @@
   </data>
   <data name="CertificateSignatureValidUntil" xml:space="preserve">
     <value>Valid Until</value>
-  </data>
-  <data name="CertificateStatus" xml:space="preserve">
-    <value>Status:</value>
   </data>
   <data name="CertificateType" xml:space="preserve">
     <value>Type:</value>
@@ -345,17 +336,11 @@
   <data name="InvalidBallots" xml:space="preserve">
     <value>Invalid ballots</value>
   </data>
-  <data name="OpenSignatureResponseButton" xml:space="preserve">
-    <value>&amp;Open...</value>
-  </data>
   <data name="OpenSignatureResponseDialog" xml:space="preserve">
     <value>Open Signature Responses</value>
   </data>
   <data name="PiVoteClient" xml:space="preserve">
     <value>Pi-Vote Client</value>
-  </data>
-  <data name="RootCertificateMissing" xml:space="preserve">
-    <value>The root certificate file is missing.</value>
   </data>
   <data name="SaveSignatureRequestButton" xml:space="preserve">
     <value>&amp;Save...</value>
@@ -372,20 +357,8 @@
   <data name="ValidBallots" xml:space="preserve">
     <value>Valid ballots</value>
   </data>
-  <data name="ViewShareAuthority" xml:space="preserve">
-    <value>Authority</value>
-  </data>
   <data name="ViewShareData" xml:space="preserve">
     <value>Data:</value>
-  </data>
-  <data name="ViewShareEncryption" xml:space="preserve">
-    <value>Encryption:</value>
-  </data>
-  <data name="ViewShareShare" xml:space="preserve">
-    <value>Share</value>
-  </data>
-  <data name="ViewShareSignature" xml:space="preserve">
-    <value>Signature:</value>
   </data>
   <data name="VoteCast" xml:space="preserve">
     <value>Your vote is now cast.</value>
@@ -431,9 +404,6 @@
   </data>
   <data name="ChooseCertificateVerifyBadShareProof" xml:space="preserve">
     <value>Verfiy share &amp;proof...</value>
-  </data>
-  <data name="ListVotingsVoted" xml:space="preserve">
-    <value>Voted</value>
   </data>
   <data name="ListVotingsVotedNo" xml:space="preserve">
     <value>No</value>

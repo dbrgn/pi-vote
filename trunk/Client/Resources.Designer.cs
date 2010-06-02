@@ -205,24 +205,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Load Authority Data.
-        /// </summary>
-        internal static string AuthorityLoadData {
-            get {
-                return ResourceManager.GetString("AuthorityLoadData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save Authority Data.
-        /// </summary>
-        internal static string AuthoritySaveData {
-            get {
-                return ResourceManager.GetString("AuthoritySaveData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Controlling Authorities.
         /// </summary>
         internal static string BadShareProofControlling {
@@ -442,15 +424,6 @@ namespace Pirate.PiVote.Client {
         internal static string CertificateSignatureValidUntil {
             get {
                 return ResourceManager.GetString("CertificateSignatureValidUntil", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Status:.
-        /// </summary>
-        internal static string CertificateStatus {
-            get {
-                return ResourceManager.GetString("CertificateStatus", resourceCulture);
             }
         }
         
@@ -941,15 +914,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Voted.
-        /// </summary>
-        internal static string ListVotingsVoted {
-            get {
-                return ResourceManager.GetString("ListVotingsVoted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         internal static string ListVotingsVotedNo {
@@ -982,15 +946,6 @@ namespace Pirate.PiVote.Client {
         internal static string OpenCertificateStorageDialog {
             get {
                 return ResourceManager.GetString("OpenCertificateStorageDialog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Open....
-        /// </summary>
-        internal static string OpenSignatureResponseButton {
-            get {
-                return ResourceManager.GetString("OpenSignatureResponseButton", resourceCulture);
             }
         }
         
@@ -1054,15 +1009,6 @@ namespace Pirate.PiVote.Client {
         internal static string PiVoteClient {
             get {
                 return ResourceManager.GetString("PiVoteClient", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The root certificate file is missing..
-        /// </summary>
-        internal static string RootCertificateMissing {
-            get {
-                return ResourceManager.GetString("RootCertificateMissing", resourceCulture);
             }
         }
         
@@ -1512,47 +1458,11 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Authority.
-        /// </summary>
-        internal static string ViewShareAuthority {
-            get {
-                return ResourceManager.GetString("ViewShareAuthority", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Data:.
         /// </summary>
         internal static string ViewShareData {
             get {
                 return ResourceManager.GetString("ViewShareData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Encryption:.
-        /// </summary>
-        internal static string ViewShareEncryption {
-            get {
-                return ResourceManager.GetString("ViewShareEncryption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Share.
-        /// </summary>
-        internal static string ViewShareShare {
-            get {
-                return ResourceManager.GetString("ViewShareShare", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Signature:.
-        /// </summary>
-        internal static string ViewShareSignature {
-            get {
-                return ResourceManager.GetString("ViewShareSignature", resourceCulture);
             }
         }
         

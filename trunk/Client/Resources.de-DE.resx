@@ -168,12 +168,6 @@
   <data name="AuthorityListTitle" xml:space="preserve">
     <value>Titel</value>
   </data>
-  <data name="AuthorityLoadData" xml:space="preserve">
-    <value>Daten der Authorität Laden</value>
-  </data>
-  <data name="AuthoritySaveData" xml:space="preserve">
-    <value>Daten der Authorität Speichern</value>
-  </data>
   <data name="CertificateCreationDate" xml:space="preserve">
     <value>Erstellungdatum:</value>
   </data>
@@ -221,9 +215,6 @@
   </data>
   <data name="CertificateSignatureValidUntil" xml:space="preserve">
     <value>Gültig bis</value>
-  </data>
-  <data name="CertificateStatus" xml:space="preserve">
-    <value>Status:</value>
   </data>
   <data name="CertificateType" xml:space="preserve">
     <value>Typ:</value>
@@ -348,20 +339,11 @@
   <data name="InvalidBallots" xml:space="preserve">
     <value>Ungültige Stimmen</value>
   </data>
-  <data name="OpenSignatureResponseButton" xml:space="preserve">
-    <value>&amp;Laden...</value>
-  </data>
   <data name="OpenSignatureResponseDialog" xml:space="preserve">
     <value>Antworten auf Zertifizierungsanfragen Laden</value>
   </data>
   <data name="PiVoteClient" xml:space="preserve">
     <value>Pi-Vote Client</value>
-  </data>
-  <data name="RootCertificateMissing" xml:space="preserve">
-    <value>Das Ursprungszertifikat ist nicht vorhanden.</value>
-  </data>
-  <data name="SaveSignatureRequestButton" xml:space="preserve">
-    <value>&amp;Speichern...</value>
   </data>
   <data name="SaveSignatureRequestDialog" xml:space="preserve">
     <value>Zertifizierungsanfragen Speichern</value>
@@ -375,20 +357,8 @@
   <data name="ValidBallots" xml:space="preserve">
     <value>Gültige Stimmen</value>
   </data>
-  <data name="ViewShareAuthority" xml:space="preserve">
-    <value>Autorität</value>
-  </data>
   <data name="ViewShareData" xml:space="preserve">
     <value>Daten:</value>
-  </data>
-  <data name="ViewShareEncryption" xml:space="preserve">
-    <value>Verschlüsselung:</value>
-  </data>
-  <data name="ViewShareShare" xml:space="preserve">
-    <value>Schlüsselteil</value>
-  </data>
-  <data name="ViewShareSignature" xml:space="preserve">
-    <value>Signatur:</value>
   </data>
   <data name="VoteCast" xml:space="preserve">
     <value>Ihre Stimme ist jetzt abgegeben.</value>
@@ -434,9 +404,6 @@
   </data>
   <data name="ChooseCertificateVerifyBadShareProof" xml:space="preserve">
     <value>Verteilungs&amp;beweis prüfen...</value>
-  </data>
-  <data name="ListVotingsVoted" xml:space="preserve">
-    <value>Abgestimmt</value>
   </data>
   <data name="ListVotingsVotedNo" xml:space="preserve">
     <value>Nein</value>
