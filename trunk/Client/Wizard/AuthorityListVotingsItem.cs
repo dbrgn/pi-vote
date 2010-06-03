@@ -109,6 +109,8 @@ namespace Pirate.PiVote.Client
             this.votingList.Items.Add(item);
           }
         }
+
+        Status.SetMessage(Resources.VotingListDownloaded, MessageType.Info);
       }
       else
       {
@@ -298,7 +300,6 @@ namespace Pirate.PiVote.Client
             Status.SetMessage(this.exception.Message, MessageType.Error);
           }
 
-          Status.UpdateProgress();
           OnUpdateWizard();
         }
         else

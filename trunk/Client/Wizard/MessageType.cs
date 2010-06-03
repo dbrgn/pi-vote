@@ -20,7 +20,6 @@ namespace Pirate.PiVote.Client
   {
     Success,
     Info,
-    Warning,
     Error
   }
 }

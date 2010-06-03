@@ -30,17 +30,14 @@ namespace Pirate.PiVote.Client
 
       switch (type)
       {
-        case MessageType.Warning:
-          this.iconBox.BackColor = Color.Yellow;
-          break;
         case MessageType.Success:
-          this.iconBox.BackColor = Color.Green;
+          this.iconBox.BackgroundImage = Resources.Success;
           break;
         case MessageType.Error:
-          this.iconBox.BackColor = Color.Red;
+          this.iconBox.BackgroundImage = Resources.Error;
           break;
         default:
-          this.iconBox.BackColor = Color.Blue;
+          this.iconBox.BackgroundImage = Resources.Info;
           break;
       }
     }

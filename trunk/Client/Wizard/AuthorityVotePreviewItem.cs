@@ -78,7 +78,7 @@ namespace Pirate.PiVote.Client
           }
           else
           {
-            Status.SetMessage(Resources.AuthorityCheckSharesDecline, MessageType.Warning);
+            Status.SetMessage(Resources.AuthorityCheckSharesDecline, MessageType.Error);
           }
 
           OnUpdateWizard();

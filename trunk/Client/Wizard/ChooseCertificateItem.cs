@@ -35,7 +35,7 @@ namespace Pirate.PiVote.Client
       }
       if (this.nextIsCreate)
       {
-        return new CreateCertificateItem();
+        return new SimpleCreateCertificateItem();
       }
       else
       {
@@ -142,6 +142,8 @@ namespace Pirate.PiVote.Client
     public override void UpdateLanguage()
     {
       base.UpdateLanguage();
+
+      this.certificateListLabel.Text = Resources.ChooseCertificateListHeader;
 
       this.idLabel.Text = Resources.ChooseCertificateId;
       this.typeLabel.Text = Resources.ChooseCertificateType;

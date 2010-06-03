@@ -75,6 +75,12 @@ namespace Pirate.PiVote.Client
       this.message.Set(message, type);
     }
 
+    public void SetNone()
+    {
+      this.message.Visible = false;
+      this.progress.Visible = false;
+    }
+
     public void UpdateProgress()
     {
       this.message.Visible = false;

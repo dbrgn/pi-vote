@@ -170,6 +170,12 @@
     <Compile Include="Wizard\AuthorityVotePreviewItem.designer.cs">
       <DependentUpon>AuthorityVotePreviewItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wizard\SimpleCreateCertificateItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\SimpleCreateCertificateItem.designer.cs">
+      <DependentUpon>SimpleCreateCertificateItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Wizard\SimpleChooseCertificateItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -224,12 +230,6 @@
     </Compile>
     <Compile Include="Wizard\VoteCompleteItem.designer.cs">
       <DependentUpon>VoteCompleteItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Wizard\CreateCertificateItem.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Wizard\CreateCertificateItem.designer.cs">
-      <DependentUpon>CreateCertificateItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Wizard\CreateRequestItem.cs">
       <SubType>UserControl</SubType>
@@ -343,6 +343,9 @@
     <EmbeddedResource Include="Wizard\AuthorityVotePreviewItem.resx">
       <DependentUpon>AuthorityVotePreviewItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\SimpleCreateCertificateItem.resx">
+      <DependentUpon>SimpleCreateCertificateItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Wizard\SimpleChooseCertificateItem.resx">
       <DependentUpon>SimpleChooseCertificateItem.cs</DependentUpon>
     </EmbeddedResource>
@@ -369,9 +372,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\VoteCompleteItem.resx">
       <DependentUpon>VoteCompleteItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Wizard\CreateCertificateItem.resx">
-      <DependentUpon>CreateCertificateItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\CreateRequestItem.resx">
       <DependentUpon>CreateRequestItem.cs</DependentUpon>
@@ -429,6 +429,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ballot.ico" />
+    <None Include="Resources\Success.png" />
+    <None Include="Resources\Info.png" />
+    <None Include="Resources\Error.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Pirate.PiVote.csproj">

@@ -118,6 +118,7 @@ namespace Pirate.PiVote.Client
       Refresh();
       Application.DoEvents();
 
+      this.status.SetNone();
       this.item.Begin();
     }
 

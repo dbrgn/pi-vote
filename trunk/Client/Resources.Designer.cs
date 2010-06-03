@@ -536,6 +536,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your certificates.
+        /// </summary>
+        internal static string ChooseCertificateListHeader {
+            get {
+                return ResourceManager.GetString("ChooseCertificateListHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Load....
         /// </summary>
         internal static string ChooseCertificateLoadButton {
@@ -883,6 +892,20 @@ namespace Pirate.PiVote.Client {
         internal static string CreateVotingTitle {
             get {
                 return ResourceManager.GetString("CreateVotingTitle", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Error {
+            get {
+                object obj = ResourceManager.GetObject("Error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Info {
+            get {
+                object obj = ResourceManager.GetObject("Info", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -1400,6 +1423,31 @@ namespace Pirate.PiVote.Client {
         internal static string StartTitle {
             get {
                 return ResourceManager.GetString("StartTitle", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Success {
+            get {
+                object obj = ResourceManager.GetObject("Success", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voting is tallied..
+        /// </summary>
+        internal static string TallyDone {
+            get {
+                return ResourceManager.GetString("TallyDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No result from server..
+        /// </summary>
+        internal static string TallyNoResult {
+            get {
+                return ResourceManager.GetString("TallyNoResult", resourceCulture);
             }
         }
         

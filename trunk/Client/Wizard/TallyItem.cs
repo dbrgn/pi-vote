@@ -172,10 +172,12 @@ namespace Pirate.PiVote.Client
 
             this.resultList.Items.Add(voteReceiptItem);
           }
+
+          Status.SetMessage(Resources.TallyDone, MessageType.Success);
         }
         else
         {
-          Status.SetMessage("No result from server.", MessageType.Error);
+          Status.SetMessage(Resources.TallyNoResult, MessageType.Error);
         }
       }
       else

@@ -622,4 +622,13 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="VoteSingleOption" xml:space="preserve">
     <value>Du must für eine Option stimmen.</value>
   </data>
+  <data name="ChooseCertificateListHeader" xml:space="preserve">
+    <value>Deine Zertifikate</value>
+  </data>
+  <data name="TallyDone" xml:space="preserve">
+    <value>Abstimmung ist ausgezählt.</value>
+  </data>
+  <data name="TallyNoResult" xml:space="preserve">
+    <value>Keine Resultat vom Server.</value>
+  </data>
 </root>

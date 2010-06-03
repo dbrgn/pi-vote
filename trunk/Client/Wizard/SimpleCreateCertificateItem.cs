@@ -17,30 +17,22 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Client
 {
-  public partial class SimpleChooseCertificateItem : WizardItem
+  public partial class SimpleCreateCertificateItem : WizardItem
   {
     private Certificate certificate;
     private Signed<SignatureRequest> signedRequest;
     private bool run = false;
     private Exception exception;
     private bool done = false;
-    private bool canNext = false;
 
-    public SimpleChooseCertificateItem()
+    public SimpleCreateCertificateItem()
     {
       InitializeComponent();
     }
 
     public override WizardItem Next()
     {
-      if (this.advancedRadioButton.Checked)
-      {
-        return new ChooseCertificateItem();
-      }
-      else
-      {
-        return new CheckCertificateItem();
-      }
+      return new CheckCertificateItem();
     }
 
     public override WizardItem Previous()
@@ -55,7 +47,7 @@ namespace Pirate.PiVote.Client
 
     public override bool CanNext
     {
-      get { return !this.run && this.canNext; }
+      get { return false; }
     }
 
     public override bool CancelIsDone
@@ -79,82 +71,41 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
-      this.advancedRadioButton.Enabled = true;
-      this.createRadioButton.Enabled = true;
-      this.importRadioButton.Enabled = true;
-      this.createRadioButton.Checked = true;
+      this.typeComboBox.Enabled = true;
+      this.firstNameTextBox.Enabled = false;
+      this.familyNameTextBox.Enabled = false;
+      this.functionNameTextBox.Enabled = false;
+      this.emailAddressTextBox.Enabled = false;
+
+      CheckValid();
+
+      this.printButton.Enabled = false;
+      this.uploadButton.Enabled = false;
+
+      this.done = false;
+      OnUpdateWizard();
     }
 
     public override void UpdateLanguage()
     {
       base.UpdateLanguage();
 
+      this.typeLabel.Text = Resources.CreateCertificateType;
       this.firstNameLabel.Text = Resources.CreateCertificateFirstname;
       this.familyNameLabel.Text = Resources.CreateCertificateSurname;
       this.emailAddressLabel.Text = Resources.CreateCertificateEmailAddress;
+      this.functionNameLabel.Text = Resources.CreateCertificateFunction;
 
-      this.advancedRadioButton.Text = Resources.SimpleChooseCertificateAdvancedOption;
-      this.createRadioButton.Text = Resources.SimpleChooseCertificateCreateOption;
-      this.importRadioButton.Text = Resources.SimpleChooseCertificateImportOption;
-
-      this.importButton.Text = Resources.SimpleChooseCertificateImportButton;
       this.createButton.Text = Resources.SimpleChooseCertificateCreateButton;
       this.printButton.Text = Resources.SimpleChooseCertificatePrintButton;
       this.uploadButton.Text = Resources.SimpleChooseCertificateUploadButton;
 
-      this.headerLabel.Text = Resources.SimpleChooseCertificateHeader;
       this.explainCreateLabel.Text = Resources.SimpleChooseCertificateCreateExplain;
-    }
 
-    private void createRadioButton_CheckedChanged(object sender, EventArgs e)
-    {
-      if (this.createRadioButton.Checked)
-      {
-        this.firstNameTextBox.Enabled = true;
-        this.familyNameTextBox.Enabled = true;
-        this.emailAddressTextBox.Enabled = true;
-        CheckValid();
-        this.printButton.Enabled = false;
-        this.uploadButton.Enabled = false;
-        this.importButton.Enabled = false;
-        this.done = false;
-        this.canNext = false;
-        OnUpdateWizard();
-      }
-    }
-
-    private void importReadioButton_CheckedChanged(object sender, EventArgs e)
-    {
-      if (this.importRadioButton.Checked)
-      {
-        this.firstNameTextBox.Enabled = false;
-        this.familyNameTextBox.Enabled = false;
-        this.emailAddressTextBox.Enabled = false;
-        this.createButton.Enabled = false;
-        this.printButton.Enabled = false;
-        this.uploadButton.Enabled = false;
-        this.importButton.Enabled = true;
-        this.done = false;
-        this.canNext = false;
-        OnUpdateWizard();
-      }
-    }
-
-    private void advancedRadioButton_CheckedChanged(object sender, EventArgs e)
-    {
-      if (this.advancedRadioButton.Checked)
-      {
-        this.firstNameTextBox.Enabled = false;
-        this.familyNameTextBox.Enabled = false;
-        this.emailAddressTextBox.Enabled = false;
-        this.createRadioButton.Enabled = false;
-        this.printButton.Enabled = false;
-        this.uploadButton.Enabled = false;
-        this.importButton.Enabled = false;
-        this.done = false;
-        this.canNext = true;
-        OnUpdateWizard();
-      }
+      this.typeComboBox.Items.Clear();
+      this.typeComboBox.Items.Add(Resources.CreateCertificateTypeVoter);
+      this.typeComboBox.Items.Add(Resources.CreateCertificateTypeAuthority);
+      this.typeComboBox.Items.Add(Resources.CreateCertificateTypeAdmin);
     }
 
     private void createButton_Click(object sender, EventArgs e)
@@ -162,16 +113,33 @@ namespace Pirate.PiVote.Client
       this.run = true;
       OnUpdateWizard();
 
-      this.advancedRadioButton.Enabled = false;
-      this.createRadioButton.Enabled = false;
-      this.importRadioButton.Enabled = false;
-
+      this.typeComboBox.Enabled = false;
       this.firstNameTextBox.Enabled = false;
       this.familyNameTextBox.Enabled = false;
+      this.functionNameTextBox.Enabled = false;
       this.emailAddressTextBox.Enabled = false;
       this.createButton.Enabled = false;
 
-      this.certificate = new VoterCertificate();
+      string fullName = string.Format("{0} {1}, {2}",
+        this.firstNameTextBox.Text,
+        this.familyNameTextBox.Text,
+        this.functionNameTextBox.Text);
+
+      switch (this.typeComboBox.SelectedIndex)
+      {
+        case 0:
+          this.certificate = new VoterCertificate();
+          break;
+        case 1:
+          this.certificate = new AuthorityCertificate(fullName);
+          break;
+        case 2:
+          this.certificate = new AdminCertificate(fullName);
+          break;
+        default:
+          throw new InvalidOperationException("Bad type selection.");
+      }
+
       this.certificate.CreateSelfSignature();
 
       var request = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
@@ -185,8 +153,10 @@ namespace Pirate.PiVote.Client
     private void CheckValid()
     {
       this.createButton.Enabled =
+        this.typeComboBox.SelectedIndex >= 0 &&
         !this.firstNameTextBox.Text.IsNullOrEmpty() &&
         !this.familyNameTextBox.Text.IsNullOrEmpty() &&
+        (!this.functionNameTextBox.Text.IsNullOrEmpty() || this.typeComboBox.SelectedIndex == 0) &&
         Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text);
     }
 
@@ -269,26 +239,20 @@ namespace Pirate.PiVote.Client
       this.exception = exception;
     }
 
-    private void importButton_Click(object sender, EventArgs e)
+    private void typeComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-      OpenFileDialog dialog = new OpenFileDialog();
-      dialog.Title = Resources.ChooseCertificateLoadDialog;
-      dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-      dialog.CheckPathExists = true;
-      dialog.CheckFileExists = true;
-      dialog.Filter = Files.CertificateFileFilter;
+      this.firstNameTextBox.Enabled = this.typeComboBox.SelectedIndex >= 0;
+      this.familyNameTextBox.Enabled = this.typeComboBox.SelectedIndex >= 0;
+      this.emailAddressTextBox.Enabled = this.typeComboBox.SelectedIndex >= 0;
+      this.functionNameTextBox.Enabled = 
+        this.typeComboBox.SelectedIndex == 1 || 
+        this.typeComboBox.SelectedIndex == 2;
+      CheckValid();
+    }
 
-      if (dialog.ShowDialog() == DialogResult.OK)
-      {
-        this.certificate = Serializable.Load<Certificate>(dialog.FileName);
-
-        string newFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + ".pi-cert");
-        File.Copy(dialog.FileName, newFileName);
-      }
-
-      this.canNext = true;
-      this.done = false;
-      OnUpdateWizard();
+    private void functionNameTextBox_TextChanged(object sender, EventArgs e)
+    {
+      CheckValid();
     }
   }
 }
