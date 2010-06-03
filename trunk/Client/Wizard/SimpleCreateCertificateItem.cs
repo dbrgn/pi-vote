@@ -37,7 +37,7 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Previous()
     {
-      return new StartItem();
+      return new ChooseCertificateItem();
     }
 
     public override WizardItem Cancel()

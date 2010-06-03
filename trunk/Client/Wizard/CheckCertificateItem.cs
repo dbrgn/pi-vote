@@ -119,6 +119,7 @@ namespace Pirate.PiVote.Client
       {
         switch (this.status)
         {
+          case CheckStatus.CheckCertificateDeclined:
           case CheckStatus.CheckCertificateFailed:
             return true;
           default:

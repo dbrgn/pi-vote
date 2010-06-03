@@ -45,7 +45,9 @@ namespace Pirate.PiVote.Client
         }
         else
         {
-          return new CheckCertificateItem();
+          CheckCertificateItem checkItem = new CheckCertificateItem();
+          checkItem.PreviousItem = this;
+          return checkItem;
         }
       }
     }
@@ -87,8 +89,10 @@ namespace Pirate.PiVote.Client
     public override void Begin()
     {
       this.nextIsCreate = false;
+      Status.Certificate = null;
 
       DirectoryInfo directory = new DirectoryInfo(Status.DataPath);
+      this.certificateList.Items.Clear();
 
       foreach (FileInfo file in directory.GetFiles("*.pi-cert"))
       {
@@ -111,6 +115,8 @@ namespace Pirate.PiVote.Client
           this.certificateList.Items.Add(item);
         }
       }
+
+      OnUpdateWizard();
     }
 
     private void loadButton_Click(object sender, EventArgs e)
