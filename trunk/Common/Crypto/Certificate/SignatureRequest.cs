@@ -50,7 +50,7 @@ namespace Pirate.PiVote.Crypto
       get
       {
         return !FirstName.IsNullOrEmpty() &&
-               !FamilyName.IsNormalized() &&
+               !FamilyName.IsNullOrEmpty() &&
                Mailer.IsEmailAddressValid(EmailAddress);
       }
     }
