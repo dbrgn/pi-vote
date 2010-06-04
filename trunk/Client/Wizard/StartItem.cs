@@ -272,5 +272,10 @@ namespace Pirate.PiVote.Client
 
       e.Graphics.DrawImage(Resources.ballot_200 , 3, 3, 200, 200);
     }
+
+    private void alphaBugLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+      System.Diagnostics.Process.Start("https://dev.piratenpartei.ch/projects/pi-vote");
+    }
   }
 }
