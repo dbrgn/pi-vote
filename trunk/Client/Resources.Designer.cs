@@ -1319,6 +1319,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Certificate import successful..
+        /// </summary>
+        internal static string SimpleChooseCertificateImportDone {
+            get {
+                return ResourceManager.GetString("SimpleChooseCertificateImportDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I already have a certificate.
         /// </summary>
         internal static string SimpleChooseCertificateImportOption {

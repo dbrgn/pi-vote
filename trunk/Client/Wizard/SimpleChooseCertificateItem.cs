@@ -39,6 +39,8 @@ namespace Pirate.PiVote.Client
       }
       else
       {
+        Status.Certificate = this.certificate;
+
         return new CheckCertificateItem();
       }
     }
@@ -284,6 +286,13 @@ namespace Pirate.PiVote.Client
 
         string newFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + ".pi-cert");
         File.Copy(dialog.FileName, newFileName);
+
+        this.importButton.Enabled = false;
+        this.createRadioButton.Enabled = false;
+        this.importRadioButton.Enabled = false;
+        this.advancedRadioButton.Enabled = false;
+
+        Status.SetMessage(Resources.SimpleChooseCertificateImportDone, MessageType.Success);
       }
 
       this.canNext = true;

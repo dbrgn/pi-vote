@@ -631,4 +631,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="TallyNoResult" xml:space="preserve">
     <value>Keine Resultat vom Server.</value>
   </data>
+  <data name="SimpleChooseCertificateImportDone" xml:space="preserve">
+    <value>Zertifikat erfolgreich importiert.</value>
+  </data>
 </root>
