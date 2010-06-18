@@ -235,7 +235,7 @@
     <value>Lade Zertifizierungsanfragen herunter.</value>
   </data>
   <data name="ClientGetSignatureRequestsGetList" xml:space="preserve">
-    <value>Lade liste der Zertifizierungsanfragen herunter.</value>
+    <value>Lade Liste der Zertifizierungsanfragen herunter.</value>
   </data>
   <data name="ClientGetSignatureRequestsGetRequest" xml:space="preserve">
     <value>Lade Zertifizierungsanfragen herunter {0} / {1}.</value>
@@ -415,7 +415,7 @@
     <value>Signatur der Teilantwort ist falsch.</value>
   </data>
   <data name="ExceptionShareResponseNotAccepted" xml:space="preserve">
-    <value>Teilantwort akzeptiert nicht.</value>
+    <value>Teilantwort ist negativ.</value>
   </data>
   <data name="ExceptionShareResponseParametersDontMatch" xml:space="preserve">
     <value>Teilantwort stimmt nicht mit Abstimmungsparametern überein</value>
@@ -430,7 +430,7 @@
     <value>Offline</value>
   </data>
   <data name="ClientSetCertificateStorage" xml:space="preserve">
-    <value>Lade Zertifikatsspeicher auf den server herauf.</value>
+    <value>Lade Zertifikatsspeicher auf den Server herauf.</value>
   </data>
   <data name="ExceptionInvalidSignatureRequest" xml:space="preserve">
     <value>Daten der Zertifizierungsanfrage nicht gültig.</value>

@@ -145,10 +145,10 @@
     <value>Teile &amp;Prüfen</value>
   </data>
   <data name="AuthorityCheckSharesAccept" xml:space="preserve">
-    <value>Die Teile wurden geprüft und akzeptiert. Die Antwort wurde auf den server hochgeladen.</value>
+    <value>Die Teile wurden geprüft und akzeptiert. Die Antwort wurde auf den Server hochgeladen.</value>
   </data>
   <data name="AuthorityCheckSharesDecline" xml:space="preserve">
-    <value>Die Teile wurden geprüft aber nicht akzeptiert. Die Antwort wurde auf den server hochgeladen.</value>
+    <value>Die Teile wurden geprüft aber nicht akzeptiert. Die Antwort wurde auf den Server hochgeladen.</value>
   </data>
   <data name="AuthorityCreateShares" xml:space="preserve">
     <value>Teile &amp;erstellen</value>
@@ -160,7 +160,7 @@
     <value>&amp;Entschlüsseln</value>
   </data>
   <data name="AuthorityDecipherDone" xml:space="preserve">
-    <value>Partielle Entschlüsselungen wurde berechnet und auf den Server hochgeladen.</value>
+    <value>Partielle Entschlüsselungen wurden berechnet und auf den Server hochgeladen.</value>
   </data>
   <data name="AuthorityListStatus" xml:space="preserve">
     <value>Status</value>
@@ -235,7 +235,7 @@
     <value>Der Server hat eine Antwort auf Ihre Zertifizierungsanfrage gesendet und die Signatur wurde zu Ihrem Zertifikat hinzugefügt.</value>
   </data>
   <data name="CheckCertificateResponseDeclined" xml:space="preserve">
-    <value>Der Server hat eine Antwort auf Ihre Zertifizierungsanfrage gesendet, aber die Zertifizierungstelle hat Ihre Anfrage abgelehnt, weil: </value>
+    <value>Der Server hat eine Antwort auf Ihre Zertifizierungsanfrage gesendet, aber die Zertifizierungstelle hat Ihre Anfrage abgelehnt, weil:</value>
   </data>
   <data name="CheckCertificateResponseInvalid" xml:space="preserve">
     <value>Der Server hat eine Antwort auf Ihre Zertifizierungsanfrage gesendet, aber die Antwort ist ungültig. Bitte kontakieren Sie Ihren Abstimmungsadministrator.</value>
@@ -262,7 +262,7 @@
     <value>Typ</value>
   </data>
   <data name="CreateCertificateDone" xml:space="preserve">
-    <value>Ihre Zertifizierungsanfrage wurde auf den Server hochgeladen. Sie müssen jetzt warten, bis die Zertifizierungstelle Ihre anfrage beantwortet.</value>
+    <value>Ihre Zertifizierungsanfrage wurde auf den Server hochgeladen. Sie müssen jetzt warten, bis die Zertifizierungstelle Ihre Anfrage beantwortet.</value>
   </data>
   <data name="CreateCertificateFirstname" xml:space="preserve">
     <value>Vorname</value>
@@ -634,4 +634,8 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="SimpleChooseCertificateImportDone" xml:space="preserve">
     <value>Zertifikat erfolgreich importiert.</value>
   </data>
+  <data name="OkButton">&amp;OK</data>
+  <data name="SaveSignatureRequestButton">&amp;Speichern...</data>
+  <data name="VoteDescriptionCloseButton">&amp;Schliessen</data>
+  <data name="VoteDescriptionTitle">Beschreibung</data>
 </root>

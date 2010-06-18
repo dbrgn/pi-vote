@@ -51,17 +51,22 @@ namespace ResourceManager
       {
         XElement rootElement = document.Value.Element("root");
         Dictionary<string, string> dataList = new Dictionary<string, string>();
-        Content.Foreach(c => dataList.Add(c.Value.Name, c.Value.Text.GetOrEmpty(document.Key)));
+        Content
+          .Where(c => !c.Value.Text.GetOrEmpty(document.Key).IsNullOrEmpty())
+          .Foreach(c => dataList.Add(c.Value.Name, c.Value.Text.GetOrEmpty(document.Key)));
 
         foreach (XElement dataElement in rootElement.Elements("data"))
         {
-          string name = dataElement.Attribute("name").Value;
-          if (dataList.ContainsKey(name))
+          if (dataElement.Elements("value").Count() > 0)
           {
-            dataElement.Element("value").Value = dataList[name];
-          }
+            string name = dataElement.Attribute("name").Value;
+            if (dataList.ContainsKey(name))
+            {
+              dataElement.Element("value").Value = dataList[name];
+            }
 
-          dataList.Remove(name);
+            dataList.Remove(name);
+          }
         }
 
         foreach (KeyValuePair<string, string> dataItem in dataList)
@@ -95,8 +100,28 @@ namespace ResourceManager
     public void ImportCsv(string fileName)
     {
       string[] lines = File.ReadAllLines(fileName);
+      List<string> changedLines = new List<string>();
+      string changedLine = null;
 
       foreach (string line in lines)
+      {
+        if (changedLine == null)
+        {
+          changedLine = line;
+        }
+        else
+        {
+          changedLine = changedLine + Environment.NewLine + line;
+        }
+
+        if (!changedLine.Contains("\"") || changedLine.EndsWith("\""))
+        {
+          changedLines.Add(changedLine);
+          changedLine = null;
+        }
+      }
+
+      foreach (string line in changedLines)
       {
         IEnumerable<string> rows = ParseLine(line);
 
@@ -110,9 +135,14 @@ namespace ResourceManager
           if (!Content.ContainsKey(name))
             Content.Add(name, new Resource(name));
 
-          Content[name].Text.Set(Language.English, english);
-          Content[name].Text.Set(Language.German, german);
-          Content[name].Text.Set(Language.French, french);
+          if (!english.IsNullOrEmpty() && english != Content[name].Text.GetOrEmpty(Language.English))
+            Content[name].Text.Set(Language.English, english);
+
+          if (!german.IsNullOrEmpty() && german != Content[name].Text.GetOrEmpty(Language.German))
+            Content[name].Text.Set(Language.German, german);
+
+          if (!french.IsNullOrEmpty() && french != Content[name].Text.GetOrEmpty(Language.French))
+            Content[name].Text.Set(Language.French, french);
         }
       }
     }

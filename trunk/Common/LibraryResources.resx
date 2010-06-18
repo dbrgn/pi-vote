@@ -328,7 +328,7 @@
     <value>No authority with supplied certificate known.</value>
   </data>
   <data name="ExceptionNoAuthorizedAdmin" xml:space="preserve">
-    <value>You ar no authorized administrator.</value>
+    <value>You are no authorized administrator.</value>
   </data>
   <data name="ExceptionNoAuthorizedAuthority" xml:space="preserve">
     <value>Supplied certificate is not from an authority.</value>
@@ -419,7 +419,7 @@
     <value>Share response has bad signature.</value>
   </data>
   <data name="ExceptionShareResponseNotAccepted" xml:space="preserve">
-    <value>Share response does not accept.</value>
+    <value>Share response is negative.</value>
   </data>
   <data name="ExceptionShareResponseParametersDontMatch" xml:space="preserve">
     <value>Share response does not match voting parameters.</value>

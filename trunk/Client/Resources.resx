@@ -145,10 +145,10 @@
     <value>C&amp;heck Shares</value>
   </data>
   <data name="AuthorityCheckSharesAccept" xml:space="preserve">
-    <value>Shares where verified and accepted. Our answer was uploaded to server.</value>
+    <value>Shares were verified and accepted. Our answer was uploaded to server.</value>
   </data>
   <data name="AuthorityCheckSharesDecline" xml:space="preserve">
-    <value>Shares where verified but not accepted. Our answer was uploaded to server.</value>
+    <value>Shares were verified but not accepted. Our answer was uploaded to server.</value>
   </data>
   <data name="AuthorityCreateShares" xml:space="preserve">
     <value>&amp;Create Shares</value>
@@ -160,7 +160,7 @@
     <value>&amp;Decipher</value>
   </data>
   <data name="AuthorityDecipherDone" xml:space="preserve">
-    <value>Partial deciphers where calculated and uploaded to the server.</value>
+    <value>Partial deciphers were calculated and uploaded to the server.</value>
   </data>
   <data name="AuthorityListStatus" xml:space="preserve">
     <value>Status</value>
@@ -259,7 +259,7 @@
     <value>Type</value>
   </data>
   <data name="CreateCertificateDone" xml:space="preserve">
-    <value>Your request has been submitted to the server. You must now wait for the certificat authority to process it.</value>
+    <value>Your request has been submitted to the server. You must now wait for the certificate authority to process it.</value>
   </data>
   <data name="CreateCertificateFirstname" xml:space="preserve">
     <value>Firstname</value>
@@ -349,7 +349,7 @@
     <value>Save Signature Requests</value>
   </data>
   <data name="SignatureResponseUploaded" xml:space="preserve">
-    <value>Signature responses have be uploaded to the server.</value>
+    <value>Signature responses were uploaded to the server.</value>
   </data>
   <data name="TotalBallots" xml:space="preserve">
     <value>Total ballots</value>
@@ -466,7 +466,7 @@
     <value>Alpha Version</value>
   </data>
   <data name="StartAlphaWarning" xml:space="preserve">
-    <value>This is an alpha verion of this software. All votings are just for test purposes. Please report all bugs to:</value>
+    <value>This is an alpha version of this software. All votings are just for test purposes. Please report all bugs to:</value>
   </data>
   <data name="StartTitle" xml:space="preserve">
     <value>Pirate Party Switzerland eVoting</value>
@@ -566,7 +566,7 @@
     <value>&amp;Create</value>
   </data>
   <data name="SimpleChooseCertificateCreateExplain" xml:space="preserve">
-    <value>To get a certificate signed by the certificate authority you first need to create your certificate.
+    <value>To get a certificate signed by the certificate authority you first need to create your certificate. 
 
 Then you must fill in your personal data which is then included in your request for certificate signing. This request will be printed out and you need to meet three voting authorities which will check your identity, sign your paper request and forward it to the certificate authority.
 
