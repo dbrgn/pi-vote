@@ -94,6 +94,7 @@ namespace Pirate.PiVote.Client
       this.firstNameLabel.Text = Resources.CreateCertificateFirstname;
       this.familyNameLabel.Text = Resources.CreateCertificateSurname;
       this.emailAddressLabel.Text = Resources.CreateCertificateEmailAddress;
+      this.cantonLabel.Text = Resources.CreateCertificateCanton;
 
       this.advancedRadioButton.Text = Resources.SimpleChooseCertificateAdvancedOption;
       this.createRadioButton.Text = Resources.SimpleChooseCertificateCreateOption;
@@ -106,6 +107,12 @@ namespace Pirate.PiVote.Client
 
       this.headerLabel.Text = Resources.SimpleChooseCertificateHeader;
       this.explainCreateLabel.Text = Resources.SimpleChooseCertificateCreateExplain;
+
+      this.cantonComboBox.Items.Clear();
+      foreach (Canton canton in Enum.GetValues(typeof(Canton)))
+      {
+        this.cantonComboBox.Items.Add(canton.Text());
+      }
     }
 
     private void createRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -115,6 +122,7 @@ namespace Pirate.PiVote.Client
         this.firstNameTextBox.Enabled = true;
         this.familyNameTextBox.Enabled = true;
         this.emailAddressTextBox.Enabled = true;
+        this.cantonComboBox.Enabled = true;
         CheckValid();
         this.printButton.Enabled = false;
         this.uploadButton.Enabled = false;
@@ -132,6 +140,7 @@ namespace Pirate.PiVote.Client
         this.firstNameTextBox.Enabled = false;
         this.familyNameTextBox.Enabled = false;
         this.emailAddressTextBox.Enabled = false;
+        this.cantonComboBox.Enabled = false;
         this.createButton.Enabled = false;
         this.printButton.Enabled = false;
         this.uploadButton.Enabled = false;
@@ -149,6 +158,7 @@ namespace Pirate.PiVote.Client
         this.firstNameTextBox.Enabled = false;
         this.familyNameTextBox.Enabled = false;
         this.emailAddressTextBox.Enabled = false;
+        this.cantonComboBox.Enabled = false;
         this.createRadioButton.Enabled = false;
         this.printButton.Enabled = false;
         this.uploadButton.Enabled = false;
@@ -171,9 +181,10 @@ namespace Pirate.PiVote.Client
       this.firstNameTextBox.Enabled = false;
       this.familyNameTextBox.Enabled = false;
       this.emailAddressTextBox.Enabled = false;
+      this.cantonComboBox.Enabled = false;
       this.createButton.Enabled = false;
 
-      this.certificate = new VoterCertificate();
+      this.certificate = new VoterCertificate((Canton)this.cantonComboBox.SelectedIndex);
       this.certificate.CreateSelfSignature();
 
       var request = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
@@ -189,7 +200,8 @@ namespace Pirate.PiVote.Client
       this.createButton.Enabled =
         !this.firstNameTextBox.Text.IsNullOrEmpty() &&
         !this.familyNameTextBox.Text.IsNullOrEmpty() &&
-        Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text);
+        Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text) &&
+        this.cantonComboBox.SelectedIndex >= 0;
     }
 
     private void firstNameTextBox_TextChanged(object sender, EventArgs e)

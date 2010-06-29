@@ -634,8 +634,25 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="SimpleChooseCertificateImportDone" xml:space="preserve">
     <value>Zertifikat erfolgreich importiert.</value>
   </data>
-  <data name="OkButton">&amp;OK</data>
-  <data name="SaveSignatureRequestButton">&amp;Speichern...</data>
-  <data name="VoteDescriptionCloseButton">&amp;Schliessen</data>
-  <data name="VoteDescriptionTitle">Beschreibung</data>
+  <data name="OkButton" xml:space="preserve">
+    <value>&amp;OK</value>
+  </data>
+  <data name="SaveSignatureRequestButton" xml:space="preserve">
+    <value>&amp;Speichern...</value>
+  </data>
+  <data name="VoteDescriptionCloseButton" xml:space="preserve">
+    <value>&amp;Schliessen</value>
+  </data>
+  <data name="VoteDescriptionTitle" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="CreateCertificateCanton" xml:space="preserve">
+    <value>Kanton:</value>
+  </data>
+  <data name="CreateVotingCanton" xml:space="preserve">
+    <value>Kanton:</value>
+  </data>
+  <data name="VotingCanton" xml:space="preserve">
+    <value>Kanton</value>
+  </data>
 </root>

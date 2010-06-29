@@ -662,4 +662,13 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="SimpleChooseCertificateImportDone" xml:space="preserve">
     <value>Certificate import successful.</value>
   </data>
+  <data name="CreateCertificateCanton" xml:space="preserve">
+    <value>Canton:</value>
+  </data>
+  <data name="CreateVotingCanton" xml:space="preserve">
+    <value>Canton:</value>
+  </data>
+  <data name="VotingCanton" xml:space="preserve">
+    <value>Canton</value>
+  </data>
 </root>

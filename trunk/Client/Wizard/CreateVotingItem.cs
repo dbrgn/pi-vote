@@ -258,7 +258,8 @@ namespace Pirate.PiVote.Client
           this.titleBox.Text,
           this.descriptionBox.Text,
           this.votingFromPicker.Value.Date,
-          this.votingUntilPicker.Value.Date);
+          this.votingUntilPicker.Value.Date,
+          (Canton)this.cantonComboBox.SelectedIndex);
 
       this.run = false;
     }
@@ -301,6 +302,7 @@ namespace Pirate.PiVote.Client
       enable &= !indices.Any(i => indices.Where(x => x == i).Count() > 1);
 
       enable &= this.questionListView.Items.Count >= 1;
+      enable &= this.cantonComboBox.SelectedIndex >= 0;
 
       this.createButton.Enabled = enable;
     }
@@ -358,6 +360,13 @@ namespace Pirate.PiVote.Client
       this.questionLabel.Text = Resources.CreateVotingQuestions;
       this.textColumnHeader.Text = Resources.CreateVotingQuestionText;
       this.descriptionColumnHeader.Text = Resources.CreateVotingQuestionDescription;
+      this.cantonLabel.Text = Resources.CreateVotingCanton;
+
+      this.cantonComboBox.Items.Clear();
+      foreach (Canton canton in Enum.GetValues(typeof(Canton)))
+      {
+        this.cantonComboBox.Items.Add(canton.Text());
+      }
     }
 
     private void addToolStripMenuItem_Click(object sender, EventArgs e)

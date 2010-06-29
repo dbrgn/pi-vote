@@ -128,6 +128,11 @@ namespace Pirate.PiVote.Crypto
       bool acceptVote = true;
       Envelope envelope = signedEnvelope.Value;
 
+      //Certificate is of voter and valid for that canton.
+      acceptVote &= signedEnvelope.Certificate is VoterCertificate &&
+                    (this.parameters.Canton == Canton.None ||
+                    ((VoterCertificate)signedEnvelope.Certificate).Canton == this.parameters.Canton);
+
       //Signature must be valid.
       acceptVote &= signedEnvelope.Verify(this.certificateStorage, envelope.Date);
 
@@ -137,6 +142,7 @@ namespace Pirate.PiVote.Crypto
       //Date must be in voting period.
       acceptVote &= envelope.Date.Date >= this.parameters.VotingBeginDate;
       acceptVote &= envelope.Date.Date <= this.parameters.VotingEndDate;
+
 
       //Ballot must verify (prooves).
       for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)

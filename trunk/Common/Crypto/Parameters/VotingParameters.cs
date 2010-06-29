@@ -43,6 +43,11 @@ namespace Pirate.PiVote.Crypto
     /// Date a which voting ends.
     /// </summary>
     public DateTime VotingEndDate { get; private set; }
+
+    /// <summary>
+    /// Canton in which the voting takes place.
+    /// </summary>
+    public Canton Canton { get; private set; }
     
     /// <summary>
     /// Create a new voting.
@@ -51,7 +56,8 @@ namespace Pirate.PiVote.Crypto
       MultiLanguageString title, 
       MultiLanguageString description, 
       DateTime votingBeginDate, 
-      DateTime votingEndDate)
+      DateTime votingEndDate,
+      Canton canton)
     {
       if (title == null)
         throw new ArgumentNullException("title");
@@ -63,6 +69,7 @@ namespace Pirate.PiVote.Crypto
       Description = description;
       VotingBeginDate = votingBeginDate;
       VotingEndDate = votingEndDate;
+      Canton = canton;
     }
 
     /// <summary>
@@ -119,6 +126,7 @@ namespace Pirate.PiVote.Crypto
       context.Write(Description);
       context.Write(VotingBeginDate);
       context.Write(VotingEndDate);
+      context.Write((int)Canton);
     }
 
     /// <summary>
@@ -133,6 +141,7 @@ namespace Pirate.PiVote.Crypto
       Description = context.ReadMultiLanguageString();
       VotingBeginDate = context.ReadDateTime();
       VotingEndDate = context.ReadDateTime();
+      Canton = (Canton)context.ReadInt32();
     }
   }
 }

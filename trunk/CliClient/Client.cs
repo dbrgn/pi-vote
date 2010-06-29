@@ -166,7 +166,8 @@ namespace Pirate.PiVote.CliClient
           new MultiLanguageString(title), 
           new MultiLanguageString(desc), 
           DateTime.Now, 
-          DateTime.Now.AddDays(1));
+          DateTime.Now.AddDays(1),
+          Canton.None);
 
       Question question = new Question(new MultiLanguageString(quest), new MultiLanguageString(string.Empty), 1);
 

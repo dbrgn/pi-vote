@@ -49,6 +49,7 @@ namespace Pirate.PiVote
     VoteSignatureNotValid             = 4000002,
     NoVoterCertificate                = 4000003,
     InvalidVoteReceipt                = 4000004,
+    BadCantonInCertificate            = 4000005,
 
     SignatureRequestInvalid           = 5000001,
     SignatureRequestResponded         = 5000002,
@@ -161,6 +162,8 @@ namespace Pirate.PiVote
           return LibraryResources.ExceptionShareResponseWrongAuthority;
         case ExceptionCode.InvalidSignatureRequest:
           return LibraryResources.ExceptionInvalidSignatureRequest;
+        case ExceptionCode.BadCantonInCertificate:
+          return LibraryResources.ExceptionBadCantonInCertificate;
         default:
           return LibraryResources.ExceptionUnknown;
       }

@@ -23,11 +23,14 @@ namespace Pirate.PiVote.Crypto
   /// </remarks>
   public class VoterCertificate : Certificate
   {
+    public Canton Canton { get; private set; }
+
     /// <summary>
     /// Creates a new voter certificate.
     /// </summary>
-    public VoterCertificate()
+    public VoterCertificate(Canton canton)
     {
+      Canton = canton;
     }
 
     /// <summary>
@@ -55,6 +58,7 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+      context.Write((int)Canton);
     }
 
     /// <summary>
@@ -64,6 +68,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+      Canton = (Canton)context.ReadInt32();
     }
 
     /// <summary>

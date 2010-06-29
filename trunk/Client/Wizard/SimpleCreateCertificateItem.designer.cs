@@ -57,6 +57,8 @@ namespace Pirate.PiVote.Client
       this.familyNameLabel = new System.Windows.Forms.Label();
       this.firstNameTextBox = new System.Windows.Forms.TextBox();
       this.firstNameLabel = new System.Windows.Forms.Label();
+      this.cantonComboBox = new System.Windows.Forms.ComboBox();
+      this.cantonLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // functionNameLabel
@@ -101,7 +103,7 @@ namespace Pirate.PiVote.Client
       // 
       // uploadButton
       // 
-      this.uploadButton.Location = new System.Drawing.Point(401, 294);
+      this.uploadButton.Location = new System.Drawing.Point(402, 320);
       this.uploadButton.Margin = new System.Windows.Forms.Padding(2);
       this.uploadButton.Name = "uploadButton";
       this.uploadButton.Size = new System.Drawing.Size(131, 25);
@@ -112,7 +114,7 @@ namespace Pirate.PiVote.Client
       // 
       // printButton
       // 
-      this.printButton.Location = new System.Drawing.Point(265, 294);
+      this.printButton.Location = new System.Drawing.Point(266, 320);
       this.printButton.Margin = new System.Windows.Forms.Padding(2);
       this.printButton.Name = "printButton";
       this.printButton.Size = new System.Drawing.Size(131, 25);
@@ -123,7 +125,7 @@ namespace Pirate.PiVote.Client
       // 
       // createButton
       // 
-      this.createButton.Location = new System.Drawing.Point(130, 294);
+      this.createButton.Location = new System.Drawing.Point(131, 320);
       this.createButton.Margin = new System.Windows.Forms.Padding(2);
       this.createButton.Name = "createButton";
       this.createButton.Size = new System.Drawing.Size(131, 25);
@@ -200,10 +202,32 @@ namespace Pirate.PiVote.Client
       this.firstNameLabel.TabIndex = 17;
       this.firstNameLabel.Text = "First name:";
       // 
+      // cantonComboBox
+      // 
+      this.cantonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cantonComboBox.FormattingEnabled = true;
+      this.cantonComboBox.Location = new System.Drawing.Point(129, 294);
+      this.cantonComboBox.Margin = new System.Windows.Forms.Padding(2);
+      this.cantonComboBox.Name = "cantonComboBox";
+      this.cantonComboBox.Size = new System.Drawing.Size(402, 22);
+      this.cantonComboBox.TabIndex = 32;
+      // 
+      // cantonLabel
+      // 
+      this.cantonLabel.AutoSize = true;
+      this.cantonLabel.Location = new System.Drawing.Point(16, 297);
+      this.cantonLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+      this.cantonLabel.Name = "cantonLabel";
+      this.cantonLabel.Size = new System.Drawing.Size(44, 14);
+      this.cantonLabel.TabIndex = 33;
+      this.cantonLabel.Text = "Canton:";
+      // 
       // SimpleCreateCertificateItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.cantonLabel);
+      this.Controls.Add(this.cantonComboBox);
       this.Controls.Add(this.functionNameLabel);
       this.Controls.Add(this.functionNameTextBox);
       this.Controls.Add(this.typeLabel);
@@ -243,6 +267,8 @@ namespace Pirate.PiVote.Client
     private TextBox functionNameTextBox;
     private Label typeLabel;
     private ComboBox typeComboBox;
+    private ComboBox cantonComboBox;
+    private Label cantonLabel;
 
   }
 }

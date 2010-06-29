@@ -117,6 +117,7 @@
     <Compile Include="Crypto\Base\ThreadedPrimeGenerator.cs" />
     <Compile Include="Crypto\Base\VerificationValue.cs" />
     <Compile Include="Crypto\Base\Proof.cs" />
+    <Compile Include="Crypto\Certificate\Canton.cs" />
     <Compile Include="Crypto\Parameters\BaseParameters.cs" />
     <Compile Include="Crypto\Base\PartialDecipher.cs" />
     <Compile Include="Crypto\Base\Polynomial.cs" />

@@ -50,7 +50,8 @@ namespace Pirate.PiVote.Crypto
           new MultiLanguageString("Zufrieden"), 
           new MultiLanguageString("Tada"), 
           DateTime.Now, 
-          DateTime.Now.AddDays(1));
+          DateTime.Now.AddDays(1),
+          Canton.None);
 
       Question question = new Question(new MultiLanguageString("Zufrieden?"), new MultiLanguageString(string.Empty), 1);
       question.AddOption(new Option(new MultiLanguageString("Nein"), new MultiLanguageString("Dagegen")));
@@ -129,7 +130,7 @@ namespace Pirate.PiVote.Crypto
       vs.DepositShareResponse(r4);
       vs.DepositShareResponse(r5);
 
-      var v1c = new VoterCertificate();
+      var v1c = new VoterCertificate(Canton.None);
       v1c.CreateSelfSignature();
       v1c.AddSignature(intermediate, validUntil);
 
@@ -147,7 +148,7 @@ namespace Pirate.PiVote.Crypto
 
       for (int i = 1000; i < 1000 + voters; i++)
       {
-        var vc = new VoterCertificate();
+        var vc = new VoterCertificate(Canton.None);
         vc.CreateSelfSignature();
         vc.AddSignature(intermediate, validUntil);
 
@@ -161,7 +162,7 @@ namespace Pirate.PiVote.Crypto
 
       for (int i = 2000; i < 2000 + voters; i++)
       {
-        var vc = new VoterCertificate();
+        var vc = new VoterCertificate(Canton.None);
         vc.CreateSelfSignature();
         vc.AddSignature(intermediate, validUntil);
 

@@ -151,9 +151,11 @@ namespace Pirate.PiVote.Client
     private void AddVotingToList(VotingDescriptor voting)
     {
       ListViewItem item = new ListViewItem(voting.Title.Text);
+      item.SubItems.Add(voting.Canton.Text());
       item.SubItems.Add(voting.Status.Text());
       item.SubItems.Add(voting.VoteFrom.ToShortDateString());
       item.SubItems.Add(voting.VoteUntil.ToShortDateString());
+
       if (voting.AuthoritiesDone == null)
       {
         item.SubItems.Add(string.Empty);
@@ -232,6 +234,7 @@ namespace Pirate.PiVote.Client
       base.UpdateLanguage();
 
       this.titleColumnHeader.Text = Resources.VotingTitle;
+      this.cantonColumnHeader.Text = Resources.VotingCanton;
       this.statusColumnHeader.Text = Resources.VotingStatus;
       this.voteFromColumnHeader.Text = Resources.VotingListVoteFrom;
       this.voteUntilColumnHeader.Text = Resources.VotingListVoteUntil;

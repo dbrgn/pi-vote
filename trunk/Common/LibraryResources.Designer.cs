@@ -61,6 +61,249 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aargau.
+        /// </summary>
+        public static string cantonAG {
+            get {
+                return ResourceManager.GetString("cantonAG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appenzell Innerrhoden.
+        /// </summary>
+        public static string cantonAI {
+            get {
+                return ResourceManager.GetString("cantonAI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appenzell Ausserrhoden.
+        /// </summary>
+        public static string cantonAR {
+            get {
+                return ResourceManager.GetString("cantonAR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bern.
+        /// </summary>
+        public static string cantonBE {
+            get {
+                return ResourceManager.GetString("cantonBE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basel-Landschaft.
+        /// </summary>
+        public static string cantonBL {
+            get {
+                return ResourceManager.GetString("cantonBL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basel-Stadt.
+        /// </summary>
+        public static string cantonBS {
+            get {
+                return ResourceManager.GetString("cantonBS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Freiburg.
+        /// </summary>
+        public static string cantonFR {
+            get {
+                return ResourceManager.GetString("cantonFR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genf.
+        /// </summary>
+        public static string cantonGE {
+            get {
+                return ResourceManager.GetString("cantonGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Glarus.
+        /// </summary>
+        public static string cantonGL {
+            get {
+                return ResourceManager.GetString("cantonGL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Graubünden.
+        /// </summary>
+        public static string cantonGR {
+            get {
+                return ResourceManager.GetString("cantonGR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jura.
+        /// </summary>
+        public static string cantonJU {
+            get {
+                return ResourceManager.GetString("cantonJU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Luzern.
+        /// </summary>
+        public static string cantonLU {
+            get {
+                return ResourceManager.GetString("cantonLU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neuenburg.
+        /// </summary>
+        public static string cantonNE {
+            get {
+                return ResourceManager.GetString("cantonNE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string cantonNone {
+            get {
+                return ResourceManager.GetString("cantonNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nidwalden.
+        /// </summary>
+        public static string cantonNW {
+            get {
+                return ResourceManager.GetString("cantonNW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Obwalden.
+        /// </summary>
+        public static string cantonOW {
+            get {
+                return ResourceManager.GetString("cantonOW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to St. Gallen.
+        /// </summary>
+        public static string cantonSG {
+            get {
+                return ResourceManager.GetString("cantonSG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schaffhausen.
+        /// </summary>
+        public static string cantonSH {
+            get {
+                return ResourceManager.GetString("cantonSH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solothurn.
+        /// </summary>
+        public static string cantonSO {
+            get {
+                return ResourceManager.GetString("cantonSO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Schwyz.
+        /// </summary>
+        public static string cantonSZ {
+            get {
+                return ResourceManager.GetString("cantonSZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thurgau.
+        /// </summary>
+        public static string cantonTG {
+            get {
+                return ResourceManager.GetString("cantonTG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tessin.
+        /// </summary>
+        public static string cantonTI {
+            get {
+                return ResourceManager.GetString("cantonTI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uri.
+        /// </summary>
+        public static string cantonUR {
+            get {
+                return ResourceManager.GetString("cantonUR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waadt.
+        /// </summary>
+        public static string cantonVD {
+            get {
+                return ResourceManager.GetString("cantonVD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wallis.
+        /// </summary>
+        public static string cantonVS {
+            get {
+                return ResourceManager.GetString("cantonVS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zug.
+        /// </summary>
+        public static string cantonZG {
+            get {
+                return ResourceManager.GetString("cantonZG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zürich.
+        /// </summary>
+        public static string cantonZH {
+            get {
+                return ResourceManager.GetString("cantonZH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to N/A.
         /// </summary>
         public static string CertificateFullNameNotAvailable {
@@ -646,6 +889,15 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You ar not allowed to vote in the canton of this voting..
+        /// </summary>
+        public static string ExceptionBadCantonInCertificate {
+            get {
+                return ResourceManager.GetString("ExceptionBadCantonInCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Binary data is currupted..
         /// </summary>
         public static string ExceptionBadSerializableFormat {
@@ -718,7 +970,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You ar no authorized administrator..
+        ///   Looks up a localized string similar to You are no authorized administrator..
         /// </summary>
         public static string ExceptionNoAuthorizedAdmin {
             get {
@@ -844,7 +1096,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Share response does not accept..
+        ///   Looks up a localized string similar to Share response is negative..
         /// </summary>
         public static string ExceptionShareResponseNotAccepted {
             get {

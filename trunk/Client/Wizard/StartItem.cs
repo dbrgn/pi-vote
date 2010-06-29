@@ -149,7 +149,8 @@ namespace Pirate.PiVote.Client
 
       if (!Status.VotingClient.Connected)
       {
-        IPAddress serverIpAddress = Status.ServerIpAddress;
+        //IPAddress serverIpAddress = Status.ServerIpAddress;
+        IPAddress serverIpAddress = IPAddress.Loopback;
 
         if (serverIpAddress == null)
         {

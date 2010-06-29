@@ -133,7 +133,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shares where verified and accepted. Our answer was uploaded to server..
+        ///   Looks up a localized string similar to Shares were verified and accepted. Our answer was uploaded to server..
         /// </summary>
         internal static string AuthorityCheckSharesAccept {
             get {
@@ -142,7 +142,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shares where verified but not accepted. Our answer was uploaded to server..
+        ///   Looks up a localized string similar to Shares were verified but not accepted. Our answer was uploaded to server..
         /// </summary>
         internal static string AuthorityCheckSharesDecline {
             get {
@@ -178,7 +178,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Partial deciphers where calculated and uploaded to the server..
+        ///   Looks up a localized string similar to Partial deciphers were calculated and uploaded to the server..
         /// </summary>
         internal static string AuthorityDecipherDone {
             get {
@@ -608,7 +608,16 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your request has been submitted to the server. You must now wait for the certificat authority to process it..
+        ///   Looks up a localized string similar to Canton:.
+        /// </summary>
+        internal static string CreateCertificateCanton {
+            get {
+                return ResourceManager.GetString("CreateCertificateCanton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your request has been submitted to the server. You must now wait for the certificate authority to process it..
         /// </summary>
         internal static string CreateCertificateDone {
             get {
@@ -775,6 +784,15 @@ namespace Pirate.PiVote.Client {
         internal static string CreateVotingButton {
             get {
                 return ResourceManager.GetString("CreateVotingButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Canton:.
+        /// </summary>
+        internal static string CreateVotingCanton {
+            get {
+                return ResourceManager.GetString("CreateVotingCanton", resourceCulture);
             }
         }
         
@@ -1063,7 +1081,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Signature responses have be uploaded to the server..
+        ///   Looks up a localized string similar to Signature responses were uploaded to the server..
         /// </summary>
         internal static string SignatureResponseUploaded {
             get {
@@ -1279,11 +1297,11 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To get a certificate signed by the certificate authority you first need to create your certificate.
+        ///   Looks up a localized string similar to To get a certificate signed by the certificate authority you first need to create your certificate. 
         ///
         ///Then you must fill in your personal data which is then included in your request for certificate signing. This request will be printed out and you need to meet three voting authorities which will check your identity, sign your paper request and forward it to the certificate authority.
         ///
-        ///Finally you need to upload your request for certificate signing to the server to facilitate the signing process. You will [rest of string was truncated]&quot;;.
+        ///Finally you need to upload your request for certificate signing to the server to facilitate the signing process. You wil [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SimpleChooseCertificateCreateExplain {
             get {
@@ -1373,7 +1391,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is an alpha verion of this software. All votings are just for test purposes. Please report all bugs to:.
+        ///   Looks up a localized string similar to This is an alpha version of this software. All votings are just for test purposes. Please report all bugs to:.
         /// </summary>
         internal static string StartAlphaWarning {
             get {
@@ -1574,6 +1592,15 @@ namespace Pirate.PiVote.Client {
         internal static string VoteSingleOption {
             get {
                 return ResourceManager.GetString("VoteSingleOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Canton.
+        /// </summary>
+        internal static string VotingCanton {
+            get {
+                return ResourceManager.GetString("VotingCanton", resourceCulture);
             }
         }
         

@@ -444,5 +444,91 @@
   <data name="LanguageGerman" xml:space="preserve">
     <value>Deutsch</value>
   </data>
-  <data name="root"></data>
+  <data name="root" xml:space="preserve">
+    <value />
+  </data>
+  <data name="cantonAG" xml:space="preserve">
+    <value>Aargau</value>
+  </data>
+  <data name="cantonAI" xml:space="preserve">
+    <value>Appenzell Innerrhoden</value>
+  </data>
+  <data name="cantonAR" xml:space="preserve">
+    <value>Appenzell Ausserrhoden</value>
+  </data>
+  <data name="cantonBE" xml:space="preserve">
+    <value>Bern</value>
+  </data>
+  <data name="cantonBL" xml:space="preserve">
+    <value>Basel-Landschaft</value>
+  </data>
+  <data name="cantonBS" xml:space="preserve">
+    <value>Basel-Stadt</value>
+  </data>
+  <data name="cantonFR" xml:space="preserve">
+    <value>Freiburg</value>
+  </data>
+  <data name="cantonGE" xml:space="preserve">
+    <value>Genf</value>
+  </data>
+  <data name="cantonGL" xml:space="preserve">
+    <value>Glarus</value>
+  </data>
+  <data name="cantonGR" xml:space="preserve">
+    <value>Graubünden</value>
+  </data>
+  <data name="cantonJU" xml:space="preserve">
+    <value>Jura</value>
+  </data>
+  <data name="cantonLU" xml:space="preserve">
+    <value>Luzern</value>
+  </data>
+  <data name="cantonNE" xml:space="preserve">
+    <value>Neuenburg</value>
+  </data>
+  <data name="cantonNone" xml:space="preserve">
+    <value>Kein</value>
+  </data>
+  <data name="cantonNW" xml:space="preserve">
+    <value>Nidwalden</value>
+  </data>
+  <data name="cantonOW" xml:space="preserve">
+    <value>Obwalden</value>
+  </data>
+  <data name="cantonSG" xml:space="preserve">
+    <value>St. Gallen</value>
+  </data>
+  <data name="cantonSH" xml:space="preserve">
+    <value>Schaffhausen</value>
+  </data>
+  <data name="cantonSO" xml:space="preserve">
+    <value>Solothurn</value>
+  </data>
+  <data name="cantonSZ" xml:space="preserve">
+    <value>Schwyz</value>
+  </data>
+  <data name="cantonTG" xml:space="preserve">
+    <value>Thurgau</value>
+  </data>
+  <data name="cantonTI" xml:space="preserve">
+    <value>Tessin</value>
+  </data>
+  <data name="cantonUR" xml:space="preserve">
+    <value>Uri</value>
+  </data>
+  <data name="cantonVD" xml:space="preserve">
+    <value>Waadt</value>
+  </data>
+  <data name="cantonVS" xml:space="preserve">
+    <value>Wallis</value>
+  </data>
+  <data name="cantonZG" xml:space="preserve">
+    <value>Zug</value>
+  </data>
+  <data name="cantonZH" xml:space="preserve">
+    <value>Zürich</value>
+  </data>
+  <data name="ExceptionBadCantonInCertificate" xml:space="preserve">
+    <value>Du bist nicht berechtigt, im Kanton dieser Abstimmung abzustimmen.</value>
+  </data>
 </root>

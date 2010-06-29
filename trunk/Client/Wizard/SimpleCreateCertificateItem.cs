@@ -76,6 +76,7 @@ namespace Pirate.PiVote.Client
       this.familyNameTextBox.Enabled = false;
       this.functionNameTextBox.Enabled = false;
       this.emailAddressTextBox.Enabled = false;
+      this.cantonComboBox.Enabled = false;
 
       CheckValid();
 
@@ -95,6 +96,7 @@ namespace Pirate.PiVote.Client
       this.familyNameLabel.Text = Resources.CreateCertificateSurname;
       this.emailAddressLabel.Text = Resources.CreateCertificateEmailAddress;
       this.functionNameLabel.Text = Resources.CreateCertificateFunction;
+      this.cantonLabel.Text = Resources.CreateCertificateCanton;
 
       this.createButton.Text = Resources.SimpleChooseCertificateCreateButton;
       this.printButton.Text = Resources.SimpleChooseCertificatePrintButton;
@@ -106,6 +108,12 @@ namespace Pirate.PiVote.Client
       this.typeComboBox.Items.Add(Resources.CreateCertificateTypeVoter);
       this.typeComboBox.Items.Add(Resources.CreateCertificateTypeAuthority);
       this.typeComboBox.Items.Add(Resources.CreateCertificateTypeAdmin);
+
+      this.cantonComboBox.Items.Clear();
+      foreach (Canton canton in Enum.GetValues(typeof(Canton)))
+      {
+        this.cantonComboBox.Items.Add(canton.Text());
+      }
     }
 
     private void createButton_Click(object sender, EventArgs e)
@@ -118,6 +126,7 @@ namespace Pirate.PiVote.Client
       this.familyNameTextBox.Enabled = false;
       this.functionNameTextBox.Enabled = false;
       this.emailAddressTextBox.Enabled = false;
+      this.cantonComboBox.Enabled = false;
       this.createButton.Enabled = false;
 
       string fullName = string.Format("{0} {1}, {2}",
@@ -128,7 +137,7 @@ namespace Pirate.PiVote.Client
       switch (this.typeComboBox.SelectedIndex)
       {
         case 0:
-          this.certificate = new VoterCertificate();
+          this.certificate = new VoterCertificate((Canton)this.cantonComboBox.SelectedIndex);
           break;
         case 1:
           this.certificate = new AuthorityCertificate(fullName);
@@ -157,7 +166,8 @@ namespace Pirate.PiVote.Client
         !this.firstNameTextBox.Text.IsNullOrEmpty() &&
         !this.familyNameTextBox.Text.IsNullOrEmpty() &&
         (!this.functionNameTextBox.Text.IsNullOrEmpty() || this.typeComboBox.SelectedIndex == 0) &&
-        Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text);
+        Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text) &&
+        this.cantonComboBox.SelectedIndex >= 0;
     }
 
     private void firstNameTextBox_TextChanged(object sender, EventArgs e)
