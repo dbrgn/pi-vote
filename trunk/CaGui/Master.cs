@@ -508,6 +508,9 @@ namespace Pirate.PiVote.CaGui
         dialog.CertificateId = this.entryListView.SelectedItems[0].Text;
         dialog.CertificateType = this.entryListView.SelectedItems[0].SubItems[1].Text;
         dialog.CertificateName = this.entryListView.SelectedItems[0].SubItems[2].Text;
+        dialog.EmailAddress = entry.Request.Value.EmailAddress;
+        dialog.Canton = entry.Certificate is VoterCertificate ? ((VoterCertificate)entry.Certificate).Canton.Text() : "N/A";
+        dialog.Fingerprint = entry.Certificate.Fingerprint;
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {

@@ -88,6 +88,8 @@ namespace Pirate.PiVote.Client
       table.AddRow(Resources.SigningRequestDocumentFamilyName, this.signatureRequest.FamilyName);
       table.AddRow(Resources.SigningRequestDocumentFirstName, this.signatureRequest.FirstName);
       table.AddRow(Resources.SigningRequestDocumentEmailAddress, this.signatureRequest.EmailAddress);
+      if (this.certificate is VoterCertificate)
+        table.AddRow(Resources.SigningRequestDocumentCanton, ((VoterCertificate)this.certificate).Canton.Text());
       table.AddRow(Resources.SigningRequestDocumentCertificateId, this.certificate.Id.ToString());
       table.AddRow(Resources.SigningRequestDocumentCertificateFingerprint, this.certificate.Fingerprint);
 
@@ -141,6 +143,7 @@ namespace Pirate.PiVote.Client
       table.AddRow(Resources.SigningRequestDocumentRevokedLost);
       table.AddRow(Resources.SigningRequestDocumentRevokedStolen);
       table.AddRow(Resources.SigningRequestDocumentRevokedNoLonger);
+      table.AddRow(Resources.SigningRequestDocumentRevokedMoved);
       table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
 
       SignObject caSign = new SignObject(this.graphics, Resources.SigningRequestDocumentSignCA, Resources.SigningRequestDocumentSignSignature, Resources.SigningRequestDocumentSignDate, font);

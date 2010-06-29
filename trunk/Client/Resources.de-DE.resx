@@ -655,4 +655,10 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="VotingCanton" xml:space="preserve">
     <value>Kanton</value>
   </data>
+  <data name="SigningRequestDocumentCanton" xml:space="preserve">
+    <value>Kanton:</value>
+  </data>
+  <data name="SigningRequestDocumentRevokedMoved" xml:space="preserve">
+    <value>Umgezogen:</value>
+  </data>
 </root>

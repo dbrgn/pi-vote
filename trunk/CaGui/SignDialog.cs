@@ -60,6 +60,24 @@ namespace Pirate.PiVote.CaGui
       set { this.nameTextBox.Text = value; }
     }
 
+    public string EmailAddress
+    {
+      get { return this.emailAddressTextBox.Text; }
+      set { this.emailAddressTextBox.Text = value; }
+    }
+
+    public string Canton
+    {
+      get { return this.cantonTextBox.Text; }
+      set { this.cantonTextBox.Text = value; }
+    }
+
+    public string Fingerprint
+    {
+      get { return this.fingerprintTextBox.Text; }
+      set { this.fingerprintTextBox.Text = value; }
+    }
+    
     public DateTime ValidUntil
     {
       get { return this.validUntilPicker.Value; }

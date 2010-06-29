@@ -1099,6 +1099,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Canton:.
+        /// </summary>
+        internal static string SigningRequestDocumentCanton {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentCanton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Certificate fingerprint:.
         /// </summary>
         internal static string SigningRequestDocumentCertificateFingerprint {
@@ -1194,6 +1203,15 @@ namespace Pirate.PiVote.Client {
         internal static string SigningRequestDocumentRevokedLost {
             get {
                 return ResourceManager.GetString("SigningRequestDocumentRevokedLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moved:.
+        /// </summary>
+        internal static string SigningRequestDocumentRevokedMoved {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRevokedMoved", resourceCulture);
             }
         }
         
