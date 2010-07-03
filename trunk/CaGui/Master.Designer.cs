@@ -57,7 +57,6 @@
       this.statusColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.entryListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.signToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.refuseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.exportResponseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.revokeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -273,7 +272,6 @@
       // 
       this.entryListContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.signToolStripMenuItem,
-            this.refuseToolStripMenuItem,
             this.exportResponseToolStripMenuItem,
             this.revokeToolStripMenuItem});
       this.entryListContextMenu.Name = "entryListContextMenu";
@@ -284,15 +282,8 @@
       // 
       this.signToolStripMenuItem.Name = "signToolStripMenuItem";
       this.signToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-      this.signToolStripMenuItem.Text = "&Sign";
+      this.signToolStripMenuItem.Text = "&Verify...";
       this.signToolStripMenuItem.Click += new System.EventHandler(this.signToolStripMenuItem_Click);
-      // 
-      // refuseToolStripMenuItem
-      // 
-      this.refuseToolStripMenuItem.Name = "refuseToolStripMenuItem";
-      this.refuseToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-      this.refuseToolStripMenuItem.Text = "&Refuse";
-      this.refuseToolStripMenuItem.Click += new System.EventHandler(this.refuseToolStripMenuItem_Click);
       // 
       // exportResponseToolStripMenuItem
       // 
@@ -463,7 +454,6 @@
     private System.Windows.Forms.ToolStripMenuItem importCertificateStorageToolStripMenuItem;
     private System.Windows.Forms.ContextMenuStrip entryListContextMenu;
     private System.Windows.Forms.ToolStripMenuItem signToolStripMenuItem;
-    private System.Windows.Forms.ToolStripMenuItem refuseToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem revokeToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem exportResponseToolStripMenuItem;
     private System.Windows.Forms.ColumnHeader typeColumnHeader;

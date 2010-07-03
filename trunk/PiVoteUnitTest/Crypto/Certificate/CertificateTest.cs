@@ -54,7 +54,7 @@ namespace PiVoteUnitTest
       var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
       storage.AddRevocationList(signedIntermediateCrl);
 
-      AdminCertificate test = new AdminCertificate("Test");
+      AdminCertificate test = new AdminCertificate(Language.English, "Test");
       test.CreateSelfSignature();
       Assert.IsFalse(test.Valid(storage));
 
@@ -84,7 +84,7 @@ namespace PiVoteUnitTest
       var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
       storage.AddRevocationList(signedIntermediateCrl);
 
-      AdminCertificate test = new AdminCertificate("Test");
+      AdminCertificate test = new AdminCertificate(Language.English, "Test");
       test.CreateSelfSignature();
       test.AddSignature(intermediate, DateTime.Now.AddDays(1));
 
@@ -116,7 +116,7 @@ namespace PiVoteUnitTest
       var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
       storage.AddRevocationList(signedIntermediateCrl);
 
-      AdminCertificate test = new AdminCertificate("Test");
+      AdminCertificate test = new AdminCertificate(Language.English, "Test");
       test.CreateSelfSignature();
       test.AddSignature(intermediate, DateTime.Now.AddDays(1));
 
@@ -156,7 +156,7 @@ namespace PiVoteUnitTest
       intermediate.AddSignature(root, DateTime.Now.AddDays(10));
       storage.Add(intermediate.OnlyPublicPart);
 
-      AdminCertificate test = new AdminCertificate("Test");
+      AdminCertificate test = new AdminCertificate(Language.English, "Test");
       test.CreateSelfSignature();
       test.AddSignature(intermediate, DateTime.Now.AddDays(10));
 

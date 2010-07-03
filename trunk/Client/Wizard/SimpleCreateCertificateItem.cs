@@ -137,13 +137,13 @@ namespace Pirate.PiVote.Client
       switch (this.typeComboBox.SelectedIndex)
       {
         case 0:
-          this.certificate = new VoterCertificate((Canton)this.cantonComboBox.SelectedIndex);
+          this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), (Canton)this.cantonComboBox.SelectedIndex);
           break;
         case 1:
-          this.certificate = new AuthorityCertificate(fullName);
+          this.certificate = new AuthorityCertificate(Resources.Culture.ToLanguage(), fullName);
           break;
         case 2:
-          this.certificate = new AdminCertificate(fullName);
+          this.certificate = new AdminCertificate(Resources.Culture.ToLanguage(), fullName);
           break;
         default:
           throw new InvalidOperationException("Bad type selection.");
@@ -167,7 +167,7 @@ namespace Pirate.PiVote.Client
         !this.familyNameTextBox.Text.IsNullOrEmpty() &&
         (!this.functionNameTextBox.Text.IsNullOrEmpty() || this.typeComboBox.SelectedIndex == 0) &&
         Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text) &&
-        this.cantonComboBox.SelectedIndex >= 0;
+        (this.typeComboBox.SelectedIndex != 0 || this.cantonComboBox.SelectedIndex >= 0);
     }
 
     private void firstNameTextBox_TextChanged(object sender, EventArgs e)

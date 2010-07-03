@@ -1126,6 +1126,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Certificate type:.
+        /// </summary>
+        internal static string SigningRequestDocumentCertificateType {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentCertificateType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email address:.
         /// </summary>
         internal static string SigningRequestDocumentEmailAddress {
@@ -1189,6 +1198,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to □ Refused, not in office.
+        /// </summary>
+        internal static string SigningRequestDocumentRefusedNotFx {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRefusedNotFx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Request for certificate signing.
         /// </summary>
         internal static string SigningRequestDocumentRequest {
@@ -1207,7 +1225,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Moved:.
+        ///   Looks up a localized string similar to □ Moved.
         /// </summary>
         internal static string SigningRequestDocumentRevokedMoved {
             get {
@@ -1221,6 +1239,15 @@ namespace Pirate.PiVote.Client {
         internal static string SigningRequestDocumentRevokedNoLonger {
             get {
                 return ResourceManager.GetString("SigningRequestDocumentRevokedNoLonger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to □ Revoked, no longer in office.
+        /// </summary>
+        internal static string SigningRequestDocumentRevokedNoMoreFx {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRevokedNoMoreFx", resourceCulture);
             }
         }
         

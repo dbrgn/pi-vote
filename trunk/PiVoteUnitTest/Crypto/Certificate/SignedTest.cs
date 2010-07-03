@@ -43,7 +43,7 @@ namespace PiVoteUnitTest
       var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, this.intermediate);
       this.storage.AddRevocationList(signedIntermediateCrl);
 
-      this.admin = new AdminCertificate("Test");
+      this.admin = new AdminCertificate(Language.English, "Test");
       this.admin.CreateSelfSignature();
       this.admin.AddSignature(this.intermediate, DateTime.Now.AddDays(1));
     }

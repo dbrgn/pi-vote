@@ -661,4 +661,13 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="SigningRequestDocumentRevokedMoved" xml:space="preserve">
     <value>Umgezogen:</value>
   </data>
+  <data name="SigningRequestDocumentCertificateType" xml:space="preserve">
+    <value>Zertifikatstyp:</value>
+  </data>
+  <data name="SigningRequestDocumentRefusedNotFx" xml:space="preserve">
+    <value>□ Refused, nicht im Amt</value>
+  </data>
+  <data name="SigningRequestDocumentRevokedNoMoreFx" xml:space="preserve">
+    <value>□ Widerrufen, nicht mehr im Amt</value>
+  </data>
 </root>

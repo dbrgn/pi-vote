@@ -37,7 +37,7 @@ namespace Pirate.PiVote.Crypto
       var intCrl = new RevocationList(intermediate.Id, DateTime.Now, validUntil, new List<Guid>());
       var sigIntCrl = new Signed<RevocationList>(intCrl, intermediate);
 
-      var admin = new AdminCertificate("Admin");
+      var admin = new AdminCertificate(Language.English, "Admin");
       admin.CreateSelfSignature();
       admin.AddSignature(intermediate, DateTime.Now.AddDays(1));
 
@@ -72,19 +72,19 @@ namespace Pirate.PiVote.Crypto
 
       VotingServerEntity vs = new VotingServerEntity(null, signedParameters, serverCertStorage, serverCert);
 
-      var a1c = new AuthorityCertificate("Authority 1");
+      var a1c = new AuthorityCertificate(Language.English, "Authority 1");
       a1c.CreateSelfSignature();
       a1c.AddSignature(intermediate, validUntil);
-      var a2c = new AuthorityCertificate("Authority 2");
+      var a2c = new AuthorityCertificate(Language.English, "Authority 2");
       a2c.CreateSelfSignature();
       a2c.AddSignature(intermediate, validUntil);
-      var a3c = new AuthorityCertificate("Authority 3");
+      var a3c = new AuthorityCertificate(Language.English, "Authority 3");
       a3c.CreateSelfSignature();
       a3c.AddSignature(intermediate, validUntil);
-      var a4c = new AuthorityCertificate("Authority 4");
+      var a4c = new AuthorityCertificate(Language.English, "Authority 4");
       a4c.CreateSelfSignature();
       a4c.AddSignature(intermediate, validUntil);
-      var a5c = new AuthorityCertificate("Authority 5");
+      var a5c = new AuthorityCertificate(Language.English, "Authority 5");
       a5c.CreateSelfSignature();
       a5c.AddSignature(intermediate, validUntil);
 
@@ -130,7 +130,7 @@ namespace Pirate.PiVote.Crypto
       vs.DepositShareResponse(r4);
       vs.DepositShareResponse(r5);
 
-      var v1c = new VoterCertificate(Canton.None);
+      var v1c = new VoterCertificate(Language.English, Canton.None);
       v1c.CreateSelfSignature();
       v1c.AddSignature(intermediate, validUntil);
 
@@ -148,7 +148,7 @@ namespace Pirate.PiVote.Crypto
 
       for (int i = 1000; i < 1000 + voters; i++)
       {
-        var vc = new VoterCertificate(Canton.None);
+        var vc = new VoterCertificate(Language.English, Canton.None);
         vc.CreateSelfSignature();
         vc.AddSignature(intermediate, validUntil);
 
@@ -162,7 +162,7 @@ namespace Pirate.PiVote.Crypto
 
       for (int i = 2000; i < 2000 + voters; i++)
       {
-        var vc = new VoterCertificate(Canton.None);
+        var vc = new VoterCertificate(Language.English, Canton.None);
         vc.CreateSelfSignature();
         vc.AddSignature(intermediate, validUntil);
 

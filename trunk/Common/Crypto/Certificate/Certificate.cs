@@ -53,6 +53,8 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public DateTime CreationDate { get; private set; }
 
+    private List<CertificateAttribute> attributes;
+
     /// <summary>
     /// SHA 256 fingerprint of the certificate.
     /// </summary>
@@ -69,7 +71,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new certificate.
     /// </summary>
-    public Certificate()
+    public Certificate(Language language)
     {
       CreationDate = DateTime.Now;
       Id = Guid.NewGuid();
@@ -79,6 +81,9 @@ namespace Pirate.PiVote.Crypto
       Key = rsaProvider.ExportCspBlob(true);
 
       this.signatures = new List<Signature>();
+      this.attributes = new List<CertificateAttribute>();
+
+      AddAttribute(new Int32CertificateAttribute(CertificateAttributeName.Language, (int)language));
     }
 
     /// <summary>
@@ -114,7 +119,10 @@ namespace Pirate.PiVote.Crypto
       SelfSignature = original.SelfSignature;
 
       this.signatures = new List<Signature>();
-      original.signatures.ForEach(signature => signatures.Add(signature.Clone));
+      original.signatures.ForEach(signature => this.signatures.Add(signature.Clone));
+
+      this.attributes = new List<CertificateAttribute>();
+      original.attributes.ForEach(attribute => this.attributes.Add(attribute.Clone));
     }
 
     /// <summary>
@@ -379,6 +387,7 @@ namespace Pirate.PiVote.Crypto
       context.Write(CreationDate);
       context.Write(Key);
       context.Write(SelfSignature);
+      context.WriteList(this.attributes);
       context.WriteList(this.signatures);
     }
 
@@ -397,6 +406,7 @@ namespace Pirate.PiVote.Crypto
       CreationDate = context.ReadDateTime();
       Key = context.ReadBytes();
       SelfSignature = context.ReadBytes();
+      this.attributes = context.ReadObjectList<CertificateAttribute>();
       this.signatures = context.ReadObjectList<Signature>();
     }
 
@@ -415,6 +425,8 @@ namespace Pirate.PiVote.Crypto
 
       //Obviously the private key must not be signed as it is not given out.
       writer.Write(HasPrivateKey ? GetRsaProvider().ExportCspBlob(false) : Key);
+
+      this.attributes.ForEach(attribute => writer.Write(attribute.ToBinary()));
     }
 
     /// <summary>
@@ -540,6 +552,116 @@ namespace Pirate.PiVote.Crypto
     public virtual string FullName
     {
       get { return LibraryResources.CertificateFullNameNotAvailable; }
+    }
+
+    /// <summary>
+    /// Has the certificate this attribute?
+    /// </summary>
+    /// <param name="name">Name of the attribute.</param>
+    /// <returns>Is it there?</returns>
+    protected bool HasAttribute(CertificateAttributeName name)
+    {
+      return this.attributes.Where(attribute => attribute.Name == name).Count() > 0;
+    }
+
+    /// <summary>
+    /// Get attribute if available.
+    /// </summary>
+    /// <param name="name">Name of the attribute.</param>
+    /// <returns>Attribute.</returns>
+    protected CertificateAttribute GetAttribute(CertificateAttributeName name)
+    {
+      return this.attributes.Where(attribute => attribute.Name == name).FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Get a string attribute value.
+    /// </summary>
+    /// <param name="name">Name of the attribute.</param>
+    /// <returns>Value of the attribute or null.</returns>
+    protected string GetAttributeValueString(CertificateAttributeName name)
+    {
+      CertificateAttribute attribute = GetAttribute(name);
+
+      if (attribute is StringCertificateAttribute)
+      {
+        return ((StringCertificateAttribute)attribute).Value;
+      }
+      else
+      {
+        return null;
+      }
+    }
+
+    /// <summary>
+    /// Get a string attribute value.
+    /// </summary>
+    /// <param name="name">Name of the attribute.</param>
+    /// <returns>Value of the attribute or null.</returns>
+    protected int? GetAttributeValueInt32(CertificateAttributeName name)
+    {
+      CertificateAttribute attribute = GetAttribute(name);
+
+      if (attribute is Int32CertificateAttribute)
+      {
+        return ((Int32CertificateAttribute)attribute).Value;
+      }
+      else
+      {
+        return null;
+      }
+    }
+
+    /// <summary>
+    /// Get a string attribute value.
+    /// </summary>
+    /// <param name="name">Name of the attribute.</param>
+    /// <returns>Value of the attribute or null.</returns>
+    protected bool? GetAttributeValueBoolean(CertificateAttributeName name)
+    {
+      CertificateAttribute attribute = GetAttribute(name);
+
+      if (attribute is BooleanCertificateAttribute)
+      {
+        return ((BooleanCertificateAttribute)attribute).Value;
+      }
+      else
+      {
+        return null;
+      }
+    }
+
+    /// <summary>
+    /// Add an attribute to the certificate;
+    /// </summary>
+    /// <param name="attribute"></param>
+    protected void AddAttribute(CertificateAttribute attribute)
+    {
+      if (SelfSignature == null)
+      {
+        this.attributes.Add(attribute);
+      }
+      else
+      {
+        throw new InvalidOperationException("Cannot add attribute after self signature.");
+      }
+    }
+
+    public Language Language
+    {
+      get
+      {
+        int? value = GetAttributeValueInt32(CertificateAttributeName.Language);
+
+        if (value == null)
+        {
+          return Language.English;
+        }
+        else
+        {
+          return (Language)value;
+        }
+      }
     }
   }
 }

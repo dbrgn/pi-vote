@@ -19,7 +19,7 @@ namespace Pirate.PiVote.Client
   {
     public static void TestSignatureRequestDocument()
     {
-      VoterCertificate voterCert = new VoterCertificate(Canton.None);
+      VoterCertificate voterCert = new VoterCertificate(Language.English, Canton.None);
       voterCert.CreateSelfSignature();
       SignatureRequest request = new SignatureRequest("Hans", "Müller", "hans@mueller.ch");
 

@@ -23,14 +23,13 @@ namespace Pirate.PiVote.Crypto
   /// </remarks>
   public class VoterCertificate : Certificate
   {
-    public Canton Canton { get; private set; }
-
     /// <summary>
     /// Creates a new voter certificate.
     /// </summary>
-    public VoterCertificate(Canton canton)
+    public VoterCertificate(Language language, Canton canton)
+      : base(language)
     {
-      Canton = canton;
+      AddAttribute(new Int32CertificateAttribute(CertificateAttributeName.Canton, (int)canton));
     }
 
     /// <summary>
@@ -58,7 +57,6 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write((int)Canton);
     }
 
     /// <summary>
@@ -68,7 +66,6 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      Canton = (Canton)context.ReadInt32();
     }
 
     /// <summary>
@@ -106,6 +103,26 @@ namespace Pirate.PiVote.Crypto
     public override string TypeText
     {
       get { return LibraryResources.CertificateTypeVoter; }
+    }
+
+    /// <summary>
+    /// Canton the voter inhabites.
+    /// </summary>
+    public Canton Canton
+    {
+      get
+      {
+        int? value = GetAttributeValueInt32(CertificateAttributeName.Canton);
+
+        if (value == null)
+        {
+          return Canton.None;
+        }
+        else
+        {
+          return (Canton)value;
+        }
+      }
     }
   }
 }

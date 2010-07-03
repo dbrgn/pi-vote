@@ -51,17 +51,21 @@
       // 
       // reasonTextBox
       // 
+      this.reasonTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.reasonTextBox.Location = new System.Drawing.Point(82, 92);
       this.reasonTextBox.Multiline = true;
       this.reasonTextBox.Name = "reasonTextBox";
       this.reasonTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.reasonTextBox.Size = new System.Drawing.Size(302, 128);
+      this.reasonTextBox.Size = new System.Drawing.Size(415, 151);
       this.reasonTextBox.TabIndex = 0;
       this.reasonTextBox.TextChanged += new System.EventHandler(this.nameTextBox_TextChanged);
       // 
       // cancelButton
       // 
-      this.cancelButton.Location = new System.Drawing.Point(309, 226);
+      this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.cancelButton.Location = new System.Drawing.Point(422, 249);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
       this.cancelButton.TabIndex = 2;
@@ -71,8 +75,9 @@
       // 
       // okButton
       // 
+      this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(228, 226);
+      this.okButton.Location = new System.Drawing.Point(341, 249);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 1;
@@ -82,18 +87,22 @@
       // 
       // idTextBox
       // 
+      this.idTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.idTextBox.Location = new System.Drawing.Point(82, 12);
       this.idTextBox.Name = "idTextBox";
       this.idTextBox.ReadOnly = true;
-      this.idTextBox.Size = new System.Drawing.Size(302, 20);
+      this.idTextBox.Size = new System.Drawing.Size(415, 20);
       this.idTextBox.TabIndex = 3;
       // 
       // nameTextBox
       // 
+      this.nameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.nameTextBox.Location = new System.Drawing.Point(82, 65);
       this.nameTextBox.Name = "nameTextBox";
       this.nameTextBox.ReadOnly = true;
-      this.nameTextBox.Size = new System.Drawing.Size(302, 20);
+      this.nameTextBox.Size = new System.Drawing.Size(415, 20);
       this.nameTextBox.TabIndex = 4;
       // 
       // nameLabel
@@ -125,17 +134,19 @@
       // 
       // typeTextBox
       // 
+      this.typeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.typeTextBox.Location = new System.Drawing.Point(82, 39);
       this.typeTextBox.Name = "typeTextBox";
       this.typeTextBox.ReadOnly = true;
-      this.typeTextBox.Size = new System.Drawing.Size(302, 20);
+      this.typeTextBox.Size = new System.Drawing.Size(415, 20);
       this.typeTextBox.TabIndex = 10;
       // 
       // RefuseDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(396, 262);
+      this.ClientSize = new System.Drawing.Size(509, 285);
       this.ControlBox = false;
       this.Controls.Add(this.typeLabel);
       this.Controls.Add(this.typeTextBox);

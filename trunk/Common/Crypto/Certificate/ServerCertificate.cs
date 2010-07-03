@@ -30,7 +30,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="fullName">Full name of the voting server.</param>
     public ServerCertificate(string fullName)
-      : base()
+      : base(Language.English)
     {
       if (fullName == null)
         throw new ArgumentNullException("fullName");

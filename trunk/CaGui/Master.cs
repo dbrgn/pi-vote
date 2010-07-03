@@ -505,54 +505,26 @@ namespace Pirate.PiVote.CaGui
         CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
 
         SignDialog dialog = new SignDialog();
-        dialog.CertificateId = this.entryListView.SelectedItems[0].Text;
-        dialog.CertificateType = this.entryListView.SelectedItems[0].SubItems[1].Text;
-        dialog.CertificateName = this.entryListView.SelectedItems[0].SubItems[2].Text;
-        dialog.EmailAddress = entry.Request.Value.EmailAddress;
-        dialog.Canton = entry.Certificate is VoterCertificate ? ((VoterCertificate)entry.Certificate).Canton.Text() : "N/A";
-        dialog.Fingerprint = entry.Certificate.Fingerprint;
+        dialog.Display(entry, CertificateStorage);
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
-          entry.Sign(Certificate, dialog.ValidUntil);
-          entry.Save(DataPath(fileName));
-          item.SubItems[3].Text = entry.Response.Value.Signature.ValidFrom.ToString();
-          item.SubItems[4].Text = entry.Response.Value.Signature.ValidUntil.ToString();
-          item.SubItems[5].Text = "Valid";
-
-          SaveFileDialog saveDialog = new SaveFileDialog();
-          saveDialog.Title = "Export Signature Response";
-          saveDialog.CheckPathExists = true;
-          saveDialog.Filter = Files.SignatureResponseFileFilter;
-
-          if (saveDialog.ShowDialog() == DialogResult.OK)
+          if (dialog.Accept)
           {
-            entry.Response.Save(saveDialog.FileName);
+            entry.Sign(Certificate, dialog.ValidUntil);
+            entry.Save(DataPath(fileName));
+            item.SubItems[3].Text = entry.Response.Value.Signature.ValidFrom.ToString();
+            item.SubItems[4].Text = entry.Response.Value.Signature.ValidUntil.ToString();
+            item.SubItems[5].Text = "Valid";
           }
-        }
-      }
-    }
-
-    private void refuseToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      if (this.entryListView.SelectedItems.Count > 0)
-      {
-        ListViewItem item = this.entryListView.SelectedItems[0];
-        string fileName = (string)item.Tag;
-        CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
-
-        RefuseDialog dialog = new RefuseDialog();
-        dialog.CertificateId = this.entryListView.SelectedItems[0].Text;
-        dialog.CertificateType = this.entryListView.SelectedItems[0].SubItems[1].Text;
-        dialog.CertificateName = this.entryListView.SelectedItems[0].SubItems[2].Text;
-
-        if (dialog.ShowDialog() == DialogResult.OK)
-        {
-          entry.Refuse(Certificate, dialog.Reason);
-          entry.Save(DataPath(fileName));
-          item.SubItems[3].Text = "N/A";
-          item.SubItems[4].Text = "N/A";
-          item.SubItems[5].Text = "Refused";
+          else
+          {
+            entry.Refuse(Certificate, dialog.Reason);
+            entry.Save(DataPath(fileName));
+            item.SubItems[3].Text = "N/A";
+            item.SubItems[4].Text = "N/A";
+            item.SubItems[5].Text = "Refused";
+          }
 
           SaveFileDialog saveDialog = new SaveFileDialog();
           saveDialog.Title = "Export Signature Response";
@@ -598,7 +570,6 @@ namespace Pirate.PiVote.CaGui
       bool canSign = Certificate != null && Certificate.Valid(CertificateStorage);
 
       this.signToolStripMenuItem.Enabled = notAnswered && canSign;
-      this.refuseToolStripMenuItem.Enabled = notAnswered && canSign;
       this.revokeToolStripMenuItem.Enabled = isAnwered && canSign;
       this.exportResponseToolStripMenuItem.Enabled = isAnwered;
     }
@@ -657,7 +628,7 @@ namespace Pirate.PiVote.CaGui
         if (saveDialog.ShowDialog() == DialogResult.OK)
         {
           string fullName = string.Format("{0} {1}, {2}", dialog.FirstName, dialog.FamilyName, dialog.Function);
-          AdminCertificate certificate = new AdminCertificate(fullName);
+          AdminCertificate certificate = new AdminCertificate(Language.English, fullName);
           certificate.CreateSelfSignature();
 
           SignatureRequest request = new SignatureRequest(dialog.FirstName, dialog.FamilyName, dialog.EmailAddress);

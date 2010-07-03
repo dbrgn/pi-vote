@@ -531,4 +531,19 @@
   <data name="ExceptionBadCantonInCertificate" xml:space="preserve">
     <value>Du bist nicht berechtigt, im Kanton dieser Abstimmung abzustimmen.</value>
   </data>
+  <data name="RefusedFingerprintNoMatch" xml:space="preserve">
+    <value>Fingerprint stimmt nicht überein.</value>
+  </data>
+  <data name="RefusedPersonHasAlready" xml:space="preserve">
+    <value>Person hat bereits ein gülitiges Zertifikat.</value>
+  </data>
+  <data name="RefusedPersonNoPirate" xml:space="preserve">
+    <value>Person ist kein Pirate.</value>
+  </data>
+  <data name="RefusedPersonNotInOffice" xml:space="preserve">
+    <value>Person ist nicht im Amt.</value>
+  </data>
+  <data name="RefusedRequestNotValid" xml:space="preserve">
+    <value>Anfrage ist nicht gültig.</value>
+  </data>
 </root>

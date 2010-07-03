@@ -1221,6 +1221,51 @@ namespace Pirate.PiVote {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Fingerprint does not match..
+        /// </summary>
+        public static string RefusedFingerprintNoMatch {
+            get {
+                return ResourceManager.GetString("RefusedFingerprintNoMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Person has already a valid certificate..
+        /// </summary>
+        public static string RefusedPersonHasAlready {
+            get {
+                return ResourceManager.GetString("RefusedPersonHasAlready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Person is no pirate..
+        /// </summary>
+        public static string RefusedPersonNoPirate {
+            get {
+                return ResourceManager.GetString("RefusedPersonNoPirate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Person is not in office..
+        /// </summary>
+        public static string RefusedPersonNotInOffice {
+            get {
+                return ResourceManager.GetString("RefusedPersonNotInOffice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request not valid..
+        /// </summary>
+        public static string RefusedRequestNotValid {
+            get {
+                return ResourceManager.GetString("RefusedRequestNotValid", resourceCulture);
+            }
+        }
+        
         public static byte[] root {
             get {
                 object obj = ResourceManager.GetObject("root", resourceCulture);

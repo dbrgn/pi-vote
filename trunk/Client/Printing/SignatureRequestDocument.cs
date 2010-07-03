@@ -47,10 +47,10 @@ namespace Pirate.PiVote.Client
       this.top = e.MarginBounds.Top;
 
       PrintHeader(Snippet(e.MarginBounds, 50f));
-      PrintData(Snippet(e.MarginBounds, 200f));
-      PrintRequest(Snippet(e.MarginBounds, 150f));
-      PrintResponse(Snippet(e.MarginBounds, 150f));
-      PrintRevoke(Snippet(e.MarginBounds, 150f));
+      PrintData(Snippet(e.MarginBounds, 250f));
+      PrintRequest(Snippet(e.MarginBounds, 200f));
+      PrintResponse(Snippet(e.MarginBounds, 200f));
+      PrintRevoke(Snippet(e.MarginBounds, 200f));
       PrintFooter(Snippet(e.MarginBounds, 50f));
 
       e.HasMorePages = false;
@@ -90,6 +90,7 @@ namespace Pirate.PiVote.Client
       table.AddRow(Resources.SigningRequestDocumentEmailAddress, this.signatureRequest.EmailAddress);
       if (this.certificate is VoterCertificate)
         table.AddRow(Resources.SigningRequestDocumentCanton, ((VoterCertificate)this.certificate).Canton.Text());
+      table.AddRow(Resources.SigningRequestDocumentCertificateType, this.certificate.TypeText);
       table.AddRow(Resources.SigningRequestDocumentCertificateId, this.certificate.Id.ToString());
       table.AddRow(Resources.SigningRequestDocumentCertificateFingerprint, this.certificate.Fingerprint);
 
@@ -125,7 +126,14 @@ namespace Pirate.PiVote.Client
       Table table = new Table(font);
       table.AddColumn(bounds.Width / 6f * 4f);
       table.AddRow(Resources.SigningRequestDocumentAccepted);
-      table.AddRow(Resources.SigningRequestDocumentRefusedNoPirate);
+      if (this.certificate is VoterCertificate)
+      {
+        table.AddRow(Resources.SigningRequestDocumentRefusedNoPirate);
+      }
+      else
+      {
+        table.AddRow(Resources.SigningRequestDocumentRefusedNotFx);
+      }
       table.AddRow(Resources.SigningRequestDocumentRefusedHasCertificate);
       table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
 
@@ -142,8 +150,15 @@ namespace Pirate.PiVote.Client
       table.AddColumn(bounds.Width / 6f * 4f);
       table.AddRow(Resources.SigningRequestDocumentRevokedLost);
       table.AddRow(Resources.SigningRequestDocumentRevokedStolen);
-      table.AddRow(Resources.SigningRequestDocumentRevokedNoLonger);
-      table.AddRow(Resources.SigningRequestDocumentRevokedMoved);
+      if (this.certificate is VoterCertificate)
+      {
+        table.AddRow(Resources.SigningRequestDocumentRevokedNoLonger);
+        table.AddRow(Resources.SigningRequestDocumentRevokedMoved);
+      }
+      else
+      {
+        table.AddRow(Resources.SigningRequestDocumentRevokedNoMoreFx);
+      }
       table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
 
       SignObject caSign = new SignObject(this.graphics, Resources.SigningRequestDocumentSignCA, Resources.SigningRequestDocumentSignSignature, Resources.SigningRequestDocumentSignDate, font);

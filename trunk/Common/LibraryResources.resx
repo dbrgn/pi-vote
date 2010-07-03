@@ -532,4 +532,19 @@
   <data name="ExceptionBadCantonInCertificate" xml:space="preserve">
     <value>You ar not allowed to vote in the canton of this voting.</value>
   </data>
+  <data name="RefusedFingerprintNoMatch" xml:space="preserve">
+    <value>Fingerprint does not match.</value>
+  </data>
+  <data name="RefusedPersonHasAlready" xml:space="preserve">
+    <value>Person has already a valid certificate.</value>
+  </data>
+  <data name="RefusedPersonNoPirate" xml:space="preserve">
+    <value>Person is no pirate.</value>
+  </data>
+  <data name="RefusedPersonNotInOffice" xml:space="preserve">
+    <value>Person is not in office.</value>
+  </data>
+  <data name="RefusedRequestNotValid" xml:space="preserve">
+    <value>Request not valid.</value>
+  </data>
 </root>

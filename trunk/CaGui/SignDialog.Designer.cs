@@ -44,12 +44,16 @@
       this.cantonTextBox = new System.Windows.Forms.TextBox();
       this.fingerprintLabel = new System.Windows.Forms.Label();
       this.fingerprintTextBox = new System.Windows.Forms.TextBox();
+      this.acceptSignRadioButton = new System.Windows.Forms.RadioButton();
+      this.reasonComboBox = new System.Windows.Forms.ComboBox();
+      this.reasonLabel = new System.Windows.Forms.Label();
+      this.refuseRadioButton = new System.Windows.Forms.RadioButton();
       this.SuspendLayout();
       // 
       // validUntilLabel
       // 
       this.validUntilLabel.AutoSize = true;
-      this.validUntilLabel.Location = new System.Drawing.Point(11, 172);
+      this.validUntilLabel.Location = new System.Drawing.Point(11, 208);
       this.validUntilLabel.Name = "validUntilLabel";
       this.validUntilLabel.Size = new System.Drawing.Size(55, 14);
       this.validUntilLabel.TabIndex = 0;
@@ -58,7 +62,7 @@
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(463, 195);
+      this.cancelButton.Location = new System.Drawing.Point(463, 301);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
       this.cancelButton.TabIndex = 2;
@@ -70,7 +74,7 @@
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(382, 195);
+      this.okButton.Location = new System.Drawing.Point(382, 301);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 1;
@@ -120,7 +124,7 @@
       // 
       this.validUntilPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.validUntilPicker.Location = new System.Drawing.Point(94, 169);
+      this.validUntilPicker.Location = new System.Drawing.Point(94, 203);
       this.validUntilPicker.Name = "validUntilPicker";
       this.validUntilPicker.Size = new System.Drawing.Size(444, 20);
       this.validUntilPicker.TabIndex = 7;
@@ -202,12 +206,59 @@
       this.fingerprintTextBox.Size = new System.Drawing.Size(444, 20);
       this.fingerprintTextBox.TabIndex = 14;
       // 
+      // acceptSignRadioButton
+      // 
+      this.acceptSignRadioButton.AutoSize = true;
+      this.acceptSignRadioButton.Location = new System.Drawing.Point(14, 179);
+      this.acceptSignRadioButton.Name = "acceptSignRadioButton";
+      this.acceptSignRadioButton.Size = new System.Drawing.Size(87, 18);
+      this.acceptSignRadioButton.TabIndex = 16;
+      this.acceptSignRadioButton.TabStop = true;
+      this.acceptSignRadioButton.Text = "Accept & Sign";
+      this.acceptSignRadioButton.UseVisualStyleBackColor = true;
+      this.acceptSignRadioButton.CheckedChanged += new System.EventHandler(this.acceptSignRadioButton_CheckedChanged);
+      // 
+      // reasonComboBox
+      // 
+      this.reasonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.reasonComboBox.FormattingEnabled = true;
+      this.reasonComboBox.Location = new System.Drawing.Point(94, 262);
+      this.reasonComboBox.Name = "reasonComboBox";
+      this.reasonComboBox.Size = new System.Drawing.Size(444, 22);
+      this.reasonComboBox.TabIndex = 17;
+      this.reasonComboBox.SelectedIndexChanged += new System.EventHandler(this.reasonComboBox_SelectedIndexChanged);
+      // 
+      // reasonLabel
+      // 
+      this.reasonLabel.AutoSize = true;
+      this.reasonLabel.Location = new System.Drawing.Point(11, 265);
+      this.reasonLabel.Name = "reasonLabel";
+      this.reasonLabel.Size = new System.Drawing.Size(47, 14);
+      this.reasonLabel.TabIndex = 18;
+      this.reasonLabel.Text = "Reason:";
+      // 
+      // refuseRadioButton
+      // 
+      this.refuseRadioButton.AutoSize = true;
+      this.refuseRadioButton.Location = new System.Drawing.Point(12, 238);
+      this.refuseRadioButton.Name = "refuseRadioButton";
+      this.refuseRadioButton.Size = new System.Drawing.Size(60, 18);
+      this.refuseRadioButton.TabIndex = 19;
+      this.refuseRadioButton.TabStop = true;
+      this.refuseRadioButton.Text = "Refuse";
+      this.refuseRadioButton.UseVisualStyleBackColor = true;
+      this.refuseRadioButton.CheckedChanged += new System.EventHandler(this.refuseRadioButton_CheckedChanged);
+      // 
       // SignDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(550, 231);
+      this.ClientSize = new System.Drawing.Size(550, 336);
       this.ControlBox = false;
+      this.Controls.Add(this.refuseRadioButton);
+      this.Controls.Add(this.reasonLabel);
+      this.Controls.Add(this.reasonComboBox);
+      this.Controls.Add(this.acceptSignRadioButton);
       this.Controls.Add(this.fingerprintLabel);
       this.Controls.Add(this.fingerprintTextBox);
       this.Controls.Add(this.cantonlabel);
@@ -256,5 +307,9 @@
     private System.Windows.Forms.TextBox cantonTextBox;
     private System.Windows.Forms.Label fingerprintLabel;
     private System.Windows.Forms.TextBox fingerprintTextBox;
+    private System.Windows.Forms.RadioButton acceptSignRadioButton;
+    private System.Windows.Forms.ComboBox reasonComboBox;
+    private System.Windows.Forms.Label reasonLabel;
+    private System.Windows.Forms.RadioButton refuseRadioButton;
   }
 }
