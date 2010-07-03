@@ -63,7 +63,7 @@ namespace Pirate.PiVote.CaGui
       this.fingerprintTextBox.Text = certificate.Fingerprint;
       this.language = certificate.Language;
 
-      if (entry.Request.Verify(storage))
+      if (entry.Request.VerifySimple())
       {
         LibraryResources.Culture = Language.English.ToCulture();
         this.refusedFingerprintNoMatchIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedFingerprintNoMatch);
@@ -84,6 +84,8 @@ namespace Pirate.PiVote.CaGui
       else
       {
         this.refusedRequestNotValidIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedRequestNotValid);
+        this.refuseRadioButton.Checked = true;
+        this.acceptSignRadioButton.Enabled = false;
       }
     }
 

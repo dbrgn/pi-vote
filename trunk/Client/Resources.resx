@@ -686,4 +686,7 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="SigningRequestDocumentRevokedNoMoreFx" xml:space="preserve">
     <value>□ Revoked, no longer in office</value>
   </data>
+  <data name="SigningRequestDocumentRefusedFingerprintMismatch" xml:space="preserve">
+    <value>□ Refused, fingerprint does not match</value>
+  </data>
 </root>

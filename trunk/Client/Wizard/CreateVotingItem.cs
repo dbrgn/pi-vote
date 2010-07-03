@@ -28,6 +28,7 @@ namespace Pirate.PiVote.Client
     private Thread initThread;
     private List<AuthorityCertificate> authorityCertificates;
     private VotingParameters votingParameters;
+    private Canton canton;
 
     public CreateVotingItem()
     {
@@ -132,6 +133,7 @@ namespace Pirate.PiVote.Client
       this.descriptionBox.Enabled = enable;
       this.votingFromPicker.Enabled = enable;
       this.votingUntilPicker.Enabled = enable;
+      this.cantonComboBox.Enabled = enable;
 
       if (enable)
       {
@@ -259,7 +261,7 @@ namespace Pirate.PiVote.Client
           this.descriptionBox.Text,
           this.votingFromPicker.Value.Date,
           this.votingUntilPicker.Value.Date,
-          (Canton)this.cantonComboBox.SelectedIndex);
+          this.canton);
 
       this.run = false;
     }
@@ -419,6 +421,12 @@ namespace Pirate.PiVote.Client
 
       this.removeToolStripMenuItem.Enabled = this.questionListView.SelectedItems.Count > 0;
       this.editToolStripMenuItem.Enabled = this.questionListView.SelectedItems.Count > 0;
+    }
+
+    private void cantonComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      this.canton = (Canton)this.cantonComboBox.SelectedIndex;
+      CheckEnable();
     }
   }
 }

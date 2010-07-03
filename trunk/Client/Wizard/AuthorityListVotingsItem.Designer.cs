@@ -43,15 +43,16 @@ namespace Pirate.PiVote.Client
     private void InitializeComponent()
     {
       this.votingList = new System.Windows.Forms.ListView();
-      this.titleColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.statusColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.voteFromColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.voteUntilColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.authorityColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.envelopesColumnHeader = new System.Windows.Forms.ColumnHeader();
+      this.titleColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.statusColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.voteFromColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.voteUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.authorityColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.envelopesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.decipherButton = new System.Windows.Forms.Button();
       this.checkSharesButton = new System.Windows.Forms.Button();
       this.createSharesButton = new System.Windows.Forms.Button();
+      this.cantonColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.SuspendLayout();
       // 
       // votingList
@@ -61,6 +62,7 @@ namespace Pirate.PiVote.Client
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.votingList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.titleColumnHeader,
+            this.cantonColumnHeader,
             this.statusColumnHeader,
             this.voteFromColumnHeader,
             this.voteUntilColumnHeader,
@@ -147,6 +149,11 @@ namespace Pirate.PiVote.Client
       this.createSharesButton.UseVisualStyleBackColor = true;
       this.createSharesButton.Click += new System.EventHandler(this.createSharesButton_Click);
       // 
+      // cantonColumnHeader
+      // 
+      this.cantonColumnHeader.Text = "Canton";
+      this.cantonColumnHeader.Width = 120;
+      // 
       // AuthorityListVotingsItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -174,6 +181,7 @@ namespace Pirate.PiVote.Client
     private ColumnHeader voteUntilColumnHeader;
     private ColumnHeader authorityColumnHeader;
     private ColumnHeader envelopesColumnHeader;
+    private ColumnHeader cantonColumnHeader;
 
 
 

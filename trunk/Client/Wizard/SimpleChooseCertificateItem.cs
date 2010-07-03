@@ -311,5 +311,10 @@ namespace Pirate.PiVote.Client
       this.done = false;
       OnUpdateWizard();
     }
+
+    private void cantonComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      CheckValid();
+    }
   }
 }

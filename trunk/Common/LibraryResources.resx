@@ -547,4 +547,19 @@
   <data name="RefusedRequestNotValid" xml:space="preserve">
     <value>Request not valid.</value>
   </data>
+  <data name="RevokedLost" xml:space="preserve">
+    <value>Certificate is lost.</value>
+  </data>
+  <data name="RevokedMoved" xml:space="preserve">
+    <value>Person has moved.</value>
+  </data>
+  <data name="RevokedNoLonger" xml:space="preserve">
+    <value>Person is no longer a pirate.</value>
+  </data>
+  <data name="RevokedNoMoreFx" xml:space="preserve">
+    <value>Person is no longer in office.</value>
+  </data>
+  <data name="RevokedStolen" xml:space="preserve">
+    <value>Certificate is stolen.</value>
+  </data>
 </root>

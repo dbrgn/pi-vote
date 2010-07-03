@@ -1266,6 +1266,51 @@ namespace Pirate.PiVote {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate is lost..
+        /// </summary>
+        public static string RevokedLost {
+            get {
+                return ResourceManager.GetString("RevokedLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Person has moved..
+        /// </summary>
+        public static string RevokedMoved {
+            get {
+                return ResourceManager.GetString("RevokedMoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Person is no longer a pirate..
+        /// </summary>
+        public static string RevokedNoLonger {
+            get {
+                return ResourceManager.GetString("RevokedNoLonger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Person is no longer in office..
+        /// </summary>
+        public static string RevokedNoMoreFx {
+            get {
+                return ResourceManager.GetString("RevokedNoMoreFx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate is stolen..
+        /// </summary>
+        public static string RevokedStolen {
+            get {
+                return ResourceManager.GetString("RevokedStolen", resourceCulture);
+            }
+        }
+        
         public static byte[] root {
             get {
                 object obj = ResourceManager.GetObject("root", resourceCulture);

@@ -211,6 +211,7 @@ namespace Pirate.PiVote.Client
       this.cantonComboBox.Name = "cantonComboBox";
       this.cantonComboBox.Size = new System.Drawing.Size(402, 22);
       this.cantonComboBox.TabIndex = 32;
+      this.cantonComboBox.SelectedIndexChanged += new System.EventHandler(this.cantonComboBox_SelectedIndexChanged);
       // 
       // cantonLabel
       // 

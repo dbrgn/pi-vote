@@ -538,12 +538,27 @@
     <value>Person hat bereits ein gülitiges Zertifikat.</value>
   </data>
   <data name="RefusedPersonNoPirate" xml:space="preserve">
-    <value>Person ist kein Pirate.</value>
+    <value>Person ist kein Pirat.</value>
   </data>
   <data name="RefusedPersonNotInOffice" xml:space="preserve">
     <value>Person ist nicht im Amt.</value>
   </data>
   <data name="RefusedRequestNotValid" xml:space="preserve">
     <value>Anfrage ist nicht gültig.</value>
+  </data>
+  <data name="RevokedLost" xml:space="preserve">
+    <value>Zertifikat verloren.</value>
+  </data>
+  <data name="RevokedMoved" xml:space="preserve">
+    <value>Person ist umgezogen.</value>
+  </data>
+  <data name="RevokedNoLonger" xml:space="preserve">
+    <value>Person ist kein Pirat mehr.</value>
+  </data>
+  <data name="RevokedNoMoreFx" xml:space="preserve">
+    <value>Person nicht mehr im Amt.</value>
+  </data>
+  <data name="RevokedStolen" xml:space="preserve">
+    <value>Zertifikat gestohlen.</value>
   </data>
 </root>

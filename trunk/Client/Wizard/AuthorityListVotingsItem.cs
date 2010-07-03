@@ -84,6 +84,7 @@ namespace Pirate.PiVote.Client
           foreach (VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
           {
             ListViewItem item = new ListViewItem(voting.Title.Text);
+            item.SubItems.Add(voting.Canton.Text());
             item.SubItems.Add(voting.Status.Text());
             item.SubItems.Add(voting.VoteFrom.ToShortDateString());
             item.SubItems.Add(voting.VoteUntil.ToShortDateString());
@@ -181,8 +182,8 @@ namespace Pirate.PiVote.Client
         if (this.exception == null)
         {
           item.Tag = this.votingDescriptor;
-          item.SubItems[1].Text = this.votingDescriptor.Status.Text();
-          item.SubItems[4].Text = this.votingDescriptor.AuthoritiesDone == null ? string.Empty :
+          item.SubItems[2].Text = this.votingDescriptor.Status.Text();
+          item.SubItems[5].Text = this.votingDescriptor.AuthoritiesDone == null ? string.Empty :
             this.votingDescriptor.AuthoritiesDone.Count().ToString() + " / " + this.votingDescriptor.AuthorityCount.ToString();
           votingList_SelectedIndexChanged(this.votingList, new EventArgs());
 
@@ -288,8 +289,8 @@ namespace Pirate.PiVote.Client
           if (this.exception == null)
           {
             item.Tag = this.votingDescriptor;
-            item.SubItems[1].Text = this.votingDescriptor.Status.Text();
-            item.SubItems[4].Text = this.votingDescriptor.AuthoritiesDone == null ? string.Empty :
+            item.SubItems[2].Text = this.votingDescriptor.Status.Text();
+            item.SubItems[5].Text = this.votingDescriptor.AuthoritiesDone == null ? string.Empty :
               this.votingDescriptor.AuthoritiesDone.Count().ToString() + " / " + this.votingDescriptor.AuthorityCount.ToString();
             votingList_SelectedIndexChanged(this.votingList, new EventArgs());
 

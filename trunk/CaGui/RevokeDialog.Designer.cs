@@ -1,6 +1,6 @@
 ﻿namespace Pirate.PiVote.CaGui
 {
-  partial class SignDialog
+  partial class RevokeDialog
   {
     /// <summary>
     /// Required designer variable.
@@ -28,14 +28,12 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.validUntilLabel = new System.Windows.Forms.Label();
       this.cancelButton = new System.Windows.Forms.Button();
       this.okButton = new System.Windows.Forms.Button();
       this.idTextBox = new System.Windows.Forms.TextBox();
       this.nameTextBox = new System.Windows.Forms.TextBox();
       this.nameLabel = new System.Windows.Forms.Label();
       this.idLabel = new System.Windows.Forms.Label();
-      this.validUntilPicker = new System.Windows.Forms.DateTimePicker();
       this.typeLabel = new System.Windows.Forms.Label();
       this.typeTextBox = new System.Windows.Forms.TextBox();
       this.emailAddressLabel = new System.Windows.Forms.Label();
@@ -44,25 +42,14 @@
       this.cantonTextBox = new System.Windows.Forms.TextBox();
       this.fingerprintLabel = new System.Windows.Forms.Label();
       this.fingerprintTextBox = new System.Windows.Forms.TextBox();
-      this.acceptSignRadioButton = new System.Windows.Forms.RadioButton();
       this.reasonComboBox = new System.Windows.Forms.ComboBox();
       this.reasonLabel = new System.Windows.Forms.Label();
-      this.refuseRadioButton = new System.Windows.Forms.RadioButton();
       this.SuspendLayout();
-      // 
-      // validUntilLabel
-      // 
-      this.validUntilLabel.AutoSize = true;
-      this.validUntilLabel.Location = new System.Drawing.Point(11, 208);
-      this.validUntilLabel.Name = "validUntilLabel";
-      this.validUntilLabel.Size = new System.Drawing.Size(55, 14);
-      this.validUntilLabel.TabIndex = 0;
-      this.validUntilLabel.Text = "Valid until:";
       // 
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(463, 301);
+      this.cancelButton.Location = new System.Drawing.Point(463, 201);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
       this.cancelButton.TabIndex = 2;
@@ -74,11 +61,11 @@
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(382, 301);
+      this.okButton.Location = new System.Drawing.Point(382, 201);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 1;
-      this.okButton.Text = "&OK";
+      this.okButton.Text = "&Revoke";
       this.okButton.UseVisualStyleBackColor = true;
       this.okButton.Click += new System.EventHandler(this.okButton_Click);
       // 
@@ -119,17 +106,6 @@
       this.idLabel.Size = new System.Drawing.Size(18, 14);
       this.idLabel.TabIndex = 6;
       this.idLabel.Text = "Id:";
-      // 
-      // validUntilPicker
-      // 
-      this.validUntilPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.validUntilPicker.Enabled = false;
-      this.validUntilPicker.Location = new System.Drawing.Point(94, 203);
-      this.validUntilPicker.Name = "validUntilPicker";
-      this.validUntilPicker.Size = new System.Drawing.Size(444, 20);
-      this.validUntilPicker.TabIndex = 7;
-      this.validUntilPicker.ValueChanged += new System.EventHandler(this.validUntilPicker_ValueChanged);
       // 
       // typeLabel
       // 
@@ -207,24 +183,11 @@
       this.fingerprintTextBox.Size = new System.Drawing.Size(444, 20);
       this.fingerprintTextBox.TabIndex = 14;
       // 
-      // acceptSignRadioButton
-      // 
-      this.acceptSignRadioButton.AutoSize = true;
-      this.acceptSignRadioButton.Location = new System.Drawing.Point(14, 179);
-      this.acceptSignRadioButton.Name = "acceptSignRadioButton";
-      this.acceptSignRadioButton.Size = new System.Drawing.Size(105, 18);
-      this.acceptSignRadioButton.TabIndex = 16;
-      this.acceptSignRadioButton.TabStop = true;
-      this.acceptSignRadioButton.Text = "Accept and Sign";
-      this.acceptSignRadioButton.UseVisualStyleBackColor = true;
-      this.acceptSignRadioButton.CheckedChanged += new System.EventHandler(this.acceptSignRadioButton_CheckedChanged);
-      // 
       // reasonComboBox
       // 
       this.reasonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.reasonComboBox.Enabled = false;
       this.reasonComboBox.FormattingEnabled = true;
-      this.reasonComboBox.Location = new System.Drawing.Point(94, 262);
+      this.reasonComboBox.Location = new System.Drawing.Point(94, 169);
       this.reasonComboBox.Name = "reasonComboBox";
       this.reasonComboBox.Size = new System.Drawing.Size(444, 22);
       this.reasonComboBox.TabIndex = 17;
@@ -233,34 +196,20 @@
       // reasonLabel
       // 
       this.reasonLabel.AutoSize = true;
-      this.reasonLabel.Location = new System.Drawing.Point(11, 265);
+      this.reasonLabel.Location = new System.Drawing.Point(11, 172);
       this.reasonLabel.Name = "reasonLabel";
       this.reasonLabel.Size = new System.Drawing.Size(47, 14);
       this.reasonLabel.TabIndex = 18;
       this.reasonLabel.Text = "Reason:";
       // 
-      // refuseRadioButton
-      // 
-      this.refuseRadioButton.AutoSize = true;
-      this.refuseRadioButton.Location = new System.Drawing.Point(12, 238);
-      this.refuseRadioButton.Name = "refuseRadioButton";
-      this.refuseRadioButton.Size = new System.Drawing.Size(60, 18);
-      this.refuseRadioButton.TabIndex = 19;
-      this.refuseRadioButton.TabStop = true;
-      this.refuseRadioButton.Text = "Refuse";
-      this.refuseRadioButton.UseVisualStyleBackColor = true;
-      this.refuseRadioButton.CheckedChanged += new System.EventHandler(this.refuseRadioButton_CheckedChanged);
-      // 
-      // SignDialog
+      // RevokeDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(550, 336);
+      this.ClientSize = new System.Drawing.Size(550, 236);
       this.ControlBox = false;
-      this.Controls.Add(this.refuseRadioButton);
       this.Controls.Add(this.reasonLabel);
       this.Controls.Add(this.reasonComboBox);
-      this.Controls.Add(this.acceptSignRadioButton);
       this.Controls.Add(this.fingerprintLabel);
       this.Controls.Add(this.fingerprintTextBox);
       this.Controls.Add(this.cantonlabel);
@@ -269,21 +218,19 @@
       this.Controls.Add(this.emailAddressTextBox);
       this.Controls.Add(this.typeLabel);
       this.Controls.Add(this.typeTextBox);
-      this.Controls.Add(this.validUntilPicker);
       this.Controls.Add(this.idLabel);
       this.Controls.Add(this.nameLabel);
       this.Controls.Add(this.nameTextBox);
       this.Controls.Add(this.idTextBox);
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);
-      this.Controls.Add(this.validUntilLabel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
-      this.Name = "SignDialog";
-      this.Text = "Verify Signature Request";
+      this.Name = "RevokeDialog";
+      this.Text = "Revoke Certificate";
       this.Load += new System.EventHandler(this.CaNameDialog_Load);
       this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RefuseDialog_KeyDown);
       this.ResumeLayout(false);
@@ -293,14 +240,12 @@
 
     #endregion
 
-    private System.Windows.Forms.Label validUntilLabel;
     private System.Windows.Forms.Button cancelButton;
     private System.Windows.Forms.Button okButton;
     private System.Windows.Forms.TextBox idTextBox;
     private System.Windows.Forms.TextBox nameTextBox;
     private System.Windows.Forms.Label nameLabel;
     private System.Windows.Forms.Label idLabel;
-    private System.Windows.Forms.DateTimePicker validUntilPicker;
     private System.Windows.Forms.Label typeLabel;
     private System.Windows.Forms.TextBox typeTextBox;
     private System.Windows.Forms.Label emailAddressLabel;
@@ -309,9 +254,7 @@
     private System.Windows.Forms.TextBox cantonTextBox;
     private System.Windows.Forms.Label fingerprintLabel;
     private System.Windows.Forms.TextBox fingerprintTextBox;
-    private System.Windows.Forms.RadioButton acceptSignRadioButton;
     private System.Windows.Forms.ComboBox reasonComboBox;
     private System.Windows.Forms.Label reasonLabel;
-    private System.Windows.Forms.RadioButton refuseRadioButton;
   }
 }

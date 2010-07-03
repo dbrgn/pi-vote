@@ -1180,6 +1180,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to □ Refused, fingerprint does not match.
+        /// </summary>
+        internal static string SigningRequestDocumentRefusedFingerprintMismatch {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRefusedFingerprintMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to □ Refused, already has valid certificate.
         /// </summary>
         internal static string SigningRequestDocumentRefusedHasCertificate {

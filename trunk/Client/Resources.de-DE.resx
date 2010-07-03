@@ -665,9 +665,12 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
     <value>Zertifikatstyp:</value>
   </data>
   <data name="SigningRequestDocumentRefusedNotFx" xml:space="preserve">
-    <value>□ Refused, nicht im Amt</value>
+    <value>□ Verweigert, nicht im Amt</value>
   </data>
   <data name="SigningRequestDocumentRevokedNoMoreFx" xml:space="preserve">
     <value>□ Widerrufen, nicht mehr im Amt</value>
+  </data>
+  <data name="SigningRequestDocumentRefusedFingerprintMismatch" xml:space="preserve">
+    <value>□ Verweigert, Fingerprint stimmt nicht überein</value>
   </data>
 </root>

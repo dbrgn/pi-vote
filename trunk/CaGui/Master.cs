@@ -547,13 +547,10 @@ namespace Pirate.PiVote.CaGui
         string fileName = (string)this.entryListView.SelectedItems[0].Tag;
         CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
 
-        string message = string.Format(
-          "Do you really want to revoke Id {0}, Type {1}, Name {2}", 
-          (string)item.Text, 
-          (string)item.SubItems[1].Text,
-          (string)item.SubItems[2].Text);
+        RevokeDialog dialog = new RevokeDialog();
+        dialog.Display(entry, CertificateStorage);
 
-        if (MessageBox.Show(message, "Revoke Certificate", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+        if (dialog.ShowDialog() == DialogResult.OK)
         {
           entry.Revoke();
           entry.Save(DataPath(fileName));

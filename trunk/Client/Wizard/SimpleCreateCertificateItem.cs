@@ -257,10 +257,16 @@ namespace Pirate.PiVote.Client
       this.functionNameTextBox.Enabled = 
         this.typeComboBox.SelectedIndex == 1 || 
         this.typeComboBox.SelectedIndex == 2;
+      this.cantonComboBox.Enabled = this.typeComboBox.SelectedIndex == 0;
       CheckValid();
     }
 
     private void functionNameTextBox_TextChanged(object sender, EventArgs e)
+    {
+      CheckValid();
+    }
+
+    private void cantonComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
       CheckValid();
     }

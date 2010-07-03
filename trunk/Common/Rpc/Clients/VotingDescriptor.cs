@@ -146,6 +146,7 @@ namespace Pirate.PiVote.Rpc
       this.envelopeCount = envelopeCount;
       this.questions = new List<QuestionDescriptor>();
       this.questions.AddRange(parameters.Questions.Select(question => new QuestionDescriptor(question)));
+      this.canton = parameters.Canton;
     }
   }
 }

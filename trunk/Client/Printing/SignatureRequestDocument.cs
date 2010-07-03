@@ -126,6 +126,7 @@ namespace Pirate.PiVote.Client
       Table table = new Table(font);
       table.AddColumn(bounds.Width / 6f * 4f);
       table.AddRow(Resources.SigningRequestDocumentAccepted);
+      table.AddRow(Resources.SigningRequestDocumentRefusedFingerprintMismatch);
       if (this.certificate is VoterCertificate)
       {
         table.AddRow(Resources.SigningRequestDocumentRefusedNoPirate);
