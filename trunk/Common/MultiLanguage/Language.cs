@@ -21,7 +21,8 @@ namespace Pirate.PiVote
   {
     English = 0,
     German = 1,
-    French = 2
+    French = 2,
+    Italien = 3
   }
 
   /// <summary>
@@ -44,6 +45,8 @@ namespace Pirate.PiVote
           return CultureInfo.CreateSpecificCulture("de-DE");
         case Language.French:
           return CultureInfo.CreateSpecificCulture("fr-FR");
+        case Language.Italien:
+          return CultureInfo.CreateSpecificCulture("it-IT");
         default:
           throw new ArgumentException("Unknown language");
       }
@@ -70,6 +73,8 @@ namespace Pirate.PiVote
             return Language.German;
           case "fr-FR":
             return Language.French;
+          case "it-IT":
+            return Language.Italien;
           default:
             throw new ArgumentException("Unknown language");
         }
