@@ -335,6 +335,8 @@ namespace Pirate.PiVote.Crypto
     {
       if (this.tally == null)
         throw new InvalidOperationException("Tally not yet begun.");
+      if (this.tally.EnvelopeCount < 1)
+        throw new InvalidOperationException("No votes to tally.");
 
       PartialDecipherList partialDecipherList = new PartialDecipherList(this.parameters.VotingId, this.authority.Index, this.tally.EnvelopeCount, this.tally.EnvelopeHash);
 

@@ -142,9 +142,10 @@ namespace Pirate.PiVote.Client
         this.checkSharesButton.Enabled = 
           voting.Status == VotingStatus.Sharing && 
           !voting.AuthoritiesDone.Contains(Status.Certificate.Id);
-        this.decipherButton.Enabled = 
-          voting.Status == VotingStatus.Deciphering && 
-          !voting.AuthoritiesDone.Contains(Status.Certificate.Id);
+        this.decipherButton.Enabled =
+          voting.Status == VotingStatus.Deciphering &&
+          !voting.AuthoritiesDone.Contains(Status.Certificate.Id) &&
+          voting.EnvelopeCount > 0;
       }
       else
       {
