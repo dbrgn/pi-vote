@@ -94,7 +94,7 @@ namespace Pirate.PiVote.Client
 
     public override bool CanNext
     {
-      get { return true; }
+      get { return this.canNext; }
     }
 
     public override bool CanPrevious

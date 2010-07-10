@@ -116,9 +116,13 @@ namespace Pirate.PiVote.Client
         {
           return false;
         }
-        else
+        else if (Question.MaxOptions > 1)
         {
           return this.optionControls.Values.Count(optionControl => optionControl != null && optionControl.Checked) <= Question.MaxOptions;
+        }
+        else 
+        {
+          return this.optionControls.Values.Count(optionControl => optionControl != null && optionControl.Checked) == Question.MaxOptions;
         }
       }
     }
