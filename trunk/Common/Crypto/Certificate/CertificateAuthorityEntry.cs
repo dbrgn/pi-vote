@@ -28,7 +28,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Request for signature.
     /// </summary>
-    public Signed<SignatureRequest> Request { get; private set; }
+    public Secure<SignatureRequest> Request { get; private set; }
 
     /// <summary>
     /// Response to signature request.
@@ -41,10 +41,20 @@ namespace Pirate.PiVote.Crypto
     public bool Revoked { get; private set; }
 
     /// <summary>
+    /// Gets the decrypted signature request.
+    /// </summary>
+    /// <param name="caCertificate">Certificate of the CA.</param>
+    /// <returns>Signature request.</returns>
+    public SignatureRequest RequestValue(Certificate caCertificate)
+    {
+      return Request.Value.Decrypt(caCertificate);
+    }
+
+    /// <summary>
     /// Creates a new certificate entry.
     /// </summary>
     /// <param name="request">Request to create from.</param>
-    public CertificateAuthorityEntry(Signed<SignatureRequest> request)
+    public CertificateAuthorityEntry(Secure<SignatureRequest> request)
     {
       Request = request;
       Response = null;
@@ -78,7 +88,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      Request = context.ReadObject<Signed<SignatureRequest>>();
+      Request = context.ReadObject<Secure<SignatureRequest>>();
       Response = context.ReadObject<Signed<SignatureResponse>>();
       Revoked = context.ReadBoolean();
     }
@@ -90,7 +100,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="validUntil">Signature valid until.</param>
     public void Sign(CACertificate caCertificate, DateTime validUntil)
     {
-      SignatureRequest request = Request.Value;
+      SignatureRequest request = RequestValue(caCertificate);
       Signature signature = Certificate.AddSignature(caCertificate, validUntil);
       SignatureResponse response = new SignatureResponse(Request.Certificate.Id, signature);
       Response = new Signed<SignatureResponse>(response, caCertificate);
@@ -103,7 +113,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="reason">Reason for refusing to sign.</param>
     public void Refuse(CACertificate caCertificate, string reason)
     {
-      SignatureRequest request = Request.Value;
+      SignatureRequest request = RequestValue(caCertificate);
       SignatureResponse response = new SignatureResponse(Request.Certificate.Id, reason);
       Response = new Signed<SignatureResponse>(response, caCertificate);
     }

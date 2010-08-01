@@ -169,7 +169,8 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("signature");
 
       var rsaProvider = GetRsaProvider();
-      return rsaProvider.VerifyData(data, "SHA256", signature) && Valid(certificateStorage);
+      return rsaProvider.VerifyData(data, "SHA256", signature) &&
+        Validate(certificateStorage) == CertificateValidationResult.Valid;
     }
 
     /// <summary>
@@ -207,7 +208,8 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("signature");
 
       var rsaProvider = GetRsaProvider();
-      return rsaProvider.VerifyData(data, "SHA256", signature) && Valid(certificateStorage, date);
+      return rsaProvider.VerifyData(data, "SHA256", signature) &&
+        Validate(certificateStorage, date) == CertificateValidationResult.Valid;
     }
 
     /// <summary>
@@ -215,9 +217,9 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="certificateStorage">Storage of certificates.</param>
     /// <returns>Is certificate valid.</returns>
-    public bool Valid(ICertificateStorage certificateStorage)
+    public CertificateValidationResult Validate(ICertificateStorage certificateStorage)
     {
-      return Valid(certificateStorage, DateTime.Now);
+      return Validate(certificateStorage, DateTime.Now);
     }
 
     /// <summary>
@@ -226,11 +228,42 @@ namespace Pirate.PiVote.Crypto
     /// <param name="certificateStorage">Storage of certificates.</param>
     /// <param name="date">Date on which it must be valid.</param>
     /// <returns>Is certificate valid.</returns>
-    public bool Valid(ICertificateStorage certificateStorage, DateTime date)
+    public CertificateValidationResult Validate(ICertificateStorage certificateStorage, DateTime date)
     {
-      return SelfSignatureValid &&
-        (signatures.Any(signature => signature.Verify(GetSignatureContent(), certificateStorage, date) && !certificateStorage.IsRevoked(signature.SignerId, Id, date)) ||
-        certificateStorage.IsRootCertificate(this));
+      if (SelfSignatureValid)
+      {
+        if (certificateStorage.IsRootCertificate(this))
+        {
+          return CertificateValidationResult.Valid;
+        }
+        else
+        {
+          CertificateValidationResult result = CertificateValidationResult.NoSignature;
+
+          foreach (Signature signature in this.signatures)
+          {
+            result = signature.Verify(GetSignatureContent(), certificateStorage, date);
+
+            if (result == CertificateValidationResult.Valid)
+            {
+              if (certificateStorage.IsRevoked(signature.SignerId, Id, date))
+              {
+                result = CertificateValidationResult.Revoked;
+              }
+              else
+              {
+                return CertificateValidationResult.Valid;
+              }
+            }
+          }
+
+          return result;
+        }
+      }
+      else
+      {
+        return CertificateValidationResult.SelfsignatureInvalid;
+      }
     }
 
     /// <summary>

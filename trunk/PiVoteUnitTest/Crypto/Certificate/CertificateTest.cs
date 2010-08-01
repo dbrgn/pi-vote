@@ -33,10 +33,10 @@ namespace PiVoteUnitTest
 
       CACertificate root = new CACertificate("Root");
       root.CreateSelfSignature();
-      Assert.IsFalse(root.Valid(storage));
+      Assert.IsFalse(root.Validate(storage) == CertificateValidationResult.Valid);
 
       storage.AddRoot(root.OnlyPublicPart);
-      Assert.IsTrue(root.Valid(storage));
+      Assert.IsTrue(root.Validate(storage) == CertificateValidationResult.Valid);
 
       var rootCrl = new RevocationList(root.Id, DateTime.Now, DateTime.Now.AddDays(1), new Guid[]{});
       var signedRootCrl = new Signed<RevocationList>(rootCrl, root);
@@ -44,11 +44,11 @@ namespace PiVoteUnitTest
 
       CACertificate intermediate = new CACertificate("Intermediate");
       intermediate.CreateSelfSignature();
-      Assert.IsFalse(intermediate.Valid(storage));
+      Assert.IsFalse(intermediate.Validate(storage) == CertificateValidationResult.Valid);
 
       intermediate.AddSignature(root, DateTime.Now.AddDays(1));
-      storage.Add(intermediate.OnlyPublicPart); 
-      Assert.IsTrue(intermediate.Valid(storage));
+      storage.Add(intermediate.OnlyPublicPart);
+      Assert.IsTrue(intermediate.Validate(storage) == CertificateValidationResult.Valid);
 
       var intermediateCrl = new RevocationList(intermediate.Id, DateTime.Now, DateTime.Now.AddDays(1), new Guid[] { });
       var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
@@ -56,10 +56,10 @@ namespace PiVoteUnitTest
 
       AdminCertificate test = new AdminCertificate(Language.English, "Test");
       test.CreateSelfSignature();
-      Assert.IsFalse(test.Valid(storage));
+      Assert.IsFalse(test.Validate(storage) == CertificateValidationResult.Valid);
 
       test.AddSignature(intermediate, DateTime.Now.AddDays(1));
-      Assert.IsTrue(test.Valid(storage));
+      Assert.IsTrue(test.Validate(storage) == CertificateValidationResult.Valid);
     }
 
     [TestMethod]
@@ -91,7 +91,7 @@ namespace PiVoteUnitTest
       byte[] data = test.ToBinary();
       data[data.Length - 3]++;
       AdminCertificate other = Serializable.FromBinary<AdminCertificate>(data);
-      Assert.IsFalse(other.Valid(storage));
+      Assert.IsFalse(other.Validate(storage) == CertificateValidationResult.Valid);
     }
 
     [TestMethod]
@@ -120,22 +120,22 @@ namespace PiVoteUnitTest
       test.CreateSelfSignature();
       test.AddSignature(intermediate, DateTime.Now.AddDays(1));
 
-      Assert.IsTrue(test.Valid(storage, DateTime.Now));
-      Assert.IsTrue(test.Valid(storage, DateTime.Now.AddMinutes(1)));
-      Assert.IsTrue(test.Valid(storage, DateTime.Now.AddHours(1)));
-      Assert.IsTrue(test.Valid(storage, DateTime.Now.AddDays(1)));
+      Assert.IsTrue(test.Validate(storage, DateTime.Now) == CertificateValidationResult.Valid);
+      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddMinutes(1)) == CertificateValidationResult.Valid);
+      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddHours(1)) == CertificateValidationResult.Valid);
+      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(1)) == CertificateValidationResult.Valid);
 
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(2)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(5)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(30)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddYears(1)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddYears(5)));
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(2)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(5)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(30)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(1)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(5)) == CertificateValidationResult.Valid);
 
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(-1)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(-5)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(-30)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddYears(-1)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddYears(-5)));
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(-1)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(-5)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(-30)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(-1)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(-5)) == CertificateValidationResult.Valid);
     }
 
     [TestMethod]
@@ -169,24 +169,24 @@ namespace PiVoteUnitTest
         var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
         storage.AddRevocationList(signedIntermediateCrl);
       }
-      
-      Assert.IsTrue(test.Valid(storage, DateTime.Now));
-      Assert.IsTrue(test.Valid(storage, DateTime.Now.AddDays(1)));
-      Assert.IsTrue(test.Valid(storage, DateTime.Now.AddDays(2)));
-      Assert.IsTrue(test.Valid(storage, DateTime.Now.AddDays(3)));
-      Assert.IsTrue(test.Valid(storage, DateTime.Now.AddDays(4)));
-      Assert.IsTrue(test.Valid(storage, DateTime.Now.AddDays(5)));
 
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(6)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(7)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(8)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(9)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(10)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(11)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(12)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddDays(30)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddYears(1)));
-      Assert.IsFalse(test.Valid(storage, DateTime.Now.AddYears(5)));
+      Assert.IsTrue(test.Validate(storage, DateTime.Now) == CertificateValidationResult.Valid);
+      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(1)) == CertificateValidationResult.Valid);
+      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(2)) == CertificateValidationResult.Valid);
+      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(3)) == CertificateValidationResult.Valid);
+      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(4)) == CertificateValidationResult.Valid);
+      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(5)) == CertificateValidationResult.Valid);
+
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(6)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(7)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(8)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(9)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(10)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(11)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(12)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(30)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(1)) == CertificateValidationResult.Valid);
+      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(5)) == CertificateValidationResult.Valid);
     }
   }
 }

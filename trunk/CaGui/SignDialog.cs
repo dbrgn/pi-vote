@@ -50,10 +50,10 @@ namespace Pirate.PiVote.CaGui
       Close();
     }
 
-    public void Display(CertificateAuthorityEntry entry, CertificateStorage storage)
+    public void Display(CertificateAuthorityEntry entry, CertificateStorage storage, Certificate caCertificate)
     {
       Certificate certificate = entry.Certificate;
-      SignatureRequest request = entry.Request.Value;
+      SignatureRequest request = entry.RequestValue(caCertificate);
 
       this.idTextBox.Text = certificate.Id.ToString();
       this.typeTextBox.Text = certificate.TypeText;

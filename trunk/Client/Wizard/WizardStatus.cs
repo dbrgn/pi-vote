@@ -24,6 +24,8 @@ namespace Pirate.PiVote.Client
 
     public CertificateStorage CertificateStorage { get; set; }
 
+    public Certificate ServerCertificate { get; set; }
+
     public Certificate Certificate { get; set; }
 
     public string CertificateFileName { get; set; }
@@ -41,6 +43,26 @@ namespace Pirate.PiVote.Client
     public string FirstName = null;
 
     public string FamilyName = null;
+
+    public Certificate CaCertificate
+    {
+      get
+      {
+        IEnumerable<Certificate> caCertificates =
+          CertificateStorage.Certificates
+          .Where(certificate => certificate is CACertificate && 
+            certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid);
+
+        IEnumerable<Certificate> caLeaveCertificates = caCertificates.
+          Where(certificate => !caCertificates
+            .Any(otherCert => otherCert.Signatures
+              .Any(signature => signature.SignerId == certificate.Id)));
+
+        return caLeaveCertificates
+          .OrderBy(certificate => certificate.CreationDate)
+          .LastOrDefault();
+      }
+    }
 
     public IPAddress ServerIpAddress
     {

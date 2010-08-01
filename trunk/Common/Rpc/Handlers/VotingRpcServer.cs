@@ -1,5 +1,4 @@
-﻿
-/*
+﻿/*
  *  <project description>
  * 
  *  Copyright (c) 2008-2009 Stefan Thöni <stefan@savvy.ch> 
@@ -79,6 +78,14 @@ namespace Pirate.PiVote.Rpc
     public MySqlConnection DbConnection
     {
       get { return this.dbConnection; }
+    }
+
+    /// <summary>
+    /// Server certificate without private key.
+    /// </summary>
+    public Certificate ServerCertificate
+    {
+      get { return this.serverCertificate.OnlyPublicPart; }
     }
 
     /// <summary>
@@ -201,7 +208,7 @@ namespace Pirate.PiVote.Rpc
 
       if (votingParameters.AuthorityCount != authorities.Count())
         throw new PiArgumentException(ExceptionCode.AuthorityCountMismatch, "Authority count does not match number of provided authorities.");
-      if (!authorities.All(authority => authority.Valid(CertificateStorage)))
+      if (!authorities.All(authority => authority.Validate(CertificateStorage) == CertificateValidationResult.Valid))
         throw new PiArgumentException(ExceptionCode.AuthorityInvalid, "Authority certificate invalid or not recognized.");
 
       MySqlCommand insertCommand = new MySqlCommand("INSERT INTO voting (Id, Parameters, Status) VALUES (@Id, @Parameters, @Status)", DbConnection);
@@ -244,20 +251,25 @@ namespace Pirate.PiVote.Rpc
     /// Add or replaces a signature request.
     /// </remarks>
     /// <param name="signatureRequest">Signed signature request.</param>
-    public void SetSignatureRequest(Signed<SignatureRequest> signatureRequest)
+    public void SetSignatureRequest(Secure<SignatureRequest> signatureRequest, Secure<SignatureRequestInfo> signatureRequestInfo)
     {
       Guid id = signatureRequest.Certificate.Id;
 
+      if (signatureRequest.Certificate.Id != signatureRequestInfo.Certificate.Id)
+        throw new PiArgumentException(ExceptionCode.SignatureRequestInvalid, "Signature request invalid.");
       if (!signatureRequest.VerifySimple())
         throw new PiArgumentException(ExceptionCode.SignatureRequestInvalid, "Signature request invalid.");
+      if (!signatureRequestInfo.VerifySimple())
+        throw new PiArgumentException(ExceptionCode.SignatureRequestInvalid, "Signature request invalid.");
 
-      SignatureRequest request = signatureRequest.Value;
-      if (!request.Valid)
+      SignatureRequestInfo requestInfo = signatureRequestInfo.Value.Decrypt(this.serverCertificate);
+      if (!requestInfo.Valid)
         throw new PiArgumentException(ExceptionCode.InvalidSignatureRequest, "Signature request data not valid.");
 
-      MySqlCommand replaceCommand = new MySqlCommand("REPLACE INTO signaturerequest (Id, Value) VALUES (@Id, @Value)", DbConnection);
+      MySqlCommand replaceCommand = new MySqlCommand("REPLACE INTO signaturerequest (Id, Value, Info) VALUES (@Id, @Value, @Info)", DbConnection);
       replaceCommand.Parameters.AddWithValue("@Id", id.ToByteArray());
       replaceCommand.Parameters.AddWithValue("@Value", signatureRequest.ToBinary());
+      replaceCommand.Parameters.AddWithValue("@Info", signatureRequestInfo.ToBinary());
       replaceCommand.ExecuteNonQuery();
 
       MySqlCommand deleteCommand = new MySqlCommand("DELETE FROM signatureresponse WHERE Id = @Id", DbConnection);
@@ -269,20 +281,19 @@ namespace Pirate.PiVote.Rpc
         CertificateStorage.Add(signatureRequest.Certificate);
       }
 
-      string userBody = string.Format(
-        this.serverConfig.MailRequestDepositedBody, 
-        request.FirstName, 
-        request.FamilyName, 
-        request.EmailAddress, 
-        signatureRequest.Certificate.Id.ToString(), 
-        signatureRequest.Certificate.TypeText);
-      Mailer.TrySend(request.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
+      if (!requestInfo.EmailAddress.IsNullOrEmpty())
+      {
+        string userBody = string.Format(
+          this.serverConfig.MailRequestDepositedBody,
+          requestInfo.EmailAddress,
+          signatureRequest.Certificate.Id.ToString(),
+          signatureRequest.Certificate.TypeText);
+        Mailer.TrySend(requestInfo.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
+      }
 
       string adminBody = string.Format(
         this.serverConfig.MailAdminNewRequestBody,
-        request.FirstName,
-        request.FamilyName,
-        request.EmailAddress,
+        requestInfo.EmailAddress.IsNullOrEmpty() ? "?@?.?" : requestInfo.EmailAddress,
         signatureRequest.Certificate.Id.ToString(),
         signatureRequest.Certificate.TypeText);
       Mailer.TrySend(this.serverConfig.MailAdminAddress, this.serverConfig.MailAdminNewRequestSubject, adminBody);
@@ -313,7 +324,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="id">Id of the signature request.</param>
     /// <returns>Signed signature request.</returns>
-    public Signed<SignatureRequest> GetSignatureRequest(Guid id)
+    public Secure<SignatureRequest> GetSignatureRequest(Guid id)
     {
       MySqlDataReader reader = DbConnection
         .ExecuteReader("SELECT Value FROM signaturerequest WHERE Id = @Id",
@@ -323,7 +334,31 @@ namespace Pirate.PiVote.Rpc
       {
         byte[] signatureRequestData = reader.GetBlob(0);
         reader.Close();
-        return Serializable.FromBinary<Signed<SignatureRequest>>(signatureRequestData);
+        return Serializable.FromBinary<Secure<SignatureRequest>>(signatureRequestData);
+      }
+      else
+      {
+        reader.Close();
+        throw new PiArgumentException(ExceptionCode.SignatureRequestNotFound, "Signature request not found.");
+      }
+    }
+
+    /// <summary>
+    /// Get a signature request info.
+    /// </summary>
+    /// <param name="id">Id of the signature request.</param>
+    /// <returns>Signed signature request.</returns>
+    public Secure<SignatureRequestInfo> GetSignatureRequestInfo(Guid id)
+    {
+      MySqlDataReader reader = DbConnection
+        .ExecuteReader("SELECT Info FROM signaturerequest WHERE Id = @Id",
+        "@Id", id.ToByteArray());
+
+      if (reader.Read())
+      {
+        byte[] signatureRequestData = reader.GetBlob(0);
+        reader.Close();
+        return Serializable.FromBinary<Secure<SignatureRequestInfo>>(signatureRequestData);
       }
       else
       {
@@ -411,30 +446,32 @@ namespace Pirate.PiVote.Rpc
           CertificateStorage.Add(certificate);
         }
 
-        Signed<SignatureRequest> signatureRequest = GetSignatureRequest(signatureResponse.SubjectId);
-        SignatureRequest request = signatureRequest.Value;
-        string userBody = string.Format(
-          this.serverConfig.MailRequestApprovedBody,
-          request.FirstName,
-          request.FamilyName,
-          request.EmailAddress,
-          signatureRequest.Certificate.Id.ToString(),
-          signatureRequest.Certificate.TypeText);
-        Mailer.TrySend(request.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
+        Secure<SignatureRequestInfo> secureSignatureRequestInfo = GetSignatureRequestInfo(signatureResponse.SubjectId);
+        SignatureRequestInfo signatureRequestInfo = secureSignatureRequestInfo.Value.Decrypt(this.serverCertificate);
+        if (!signatureRequestInfo.EmailAddress.IsNullOrEmpty())
+        {
+          string userBody = string.Format(
+            this.serverConfig.MailRequestApprovedBody,
+            signatureRequestInfo.EmailAddress,
+            secureSignatureRequestInfo.Certificate.Id.ToString(),
+            secureSignatureRequestInfo.Certificate.TypeText);
+          Mailer.TrySend(signatureRequestInfo.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
+        }
       }
       else
       {
-        Signed<SignatureRequest> signatureRequest = GetSignatureRequest(signatureResponse.SubjectId);
-        SignatureRequest request = signatureRequest.Value;
-        string userBody = string.Format(
-          this.serverConfig.MailRequestDeclinedBody,
-          request.FirstName,
-          request.FamilyName,
-          request.EmailAddress,
-          signatureRequest.Certificate.Id.ToString(),
-          signatureRequest.Certificate.TypeText,
-          signatureResponse.Reason);
-        Mailer.TrySend(request.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
+        Secure<SignatureRequestInfo> secureSignatureRequestInfo = GetSignatureRequestInfo(signatureResponse.SubjectId);
+        SignatureRequestInfo signatureRequestInfo = secureSignatureRequestInfo.Value.Decrypt(this.serverCertificate);
+        if (!signatureRequestInfo.EmailAddress.IsNullOrEmpty())
+        {
+          string userBody = string.Format(
+            this.serverConfig.MailRequestDeclinedBody,
+            signatureRequestInfo.EmailAddress,
+            secureSignatureRequestInfo.Certificate.Id.ToString(),
+            secureSignatureRequestInfo.Certificate.TypeText,
+            signatureResponse.Reason);
+          Mailer.TrySend(signatureRequestInfo.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
+        }
       }
     }
 
@@ -448,7 +485,8 @@ namespace Pirate.PiVote.Rpc
 
       foreach (Certificate certificate in CertificateStorage.Certificates)
       {
-        if (certificate is AuthorityCertificate && certificate.Valid(CertificateStorage))
+        if (certificate is AuthorityCertificate &&
+          certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid)
         {
           authorityCertificates.Add((AuthorityCertificate)certificate);
         }
@@ -468,7 +506,7 @@ namespace Pirate.PiVote.Rpc
     {
       if (!certificateStorage.SignedRevocationLists.All(crl => crl.Verify(CertificateStorage)))
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature on CRL not valid.");
-      if (!certificateStorage.Certificates.All(certificate => certificate.Valid(CertificateStorage)))
+      if (!certificateStorage.Certificates.All(certificate => certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid))
         throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Certificate not valid.");
 
       CertificateStorage.Add(certificateStorage);

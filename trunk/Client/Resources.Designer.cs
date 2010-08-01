@@ -464,6 +464,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your certificate is outdated. You need to create a new one..
+        /// </summary>
+        internal static string CheckCertificateOutdated {
+            get {
+                return ResourceManager.GetString("CheckCertificateOutdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your certificate signature request ist still pending on the server..
         /// </summary>
         internal static string CheckCertificatePending {
@@ -505,6 +514,60 @@ namespace Pirate.PiVote.Client {
         internal static string CheckCertificateResponseInvalid {
             get {
                 return ResourceManager.GetString("CheckCertificateResponseInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your certificate could not be validated..
+        /// </summary>
+        internal static string CheckCertificateResultUnknown {
+            get {
+                return ResourceManager.GetString("CheckCertificateResultUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your certificate was revoked by the Certification Authority. You need to create a new one..
+        /// </summary>
+        internal static string CheckCertificateRevoked {
+            get {
+                return ResourceManager.GetString("CheckCertificateRevoked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your certificate contains invalid data. This might be due to data corruption..
+        /// </summary>
+        internal static string CheckCertificateSelfsignatureInvalid {
+            get {
+                return ResourceManager.GetString("CheckCertificateSelfsignatureInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your certificate contains invalid data. This might be due to data corruption..
+        /// </summary>
+        internal static string CheckCertificateSignatureDataInvalid {
+            get {
+                return ResourceManager.GetString("CheckCertificateSignatureDataInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The certificate of your Certificate Authority is not valid..
+        /// </summary>
+        internal static string CheckCertificateSignerInvalid {
+            get {
+                return ResourceManager.GetString("CheckCertificateSignerInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Certificate Authority is not known..
+        /// </summary>
+        internal static string CheckCertificateUnknownSigner {
+            get {
+                return ResourceManager.GetString("CheckCertificateUnknownSigner", resourceCulture);
             }
         }
         
@@ -631,6 +694,15 @@ namespace Pirate.PiVote.Client {
         internal static string CreateCertificateEmailAddress {
             get {
                 return ResourceManager.GetString("CreateCertificateEmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notify me by email, when an answer to my certificate signing request is available. This requires your email address to be stored on the PiVote server..
+        /// </summary>
+        internal static string CreateCertificateEmailNotification {
+            get {
+                return ResourceManager.GetString("CreateCertificateEmailNotification", resourceCulture);
             }
         }
         

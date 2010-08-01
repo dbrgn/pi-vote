@@ -56,7 +56,7 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Response to the request.</returns>
     protected override FetchCertificateStorageResponse Execute(VotingRpcServer server)
     {
-      return new FetchCertificateStorageResponse(RequestId, server.CertificateStorage.CloneOnlyCA());
+      return new FetchCertificateStorageResponse(RequestId, server.CertificateStorage.CloneOnlyCA(), server.ServerCertificate);
     }
   }
 }

@@ -133,7 +133,7 @@ namespace Pirate.PiVote.Client
       this.status = CheckStatus.CheckCertificate;
       Status.UpdateProgress();
 
-      if (Status.Certificate.Valid(Status.CertificateStorage))
+      if (Status.Certificate.Validate(Status.CertificateStorage) == CertificateValidationResult.Valid)
       {
         this.status = CheckStatus.CheckCertificateAccepted;
         Status.SetMessage(Resources.CheckCertificateReady, MessageType.Info);

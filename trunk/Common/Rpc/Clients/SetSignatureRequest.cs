@@ -34,9 +34,14 @@ namespace Pirate.PiVote.Rpc
     private class SetSignatureRequestOperation : Operation
     {
       /// <summary>
-      /// Signed signature request.
+      /// Signature Request signed and encrypted for the CA.
       /// </summary>
-      private Signed<SignatureRequest> signatureRequest;
+      private Secure<SignatureRequest> signatureRequest;
+
+      /// <summary>
+      /// Signature Request Info signed and encrypted for the server.
+      /// </summary>
+      private Secure<SignatureRequestInfo> signatureRequestInfo;
 
       /// <summary>
       /// Callback upon completion.
@@ -46,12 +51,13 @@ namespace Pirate.PiVote.Rpc
       /// <summary>
       /// Create a new vote cast opeation.
       /// </summary>
-      /// <param name="votingId">Id of the voting.</param>
-      /// <param name="optionIndex">Index of chosen option.</param>
+      /// <param name="signatureRequest">Signature Request signed and encrypted for the CA.</param>
+      /// <param name="signatureRequestInfo">Signature Request Info signed and encrypted for the server.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public SetSignatureRequestOperation(Signed<SignatureRequest> signatureRequest, SetSignatureRequestCallBack callBack)
+      public SetSignatureRequestOperation(Secure<SignatureRequest> signatureRequest, Secure<SignatureRequestInfo> signatureRequestInfo, SetSignatureRequestCallBack callBack)
       {
         this.signatureRequest = signatureRequest;
+        this.signatureRequestInfo = signatureRequestInfo;
         this.callBack = callBack;
       }
 
@@ -68,7 +74,7 @@ namespace Pirate.PiVote.Rpc
           SubText = string.Empty;
           SubProgress = 0d;
 
-          client.proxy.PushSignatureRequest(this.signatureRequest);
+          client.proxy.PushSignatureRequest(this.signatureRequest, this.signatureRequestInfo);
 
           Progress = 1d;
 

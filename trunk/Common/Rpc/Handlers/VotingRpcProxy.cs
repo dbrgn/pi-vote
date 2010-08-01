@@ -175,10 +175,11 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Pushes a signature request to the server.
     /// </summary>
-    /// <param name="signatureRequest">Signed signature request.</param>
-    public void PushSignatureRequest(Signed<SignatureRequest> signatureRequest)
+    /// <param name="signatureRequest">Signature Request signed and encrypted for the CA.</param>
+    /// <param name="signatureRequestInfo">Signature Request Info signed and encrypted for the Server.</param>
+    public void PushSignatureRequest(Secure<SignatureRequest> signatureRequest, Secure<SignatureRequestInfo> signatureRequestInfo)
     {
-      var request = new PushSignatureRequestRequest(Guid.NewGuid(), signatureRequest);
+      var request = new PushSignatureRequestRequest(Guid.NewGuid(), signatureRequest, signatureRequestInfo);
       var response = Execute<PushSignatureRequestResponse>(request);
     }
 
@@ -186,12 +187,12 @@ namespace Pirate.PiVote.Rpc
     /// Pushes a signature request to the server.
     /// </summary>
     /// <param name="signatureRequest">Signed signature request.</param>
-    public CertificateStorage FetchCertificateStorage()
+    public Tuple< CertificateStorage, Certificate> FetchCertificateStorage()
     {
       var request = new FetchCertificateStorageRequest(Guid.NewGuid());
       var response = Execute<FetchCertificateStorageResponse>(request);
 
-      return response.CertificateStorage;
+      return new Tuple<CertificateStorage, Certificate>(response.CertificateStorage, response.ServerCertificate);
     }
 
     /// <summary>

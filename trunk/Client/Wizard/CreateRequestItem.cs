@@ -105,6 +105,10 @@ namespace Pirate.PiVote.Client
           this.familyNameTextBox.Text, 
           this.emailAddressTextBox.Text);
 
+      SignatureRequestInfo signatureRequestInfo
+        = new SignatureRequestInfo(
+          this.emailAddressTextBox.Text);
+
       SignatureRequestDocument document = new SignatureRequestDocument(signatureRequest, Status.Certificate);
       PrintDialog printDialog = new PrintDialog();
       printDialog.Document = document;
@@ -113,10 +117,12 @@ namespace Pirate.PiVote.Client
       {
         document.Print();
 
-        Signed<SignatureRequest> signedSignatureRequest =
-          new Signed<SignatureRequest>(signatureRequest, Status.Certificate);
+        Secure<SignatureRequest> secureSignatureRequest =
+          new Secure<SignatureRequest>(signatureRequest, Status.Certificate, Status.CaCertificate);
+        Secure<SignatureRequestInfo> secureSignatureRequestInfo =
+          new Secure<SignatureRequestInfo>(signatureRequestInfo, Status.Certificate, Status.ServerCertificate);
 
-        Status.VotingClient.SetSignatureRequest(signedSignatureRequest, SetSignatureRequestComplete);
+        Status.VotingClient.SetSignatureRequest(secureSignatureRequest, secureSignatureRequestInfo, SetSignatureRequestComplete);
 
         while (this.run)
         {

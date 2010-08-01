@@ -20,7 +20,10 @@ namespace Pirate.PiVote.Client
   public partial class SimpleCreateCertificateItem : WizardItem
   {
     private Certificate certificate;
-    private Signed<SignatureRequest> signedRequest;
+    private SignatureRequest signatureRequest;
+    private SignatureRequestInfo signatureRequestInfo;
+    private Secure<SignatureRequest> secureSignatureRequest;
+    private Secure<SignatureRequestInfo> secureSignatureRequestInfo;
     private bool run = false;
     private Exception exception;
     private bool done = false;
@@ -95,6 +98,7 @@ namespace Pirate.PiVote.Client
       this.firstNameLabel.Text = Resources.CreateCertificateFirstname;
       this.familyNameLabel.Text = Resources.CreateCertificateSurname;
       this.emailAddressLabel.Text = Resources.CreateCertificateEmailAddress;
+      this.emailAddressTextBox.Text = Resources.CreateCertificateEmailNotification;
       this.functionNameLabel.Text = Resources.CreateCertificateFunction;
       this.cantonLabel.Text = Resources.CreateCertificateCanton;
 
@@ -151,8 +155,10 @@ namespace Pirate.PiVote.Client
 
       this.certificate.CreateSelfSignature();
 
-      var request = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
-      this.signedRequest = new Signed<SignatureRequest>(request, this.certificate);
+      this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
+      this.signatureRequestInfo = new SignatureRequestInfo(this.emailNotificationCheckBox.Checked ? this.emailAddressTextBox.Text : string.Empty);
+      this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, this.certificate, Status.CaCertificate);
+      this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, this.certificate, Status.ServerCertificate);
 
       this.run = false;
       OnUpdateWizard();
@@ -191,7 +197,7 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
       this.printButton.Enabled = false;
 
-      SignatureRequestDocument document = new SignatureRequestDocument(this.signedRequest.Value, this.certificate);
+      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, this.certificate);
       PrintDialog printDialog = new PrintDialog();
       printDialog.Document = document;
 
@@ -216,7 +222,7 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
       this.uploadButton.Enabled = false;
 
-      Status.VotingClient.SetSignatureRequest(this.signedRequest, SetSignatureRequestComplete);
+      Status.VotingClient.SetSignatureRequest(this.secureSignatureRequest, this.secureSignatureRequestInfo, SetSignatureRequestComplete);
 
       while (this.run)
       {

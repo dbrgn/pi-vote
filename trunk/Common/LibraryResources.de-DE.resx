@@ -561,4 +561,7 @@
   <data name="RevokedStolen" xml:space="preserve">
     <value>Zertifikat gestohlen.</value>
   </data>
+  <data name="ExceptionServerCertificateInvalid" xml:space="preserve">
+    <value>Das Zertifikat des Server is ungültig.</value>
+  </data>
 </root>

@@ -58,13 +58,13 @@ namespace Pirate.PiVote.Rpc
     /// Fetch a signature request.
     /// </summary>
     /// <param name="id">Id of the signature request.</param>
-    /// <returns>Signed siganture request.</returns>
-    public Signed<SignatureRequest> FetchSignatureRequest(Guid id)
+    /// <returns>Secure siganture request.</returns>
+    public Secure<SignatureRequest> FetchSignatureRequest(Guid id)
     {
       var request = new FetchSignatureRequestRequest(Guid.NewGuid(), id);
       var response = Execute<FetchSignatureRequestResponse>(request);
 
-      return response.SignatureRequest;
+      return response.SecureSignatureRequest;
     }
 
     /// <summary>

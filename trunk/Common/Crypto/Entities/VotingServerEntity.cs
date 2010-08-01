@@ -210,7 +210,8 @@ namespace Pirate.PiVote.Crypto
       List<string> authorities = new List<string>(
         Authorities
         .Where(authority => Server.HasSignatureRequest(authority.Id))
-        .Select(authority => Server.GetSignatureRequest(authority.Id).Value.EmailAddress));
+        .Select(authority => Server.GetSignatureRequestInfo(authority.Id).Value.Decrypt(this.serverCertificate).EmailAddress)
+        .Where(emailAddress => !emailAddress.IsNullOrEmpty()));
       string authorityBody = string.Format(
         ServerConfig.MailAuthorityActionRequiredBody,
         Id.ToString(),
@@ -268,7 +269,7 @@ namespace Pirate.PiVote.Crypto
     {
       if (certificate == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "Certificate is null.");
-      if (!certificate.Valid(this.certificateStorage))
+      if (certificate.Validate(this.certificateStorage) != CertificateValidationResult.Valid)
         throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Authority certificate invalid.");
 
       MySqlCommand command = new MySqlCommand("SELECT AuthorityIndex FROM authority WHERE VotingId = @VotingId AND AuthorityId = @AuthorityId", DbConnection);
@@ -298,7 +299,7 @@ namespace Pirate.PiVote.Crypto
     {
       if (certificate == null)
         throw new ArgumentNullException("certificate");
-      if (!certificate.Valid(this.certificateStorage))
+      if (certificate.Validate(this.certificateStorage) != CertificateValidationResult.Valid)
         throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Authority certificate not valid.");
       if (!(certificate is AuthorityCertificate))
         throw new PiSecurityException(ExceptionCode.NoAuthorizedAuthority, "No an authority certificate.");

@@ -42,7 +42,7 @@ namespace Pirate.PiVote.Client
       {
         this.nameTextBox.Text = this.certificate.FullName;
 
-        if (this.certificate.Valid(CertificateStorage, ValidationDate))
+        if (this.certificate.Validate(CertificateStorage, ValidationDate) == CertificateValidationResult.Valid)
         {
           this.nameTextBox.BackColor = Color.Green;
         }

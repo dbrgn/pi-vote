@@ -50,7 +50,7 @@ namespace Pirate.PiVote.CliClient
         AuthorityCertificate auth = GetCertificate<AuthorityCertificate>(string.Format("Authority{0}", i), intermediate);
         this.certs.Add(auth.OnlyPublicPart);
         this.auths.Add(auth);
-        auth.Valid(this.certs);
+        auth.Validate(this.certs);
       }
 
       this.voters = new List<VoterCertificate>();

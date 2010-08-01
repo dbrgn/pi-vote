@@ -689,4 +689,28 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="SigningRequestDocumentRefusedFingerprintMismatch" xml:space="preserve">
     <value>□ Refused, fingerprint does not match</value>
   </data>
+  <data name="CheckCertificateOutdated" xml:space="preserve">
+    <value>Your certificate is outdated. You need to create a new one.</value>
+  </data>
+  <data name="CheckCertificateResultUnknown" xml:space="preserve">
+    <value>Your certificate could not be validated.</value>
+  </data>
+  <data name="CheckCertificateRevoked" xml:space="preserve">
+    <value>Your certificate was revoked by the Certification Authority. You need to create a new one.</value>
+  </data>
+  <data name="CheckCertificateSelfsignatureInvalid" xml:space="preserve">
+    <value>Your certificate contains invalid data. This might be due to data corruption.</value>
+  </data>
+  <data name="CheckCertificateSignatureDataInvalid" xml:space="preserve">
+    <value>Your certificate contains invalid data. This might be due to data corruption.</value>
+  </data>
+  <data name="CheckCertificateSignerInvalid" xml:space="preserve">
+    <value>The certificate of your Certificate Authority is not valid.</value>
+  </data>
+  <data name="CheckCertificateUnknownSigner" xml:space="preserve">
+    <value>Your Certificate Authority is not known.</value>
+  </data>
+  <data name="CreateCertificateEmailNotification" xml:space="preserve">
+    <value>Notify me by email, when an answer to my certificate signing request is available. This requires your email address to be stored on the PiVote server.</value>
+  </data>
 </root>

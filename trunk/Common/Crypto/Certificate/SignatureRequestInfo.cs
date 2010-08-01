@@ -1,6 +1,4 @@
-﻿
-
-/*
+﻿/*
  *  <project description>
  * 
  *  Copyright (c) 2008-2009 Stefan Thöni <stefan@savvy.ch> 
@@ -11,38 +9,50 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Pirate.PiVote.Crypto;
+using System.IO;
 using Pirate.PiVote.Serialization;
 
-namespace Pirate.PiVote.Rpc
+namespace Pirate.PiVote.Crypto
 {
-  public class FetchSignatureRequestResponse : RpcResponse
+  /// <summary>
+  /// Information that accompanies a request for a signature by a CA.
+  /// </summary>
+  public class SignatureRequestInfo : Serializable
   {
     /// <summary>
-    /// Signature Response signed and encrypted for the CA.
+    /// Email address of requester.
     /// </summary>
-    public Secure<SignatureRequest> SecureSignatureRequest { get; private set; }
+    public string EmailAddress { get; private set; }
 
-    public FetchSignatureRequestResponse(Guid requestId, Secure<SignatureRequest> signatureRequest)
-      : base(requestId)
+    /// <summary>
+    /// Is this request info valid?
+    /// </summary>
+    /// <remarks>
+    /// Email address can be empty. If so you won't get any emails.
+    /// </remarks>
+    public bool Valid
     {
-      SecureSignatureRequest = signatureRequest;
+      get
+      {
+        return EmailAddress.IsNullOrEmpty() || 
+          Mailer.IsEmailAddressValid(EmailAddress);
+      }
     }
 
     /// <summary>
-    /// Create a failure response to request.
+    /// Create a new signature request.
     /// </summary>
-    /// <param name="requestId">Id of the request.</param>
-    /// <param name="exception">Exception that occured when executing the request.</param>
-    public FetchSignatureRequestResponse(Guid requestId, PiException exception)
-      : base(requestId, exception)
-    { }
+    /// <param name="emailAddress">Email address of requester.</param>
+    public SignatureRequestInfo(string emailAddress)
+    {
+      EmailAddress = emailAddress;
+    }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchSignatureRequestResponse(DeserializeContext context)
+    public SignatureRequestInfo(DeserializeContext context)
       : base(context)
     { }
 
@@ -53,7 +63,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(SecureSignatureRequest);
+      context.Write(EmailAddress);
     }
 
     /// <summary>
@@ -63,7 +73,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      SecureSignatureRequest = context.ReadObject<Secure<SignatureRequest>>();
+      EmailAddress = context.ReadString();
     }
   }
 }

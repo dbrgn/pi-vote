@@ -314,13 +314,14 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Send a signature request to the server.
     /// </summary>
-    /// <param name="signatureRequest">Signed signature request.</param>
+    /// <param name="signatureRequest">Signature Request signed and encrypted for the CA.</param>
+    /// <param name="signatureRequestInfo">Signature Request Info signed and encrypted for the server.</param>
     /// <param name="callBack">Callback upon completion.</param>
-    public void SetSignatureRequest(Signed<SignatureRequest> signatureRequest, SetSignatureRequestCallBack callBack)
+    public void SetSignatureRequest(Secure<SignatureRequest> signatureRequest, Secure<SignatureRequestInfo> signatureRequestInfo, SetSignatureRequestCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new SetSignatureRequestOperation(signatureRequest, callBack));
+        this.operations.Enqueue(new SetSignatureRequestOperation(signatureRequest, signatureRequestInfo, callBack));
       }
     }
 

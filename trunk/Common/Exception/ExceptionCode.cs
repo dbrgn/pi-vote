@@ -29,6 +29,7 @@ namespace Pirate.PiVote
     BadVotingMaterial                 = 8,
     InvalidSignature                  = 9,
     InvalidSignatureRequest           = 10,
+    ServerCertificateInvalid          = 11,
 
     AuthorityCountOutOfRange          = 1000001,
     TheresholdOutOfRange              = 1000002,

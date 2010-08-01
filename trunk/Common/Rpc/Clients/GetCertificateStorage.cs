@@ -26,8 +26,9 @@ namespace Pirate.PiVote.Rpc
     /// Callback for the certificate storage get operation.
     /// </summary>
     /// <param name="certificateStorage">Certificate storage or null in case of failure.</param>
+    /// <param name="serverCertificate">Certificate of the server or null in case of failure.</param>
     /// <param name="exception">Exception or null in case of success.</param>
-    public delegate void GetCertificateStorageCallBack(CertificateStorage certificateStorage, Exception exception);
+    public delegate void GetCertificateStorageCallBack(CertificateStorage certificateStorage, Certificate serverCertificate, Exception exception);
 
     /// <summary>
     /// Certificate storage get operation.
@@ -61,13 +62,23 @@ namespace Pirate.PiVote.Rpc
           SubText = string.Empty;
           SubProgress = 0d;
 
-          var certificateStorage = client.proxy.FetchCertificateStorage();
+          var value = client.proxy.FetchCertificateStorage();
+          CertificateStorage certificateStorage = new CertificateStorage();
+          certificateStorage.Add(value.First);
+          Certificate serverCertificate = value.Second;
 
-          this.callBack(certificateStorage, null);
+          if (serverCertificate.Validate(certificateStorage) == CertificateValidationResult.Valid)
+          {
+            this.callBack(certificateStorage, serverCertificate, null);
+          }
+          else
+          {
+            throw new PiException(ExceptionCode.ServerCertificateInvalid, "Server certificate invalid.");
+          }
         }
         catch (Exception exception)
         {
-          this.callBack(null, exception);
+          this.callBack(null, null, exception);
         }
       }
     }

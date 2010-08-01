@@ -237,7 +237,7 @@ namespace Pirate.PiVote.CaGui
       this.entryListView.Items.Clear();
 
       Items
-        .Where(entry => entry.Key.Request.Value.FullName.ToLower().Contains(this.searchTestBox.Text.ToLower()) || entry.Key.Request.Certificate.Id.ToString().ToLower().Contains(this.searchTestBox.Text.ToLower()))
+        .Where(entry => entry.Key.RequestValue(Certificate).FullName.ToLower().Contains(this.searchTestBox.Text.ToLower()) || entry.Key.Request.Certificate.Id.ToString().ToLower().Contains(this.searchTestBox.Text.ToLower()))
         .Where(entry => IsOfSearchedType(entry.Key.Request.Certificate))
         .Where(entry => IsOfSearchedStatus(entry.Key))
         .Where(entry => IsOfSearchedDate(entry.Key))
@@ -247,7 +247,7 @@ namespace Pirate.PiVote.CaGui
 
     private void AddEntry(CertificateAuthorityEntry entry, string fileName)
     {
-      SignatureRequest request = entry.Request.Value;
+      SignatureRequest request = entry.RequestValue(Certificate);
       ListViewItem item = new ListViewItem(entry.Certificate.Id.ToString());
 
       item.SubItems.Add(TypeName(entry.Request.Certificate));
@@ -440,13 +440,13 @@ namespace Pirate.PiVote.CaGui
       {
         foreach (string fileName in dialog.FileNames)
         {
-          Signed<SignatureRequest> signedRequest = Serializable.Load<Signed<SignatureRequest>>(fileName);
+          Secure<SignatureRequest> secureSignatureRequest = Serializable.Load<Secure<SignatureRequest>>(fileName);
 
-          if (signedRequest.VerifySimple())
+          if (secureSignatureRequest.VerifySimple())
           {
-            if (Items.Where(entry => entry.Key.Certificate.Id ==  signedRequest.Certificate.Id).Count() < 1)
+            if (Items.Where(entry => entry.Key.Certificate.Id ==  secureSignatureRequest.Certificate.Id).Count() < 1)
             {
-              CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
+              CertificateAuthorityEntry entry = new CertificateAuthorityEntry(secureSignatureRequest);
               string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
               entry.Save(DataPath(entryFileName));
               AddEntry(entry, entryFileName);
@@ -505,7 +505,7 @@ namespace Pirate.PiVote.CaGui
         CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
 
         SignDialog dialog = new SignDialog();
-        dialog.Display(entry, CertificateStorage);
+        dialog.Display(entry, CertificateStorage, Certificate);
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
@@ -548,7 +548,7 @@ namespace Pirate.PiVote.CaGui
         CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
 
         RevokeDialog dialog = new RevokeDialog();
-        dialog.Display(entry, CertificateStorage);
+        dialog.Display(entry, CertificateStorage, Certificate);
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
@@ -564,7 +564,7 @@ namespace Pirate.PiVote.CaGui
       bool hasRow = this.entryListView.SelectedItems.Count > 0;
       bool isAnwered = hasRow && this.entryListView.SelectedItems[0].SubItems[3].Text != string.Empty;
       bool notAnswered = hasRow && this.entryListView.SelectedItems[0].SubItems[3].Text == string.Empty;
-      bool canSign = Certificate != null && Certificate.Valid(CertificateStorage);
+      bool canSign = Certificate != null && Certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid;
 
       this.signToolStripMenuItem.Enabled = notAnswered && canSign;
       this.revokeToolStripMenuItem.Enabled = isAnwered && canSign;
@@ -629,7 +629,7 @@ namespace Pirate.PiVote.CaGui
           certificate.CreateSelfSignature();
 
           SignatureRequest request = new SignatureRequest(dialog.FirstName, dialog.FamilyName, dialog.EmailAddress);
-          Signed<SignatureRequest> signedRequest = new Signed<SignatureRequest>(request, certificate);
+          Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, certificate, Certificate);
 
           CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
           entry.Sign(Certificate, dialog.ValidUntil);
@@ -647,7 +647,7 @@ namespace Pirate.PiVote.CaGui
     private void mainMenu_MenuActivate(object sender, EventArgs e)
     {
       bool haveCertificate = Certificate != null;
-      bool canSign = haveCertificate && Certificate.Valid(CertificateStorage);
+      bool canSign = haveCertificate && Certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid;
 
       this.createToolStripMenuItem.Enabled = !haveCertificate;
       this.signatureRequestToolStripMenuItem.Enabled = haveCertificate;
@@ -677,7 +677,7 @@ namespace Pirate.PiVote.CaGui
           certificate.CreateSelfSignature();
 
           SignatureRequest request = new SignatureRequest(dialog.FullName, string.Empty, string.Empty);
-          Signed<SignatureRequest> signedRequest = new Signed<SignatureRequest>(request, certificate);
+          Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, certificate, Certificate);
 
           CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
           entry.Sign(Certificate, dialog.ValidUntil);

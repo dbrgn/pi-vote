@@ -1087,6 +1087,15 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The certificate of the server is invalid..
+        /// </summary>
+        public static string ExceptionServerCertificateInvalid {
+            get {
+                return ResourceManager.GetString("ExceptionServerCertificateInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Share response has bad signature..
         /// </summary>
         public static string ExceptionShareResponseBadSignature {

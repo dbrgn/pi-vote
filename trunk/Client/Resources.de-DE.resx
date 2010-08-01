@@ -673,4 +673,28 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="SigningRequestDocumentRefusedFingerprintMismatch" xml:space="preserve">
     <value>□ Verweigert, Fingerprint stimmt nicht überein</value>
   </data>
+  <data name="CheckCertificateOutdated" xml:space="preserve">
+    <value>Dein Zertifikat ist abgelaufen. Du musst ein neues erstellen.</value>
+  </data>
+  <data name="CheckCertificateResultUnknown" xml:space="preserve">
+    <value>Dein Zertifikat konnte nicht validiert werden.</value>
+  </data>
+  <data name="CheckCertificateRevoked" xml:space="preserve">
+    <value>Dein Zertifikat wurde von der Zertifizierungsstelle widerrufen. Du musst ein neues erstellen.</value>
+  </data>
+  <data name="CheckCertificateSelfsignatureInvalid" xml:space="preserve">
+    <value>Dein Zertifikat enthält ungültige Daten. Möglicherweise ist die Datei korrupt.</value>
+  </data>
+  <data name="CheckCertificateSignatureDataInvalid" xml:space="preserve">
+    <value>Dein Zertifikat enthält ungültige Daten. Möglicherweise ist die Datei korrupt.</value>
+  </data>
+  <data name="CheckCertificateSignerInvalid" xml:space="preserve">
+    <value>Das Zertifikat deiner Zertifizierungsstelle ist ungültig.</value>
+  </data>
+  <data name="CheckCertificateUnknownSigner" xml:space="preserve">
+    <value>Deine Zertifizierungsstelle ist unbekannt.</value>
+  </data>
+  <data name="CreateCertificateEmailNotification" xml:space="preserve">
+    <value>Ich möchte via Email benachrichtigt werden, wenn meine Zertifizierungsanfrage beantwortet wurde. Dafür muss die Email-Adresse auf dem PiVote server gespeichert werden.</value>
+  </data>
 </root>

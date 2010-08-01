@@ -562,4 +562,7 @@
   <data name="RevokedStolen" xml:space="preserve">
     <value>Certificate is stolen.</value>
   </data>
+  <data name="ExceptionServerCertificateInvalid" xml:space="preserve">
+    <value>The certificate of the server is invalid.</value>
+  </data>
 </root>

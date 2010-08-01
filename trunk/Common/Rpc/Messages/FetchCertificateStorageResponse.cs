@@ -20,10 +20,13 @@ namespace Pirate.PiVote.Rpc
   {
     public CertificateStorage CertificateStorage { get; private set; }
 
-    public FetchCertificateStorageResponse(Guid requestId, CertificateStorage certificateStorage)
+    public Certificate ServerCertificate { get; private set; }
+
+    public FetchCertificateStorageResponse(Guid requestId, CertificateStorage certificateStorage, Certificate serverCertificate)
       : base(requestId)
     {
       CertificateStorage = certificateStorage;
+      ServerCertificate = serverCertificate;
     }
 
     /// <summary>
@@ -51,6 +54,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
       context.Write(CertificateStorage);
+      context.Write(ServerCertificate);
     }
 
     /// <summary>
@@ -61,6 +65,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Deserialize(context);
       CertificateStorage = context.ReadObject<CertificateStorage>();
+      ServerCertificate = context.ReadObject<ServerCertificate>();
     }
   }
 }

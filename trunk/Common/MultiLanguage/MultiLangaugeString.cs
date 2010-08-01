@@ -149,7 +149,7 @@ namespace Pirate.PiVote
 
       for (int index = 0; index < count; index++)
       {
-        value.Set((Language)context.ReadInt32(), context.ReadString());
+        value.content.Add((Language)context.ReadInt32(), context.ReadString());
       }
 
       return value;

@@ -66,7 +66,7 @@ namespace Pirate.PiVote.Client
           item.SubItems.Add(signature.ValidFrom.ToString());
           item.SubItems.Add(signature.ValidUntil.ToString());
 
-          if (signature.Verify(this.certificate.GetSignatureContent(), CertificateStorage, ValidationDate))
+          if (signature.Verify(this.certificate.GetSignatureContent(), CertificateStorage, ValidationDate) == CertificateValidationResult.Valid)
           {
             item.SubItems.Add(Resources.CertificateSignatureValid);
           }
