@@ -139,6 +139,7 @@ namespace Pirate.PiVote.Crypto
       else
       {
         EncryptPrivateKey(passphrase, rsaProvider);
+        Unlock(passphrase);
       }
 
       this.signatures = new List<Signature>();
@@ -168,7 +169,8 @@ namespace Pirate.PiVote.Crypto
       SHA256Managed sha256 = new SHA256Managed();
       data = data.Concat(sha256.ComputeHash(data));
 
-      this.privateKeyData = Aes.Encrypt(data, key, this.passphraseSalt);
+      this.privateKeyData = Aes.Encrypt(data, key, this.privateKeySalt);
+      PrivateKeyStatus = PrivateKeyStatus.Encrypted;
     }
 
     /// <summary>
@@ -503,7 +505,8 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
-        return PrivateKey != null;
+        return PrivateKeyStatus == Crypto.PrivateKeyStatus.Decrypted ||
+               PrivateKeyStatus == Crypto.PrivateKeyStatus.Unencrypted;
       }
     }
 
@@ -526,6 +529,26 @@ namespace Pirate.PiVote.Crypto
       context.Write(SelfSignature);
       context.WriteList(this.attributes);
       context.WriteList(this.signatures);
+
+      switch (PrivateKeyStatus)
+      {
+        case PrivateKeyStatus.Unavailable:
+          context.Write((int)PrivateKeyStatus.Unavailable);
+          break;
+        case PrivateKeyStatus.Unencrypted:
+          context.Write((int)PrivateKeyStatus.Unencrypted);
+          context.Write(this.privateKeyData);
+          break;
+        case PrivateKeyStatus.Encrypted:
+        case PrivateKeyStatus.Decrypted:
+          context.Write((int)PrivateKeyStatus.Encrypted);
+          context.Write(this.privateKeyData);
+          context.Write(this.privateKeySalt);
+          context.Write(this.passphraseSalt);
+          break;
+        default:
+          throw new InvalidOperationException("Unknown private key status.");
+      }
     }
 
     /// <summary>
@@ -545,6 +568,24 @@ namespace Pirate.PiVote.Crypto
       SelfSignature = context.ReadBytes();
       this.attributes = context.ReadObjectList<CertificateAttribute>();
       this.signatures = context.ReadObjectList<Signature>();
+
+      PrivateKeyStatus = (PrivateKeyStatus)context.ReadInt32();
+
+      switch (PrivateKeyStatus)
+      {
+        case PrivateKeyStatus.Unavailable:
+          break;
+        case Crypto.PrivateKeyStatus.Unencrypted:
+          this.privateKeyData = context.ReadBytes();
+          break;
+        case Crypto.PrivateKeyStatus.Encrypted:
+          this.privateKeyData = context.ReadBytes();
+          this.privateKeySalt = context.ReadBytes();
+          this.passphraseSalt = context.ReadBytes();
+          break;
+        default:
+          throw new InvalidOperationException("Unknown or bad private key status.");
+      }
     }
 
     /// <summary>
@@ -559,7 +600,7 @@ namespace Pirate.PiVote.Crypto
       writer.Write(MagicTypeConstant);
       writer.Write(CreationDate.Ticks);
       writer.Write(Id.ToByteArray());
-      writer.Write(PrivateKey);
+      writer.Write(PublicKey);
 
       this.attributes.ForEach(attribute => writer.Write(attribute.ToBinary()));
     }
@@ -813,12 +854,12 @@ namespace Pirate.PiVote.Crypto
         Rfc2898DeriveBytes derive = new Rfc2898DeriveBytes(passphrase, this.passphraseSalt, 1024);
         byte[] key = derive.GetBytes(32);
 
-        byte[] data = Aes.Decrypt(this.privateKeyData, key, this.passphraseSalt);
+        byte[] data = Aes.Decrypt(this.privateKeyData, key, this.privateKeySalt);
         SHA256Managed sha256 = new SHA256Managed();
         int hashLength = sha256.HashSize / 8;
 
         if (data.Length > hashLength && 
-          sha256.ComputeHash(data.Part(0, data.Length - hashLength)) == data.Part(data.Length - hashLength, hashLength))
+          sha256.ComputeHash(data.Part(0, data.Length - hashLength)).Equal(data.Part(data.Length - hashLength, hashLength)))
         {
           this.privateKeyDecrypted = data.Part(0, data.Length - hashLength);
           PrivateKeyStatus = PrivateKeyStatus.Decrypted;

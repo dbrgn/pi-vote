@@ -120,7 +120,7 @@
       this.caNameTextBox.Location = new System.Drawing.Point(103, 12);
       this.caNameTextBox.Name = "caNameTextBox";
       this.caNameTextBox.Size = new System.Drawing.Size(340, 20);
-      this.caNameTextBox.TabIndex = 10;
+      this.caNameTextBox.TabIndex = 0;
       this.caNameTextBox.TextChanged += new System.EventHandler(this.caNameTextBox_TextChanged);
       // 
       // caNameLabel

@@ -131,7 +131,7 @@
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "DecryptCaKeyDialog";
-      this.Text = "Create Certificate Authority";
+      this.Text = "Decrypt CA private key";
       this.Load += new System.EventHandler(this.CaNameDialog_Load);
       this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CreateCaDialog_KeyDown);
       this.ResumeLayout(false);

@@ -118,9 +118,9 @@ namespace Pirate.PiVote.Client
         document.Print();
 
         Secure<SignatureRequest> secureSignatureRequest =
-          new Secure<SignatureRequest>(signatureRequest, Status.Certificate, Status.CaCertificate);
+          new Secure<SignatureRequest>(signatureRequest, Status.CaCertificate, Status.Certificate);
         Secure<SignatureRequestInfo> secureSignatureRequestInfo =
-          new Secure<SignatureRequestInfo>(signatureRequestInfo, Status.Certificate, Status.ServerCertificate);
+          new Secure<SignatureRequestInfo>(signatureRequestInfo, Status.ServerCertificate, Status.Certificate);
 
         Status.VotingClient.SetSignatureRequest(secureSignatureRequest, secureSignatureRequestInfo, SetSignatureRequestComplete);
 

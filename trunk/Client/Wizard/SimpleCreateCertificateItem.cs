@@ -163,8 +163,8 @@ namespace Pirate.PiVote.Client
 
         this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
         this.signatureRequestInfo = new SignatureRequestInfo(this.emailNotificationCheckBox.Checked ? this.emailAddressTextBox.Text : string.Empty);
-        this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, this.certificate, Status.CaCertificate);
-        this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, this.certificate, Status.ServerCertificate);
+        this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, this.certificate);
+        this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, this.certificate);
 
         this.run = false;
         OnUpdateWizard();

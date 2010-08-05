@@ -85,8 +85,8 @@ namespace Pirate.PiVote.CaGui
         while (!unlocked)
         {
           DecryptCaKeyDialog dialog = new DecryptCaKeyDialog();
-          dialog.caIdLabel.Text = certificate.Id.ToString();
-          dialog.caNameLabel.Text = certificate.FullName;
+          dialog.caIdTextBox.Text = certificate.Id.ToString();
+          dialog.caNameTextBox.Text = certificate.FullName;
 
           if (dialog.ShowDialog() == DialogResult.OK)
           {

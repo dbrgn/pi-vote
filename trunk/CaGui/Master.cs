@@ -638,7 +638,7 @@ namespace Pirate.PiVote.CaGui
           certificate.CreateSelfSignature();
 
           SignatureRequest request = new SignatureRequest(dialog.FirstName, dialog.FamilyName, dialog.EmailAddress);
-          Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, certificate, Certificate);
+          Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, Certificate, certificate);
 
           CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
           entry.Sign(Certificate, dialog.ValidUntil);
@@ -656,12 +656,15 @@ namespace Pirate.PiVote.CaGui
     private void mainMenu_MenuActivate(object sender, EventArgs e)
     {
       bool haveCertificate = Certificate != null;
-      bool canSign = haveCertificate && Certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid;
+      bool validCertificate = haveCertificate &&
+        Certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid;
+      bool canSign = validCertificate &&
+        CertificateStorage.HasValidRevocationList(Certificate.Id, DateTime.Now);
 
       this.createToolStripMenuItem.Enabled = !haveCertificate;
       this.signatureRequestToolStripMenuItem.Enabled = haveCertificate;
       this.signatureResponseToolStripMenuItem.Enabled = haveCertificate;
-      this.generateRevocationListToolStripMenuItem.Enabled = canSign;
+      this.generateRevocationListToolStripMenuItem.Enabled = validCertificate;
       this.importRequestsToolStripMenuItem.Enabled = canSign;
       this.exportRootCertificateToolStripMenuItem.Enabled = haveCertificate;
       this.cAPropertiesToolStripMenuItem.Enabled = haveCertificate;
@@ -686,7 +689,7 @@ namespace Pirate.PiVote.CaGui
           certificate.CreateSelfSignature();
 
           SignatureRequest request = new SignatureRequest(dialog.FullName, string.Empty, string.Empty);
-          Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, certificate, Certificate);
+          Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, Certificate, certificate);
 
           CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
           entry.Sign(Certificate, dialog.ValidUntil);

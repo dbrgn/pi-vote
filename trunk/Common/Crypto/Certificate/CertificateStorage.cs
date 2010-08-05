@@ -299,5 +299,22 @@ namespace Pirate.PiVote.Crypto
         return false;
       }
     }
+
+    /// <summary>
+    /// Determines if there is a valid revocation list for a given CA.
+    /// </summary>
+    /// <param name="issuerId">Id of the issuing CA.</param>
+    /// <param name="date">Date at which the revocation list shall be valid.</param>
+    /// <returns>Is there a vaild CRL?</returns>
+    public bool HasValidRevocationList(Guid issuerId, DateTime date)
+    {
+      return SignedRevocationLists
+        .Where(signedRevocationList => signedRevocationList.Verify(this))
+        .Select(signedRevocationList => signedRevocationList.Value)
+        .Where(revocationList => revocationList.IssuerId == issuerId &&
+                                 revocationList.ValidFrom.Date <= date.Date &&
+                                 revocationList.ValidUntil.Date >= date.Date)
+        .Count() > 0;
+    }
   }
 }

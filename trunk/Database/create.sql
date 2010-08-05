@@ -23,7 +23,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `pivote`.`certificate`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `pivote`.`certificate` (
-  `Id` VARBINARY(16) NOT NULL DEFAULT '' ,
+  `Id` VARBINARY(16) NOT NULL ,
   `Value` BLOB NOT NULL ,
   `Root` INT(11) NOT NULL ,
   PRIMARY KEY (`Id`) )
@@ -60,7 +60,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `pivote`.`revocationlist`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `pivote`.`revocationlist` (
-  `IssuerId` VARBINARY(16) NOT NULL DEFAULT '' ,
+  `IssuerId` VARBINARY(16) NOT NULL ,
   `ValidFrom` DATETIME NOT NULL ,
   `ValidUntil` DATETIME NOT NULL ,
   `Value` BLOB NULL DEFAULT NULL ,
@@ -99,6 +99,7 @@ DEFAULT CHARACTER SET = latin1;
 CREATE  TABLE IF NOT EXISTS `pivote`.`signaturerequest` (
   `Id` VARBINARY(16) NOT NULL ,
   `Value` BLOB NOT NULL ,
+  `Info` BLOB NOT NULL ,
   PRIMARY KEY (`Id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
