@@ -13,12 +13,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.CaGui
 {
-  public partial class CreateCaDialog : Form
+  public partial class DecryptCaKeyDialog : Form
   {
-    public CreateCaDialog()
+    public DecryptCaKeyDialog()
     {
       InitializeComponent();
     }
@@ -44,9 +45,7 @@ namespace Pirate.PiVote.CaGui
     private void CheckOkEnabled()
     {
       this.okButton.Enabled =
-        this.caNameTextBox.Text.Length > 0 &&
-        this.passphraseTextBox.Text.Length >= 12 &&
-        this.passphraseTextBox.Text == this.repeatTextBox.Text;
+        this.passphraseTextBox.Text.Length >= 12;
     }
 
     private void CreateCaDialog_KeyDown(object sender, KeyEventArgs e)
@@ -77,24 +76,44 @@ namespace Pirate.PiVote.CaGui
       CheckOkEnabled();
     }
 
-    public string CaName
+    public static bool TryUnlock(Certificate certificate)
     {
-      get { return this.caNameTextBox.Text; }
-    }
+      if (certificate.PrivateKeyStatus == PrivateKeyStatus.Encrypted)
+      {
+        bool unlocked = false;
 
-    public bool RootCa
-    {
-      get { return this.rootCaCheckBox.Checked; }
-    }
+        while (!unlocked)
+        {
+          DecryptCaKeyDialog dialog = new DecryptCaKeyDialog();
+          dialog.caIdLabel.Text = certificate.Id.ToString();
+          dialog.caNameLabel.Text = certificate.FullName;
 
-    public string Passphrase
-    {
-      get { return this.passphraseTextBox.Text; }
-    }
+          if (dialog.ShowDialog() == DialogResult.OK)
+          {
+            try
+            {
+              certificate.Unlock(dialog.passphraseTextBox.Text);
+              unlocked = true;
+            }
+            catch
+            { }
+          }
+          else
+          {
+            break;
+          }
+        }
 
-    private void caNameTextBox_TextChanged(object sender, EventArgs e)
-    {
-      CheckOkEnabled();
+        return unlocked;
+      }
+      else if (certificate.PrivateKeyStatus == PrivateKeyStatus.Unavailable)
+      {
+        return false;
+      }
+      else
+      {
+        return true;
+      }
     }
   }
 }

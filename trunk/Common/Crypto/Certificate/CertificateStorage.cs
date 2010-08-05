@@ -287,9 +287,17 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Loads the root certificate from resources.
     /// </summary>
-    public void LoadRoot()
+    public bool TryLoadRoot()
     {
-      AddRoot(Serializable.FromBinary<Certificate>(LibraryResources.root));
+      if (File.Exists(Files.RootCertificateFileName))
+      {
+        Add(Serializable.Load<Certificate>(Files.RootCertificateFileName));
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
   }
 }

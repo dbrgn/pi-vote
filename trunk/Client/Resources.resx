@@ -767,4 +767,10 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="VoteUnlockAction" xml:space="preserve">
     <value>Sign vote</value>
   </data>
+  <data name="MessageBoxRootNotFound" xml:space="preserve">
+    <value>Cannot find root certificate file.</value>
+  </data>
+  <data name="MessageBoxTitle" xml:space="preserve">
+    <value>Pi-Vote</value>
+  </data>
 </root>

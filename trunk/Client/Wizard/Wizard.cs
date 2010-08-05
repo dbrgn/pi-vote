@@ -54,7 +54,14 @@ namespace Pirate.PiVote.Client
     {
       this.status = new WizardStatus(this.message1, this.progress1);
       this.status.CertificateStorage = new CertificateStorage();
-      this.status.CertificateStorage.LoadRoot();
+
+      if (!this.status.CertificateStorage.TryLoadRoot())
+      {
+        MessageBox.Show(Resources.MessageBoxRootNotFound, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Close();
+        return;
+      }
+
       this.status.UpdateProgress();
 
       this.status.VotingClient = new VotingClient(this.status.CertificateStorage);

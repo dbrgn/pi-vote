@@ -96,6 +96,6 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Loads the root certificate from resources.
     /// </summary>
-    void LoadRoot();
+    bool TryLoadRoot();
   }
 }

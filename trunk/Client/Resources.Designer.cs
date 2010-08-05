@@ -1189,6 +1189,24 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot find root certificate file..
+        /// </summary>
+        internal static string MessageBoxRootNotFound {
+            get {
+                return ResourceManager.GetString("MessageBoxRootNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pi-Vote.
+        /// </summary>
+        internal static string MessageBoxTitle {
+            get {
+                return ResourceManager.GetString("MessageBoxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;OK.
         /// </summary>
         internal static string OkButton {

@@ -1320,13 +1320,6 @@ namespace Pirate.PiVote {
             }
         }
         
-        public static byte[] root {
-            get {
-                object obj = ResourceManager.GetObject("root", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to Aborted.
         /// </summary>

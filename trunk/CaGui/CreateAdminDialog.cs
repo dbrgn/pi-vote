@@ -65,7 +65,9 @@ namespace Pirate.PiVote.CaGui
         !this.firstNameTextBox.Text.IsNullOrEmpty() &&
         !this.familyNameTextBox.Text.IsNullOrEmpty() &&
         !this.functionTextBox.Text.IsNullOrEmpty() &&
-        !this.emailAddressTextBox.Text.IsNullOrEmpty();
+        !this.emailAddressTextBox.Text.IsNullOrEmpty() &&
+        this.passphraseTextBox.Text.Length >= 12 &&
+        this.passphraseTextBox.Text == this.repeatTextBox.Text;
     }
 
     private void firstNameTextBox_TextChanged(object sender, EventArgs e)
@@ -91,31 +93,41 @@ namespace Pirate.PiVote.CaGui
     public string FirstName
     {
       get { return this.firstNameTextBox.Text; }
-      set { this.firstNameTextBox.Text = value; }
     }
 
     public string FamilyName
     {
       get { return this.familyNameTextBox.Text; }
-      set { this.familyNameTextBox.Text = value; }
     }
 
     public string Function
     {
       get { return this.functionTextBox.Text; }
-      set { this.functionTextBox.Text = value; }
     }
 
     public string EmailAddress
     {
       get { return this.emailAddressTextBox.Text; }
-      set { this.emailAddressTextBox.Text = value; }
     }
 
     public DateTime ValidUntil
     {
       get { return this.validUntilPicker.Value; }
-      set { this.validUntilPicker.Value = value; }
+    }
+
+    public string Passphrase
+    {
+      get { return this.passphraseTextBox.Text; }
+    }
+
+    private void passphraseTextBox_TextChanged(object sender, EventArgs e)
+    {
+      CheckOkEnabled();
+    }
+
+    private void repeatTextBox_TextChanged(object sender, EventArgs e)
+    {
+      CheckOkEnabled();
     }
   }
 }

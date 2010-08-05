@@ -40,14 +40,18 @@
       this.functionTextBox = new System.Windows.Forms.TextBox();
       this.validUntilPicker = new System.Windows.Forms.DateTimePicker();
       this.validUntilLabel = new System.Windows.Forms.Label();
+      this.passphraseLabel = new System.Windows.Forms.Label();
+      this.passphraseTextBox = new System.Windows.Forms.TextBox();
+      this.repeatLabel = new System.Windows.Forms.Label();
+      this.repeatTextBox = new System.Windows.Forms.TextBox();
       this.SuspendLayout();
       // 
       // cancelButton
       // 
-      this.cancelButton.Location = new System.Drawing.Point(309, 134);
+      this.cancelButton.Location = new System.Drawing.Point(332, 194);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
-      this.cancelButton.TabIndex = 5;
+      this.cancelButton.TabIndex = 8;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
       this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -55,17 +59,17 @@
       // okButton
       // 
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(228, 134);
+      this.okButton.Location = new System.Drawing.Point(251, 194);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(75, 23);
-      this.okButton.TabIndex = 4;
+      this.okButton.TabIndex = 7;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
       this.okButton.Click += new System.EventHandler(this.okButton_Click);
       // 
       // firstNameTextBox
       // 
-      this.firstNameTextBox.Location = new System.Drawing.Point(93, 12);
+      this.firstNameTextBox.Location = new System.Drawing.Point(116, 12);
       this.firstNameTextBox.Name = "firstNameTextBox";
       this.firstNameTextBox.Size = new System.Drawing.Size(291, 20);
       this.firstNameTextBox.TabIndex = 0;
@@ -73,7 +77,7 @@
       // 
       // emailAddressTextBox
       // 
-      this.emailAddressTextBox.Location = new System.Drawing.Point(93, 84);
+      this.emailAddressTextBox.Location = new System.Drawing.Point(116, 90);
       this.emailAddressTextBox.Name = "emailAddressTextBox";
       this.emailAddressTextBox.Size = new System.Drawing.Size(291, 20);
       this.emailAddressTextBox.TabIndex = 3;
@@ -82,7 +86,7 @@
       // emailAddressLabel
       // 
       this.emailAddressLabel.AutoSize = true;
-      this.emailAddressLabel.Location = new System.Drawing.Point(16, 86);
+      this.emailAddressLabel.Location = new System.Drawing.Point(16, 92);
       this.emailAddressLabel.Name = "emailAddressLabel";
       this.emailAddressLabel.Size = new System.Drawing.Size(77, 14);
       this.emailAddressLabel.TabIndex = 5;
@@ -100,7 +104,7 @@
       // familyNameLabel
       // 
       this.familyNameLabel.AutoSize = true;
-      this.familyNameLabel.Location = new System.Drawing.Point(12, 38);
+      this.familyNameLabel.Location = new System.Drawing.Point(12, 40);
       this.familyNameLabel.Name = "familyNameLabel";
       this.familyNameLabel.Size = new System.Drawing.Size(69, 14);
       this.familyNameLabel.TabIndex = 11;
@@ -108,7 +112,7 @@
       // 
       // familyNameTextBox
       // 
-      this.familyNameTextBox.Location = new System.Drawing.Point(93, 36);
+      this.familyNameTextBox.Location = new System.Drawing.Point(116, 38);
       this.familyNameTextBox.Name = "familyNameTextBox";
       this.familyNameTextBox.Size = new System.Drawing.Size(291, 20);
       this.familyNameTextBox.TabIndex = 1;
@@ -117,7 +121,7 @@
       // functionLabel
       // 
       this.functionLabel.AutoSize = true;
-      this.functionLabel.Location = new System.Drawing.Point(16, 62);
+      this.functionLabel.Location = new System.Drawing.Point(16, 66);
       this.functionLabel.Name = "functionLabel";
       this.functionLabel.Size = new System.Drawing.Size(51, 14);
       this.functionLabel.TabIndex = 13;
@@ -125,7 +129,7 @@
       // 
       // functionTextBox
       // 
-      this.functionTextBox.Location = new System.Drawing.Point(93, 60);
+      this.functionTextBox.Location = new System.Drawing.Point(116, 64);
       this.functionTextBox.Name = "functionTextBox";
       this.functionTextBox.Size = new System.Drawing.Size(291, 20);
       this.functionTextBox.TabIndex = 2;
@@ -133,26 +137,66 @@
       // 
       // validUntilPicker
       // 
-      this.validUntilPicker.Location = new System.Drawing.Point(93, 108);
+      this.validUntilPicker.Location = new System.Drawing.Point(116, 168);
       this.validUntilPicker.Name = "validUntilPicker";
       this.validUntilPicker.Size = new System.Drawing.Size(291, 20);
-      this.validUntilPicker.TabIndex = 14;
+      this.validUntilPicker.TabIndex = 6;
       // 
       // validUntilLabel
       // 
       this.validUntilLabel.AutoSize = true;
-      this.validUntilLabel.Location = new System.Drawing.Point(16, 111);
+      this.validUntilLabel.Location = new System.Drawing.Point(16, 171);
       this.validUntilLabel.Name = "validUntilLabel";
       this.validUntilLabel.Size = new System.Drawing.Size(55, 14);
       this.validUntilLabel.TabIndex = 15;
       this.validUntilLabel.Text = "Valid until:";
       // 
+      // passphraseLabel
+      // 
+      this.passphraseLabel.AutoSize = true;
+      this.passphraseLabel.Location = new System.Drawing.Point(16, 118);
+      this.passphraseLabel.Name = "passphraseLabel";
+      this.passphraseLabel.Size = new System.Drawing.Size(68, 14);
+      this.passphraseLabel.TabIndex = 17;
+      this.passphraseLabel.Text = "Passphrase:";
+      // 
+      // passphraseTextBox
+      // 
+      this.passphraseTextBox.Location = new System.Drawing.Point(116, 116);
+      this.passphraseTextBox.Name = "passphraseTextBox";
+      this.passphraseTextBox.PasswordChar = '*';
+      this.passphraseTextBox.Size = new System.Drawing.Size(291, 20);
+      this.passphraseTextBox.TabIndex = 4;
+      this.passphraseTextBox.TextChanged += new System.EventHandler(this.passphraseTextBox_TextChanged);
+      // 
+      // repeatLabel
+      // 
+      this.repeatLabel.AutoSize = true;
+      this.repeatLabel.Location = new System.Drawing.Point(16, 144);
+      this.repeatLabel.Name = "repeatLabel";
+      this.repeatLabel.Size = new System.Drawing.Size(44, 14);
+      this.repeatLabel.TabIndex = 19;
+      this.repeatLabel.Text = "Repeat:";
+      // 
+      // repeatTextBox
+      // 
+      this.repeatTextBox.Location = new System.Drawing.Point(116, 142);
+      this.repeatTextBox.Name = "repeatTextBox";
+      this.repeatTextBox.PasswordChar = '*';
+      this.repeatTextBox.Size = new System.Drawing.Size(291, 20);
+      this.repeatTextBox.TabIndex = 5;
+      this.repeatTextBox.TextChanged += new System.EventHandler(this.repeatTextBox_TextChanged);
+      // 
       // CreateAdminDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(396, 171);
+      this.ClientSize = new System.Drawing.Size(419, 226);
       this.ControlBox = false;
+      this.Controls.Add(this.repeatLabel);
+      this.Controls.Add(this.repeatTextBox);
+      this.Controls.Add(this.passphraseLabel);
+      this.Controls.Add(this.passphraseTextBox);
       this.Controls.Add(this.validUntilPicker);
       this.Controls.Add(this.validUntilLabel);
       this.Controls.Add(this.functionLabel);
@@ -193,5 +237,9 @@
     private System.Windows.Forms.TextBox functionTextBox;
     private System.Windows.Forms.DateTimePicker validUntilPicker;
     private System.Windows.Forms.Label validUntilLabel;
+    private System.Windows.Forms.Label passphraseLabel;
+    private System.Windows.Forms.TextBox passphraseTextBox;
+    private System.Windows.Forms.Label repeatLabel;
+    private System.Windows.Forms.TextBox repeatTextBox;
   }
 }

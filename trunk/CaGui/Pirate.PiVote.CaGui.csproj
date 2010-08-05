@@ -82,6 +82,12 @@
     <Compile Include="CaPropertiesDialog.Designer.cs">
       <DependentUpon>CaPropertiesDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="DecryptCaKeyDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DecryptCaKeyDialog.Designer.cs">
+      <DependentUpon>DecryptCaKeyDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="RevokeDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CaPropertiesDialog.resx">
       <DependentUpon>CaPropertiesDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DecryptCaKeyDialog.resx">
+      <DependentUpon>DecryptCaKeyDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RevokeDialog.resx">

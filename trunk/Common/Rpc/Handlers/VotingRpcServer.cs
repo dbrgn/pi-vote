@@ -107,7 +107,14 @@ namespace Pirate.PiVote.Rpc
       Logger.Log(LogLevel.Info, "Database connection is open.");
 
       CertificateStorage = new DatabaseCertificateStorage(this.dbConnection);
-      CertificateStorage.LoadRoot();
+
+      if (!CertificateStorage.TryLoadRoot())
+      {
+        Logger.Log(LogLevel.Error, "Root certificate file not found.");
+        this.dbConnection.Close();
+        throw new InvalidOperationException("Root certificate file not found.");
+      }
+
       CertificateStorage.ImportStorageIfNeed();
       Logger.Log(LogLevel.Info, "Certificate storage is loaded.");
 
