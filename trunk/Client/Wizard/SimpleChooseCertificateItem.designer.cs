@@ -70,7 +70,7 @@ namespace Pirate.PiVote.Client
       this.createRadioButton.Margin = new System.Windows.Forms.Padding(2);
       this.createRadioButton.Name = "createRadioButton";
       this.createRadioButton.Size = new System.Drawing.Size(139, 18);
-      this.createRadioButton.TabIndex = 9;
+      this.createRadioButton.TabIndex = 0;
       this.createRadioButton.TabStop = true;
       this.createRadioButton.Text = "I need a new certificate";
       this.createRadioButton.UseVisualStyleBackColor = true;
@@ -83,7 +83,7 @@ namespace Pirate.PiVote.Client
       this.importRadioButton.Margin = new System.Windows.Forms.Padding(2);
       this.importRadioButton.Name = "importRadioButton";
       this.importRadioButton.Size = new System.Drawing.Size(153, 18);
-      this.importRadioButton.TabIndex = 10;
+      this.importRadioButton.TabIndex = 9;
       this.importRadioButton.TabStop = true;
       this.importRadioButton.Text = "I already have a certificate";
       this.importRadioButton.UseVisualStyleBackColor = true;
@@ -108,7 +108,7 @@ namespace Pirate.PiVote.Client
       this.emailAddressTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.emailAddressTextBox.Name = "emailAddressTextBox";
       this.emailAddressTextBox.Size = new System.Drawing.Size(403, 20);
-      this.emailAddressTextBox.TabIndex = 22;
+      this.emailAddressTextBox.TabIndex = 3;
       this.emailAddressTextBox.TextChanged += new System.EventHandler(this.emailAddressTextBox_TextChanged);
       // 
       // emailAddressLabel
@@ -127,7 +127,7 @@ namespace Pirate.PiVote.Client
       this.familyNameTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.familyNameTextBox.Name = "familyNameTextBox";
       this.familyNameTextBox.Size = new System.Drawing.Size(403, 20);
-      this.familyNameTextBox.TabIndex = 20;
+      this.familyNameTextBox.TabIndex = 2;
       this.familyNameTextBox.TextChanged += new System.EventHandler(this.familyNameTextBox_TextChanged);
       // 
       // familyNameLabel
@@ -146,7 +146,7 @@ namespace Pirate.PiVote.Client
       this.firstNameTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.firstNameTextBox.Name = "firstNameTextBox";
       this.firstNameTextBox.Size = new System.Drawing.Size(403, 20);
-      this.firstNameTextBox.TabIndex = 18;
+      this.firstNameTextBox.TabIndex = 1;
       this.firstNameTextBox.TextChanged += new System.EventHandler(this.firstNameTextBox_TextChanged);
       // 
       // firstNameLabel
@@ -187,7 +187,7 @@ namespace Pirate.PiVote.Client
       this.createButton.Margin = new System.Windows.Forms.Padding(2);
       this.createButton.Name = "createButton";
       this.createButton.Size = new System.Drawing.Size(131, 25);
-      this.createButton.TabIndex = 25;
+      this.createButton.TabIndex = 6;
       this.createButton.Text = "&Create";
       this.createButton.UseVisualStyleBackColor = true;
       this.createButton.Click += new System.EventHandler(this.createButton_Click);
@@ -198,7 +198,7 @@ namespace Pirate.PiVote.Client
       this.printButton.Margin = new System.Windows.Forms.Padding(2);
       this.printButton.Name = "printButton";
       this.printButton.Size = new System.Drawing.Size(131, 25);
-      this.printButton.TabIndex = 26;
+      this.printButton.TabIndex = 7;
       this.printButton.Text = "&Print";
       this.printButton.UseVisualStyleBackColor = true;
       this.printButton.Click += new System.EventHandler(this.printButton_Click);
@@ -209,7 +209,7 @@ namespace Pirate.PiVote.Client
       this.uploadButton.Margin = new System.Windows.Forms.Padding(2);
       this.uploadButton.Name = "uploadButton";
       this.uploadButton.Size = new System.Drawing.Size(131, 25);
-      this.uploadButton.TabIndex = 27;
+      this.uploadButton.TabIndex = 8;
       this.uploadButton.Text = "&Upload";
       this.uploadButton.UseVisualStyleBackColor = true;
       this.uploadButton.Click += new System.EventHandler(this.uploadButton_Click);
@@ -220,7 +220,7 @@ namespace Pirate.PiVote.Client
       this.importButton.Margin = new System.Windows.Forms.Padding(2);
       this.importButton.Name = "importButton";
       this.importButton.Size = new System.Drawing.Size(131, 25);
-      this.importButton.TabIndex = 28;
+      this.importButton.TabIndex = 10;
       this.importButton.Text = "&Import";
       this.importButton.UseVisualStyleBackColor = true;
       this.importButton.Click += new System.EventHandler(this.importButton_Click);
@@ -243,7 +243,7 @@ namespace Pirate.PiVote.Client
       this.cantonComboBox.Margin = new System.Windows.Forms.Padding(2);
       this.cantonComboBox.Name = "cantonComboBox";
       this.cantonComboBox.Size = new System.Drawing.Size(402, 22);
-      this.cantonComboBox.TabIndex = 34;
+      this.cantonComboBox.TabIndex = 5;
       this.cantonComboBox.SelectedIndexChanged += new System.EventHandler(this.cantonComboBox_SelectedIndexChanged);
       // 
       // emailNotificationCheckBox
@@ -251,7 +251,7 @@ namespace Pirate.PiVote.Client
       this.emailNotificationCheckBox.Location = new System.Drawing.Point(131, 242);
       this.emailNotificationCheckBox.Name = "emailNotificationCheckBox";
       this.emailNotificationCheckBox.Size = new System.Drawing.Size(402, 43);
-      this.emailNotificationCheckBox.TabIndex = 36;
+      this.emailNotificationCheckBox.TabIndex = 4;
       this.emailNotificationCheckBox.Text = "Notify me by email, when an answer to my certificate signing request is available" +
           ". This requires your email address to be stored on the PiVote server.";
       this.emailNotificationCheckBox.UseVisualStyleBackColor = true;

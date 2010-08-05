@@ -184,7 +184,7 @@ namespace Pirate.PiVote.Client
 
         Status.SetProgress(Resources.StartGettingCertificates, 0.5d);
         this.run = true;
-        Status.VotingClient.GetCertificateStorage(GetCertificateStorageComplete);
+        Status.VotingClient.GetCertificateStorage(Status.CertificateStorage, GetCertificateStorageComplete);
 
         while (this.run)
         {
@@ -210,14 +210,9 @@ namespace Pirate.PiVote.Client
       }
     }
 
-    private void GetCertificateStorageComplete(CertificateStorage certificateStorage, Certificate serverCertificate, Exception exception)
+    private void GetCertificateStorageComplete(Certificate serverCertificate, Exception exception)
     {
-      if (exception == null)
-      {
-        Status.CertificateStorage.Add(certificateStorage);
-        Status.ServerCertificate = serverCertificate;
-      }
-
+      Status.ServerCertificate = serverCertificate;
       this.exception = exception;
       this.run = false;
     }

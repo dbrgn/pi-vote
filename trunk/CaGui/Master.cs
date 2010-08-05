@@ -535,6 +535,8 @@ namespace Pirate.PiVote.CaGui
             item.SubItems[5].Text = "Refused";
           }
 
+          item.Tag = entry;
+
           SaveFileDialog saveDialog = new SaveFileDialog();
           saveDialog.Title = "Export Signature Response";
           saveDialog.CheckPathExists = true;

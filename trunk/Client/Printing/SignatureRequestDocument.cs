@@ -124,7 +124,7 @@ namespace Pirate.PiVote.Client
       Font font = new Font(FontFace, 12);
 
       Table table = new Table(font);
-      table.AddColumn(bounds.Width / 6f * 4f);
+      table.AddColumn(bounds.Width / 12f * 9f);
       table.AddRow(Resources.SigningRequestDocumentAccepted);
       table.AddRow(Resources.SigningRequestDocumentRefusedFingerprintMismatch);
       if (this.certificate is VoterCertificate)
@@ -148,7 +148,8 @@ namespace Pirate.PiVote.Client
       Font font = new Font(FontFace, 12);
 
       Table table = new Table(font);
-      table.AddColumn(bounds.Width / 6f * 4f);
+      table.AddColumn(bounds.Width / 12f * 9f);
+      table.AddRow(Resources.SigningRequestDocumentRevokedForgotten);
       table.AddRow(Resources.SigningRequestDocumentRevokedLost);
       table.AddRow(Resources.SigningRequestDocumentRevokedStolen);
       if (this.certificate is VoterCertificate)

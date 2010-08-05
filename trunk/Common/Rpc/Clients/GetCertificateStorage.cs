@@ -26,15 +26,19 @@ namespace Pirate.PiVote.Rpc
     /// Callback for the certificate storage get operation.
     /// </summary>
     /// <param name="certificateStorage">Certificate storage or null in case of failure.</param>
-    /// <param name="serverCertificate">Certificate of the server or null in case of failure.</param>
     /// <param name="exception">Exception or null in case of success.</param>
-    public delegate void GetCertificateStorageCallBack(CertificateStorage certificateStorage, Certificate serverCertificate, Exception exception);
+    public delegate void GetCertificateStorageCallBack(Certificate serverCertificate, Exception exception);
 
     /// <summary>
     /// Certificate storage get operation.
     /// </summary>
     private class GetCertificateStorageOperation : Operation
     {
+      /// <summary>
+      /// Client's certificate storage.
+      /// </summary>
+      private CertificateStorage certificateStorage;
+
       /// <summary>
       /// Callback upon completion.
       /// </summary>
@@ -43,9 +47,11 @@ namespace Pirate.PiVote.Rpc
       /// <summary>
       /// Create a new voting list get operation.
       /// </summary>
+      /// <param name="certificateStorage">Client's certificate storage.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public GetCertificateStorageOperation(GetCertificateStorageCallBack callBack)
+      public GetCertificateStorageOperation(CertificateStorage certificateStorage, GetCertificateStorageCallBack callBack)
       {
+        this.certificateStorage = certificateStorage;
         this.callBack = callBack;
       }
 
@@ -63,13 +69,12 @@ namespace Pirate.PiVote.Rpc
           SubProgress = 0d;
 
           var value = client.proxy.FetchCertificateStorage();
-          CertificateStorage certificateStorage = new CertificateStorage();
-          certificateStorage.Add(value.First);
+          this.certificateStorage.Add(value.First);
           Certificate serverCertificate = value.Second;
 
-          if (serverCertificate.Validate(certificateStorage) == CertificateValidationResult.Valid)
+          if (serverCertificate.Validate(this.certificateStorage) == CertificateValidationResult.Valid)
           {
-            this.callBack(certificateStorage, serverCertificate, null);
+            this.callBack(serverCertificate, null);
           }
           else
           {
@@ -78,7 +83,7 @@ namespace Pirate.PiVote.Rpc
         }
         catch (Exception exception)
         {
-          this.callBack(null, null, exception);
+          this.callBack(null, exception);
         }
       }
     }

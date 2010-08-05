@@ -111,7 +111,7 @@ namespace Pirate.PiVote.Crypto
       get
       {
         SHA256Managed sha256 = new SHA256Managed();
-        byte[] hash = sha256.ComputeHash(ToBinary());
+        byte[] hash = sha256.ComputeHash(GetSignatureContent());
         return string.Join(" ", hash.Select(b => string.Format("{0:x2}", b)).ToArray());
       }
     }

@@ -290,12 +290,13 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Get certificate storage from server.
     /// </summary>
+    /// <param name="certificateStorage">Client's certificate storage.</param>
     /// <param name="callBack">Callback upon completion.</param>
-    public void GetCertificateStorage(GetCertificateStorageCallBack callBack)
+    public void GetCertificateStorage(CertificateStorage certificateStorage, GetCertificateStorageCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new GetCertificateStorageOperation(callBack));
+        this.operations.Enqueue(new GetCertificateStorageOperation(certificateStorage, callBack));
       }
     }
 

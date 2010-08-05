@@ -475,7 +475,7 @@
     <value>&amp;Fertig</value>
   </data>
   <data name="SigningRequestDocumentAccepted" xml:space="preserve">
-    <value>□ Akzeptiert</value>
+    <value>□ Akzeptiert, gültig bis __________________________</value>
   </data>
   <data name="SigningRequestDocumentCertificateFingerprint" xml:space="preserve">
     <value>Fingerprint des Zertifikats:</value>
@@ -659,7 +659,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
     <value>Kanton:</value>
   </data>
   <data name="SigningRequestDocumentRevokedMoved" xml:space="preserve">
-    <value>Umgezogen:</value>
+    <value>□ Widerrufen, in anderen Kanton umgezogen</value>
   </data>
   <data name="SigningRequestDocumentCertificateType" xml:space="preserve">
     <value>Zertifikatstyp:</value>
@@ -756,5 +756,8 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="MessageBoxTitle" xml:space="preserve">
     <value>Pi-Vote</value>
+  </data>
+  <data name="SigningRequestDocumentRevokedForgotten" xml:space="preserve">
+    <value>□ Widerrufen, Passphrase vergessen</value>
   </data>
 </root>

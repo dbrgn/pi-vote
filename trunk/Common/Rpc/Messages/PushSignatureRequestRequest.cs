@@ -59,6 +59,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
       context.Write(this.signatureRequest);
+      context.Write(this.signatureRequestInfo);
     }
 
     /// <summary>

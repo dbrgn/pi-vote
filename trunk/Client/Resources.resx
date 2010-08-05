@@ -479,7 +479,7 @@
     <value>&amp;Done</value>
   </data>
   <data name="SigningRequestDocumentAccepted" xml:space="preserve">
-    <value>□ Accepted</value>
+    <value>□ Accepted, valid until __________________________</value>
   </data>
   <data name="SigningRequestDocumentCertificateFingerprint" xml:space="preserve">
     <value>Certificate fingerprint:</value>
@@ -675,7 +675,7 @@ Finally you need to upload your request for certificate signing to the server to
     <value>Canton:</value>
   </data>
   <data name="SigningRequestDocumentRevokedMoved" xml:space="preserve">
-    <value>□ Moved</value>
+    <value>□ Revoked, moved to another canton</value>
   </data>
   <data name="SigningRequestDocumentCertificateType" xml:space="preserve">
     <value>Certificate type:</value>
@@ -772,5 +772,8 @@ Finally you need to upload your request for certificate signing to the server to
   </data>
   <data name="MessageBoxTitle" xml:space="preserve">
     <value>Pi-Vote</value>
+  </data>
+  <data name="SigningRequestDocumentRevokedForgotten" xml:space="preserve">
+    <value>□ Revoked, passphrase forgotten</value>
   </data>
 </root>

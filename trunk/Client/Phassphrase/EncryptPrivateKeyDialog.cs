@@ -52,7 +52,7 @@ namespace Pirate.PiVote.Client
     {
       get
       {
-        return this.encryptCheckBox.Checked ||
+        return !this.encryptCheckBox.Checked ||
           (this.passphraseTextBox.Text.Length >= 1 &&
            this.passphraseTextBox.Text == this.repeatTextBox.Text);
       }
@@ -90,6 +90,7 @@ namespace Pirate.PiVote.Client
     {
       this.passphraseTextBox.Enabled = this.encryptCheckBox.Checked;
       this.repeatTextBox.Enabled = this.encryptCheckBox.Checked;
+      this.okButton.Enabled = Valid;
     }
 
     public static Tuple<DialogResult, string> ShowSetPassphrase()

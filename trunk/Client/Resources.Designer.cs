@@ -1324,7 +1324,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to □ Accepted.
+        ///   Looks up a localized string similar to □ Accepted, valid until __________________________.
         /// </summary>
         internal static string SigningRequestDocumentAccepted {
             get {
@@ -1459,6 +1459,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to □ Revoked, passphrase forgotten.
+        /// </summary>
+        internal static string SigningRequestDocumentRevokedForgotten {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRevokedForgotten", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to □ Revoked, presumed lost.
         /// </summary>
         internal static string SigningRequestDocumentRevokedLost {
@@ -1468,7 +1477,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to □ Moved.
+        ///   Looks up a localized string similar to □ Revoked, moved to another canton.
         /// </summary>
         internal static string SigningRequestDocumentRevokedMoved {
             get {

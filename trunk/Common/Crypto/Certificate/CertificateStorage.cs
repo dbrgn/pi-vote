@@ -291,7 +291,7 @@ namespace Pirate.PiVote.Crypto
     {
       if (File.Exists(Files.RootCertificateFileName))
       {
-        Add(Serializable.Load<Certificate>(Files.RootCertificateFileName));
+        AddRoot(Serializable.Load<Certificate>(Files.RootCertificateFileName));
         return true;
       }
       else

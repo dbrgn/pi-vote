@@ -98,7 +98,7 @@ namespace Pirate.PiVote.Client
       this.firstNameLabel.Text = Resources.CreateCertificateFirstname;
       this.familyNameLabel.Text = Resources.CreateCertificateSurname;
       this.emailAddressLabel.Text = Resources.CreateCertificateEmailAddress;
-      this.emailAddressTextBox.Text = Resources.CreateCertificateEmailNotification;
+      this.emailNotificationCheckBox.Text = Resources.CreateCertificateEmailNotification;
       this.functionNameLabel.Text = Resources.CreateCertificateFunction;
       this.cantonLabel.Text = Resources.CreateCertificateCanton;
 
@@ -130,6 +130,7 @@ namespace Pirate.PiVote.Client
       this.familyNameTextBox.Enabled = false;
       this.functionNameTextBox.Enabled = false;
       this.emailAddressTextBox.Enabled = false;
+      this.emailNotificationCheckBox.Enabled = false;
       this.cantonComboBox.Enabled = false;
       this.createButton.Enabled = false;
 
@@ -180,6 +181,7 @@ namespace Pirate.PiVote.Client
         this.familyNameTextBox.Enabled = true;
         this.functionNameTextBox.Enabled = true;
         this.emailAddressTextBox.Enabled = true;
+        this.emailNotificationCheckBox.Enabled = true;
         this.cantonComboBox.Enabled = true;
         this.createButton.Enabled = true;
       }

@@ -53,7 +53,7 @@
       // validUntilLabel
       // 
       this.validUntilLabel.AutoSize = true;
-      this.validUntilLabel.Location = new System.Drawing.Point(11, 208);
+      this.validUntilLabel.Location = new System.Drawing.Point(11, 236);
       this.validUntilLabel.Name = "validUntilLabel";
       this.validUntilLabel.Size = new System.Drawing.Size(55, 14);
       this.validUntilLabel.TabIndex = 0;
@@ -62,7 +62,7 @@
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(463, 301);
+      this.cancelButton.Location = new System.Drawing.Point(463, 322);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
       this.cancelButton.TabIndex = 2;
@@ -74,7 +74,7 @@
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(382, 301);
+      this.okButton.Location = new System.Drawing.Point(382, 322);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 1;
@@ -125,7 +125,7 @@
       this.validUntilPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.validUntilPicker.Enabled = false;
-      this.validUntilPicker.Location = new System.Drawing.Point(94, 203);
+      this.validUntilPicker.Location = new System.Drawing.Point(94, 231);
       this.validUntilPicker.Name = "validUntilPicker";
       this.validUntilPicker.Size = new System.Drawing.Size(444, 20);
       this.validUntilPicker.TabIndex = 7;
@@ -202,15 +202,16 @@
       this.fingerprintTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.fingerprintTextBox.Location = new System.Drawing.Point(94, 143);
+      this.fingerprintTextBox.Multiline = true;
       this.fingerprintTextBox.Name = "fingerprintTextBox";
       this.fingerprintTextBox.ReadOnly = true;
-      this.fingerprintTextBox.Size = new System.Drawing.Size(444, 20);
+      this.fingerprintTextBox.Size = new System.Drawing.Size(444, 49);
       this.fingerprintTextBox.TabIndex = 14;
       // 
       // acceptSignRadioButton
       // 
       this.acceptSignRadioButton.AutoSize = true;
-      this.acceptSignRadioButton.Location = new System.Drawing.Point(14, 179);
+      this.acceptSignRadioButton.Location = new System.Drawing.Point(14, 207);
       this.acceptSignRadioButton.Name = "acceptSignRadioButton";
       this.acceptSignRadioButton.Size = new System.Drawing.Size(105, 18);
       this.acceptSignRadioButton.TabIndex = 16;
@@ -224,7 +225,7 @@
       this.reasonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.reasonComboBox.Enabled = false;
       this.reasonComboBox.FormattingEnabled = true;
-      this.reasonComboBox.Location = new System.Drawing.Point(94, 262);
+      this.reasonComboBox.Location = new System.Drawing.Point(94, 290);
       this.reasonComboBox.Name = "reasonComboBox";
       this.reasonComboBox.Size = new System.Drawing.Size(444, 22);
       this.reasonComboBox.TabIndex = 17;
@@ -233,7 +234,7 @@
       // reasonLabel
       // 
       this.reasonLabel.AutoSize = true;
-      this.reasonLabel.Location = new System.Drawing.Point(11, 265);
+      this.reasonLabel.Location = new System.Drawing.Point(11, 293);
       this.reasonLabel.Name = "reasonLabel";
       this.reasonLabel.Size = new System.Drawing.Size(47, 14);
       this.reasonLabel.TabIndex = 18;
@@ -242,7 +243,7 @@
       // refuseRadioButton
       // 
       this.refuseRadioButton.AutoSize = true;
-      this.refuseRadioButton.Location = new System.Drawing.Point(12, 238);
+      this.refuseRadioButton.Location = new System.Drawing.Point(12, 266);
       this.refuseRadioButton.Name = "refuseRadioButton";
       this.refuseRadioButton.Size = new System.Drawing.Size(60, 18);
       this.refuseRadioButton.TabIndex = 19;
@@ -255,7 +256,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(550, 336);
+      this.ClientSize = new System.Drawing.Size(550, 357);
       this.ControlBox = false;
       this.Controls.Add(this.refuseRadioButton);
       this.Controls.Add(this.reasonLabel);

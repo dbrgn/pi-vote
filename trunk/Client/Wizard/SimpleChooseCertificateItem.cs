@@ -181,24 +181,46 @@ namespace Pirate.PiVote.Client
       this.advancedRadioButton.Enabled = false;
       this.createRadioButton.Enabled = false;
       this.importRadioButton.Enabled = false;
-
       this.firstNameTextBox.Enabled = false;
       this.familyNameTextBox.Enabled = false;
       this.emailAddressTextBox.Enabled = false;
+      this.emailNotificationCheckBox.Enabled = false;
       this.cantonComboBox.Enabled = false;
       this.createButton.Enabled = false;
 
-      this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), null, (Canton)this.cantonComboBox.SelectedIndex);
-      this.certificate.CreateSelfSignature();
+      var encryptResult = EncryptPrivateKeyDialog.ShowSetPassphrase();
 
-      this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
-      this.signatureRequestInfo = new SignatureRequestInfo(this.emailNotificationCheckBox.Checked ? this.emailAddressTextBox.Text : string.Empty);
-      this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, this.certificate);
-      this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, this.certificate);
+      if (encryptResult.First == DialogResult.OK)
+      {
+        string passphrase = encryptResult.Second;
 
-      this.run = false;
-      OnUpdateWizard();
-      this.printButton.Enabled = true;
+        this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, (Canton)this.cantonComboBox.SelectedIndex);
+        this.certificate.CreateSelfSignature();
+
+        this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
+        this.signatureRequestInfo = new SignatureRequestInfo(this.emailNotificationCheckBox.Checked ? this.emailAddressTextBox.Text : string.Empty);
+        this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, this.certificate);
+        this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, this.certificate);
+
+        this.run = false;
+        OnUpdateWizard();
+        this.printButton.Enabled = true;
+      }
+      else
+      {
+        this.run = false;
+        OnUpdateWizard();
+
+        this.advancedRadioButton.Enabled = true;
+        this.createRadioButton.Enabled = true;
+        this.importRadioButton.Enabled = true;
+        this.firstNameTextBox.Enabled = true;
+        this.familyNameTextBox.Enabled = true;
+        this.emailAddressTextBox.Enabled = true;
+        this.emailNotificationCheckBox.Enabled = true;
+        this.cantonComboBox.Enabled = true;
+        this.createButton.Enabled = true;
+      }
     }
 
     private void CheckValid()
