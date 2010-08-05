@@ -105,10 +105,9 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Enables voter entity.
     /// </summary>
-    /// <param name="voterCertificate">Certificate of the voter.</param>
-    public void ActivateVoter(VoterCertificate voterCertificate)
+    public void ActivateVoter()
     {
-      this.voterEntity = new VoterEntity(this.certificateStorage, voterCertificate);
+      this.voterEntity = new VoterEntity(this.certificateStorage);
     }
 
     /// <summary>
@@ -208,13 +207,14 @@ namespace Pirate.PiVote.Rpc
     /// Send vote to server.
     /// </summary>
     /// <param name="votingMaterial">Material to vote.</param>
-    /// <param name="optionIndex">Index of selected option.</param>
+    /// /// <param name="voterCertificate">Certificate of the voter.</param>
+    /// <param name="vota">Selected options.</param>
     /// <param name="callBack">Callback upon completion.</param>
-    public void Vote(VotingMaterial votingMaterial, IEnumerable<IEnumerable<bool>> vota, VoteCallBack callBack)
+    public void Vote(VotingMaterial votingMaterial, VoterCertificate voterCertificate, IEnumerable<IEnumerable<bool>> vota, VoteCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new VoteOperation(votingMaterial, vota, callBack));
+        this.operations.Enqueue(new VoteOperation(votingMaterial, voterCertificate, vota, callBack));
       }
     }
 

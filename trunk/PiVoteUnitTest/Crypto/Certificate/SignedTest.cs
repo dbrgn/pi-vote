@@ -26,7 +26,7 @@ namespace PiVoteUnitTest
     {
       this.storage = new CertificateStorage();
 
-      this.root = new CACertificate("Root");
+      this.root = new CACertificate(null, "Root");
       this.root.CreateSelfSignature();
       this.storage.AddRoot(this.root.OnlyPublicPart);
 
@@ -34,7 +34,7 @@ namespace PiVoteUnitTest
       var signedRootCrl = new Signed<RevocationList>(rootCrl, this.root);
       this.storage.AddRevocationList(signedRootCrl);
 
-      this.intermediate = new CACertificate("Intermediate");
+      this.intermediate = new CACertificate(null, "Intermediate");
       this.intermediate.CreateSelfSignature();
       this.intermediate.AddSignature(this.root, DateTime.Now.AddDays(1));
       this.storage.Add(intermediate.OnlyPublicPart);
@@ -43,7 +43,7 @@ namespace PiVoteUnitTest
       var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, this.intermediate);
       this.storage.AddRevocationList(signedIntermediateCrl);
 
-      this.admin = new AdminCertificate(Language.English, "Test");
+      this.admin = new AdminCertificate(Language.English, null, "Test");
       this.admin.CreateSelfSignature();
       this.admin.AddSignature(this.intermediate, DateTime.Now.AddDays(1));
     }

@@ -60,34 +60,42 @@ namespace Pirate.PiVote.Client
         this.run = true;
         OnUpdateWizard();
 
-        Status.VotingClient.CheckShares(VotingDescriptor.Id, (AuthorityCertificate)Status.Certificate, filePath, CheckSharesCompleteCallBack);
-
-        while (this.run)
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.AuthorityCheckSharesUnlockAction))
         {
-          Status.UpdateProgress();
-          Thread.Sleep(10);
-        }
+          Status.VotingClient.CheckShares(VotingDescriptor.Id, (AuthorityCertificate)Status.Certificate, filePath, CheckSharesCompleteCallBack);
 
-        Status.UpdateProgress();
-
-        if (this.exception == null)
-        {
-          if (this.accept)
+          while (this.run)
           {
-            Status.SetMessage(Resources.AuthorityCheckSharesAccept, MessageType.Success);
+            Status.UpdateProgress();
+            Thread.Sleep(10);
+          }
+
+          Status.UpdateProgress();
+
+          if (this.exception == null)
+          {
+            if (this.accept)
+            {
+              Status.SetMessage(Resources.AuthorityCheckSharesAccept, MessageType.Success);
+            }
+            else
+            {
+              Status.SetMessage(Resources.AuthorityCheckSharesDecline, MessageType.Error);
+            }
           }
           else
           {
-            Status.SetMessage(Resources.AuthorityCheckSharesDecline, MessageType.Error);
+            Status.SetMessage(this.exception.Message, MessageType.Error);
           }
 
-          OnUpdateWizard();
+          Status.Certificate.Lock();
         }
         else
         {
-          Status.SetMessage(this.exception.Message, MessageType.Error);
-          OnUpdateWizard();
+          Status.SetMessage(Resources.AuthorityDecipherCanceled, MessageType.Info);
         }
+
+        OnUpdateWizard();
       }
       else
       {

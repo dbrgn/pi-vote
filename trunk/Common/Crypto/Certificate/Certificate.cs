@@ -26,9 +26,57 @@ namespace Pirate.PiVote.Crypto
     public Guid Id { get; private set; }
 
     /// <summary>
-    /// Public and possibly private key of the certificate.
+    /// Public key of the certificate.
     /// </summary>
-    private byte[] Key { get; set; }
+    private byte[] PublicKey { get; set; }
+
+    /// <summary>
+    /// Status of the private key.
+    /// </summary>
+    public PrivateKeyStatus PrivateKeyStatus  { get; private set; }
+
+    /// <summary>
+    /// Data of the private key, either encrypted or unencrypted.
+    /// </summary>
+    private byte[] privateKeyData;
+
+    /// <summary>
+    /// Salt used in encryption of the private key.
+    /// </summary>
+    private byte[] privateKeySalt;
+
+    /// <summary>
+    /// Salt used to strengthen the passphrase.
+    /// </summary>
+    private byte[] passphraseSalt;
+
+    /// <summary>
+    /// Decrypted private key.
+    /// </summary>
+    private byte[] privateKeyDecrypted;
+
+    /// <summary>
+    /// Private key corresponding to the certificate.
+    /// </summary>
+    private byte[] PrivateKey
+    {
+      get
+      {
+        switch (PrivateKeyStatus)
+        {
+          case PrivateKeyStatus.Unavailable:
+            throw new InvalidOperationException("Private key unavailable.");
+          case PrivateKeyStatus.Unencrypted:
+            return this.privateKeyData;
+          case Crypto.PrivateKeyStatus.Encrypted:
+            throw new InvalidOperationException("Private key is encrypted.");
+          case Crypto.PrivateKeyStatus.Decrypted:
+            return this.privateKeyDecrypted;
+          default:
+            throw new InvalidOperationException("Unknown private key status.");
+        }
+      }
+    }
 
     /// <summary>
     /// Signatures affixed to the certificate.
@@ -71,19 +119,56 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new certificate.
     /// </summary>
-    public Certificate(Language language)
+    /// <param name="language">Language preferred by the certificate holder.</param>
+    /// <param name="passphrase">Passphrase to encrypt the key with or null for no encryption.</param>
+    public Certificate(Language language, string passphrase)
     {
       CreationDate = DateTime.Now;
       Id = Guid.NewGuid();
 
       RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider();
       rsaProvider.KeySize = 4096;
-      Key = rsaProvider.ExportCspBlob(true);
+      PublicKey = rsaProvider.ExportCspBlob(false);
+
+      PrivateKeyStatus = PrivateKeyStatus.Unencrypted;
+
+      if (passphrase == null)
+      {
+        this.privateKeyData = rsaProvider.ExportCspBlob(true);
+      }
+      else
+      {
+        EncryptPrivateKey(passphrase, rsaProvider);
+      }
 
       this.signatures = new List<Signature>();
       this.attributes = new List<CertificateAttribute>();
 
       AddAttribute(new Int32CertificateAttribute(CertificateAttributeName.Language, (int)language));
+    }
+
+    /// <summary>
+    /// Encrypts the private key of RSA using a key derived from the passphrase.
+    /// </summary>
+    /// <param name="passphrase">Passphrase to protect the private key.</param>
+    /// <param name="rsaProvider">RSA provider containing a private key.</param>
+    private void EncryptPrivateKey(string passphrase, RSACryptoServiceProvider rsaProvider)
+    {
+      RandomNumberGenerator rng = RandomNumberGenerator.Create();
+      this.passphraseSalt = new byte[32];
+      rng.GetBytes(this.passphraseSalt);
+
+      Rfc2898DeriveBytes derive = new Rfc2898DeriveBytes(passphrase, this.passphraseSalt, 1024);
+      byte[] key = derive.GetBytes(32);
+
+      this.privateKeySalt = new byte[16];
+      rng.GetBytes(this.privateKeySalt);
+
+      byte[] data = rsaProvider.ExportCspBlob(true);
+      SHA256Managed sha256 = new SHA256Managed();
+      data = data.Concat(sha256.ComputeHash(data));
+
+      this.privateKeyData = Aes.Encrypt(data, key, this.passphraseSalt);
     }
 
     /// <summary>
@@ -106,14 +191,20 @@ namespace Pirate.PiVote.Crypto
 
       CreationDate = original.CreationDate;
       Id = original.Id;
+      PublicKey = original.PublicKey;
 
       if (onlyPublicPart)
       {
-        Key = original.GetRsaProvider().ExportCspBlob(false);
+        PrivateKeyStatus = PrivateKeyStatus.Unavailable;
       }
       else
       {
-        Key = Key;
+        PrivateKeyStatus =
+          original.PrivateKeyStatus == PrivateKeyStatus.Decrypted ?
+          PrivateKeyStatus.Encrypted :
+          original.PrivateKeyStatus;
+        this.privateKeyData = original.privateKeyData;
+        this.privateKeySalt = original.privateKeySalt;
       }
 
       SelfSignature = original.SelfSignature;
@@ -128,11 +219,21 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Gets the RSA provider for the saved public and possibly private key.
     /// </summary>
+    /// <param name="usingPrivateKey">Include the private key?</param>
     /// <returns>An RSA provider.</returns>
-    private RSACryptoServiceProvider GetRsaProvider()
+    private RSACryptoServiceProvider GetRsaProvider(bool usingPrivateKey)
     {
       var rsaProvider = new RSACryptoServiceProvider();
-      rsaProvider.ImportCspBlob(Key);
+
+      if (usingPrivateKey)
+      {
+        rsaProvider.ImportCspBlob(PrivateKey);
+      }
+      else
+      {
+        rsaProvider.ImportCspBlob(PublicKey);
+      }
+
       return rsaProvider;
     }
 
@@ -148,7 +249,7 @@ namespace Pirate.PiVote.Crypto
       if (!HasPrivateKey)
         throw new InvalidOperationException("No private key.");
 
-      var rsaProvider = GetRsaProvider();
+      var rsaProvider = GetRsaProvider(true);
       return rsaProvider.SignData(data, "SHA256");
     }
 
@@ -168,7 +269,7 @@ namespace Pirate.PiVote.Crypto
       if (signature == null)
         throw new ArgumentNullException("signature");
 
-      var rsaProvider = GetRsaProvider();
+      var rsaProvider = GetRsaProvider(false);
       return rsaProvider.VerifyData(data, "SHA256", signature) &&
         Validate(certificateStorage) == CertificateValidationResult.Valid;
     }
@@ -186,7 +287,7 @@ namespace Pirate.PiVote.Crypto
       if (signature == null)
         throw new ArgumentNullException("signature");
 
-      var rsaProvider = GetRsaProvider();
+      var rsaProvider = GetRsaProvider(false);
       return rsaProvider.VerifyData(data, "SHA256", signature);
     }
     
@@ -207,7 +308,7 @@ namespace Pirate.PiVote.Crypto
       if (signature == null)
         throw new ArgumentNullException("signature");
 
-      var rsaProvider = GetRsaProvider();
+      var rsaProvider = GetRsaProvider(false);
       return rsaProvider.VerifyData(data, "SHA256", signature) &&
         Validate(certificateStorage, date) == CertificateValidationResult.Valid;
     }
@@ -290,7 +391,7 @@ namespace Pirate.PiVote.Crypto
       if (data == null)
         throw new ArgumentNullException("data");
 
-      var rsaProvider = GetRsaProvider();
+      var rsaProvider = GetRsaProvider(false);
 
       RijndaelManaged rijndael = new RijndaelManaged();
       rijndael.BlockSize = 128;
@@ -323,7 +424,7 @@ namespace Pirate.PiVote.Crypto
       if (!HasPrivateKey)
         throw new InvalidProgramException("No private key.");
 
-      var rsaProvider = GetRsaProvider();
+      var rsaProvider = GetRsaProvider(true);
 
       byte[] encryptedKey = data.Part(0, 128);
       byte[] cipherText = data.Part(144);
@@ -357,7 +458,7 @@ namespace Pirate.PiVote.Crypto
       if (!HasPrivateKey)
         throw new InvalidProgramException("No private key.");
 
-      var rsaProvider = GetRsaProvider();
+      var rsaProvider = GetRsaProvider(true);
 
       byte[] encryptedKey = data.Part(0, 128);
 
@@ -400,7 +501,10 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public bool HasPrivateKey
     {
-      get { return !GetRsaProvider().PublicOnly; }
+      get
+      {
+        return PrivateKey != null;
+      }
     }
 
     /// <summary>
@@ -418,7 +522,7 @@ namespace Pirate.PiVote.Crypto
       context.Write(MagicTypeConstant);
       context.Write(Id.ToByteArray());
       context.Write(CreationDate);
-      context.Write(Key);
+      context.Write(PublicKey);
       context.Write(SelfSignature);
       context.WriteList(this.attributes);
       context.WriteList(this.signatures);
@@ -437,7 +541,7 @@ namespace Pirate.PiVote.Crypto
 
       Id = new Guid(context.ReadBytes());
       CreationDate = context.ReadDateTime();
-      Key = context.ReadBytes();
+      PublicKey = context.ReadBytes();
       SelfSignature = context.ReadBytes();
       this.attributes = context.ReadObjectList<CertificateAttribute>();
       this.signatures = context.ReadObjectList<Signature>();
@@ -455,9 +559,7 @@ namespace Pirate.PiVote.Crypto
       writer.Write(MagicTypeConstant);
       writer.Write(CreationDate.Ticks);
       writer.Write(Id.ToByteArray());
-
-      //Obviously the private key must not be signed as it is not given out.
-      writer.Write(HasPrivateKey ? GetRsaProvider().ExportCspBlob(false) : Key);
+      writer.Write(PrivateKey);
 
       this.attributes.ForEach(attribute => writer.Write(attribute.ToBinary()));
     }
@@ -541,7 +643,7 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
-        var rsaProvider = GetRsaProvider();
+        var rsaProvider = GetRsaProvider(false);
         return rsaProvider.VerifyData(GetSignatureContent(), "SHA256", SelfSignature);
       }
     }
@@ -680,6 +782,9 @@ namespace Pirate.PiVote.Crypto
       }
     }
 
+    /// <summary>
+    /// Language preferred by the certificate holder.
+    /// </summary>
     public Language Language
     {
       get
@@ -695,6 +800,55 @@ namespace Pirate.PiVote.Crypto
           return (Language)value;
         }
       }
+    }
+
+    /// <summary>
+    /// Decrypts the private key.
+    /// </summary>
+    /// <param name="passphrase">Passphrase protecting the private key.</param>
+    public void Unlock(string passphrase)
+    {
+      if (PrivateKeyStatus == PrivateKeyStatus.Encrypted)
+      {
+        Rfc2898DeriveBytes derive = new Rfc2898DeriveBytes(passphrase, this.passphraseSalt, 1024);
+        byte[] key = derive.GetBytes(32);
+
+        byte[] data = Aes.Decrypt(this.privateKeyData, key, this.passphraseSalt);
+        SHA256Managed sha256 = new SHA256Managed();
+        int hashLength = sha256.HashSize / 8;
+
+        if (data.Length > hashLength && 
+          sha256.ComputeHash(data.Part(0, data.Length - hashLength)) == data.Part(data.Length - hashLength, hashLength))
+        {
+          this.privateKeyDecrypted = data.Part(0, data.Length - hashLength);
+          PrivateKeyStatus = PrivateKeyStatus.Decrypted;
+        }
+        else
+        { 
+          throw new ArgumentException("Passphrase wrong.");
+        }
+      }
+      else if (PrivateKeyStatus == PrivateKeyStatus.Decrypted)
+      {
+        //Do nothing at all.
+      }
+      else
+      {
+        throw new InvalidOperationException("Private key is not encrypted.");
+      }
+    }
+
+    /// <summary>
+    /// Remove the decrypted private key.
+    /// </summary>
+    /// <remarks>
+    /// Altought is zeros out the key, this might be unreliable due to managed memory.
+    /// </remarks>
+    public void Lock()
+    {
+      this.privateKeyDecrypted.Clear();
+      this.privateKeyDecrypted = null;
+      PrivateKeyStatus = PrivateKeyStatus.Encrypted;
     }
   }
 }

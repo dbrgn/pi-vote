@@ -30,6 +30,7 @@ namespace Pirate.PiVote.CliClient
     private CACertificate intermediate;
     private AdminCertificate admin;
     private VotingClient voterClient;
+    private VoterCertificate voterCertificate;
     
     public Client()
     {
@@ -310,7 +311,8 @@ namespace Pirate.PiVote.CliClient
       var certificateStorage = new CertificateStorage();
       certificateStorage.AddRoot(this.root.OnlyPublicPart);
       this.voterClient = new VotingClient(certificateStorage);
-      this.voterClient.ActivateVoter(this.voters[voterIndex]);
+      this.voterClient.ActivateVoter();
+      this.voterCertificate = this.voters[voterIndex];
 
       this.voterClient.Connect(IPAddress.Loopback, Connected);
     }
@@ -391,7 +393,7 @@ namespace Pirate.PiVote.CliClient
               Thread.Sleep(1);
             }
 
-            this.voterClient.Vote(votingMaterial, vota, VoteCallBack);
+            this.voterClient.Vote(votingMaterial, this.voterCertificate, vota, VoteCallBack);
 
             break;
           case VotingStatus.Finished:

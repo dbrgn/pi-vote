@@ -713,4 +713,58 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="CreateCertificateEmailNotification" xml:space="preserve">
     <value>Notify me by email, when an answer to my certificate signing request is available. This requires your email address to be stored on the PiVote server.</value>
   </data>
+  <data name="AuthorityCheckSharesUnlockAction" xml:space="preserve">
+    <value>Decrypt key shares and sign share response</value>
+  </data>
+  <data name="AuthorityCreateSharesCanceled" xml:space="preserve">
+    <value>The creation of shared was canceled.</value>
+  </data>
+  <data name="AuthorityCreateSharesUnlockAction" xml:space="preserve">
+    <value>Sign newly created key shares</value>
+  </data>
+  <data name="AuthorityDecipherCanceled" xml:space="preserve">
+    <value>The partial deciphering was canceled.</value>
+  </data>
+  <data name="AuthorityDecipherUnlockAction" xml:space="preserve">
+    <value>Sign partial deciphers.</value>
+  </data>
+  <data name="CreateVotingCanceled" xml:space="preserve">
+    <value>The creation of a voting was canceled.</value>
+  </data>
+  <data name="CreateVotingUnlockAction" xml:space="preserve">
+    <value>Sign voting parameters</value>
+  </data>
+  <data name="EncryptPrivateKeyCertificateId" xml:space="preserve">
+    <value>Certificate Id:</value>
+  </data>
+  <data name="EncryptPrivateKeyCertificateType" xml:space="preserve">
+    <value>Certificate Type:</value>
+  </data>
+  <data name="EncryptPrivateKeyChoose" xml:space="preserve">
+    <value>Encrypt my private key</value>
+  </data>
+  <data name="EncryptPrivateKeyEncrypted" xml:space="preserve">
+    <value>Your private key is encrypted. You need to enter your passphrase to decrypt it.</value>
+  </data>
+  <data name="EncryptPrivateKeyInfo" xml:space="preserve">
+    <value>You may encrypt the private key of your certificate to proctet it against unauthorized use. If you do so you will be prompted to enter your passphrase when your private key is used.</value>
+  </data>
+  <data name="EncryptPrivateKeyPassphrase" xml:space="preserve">
+    <value>Passphrase:</value>
+  </data>
+  <data name="EncryptPrivateKeyRepeat" xml:space="preserve">
+    <value>Repeat passphrase:</value>
+  </data>
+  <data name="EncryptPrivateKeyTitle" xml:space="preserve">
+    <value>Pi-Vote Private Key Protection</value>
+  </data>
+  <data name="EncryptPrivateKeyUnlockAction" xml:space="preserve">
+    <value>Action:</value>
+  </data>
+  <data name="VoteCanceled" xml:space="preserve">
+    <value>The casting of the vote was canceled.</value>
+  </data>
+  <data name="VoteUnlockAction" xml:space="preserve">
+    <value>Sign vote</value>
+  </data>
 </root>

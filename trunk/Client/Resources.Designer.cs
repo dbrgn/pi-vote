@@ -151,11 +151,29 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decrypt key shares and sign share response.
+        /// </summary>
+        internal static string AuthorityCheckSharesUnlockAction {
+            get {
+                return ResourceManager.GetString("AuthorityCheckSharesUnlockAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Create Shares.
         /// </summary>
         internal static string AuthorityCreateShares {
             get {
                 return ResourceManager.GetString("AuthorityCreateShares", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The creation of shared was canceled..
+        /// </summary>
+        internal static string AuthorityCreateSharesCanceled {
+            get {
+                return ResourceManager.GetString("AuthorityCreateSharesCanceled", resourceCulture);
             }
         }
         
@@ -169,6 +187,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sign newly created key shares.
+        /// </summary>
+        internal static string AuthorityCreateSharesUnlockAction {
+            get {
+                return ResourceManager.GetString("AuthorityCreateSharesUnlockAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Decipher.
         /// </summary>
         internal static string AuthorityDecipher {
@@ -178,11 +205,29 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The partial deciphering was canceled..
+        /// </summary>
+        internal static string AuthorityDecipherCanceled {
+            get {
+                return ResourceManager.GetString("AuthorityDecipherCanceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Partial deciphers were calculated and uploaded to the server..
         /// </summary>
         internal static string AuthorityDecipherDone {
             get {
                 return ResourceManager.GetString("AuthorityDecipherDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign partial deciphers..
+        /// </summary>
+        internal static string AuthorityDecipherUnlockAction {
+            get {
+                return ResourceManager.GetString("AuthorityDecipherUnlockAction", resourceCulture);
             }
         }
         
@@ -860,6 +905,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The creation of a voting was canceled..
+        /// </summary>
+        internal static string CreateVotingCanceled {
+            get {
+                return ResourceManager.GetString("CreateVotingCanceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Canton:.
         /// </summary>
         internal static string CreateVotingCanton {
@@ -982,6 +1036,96 @@ namespace Pirate.PiVote.Client {
         internal static string CreateVotingTitle {
             get {
                 return ResourceManager.GetString("CreateVotingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign voting parameters.
+        /// </summary>
+        internal static string CreateVotingUnlockAction {
+            get {
+                return ResourceManager.GetString("CreateVotingUnlockAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate Id:.
+        /// </summary>
+        internal static string EncryptPrivateKeyCertificateId {
+            get {
+                return ResourceManager.GetString("EncryptPrivateKeyCertificateId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate Type:.
+        /// </summary>
+        internal static string EncryptPrivateKeyCertificateType {
+            get {
+                return ResourceManager.GetString("EncryptPrivateKeyCertificateType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encrypt my private key.
+        /// </summary>
+        internal static string EncryptPrivateKeyChoose {
+            get {
+                return ResourceManager.GetString("EncryptPrivateKeyChoose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your private key is encrypted. You need to enter your passphrase to decrypt it..
+        /// </summary>
+        internal static string EncryptPrivateKeyEncrypted {
+            get {
+                return ResourceManager.GetString("EncryptPrivateKeyEncrypted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You may encrypt the private key of your certificate to proctet it against unauthorized use. If you do so you will be prompted to enter your passphrase when your private key is used..
+        /// </summary>
+        internal static string EncryptPrivateKeyInfo {
+            get {
+                return ResourceManager.GetString("EncryptPrivateKeyInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passphrase:.
+        /// </summary>
+        internal static string EncryptPrivateKeyPassphrase {
+            get {
+                return ResourceManager.GetString("EncryptPrivateKeyPassphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat passphrase:.
+        /// </summary>
+        internal static string EncryptPrivateKeyRepeat {
+            get {
+                return ResourceManager.GetString("EncryptPrivateKeyRepeat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pi-Vote Private Key Protection.
+        /// </summary>
+        internal static string EncryptPrivateKeyTitle {
+            get {
+                return ResourceManager.GetString("EncryptPrivateKeyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action:.
+        /// </summary>
+        internal static string EncryptPrivateKeyUnlockAction {
+            get {
+                return ResourceManager.GetString("EncryptPrivateKeyUnlockAction", resourceCulture);
             }
         }
         
@@ -1668,6 +1812,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The casting of the vote was canceled..
+        /// </summary>
+        internal static string VoteCanceled {
+            get {
+                return ResourceManager.GetString("VoteCanceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your vote is now cast..
         /// </summary>
         internal static string VoteCast {
@@ -1718,6 +1871,15 @@ namespace Pirate.PiVote.Client {
         internal static string VoteSingleOption {
             get {
                 return ResourceManager.GetString("VoteSingleOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign vote.
+        /// </summary>
+        internal static string VoteUnlockAction {
+            get {
+                return ResourceManager.GetString("VoteUnlockAction", resourceCulture);
             }
         }
         

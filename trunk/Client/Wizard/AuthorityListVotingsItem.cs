@@ -170,29 +170,38 @@ namespace Pirate.PiVote.Client
         this.run = true;
         OnUpdateWizard();
 
-        Status.VotingClient.CreateSharePart(voting.Id, (AuthorityCertificate)Status.Certificate, filePath, CreateSharesCompleteCallBack);
-
-        while (this.run)
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.AuthorityCreateSharesUnlockAction))
         {
+          Status.VotingClient.CreateSharePart(voting.Id, (AuthorityCertificate)Status.Certificate, filePath, CreateSharesCompleteCallBack);
+
+          while (this.run)
+          {
+            Status.UpdateProgress();
+            Thread.Sleep(10);
+          }
+
           Status.UpdateProgress();
-          Thread.Sleep(10);
-        }
 
-        Status.UpdateProgress();
+          if (this.exception == null)
+          {
+            item.Tag = this.votingDescriptor;
+            item.SubItems[2].Text = this.votingDescriptor.Status.Text();
+            item.SubItems[5].Text = this.votingDescriptor.AuthoritiesDone == null ? string.Empty :
+              this.votingDescriptor.AuthoritiesDone.Count().ToString() + " / " + this.votingDescriptor.AuthorityCount.ToString();
+            votingList_SelectedIndexChanged(this.votingList, new EventArgs());
 
-        if (this.exception == null)
-        {
-          item.Tag = this.votingDescriptor;
-          item.SubItems[2].Text = this.votingDescriptor.Status.Text();
-          item.SubItems[5].Text = this.votingDescriptor.AuthoritiesDone == null ? string.Empty :
-            this.votingDescriptor.AuthoritiesDone.Count().ToString() + " / " + this.votingDescriptor.AuthorityCount.ToString();
-          votingList_SelectedIndexChanged(this.votingList, new EventArgs());
+            Status.SetMessage(Resources.AuthorityCreateSharesDone, MessageType.Success);
+          }
+          else
+          {
+            Status.SetMessage(this.exception.Message, MessageType.Error);
+          }
 
-          Status.SetMessage(Resources.AuthorityCreateSharesDone, MessageType.Success);
+          Status.Certificate.Lock();
         }
         else
         {
-          Status.SetMessage(this.exception.Message, MessageType.Error);
+          Status.SetMessage(Resources.AuthorityCreateSharesCanceled, MessageType.Info);
         }
 
         OnUpdateWizard();
@@ -277,29 +286,38 @@ namespace Pirate.PiVote.Client
           this.run = true;
           OnUpdateWizard();
 
-          Status.VotingClient.CreateDeciphers(voting.Id, (AuthorityCertificate)Status.Certificate, filePath, CreateDeciphersCompleteCallBack);
-
-          while (this.run)
+          if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.AuthorityDecipherUnlockAction))
           {
+            Status.VotingClient.CreateDeciphers(voting.Id, (AuthorityCertificate)Status.Certificate, filePath, CreateDeciphersCompleteCallBack);
+
+            while (this.run)
+            {
+              Status.UpdateProgress();
+              Thread.Sleep(10);
+            }
+
             Status.UpdateProgress();
-            Thread.Sleep(10);
-          }
 
-          Status.UpdateProgress();
+            if (this.exception == null)
+            {
+              item.Tag = this.votingDescriptor;
+              item.SubItems[2].Text = this.votingDescriptor.Status.Text();
+              item.SubItems[5].Text = this.votingDescriptor.AuthoritiesDone == null ? string.Empty :
+                this.votingDescriptor.AuthoritiesDone.Count().ToString() + " / " + this.votingDescriptor.AuthorityCount.ToString();
+              votingList_SelectedIndexChanged(this.votingList, new EventArgs());
 
-          if (this.exception == null)
-          {
-            item.Tag = this.votingDescriptor;
-            item.SubItems[2].Text = this.votingDescriptor.Status.Text();
-            item.SubItems[5].Text = this.votingDescriptor.AuthoritiesDone == null ? string.Empty :
-              this.votingDescriptor.AuthoritiesDone.Count().ToString() + " / " + this.votingDescriptor.AuthorityCount.ToString();
-            votingList_SelectedIndexChanged(this.votingList, new EventArgs());
+              Status.SetMessage(Resources.AuthorityDecipherDone, MessageType.Success);
+            }
+            else
+            {
+              Status.SetMessage(this.exception.Message, MessageType.Error);
+            }
 
-            Status.SetMessage(Resources.AuthorityDecipherDone, MessageType.Success);
+            Status.Certificate.Lock();
           }
           else
           {
-            Status.SetMessage(this.exception.Message, MessageType.Error);
+            Status.SetMessage(Resources.AuthorityDecipherCanceled, MessageType.Info);
           }
 
           OnUpdateWizard();

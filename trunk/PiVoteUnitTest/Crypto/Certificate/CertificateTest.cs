@@ -31,7 +31,7 @@ namespace PiVoteUnitTest
     {
       CertificateStorage storage = new CertificateStorage();
 
-      CACertificate root = new CACertificate("Root");
+      CACertificate root = new CACertificate(null, "Root");
       root.CreateSelfSignature();
       Assert.IsFalse(root.Validate(storage) == CertificateValidationResult.Valid);
 
@@ -42,7 +42,7 @@ namespace PiVoteUnitTest
       var signedRootCrl = new Signed<RevocationList>(rootCrl, root);
       storage.AddRevocationList(signedRootCrl);
 
-      CACertificate intermediate = new CACertificate("Intermediate");
+      CACertificate intermediate = new CACertificate(null, "Intermediate");
       intermediate.CreateSelfSignature();
       Assert.IsFalse(intermediate.Validate(storage) == CertificateValidationResult.Valid);
 
@@ -54,7 +54,7 @@ namespace PiVoteUnitTest
       var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
       storage.AddRevocationList(signedIntermediateCrl);
 
-      AdminCertificate test = new AdminCertificate(Language.English, "Test");
+      AdminCertificate test = new AdminCertificate(Language.English, null, "Test");
       test.CreateSelfSignature();
       Assert.IsFalse(test.Validate(storage) == CertificateValidationResult.Valid);
 
@@ -67,7 +67,7 @@ namespace PiVoteUnitTest
     {
       CertificateStorage storage = new CertificateStorage();
 
-      CACertificate root = new CACertificate("Root");
+      CACertificate root = new CACertificate(null, "Root");
       root.CreateSelfSignature();
       storage.AddRoot(root.OnlyPublicPart);
 
@@ -75,7 +75,7 @@ namespace PiVoteUnitTest
       var signedRootCrl = new Signed<RevocationList>(rootCrl, root);
       storage.AddRevocationList(signedRootCrl);
 
-      CACertificate intermediate = new CACertificate("Intermediate");
+      CACertificate intermediate = new CACertificate(null, "Intermediate");
       intermediate.CreateSelfSignature();
       intermediate.AddSignature(root, DateTime.Now.AddDays(1));
       storage.Add(intermediate.OnlyPublicPart);
@@ -84,7 +84,7 @@ namespace PiVoteUnitTest
       var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
       storage.AddRevocationList(signedIntermediateCrl);
 
-      AdminCertificate test = new AdminCertificate(Language.English, "Test");
+      AdminCertificate test = new AdminCertificate(Language.English, null, "Test");
       test.CreateSelfSignature();
       test.AddSignature(intermediate, DateTime.Now.AddDays(1));
 
@@ -99,7 +99,7 @@ namespace PiVoteUnitTest
     {
       CertificateStorage storage = new CertificateStorage();
 
-      CACertificate root = new CACertificate("Root");
+      CACertificate root = new CACertificate(null, "Root");
       root.CreateSelfSignature();
       storage.AddRoot(root.OnlyPublicPart);
 
@@ -107,7 +107,7 @@ namespace PiVoteUnitTest
       var signedRootCrl = new Signed<RevocationList>(rootCrl, root);
       storage.AddRevocationList(signedRootCrl);
 
-      CACertificate intermediate = new CACertificate("Intermediate");
+      CACertificate intermediate = new CACertificate(null, "Intermediate");
       intermediate.CreateSelfSignature();
       intermediate.AddSignature(root, DateTime.Now.AddDays(1));
       storage.Add(intermediate.OnlyPublicPart);
@@ -116,7 +116,7 @@ namespace PiVoteUnitTest
       var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
       storage.AddRevocationList(signedIntermediateCrl);
 
-      AdminCertificate test = new AdminCertificate(Language.English, "Test");
+      AdminCertificate test = new AdminCertificate(Language.English, null, "Test");
       test.CreateSelfSignature();
       test.AddSignature(intermediate, DateTime.Now.AddDays(1));
 
@@ -143,7 +143,7 @@ namespace PiVoteUnitTest
     {
       CertificateStorage storage = new CertificateStorage();
 
-      CACertificate root = new CACertificate("Root");
+      CACertificate root = new CACertificate(null, "Root");
       root.CreateSelfSignature();
       storage.AddRoot(root.OnlyPublicPart);
 
@@ -151,12 +151,12 @@ namespace PiVoteUnitTest
       var signedRootCrl = new Signed<RevocationList>(rootCrl, root);
       storage.AddRevocationList(signedRootCrl);
 
-      CACertificate intermediate = new CACertificate("Intermediate");
+      CACertificate intermediate = new CACertificate(null, "Intermediate");
       intermediate.CreateSelfSignature();
       intermediate.AddSignature(root, DateTime.Now.AddDays(10));
       storage.Add(intermediate.OnlyPublicPart);
 
-      AdminCertificate test = new AdminCertificate(Language.English, "Test");
+      AdminCertificate test = new AdminCertificate(Language.English, null, "Test");
       test.CreateSelfSignature();
       test.AddSignature(intermediate, DateTime.Now.AddDays(10));
 

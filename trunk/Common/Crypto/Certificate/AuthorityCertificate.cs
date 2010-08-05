@@ -28,9 +28,11 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new certificate for an authority.
     /// </summary>
+    /// <param name="language">Language preferred by the certificate holder.</param>
+    /// <param name="passphrase">Passphrase to encrypt the key with or null for no encryption.</param>
     /// <param name="fullName">Full name of the authority.</param>
-    public AuthorityCertificate(Language language, string fullName)
-      : base(language)
+    public AuthorityCertificate(Language language, string passphrase, string fullName)
+      : base(language, passphrase)
     {
       if (fullName == null)
         throw new ArgumentNullException("fullName");

@@ -309,7 +309,7 @@ namespace Pirate.PiVote.CaGui
       {
         if (dialog.RootCa)
         {
-          Certificate = new CACertificate(dialog.CaName);
+          Certificate = new CACertificate(null, dialog.CaName);
           Certificate.CreateSelfSignature();
           Certificate.Save(DataPath(CaCertFileName));
           CertificateStorage.AddRoot(Certificate.OnlyPublicPart);
@@ -327,7 +327,7 @@ namespace Pirate.PiVote.CaGui
           {
             CACertificate caCertificate = Serializable.Load<CACertificate>(openDialog.FileName);
             CertificateStorage.AddRoot(caCertificate);
-            Certificate = new CACertificate(dialog.CaName);
+            Certificate = new CACertificate(null, dialog.CaName);
             Certificate.CreateSelfSignature();
             Certificate.Save(DataPath(CaCertFileName));
             CertificateStorage.Add(Certificate.OnlyPublicPart);
@@ -625,7 +625,7 @@ namespace Pirate.PiVote.CaGui
         if (saveDialog.ShowDialog() == DialogResult.OK)
         {
           string fullName = string.Format("{0} {1}, {2}", dialog.FirstName, dialog.FamilyName, dialog.Function);
-          AdminCertificate certificate = new AdminCertificate(Language.English, fullName);
+          AdminCertificate certificate = new AdminCertificate(Language.English, null, fullName);
           certificate.CreateSelfSignature();
 
           SignatureRequest request = new SignatureRequest(dialog.FirstName, dialog.FamilyName, dialog.EmailAddress);

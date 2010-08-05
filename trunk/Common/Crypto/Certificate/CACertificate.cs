@@ -28,9 +28,11 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new certificate for a certificate authority.
     /// </summary>
+    /// <param name="language">Language preferred by the certificate holder.</param>
+    /// <param name="passphrase">Passphrase to encrypt the key with or null for no encryption.</param>
     /// <param name="fullName">Full name of the certificate authority.</param>
-    public CACertificate(string fullName)
-      : base(Language.English)
+    public CACertificate(string passphrase, string fullName)
+      : base(Language.English, passphrase)
     {
       if (fullName == null)
         throw new ArgumentNullException("fullName");

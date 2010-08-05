@@ -34,18 +34,12 @@ namespace Pirate.PiVote.Crypto
     private VotingParameters parameters;
 
     /// <summary>
-    /// Private certificate of this voter.
-    /// </summary>
-    public VoterCertificate Certificate { get; private set; }
-
-    /// <summary>
     /// Tally of voting.
     /// </summary>
     private Tally tally;
 
-    public VoterEntity(CertificateStorage certificateStorage, VoterCertificate voterCertificate)
+    public VoterEntity(CertificateStorage certificateStorage)
     {
-      Certificate = voterCertificate;
       CertificateStorage = certificateStorage;
     }
 
@@ -53,9 +47,10 @@ namespace Pirate.PiVote.Crypto
     /// Cast a vote and pack it in an envelope.
     /// </summary>
     /// <param name="votingMaterial">Voting material.</param>
+    /// <param name="voterCertificate">Private certificate of this voter.</param>
     /// <param name="vota">List of vota.</param>
     /// <returns>Signed envelope containing the ballot.</returns>
-    public Signed<Envelope> Vote(VotingMaterial votingMaterial, IEnumerable<IEnumerable<int>> vota, ProgressHandler progressHandler)
+    public Signed<Envelope> Vote(VotingMaterial votingMaterial, Certificate voterCertificate, IEnumerable<IEnumerable<int>> vota, ProgressHandler progressHandler)
     {
       if (votingMaterial == null)
         throw new ArgumentNullException("votingMaterial");
@@ -88,9 +83,9 @@ namespace Pirate.PiVote.Crypto
 
         List<Ballot> ballots = Parallel.Work(CreateBallot, inputs, progressHandler);
 
-        Envelope ballotContainer = new Envelope(this.parameters.VotingId, Certificate.Id, ballots);
+        Envelope ballotContainer = new Envelope(this.parameters.VotingId, voterCertificate.Id, ballots);
 
-        return new Signed<Envelope>(ballotContainer, Certificate);
+        return new Signed<Envelope>(ballotContainer, voterCertificate);
       }
       else
       {

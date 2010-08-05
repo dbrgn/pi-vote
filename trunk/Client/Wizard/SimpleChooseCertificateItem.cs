@@ -188,7 +188,7 @@ namespace Pirate.PiVote.Client
       this.cantonComboBox.Enabled = false;
       this.createButton.Enabled = false;
 
-      this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), (Canton)this.cantonComboBox.SelectedIndex);
+      this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), null, (Canton)this.cantonComboBox.SelectedIndex);
       this.certificate.CreateSelfSignature();
 
       this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);

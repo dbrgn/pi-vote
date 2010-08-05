@@ -83,6 +83,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientMain.cs" />
+    <Compile Include="Phassphrase\DecryptPrivateKeyDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Phassphrase\DecryptPrivateKeyDialog.Designer.cs">
+      <DependentUpon>DecryptPrivateKeyDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Phassphrase\EncryptPrivateKeyDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Phassphrase\EncryptPrivateKeyDialog.Designer.cs">
+      <DependentUpon>EncryptPrivateKeyDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Printing\SignObject.cs" />
     <Compile Include="Printing\TableRow.cs" />
     <Compile Include="Printing\TableColumn.cs" />
@@ -300,6 +312,12 @@
     <Compile Include="Wizard\WizardStatus.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Phassphrase\DecryptPrivateKeyDialog.resx">
+      <DependentUpon>DecryptPrivateKeyDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Phassphrase\EncryptPrivateKeyDialog.resx">
+      <DependentUpon>EncryptPrivateKeyDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources.fr-FR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.fr-FR.Designer.cs</LastGenOutput>

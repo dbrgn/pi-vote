@@ -216,29 +216,38 @@ namespace Pirate.PiVote.Client
         votingParameters.AddQuestion(question);
       }
 
-      Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);
-      List<AuthorityCertificate> authorities = new List<AuthorityCertificate>();
-      authorities.Add(this.authorityCertificates[this.authority0List.SelectedIndex]);
-      authorities.Add(this.authorityCertificates[this.authority1List.SelectedIndex]);
-      authorities.Add(this.authorityCertificates[this.authority2List.SelectedIndex]);
-      authorities.Add(this.authorityCertificates[this.authority3List.SelectedIndex]);
-      authorities.Add(this.authorityCertificates[this.authority4List.SelectedIndex]);
-
-      Status.VotingClient.CreateVoting(signedVotingParameters, authorities, CreateVotingCompleted);
-
-      while (this.run)
+      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.CreateVotingUnlockAction))
       {
-        Application.DoEvents();
-        Thread.Sleep(10);
-      }
+        Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);
+        List<AuthorityCertificate> authorities = new List<AuthorityCertificate>();
+        authorities.Add(this.authorityCertificates[this.authority0List.SelectedIndex]);
+        authorities.Add(this.authorityCertificates[this.authority1List.SelectedIndex]);
+        authorities.Add(this.authorityCertificates[this.authority2List.SelectedIndex]);
+        authorities.Add(this.authorityCertificates[this.authority3List.SelectedIndex]);
+        authorities.Add(this.authorityCertificates[this.authority4List.SelectedIndex]);
 
-      if (this.exception == null)
-      {
-        Status.SetProgress(Resources.CreateVotingCreated, 1d);
+        Status.VotingClient.CreateVoting(signedVotingParameters, authorities, CreateVotingCompleted);
+
+        while (this.run)
+        {
+          Application.DoEvents();
+          Thread.Sleep(10);
+        }
+
+        if (this.exception == null)
+        {
+          Status.SetMessage(Resources.CreateVotingCreated, MessageType.Success);
+        }
+        else
+        {
+          Status.SetMessage(this.exception.Message, MessageType.Error);
+        }
+
+        Status.Certificate.Lock();
       }
       else
       {
-        Status.SetMessage(this.exception.Message, MessageType.Error);
+        Status.SetMessage(Resources.CreateVotingCanceled, MessageType.Info);
       }
 
       Application.DoEvents();

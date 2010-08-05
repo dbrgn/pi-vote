@@ -41,6 +41,11 @@ namespace Pirate.PiVote.Rpc
       private VotingMaterial votingMaterial;
 
       /// <summary>
+      /// Certificate of the voter.
+      /// </summary>
+      private Certificate voterCertificate;
+
+      /// <summary>
       /// Selected options.
       /// </summary>
       private IEnumerable<IEnumerable<bool>> vota;
@@ -58,12 +63,14 @@ namespace Pirate.PiVote.Rpc
       /// <summary>
       /// Create a new vote cast opeation.
       /// </summary>
-      /// <param name="votingId">Material to vote.</param>
-      /// <param name="optionIndex">Selected options.</param>
+      /// <param name="votingMaterial">Material to vote.</param>
+      /// <param name="voterCertificate">Certificate of the voter.</param>
+      /// <param name="vota">Selected options.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public VoteOperation(VotingMaterial votingMaterial, IEnumerable<IEnumerable<bool>> vota, VoteCallBack callBack)
+      public VoteOperation(VotingMaterial votingMaterial, Certificate voterCertificate, IEnumerable<IEnumerable<bool>> vota, VoteCallBack callBack)
       {
         this.votingMaterial = votingMaterial;
+        this.voterCertificate = voterCertificate;
         this.vota = vota;
         this.callBack = callBack;
       }
@@ -93,7 +100,7 @@ namespace Pirate.PiVote.Rpc
           SubText = LibraryResources.ClientVoteCalcVote;
           SubProgress = 0d;
 
-          var envelope = client.voterEntity.Vote(votingMaterial, vota, VoteProgressHandler);
+          var envelope = client.voterEntity.Vote(this.votingMaterial, this.voterCertificate, vota, VoteProgressHandler);
 
           Progress = 0.7d;
           SubText = LibraryResources.ClientVotePushVote;

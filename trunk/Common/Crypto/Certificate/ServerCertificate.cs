@@ -28,9 +28,11 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new certificate for an voting server.
     /// </summary>
+    /// <param name="language">Language preferred by the certificate holder.</param>
+    /// <param name="passphrase">Passphrase to encrypt the key with or null for no encryption.</param>
     /// <param name="fullName">Full name of the voting server.</param>
     public ServerCertificate(string fullName)
-      : base(Language.English)
+      : base(Language.English, null)
     {
       if (fullName == null)
         throw new ArgumentNullException("fullName");

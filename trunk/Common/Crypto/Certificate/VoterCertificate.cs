@@ -26,8 +26,11 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Creates a new voter certificate.
     /// </summary>
-    public VoterCertificate(Language language, Canton canton)
-      : base(language)
+    /// <param name="language">Language preferred by the certificate holder.</param>
+    /// <param name="passphrase">Passphrase to encrypt the key with or null for no encryption.</param>
+    /// <param name="canton">Canton the holder inhabits.</param>
+    public VoterCertificate(Language language, string passphrase, Canton canton)
+      : base(language, passphrase)
     {
       AddAttribute(new Int32CertificateAttribute(CertificateAttributeName.Canton, (int)canton));
     }

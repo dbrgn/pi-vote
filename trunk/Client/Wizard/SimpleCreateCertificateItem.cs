@@ -138,31 +138,51 @@ namespace Pirate.PiVote.Client
         this.familyNameTextBox.Text,
         this.functionNameTextBox.Text);
 
-      switch (this.typeComboBox.SelectedIndex)
+      var encryptResult = EncryptPrivateKeyDialog.ShowSetPassphrase();
+
+      if (encryptResult.First == DialogResult.OK)
       {
-        case 0:
-          this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), (Canton)this.cantonComboBox.SelectedIndex);
-          break;
-        case 1:
-          this.certificate = new AuthorityCertificate(Resources.Culture.ToLanguage(), fullName);
-          break;
-        case 2:
-          this.certificate = new AdminCertificate(Resources.Culture.ToLanguage(), fullName);
-          break;
-        default:
-          throw new InvalidOperationException("Bad type selection.");
+        string passphrase = encryptResult.Second;
+
+        switch (this.typeComboBox.SelectedIndex)
+        {
+          case 0:
+            this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, (Canton)this.cantonComboBox.SelectedIndex);
+            break;
+          case 1:
+            this.certificate = new AuthorityCertificate(Resources.Culture.ToLanguage(), passphrase, fullName);
+            break;
+          case 2:
+            this.certificate = new AdminCertificate(Resources.Culture.ToLanguage(), passphrase, fullName);
+            break;
+          default:
+            throw new InvalidOperationException("Bad type selection.");
+        }
+
+        this.certificate.CreateSelfSignature();
+
+        this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
+        this.signatureRequestInfo = new SignatureRequestInfo(this.emailNotificationCheckBox.Checked ? this.emailAddressTextBox.Text : string.Empty);
+        this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, this.certificate, Status.CaCertificate);
+        this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, this.certificate, Status.ServerCertificate);
+
+        this.run = false;
+        OnUpdateWizard();
+        this.printButton.Enabled = true;
       }
+      else
+      {
+        this.run = false;
+        OnUpdateWizard();
 
-      this.certificate.CreateSelfSignature();
-
-      this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
-      this.signatureRequestInfo = new SignatureRequestInfo(this.emailNotificationCheckBox.Checked ? this.emailAddressTextBox.Text : string.Empty);
-      this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, this.certificate, Status.CaCertificate);
-      this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, this.certificate, Status.ServerCertificate);
-
-      this.run = false;
-      OnUpdateWizard();
-      this.printButton.Enabled = true;
+        this.typeComboBox.Enabled = true;
+        this.firstNameTextBox.Enabled = true;
+        this.familyNameTextBox.Enabled = true;
+        this.functionNameTextBox.Enabled = true;
+        this.emailAddressTextBox.Enabled = true;
+        this.cantonComboBox.Enabled = true;
+        this.createButton.Enabled = true;
+      }
     }
 
     private void CheckValid()

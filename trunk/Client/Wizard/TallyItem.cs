@@ -71,7 +71,7 @@ namespace Pirate.PiVote.Client
       this.run = true;
       OnUpdateWizard();
 
-      Status.VotingClient.ActivateVoter((VoterCertificate)Status.Certificate);
+      Status.VotingClient.ActivateVoter();
 
       if (VotingDescriptor.OfflinePath.IsNullOrEmpty())
       {

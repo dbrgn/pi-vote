@@ -70,29 +70,38 @@ namespace Pirate.PiVote.Client
       this.run = true;
       OnUpdateWizard();
 
-      Status.VotingClient.ActivateVoter((VoterCertificate)Status.Certificate);
-      Status.VotingClient.Vote(VotingMaterial, Vota, VoteCompleted);
-
-      while (this.run)
+      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.VoteUnlockAction))
       {
+        Status.VotingClient.ActivateVoter();
+        Status.VotingClient.Vote(VotingMaterial, (VoterCertificate)Status.Certificate, Vota, VoteCompleted);
+
+        while (this.run)
+        {
+          Status.UpdateProgress();
+          Thread.Sleep(10);
+        }
+
         Status.UpdateProgress();
-        Thread.Sleep(10);
-      }
 
-      Status.UpdateProgress();
+        if (this.exception == null)
+        {
+          this.voteReceipt.Save(
+            Path.Combine(Status.DataPath,
+            string.Format("{0}@{1}.pi-receipt",
+            Status.Certificate.Id.ToString(), VotingDescriptor.Id.ToString())));
 
-      if (this.exception == null)
-      {
-        this.voteReceipt.Save(
-          Path.Combine(Status.DataPath,
-          string.Format("{0}@{1}.pi-receipt",
-          Status.Certificate.Id.ToString(), VotingDescriptor.Id.ToString())));
+          Status.SetMessage(Resources.VoteCast, MessageType.Success);
+        }
+        else
+        {
+          Status.SetMessage(exception.Message, MessageType.Error);
+        }
 
-        Status.SetMessage(Resources.VoteCast, MessageType.Success);
+        Status.Certificate.Lock();
       }
       else
       {
-        Status.SetMessage(exception.Message, MessageType.Error);
+        Status.SetMessage(Resources.VoteCanceled, MessageType.Info);
       }
 
       this.done = true;

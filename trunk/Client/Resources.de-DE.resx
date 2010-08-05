@@ -697,4 +697,58 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="CreateCertificateEmailNotification" xml:space="preserve">
     <value>Ich möchte via Email benachrichtigt werden, wenn meine Zertifizierungsanfrage beantwortet wurde. Dafür muss die Email-Adresse auf dem PiVote server gespeichert werden.</value>
   </data>
+  <data name="AuthorityCheckSharesUnlockAction" xml:space="preserve">
+    <value>Schlüsselteile entschlüsseln und Antwort signieren.</value>
+  </data>
+  <data name="AuthorityCreateSharesCanceled" xml:space="preserve">
+    <value>Die Erstellung von Schlüsselteilen wurde abgebrochen.</value>
+  </data>
+  <data name="AuthorityCreateSharesUnlockAction" xml:space="preserve">
+    <value>Neu erstellte Schlüsselteile signieren</value>
+  </data>
+  <data name="AuthorityDecipherCanceled" xml:space="preserve">
+    <value>Die Partielle Entschlüsselung wurde abgebrochen.</value>
+  </data>
+  <data name="AuthorityDecipherUnlockAction" xml:space="preserve">
+    <value>Partielle Entschlüsselungen signieren.</value>
+  </data>
+  <data name="CreateVotingCanceled" xml:space="preserve">
+    <value>Die Erstellung einer Abstimmung wurde abgebrochen.</value>
+  </data>
+  <data name="CreateVotingUnlockAction" xml:space="preserve">
+    <value>Abstimmungsparameter signieren</value>
+  </data>
+  <data name="EncryptPrivateKeyCertificateId" xml:space="preserve">
+    <value>Zertifikatsid:</value>
+  </data>
+  <data name="EncryptPrivateKeyCertificateType" xml:space="preserve">
+    <value>Zertifikatstyp:</value>
+  </data>
+  <data name="EncryptPrivateKeyChoose" xml:space="preserve">
+    <value>Privaten Schlüssel verschlüsseln</value>
+  </data>
+  <data name="EncryptPrivateKeyEncrypted" xml:space="preserve">
+    <value>Die privater Schlüssel ist verschlüsselt. Gib deine Passphrase ein, um in zu entschlüsseln.</value>
+  </data>
+  <data name="EncryptPrivateKeyInfo" xml:space="preserve">
+    <value>Du kannst deinen privaten Schlüssel verschlüsseln, um ihn gegen unbefugte Benutzung zu schützen. Wenn du das tust, musst du deine Passphrase jeweils eingeben, wenn der Schlüssel benutz wird.</value>
+  </data>
+  <data name="EncryptPrivateKeyPassphrase" xml:space="preserve">
+    <value>Passphrase:</value>
+  </data>
+  <data name="EncryptPrivateKeyRepeat" xml:space="preserve">
+    <value>Passphrase wiederholen:</value>
+  </data>
+  <data name="EncryptPrivateKeyTitle" xml:space="preserve">
+    <value>Pi-Vote Schutz des privaten Schlüssels</value>
+  </data>
+  <data name="EncryptPrivateKeyUnlockAction" xml:space="preserve">
+    <value>Vorgang:</value>
+  </data>
+  <data name="VoteCanceled" xml:space="preserve">
+    <value>Die Stimmabgabe wurde abgebrochen.</value>
+  </data>
+  <data name="VoteUnlockAction" xml:space="preserve">
+    <value>Stimme signieren</value>
+  </data>
 </root>

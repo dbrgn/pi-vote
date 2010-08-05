@@ -26,18 +26,18 @@ namespace Pirate.PiVote.Crypto
     public void EntityTest()
     {
       DateTime validUntil = DateTime.Now.AddDays(1);
-      var root = new CACertificate("Root");
+      var root = new CACertificate(null, "Root");
       root.CreateSelfSignature();
       var rootCrl = new RevocationList(root.Id, DateTime.Now, validUntil, new List<Guid>());
       var sigRootCrl = new Signed<RevocationList>(rootCrl, root);
 
-      var intermediate = new CACertificate("Intermediate");
+      var intermediate = new CACertificate(null, "Intermediate");
       intermediate.CreateSelfSignature();
       intermediate.AddSignature(root, validUntil);
       var intCrl = new RevocationList(intermediate.Id, DateTime.Now, validUntil, new List<Guid>());
       var sigIntCrl = new Signed<RevocationList>(intCrl, intermediate);
 
-      var admin = new AdminCertificate(Language.English, "Admin");
+      var admin = new AdminCertificate(Language.English, null, "Admin");
       admin.CreateSelfSignature();
       admin.AddSignature(intermediate, DateTime.Now.AddDays(1));
 
@@ -72,19 +72,19 @@ namespace Pirate.PiVote.Crypto
 
       VotingServerEntity vs = new VotingServerEntity(null, signedParameters, serverCertStorage, serverCert);
 
-      var a1c = new AuthorityCertificate(Language.English, "Authority 1");
+      var a1c = new AuthorityCertificate(Language.English, "Authority 1", null);
       a1c.CreateSelfSignature();
       a1c.AddSignature(intermediate, validUntil);
-      var a2c = new AuthorityCertificate(Language.English, "Authority 2");
+      var a2c = new AuthorityCertificate(Language.English, "Authority 2", null);
       a2c.CreateSelfSignature();
       a2c.AddSignature(intermediate, validUntil);
-      var a3c = new AuthorityCertificate(Language.English, "Authority 3");
+      var a3c = new AuthorityCertificate(Language.English, "Authority 3", null);
       a3c.CreateSelfSignature();
       a3c.AddSignature(intermediate, validUntil);
-      var a4c = new AuthorityCertificate(Language.English, "Authority 4");
+      var a4c = new AuthorityCertificate(Language.English, "Authority 4", null);
       a4c.CreateSelfSignature();
       a4c.AddSignature(intermediate, validUntil);
-      var a5c = new AuthorityCertificate(Language.English, "Authority 5");
+      var a5c = new AuthorityCertificate(Language.English, "Authority 5", null);
       a5c.CreateSelfSignature();
       a5c.AddSignature(intermediate, validUntil);
 
@@ -130,17 +130,17 @@ namespace Pirate.PiVote.Crypto
       vs.DepositShareResponse(r4);
       vs.DepositShareResponse(r5);
 
-      var v1c = new VoterCertificate(Language.English, Canton.None);
+      var v1c = new VoterCertificate(Language.English, null, Canton.None);
       v1c.CreateSelfSignature();
       v1c.AddSignature(intermediate, validUntil);
 
       var cs = new CertificateStorage();
       cs.AddRoot(root);
-      var v1 = new VoterEntity(cs, v1c);
+      var v1 = new VoterEntity(cs);
 
       IEnumerable<int> questionVota = new int[] { 0, 1 };
 
-      var vote1 = v1.Vote(vs.GetVotingMaterial(), new IEnumerable<int>[] { questionVota }, null);
+      var vote1 = v1.Vote(vs.GetVotingMaterial(), v1c, new IEnumerable<int>[] { questionVota }, null);
 
       vs.Vote(vote1);
 
@@ -148,28 +148,28 @@ namespace Pirate.PiVote.Crypto
 
       for (int i = 1000; i < 1000 + voters; i++)
       {
-        var vc = new VoterCertificate(Language.English, Canton.None);
+        var vc = new VoterCertificate(Language.English, null, Canton.None);
         vc.CreateSelfSignature();
         vc.AddSignature(intermediate, validUntil);
 
-        var vx = new VoterEntity(cs, vc);
+        var vx = new VoterEntity(cs);
 
         IEnumerable<int> questionVota2 = new int[] { 0, 1 };
-        var votex = vx.Vote(vs.GetVotingMaterial(), new IEnumerable<int>[] { questionVota2 }, null);
+        var votex = vx.Vote(vs.GetVotingMaterial(), vc, new IEnumerable<int>[] { questionVota2 }, null);
 
         vs.Vote(votex);
       }
 
       for (int i = 2000; i < 2000 + voters; i++)
       {
-        var vc = new VoterCertificate(Language.English, Canton.None);
+        var vc = new VoterCertificate(Language.English, null, Canton.None);
         vc.CreateSelfSignature();
         vc.AddSignature(intermediate, validUntil);
 
-        var vx = new VoterEntity(cs, vc);
+        var vx = new VoterEntity(cs);
 
         IEnumerable<int> questionVota3 = new int[] { 1, 0 };
-        var votex = vx.Vote(vs.GetVotingMaterial(), new IEnumerable<int>[] { questionVota3 }, null);
+        var votex = vx.Vote(vs.GetVotingMaterial(), vc, new IEnumerable<int>[] { questionVota3 }, null);
 
         vs.Vote(votex);
       }
