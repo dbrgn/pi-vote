@@ -1679,7 +1679,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advanced Options.
+        ///   Looks up a localized string similar to &amp;Advanced Options.
         /// </summary>
         internal static string StartAdvancedOptions {
             get {
@@ -1751,11 +1751,29 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Tally only.
+        /// </summary>
+        internal static string StartTallyOnly {
+            get {
+                return ResourceManager.GetString("StartTallyOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pirate Party Switzerland eVoting.
         /// </summary>
         internal static string StartTitle {
             get {
                 return ResourceManager.GetString("StartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Voting.
+        /// </summary>
+        internal static string StartVoting {
+            get {
+                return ResourceManager.GetString("StartVoting", resourceCulture);
             }
         }
         

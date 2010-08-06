@@ -608,7 +608,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
     <value>DNS-Abfrage der Serveraddresse fehlgeschlagen</value>
   </data>
   <data name="StartAdvancedOptions" xml:space="preserve">
-    <value>Erweiterte Optionen</value>
+    <value>&amp;Erweiterte Optionen</value>
   </data>
   <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
     <value>Enthaltung wird automatisch hinzugefügt.</value>
@@ -762,5 +762,11 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="AuthorityVotePreviewVerify" xml:space="preserve">
     <value>&amp;Prüfen</value>
+  </data>
+  <data name="StartTallyOnly" xml:space="preserve">
+    <value>Nur &amp;Auszählen</value>
+  </data>
+  <data name="StartVoting" xml:space="preserve">
+    <value>&amp;Abstimmen</value>
   </data>
 </root>

@@ -34,33 +34,40 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-        if (this.votingList.SelectedIndices.Count > 0)
-        {
-          var votingDescriptor = (VotingDescriptor)this.votingList.SelectedItems[0].Tag;
+      if (this.votingList.SelectedIndices.Count > 0)
+      {
+        var votingDescriptor = (VotingDescriptor)this.votingList.SelectedItems[0].Tag;
 
-          switch (votingDescriptor.Status)
-          {
-            case VotingStatus.Voting:
+        switch (votingDescriptor.Status)
+        {
+          case VotingStatus.Voting:
+            if (Status.Certificate != null)
+            {
               ViewVotingAuthoritiesItem viewVotingAuthoritiesItem = new ViewVotingAuthoritiesItem();
               viewVotingAuthoritiesItem.VotingDescriptor = votingDescriptor;
               return viewVotingAuthoritiesItem;
-            case VotingStatus.Finished:
-            case VotingStatus.Offline:
-              TallyItem tallyItem = new TallyItem();
-              tallyItem.VotingDescriptor = votingDescriptor;
-              tallyItem.VoteReceipts = 
-                this.voteReceipts.ContainsKey(votingDescriptor.Id) ? 
-                this.voteReceipts[votingDescriptor.Id] : 
-                new List<Signed<VoteReceipt>>();
-              return tallyItem;
-            default:
+            }
+            else
+            {
               return null;
-          }
+            }
+          case VotingStatus.Finished:
+          case VotingStatus.Offline:
+            TallyItem tallyItem = new TallyItem();
+            tallyItem.VotingDescriptor = votingDescriptor;
+            tallyItem.VoteReceipts =
+              this.voteReceipts.ContainsKey(votingDescriptor.Id) ?
+              this.voteReceipts[votingDescriptor.Id] :
+              new List<Signed<VoteReceipt>>();
+            return tallyItem;
+          default:
+            return null;
         }
-        else
-        {
-          return null;
-        }
+      }
+      else
+      {
+        return null;
+      }
     }
 
     public override WizardItem Previous()
@@ -89,6 +96,9 @@ namespace Pirate.PiVote.Client
           switch (votingDescriptor.Status)
           {
             case VotingStatus.Voting:
+              return Status.Certificate != null &&
+                (votingDescriptor.Canton == Canton.None ||
+                votingDescriptor.Canton == ((VoterCertificate)Status.Certificate).Canton);
             case VotingStatus.Finished:
             case VotingStatus.Offline:
               return true;

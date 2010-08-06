@@ -49,13 +49,19 @@ namespace Pirate.PiVote.Client
       this.titlelLabel = new System.Windows.Forms.Label();
       this.alphaWarningLabel = new System.Windows.Forms.Label();
       this.alphaBugLink = new System.Windows.Forms.LinkLabel();
-      this.advancedOptionsCheckBox = new System.Windows.Forms.CheckBox();
+      this.languageGroupBox = new System.Windows.Forms.GroupBox();
+      this.optionGroupBox = new System.Windows.Forms.GroupBox();
+      this.tallyOnlyRadio = new System.Windows.Forms.RadioButton();
+      this.votingRadio = new System.Windows.Forms.RadioButton();
+      this.advancedOptionsRadio = new System.Windows.Forms.RadioButton();
+      this.languageGroupBox.SuspendLayout();
+      this.optionGroupBox.SuspendLayout();
       this.SuspendLayout();
       // 
       // frenchRadio
       // 
       this.frenchRadio.AutoSize = true;
-      this.frenchRadio.Location = new System.Drawing.Point(40, 372);
+      this.frenchRadio.Location = new System.Drawing.Point(6, 93);
       this.frenchRadio.Name = "frenchRadio";
       this.frenchRadio.Size = new System.Drawing.Size(67, 18);
       this.frenchRadio.TabIndex = 2;
@@ -67,7 +73,7 @@ namespace Pirate.PiVote.Client
       // germanRadio
       // 
       this.germanRadio.AutoSize = true;
-      this.germanRadio.Location = new System.Drawing.Point(40, 334);
+      this.germanRadio.Location = new System.Drawing.Point(6, 55);
       this.germanRadio.Name = "germanRadio";
       this.germanRadio.Size = new System.Drawing.Size(65, 18);
       this.germanRadio.TabIndex = 1;
@@ -79,7 +85,7 @@ namespace Pirate.PiVote.Client
       // englishRadio
       // 
       this.englishRadio.AutoSize = true;
-      this.englishRadio.Location = new System.Drawing.Point(40, 298);
+      this.englishRadio.Location = new System.Drawing.Point(6, 19);
       this.englishRadio.Name = "englishRadio";
       this.englishRadio.Size = new System.Drawing.Size(59, 18);
       this.englishRadio.TabIndex = 0;
@@ -133,35 +139,80 @@ namespace Pirate.PiVote.Client
       this.alphaBugLink.Text = "https://dev.piratenpartei.ch/projects/pi-vote";
       this.alphaBugLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.alphaBugLink_LinkClicked);
       // 
-      // advancedOptionsCheckBox
+      // languageGroupBox
       // 
-      this.advancedOptionsCheckBox.AutoSize = true;
-      this.advancedOptionsCheckBox.Location = new System.Drawing.Point(259, 299);
-      this.advancedOptionsCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-      this.advancedOptionsCheckBox.Name = "advancedOptionsCheckBox";
-      this.advancedOptionsCheckBox.Size = new System.Drawing.Size(116, 18);
-      this.advancedOptionsCheckBox.TabIndex = 8;
-      this.advancedOptionsCheckBox.Text = "Advanced Options";
-      this.advancedOptionsCheckBox.UseVisualStyleBackColor = true;
+      this.languageGroupBox.Controls.Add(this.frenchRadio);
+      this.languageGroupBox.Controls.Add(this.englishRadio);
+      this.languageGroupBox.Controls.Add(this.germanRadio);
+      this.languageGroupBox.Location = new System.Drawing.Point(33, 268);
+      this.languageGroupBox.Name = "languageGroupBox";
+      this.languageGroupBox.Size = new System.Drawing.Size(241, 125);
+      this.languageGroupBox.TabIndex = 9;
+      this.languageGroupBox.TabStop = false;
+      // 
+      // optionGroupBox
+      // 
+      this.optionGroupBox.Controls.Add(this.tallyOnlyRadio);
+      this.optionGroupBox.Controls.Add(this.votingRadio);
+      this.optionGroupBox.Controls.Add(this.advancedOptionsRadio);
+      this.optionGroupBox.Location = new System.Drawing.Point(280, 268);
+      this.optionGroupBox.Name = "optionGroupBox";
+      this.optionGroupBox.Size = new System.Drawing.Size(241, 125);
+      this.optionGroupBox.TabIndex = 10;
+      this.optionGroupBox.TabStop = false;
+      // 
+      // tallyOnlyRadio
+      // 
+      this.tallyOnlyRadio.AutoSize = true;
+      this.tallyOnlyRadio.Location = new System.Drawing.Point(6, 93);
+      this.tallyOnlyRadio.Name = "tallyOnlyRadio";
+      this.tallyOnlyRadio.Size = new System.Drawing.Size(69, 18);
+      this.tallyOnlyRadio.TabIndex = 2;
+      this.tallyOnlyRadio.TabStop = true;
+      this.tallyOnlyRadio.Text = "Tally only";
+      this.tallyOnlyRadio.UseVisualStyleBackColor = true;
+      // 
+      // votingRadio
+      // 
+      this.votingRadio.AutoSize = true;
+      this.votingRadio.Location = new System.Drawing.Point(6, 19);
+      this.votingRadio.Name = "votingRadio";
+      this.votingRadio.Size = new System.Drawing.Size(55, 18);
+      this.votingRadio.TabIndex = 0;
+      this.votingRadio.TabStop = true;
+      this.votingRadio.Text = "Voting";
+      this.votingRadio.UseVisualStyleBackColor = true;
+      // 
+      // advancedOptionsRadio
+      // 
+      this.advancedOptionsRadio.AutoSize = true;
+      this.advancedOptionsRadio.Location = new System.Drawing.Point(6, 55);
+      this.advancedOptionsRadio.Name = "advancedOptionsRadio";
+      this.advancedOptionsRadio.Size = new System.Drawing.Size(115, 18);
+      this.advancedOptionsRadio.TabIndex = 1;
+      this.advancedOptionsRadio.TabStop = true;
+      this.advancedOptionsRadio.Text = "Advanced Options";
+      this.advancedOptionsRadio.UseVisualStyleBackColor = true;
       // 
       // StartItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.Controls.Add(this.advancedOptionsCheckBox);
+      this.Controls.Add(this.optionGroupBox);
+      this.Controls.Add(this.languageGroupBox);
       this.Controls.Add(this.alphaBugLink);
       this.Controls.Add(this.alphaWarningLabel);
       this.Controls.Add(this.titlelLabel);
       this.Controls.Add(this.alphaTitleLabel);
-      this.Controls.Add(this.frenchRadio);
-      this.Controls.Add(this.germanRadio);
-      this.Controls.Add(this.englishRadio);
-      this.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.Margin = new System.Windows.Forms.Padding(3);
       this.Name = "StartItem";
       this.Size = new System.Drawing.Size(700, 487);
       this.Load += new System.EventHandler(this.StartItem_Load);
+      this.languageGroupBox.ResumeLayout(false);
+      this.languageGroupBox.PerformLayout();
+      this.optionGroupBox.ResumeLayout(false);
+      this.optionGroupBox.PerformLayout();
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
@@ -174,6 +225,10 @@ namespace Pirate.PiVote.Client
     private Label titlelLabel;
     private Label alphaWarningLabel;
     private LinkLabel alphaBugLink;
-    private CheckBox advancedOptionsCheckBox;
+    private GroupBox languageGroupBox;
+    private GroupBox optionGroupBox;
+    private RadioButton tallyOnlyRadio;
+    private RadioButton votingRadio;
+    private RadioButton advancedOptionsRadio;
   }
 }

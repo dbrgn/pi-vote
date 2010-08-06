@@ -41,9 +41,13 @@ namespace Pirate.PiVote.Client
 
       if (certificateFiles.Count() == 0)
       {
-        if (this.advancedOptionsCheckBox.Checked)
+        if (this.advancedOptionsRadio.Checked)
         {
           return new ChooseCertificateItem();
+        }
+        else if (this.tallyOnlyRadio.Checked)
+        {
+          return new ListVotingsItem();
         }
         else
         {
@@ -52,9 +56,13 @@ namespace Pirate.PiVote.Client
       }
       else if (certificateFiles.Count() == 1)
       {
-        if (this.advancedOptionsCheckBox.Checked)
+        if (this.advancedOptionsRadio.Checked)
         {
           return new ChooseCertificateItem();
+        }
+        else if (this.tallyOnlyRadio.Checked)
+        {
+          return new ListVotingsItem();
         }
         else
         {
@@ -73,7 +81,14 @@ namespace Pirate.PiVote.Client
       }
       else
       {
-        return new ChooseCertificateItem();
+        if (this.tallyOnlyRadio.Checked)
+        {
+          return new ListVotingsItem();
+        }
+        else
+        {
+          return new ChooseCertificateItem();
+        }
       }
     }
 
@@ -123,8 +138,12 @@ namespace Pirate.PiVote.Client
 
       if (certificateFiles.Count() > 1)
       {
-        this.advancedOptionsCheckBox.Checked = true;
-        this.advancedOptionsCheckBox.Enabled = false;
+        this.votingRadio.Enabled = false;
+        this.advancedOptionsRadio.Checked = true;
+      }
+      else
+      {
+        this.votingRadio.Checked = true;
       }
       
       if (!this.englishRadio.Checked &&
@@ -230,7 +249,9 @@ namespace Pirate.PiVote.Client
       this.titlelLabel.Text = Resources.StartTitle;
       this.alphaTitleLabel.Text = Resources.StartAlphaTitle + " " + GetType().Assembly.GetName().Version.ToString();
       this.alphaWarningLabel.Text = Resources.StartAlphaWarning;
-      this.advancedOptionsCheckBox.Text = Resources.StartAdvancedOptions;
+      this.votingRadio.Text = Resources.StartVoting;
+      this.advancedOptionsRadio.Text = Resources.StartAdvancedOptions;
+      this.tallyOnlyRadio.Text = Resources.StartTallyOnly;
 
       if (this.canNext)
       {

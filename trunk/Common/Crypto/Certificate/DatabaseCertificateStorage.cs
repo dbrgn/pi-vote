@@ -239,8 +239,8 @@ namespace Pirate.PiVote.Crypto
 
       MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
-      command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
-      command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
+      command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom.Date);
+      command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil.Date);
       MySqlDataReader reader = command.ExecuteReader();
 
       if (!reader.Read())
@@ -249,8 +249,8 @@ namespace Pirate.PiVote.Crypto
 
         MySqlCommand insertCommand = new MySqlCommand("INSERT INTO revocationlist (IssuerId, ValidFrom, ValidUntil, Value) VALUES (@IssuerId, @ValidFrom, @ValidUntil, @Value)", DbConnection);
         insertCommand.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
-        insertCommand.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
-        insertCommand.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
+        insertCommand.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom.Date);
+        insertCommand.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil.Date);
         insertCommand.Parameters.AddWithValue("@Value", signedRevocationList.ToBinary());
         insertCommand.ExecuteNonQuery();
       }
@@ -300,7 +300,7 @@ namespace Pirate.PiVote.Crypto
     {
       MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom <= @FromDate AND ValidUntil >= @UntilDate", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", issuerId.ToByteArray());
-      command.Parameters.AddWithValue("@FromDate", date.Date.AddDays(1));
+      command.Parameters.AddWithValue("@FromDate", date.Date);
       command.Parameters.AddWithValue("@UntilDate", date.Date);
 
       MySqlDataReader reader = command.ExecuteReader();

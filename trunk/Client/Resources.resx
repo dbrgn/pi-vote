@@ -615,7 +615,7 @@ Finally you need to upload your request for certificate signing to the server to
     <value>DNS lookup of server IP address failed</value>
   </data>
   <data name="StartAdvancedOptions" xml:space="preserve">
-    <value>Advanced Options</value>
+    <value>&amp;Advanced Options</value>
   </data>
   <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
     <value>Abstention will be added automatically.</value>
@@ -778,5 +778,11 @@ Finally you need to upload your request for certificate signing to the server to
   </data>
   <data name="AuthorityVotePreviewVerify" xml:space="preserve">
     <value>&amp;Verify</value>
+  </data>
+  <data name="StartTallyOnly" xml:space="preserve">
+    <value>&amp;Tally only</value>
+  </data>
+  <data name="StartVoting" xml:space="preserve">
+    <value>&amp;Voting</value>
   </data>
 </root>
