@@ -776,4 +776,7 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="SigningRequestDocumentRevokedForgotten" xml:space="preserve">
     <value>□ Revoked, passphrase forgotten</value>
   </data>
+  <data name="AuthorityVotePreviewVerify" xml:space="preserve">
+    <value>&amp;Verify</value>
+  </data>
 </root>

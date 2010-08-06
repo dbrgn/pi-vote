@@ -887,9 +887,16 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     public void Lock()
     {
-      this.privateKeyDecrypted.Clear();
-      this.privateKeyDecrypted = null;
-      PrivateKeyStatus = PrivateKeyStatus.Encrypted;
+      if (this.privateKeyDecrypted != null)
+      {
+        this.privateKeyDecrypted.Clear();
+        this.privateKeyDecrypted = null;
+      }
+
+      if (PrivateKeyStatus == PrivateKeyStatus.Decrypted)
+      {
+        PrivateKeyStatus = PrivateKeyStatus.Encrypted;
+      }
     }
   }
 }

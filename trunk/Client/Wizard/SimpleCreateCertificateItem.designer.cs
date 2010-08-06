@@ -130,7 +130,7 @@ namespace Pirate.PiVote.Client
       this.createButton.Margin = new System.Windows.Forms.Padding(2);
       this.createButton.Name = "createButton";
       this.createButton.Size = new System.Drawing.Size(131, 25);
-      this.createButton.TabIndex = 6;
+      this.createButton.TabIndex = 7;
       this.createButton.Text = "&Create";
       this.createButton.UseVisualStyleBackColor = true;
       this.createButton.Click += new System.EventHandler(this.createButton_Click);
@@ -211,7 +211,7 @@ namespace Pirate.PiVote.Client
       this.cantonComboBox.Margin = new System.Windows.Forms.Padding(2);
       this.cantonComboBox.Name = "cantonComboBox";
       this.cantonComboBox.Size = new System.Drawing.Size(402, 22);
-      this.cantonComboBox.TabIndex = 5;
+      this.cantonComboBox.TabIndex = 6;
       this.cantonComboBox.SelectedIndexChanged += new System.EventHandler(this.cantonComboBox_SelectedIndexChanged);
       // 
       // cantonLabel
@@ -229,7 +229,7 @@ namespace Pirate.PiVote.Client
       this.emailNotificationCheckBox.Location = new System.Drawing.Point(129, 262);
       this.emailNotificationCheckBox.Name = "emailNotificationCheckBox";
       this.emailNotificationCheckBox.Size = new System.Drawing.Size(402, 43);
-      this.emailNotificationCheckBox.TabIndex = 4;
+      this.emailNotificationCheckBox.TabIndex = 5;
       this.emailNotificationCheckBox.Text = "Notify me by email, when an answer to my certificate signing request is available" +
           ". This requires your email address to be stored on the PiVote server.";
       this.emailNotificationCheckBox.UseVisualStyleBackColor = true;

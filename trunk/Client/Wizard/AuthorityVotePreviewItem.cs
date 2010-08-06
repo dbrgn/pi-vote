@@ -35,8 +35,6 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      Execute();
-
       if (this.signedBadShareProof != null)
       {
         var badShareProofItem = new BadShareProofItem();
@@ -46,7 +44,7 @@ namespace Pirate.PiVote.Client
       }
       else
       {
-        return this;
+        return new AuthorityListVotingsItem();
       }
     }
 
@@ -94,14 +92,14 @@ namespace Pirate.PiVote.Client
         {
           Status.SetMessage(Resources.AuthorityDecipherCanceled, MessageType.Info);
         }
-
-        OnUpdateWizard();
       }
       else
       {
         Status.SetMessage(Resources.CreateVotingAuthFileMissing, MessageType.Error);
-        OnUpdateWizard();
       }
+
+      this.run = false;
+      OnUpdateWizard();
     }
 
     private void CheckSharesCompleteCallBack(VotingDescriptor votingDescriptor, bool accept, Signed<BadShareProof> signedBadShareProof, Exception exception)
@@ -114,12 +112,17 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Previous()
     {
-      return null;
+      return new AuthorityListVotingsItem();
     }
 
     public override WizardItem Cancel()
     {
       return null;
+    }
+
+    public override bool CanPrevious
+    {
+      get { return !this.run; }
     }
 
     public override bool CanCancel
@@ -129,7 +132,7 @@ namespace Pirate.PiVote.Client
 
     public override bool CanNext
     {
-      get { return !this.run; }
+      get { return !this.run && this.signedBadShareProof != null; }
     }
 
     public override bool CancelIsDone
@@ -142,6 +145,20 @@ namespace Pirate.PiVote.Client
       this.voteControl.Voting = VotingDescriptor;
       this.voteControl.Display(false);
       OnUpdateWizard();
+    }
+
+    private void verifyButton_Click(object sender, EventArgs e)
+    {
+      this.verifyButton.Enabled = false;
+
+      Execute();
+
+      this.verifyButton.Enabled = this.signedBadShareProof == null;
+    }
+
+    public override void UpdateLanguage()
+    {
+      this.verifyButton.Text = Resources.AuthorityVotePreviewVerify;
     }
   }
 }

@@ -728,7 +728,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
     <value>Privaten Schlüssel verschlüsseln</value>
   </data>
   <data name="EncryptPrivateKeyEncrypted" xml:space="preserve">
-    <value>Die privater Schlüssel ist verschlüsselt. Gib deine Passphrase ein, um in zu entschlüsseln.</value>
+    <value>Dein privater Schlüssel ist verschlüsselt. Gib deine Passphrase ein, um ihn zu entschlüsseln.</value>
   </data>
   <data name="EncryptPrivateKeyInfo" xml:space="preserve">
     <value>Du kannst deinen privaten Schlüssel verschlüsseln, um ihn gegen unbefugte Benutzung zu schützen. Wenn du das tust, musst du deine Passphrase jeweils eingeben, wenn der Schlüssel benutz wird.</value>
@@ -759,5 +759,8 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="SigningRequestDocumentRevokedForgotten" xml:space="preserve">
     <value>□ Widerrufen, Passphrase vergessen</value>
+  </data>
+  <data name="AuthorityVotePreviewVerify" xml:space="preserve">
+    <value>&amp;Prüfen</value>
   </data>
 </root>

@@ -250,6 +250,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Verify.
+        /// </summary>
+        internal static string AuthorityVotePreviewVerify {
+            get {
+                return ResourceManager.GetString("AuthorityVotePreviewVerify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Controlling Authorities.
         /// </summary>
         internal static string BadShareProofControlling {

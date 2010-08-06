@@ -74,14 +74,7 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
-      this.typeComboBox.Enabled = true;
-      this.firstNameTextBox.Enabled = false;
-      this.familyNameTextBox.Enabled = false;
-      this.functionNameTextBox.Enabled = false;
-      this.emailAddressTextBox.Enabled = false;
-      this.cantonComboBox.Enabled = false;
-
-      CheckValid();
+      SetEnable(true);
 
       this.printButton.Enabled = false;
       this.uploadButton.Enabled = false;
@@ -120,19 +113,32 @@ namespace Pirate.PiVote.Client
       }
     }
 
+    private void SetEnable(bool enable)
+    {
+      this.typeComboBox.Enabled = enable;
+      this.firstNameTextBox.Enabled = enable && this.typeComboBox.SelectedIndex >= 0;
+      this.familyNameTextBox.Enabled = enable && this.typeComboBox.SelectedIndex >= 0;
+      this.functionNameTextBox.Enabled = enable && this.typeComboBox.SelectedIndex >= 1;
+      this.emailAddressTextBox.Enabled = enable && this.typeComboBox.SelectedIndex >= 0;
+      this.emailNotificationCheckBox.Enabled = this.typeComboBox.SelectedIndex == 0;
+      this.emailNotificationCheckBox.Checked |= this.typeComboBox.SelectedIndex >= 1;
+      this.cantonComboBox.Enabled = enable && this.typeComboBox.SelectedIndex == 0;
+
+      this.createButton.Enabled =
+        enable &&
+        this.typeComboBox.SelectedIndex >= 0 &&
+        !this.firstNameTextBox.Text.IsNullOrEmpty() &&
+        !this.familyNameTextBox.Text.IsNullOrEmpty() &&
+        (!this.functionNameTextBox.Text.IsNullOrEmpty() || this.typeComboBox.SelectedIndex == 0) &&
+        Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text) &&
+        (this.typeComboBox.SelectedIndex != 0 || this.cantonComboBox.SelectedIndex >= 0);
+    }
+
     private void createButton_Click(object sender, EventArgs e)
     {
       this.run = true;
       OnUpdateWizard();
-
-      this.typeComboBox.Enabled = false;
-      this.firstNameTextBox.Enabled = false;
-      this.familyNameTextBox.Enabled = false;
-      this.functionNameTextBox.Enabled = false;
-      this.emailAddressTextBox.Enabled = false;
-      this.emailNotificationCheckBox.Enabled = false;
-      this.cantonComboBox.Enabled = false;
-      this.createButton.Enabled = false;
+      SetEnable(false);
 
       string fullName = string.Format("{0} {1}, {2}",
         this.firstNameTextBox.Text,
@@ -175,42 +181,23 @@ namespace Pirate.PiVote.Client
       {
         this.run = false;
         OnUpdateWizard();
-
-        this.typeComboBox.Enabled = true;
-        this.firstNameTextBox.Enabled = true;
-        this.familyNameTextBox.Enabled = true;
-        this.functionNameTextBox.Enabled = true;
-        this.emailAddressTextBox.Enabled = true;
-        this.emailNotificationCheckBox.Enabled = true;
-        this.cantonComboBox.Enabled = true;
-        this.createButton.Enabled = true;
+        SetEnable(true);
       }
-    }
-
-    private void CheckValid()
-    {
-      this.createButton.Enabled =
-        this.typeComboBox.SelectedIndex >= 0 &&
-        !this.firstNameTextBox.Text.IsNullOrEmpty() &&
-        !this.familyNameTextBox.Text.IsNullOrEmpty() &&
-        (!this.functionNameTextBox.Text.IsNullOrEmpty() || this.typeComboBox.SelectedIndex == 0) &&
-        Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text) &&
-        (this.typeComboBox.SelectedIndex != 0 || this.cantonComboBox.SelectedIndex >= 0);
     }
 
     private void firstNameTextBox_TextChanged(object sender, EventArgs e)
     {
-      CheckValid();
+      SetEnable(true);
     }
 
     private void familyNameTextBox_TextChanged(object sender, EventArgs e)
     {
-      CheckValid();
+      SetEnable(true);
     }
 
     private void emailAddressTextBox_TextChanged(object sender, EventArgs e)
     {
-      CheckValid();
+      SetEnable(true);
     }
 
     private void printButton_Click(object sender, EventArgs e)
@@ -279,24 +266,17 @@ namespace Pirate.PiVote.Client
 
     private void typeComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-      this.firstNameTextBox.Enabled = this.typeComboBox.SelectedIndex >= 0;
-      this.familyNameTextBox.Enabled = this.typeComboBox.SelectedIndex >= 0;
-      this.emailAddressTextBox.Enabled = this.typeComboBox.SelectedIndex >= 0;
-      this.functionNameTextBox.Enabled = 
-        this.typeComboBox.SelectedIndex == 1 || 
-        this.typeComboBox.SelectedIndex == 2;
-      this.cantonComboBox.Enabled = this.typeComboBox.SelectedIndex == 0;
-      CheckValid();
+      SetEnable(true);
     }
 
     private void functionNameTextBox_TextChanged(object sender, EventArgs e)
     {
-      CheckValid();
+      SetEnable(true);
     }
 
     private void cantonComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-      CheckValid();
+      SetEnable(true);
     }
   }
 }

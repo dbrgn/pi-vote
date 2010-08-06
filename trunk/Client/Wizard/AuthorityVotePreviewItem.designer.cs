@@ -43,6 +43,7 @@ namespace Pirate.PiVote.Client
     private void InitializeComponent()
     {
       this.voteControl = new Pirate.PiVote.Client.VoteControl();
+      this.verifyButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // voteControl
@@ -50,16 +51,29 @@ namespace Pirate.PiVote.Client
       this.voteControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
+      this.voteControl.Font = new System.Drawing.Font("Arial", 8.25F);
       this.voteControl.Location = new System.Drawing.Point(0, 0);
       this.voteControl.Name = "voteControl";
       this.voteControl.Size = new System.Drawing.Size(700, 562);
       this.voteControl.TabIndex = 0;
       this.voteControl.Voting = null;
       // 
+      // verifyButton
+      // 
+      this.verifyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.verifyButton.Location = new System.Drawing.Point(589, 537);
+      this.verifyButton.Name = "verifyButton";
+      this.verifyButton.Size = new System.Drawing.Size(111, 25);
+      this.verifyButton.TabIndex = 1;
+      this.verifyButton.Text = "&Verify";
+      this.verifyButton.UseVisualStyleBackColor = true;
+      this.verifyButton.Click += new System.EventHandler(this.verifyButton_Click);
+      // 
       // AuthorityVotePreviewItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.verifyButton);
       this.Controls.Add(this.voteControl);
       this.Margin = new System.Windows.Forms.Padding(3);
       this.Name = "AuthorityVotePreviewItem";
@@ -71,6 +85,7 @@ namespace Pirate.PiVote.Client
     #endregion
 
     private VoteControl voteControl;
+    private Button verifyButton;
 
 
 
