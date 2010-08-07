@@ -60,13 +60,20 @@ namespace Pirate.PiVote.Crypto
       aes.Key = key;
       aes.IV = iv;
 
-      MemoryStream memoryStream = new MemoryStream();
-      CryptoStream cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
-      cryptoStream.Write(ciphertext, 0, ciphertext.Length);
-      cryptoStream.Close();
-      memoryStream.Close();
+      try
+      {
+        MemoryStream memoryStream = new MemoryStream();
+        CryptoStream cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write);
+        cryptoStream.Write(ciphertext, 0, ciphertext.Length);
+        cryptoStream.Close();
+        memoryStream.Close();
 
-      return memoryStream.ToArray();
+        return memoryStream.ToArray();
+      }
+      catch (CryptographicException)
+      {
+        throw new CryptographicException("Cannot decrypt because of wrong key or iv.");
+      }
     }
   }
 }

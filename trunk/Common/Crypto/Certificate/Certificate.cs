@@ -849,24 +849,34 @@ namespace Pirate.PiVote.Crypto
     /// <param name="passphrase">Passphrase protecting the private key.</param>
     public void Unlock(string passphrase)
     {
+      if (passphrase.IsNullOrEmpty())
+        throw new ArgumentException("Passphrase must not be null or empty.");
+
       if (PrivateKeyStatus == PrivateKeyStatus.Encrypted)
       {
         Rfc2898DeriveBytes derive = new Rfc2898DeriveBytes(passphrase, this.passphraseSalt, 1024);
         byte[] key = derive.GetBytes(32);
 
-        byte[] data = Aes.Decrypt(this.privateKeyData, key, this.privateKeySalt);
-        SHA256Managed sha256 = new SHA256Managed();
-        int hashLength = sha256.HashSize / 8;
-
-        if (data.Length > hashLength && 
-          sha256.ComputeHash(data.Part(0, data.Length - hashLength)).Equal(data.Part(data.Length - hashLength, hashLength)))
+        try
         {
-          this.privateKeyDecrypted = data.Part(0, data.Length - hashLength);
-          PrivateKeyStatus = PrivateKeyStatus.Decrypted;
+          byte[] data = Aes.Decrypt(this.privateKeyData, key, this.privateKeySalt);
+          SHA256Managed sha256 = new SHA256Managed();
+          int hashLength = sha256.HashSize / 8;
+
+          if (data.Length > hashLength &&
+            sha256.ComputeHash(data.Part(0, data.Length - hashLength)).Equal(data.Part(data.Length - hashLength, hashLength)))
+          {
+            this.privateKeyDecrypted = data.Part(0, data.Length - hashLength);
+            PrivateKeyStatus = PrivateKeyStatus.Decrypted;
+          }
+          else
+          {
+            throw new CryptographicException("Passphrase wrong.");
+          }
         }
-        else
-        { 
-          throw new ArgumentException("Passphrase wrong.");
+        catch (CryptographicException)
+        {
+          throw new CryptographicException("Passphrase wrong.");
         }
       }
       else if (PrivateKeyStatus == PrivateKeyStatus.Decrypted)

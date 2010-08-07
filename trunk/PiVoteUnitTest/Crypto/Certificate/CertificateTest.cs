@@ -33,10 +33,10 @@ namespace PiVoteUnitTest
 
       CACertificate root = new CACertificate(null, "Root");
       root.CreateSelfSignature();
-      Assert.IsFalse(root.Validate(storage) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.NoSignature, root.Validate(storage));
 
       storage.AddRoot(root.OnlyPublicPart);
-      Assert.IsTrue(root.Validate(storage) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.Valid, root.Validate(storage));
 
       var rootCrl = new RevocationList(root.Id, DateTime.Now, DateTime.Now.AddDays(1), new Guid[]{});
       var signedRootCrl = new Signed<RevocationList>(rootCrl, root);
@@ -44,11 +44,11 @@ namespace PiVoteUnitTest
 
       CACertificate intermediate = new CACertificate(null, "Intermediate");
       intermediate.CreateSelfSignature();
-      Assert.IsFalse(intermediate.Validate(storage) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.NoSignature, intermediate.Validate(storage));
 
       intermediate.AddSignature(root, DateTime.Now.AddDays(1));
       storage.Add(intermediate.OnlyPublicPart);
-      Assert.IsTrue(intermediate.Validate(storage) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.Valid, intermediate.Validate(storage));
 
       var intermediateCrl = new RevocationList(intermediate.Id, DateTime.Now, DateTime.Now.AddDays(1), new Guid[] { });
       var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
@@ -56,10 +56,10 @@ namespace PiVoteUnitTest
 
       AdminCertificate test = new AdminCertificate(Language.English, null, "Test");
       test.CreateSelfSignature();
-      Assert.IsFalse(test.Validate(storage) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.NoSignature, test.Validate(storage));
 
       test.AddSignature(intermediate, DateTime.Now.AddDays(1));
-      Assert.IsTrue(test.Validate(storage) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage));
     }
 
     [TestMethod]
@@ -91,7 +91,7 @@ namespace PiVoteUnitTest
       byte[] data = test.ToBinary();
       data[data.Length - 3]++;
       AdminCertificate other = Serializable.FromBinary<AdminCertificate>(data);
-      Assert.IsFalse(other.Validate(storage) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.SelfsignatureInvalid, other.Validate(storage));
     }
 
     [TestMethod]
@@ -120,22 +120,22 @@ namespace PiVoteUnitTest
       test.CreateSelfSignature();
       test.AddSignature(intermediate, DateTime.Now.AddDays(1));
 
-      Assert.IsTrue(test.Validate(storage, DateTime.Now) == CertificateValidationResult.Valid);
-      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddMinutes(1)) == CertificateValidationResult.Valid);
-      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddHours(1)) == CertificateValidationResult.Valid);
-      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(1)) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage, DateTime.Now));
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage, DateTime.Now.AddMinutes(1)));
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage, DateTime.Now.AddHours(1)));
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage, DateTime.Now.AddDays(1)));
 
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(2)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(5)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(30)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(1)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(5)) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddDays(2)));
+      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddDays(5)));
+      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddDays(30)));
+      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddYears(1)));
+      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddYears(5)));
 
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(-1)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(-5)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(-30)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(-1)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(-5)) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddDays(-1)));
+      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddDays(-5)));
+      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddDays(-30)));
+      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddYears(-1)));
+      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddYears(-5)));
     }
 
     [TestMethod]
@@ -147,18 +147,18 @@ namespace PiVoteUnitTest
       root.CreateSelfSignature();
       storage.AddRoot(root.OnlyPublicPart);
 
-      var rootCrl = new RevocationList(root.Id, DateTime.Now, DateTime.Now.AddDays(10), new Guid[] { });
+      var rootCrl = new RevocationList(root.Id, DateTime.Now, DateTime.Now.AddYears(10), new Guid[] { });
       var signedRootCrl = new Signed<RevocationList>(rootCrl, root);
       storage.AddRevocationList(signedRootCrl);
 
       CACertificate intermediate = new CACertificate(null, "Intermediate");
       intermediate.CreateSelfSignature();
-      intermediate.AddSignature(root, DateTime.Now.AddDays(10));
+      intermediate.AddSignature(root, DateTime.Now.AddYears(10));
       storage.Add(intermediate.OnlyPublicPart);
 
       AdminCertificate test = new AdminCertificate(Language.English, null, "Test");
       test.CreateSelfSignature();
-      test.AddSignature(intermediate, DateTime.Now.AddDays(10));
+      test.AddSignature(intermediate, DateTime.Now.AddYears(10));
 
       for (int startDay = 0; startDay < 10; startDay += 2)
       {
@@ -170,23 +170,123 @@ namespace PiVoteUnitTest
         storage.AddRevocationList(signedIntermediateCrl);
       }
 
-      Assert.IsTrue(test.Validate(storage, DateTime.Now) == CertificateValidationResult.Valid);
-      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(1)) == CertificateValidationResult.Valid);
-      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(2)) == CertificateValidationResult.Valid);
-      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(3)) == CertificateValidationResult.Valid);
-      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(4)) == CertificateValidationResult.Valid);
-      Assert.IsTrue(test.Validate(storage, DateTime.Now.AddDays(5)) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage, DateTime.Now));
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage, DateTime.Now.AddDays(1)));
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage, DateTime.Now.AddDays(2)));
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage, DateTime.Now.AddDays(3)));
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage, DateTime.Now.AddDays(4)));
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage, DateTime.Now.AddDays(5)));
 
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(6)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(7)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(8)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(9)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(10)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(11)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(12)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddDays(30)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(1)) == CertificateValidationResult.Valid);
-      Assert.IsFalse(test.Validate(storage, DateTime.Now.AddYears(5)) == CertificateValidationResult.Valid);
+      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(6)));
+      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(7)));
+      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(8)));
+      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(9)));
+      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(10)));
+      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(11)));
+      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(12)));
+      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(30)));
+      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddYears(1)));
+      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddYears(5)));
+    }
+
+    [TestMethod]
+    public void SignerUnknownTest()
+    {
+      CertificateStorage storage = new CertificateStorage();
+
+      CACertificate root = new CACertificate(null, "Root");
+      root.CreateSelfSignature();
+      storage.AddRoot(root.OnlyPublicPart);
+
+      var rootCrl = new RevocationList(root.Id, DateTime.Now, DateTime.Now.AddDays(1), new Guid[] { });
+      var signedRootCrl = new Signed<RevocationList>(rootCrl, root);
+      storage.AddRevocationList(signedRootCrl);
+
+      CACertificate intermediate = new CACertificate(null, "Intermediate");
+      intermediate.CreateSelfSignature();
+      intermediate.AddSignature(root, DateTime.Now.AddDays(1));
+
+      var intermediateCrl = new RevocationList(intermediate.Id, DateTime.Now, DateTime.Now.AddDays(1), new Guid[] { });
+      var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
+      storage.AddRevocationList(signedIntermediateCrl);
+
+      AdminCertificate test = new AdminCertificate(Language.English, null, "Test");
+      test.CreateSelfSignature();
+      test.AddSignature(intermediate, DateTime.Now.AddDays(1));
+
+      Assert.AreEqual(CertificateValidationResult.UnknownSigner, test.Validate(storage));
+    }
+
+    [TestMethod]
+    public void SignerInvalidTest()
+    {
+      CertificateStorage storage = new CertificateStorage();
+
+      CACertificate root = new CACertificate(null, "Root");
+      root.CreateSelfSignature();
+      storage.AddRoot(root.OnlyPublicPart);
+
+      var rootCrl0 = new RevocationList(root.Id, DateTime.Now, DateTime.Now.AddDays(1), new Guid[] { });
+      var signedRootCrl0 = new Signed<RevocationList>(rootCrl0, root);
+      storage.AddRevocationList(signedRootCrl0);
+
+      CACertificate intermediate = new CACertificate(null, "Intermediate");
+      intermediate.CreateSelfSignature();
+      intermediate.AddSignature(root, DateTime.Now.AddDays(4));
+      storage.Add(intermediate.OnlyPublicPart);
+
+      var rootCrl1 = new RevocationList(root.Id, DateTime.Now.AddDays(2), DateTime.Now.AddDays(3), new Guid[] { });
+      rootCrl1.RevokedCertificates.Add(intermediate.Id);
+      var signedRootCrl1 = new Signed<RevocationList>(rootCrl1, root);
+      storage.AddRevocationList(signedRootCrl1);
+
+      var intermediateCrl = new RevocationList(intermediate.Id, DateTime.Now, DateTime.Now.AddDays(4), new Guid[] { });
+      var signedIntermediateCrl = new Signed<RevocationList>(intermediateCrl, intermediate);
+      storage.AddRevocationList(signedIntermediateCrl);
+
+      AdminCertificate test = new AdminCertificate(Language.English, null, "Test");
+      test.CreateSelfSignature();
+      test.AddSignature(intermediate, DateTime.Now.AddDays(4));
+
+      Assert.AreEqual(CertificateValidationResult.Valid, test.Validate(storage, DateTime.Now.AddDays(1)));
+
+      Assert.AreEqual(CertificateValidationResult.SignerInvalid, test.Validate(storage, DateTime.Now.AddDays(2)));
+    }
+
+    [TestMethod]
+    public void PassphraseTest()
+    {
+      var root = new CACertificate("test", "Root");
+      root.CreateSelfSignature();
+      root.Lock();
+
+      root.Unlock("test");
+
+      root.Sign(Encoding.UTF8.GetBytes("hello"));
+
+      root.Lock();
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(System.Security.Cryptography.CryptographicException))]
+    public void BadPassphraseTest()
+    {
+      var root = new CACertificate("test", "Root");
+      root.CreateSelfSignature();
+      root.Lock();
+
+      root.Unlock("other");
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(InvalidOperationException))]
+    public void NoPassphraseTest()
+    {
+      var root = new CACertificate("test", "Root");
+      root.CreateSelfSignature();
+      root.Lock();
+
+      root.Sign(Encoding.UTF8.GetBytes("hello"));
     }
   }
 }

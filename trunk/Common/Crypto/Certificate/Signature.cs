@@ -87,37 +87,37 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Is the signature valid.</returns>
     public CertificateValidationResult Verify(byte[] objectData, ICertificateStorage certificateStorage, DateTime date)
     {
-      if (certificateStorage.Has(SignerId))
+      if (ValidFrom.Date <= date.Date &&
+          ValidUntil.Date >= date.Date)
       {
-        Certificate signer = certificateStorage.Get(SignerId);
-
-        if (signer.VerifySimple(AssmblySigningData(objectData), Data))
+        if (certificateStorage.Has(SignerId))
         {
-          if (signer.Validate(certificateStorage, date) == CertificateValidationResult.Valid)
+          Certificate signer = certificateStorage.Get(SignerId);
+
+          if (signer.VerifySimple(AssmblySigningData(objectData), Data))
           {
-            if (ValidFrom.Date <= date.Date &&
-                ValidUntil.Date >= date.Date)
+            if (signer.Validate(certificateStorage, date) == CertificateValidationResult.Valid)
             {
               return CertificateValidationResult.Valid;
             }
             else
             {
-              return CertificateValidationResult.Outdated;
+              return CertificateValidationResult.SignerInvalid;
             }
           }
           else
           {
-            return CertificateValidationResult.SignerInvalid;
+            return CertificateValidationResult.SignatureDataInvalid;
           }
         }
         else
         {
-          return CertificateValidationResult.SignatureDataInvalid;
+          return CertificateValidationResult.UnknownSigner;
         }
       }
       else
       {
-        return CertificateValidationResult.UnknownSigner;
+        return CertificateValidationResult.Outdated;
       }
     }
 

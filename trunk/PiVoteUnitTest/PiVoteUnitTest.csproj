@@ -51,6 +51,7 @@
     <Compile Include="Crypto\Base\BallotTest.cs" />
     <Compile Include="Crypto\Base\BaseVotingTest.cs" />
     <Compile Include="Crypto\Certificate\CertificateTest.cs" />
+    <Compile Include="Crypto\Certificate\SecureTest.cs" />
     <Compile Include="Crypto\Certificate\EncryptedTest.cs" />
     <Compile Include="Crypto\Certificate\SignedTest.cs" />
     <Compile Include="PrototypTest.cs" />
