@@ -1,0 +1,3 @@
+?package(pivote-client): needs="X11" section="Applications/Network" \
+                         title="Pi-Vote" command="pivote" hints="eVoting" \
+                         icon="/usr/share/pixmaps/pivote.xpm"

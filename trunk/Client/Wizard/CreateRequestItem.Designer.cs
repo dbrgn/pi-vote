@@ -53,7 +53,6 @@ namespace Pirate.PiVote.Client
       this.emailAddressTextBox = new System.Windows.Forms.TextBox();
       this.emailAddressLabel = new System.Windows.Forms.Label();
       this.sendButton = new System.Windows.Forms.Button();
-      this.spaceLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // idTextBox
@@ -163,21 +162,10 @@ namespace Pirate.PiVote.Client
       this.sendButton.UseVisualStyleBackColor = true;
       this.sendButton.Click += new System.EventHandler(this.sendButton_Click);
       // 
-      // spaceLabel
-      // 
-      this.spaceLabel.AutoSize = true;
-      this.spaceLabel.ForeColor = System.Drawing.Color.Red;
-      this.spaceLabel.Location = new System.Drawing.Point(70, 253);
-      this.spaceLabel.Name = "spaceLabel";
-      this.spaceLabel.Size = new System.Drawing.Size(274, 14);
-      this.spaceLabel.TabIndex = 18;
-      this.spaceLabel.Text = "This space shall be occupied by an appropriate picture.";
-      // 
       // CreateRequestItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.Controls.Add(this.spaceLabel);
       this.Controls.Add(this.sendButton);
       this.Controls.Add(this.emailAddressTextBox);
       this.Controls.Add(this.emailAddressLabel);
@@ -210,7 +198,6 @@ namespace Pirate.PiVote.Client
     private TextBox emailAddressTextBox;
     private Label emailAddressLabel;
     private Button sendButton;
-    private Label spaceLabel;
 
 
   }

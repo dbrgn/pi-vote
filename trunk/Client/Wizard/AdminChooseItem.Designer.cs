@@ -42,29 +42,18 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
-      this.spaceLabel = new System.Windows.Forms.Label();
       this.downloadSignatureRequestsButton = new System.Windows.Forms.Button();
       this.uploadSignatureResponsesButton = new System.Windows.Forms.Button();
       this.createVotingButton = new System.Windows.Forms.Button();
       this.uploadCertificateStorageButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
-      // spaceLabel
-      // 
-      this.spaceLabel.AutoSize = true;
-      this.spaceLabel.ForeColor = System.Drawing.Color.Red;
-      this.spaceLabel.Location = new System.Drawing.Point(144, 258);
-      this.spaceLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-      this.spaceLabel.Name = "spaceLabel";
-      this.spaceLabel.Size = new System.Drawing.Size(414, 19);
-      this.spaceLabel.TabIndex = 3;
-      this.spaceLabel.Text = "This space shall be occupied by an appropriate picture.";
-      // 
       // downloadSignatureRequestsButton
       // 
-      this.downloadSignatureRequestsButton.Location = new System.Drawing.Point(3, 3);
+      this.downloadSignatureRequestsButton.Location = new System.Drawing.Point(2, 2);
+      this.downloadSignatureRequestsButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.downloadSignatureRequestsButton.Name = "downloadSignatureRequestsButton";
-      this.downloadSignatureRequestsButton.Size = new System.Drawing.Size(617, 37);
+      this.downloadSignatureRequestsButton.Size = new System.Drawing.Size(411, 25);
       this.downloadSignatureRequestsButton.TabIndex = 5;
       this.downloadSignatureRequestsButton.Text = "Download signature requests from server...";
       this.downloadSignatureRequestsButton.UseVisualStyleBackColor = true;
@@ -72,9 +61,10 @@ namespace Pirate.PiVote.Client
       // 
       // uploadSignatureResponsesButton
       // 
-      this.uploadSignatureResponsesButton.Location = new System.Drawing.Point(3, 46);
+      this.uploadSignatureResponsesButton.Location = new System.Drawing.Point(2, 31);
+      this.uploadSignatureResponsesButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.uploadSignatureResponsesButton.Name = "uploadSignatureResponsesButton";
-      this.uploadSignatureResponsesButton.Size = new System.Drawing.Size(617, 38);
+      this.uploadSignatureResponsesButton.Size = new System.Drawing.Size(411, 25);
       this.uploadSignatureResponsesButton.TabIndex = 6;
       this.uploadSignatureResponsesButton.Text = "Upload signature responses to server...";
       this.uploadSignatureResponsesButton.UseVisualStyleBackColor = true;
@@ -82,9 +72,10 @@ namespace Pirate.PiVote.Client
       // 
       // createVotingButton
       // 
-      this.createVotingButton.Location = new System.Drawing.Point(3, 134);
+      this.createVotingButton.Location = new System.Drawing.Point(2, 89);
+      this.createVotingButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.createVotingButton.Name = "createVotingButton";
-      this.createVotingButton.Size = new System.Drawing.Size(617, 38);
+      this.createVotingButton.Size = new System.Drawing.Size(411, 25);
       this.createVotingButton.TabIndex = 7;
       this.createVotingButton.Text = "Create a voting procedure";
       this.createVotingButton.UseVisualStyleBackColor = true;
@@ -92,9 +83,10 @@ namespace Pirate.PiVote.Client
       // 
       // uploadCertificateStorageButton
       // 
-      this.uploadCertificateStorageButton.Location = new System.Drawing.Point(3, 90);
+      this.uploadCertificateStorageButton.Location = new System.Drawing.Point(2, 60);
+      this.uploadCertificateStorageButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.uploadCertificateStorageButton.Name = "uploadCertificateStorageButton";
-      this.uploadCertificateStorageButton.Size = new System.Drawing.Size(617, 38);
+      this.uploadCertificateStorageButton.Size = new System.Drawing.Size(411, 25);
       this.uploadCertificateStorageButton.TabIndex = 8;
       this.uploadCertificateStorageButton.Text = "Upload certificate storage to server...";
       this.uploadCertificateStorageButton.UseVisualStyleBackColor = true;
@@ -102,24 +94,21 @@ namespace Pirate.PiVote.Client
       // 
       // AdminChooseItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.uploadCertificateStorageButton);
       this.Controls.Add(this.createVotingButton);
       this.Controls.Add(this.uploadSignatureResponsesButton);
       this.Controls.Add(this.downloadSignatureRequestsButton);
-      this.Controls.Add(this.spaceLabel);
-      this.Margin = new System.Windows.Forms.Padding(2);
+      this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
       this.Name = "AdminChooseItem";
-      this.Size = new System.Drawing.Size(700, 538);
+      this.Size = new System.Drawing.Size(467, 359);
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
     #endregion
 
-    private Label spaceLabel;
     private Button downloadSignatureRequestsButton;
     private Button uploadSignatureResponsesButton;
     private Button createVotingButton;

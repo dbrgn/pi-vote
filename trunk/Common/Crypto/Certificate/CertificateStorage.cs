@@ -289,9 +289,11 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public bool TryLoadRoot()
     {
-      if (File.Exists(Files.RootCertificateFileName))
+      string fileName = Path.Combine(System.Windows.Forms.Application.StartupPath, Files.RootCertificateFileName);
+
+      if (File.Exists(fileName))
       {
-        AddRoot(Serializable.Load<Certificate>(Files.RootCertificateFileName));
+        AddRoot(Serializable.Load<Certificate>(fileName));
         return true;
       }
       else
