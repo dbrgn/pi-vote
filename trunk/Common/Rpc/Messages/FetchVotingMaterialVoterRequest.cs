@@ -15,16 +15,36 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// Fetches voting material and status.
+  /// May fetch material and status of one, some or all votings at once.
+  /// </summary>
   public class FetchVotingMaterialVoterRequest : RpcRequest<VotingRpcServer, FetchVotingMaterialVoterResponse>
   {
-    private Guid votingId;
+    /// <summary>
+    /// List of ids of the votings to get.
+    /// May be null in case all votings are requested.
+    /// </summary>
+    private List<Guid> votingIds;
 
+    /// <summary>
+    /// Creates a new fetch voting material request.
+    /// </summary>
+    /// <param name="requestId">Id of the request.</param>
+    /// <param name="votingIds">Ids of the requested voting or null to request all votings.</param>
     public FetchVotingMaterialVoterRequest(
       Guid requestId,
-      Guid votingId)
+      IEnumerable<Guid> votingIds)
       : base(requestId)
     {
-      this.votingId = votingId;
+      if (votingIds == null)
+      {
+        this.votingIds = null;
+      }
+      else
+      {
+        this.votingIds = new List<Guid>(votingIds);
+      }
     }
 
     /// <summary>
@@ -42,7 +62,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(this.votingId);
+      context.WriteList(this.votingIds);
     }
 
     /// <summary>
@@ -52,7 +72,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.votingId = context.ReadGuid();
+      this.votingIds = context.ReadGuidList();
     }
 
     /// <summary>
@@ -62,9 +82,12 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Response to the request.</returns>
     protected override FetchVotingMaterialVoterResponse Execute(VotingRpcServer server)
     {
-      var voting = server.GetVoting(this.votingId);
+      var votingMaterials = 
+        (this.votingIds == null ? server.FetchVotingIds() : this.votingIds)
+        .Select(votingId => server.GetVoting(votingId))
+        .Select(voting => new Tuple<VotingMaterial, VotingStatus, List<Guid>>(voting.GetVotingMaterial(), voting.Status, voting.AuthoritiesDone));
 
-      return new FetchVotingMaterialVoterResponse(RequestId, voting.GetVotingMaterial());
+      return new FetchVotingMaterialVoterResponse(RequestId, votingMaterials);
     }
   }
 }

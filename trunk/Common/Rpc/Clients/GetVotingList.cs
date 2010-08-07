@@ -73,36 +73,16 @@ namespace Pirate.PiVote.Rpc
         {
           Text = LibraryResources.ClientGetVotingList;
           Progress = 0d;
-          SubText = LibraryResources.ClientGetVotingListGetIds;
+          SubText = string.Empty;
           SubProgress = 0d;
 
           List<VotingDescriptor> votingList = new List<VotingDescriptor>();
-          IEnumerable<Guid> votingIds = client.proxy.FetchVotingIds();
-
-          int counter = 0;
-          Progress = 0.2d;
-          SubText = string.Format(LibraryResources.ClientGetVotingListFetchVoting, counter, votingIds.Count());
-          SubProgress = 0d;
-
-          foreach (Guid votingId in votingIds)
-          {
-            List<Guid> authoritiesDone = null;
-            VotingStatus status = client.proxy.FetchVotingStatus(votingId, out authoritiesDone);
-            VotingMaterial material = client.proxy.FetchVotingMaterial(votingId);
-
-            if (material.Valid(this.certificateStorage))
-            {
-              VotingParameters parameters = material.Parameters.Value;
-              votingList.Add(new VotingDescriptor(parameters, status, authoritiesDone, material.CastEnvelopeCount));
-            }
-
-            counter++;
-            SubText = string.Format(LibraryResources.ClientGetVotingListFetchVoting, counter, votingIds.Count());
-            SubProgress = 1d / (double)votingIds.Count() * (double)counter;
-          }
-
-          Progress = 0.6d;
-          SubProgress = 1d;
+          
+          var votingMaterials = client.proxy.FetchVotingMaterial(null);
+          var votingDescriptors = votingMaterials
+            .Where(votingMaterial => votingMaterial.First.Valid(this.certificateStorage))
+            .Select(votingMaterial => new VotingDescriptor(votingMaterial.First.Parameters.Value, votingMaterial.Second, votingMaterial.Third, votingMaterial.First.CastEnvelopeCount));
+          votingList.AddRange(votingDescriptors);
 
           DirectoryInfo appDataDirectory = new DirectoryInfo(this.dataPath);
 
@@ -115,7 +95,7 @@ namespace Pirate.PiVote.Rpc
           }
 
           Progress = 1d;
-          SubProgress = 1d;
+          SubProgress = 0d;
 
           this.callBack(votingList, null);
         }

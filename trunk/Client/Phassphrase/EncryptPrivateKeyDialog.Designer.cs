@@ -43,9 +43,10 @@
       this.infoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.infoLabel.Location = new System.Drawing.Point(12, 9);
+      this.infoLabel.Location = new System.Drawing.Point(18, 14);
+      this.infoLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.infoLabel.Name = "infoLabel";
-      this.infoLabel.Size = new System.Drawing.Size(485, 39);
+      this.infoLabel.Size = new System.Drawing.Size(728, 60);
       this.infoLabel.TabIndex = 0;
       this.infoLabel.Text = "You may encrypt the private key of your certificate to proctet it against unautho" +
           "rized use. If you do so you will be prompted to enter your passphrase when your " +
@@ -55,10 +56,11 @@
       // 
       this.passphraseTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.passphraseTextBox.Location = new System.Drawing.Point(159, 77);
+      this.passphraseTextBox.Location = new System.Drawing.Point(238, 118);
+      this.passphraseTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.passphraseTextBox.Name = "passphraseTextBox";
       this.passphraseTextBox.PasswordChar = '*';
-      this.passphraseTextBox.Size = new System.Drawing.Size(338, 20);
+      this.passphraseTextBox.Size = new System.Drawing.Size(505, 26);
       this.passphraseTextBox.TabIndex = 1;
       this.passphraseTextBox.TextChanged += new System.EventHandler(this.passphraseTextBox_TextChanged);
       // 
@@ -66,9 +68,10 @@
       // 
       this.passphraseLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.passphraseLabel.AutoSize = true;
-      this.passphraseLabel.Location = new System.Drawing.Point(12, 80);
+      this.passphraseLabel.Location = new System.Drawing.Point(18, 123);
+      this.passphraseLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.passphraseLabel.Name = "passphraseLabel";
-      this.passphraseLabel.Size = new System.Drawing.Size(65, 13);
+      this.passphraseLabel.Size = new System.Drawing.Size(97, 20);
       this.passphraseLabel.TabIndex = 3;
       this.passphraseLabel.Text = "Passphrase:";
       // 
@@ -76,10 +79,11 @@
       // 
       this.repeatTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.repeatTextBox.Location = new System.Drawing.Point(159, 103);
+      this.repeatTextBox.Location = new System.Drawing.Point(238, 158);
+      this.repeatTextBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.repeatTextBox.Name = "repeatTextBox";
       this.repeatTextBox.PasswordChar = '*';
-      this.repeatTextBox.Size = new System.Drawing.Size(338, 20);
+      this.repeatTextBox.Size = new System.Drawing.Size(505, 26);
       this.repeatTextBox.TabIndex = 2;
       this.repeatTextBox.TextChanged += new System.EventHandler(this.repeatTextBox_TextChanged);
       // 
@@ -87,18 +91,20 @@
       // 
       this.repeatLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.repeatLabel.AutoSize = true;
-      this.repeatLabel.Location = new System.Drawing.Point(12, 106);
+      this.repeatLabel.Location = new System.Drawing.Point(18, 163);
+      this.repeatLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.repeatLabel.Name = "repeatLabel";
-      this.repeatLabel.Size = new System.Drawing.Size(102, 13);
+      this.repeatLabel.Size = new System.Drawing.Size(153, 20);
       this.repeatLabel.TabIndex = 5;
       this.repeatLabel.Text = "Repeat passphrase:";
       // 
       // okButton
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.okButton.Location = new System.Drawing.Point(305, 129);
+      this.okButton.Location = new System.Drawing.Point(458, 198);
+      this.okButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.okButton.Name = "okButton";
-      this.okButton.Size = new System.Drawing.Size(93, 24);
+      this.okButton.Size = new System.Drawing.Size(140, 37);
       this.okButton.TabIndex = 3;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
@@ -107,9 +113,10 @@
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(404, 129);
+      this.cancelButton.Location = new System.Drawing.Point(606, 198);
+      this.cancelButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.cancelButton.Name = "cancelButton";
-      this.cancelButton.Size = new System.Drawing.Size(93, 24);
+      this.cancelButton.Size = new System.Drawing.Size(140, 37);
       this.cancelButton.TabIndex = 4;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
@@ -119,9 +126,10 @@
       // 
       this.encryptCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.encryptCheckBox.AutoSize = true;
-      this.encryptCheckBox.Location = new System.Drawing.Point(15, 51);
+      this.encryptCheckBox.Location = new System.Drawing.Point(22, 80);
+      this.encryptCheckBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.encryptCheckBox.Name = "encryptCheckBox";
-      this.encryptCheckBox.Size = new System.Drawing.Size(133, 17);
+      this.encryptCheckBox.Size = new System.Drawing.Size(191, 24);
       this.encryptCheckBox.TabIndex = 0;
       this.encryptCheckBox.Text = "Encrypt my private key";
       this.encryptCheckBox.UseVisualStyleBackColor = true;
@@ -129,9 +137,9 @@
       // 
       // EncryptPrivateKeyDialog
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(509, 165);
+      this.ClientSize = new System.Drawing.Size(764, 254);
       this.ControlBox = false;
       this.Controls.Add(this.encryptCheckBox);
       this.Controls.Add(this.cancelButton);
@@ -143,6 +151,7 @@
       this.Controls.Add(this.infoLabel);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
+      this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "EncryptPrivateKeyDialog";

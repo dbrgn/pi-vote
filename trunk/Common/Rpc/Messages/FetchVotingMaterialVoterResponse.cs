@@ -18,12 +18,14 @@ namespace Pirate.PiVote.Rpc
 {
   public class FetchVotingMaterialVoterResponse : RpcResponse
   {
-    public VotingMaterial VotingMaterial { get; private set; }
+    private List<Tuple<VotingMaterial, VotingStatus, List<Guid>>> votingMaterials;
 
-    public FetchVotingMaterialVoterResponse(Guid requestId, VotingMaterial votingMaterial)
+    public IEnumerable<Tuple<VotingMaterial, VotingStatus, List<Guid>>> VotingMaterials { get { return this.votingMaterials; } }
+
+    public FetchVotingMaterialVoterResponse(Guid requestId, IEnumerable<Tuple<VotingMaterial, VotingStatus, List<Guid>>> votingMaterials)
       : base(requestId)
     {
-      VotingMaterial = votingMaterial;
+      this.votingMaterials = new List<Tuple<VotingMaterial, VotingStatus, List<Guid>>>(votingMaterials);
     }
 
     /// <summary>
@@ -50,7 +52,15 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(VotingMaterial);
+
+      context.Write(this.votingMaterials.Count);
+
+      foreach (var votingMaterial in this.votingMaterials)
+      {
+        context.Write(votingMaterial.First);
+        context.Write((int)votingMaterial.Second);
+        context.WriteList(votingMaterial.Third);
+      }
     }
 
     /// <summary>
@@ -60,7 +70,18 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      VotingMaterial = context.ReadObject<VotingMaterial>();
+
+      this.votingMaterials = new List<Tuple<VotingMaterial, VotingStatus, List<Guid>>>();
+      int count = context.ReadInt32();
+
+      for (int index = 0; index < count; index++)
+      {
+        this.votingMaterials.Add(
+          new Tuple<VotingMaterial, VotingStatus, List<Guid>>(
+            context.ReadObject<VotingMaterial>(),
+            (VotingStatus)context.ReadInt32(),
+            context.ReadGuidList()));
+      }
     }
   }
 }

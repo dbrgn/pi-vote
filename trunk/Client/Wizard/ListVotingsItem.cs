@@ -141,7 +141,7 @@ namespace Pirate.PiVote.Client
 
           this.votingList.Items.Clear();
 
-          foreach (VotingDescriptor voting in this.votings)
+          foreach (VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
           { 
             AddVotingToList(voting);
           }

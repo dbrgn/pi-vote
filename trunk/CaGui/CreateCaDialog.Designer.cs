@@ -42,9 +42,10 @@
       // 
       // cancelButton
       // 
-      this.cancelButton.Location = new System.Drawing.Point(368, 110);
+      this.cancelButton.Location = new System.Drawing.Point(552, 165);
+      this.cancelButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.cancelButton.Name = "cancelButton";
-      this.cancelButton.Size = new System.Drawing.Size(75, 23);
+      this.cancelButton.Size = new System.Drawing.Size(112, 34);
       this.cancelButton.TabIndex = 5;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
@@ -53,9 +54,10 @@
       // okButton
       // 
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(287, 110);
+      this.okButton.Location = new System.Drawing.Point(430, 165);
+      this.okButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.okButton.Name = "okButton";
-      this.okButton.Size = new System.Drawing.Size(75, 23);
+      this.okButton.Size = new System.Drawing.Size(112, 34);
       this.okButton.TabIndex = 4;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
@@ -64,79 +66,87 @@
       // rootCaLabel
       // 
       this.rootCaLabel.AutoSize = true;
-      this.rootCaLabel.Location = new System.Drawing.Point(12, 38);
+      this.rootCaLabel.Location = new System.Drawing.Point(18, 57);
+      this.rootCaLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.rootCaLabel.Name = "rootCaLabel";
-      this.rootCaLabel.Size = new System.Drawing.Size(50, 14);
+      this.rootCaLabel.Size = new System.Drawing.Size(75, 19);
       this.rootCaLabel.TabIndex = 4;
       this.rootCaLabel.Text = "Root CA:";
       // 
       // rootCaCheckBox
       // 
       this.rootCaCheckBox.AutoSize = true;
-      this.rootCaCheckBox.Location = new System.Drawing.Point(103, 38);
+      this.rootCaCheckBox.Location = new System.Drawing.Point(154, 57);
+      this.rootCaCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.rootCaCheckBox.Name = "rootCaCheckBox";
-      this.rootCaCheckBox.Size = new System.Drawing.Size(15, 14);
+      this.rootCaCheckBox.Size = new System.Drawing.Size(21, 20);
       this.rootCaCheckBox.TabIndex = 1;
       this.rootCaCheckBox.UseVisualStyleBackColor = true;
       // 
       // passphraseTextBox
       // 
-      this.passphraseTextBox.Location = new System.Drawing.Point(103, 58);
+      this.passphraseTextBox.Location = new System.Drawing.Point(154, 87);
+      this.passphraseTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.passphraseTextBox.Name = "passphraseTextBox";
       this.passphraseTextBox.PasswordChar = '*';
-      this.passphraseTextBox.Size = new System.Drawing.Size(340, 20);
+      this.passphraseTextBox.Size = new System.Drawing.Size(508, 26);
       this.passphraseTextBox.TabIndex = 2;
       this.passphraseTextBox.TextChanged += new System.EventHandler(this.passphraseTextBox_TextChanged);
       // 
       // passphraseLabel
       // 
       this.passphraseLabel.AutoSize = true;
-      this.passphraseLabel.Location = new System.Drawing.Point(12, 61);
+      this.passphraseLabel.Location = new System.Drawing.Point(18, 92);
+      this.passphraseLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.passphraseLabel.Name = "passphraseLabel";
-      this.passphraseLabel.Size = new System.Drawing.Size(68, 14);
+      this.passphraseLabel.Size = new System.Drawing.Size(100, 19);
       this.passphraseLabel.TabIndex = 6;
       this.passphraseLabel.Text = "Passphrase:";
       // 
       // repeatTextBox
       // 
-      this.repeatTextBox.Location = new System.Drawing.Point(103, 84);
+      this.repeatTextBox.Location = new System.Drawing.Point(154, 126);
+      this.repeatTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.repeatTextBox.Name = "repeatTextBox";
       this.repeatTextBox.PasswordChar = '*';
-      this.repeatTextBox.Size = new System.Drawing.Size(340, 20);
+      this.repeatTextBox.Size = new System.Drawing.Size(508, 26);
       this.repeatTextBox.TabIndex = 3;
       this.repeatTextBox.TextChanged += new System.EventHandler(this.repeatTextBox_TextChanged);
       // 
       // repeatLabel
       // 
       this.repeatLabel.AutoSize = true;
-      this.repeatLabel.Location = new System.Drawing.Point(12, 87);
+      this.repeatLabel.Location = new System.Drawing.Point(18, 130);
+      this.repeatLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.repeatLabel.Name = "repeatLabel";
-      this.repeatLabel.Size = new System.Drawing.Size(44, 14);
+      this.repeatLabel.Size = new System.Drawing.Size(65, 19);
       this.repeatLabel.TabIndex = 8;
       this.repeatLabel.Text = "Repeat:";
       // 
       // caNameTextBox
       // 
-      this.caNameTextBox.Location = new System.Drawing.Point(103, 12);
+      this.caNameTextBox.Location = new System.Drawing.Point(154, 18);
+      this.caNameTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.caNameTextBox.Name = "caNameTextBox";
-      this.caNameTextBox.Size = new System.Drawing.Size(340, 20);
+      this.caNameTextBox.Size = new System.Drawing.Size(508, 26);
       this.caNameTextBox.TabIndex = 0;
       this.caNameTextBox.TextChanged += new System.EventHandler(this.caNameTextBox_TextChanged);
       // 
       // caNameLabel
       // 
       this.caNameLabel.AutoSize = true;
-      this.caNameLabel.Location = new System.Drawing.Point(12, 15);
+      this.caNameLabel.Location = new System.Drawing.Point(18, 22);
+      this.caNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.caNameLabel.Name = "caNameLabel";
-      this.caNameLabel.Size = new System.Drawing.Size(54, 14);
+      this.caNameLabel.Size = new System.Drawing.Size(83, 19);
       this.caNameLabel.TabIndex = 9;
       this.caNameLabel.Text = "CA Name:";
       // 
       // CreateCaDialog
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(455, 144);
+      this.ClientSize = new System.Drawing.Size(682, 216);
       this.ControlBox = false;
       this.Controls.Add(this.caNameTextBox);
       this.Controls.Add(this.caNameLabel);
@@ -151,6 +161,7 @@
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
+      this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "CreateCaDialog";

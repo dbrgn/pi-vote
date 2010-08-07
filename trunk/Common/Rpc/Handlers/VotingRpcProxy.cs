@@ -151,10 +151,20 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Complete voting material.</returns>
     public VotingMaterial FetchVotingMaterial(Guid votingId)
     {
-      var request = new FetchVotingMaterialVoterRequest(Guid.NewGuid(), votingId);
+      return FetchVotingMaterial(new Guid[] { votingId }).First().First;
+    }
+
+    /// <summary>
+    /// Fetches the voting material.
+    /// </summary>
+    /// <param name="votingIds">Ids of the votings.</param>
+    /// <returns>Complete voting material.</returns>
+    public IEnumerable<Tuple<VotingMaterial, VotingStatus, List<Guid>>> FetchVotingMaterial(IEnumerable<Guid> votingIds)
+    {
+      var request = new FetchVotingMaterialVoterRequest(Guid.NewGuid(), votingIds);
       var response = Execute<FetchVotingMaterialVoterResponse>(request);
 
-      return response.VotingMaterial;
+      return response.VotingMaterials;
     }
 
     /// <summary>

@@ -135,6 +135,16 @@ namespace Pirate.PiVote.Serialization
       }
     }
 
+    public void WriteList(IEnumerable<Guid> list)
+    {
+      Write(list.Count());
+
+      foreach (Guid data in list)
+      {
+        Write(data);
+      }
+    }
+
     public void Close()
     {
       this.writer.Close();

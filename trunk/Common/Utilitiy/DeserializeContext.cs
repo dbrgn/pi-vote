@@ -161,6 +161,19 @@ namespace Pirate.PiVote.Serialization
       return list;
     }
 
+    public List<Guid> ReadGuidList()
+    {
+      int count = ReadInt32();
+      List<Guid> list = new List<Guid>();
+
+      for (int index = 0; index < count; index++)
+      {
+        list.Add(ReadGuid());
+      }
+
+      return list;
+    }
+
     public void Close()
     {
       this.reader.Close();
