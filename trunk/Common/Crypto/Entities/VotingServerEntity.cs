@@ -121,7 +121,7 @@ namespace Pirate.PiVote.Crypto
 
     /// <summary>
     /// List of authoritites that have performed the current step.
-    /// Null if not applicable.
+    /// Empty if not applicable.
     /// </summary>
     public List<Guid> AuthoritiesDone
     {
@@ -172,7 +172,7 @@ namespace Pirate.PiVote.Crypto
 
             return authorityIds;
           default:
-            return null;
+            return new List<Guid>();
         }
       }
     }

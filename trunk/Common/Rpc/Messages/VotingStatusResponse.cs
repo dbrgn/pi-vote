@@ -57,16 +57,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
       context.Write((int)VotingStatus);
-
-      if (AuthoritiesDone == null)
-      {
-        context.Write(-1);
-      }
-      else
-      {
-        context.Write(AuthoritiesDone.Count);
-        AuthoritiesDone.ForEach(authorityId => context.Write(authorityId));
-      }
+      context.WriteList(this.AuthoritiesDone);
     }
 
     /// <summary>
@@ -77,18 +68,7 @@ namespace Pirate.PiVote.Rpc
     {
       base.Deserialize(context);
       VotingStatus = (VotingStatus)context.ReadInt32();
-
-      int count = context.ReadInt32();
-
-      if (count < 0)
-      {
-        AuthoritiesDone = null;
-      }
-      else
-      {
-        AuthoritiesDone = new List<Guid>();
-        count.Times(() => AuthoritiesDone.Add(context.ReadGuid()));
-      }
+      this.AuthoritiesDone = context.ReadGuidList();
     }
   }
 }

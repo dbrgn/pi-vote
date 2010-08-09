@@ -62,7 +62,10 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.WriteList(this.votingIds);
+
+      context.Write(this.votingIds != null);
+      if (this.votingIds != null)
+        context.WriteList(this.votingIds);
     }
 
     /// <summary>
@@ -72,7 +75,15 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.votingIds = context.ReadGuidList();
+
+      if (context.ReadBoolean())
+      {
+        this.votingIds = context.ReadGuidList();
+      }
+      else
+      {
+        this.votingIds = null;
+      }
     }
 
     /// <summary>

@@ -220,13 +220,14 @@ namespace Pirate.PiVote.Client
         {
           Status.SetMessage(this.exception.Message, MessageType.Error);
         }
-
-        OnUpdateWizard();
       }
       else
       {
         Status.SetMessage(Resources.StartReady, MessageType.Success);
+        this.canNext = true;
       }
+
+      OnUpdateWizard();
     }
 
     private void GetCertificateStorageComplete(Certificate serverCertificate, Exception exception)
