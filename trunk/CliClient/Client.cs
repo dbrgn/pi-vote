@@ -114,7 +114,7 @@ namespace Pirate.PiVote.CliClient
     private void Connect()
     {
       this.client = new TcpRpcClient();
-      ((TcpRpcClient)this.client).Connect(IPAddress.Loopback);
+      ((TcpRpcClient)this.client).Connect(new IPEndPoint(IPAddress.Loopback, 4242));
       //this.client = new VoteServiceSoapClient();
     }
 
@@ -314,7 +314,7 @@ namespace Pirate.PiVote.CliClient
       this.voterClient.ActivateVoter();
       this.voterCertificate = this.voters[voterIndex];
 
-      this.voterClient.Connect(IPAddress.Loopback, Connected);
+      this.voterClient.Connect(new IPEndPoint(IPAddress.Loopback, 4242), Connected);
     }
 
     private void Connected(Exception exception)

@@ -25,11 +25,6 @@ namespace Pirate.PiVote.Rpc
   public class TcpRpcClient : IBinaryRpcProxy
   {
     /// <summary>
-    /// Server port.
-    /// </summary>
-    private const int Port = 4242;
-
-    /// <summary>
     /// TCP client.
     /// </summary>
     private TcpClient client;
@@ -50,10 +45,10 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Connects the client to the server.
     /// </summary>
-    /// <param name="address">Server IP address.</param>
-    public void Connect(IPAddress address)
+    /// <param name="serverEndPoint">Server IP address and port.</param>
+    public void Connect(IPEndPoint serverEndPoint)
     {
-      this.client.Connect(new IPEndPoint(address, Port));
+      this.client.Connect(serverEndPoint);
       this.stream = this.client.GetStream();
     }
 

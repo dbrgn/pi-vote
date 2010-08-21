@@ -426,6 +426,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="pi-vote-client.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\ballot_200.png" />
   </ItemGroup>
   <ItemGroup>
@@ -447,6 +450,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ballot.ico" />
+    <Content Include="ballot_200.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\Success.png" />
     <None Include="Resources\Info.png" />
     <None Include="Resources\Error.png" />

@@ -462,15 +462,6 @@
   <data name="CreateVotingQuestionText" xml:space="preserve">
     <value>Text</value>
   </data>
-  <data name="StartAlphaTitle" xml:space="preserve">
-    <value>Alpha Version</value>
-  </data>
-  <data name="StartAlphaWarning" xml:space="preserve">
-    <value>Das ist eine Alpha Version dieser Software. Alle Abstimmung werden ausschliesslich zu Testzwecken durchgeführt. Bitte alle Fehler hier melden:</value>
-  </data>
-  <data name="StartTitle" xml:space="preserve">
-    <value>eVoting der Piratenpartei Schweiz</value>
-  </data>
   <data name="WizardDoneButton" xml:space="preserve">
     <value>&amp;Fertig</value>
   </data>

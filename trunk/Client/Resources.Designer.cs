@@ -321,13 +321,6 @@ namespace Pirate.PiVote.Client {
             }
         }
         
-        internal static System.Drawing.Bitmap ballot_200 {
-            get {
-                object obj = ResourceManager.GetObject("ballot_200", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to &amp;Cancel.
         /// </summary>
@@ -1315,15 +1308,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to pivote.piratenpartei.ch.
-        /// </summary>
-        internal static string ServerIpAddress {
-            get {
-                return ResourceManager.GetString("ServerIpAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Signature responses were uploaded to the server..
         /// </summary>
         internal static string SignatureResponseUploaded {
@@ -1688,24 +1672,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alpha Version.
-        /// </summary>
-        internal static string StartAlphaTitle {
-            get {
-                return ResourceManager.GetString("StartAlphaTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This is an alpha version of this software. All votings are just for test purposes. Please report all bugs to:.
-        /// </summary>
-        internal static string StartAlphaWarning {
-            get {
-                return ResourceManager.GetString("StartAlphaWarning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Connection to server could not be established.
         /// </summary>
         internal static string StartConnectError {
@@ -1756,15 +1722,6 @@ namespace Pirate.PiVote.Client {
         internal static string StartTallyOnly {
             get {
                 return ResourceManager.GetString("StartTallyOnly", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pirate Party Switzerland eVoting.
-        /// </summary>
-        internal static string StartTitle {
-            get {
-                return ResourceManager.GetString("StartTitle", resourceCulture);
             }
         }
         

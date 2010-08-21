@@ -76,6 +76,7 @@
   <ItemGroup>
     <None Include="Server\pi-vote-server.cfg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

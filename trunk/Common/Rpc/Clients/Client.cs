@@ -81,9 +81,13 @@ namespace Pirate.PiVote.Rpc
       this.masterThread.Start();
     }
 
-    public void Connect(IPAddress serverIpAddress)
+    /// <summary>
+    /// Connect to the server.
+    /// </summary>
+    /// <param name="serverEndPoint">IP address and port of the server.</param>
+    public void Connect(IPEndPoint serverEndPoint)
     {
-      this.client.Connect(serverIpAddress);
+      this.client.Connect(serverEndPoint);
       this.proxy = new VotingRpcProxy(this.client);
       this.proxy.Start();
     }
@@ -179,13 +183,13 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Connect to the server.
     /// </summary>
-    /// <param name="serverIpAddress">IP address of the server.</param>
+    /// <param name="serverEndPoint">IP address and port of the server.</param>
     /// <param name="callBack">Callback upon connection.</param>
-    public void Connect(IPAddress serverIpAddress, ConnectCallBack callBack)
+    public void Connect(IPEndPoint serverEndPoint, ConnectCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new ConnectOperation(serverIpAddress, callBack));
+        this.operations.Enqueue(new ConnectOperation(serverEndPoint, callBack));
       }
     }
 

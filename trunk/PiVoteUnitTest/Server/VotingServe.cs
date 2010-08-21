@@ -45,7 +45,7 @@ namespace Pirate.PiVote.UnitTest
       CertificateStorage storage = new CertificateStorage();
       TcpRpcClient client = new TcpRpcClient();
 
-      client.Connect(IPAddress.Loopback);
+      client.Connect(new IPEndPoint(IPAddress.Loopback, 4242));
       Assert.IsTrue(client.Connected);
 
       VotingRpcProxy proxy = new VotingRpcProxy(client);

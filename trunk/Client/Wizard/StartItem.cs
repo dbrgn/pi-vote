@@ -168,10 +168,9 @@ namespace Pirate.PiVote.Client
 
       if (!Status.VotingClient.Connected)
       {
-        //IPAddress serverIpAddress = Status.ServerIpAddress;
-        IPAddress serverIpAddress = IPAddress.Loopback;
+        IPEndPoint serverEndPoint = Status.ServerEndPoint;
 
-        if (serverIpAddress == null)
+        if (serverEndPoint == null)
         {
           Status.SetMessage(Resources.StartDnsError, MessageType.Error);
           this.dnsError = true;
@@ -180,7 +179,7 @@ namespace Pirate.PiVote.Client
 
         Status.SetProgress(Resources.StartConnecting, 0d);
         this.run = true;
-        Status.VotingClient.Connect(serverIpAddress, ConnectComplete);
+        Status.VotingClient.Connect(serverEndPoint, ConnectComplete);
 
         while (this.run)
         {
@@ -247,12 +246,17 @@ namespace Pirate.PiVote.Client
     {
       base.UpdateLanguage();
 
-      this.titlelLabel.Text = Resources.StartTitle;
-      this.alphaTitleLabel.Text = Resources.StartAlphaTitle + " " + GetType().Assembly.GetName().Version.ToString();
-      this.alphaWarningLabel.Text = Resources.StartAlphaWarning;
+      this.titlelLabel.Text = Status.Config.SystemName.Text;
+      this.alphaWarningLabel.Text = Status.Config.WelcomeMessage.Text;
       this.votingRadio.Text = Resources.StartVoting;
       this.advancedOptionsRadio.Text = Resources.StartAdvancedOptions;
       this.tallyOnlyRadio.Text = Resources.StartTallyOnly;
+
+      if (!Status.Config.ImageFile.IsNullOrEmpty() &&
+        File.Exists(Path.Combine(Application.StartupPath, Status.Config.ImageFile)))
+      {
+        this.tileImage.Image = new Bitmap(Path.Combine(Application.StartupPath, Status.Config.ImageFile));
+      }
 
       if (this.canNext)
       {
@@ -287,13 +291,6 @@ namespace Pirate.PiVote.Client
       Resources.Culture = CultureInfo.CreateSpecificCulture("fr-FR");
       LibraryResources.Culture = CultureInfo.CreateSpecificCulture("fr-FR");
       OnChangeLanguage();
-    }
-
-    protected override void OnPaint(PaintEventArgs e)
-    {
-      base.OnPaint(e);
-
-      e.Graphics.DrawImage(Resources.ballot_200 , 3, 3, 200, 200);
     }
 
     private void alphaBugLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

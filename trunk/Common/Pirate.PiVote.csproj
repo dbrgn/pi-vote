@@ -96,7 +96,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Downloads\GnuMpDotNet-0.1.0-Binaries\Emil.GMP.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.2.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=6.2.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Downloads\mysql-connector-net-6.3.3-noinstall\v2\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -111,6 +114,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
+    <Compile Include="Config\ClientConfig.cs" />
+    <Compile Include="Config\IClientConfig.cs" />
     <Compile Include="Config\DummyConfig.cs" />
     <Compile Include="Config\IServerConfig.cs" />
     <Compile Include="Config\ServerConfig.cs" />

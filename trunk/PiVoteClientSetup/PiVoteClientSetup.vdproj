@@ -45,6 +45,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_479F2E62E66744AAABD00C329A26BC77"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_56C46E5B886E4236AB4E1CE337A02255"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -64,6 +70,12 @@
         "Entry"
         {
         "MsmKey" = "8:_A414786230C1480C9C152EA0B339FD0A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A634C406AAA64ADBB34F9E3A831E7A1C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -94,31 +106,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FA30018B8A957768C04BEF6F03740EBA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5D85095738773B5106D4CCE47C78D787"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3C1E80C8D343052811A7D5A57917A042"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0583866E7D9E44529A28AFFDBA13A654"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_360A6B59FE6549E68F034A5EF8E3949F"
+        "OwnerKey" = "8:_B34CBB58876843B7BBE1094F48AFF3E0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -130,7 +118,31 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B34CBB58876843B7BBE1094F48AFF3E0"
+        "OwnerKey" = "8:_360A6B59FE6549E68F034A5EF8E3949F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_0583866E7D9E44529A28AFFDBA13A654"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3C1E80C8D343052811A7D5A57917A042"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5D85095738773B5106D4CCE47C78D787"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_FA30018B8A957768C04BEF6F03740EBA"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -358,6 +370,11 @@
             "AssemblyAsmDisplayName" = "8:Pirate.PiVote, Version=0.2.5.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_3C1E80C8D343052811A7D5A57917A042"
+                    {
+                    "Name" = "8:Pirate.PiVote.DLL"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Pirate.PiVote.DLL"
             "TargetName" = "8:"
@@ -375,6 +392,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_479F2E62E66744AAABD00C329A26BC77"
+            {
+            "SourcePath" = "8:..\\Client\\ballot_200.png"
+            "TargetName" = "8:ballot_200.png"
+            "Tag" = "8:"
+            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_56C46E5B886E4236AB4E1CE337A02255"
@@ -463,6 +500,26 @@
             {
             "SourcePath" = "8:..\\Common\\root.pi-cert"
             "TargetName" = "8:root.pi-cert"
+            "Tag" = "8:"
+            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A634C406AAA64ADBB34F9E3A831E7A1C"
+            {
+            "SourcePath" = "8:..\\Client\\pi-vote-client.cfg"
+            "TargetName" = "8:pi-vote-client.cfg"
             "Tag" = "8:"
             "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
             "Condition" = "8:"

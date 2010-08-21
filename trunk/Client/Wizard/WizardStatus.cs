@@ -20,7 +20,11 @@ namespace Pirate.PiVote.Client
 {
   public class WizardStatus
   {
+    private const string ClientConfigFileName = "pi-vote-client.cfg"; 
+
     private const string DataFolder = "PiVote";
+
+    public IClientConfig Config { get; private set; }
 
     public CertificateStorage CertificateStorage { get; set; }
 
@@ -64,13 +68,19 @@ namespace Pirate.PiVote.Client
       }
     }
 
-    public IPAddress ServerIpAddress
+    public IPEndPoint ServerEndPoint
     {
       get
       {
         try
         {
-          return Dns.GetHostEntry(Resources.ServerIpAddress).AddressList.First();
+#if DEBUG
+          IPAddress ipAddress = IPAddress.Loopback;
+#else
+          IPAddress ipAddress = Dns.GetHostEntry(Config.ServerAddress).AddressList.First();
+#endif
+
+          return new IPEndPoint(ipAddress, Config.ServerPort);
         }
         catch (System.Net.Sockets.SocketException)
         {
@@ -88,6 +98,8 @@ namespace Pirate.PiVote.Client
       this.dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), DataFolder);
       if (!Directory.Exists(DataPath))
         Directory.CreateDirectory(dataPath);
+
+      Config = new ClientConfig(ClientConfigFileName);
     }
 
     public void SetMessage(string message, MessageType type)

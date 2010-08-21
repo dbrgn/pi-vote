@@ -34,9 +34,9 @@ namespace Pirate.PiVote.Rpc
     private class ConnectOperation : Operation
     {
       /// <summary>
-      /// IP address of the server.
+      /// IP address and port of the server.
       /// </summary>
-      private IPAddress serverIpAddress;
+      private IPEndPoint serverEndPoint;
 
       /// <summary>
       /// Callback upon completion.
@@ -46,11 +46,11 @@ namespace Pirate.PiVote.Rpc
       /// <summary>
       /// Create a new connect operation.
       /// </summary>
-      /// <param name="serverIpAddress">IP address of server.</param>
+      /// <param name="serverEndPoint">IP address and port of server.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public ConnectOperation(IPAddress serverIpAddress, ConnectCallBack callBack)
+      public ConnectOperation(IPEndPoint serverEndPoint, ConnectCallBack callBack)
       {
-        this.serverIpAddress = serverIpAddress;
+        this.serverEndPoint = serverEndPoint;
         this.callBack = callBack;
       }
 
@@ -69,7 +69,7 @@ namespace Pirate.PiVote.Rpc
 
           if (!client.client.Connected)
           {
-            client.Connect(this.serverIpAddress);
+            client.Connect(this.serverEndPoint);
           }
 
           Progress = 1d;

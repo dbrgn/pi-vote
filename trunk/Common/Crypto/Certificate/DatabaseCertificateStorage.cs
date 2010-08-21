@@ -132,7 +132,7 @@ namespace Pirate.PiVote.Crypto
     /// Is the certificate with this id in storage.
     /// </summary>
     /// <param name="id">Certificate id.</param>
-    /// <returns>Is it there?</returns>
+    /// <returns>Is it there@</returns>
     public bool Has(Guid id)
     {
       MySqlCommand command = new MySqlCommand("SELECT Id FROM certificate WHERE Id = @Id", DbConnection);
@@ -149,7 +149,7 @@ namespace Pirate.PiVote.Crypto
     /// Is this CRL in this storage.
     /// </summary>
     /// <param name="revocationList">Revocation list in question.</param>
-    /// <returns>Was it already added?</returns>
+    /// <returns>Was it already added@</returns>
     public bool Has(RevocationList revocationList)
     {
       MySqlCommand command = new MySqlCommand("SELECT count(*) FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", DbConnection);
@@ -201,6 +201,8 @@ namespace Pirate.PiVote.Crypto
         command.Parameters.AddWithValue("@Value", certificate.ToBinary());
         command.Parameters.AddWithValue("@Root", 1);
         command.ExecuteNonQuery();
+
+        Console.WriteLine("done");
       }
       else
       {
@@ -219,7 +221,7 @@ namespace Pirate.PiVote.Crypto
     /// Checks weather the certificate is a root certificate.
     /// </summary>
     /// <param name="certificate">Certificate to check.</param>
-    /// <returns>Is it a root?</returns>
+    /// <returns>Is it a root@</returns>
     public bool IsRootCertificate(Certificate certificate)
     {
       return certificate.IsIdentic(this.rootCertificate);
