@@ -11,33 +11,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Pirate.PiVote.Serialization;
+using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
-  /// <summary>
-  /// Message to or from RPC server.
-  /// </summary>
-  public abstract class RpcMessage : Serializable
+  public class EchoRequest : RpcRequest<EchoServer, EchoResponse>
   {
-    /// <summary>
-    /// Id of the request.
-    /// </summary>
-    public Guid RequestId { get; private set; }
+    private string message;
 
-    /// <summary>
-    /// Creates a new RPC message.
-    /// </summary>
-    /// <param name="requestId">Id of the request.</param>
-    public RpcMessage(Guid requestId)
+    public EchoRequest(
+      Guid requestId, string message)
+      : base(requestId)
     {
-      RequestId = requestId;
+      this.message = message;
     }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public RpcMessage(DeserializeContext context)
+    public EchoRequest(DeserializeContext context)
       : base(context)
     { }
 
@@ -48,7 +41,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(RequestId);
+      context.Write(this.message);
     }
 
     /// <summary>
@@ -58,7 +51,18 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      RequestId = context.ReadGuid();
+      this.message = context.ReadString();
+    }
+
+    /// <summary>
+    /// Executes a RPC request.
+    /// </summary>
+    /// <param name="server">Server to execute the request on.</param>
+    /// <param name="signer">Signer of the RPC request.</param>
+    /// <returns>Response to the request.</returns>
+    protected override EchoResponse Execute(EchoServer server)
+    {
+      return new EchoResponse(RequestId, server.Echo(this.message));
     }
   }
 }

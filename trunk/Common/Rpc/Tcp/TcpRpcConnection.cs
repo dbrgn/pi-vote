@@ -47,7 +47,7 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Voting RPC server.
     /// </summary>
-    private VotingRpcServer rpcServer;
+    private RpcServer rpcServer;
 
     /// <summary>
     /// Time of last activity on this connection.
@@ -80,7 +80,7 @@ namespace Pirate.PiVote.Rpc
     /// <param name="client">TCP client.</param>
     /// <param name="rpcServer">Voting RPC server.</param>
     /// <param name="clientTimeOut">Time until idle client is disconnected in seconds.</param>
-    public TcpRpcConnection(TcpClient client, VotingRpcServer rpcServer, double clientTimeOut)
+    public TcpRpcConnection(TcpClient client, RpcServer rpcServer, double clientTimeOut)
     {
       this.clientTimeOut = clientTimeOut;
       this.lastActivity = DateTime.Now;

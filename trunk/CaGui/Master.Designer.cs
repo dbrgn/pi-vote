@@ -232,7 +232,7 @@
       this.entryListView.Location = new System.Drawing.Point(0, 31);
       this.entryListView.MultiSelect = false;
       this.entryListView.Name = "entryListView";
-      this.entryListView.Size = new System.Drawing.Size(1050, 403);
+      this.entryListView.Size = new System.Drawing.Size(1050, 402);
       this.entryListView.TabIndex = 1;
       this.entryListView.UseCompatibleStateImageBehavior = false;
       this.entryListView.View = System.Windows.Forms.View.Details;
@@ -319,7 +319,7 @@
       // 
       this.splitContainer1.Panel2.Controls.Add(this.crlListView);
       this.splitContainer1.Size = new System.Drawing.Size(1050, 647);
-      this.splitContainer1.SplitterDistance = 435;
+      this.splitContainer1.SplitterDistance = 434;
       this.splitContainer1.TabIndex = 2;
       // 
       // searchDateActive
@@ -388,7 +388,7 @@
       this.crlListView.Location = new System.Drawing.Point(0, 0);
       this.crlListView.MultiSelect = false;
       this.crlListView.Name = "crlListView";
-      this.crlListView.Size = new System.Drawing.Size(1050, 208);
+      this.crlListView.Size = new System.Drawing.Size(1050, 209);
       this.crlListView.TabIndex = 2;
       this.crlListView.UseCompatibleStateImageBehavior = false;
       this.crlListView.View = System.Windows.Forms.View.Details;

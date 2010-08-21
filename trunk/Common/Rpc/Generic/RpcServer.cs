@@ -19,8 +19,20 @@ namespace Pirate.PiVote.Rpc
   /// </summary>
   public abstract class RpcServer
   {
-    public abstract Logger Logger { get; }
+    public abstract ILogger Logger { get; }
 
-    public abstract ServerConfig ServerConfig { get; }
+    public abstract IServerConfig ServerConfig { get; }
+
+    /// <summary>
+    /// Lets the server do something when it's idle.
+    /// </summary>
+    public abstract void Idle();
+
+    /// <summary>
+    /// Excecutes a RPC request.
+    /// </summary>
+    /// <param name="requestData">Serialized request data.</param>
+    /// <returns>Serialized response data</returns>
+    public abstract byte[] Execute(byte[] requestData);
   }
 }

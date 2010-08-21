@@ -16,20 +16,16 @@ using System.Globalization;
 namespace Pirate.PiVote
 {
   /// <summary>
-  /// Config file for the voting server.
+  /// A dummy server config for testing.
   /// </summary>
-  public class ServerConfig : Config, IServerConfig
+  public class DummyConfig : IServerConfig
   {
-    public ServerConfig(string fileName)
-      : base(fileName)
-    { }
-
     /// <summary>
     /// Connection string for the MySQL database.
     /// </summary>
     public string MySqlConnectionString
     {
-      get { return ReadString("MySqlConnectionString", null); }
+      get { return "bad string"; }
     }
 
     /// <summary>
@@ -37,7 +33,7 @@ namespace Pirate.PiVote
     /// </summary>
     public int Port
     {
-      get { return ReadInt32("Port", 4242); }
+      get { return 4242; }
     }
 
     /// <summary>
@@ -45,7 +41,7 @@ namespace Pirate.PiVote
     /// </summary>
     public int WorkerCount
     {
-      get { return ReadInt32("WorkerCount", 2); }
+      get { return 2; }
     }
 
     /// <summary>
@@ -53,7 +49,7 @@ namespace Pirate.PiVote
     /// </summary>
     public int WorkerShortWait
     {
-      get { return ReadInt32("WorkerShortWait", 1); }
+      get { return 1; }
     }
 
     /// <summary>
@@ -61,7 +57,7 @@ namespace Pirate.PiVote
     /// </summary>
     public int WorkerLongWait
     {
-      get { return ReadInt32("WorkerLongWait", 100); }
+      get { return 100; }
     }
 
     /// <summary>
@@ -69,7 +65,7 @@ namespace Pirate.PiVote
     /// </summary>
     public double SqlKeepAliveTime
     {
-      get { return ReadDouble("SqlKeepAliveTime", 300d); }
+      get { return 300d; }
     }
 
     /// <summary>
@@ -77,14 +73,14 @@ namespace Pirate.PiVote
     /// </summary>
     public double ClientTimeOut
     {
-      get { return ReadDouble("ClientTimeOut", 120d); }
+      get { return 120d; }
     }
     /// <summary>
     /// DNS or IP address of the mail server.
     /// </summary>
     public string MailServerAddress
     {
-      get { return ReadString("MailServerAddress", "smtp.b.c"); }
+      get { return "smtp.b.c"; }
     }
 
     /// <summary>
@@ -92,7 +88,7 @@ namespace Pirate.PiVote
     /// </summary>
     public int MailServerPort
     {
-      get { return ReadInt32("MailServerPort", 25); }
+      get { return 25; }
     }
     
     /// <summary>
@@ -100,7 +96,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailAdminAddress
     {
-      get { return ReadString("MailAdminAddress", "a@b.c"); }
+      get { return "a@b.c"; }
     }
 
     /// <summary>
@@ -108,7 +104,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailAuthorityAddress
     {
-      get { return ReadString("MailAuthorityAddress", "a@b.c"); }
+      get { return "a@b.c"; }
     }
 
     /// <summary>
@@ -116,7 +112,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailRequestSubject
     {
-      get { return ReadString("MailRequestSubject", "Insert subject here."); }
+      get { return "Insert subject here."; }
     }
 
     /// <summary>
@@ -124,7 +120,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailRequestDepositedBody
     {
-      get { return ReadString("MailRequestDepositedBody", "Insert message here."); }
+      get { return "Insert subject here."; }
     }
 
     /// <summary>
@@ -132,7 +128,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailRequestDeclinedBody
     {
-      get { return ReadString("MailRequestDeclinedBody", "Insert message here."); }
+      get { return "Insert subject here."; }
     }
 
     /// <summary>
@@ -140,7 +136,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailRequestApprovedBody
     {
-      get { return ReadString("MailRequestApprovedBody", "Insert message here."); }
+      get { return "Insert subject here."; }
     }
 
     /// <summary>
@@ -148,7 +144,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailAdminNewRequestSubject
     {
-      get { return ReadString("MailAdminNewRequestSubject", "Insert subject here."); }
+      get { return "Insert subject here."; }
     }
 
     /// <summary>
@@ -156,7 +152,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailAdminNewRequestBody
     {
-      get { return ReadString("MailAdminNewRequestBody", "Insert message here."); }
+      get { return "Insert subject here."; }
     }
 
     /// <summary>
@@ -164,7 +160,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailAdminVotingStatusSubject
     {
-      get { return ReadString("MailAdminVotingStatusSubject", "Insert subject here."); }
+      get { return "Insert subject here."; }
     }
 
     /// <summary>
@@ -172,7 +168,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailAdminVotingStatusBody
     {
-      get { return ReadString("MailAdminVotingStatusBody", "Insert message here."); }
+      get { return "Insert subject here."; }
     }
 
     /// <summary>
@@ -180,7 +176,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailAdminAuthorityActivitySubject
     {
-      get { return ReadString("MailAdminAuthorityActivitySubject", "Insert subject here."); }
+      get { return "Insert subject here."; }
     }
 
     /// <summary>
@@ -188,7 +184,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailAdminAuthorityActivityBody
     {
-      get { return ReadString("MailAdminAuthorityActivityBody", "Insert message here."); }
+      get { return "Insert subject here."; }
     }
 
     /// <summary>
@@ -196,7 +192,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailAuthorityActionRequiredSubject
     {
-      get { return ReadString("MailAuthorityActionRequiredSubject", "Insert subject here."); }
+      get { return "Insert subject here."; }
     }
 
     /// <summary>
@@ -204,43 +200,7 @@ namespace Pirate.PiVote
     /// </summary>
     public string MailAuthorityActionRequiredBody
     {
-      get { return ReadString("MailAuthorityActionRequiredBody", "Insert message here."); }
-    }
-
-    protected override void Validate()
-    {
-      string dummy = null;
-
-      dummy = MailAdminAddress;
-      dummy = MailAdminNewRequestBody;
-      dummy = MailAdminNewRequestSubject;
-      dummy = MailAuthorityAddress;
-      dummy = MailRequestApprovedBody;
-      dummy = MailRequestDeclinedBody;
-      dummy = MailRequestSubject;
-      dummy = MailServerAddress;
-      dummy = MailAdminAuthorityActivityBody;
-      dummy = MailAdminAuthorityActivitySubject;
-      dummy = MailAdminVotingStatusBody;
-      dummy = MailAdminVotingStatusSubject;
-      dummy = MailServerPort.ToString();
-      dummy = MailAuthorityActionRequiredBody;
-      dummy = MailAuthorityActionRequiredSubject;
-
-      dummy = Port.ToString();
-      dummy = WorkerCount.ToString();
-      dummy = WorkerShortWait.ToString();
-      dummy = WorkerLongWait.ToString();
-      dummy = SqlKeepAliveTime.ToString();
-      dummy = ClientTimeOut.ToString();
-
-      Save();
-
-      if (MySqlConnectionString.IsNullOrEmpty())
-      {
-        Save();
-        throw new InvalidDataException("The MySQL connection string in the config file is not valid");
-      }
+      get { return "Insert subject here."; }
     }
   }
 }

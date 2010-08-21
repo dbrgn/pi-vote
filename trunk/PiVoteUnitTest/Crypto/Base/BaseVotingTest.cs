@@ -7,7 +7,7 @@ using Pirate.PiVote;
 using Pirate.PiVote.Crypto;
 using Emil.GMP;
 
-namespace PiVoteUnitTest
+namespace Pirate.PiVote.UnitTest
 {
   [TestClass]
   public class BaseVotingTest
@@ -29,29 +29,37 @@ namespace PiVoteUnitTest
     {
     }
 
-    [TestMethod]
+    [DeploymentItem("libgmp-3.dll"), TestMethod]
     public void VotingTest()
     {
-      List<Authority> auths = new List<Authority>();
+      Dictionary<int, Authority> auths = new Dictionary<int, Authority>();
 
       for (int authIndex = 1; authIndex <= 5; authIndex++)
       {
-        auths.Add(new Authority(authIndex, this.parameters));
+        auths.Add(authIndex, new Authority(authIndex, this.parameters));
       }
 
-      auths.ForEach(a => a.CreatePolynomial());
+      auths.Values.Foreach(a => a.CreatePolynomial());
 
       var verVals = new List<List<VerificationValue>>();
 
       for (int authIndex = 1; authIndex <= 5; authIndex++)
       {
-        verVals.Add(new List<VerificationValue>(auths.Select(a => a.VerificationValue(authIndex))));
+        Authority auth = auths[authIndex];
+        var authVerVals = new List<VerificationValue>();
+
+        for (int valueIndex = 0; valueIndex <= parameters.Thereshold; valueIndex++)
+        {
+          authVerVals.Add(auth.VerificationValue(valueIndex));
+        }
+
+        verVals.Add(authVerVals);
       }
 
       for (int authIndex = 1; authIndex <= 5; authIndex++)
       {
         Authority auth = auths[authIndex];
-        var shares = new List<Share>(auths.Select(a => a.Share(authIndex)));
+        var shares = new List<Share>(auths.Values.Select(a => a.Share(authIndex)));
         Assert.IsTrue(auth.VerifySharing(shares, verVals));
       }
     }

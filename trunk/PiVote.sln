@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PiVoteClientSetup", "PiVoteClientSetup\PiVoteClientSetup.vdproj", "{6A2B0419-7BAA-41F3-9C45-39D8D91842A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiVoteUnitTest", "PiVoteUnitTest\PiVoteUnitTest.csproj", "{AB6C9A36-7FED-4C78-BF20-C0BCDA93D499}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirate.PiVote.UnitTest", "PiVoteUnitTest\Pirate.PiVote.UnitTest.csproj", "{AB6C9A36-7FED-4C78-BF20-C0BCDA93D499}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManager", "ResourceManager\ResourceManager.csproj", "{512BE396-1DAB-415B-9A19-BBD5F4061035}"
 EndProject

@@ -28,12 +28,12 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Logs information to file.
     /// </summary>
-    private Logger Logger { get { return Server.Logger; } }
+    private ILogger Logger { get { return Server.Logger; } }
 
     /// <summary>
     /// Configuration of the server.
     /// </summary>
-    private ServerConfig ServerConfig { get { return Server.ServerConfig; } }
+    private IServerConfig ServerConfig { get { return Server.ServerConfig; } }
 
     /// <summary>
     /// Sends mails to users;

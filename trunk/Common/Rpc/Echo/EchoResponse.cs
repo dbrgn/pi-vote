@@ -10,34 +10,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  /// <summary>
-  /// Message to or from RPC server.
-  /// </summary>
-  public abstract class RpcMessage : Serializable
+  public class EchoResponse : RpcResponse
   {
-    /// <summary>
-    /// Id of the request.
-    /// </summary>
-    public Guid RequestId { get; private set; }
+    public string Message { get; set; }
+
+    public EchoResponse(Guid requestId, string message)
+      : base(requestId)
+    {
+      Message = message;
+    }
 
     /// <summary>
-    /// Creates a new RPC message.
+    /// Create a failure response to request.
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
-    public RpcMessage(Guid requestId)
-    {
-      RequestId = requestId;
-    }
+    /// <param name="exception">Exception that occured when executing the request.</param>
+    public EchoResponse(Guid requestId, PiException exception)
+      : base(requestId, exception)
+    { }
 
     /// <summary>
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public RpcMessage(DeserializeContext context)
+    public EchoResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -48,7 +49,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(RequestId);
+      context.Write(Message);
     }
 
     /// <summary>
@@ -58,7 +59,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      RequestId = context.ReadGuid();
+      Message = context.ReadString();
     }
   }
 }

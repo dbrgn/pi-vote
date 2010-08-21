@@ -43,7 +43,7 @@ namespace Pirate.PiVote.Crypto
     /// Creates a new encrypted vote.
     /// </summary>
     /// <remarks>
-    /// Still need non-interactive zero-knowledge proof of vote being 0 or 1.
+    /// Includes zero-knowledge proof of vote being 0 or 1.
     /// Still need non-interactive zero-knowledge proof of sum of votes.
     /// </remarks>
     /// <param name="votum">Actual vote.</param>
@@ -68,11 +68,46 @@ namespace Pirate.PiVote.Crypto
       //dividing partial deciphers for linear combinations by 2, 3 and 4.
       Ciphertext = (publicKey.PowerMod(nonce * 12, P) * parameters.F.PowerMod(votum, P)).Mod(P);
 
-      this.RangeProves = new List<RangeProof>();
+      RangeProves = new List<RangeProof>();
       for (int proofIndex = 0; proofIndex < parameters.ProofCount; proofIndex++)
       {
-        this.RangeProves.Add(new RangeProof(votum, nonce * 12, this, publicKey, parameters));
+        RangeProves.Add(new RangeProof(votum, nonce * 12, this, publicKey, parameters));
         progress.Add(1d / (double)parameters.ProofCount);
+      }
+    }
+
+    /// <summary>
+    /// Creates a new encrypted vote with an invalid proof.
+    /// </summary>
+    /// <remarks>
+    /// Includes invalid zero-knowledge proves of vote being 0 or 1 when it is not.
+    /// </remarks>
+    /// <param name="votum">Actual vote.</param>
+    /// <param name="parameters">Cryptographic parameters.</param>
+    /// <param name="publicKey">Public key of the authorities.</param>
+    /// <param name="fakeType">What kind of a fake?</param>
+    public Vote(int votum, BigInt nonce, BaseParameters parameters, BigInt publicKey, FakeType fakeType)
+    {
+      if (votum.InRange(0, 1))
+        throw new ArgumentException("Cannot create a invalid proof of a valid votum.");
+      if (nonce == null)
+        throw new ArgumentNullException("nonce");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+      if (publicKey == null)
+        throw new ArgumentNullException("publicKey");
+
+      P = parameters.P;
+      HalfKey = parameters.G.PowerMod(nonce, P);
+
+      //The 12 magic number is inserted to avoid division remainders when
+      //dividing partial deciphers for linear combinations by 2, 3 and 4.
+      Ciphertext = (publicKey.PowerMod(nonce * 12, P) * parameters.F.PowerMod(votum, P)).Mod(P);
+
+      RangeProves = new List<RangeProof>();
+      for (int proofIndex = 0; proofIndex < parameters.ProofCount; proofIndex++)
+      {
+        RangeProves.Add(new RangeProof(votum, nonce * 12, this, publicKey, parameters, fakeType));
       }
     }
 
@@ -91,9 +126,19 @@ namespace Pirate.PiVote.Crypto
       P = a.P;
       HalfKey = (a.HalfKey * b.HalfKey).Mod(P);
       Ciphertext = (a.Ciphertext * b.Ciphertext).Mod(P);
+      RangeProves = new List<RangeProof>();
     }
 
-    public Vote(BigInt halfKey, BigInt ciphertext, BigInt p)
+    /// <summary>
+    /// Create a vote without proofs.
+    /// </summary>
+    /// <remarks>
+    /// Used to clone.
+    /// </remarks>
+    /// <param name="halfKey">Halfkey ot the vote.</param>
+    /// <param name="ciphertext">Ciphertext of the vote.</param>
+    /// <param name="p">Prime number defining modular arithmetic.</param>
+    private Vote(BigInt halfKey, BigInt ciphertext, BigInt p)
     {
       if (halfKey == null)
         throw new ArgumentNullException("halfKey");
@@ -105,6 +150,7 @@ namespace Pirate.PiVote.Crypto
       HalfKey = halfKey;
       Ciphertext = ciphertext;
       P = p;
+      RangeProves = new List<RangeProof>();
     }
 
     /// <summary>

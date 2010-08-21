@@ -7,7 +7,7 @@ using Pirate.PiVote;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Serialization;
 
-namespace PiVoteUnitTest
+namespace Pirate.PiVote.UnitTest
 {
   [TestClass]
   public class SignedTest

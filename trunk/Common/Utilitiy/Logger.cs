@@ -14,40 +14,9 @@ using System.IO;
 namespace Pirate.PiVote
 {
   /// <summary>
-  /// Levels of serverity for log entries.
-  /// </summary>
-  public enum LogLevel
-  { 
-    /// <summary>
-    /// The server cannot continue to run.
-    /// </summary>
-    Emergency = 1,
-
-    /// <summary>
-    /// The action requested by the user failed.
-    /// </summary>
-    Error = 2,
-
-    /// <summary>
-    /// There might be a problem.
-    /// </summary>
-    Warning = 3,
-
-    /// <summary>
-    /// Just some information.
-    /// </summary>
-    Info = 4,
-
-    /// <summary>
-    /// Output only for debug.
-    /// </summary>
-    Debug = 5
-  }
-
-  /// <summary>
   /// Logs interesting events of the voting server.
   /// </summary>
-  public class Logger
+  public class Logger : ILogger
   {
     public const string ServerLogFileName = "pi-vote-server.log";
 

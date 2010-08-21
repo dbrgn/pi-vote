@@ -81,18 +81,18 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// The voting RPC server.
     /// </summary>
-    private VotingRpcServer rpcServer;
+    private RpcServer rpcServer;
 
     /// <summary>
     /// Logs messages to file.
     /// </summary>
-    private Logger logger;
+    private ILogger logger;
 
     /// <summary>
     /// Create a new TCP RPC server.
     /// </summary>
     /// <param name="rpcServer">Voting RPC server.</param>
-    public TcpRpcServer(VotingRpcServer rpcServer)
+    public TcpRpcServer(RpcServer rpcServer)
     {
       this.logger = rpcServer.Logger;
 
@@ -136,6 +136,7 @@ namespace Pirate.PiVote.Rpc
       this.run = false;
       this.listenerThread.Join();
       this.workerThreads.ForEach(workerThread => workerThread.Join());
+      this.logger.Close();
     }
 
     /// <summary>

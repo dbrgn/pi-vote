@@ -86,6 +86,57 @@ namespace Pirate.PiVote.Crypto
       progress.Up();
     }
 
+    /// <summary>
+    /// Creates a new ballot for a voter.
+    /// </summary>
+    /// <param name="vota">Vota the voter wishes to cast for each option.</param>
+    /// <param name="parameters">Cryptographic parameters.</param>
+    /// <param name="publicKey">Public key of voting authorities.</param>
+    /// <param name="progress">Report progress up.</param>
+    /// <param name="fakeType">What fake to create?</param>
+    public Ballot(IEnumerable<int> vota, BaseParameters parameters, Question questionParameters, BigInt publicKey, FakeType fakeType)
+    {
+      if (vota == null)
+        throw new ArgumentNullException("vota");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+      if (publicKey == null)
+        throw new ArgumentNullException("publicKey");
+      if (vota.Count() != questionParameters.Options.Count())
+        throw new ArgumentException("Bad vota.");
+      if (!vota.All(votum => votum.InRange(0, 1)))
+        throw new ArgumentException("Bad vota.");
+      if (vota.Sum() != questionParameters.MaxVota)
+        throw new ArgumentException("Bad vota.");
+
+      Votes = new List<Vote>();
+      BigInt nonceSum = new BigInt(0);
+      Vote voteSum = null;
+
+      List<Tuple<int, BigInt, BaseParameters, BigInt>> voteWorkList = new List<Tuple<int, BigInt, BaseParameters, BigInt>>();
+
+      foreach (int votum in vota)
+      {
+        BigInt nonce = parameters.Random();
+        nonceSum += nonce;
+        voteWorkList.Add(new Tuple<int, BigInt, BaseParameters, BigInt>(votum, nonce, parameters, publicKey));
+      }
+
+      List<Vote> voteList = Parallel.Work(CreateVote, voteWorkList, null);
+
+      foreach (Vote vote in voteList)
+      {
+        voteSum = voteSum == null ? vote : voteSum + vote;
+        Votes.Add(vote);
+      }
+
+      SumProves = new List<Proof>();
+      for (int proofIndex = 0; proofIndex < parameters.ProofCount; proofIndex++)
+      {
+        SumProves.Add(new Proof(nonceSum * 12, voteSum, publicKey, parameters, fakeType));
+      }
+    }
+
     private Vote CreateVote(Tuple<int, BigInt, BaseParameters, BigInt> input, ProgressHandler progressHandler)
     {
       return new Vote(input.First, input.Second, input.Third, input.Fourth, new Progress(progressHandler));

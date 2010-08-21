@@ -62,7 +62,12 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     public bool Connected
     {
-      get { return this.client.Connected; }
+      get
+      {
+        return
+          this.client != null &&
+          this.client.Connected;
+      }
     }
 
     /// <summary>

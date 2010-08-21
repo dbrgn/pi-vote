@@ -137,6 +137,130 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Creates a new invalid range proof.
+    /// </summary>
+    /// <remarks>
+    /// Used to test proofing mechanism.
+    /// </remarks>
+    /// <param name="votum">The votum. Must NOT be 0 or 1.</param>
+    /// <param name="r">The randomness used to encrypt the vote.</param>
+    /// <param name="vote">The vote for which to generate a proof.</param>
+    /// <param name="publicKey">The public key with which the vote was encrypted.</param>
+    /// <param name="parameters">Cryptographic Parameters.</param>
+    /// <param name="fakeType">What is to be wrong?</param>
+    public RangeProof(int votum, BigInt r, Vote vote, BigInt publicKey, BaseParameters parameters, FakeType fakeType)
+    {
+      if (r == null)
+        throw new ArgumentNullException("r");
+      if (vote == null)
+        throw new ArgumentNullException("vote");
+      if (publicKey == null)
+        throw new ArgumentNullException("publicKey");
+      if (parameters == null)
+        throw new ArgumentNullException("parameters");
+
+      BigInt r0 = parameters.Random();
+      BigInt r1 = parameters.Random();
+      MemoryStream serializeStream = new MemoryStream();
+      SerializeContext serializer = new SerializeContext(serializeStream);
+      SHA512Managed sha512 = new SHA512Managed();
+
+      switch (fakeType)
+      {
+        case FakeType.BadDisjunction:
+          //The C value will not be correct as it is not considered.
+
+          //Create the fake proof.
+          C0 = (int)Prime.RandomNumber(16);
+          S0 = parameters.Random();
+          T0 = (vote.Ciphertext.DivideMod(parameters.F.PowerMod(0, parameters.P), parameters.P).PowerMod(C0, parameters.P).InvertMod(parameters.P) * publicKey.PowerMod(S0, parameters.P)).Mod(parameters.P);
+
+          //Create the fake proof.
+          C1 = (int)Prime.RandomNumber(16);
+          S1 = parameters.Random();
+          T1 = (vote.Ciphertext.DivideMod(parameters.F.PowerMod(1, parameters.P), parameters.P).PowerMod(C1, parameters.P).InvertMod(parameters.P) * publicKey.PowerMod(S1, parameters.P)).Mod(parameters.P);
+
+          //Put togeather the data to be hashed.
+          serializer.Write(vote.Ciphertext);
+          serializer.Write(vote.HalfKey);
+          serializer.Write(publicKey);
+          serializer.Write(T0);
+          serializer.Write(T1);
+          serializer.Close();
+          serializeStream.Close();
+
+          //Hash the proof data.
+          byte[] hash0 = sha512.ComputeHash(serializeStream.ToArray());
+          //Take the first 16 bits.
+          C = hash0[0] | (hash0[1] << 8);
+
+          break;
+
+        case FakeType.BadFiatShamir:
+          //The C value will not correspond to the hash.
+
+          //Create the fake proof.
+          C0 = (int)Prime.RandomNumber(16);
+          S0 = parameters.Random();
+          T0 = (vote.Ciphertext.DivideMod(parameters.F.PowerMod(0, parameters.P), parameters.P).PowerMod(C0, parameters.P).InvertMod(parameters.P) * publicKey.PowerMod(S0, parameters.P)).Mod(parameters.P);
+
+          //Create the fake proof.
+          C1 = (int)Prime.RandomNumber(16);
+          S1 = parameters.Random();
+          T1 = (vote.Ciphertext.DivideMod(parameters.F.PowerMod(1, parameters.P), parameters.P).PowerMod(C1, parameters.P).InvertMod(parameters.P) * publicKey.PowerMod(S1, parameters.P)).Mod(parameters.P);
+
+          //Put togeather the data to be hashed.
+          serializer.Write(vote.Ciphertext);
+          serializer.Write(vote.HalfKey);
+          serializer.Write(publicKey);
+          serializer.Write(T0);
+          serializer.Write(T1);
+          serializer.Close();
+          serializeStream.Close();
+
+          //Hash the proof data.
+          byte[] hash1 = sha512.ComputeHash(serializeStream.ToArray());
+          //Take the first 16 bits.
+          C = C0 + C1;
+
+          break;
+
+        case FakeType.BadPowerMod:
+
+          //Create the fake proof.
+          C1 = (int)Prime.RandomNumber(16);
+          S1 = parameters.Random();
+          T1 = (vote.Ciphertext.DivideMod(parameters.F.PowerMod(1, parameters.P), parameters.P).PowerMod(C1, parameters.P).InvertMod(parameters.P) * publicKey.PowerMod(S1, parameters.P)).Mod(parameters.P);
+
+          //First part of the real proof
+          T0 = publicKey.PowerMod(r0, parameters.P);
+
+          //Put togeather the data to be hashed.
+          serializer.Write(vote.Ciphertext);
+          serializer.Write(vote.HalfKey);
+          serializer.Write(publicKey);
+          serializer.Write(T0);
+          serializer.Write(T1);
+          serializer.Close();
+          serializeStream.Close();
+
+          //Hash the proof data.
+          byte[] hash2 = sha512.ComputeHash(serializeStream.ToArray());
+          //Take the first 16 bits.
+          C = hash2[0] | (hash2[1] << 8);
+
+          //Second part of the real proof
+          C0 = (int)((BigInt)(C - C1)).Mod(0xffff);
+          S0 = r0 + r * C0;
+
+          break;
+
+        default:
+          throw new NotSupportedException("Cannot fake in that way.");
+      }
+    }
+
+    /// <summary>
     /// Verifies a range proof.
     /// </summary>
     /// <param name="vote">The vote for which to verify the proof.</param>

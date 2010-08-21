@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pirate.PiVote;
 using Pirate.PiVote.Crypto;
 
-namespace PiVoteUnitTest
+namespace Pirate.PiVote.UnitTest
 {
   [TestClass]
   public class EncryptedTest

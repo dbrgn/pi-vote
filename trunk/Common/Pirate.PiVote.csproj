@@ -111,9 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
+    <Compile Include="Config\DummyConfig.cs" />
+    <Compile Include="Config\IServerConfig.cs" />
     <Compile Include="Config\ServerConfig.cs" />
     <Compile Include="Crypto\Base\Authority.cs" />
     <Compile Include="Crypto\Base\Ballot.cs" />
+    <Compile Include="Crypto\Base\FakeType.cs" />
     <Compile Include="Crypto\Base\ThreadedPrimeGenerator.cs" />
     <Compile Include="Crypto\Base\VerificationValue.cs" />
     <Compile Include="Crypto\Base\Proof.cs" />
@@ -212,6 +215,9 @@
     <Compile Include="Rpc\Clients\Connect.cs" />
     <Compile Include="Rpc\Clients\Operation.cs" />
     <Compile Include="Rpc\Clients\Client.cs" />
+    <Compile Include="Rpc\Echo\EchoServer.cs" />
+    <Compile Include="Rpc\Echo\EchoRequest.cs" />
+    <Compile Include="Rpc\Echo\EchoResponse.cs" />
     <Compile Include="Rpc\Generic\RpcServer.cs" />
     <Compile Include="Rpc\Generic\RpcResponse.cs" />
     <Compile Include="Rpc\Generic\RpcRequest.cs" />
@@ -270,6 +276,9 @@
     <Compile Include="Rpc\Messages\CreateVotingResponse.cs" />
     <Compile Include="Rpc\Messages\CreateVotingRequest.cs" />
     <Compile Include="Rpc\Handlers\VotingRpcServer.cs" />
+    <Compile Include="Utilitiy\DummyLogger.cs" />
+    <Compile Include="Utilitiy\ILogger.cs" />
+    <Compile Include="Utilitiy\LogLevel.cs" />
     <Compile Include="Utilitiy\Mailer.cs" />
     <Compile Include="Utilitiy\Parallel.cs" />
     <Compile Include="Utilitiy\ProgressHandler.cs" />

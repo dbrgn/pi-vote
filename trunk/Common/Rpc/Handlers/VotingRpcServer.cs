@@ -52,7 +52,7 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Server config file.
     /// </summary>
-    public override ServerConfig ServerConfig
+    public override IServerConfig ServerConfig
     {
       get { return this.serverConfig; }
     }
@@ -70,7 +70,7 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Logs messages to file.
     /// </summary>
-    public override Logger Logger { get { return this.logger; } }
+    public override ILogger Logger { get { return this.logger; } }
 
     /// <summary>
     /// Checked database connections.
@@ -93,7 +93,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     public VotingRpcServer()
     {
-      this.logger = new Logger(Logger.ServerLogFileName, LogLevel.Debug);
+      this.logger = new Logger(Pirate.PiVote.Logger.ServerLogFileName, LogLevel.Debug);
       Logger.Log(LogLevel.Info, "Voting RPC server starting...");
 
       this.serverConfig = new ServerConfig(ServerConfigFileName);
@@ -153,7 +153,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="requestData">Serialized request data.</param>
     /// <returns>Serialized response data</returns>
-    public byte[] Execute(byte[] requestData)
+    public override byte[] Execute(byte[] requestData)
     {
       Logger.Log(LogLevel.Debug, "Receiving request of {0} bytes.", requestData.Length);
 
@@ -523,7 +523,7 @@ namespace Pirate.PiVote.Rpc
     /// Called from time to time when idle.
     /// Has to keep the DB connection alive.
     /// </summary>
-    public void Idle()
+    public override void Idle()
     {
       int certificateCount = CertificateStorage.Certificates.Count();
       Logger.Log(LogLevel.Debug, "Worker idling at {0}.", certificateCount);

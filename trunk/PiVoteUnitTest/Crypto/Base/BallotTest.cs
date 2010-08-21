@@ -7,7 +7,7 @@ using Pirate.PiVote;
 using Pirate.PiVote.Crypto;
 using Emil.GMP;
 
-namespace PiVoteUnitTest
+namespace Pirate.PiVote.UnitTest
 {
   [TestClass]
   public class BallotTest
@@ -30,7 +30,7 @@ namespace PiVoteUnitTest
     {
     }
 
-    [TestMethod]
+    [DeploymentItem("libgmp-3.dll"), TestMethod]
     public void BallotVerifyTest()
     {
       for (int i = 0; i < 100; i++)
@@ -38,8 +38,22 @@ namespace PiVoteUnitTest
         this.publicKey = this.parameters.Random();
 
         Ballot ballot = new Ballot(new int[] { 0, 1, 0, 1 }, this.parameters, this.parameters.Questions.ElementAt(0), this.publicKey, new Progress(null));
-
         Assert.IsTrue(ballot.Verify(this.publicKey, this.parameters, this.parameters.Questions.ElementAt(0), new Progress(null)));
+      }
+    }
+
+    [DeploymentItem("libgmp-3.dll"), TestMethod]
+    public void BallotInvalidVerifyTest()
+    {
+      for (int i = 0; i < 100; i++)
+      {
+        this.publicKey = this.parameters.Random();
+
+        Ballot ballot0 = new Ballot(new int[] { 0, 1, 0, 1 }, this.parameters, this.parameters.Questions.ElementAt(0), this.publicKey, FakeType.BadFiatShamir);
+        Assert.IsFalse(ballot0.Verify(this.publicKey, this.parameters, this.parameters.Questions.ElementAt(0), new Progress(null)));
+
+        Ballot ballot1 = new Ballot(new int[] { 0, 1, 0, 1 }, this.parameters, this.parameters.Questions.ElementAt(0), this.publicKey, FakeType.BadPowerMod);
+        Assert.IsFalse(ballot1.Verify(this.publicKey, this.parameters, this.parameters.Questions.ElementAt(0), new Progress(null)));
       }
     }
   }
