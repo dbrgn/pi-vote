@@ -1335,7 +1335,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Certificate fingerprint:.
+        ///   Looks up a localized string similar to Fingerprint:.
         /// </summary>
         internal static string SigningRequestDocumentCertificateFingerprint {
             get {
@@ -1344,7 +1344,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Certificate id:.
+        ///   Looks up a localized string similar to Identifier:.
         /// </summary>
         internal static string SigningRequestDocumentCertificateId {
             get {
@@ -1353,7 +1353,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Certificate type:.
+        ///   Looks up a localized string similar to Type:.
         /// </summary>
         internal static string SigningRequestDocumentCertificateType {
             get {

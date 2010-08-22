@@ -60,8 +60,6 @@ namespace Pirate.PiVote.Client
           break;
       }
 
-      stringObject.Width = bounds.Width;
-
       stringObject.Draw();
 
       return stringObject.Size.Height;

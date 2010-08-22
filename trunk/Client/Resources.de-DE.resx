@@ -139,7 +139,7 @@
     <value>Zertifizierungsanfragen vom Server herunterladen</value>
   </data>
   <data name="AdminChooseUploadSignatureRessponse" xml:space="preserve">
-    <value>Antworten auf Zertifizierungsanfragen auf den Server heraufladen</value>
+    <value>Antworten auf Zertifizierungsanfragen auf den Server hochladen</value>
   </data>
   <data name="AuthorityCheckShares" xml:space="preserve">
     <value>Teile &amp;Prüfen</value>
@@ -469,10 +469,10 @@
     <value>□ Akzeptiert, gültig bis __________________________</value>
   </data>
   <data name="SigningRequestDocumentCertificateFingerprint" xml:space="preserve">
-    <value>Fingerprint des Zertifikats:</value>
+    <value>Fingerprint:</value>
   </data>
   <data name="SigningRequestDocumentCertificateId" xml:space="preserve">
-    <value>Id des Zertifikats:</value>
+    <value>Kennung:</value>
   </data>
   <data name="SigningRequestDocumentEmailAddress" xml:space="preserve">
     <value>Email Adresse:</value>
@@ -532,13 +532,13 @@
     <value>Die Abstimmung wurde erfolgreich heruntergeladen</value>
   </data>
   <data name="CertificateStorageUploaded" xml:space="preserve">
-    <value>Heraufladen des Zertifikatsspeichers komplett</value>
+    <value>Hochladen des Zertifikatsspeichers komplett</value>
   </data>
   <data name="OpenCertificateStorageDialog" xml:space="preserve">
     <value>Zertifikatsspeicher öffnen</value>
   </data>
   <data name="AdminChooseUploadCertificateStorage" xml:space="preserve">
-    <value>Zertifikatsspeicher auf den Server heraufladen...</value>
+    <value>Zertifikatsspeicher auf den Server hochladen...</value>
   </data>
   <data name="SigningRequestDocumentSignThirdAuthority" xml:space="preserve">
     <value>Dritte Autorität</value>
@@ -572,7 +572,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
     <value>&amp;Drucken</value>
   </data>
   <data name="SimpleChooseCertificateUploadButton" xml:space="preserve">
-    <value>&amp;Heraufladen</value>
+    <value>&amp;Hochladen</value>
   </data>
   <data name="CreateCertificateEmailAddress" xml:space="preserve">
     <value>E-Mail Adresse:</value>
@@ -653,7 +653,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
     <value>□ Widerrufen, in anderen Kanton umgezogen</value>
   </data>
   <data name="SigningRequestDocumentCertificateType" xml:space="preserve">
-    <value>Zertifikatstyp:</value>
+    <value>Typ:</value>
   </data>
   <data name="SigningRequestDocumentRefusedNotFx" xml:space="preserve">
     <value>□ Verweigert, nicht im Amt</value>

@@ -18,7 +18,8 @@ namespace Pirate.PiVote.Client
 {
   public class SignatureRequestDocument : PrintDocument
   {
-    private const string FontFace = "Arial";
+    private const string FontFace = "DejaVu Sans";
+    private const int BaseFontSize = 12;
 
     private SignatureRequest signatureRequest;
     private Certificate certificate;
@@ -47,11 +48,11 @@ namespace Pirate.PiVote.Client
       this.top = e.MarginBounds.Top;
 
       PrintHeader(Snippet(e.MarginBounds, 50f));
-      PrintData(Snippet(e.MarginBounds, 250f));
-      PrintRequest(Snippet(e.MarginBounds, 200f));
-      PrintResponse(Snippet(e.MarginBounds, 200f));
-      PrintRevoke(Snippet(e.MarginBounds, 200f));
-      PrintFooter(Snippet(e.MarginBounds, 50f));
+      PrintData(Snippet(e.MarginBounds, 300f));
+      PrintRequest(Snippet(e.MarginBounds, 220f));
+      PrintResponse(Snippet(e.MarginBounds, 220f));
+      PrintRevoke(Snippet(e.MarginBounds, 220f));
+      PrintFooter(Snippet(e.MarginBounds, 10f));
 
       e.HasMorePages = false;
     }
@@ -68,7 +69,7 @@ namespace Pirate.PiVote.Client
     private void PrintHeader(RectangleF bounds)
     {
       float space = 2f;
-      Font headerFont = new Font(FontFace, 14, FontStyle.Bold);
+      Font headerFont = new Font(FontFace, BaseFontSize + 2, FontStyle.Bold);
 
       SizeF partySize = graphics.MeasureString(Resources.SigningRequestDocumentHeaderRight, headerFont);
 
@@ -79,9 +80,9 @@ namespace Pirate.PiVote.Client
 
     private void PrintData(RectangleF bounds)
     {
-      Table table = new Table(new Font(FontFace, 12));
-      table.AddColumn(240f);
-      table.AddColumn(bounds.Width - 240f);
+      Table table = new Table(new Font(FontFace, BaseFontSize));
+      table.AddColumn(200f);
+      table.AddColumn(bounds.Width - 200f);
 
       table.AddRow(Resources.SigningRequestDocumentRequest, 2, FontStyle.Bold);
       table.AddRow(" ", 2);
@@ -92,14 +93,19 @@ namespace Pirate.PiVote.Client
         table.AddRow(Resources.SigningRequestDocumentCanton, ((VoterCertificate)this.certificate).Canton.Text());
       table.AddRow(Resources.SigningRequestDocumentCertificateType, this.certificate.TypeText);
       table.AddRow(Resources.SigningRequestDocumentCertificateId, this.certificate.Id.ToString());
-      table.AddRow(Resources.SigningRequestDocumentCertificateFingerprint, this.certificate.Fingerprint);
+
+      string fingerprint = this.certificate.Fingerprint;
+      string fingerprintLine1 = ReworkFingerprintLine(fingerprint.Substring(0, fingerprint.Length / 2));
+      string fingerprintLine2 = ReworkFingerprintLine(fingerprint.Substring(fingerprint.Length / 2 + 1));
+      table.AddRow(Resources.SigningRequestDocumentCertificateFingerprint, fingerprintLine1);
+      table.AddRow(string.Empty, fingerprintLine2);
 
       table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
     }
 
     private void PrintRequest(RectangleF bounds)
     {
-      Font font = new Font(FontFace, 12);
+      Font font = new Font(FontFace, BaseFontSize);
       float eights = bounds.Width / 8f;
 
       SignObject requesterSign = new SignObject(this.graphics, Resources.SigningRequestDocumentSignRequester, Resources.SigningRequestDocumentSignSignature, Resources.SigningRequestDocumentSignDate, font);
@@ -119,12 +125,25 @@ namespace Pirate.PiVote.Client
       thirdAuthoritySign.Draw();
     }
 
+    private string ReworkFingerprintLine(string line)
+    {
+      string[] parts = line.Split(new string[] { " " }, StringSplitOptions.None);
+      string newLine = string.Empty;
+
+      for (int index = 0; index < parts.Length; index++)
+      {
+        newLine += parts[index] + ((index % 2) == 1 ? " " : string.Empty);
+      }
+
+      return newLine;
+    }
+
     private void PrintResponse(RectangleF bounds)
     {
-      Font font = new Font(FontFace, 12);
+      Font font = new Font(FontFace, BaseFontSize);
 
       Table table = new Table(font);
-      table.AddColumn(bounds.Width / 12f * 9f);
+      table.AddColumn(bounds.Width);
       table.AddRow(Resources.SigningRequestDocumentAccepted);
       table.AddRow(Resources.SigningRequestDocumentRefusedFingerprintMismatch);
       if (this.certificate is VoterCertificate)
@@ -145,10 +164,10 @@ namespace Pirate.PiVote.Client
 
     private void PrintRevoke(RectangleF bounds)
     {
-      Font font = new Font(FontFace, 12);
+      Font font = new Font(FontFace, BaseFontSize);
 
       Table table = new Table(font);
-      table.AddColumn(bounds.Width / 12f * 9f);
+      table.AddColumn(bounds.Width);
       table.AddRow(Resources.SigningRequestDocumentRevokedForgotten);
       table.AddRow(Resources.SigningRequestDocumentRevokedLost);
       table.AddRow(Resources.SigningRequestDocumentRevokedStolen);

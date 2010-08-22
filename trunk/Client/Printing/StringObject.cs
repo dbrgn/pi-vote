@@ -20,8 +20,6 @@ namespace Pirate.PiVote.Client
   {
     private Graphics graphics;
 
-    public float Width { get; set; }
-
     public string Text { get; set; }
 
     public Font Font { get; set; }
@@ -30,7 +28,13 @@ namespace Pirate.PiVote.Client
 
     public PointF Position { get; set; }
 
-    public SizeF Size { get { return this.graphics.MeasureString(Text, Font, new SizeF(Width, float.MaxValue)); } }
+    public SizeF Size
+    {
+      get
+      {
+        return new SizeF(this.graphics.MeasureString(Text, Font).Width, Font.Height);
+      }
+    }
 
     public StringObject(Graphics graphics, string text, Font font)
     {
@@ -38,19 +42,11 @@ namespace Pirate.PiVote.Client
       Text = text;
       Font = font;
       Brush = Brushes.Black;
-      Width = float.MaxValue;
     }
 
     public override void Draw()
     {
-      if (Width == float.MaxValue)
-      {
-        this.graphics.DrawString(Text, Font, Brush, Position.X, Position.Y);
-      }
-      else
-      {
-        this.graphics.DrawString(Text, Font, Brush, new RectangleF(Position.X, Position.Y, Width, 10000f));
-      }
+      this.graphics.DrawString(Text, Font, Brush, Position.X, Position.Y);
     }
 
     public void SetLeftTop(float left, float top)
