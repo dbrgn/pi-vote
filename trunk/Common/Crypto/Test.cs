@@ -295,7 +295,7 @@ namespace Pirate.PiVote.Crypto
         votes.Foreach(vote => sum = sum == null ? vote : sum + vote);
 
         List<PartialDecipher> partialDeciphers = new List<PartialDecipher>();
-        auths.Foreach(authority => partialDeciphers.AddRange(authority.PartialDeciphers(sum, 0, optionIndex)));
+        auths.Foreach(authority => partialDeciphers.AddRange(authority.PartialDeciphers(1, sum, 0, optionIndex)));
 
         IEnumerable<BigInt> partialDeciphers0 = partialDeciphers
           .Where(partialDecipher => partialDecipher.GroupIndex == 1)

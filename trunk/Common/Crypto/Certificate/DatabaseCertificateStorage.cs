@@ -154,8 +154,8 @@ namespace Pirate.PiVote.Crypto
     {
       MySqlCommand command = new MySqlCommand("SELECT count(*) FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
-      command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
-      command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
+      command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom.Date.ToString("yyyy-MM-hh"));
+      command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil.Date.ToString("yyyy-MM-hh"));
       return (long)command.ExecuteScalar() > 0;
     }
 
@@ -300,8 +300,8 @@ namespace Pirate.PiVote.Crypto
     {
       MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom <= @FromDate AND ValidUntil >= @UntilDate", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", issuerId.ToByteArray());
-      command.Parameters.AddWithValue("@FromDate", date.Date);
-      command.Parameters.AddWithValue("@UntilDate", date.Date);
+      command.Parameters.AddWithValue("@FromDate", date.Date.ToString("yyyy-MM-hh"));
+      command.Parameters.AddWithValue("@UntilDate", date.Date.ToString("yyyy-MM-hh"));
 
       MySqlDataReader reader = command.ExecuteReader();
       bool isRevoked;

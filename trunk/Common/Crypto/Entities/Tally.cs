@@ -263,7 +263,7 @@ namespace Pirate.PiVote.Crypto
           {
             List<int> optionResults = new List<int>();
 
-            for (int groupIndex = 1; groupIndex < this.parameters.AuthorityCount; groupIndex++)
+            for (int groupIndex = 1; groupIndex <= this.parameters.AuthorityCount; groupIndex++)
             {
               IEnumerable<BigInt> partialDeciphersByOptionAndGroup = this.partialDeciphers
                 .Where(partialDecipher => partialDecipher.GroupIndex == groupIndex && 

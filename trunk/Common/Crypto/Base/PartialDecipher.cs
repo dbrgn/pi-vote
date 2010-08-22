@@ -19,10 +19,19 @@ namespace Pirate.PiVote.Crypto
   /// </summary>
   public class PartialDecipher : Serializable
   {
+    /// <summary>
+    /// Index of the question in question.
+    /// </summary>
     public int QuestionIndex { get;private set; }
 
+    /// <summary>
+    /// Index of the option in question.
+    /// </summary>
     public int OptionIndex { get; private set; }
 
+    /// <summary>
+    /// Index of the deciphering authority.
+    /// </summary>
     public int AuthorityIndex { get; private set; }
 
     /// <summary>
@@ -46,11 +55,12 @@ namespace Pirate.PiVote.Crypto
     /// <param name="questionIndex">Index of question in the voting.</param>
     /// <param name="optionIndex">Index of the option in the question.</param>
     /// <param name="value">Value of the partial decipher</param>
-    public PartialDecipher(int groupIndex, int questionIndex, int optionIndex, BigInt value)
+    public PartialDecipher(int authorityIndex, int groupIndex, int questionIndex, int optionIndex, BigInt value)
     {
       if (value == null)
         throw new ArgumentNullException("value");
 
+      AuthorityIndex = authorityIndex;
       QuestionIndex = questionIndex;
       GroupIndex = groupIndex;
       OptionIndex = optionIndex;

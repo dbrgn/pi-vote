@@ -346,7 +346,7 @@ namespace Pirate.PiVote.Crypto
 
         for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
         {
-          partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(this.tally.VoteSums[questionIndex][optionIndex], questionIndex, optionIndex));
+          partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(this.authority.Index, this.tally.VoteSums[questionIndex][optionIndex], questionIndex, optionIndex));
         }
       }
 
