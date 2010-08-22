@@ -74,7 +74,7 @@ namespace Pirate.PiVote.Client
       {
         try
         {
-#if DEBUG
+#if LOCAL
           IPAddress ipAddress = IPAddress.Loopback;
 #else
           IPAddress ipAddress = Dns.GetHostEntry(Config.ServerAddress).AddressList.First();

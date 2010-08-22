@@ -201,8 +201,6 @@ namespace Pirate.PiVote.Crypto
         command.Parameters.AddWithValue("@Value", certificate.ToBinary());
         command.Parameters.AddWithValue("@Root", 1);
         command.ExecuteNonQuery();
-
-        Console.WriteLine("done");
       }
       else
       {
@@ -241,8 +239,8 @@ namespace Pirate.PiVote.Crypto
 
       MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
-      command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom.Date);
-      command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil.Date);
+      command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom.ToString("yyyy-MM-hh"));
+      command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil.ToString("yyyy-MM-hh"));
       MySqlDataReader reader = command.ExecuteReader();
 
       if (!reader.Read())
@@ -251,8 +249,8 @@ namespace Pirate.PiVote.Crypto
 
         MySqlCommand insertCommand = new MySqlCommand("INSERT INTO revocationlist (IssuerId, ValidFrom, ValidUntil, Value) VALUES (@IssuerId, @ValidFrom, @ValidUntil, @Value)", DbConnection);
         insertCommand.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
-        insertCommand.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom.Date);
-        insertCommand.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil.Date);
+        insertCommand.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom.ToString("yyyy-MM-hh"));
+        insertCommand.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil.ToString("yyyy-MM-hh"));
         insertCommand.Parameters.AddWithValue("@Value", signedRevocationList.ToBinary());
         insertCommand.ExecuteNonQuery();
       }
@@ -271,8 +269,8 @@ namespace Pirate.PiVote.Crypto
 
       MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
-      command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
-      command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
+      command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom.ToString("yyyy-MM-hh"));
+      command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil.ToString("yyyy-MM-hh"));
       MySqlDataReader reader = command.ExecuteReader();
 
       if (!reader.Read())
@@ -281,8 +279,8 @@ namespace Pirate.PiVote.Crypto
 
         MySqlCommand insertCommand = new MySqlCommand("INSERT INTO revocationlist (IssuerId, ValidFrom, ValidUntil, Value) VALUES (@IssuerId, @ValidFrom, @ValidUntil, @Value)", DbConnection);
         insertCommand.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
-        insertCommand.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom);
-        insertCommand.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil);
+        insertCommand.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom.ToString("yyyy-MM-hh"));
+        insertCommand.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil.ToString("yyyy-MM-hh"));
         insertCommand.Parameters.AddWithValue("@Value", signedRevocationList.ToBinary());
         insertCommand.ExecuteNonQuery();
       }
