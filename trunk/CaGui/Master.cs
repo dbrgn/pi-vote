@@ -611,7 +611,7 @@ namespace Pirate.PiVote.CaGui
       if (dialog.ShowDialog() == DialogResult.OK)
       {
         Certificate rootCertificate = CertificateStorage.Certificates.Where(certificate => CertificateStorage.IsRootCertificate(certificate)).First();
-        rootCertificate.Save(dialog.FileName);
+        rootCertificate.OnlyPublicPart.Save(dialog.FileName);
       }
     }
 

@@ -58,7 +58,8 @@ namespace Pirate.PiVote
         this.document = new XDocument();
       }
 
-      Validate();
+      //Don't do that as it implies saving.
+      //Validate();
     }
 
     /// <summary>

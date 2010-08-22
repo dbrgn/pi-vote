@@ -10,7 +10,8 @@
 	rmif $tmp
 	mkif $tmp
 	cp -r ../client/bin/release/* $tmp/
-	rm $tmp/*vshost*
+	rmif $tmp/*vshost*
+	rmif $tmp/libgmp-3.dll
 	$name = "PiVote_Client_Linux_x86_" + $version + ".zip"
 	pushd
 	cd $tmp
