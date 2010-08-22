@@ -21,12 +21,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_11350A1BFEC2468B9B5E459E49B2332D"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_18F26FADC1A54820BF71B7F626F26142"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -45,7 +39,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_479F2E62E66744AAABD00C329A26BC77"
+        "MsmKey" = "8:_486E4EA3DE1746F2A6D07CE0F7534F92"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -53,6 +47,12 @@
         {
         "MsmKey" = "8:_56C46E5B886E4236AB4E1CE337A02255"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5C14CEDA1C0BEEC6ED410305C493E763"
+        "OwnerKey" = "8:_3C1E80C8D343052811A7D5A57917A042"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -69,13 +69,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A414786230C1480C9C152EA0B339FD0A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A634C406AAA64ADBB34F9E3A831E7A1C"
+        "MsmKey" = "8:_63C3EF8D27E7499B8D37447BE3F97830"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -87,14 +81,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D7AB44F379FC4712A9CF4C51990445DC"
+        "MsmKey" = "8:_D9CB2DA7CDE24FEAA96513A2CC8AB4B4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_FA30018B8A957768C04BEF6F03740EBA"
-        "OwnerKey" = "8:_3C1E80C8D343052811A7D5A57917A042"
+        "MsmKey" = "8:_DABE9D057F08437B933BE4A0102B96C5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E71DEBFA787E40648C0259C01834D3CD"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -136,13 +136,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5D85095738773B5106D4CCE47C78D787"
+        "OwnerKey" = "8:_5C14CEDA1C0BEEC6ED410305C493E763"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FA30018B8A957768C04BEF6F03740EBA"
+        "OwnerKey" = "8:_5D85095738773B5106D4CCE47C78D787"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -281,26 +281,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_11350A1BFEC2468B9B5E459E49B2332D"
-            {
-            "SourcePath" = "8:..\\logos\\ballot.ico"
-            "TargetName" = "8:ballot.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_18F26FADC1A54820BF71B7F626F26142"
             {
             "AssemblyRegister" = "3:1"
@@ -394,10 +374,10 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_479F2E62E66744AAABD00C329A26BC77"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_486E4EA3DE1746F2A6D07CE0F7534F92"
             {
-            "SourcePath" = "8:..\\Client\\ballot_200.png"
-            "TargetName" = "8:ballot_200.png"
+            "SourcePath" = "8:..\\build\\files-windows\\libgmp-3.dll"
+            "TargetName" = "8:libgmp-3.dll"
             "Tag" = "8:"
             "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
             "Condition" = "8:"
@@ -432,6 +412,37 @@
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5C14CEDA1C0BEEC6ED410305C493E763"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.3.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5C14CEDA1C0BEEC6ED410305C493E763"
+                    {
+                    "Name" = "8:MySql.Data.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MySql.Data.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5D85095738773B5106D4CCE47C78D787"
@@ -496,30 +507,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A414786230C1480C9C152EA0B339FD0A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_63C3EF8D27E7499B8D37447BE3F97830"
             {
-            "SourcePath" = "8:..\\Common\\root.pi-cert"
-            "TargetName" = "8:root.pi-cert"
-            "Tag" = "8:"
-            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A634C406AAA64ADBB34F9E3A831E7A1C"
-            {
-            "SourcePath" = "8:..\\Client\\pi-vote-client.cfg"
-            "TargetName" = "8:pi-vote-client.cfg"
+            "SourcePath" = "8:..\\build\\files-windows\\ballot.ico"
+            "TargetName" = "8:ballot.ico"
             "Tag" = "8:"
             "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
             "Condition" = "8:"
@@ -567,10 +558,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D7AB44F379FC4712A9CF4C51990445DC"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D9CB2DA7CDE24FEAA96513A2CC8AB4B4"
             {
-            "SourcePath" = "8:..\\Client\\bin\\Debug\\libgmp-3.dll"
-            "TargetName" = "8:libgmp-3.dll"
+            "SourcePath" = "8:..\\build\\files-windows\\ballot_200.png"
+            "TargetName" = "8:ballot_200.png"
             "Tag" = "8:"
             "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
             "Condition" = "8:"
@@ -587,21 +578,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FA30018B8A957768C04BEF6F03740EBA"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DABE9D057F08437B933BE4A0102B96C5"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:TRUE"
-            "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.2.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_FA30018B8A957768C04BEF6F03740EBA"
-                    {
-                    "Name" = "8:MySql.Data.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:MySql.Data.dll"
-            "TargetName" = "8:"
+            "SourcePath" = "8:..\\build\\files-windows\\pi-vote-client.cfg"
+            "TargetName" = "8:pi-vote-client.cfg"
             "Tag" = "8:"
             "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
             "Condition" = "8:"
@@ -615,7 +595,27 @@
             "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E71DEBFA787E40648C0259C01834D3CD"
+            {
+            "SourcePath" = "8:..\\build\\files-windows\\root.pi-cert"
+            "TargetName" = "8:root.pi-cert"
+            "Tag" = "8:"
+            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
         }
@@ -714,7 +714,7 @@
         "Keywords" = "8:eVoting, Secure"
         "ARPCOMMENTS" = "8:Secure internet voting client."
         "ARPURLINFOABOUT" = "8:http://www.pirateparty.ch"
-        "ARPPRODUCTICON" = "8:_11350A1BFEC2468B9B5E459E49B2332D"
+        "ARPPRODUCTICON" = "8:_63C3EF8D27E7499B8D37447BE3F97830"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -828,7 +828,7 @@
             "Target" = "8:_0583866E7D9E44529A28AFFDBA13A654"
             "Folder" = "8:_3FDD2400DA8A47BD8963BDD4C3770416"
             "WorkingFolder" = "8:_E55824479EB3467F94CB9C80360A0B76"
-            "Icon" = "8:_11350A1BFEC2468B9B5E459E49B2332D"
+            "Icon" = "8:_63C3EF8D27E7499B8D37447BE3F97830"
             "Feature" = "8:"
             }
         }

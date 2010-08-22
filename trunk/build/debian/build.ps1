@@ -6,7 +6,7 @@ rmif ./package/opt
 mkdir ./package/opt/pivote
 cp -r ../../client/bin/release/* ./package/opt/pivote/
 rmif ./package/opt/pivote/*vshost*
-rmif ./package/opt/pivote/libgmp-3.dll
+cp -r ../files-linux/* ./package/opt/pivote/
 
 cp -r package packagetmp
 $svndirs = ls -r -force -filter .svn ./packagetmp
