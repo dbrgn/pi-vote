@@ -38,11 +38,12 @@
       this.repeatLabel = new System.Windows.Forms.Label();
       this.caNameTextBox = new System.Windows.Forms.TextBox();
       this.caNameLabel = new System.Windows.Forms.Label();
+      this.label1 = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // cancelButton
       // 
-      this.cancelButton.Location = new System.Drawing.Point(368, 110);
+      this.cancelButton.Location = new System.Drawing.Point(368, 127);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
       this.cancelButton.TabIndex = 5;
@@ -53,7 +54,7 @@
       // okButton
       // 
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(287, 110);
+      this.okButton.Location = new System.Drawing.Point(287, 127);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 4;
@@ -132,12 +133,22 @@
       this.caNameLabel.TabIndex = 9;
       this.caNameLabel.Text = "CA Name:";
       // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(100, 107);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(262, 14);
+      this.label1.TabIndex = 10;
+      this.label1.Text = "The passphrase must be at least 12 characters long.";
+      // 
       // CreateCaDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(455, 144);
+      this.ClientSize = new System.Drawing.Size(455, 162);
       this.ControlBox = false;
+      this.Controls.Add(this.label1);
       this.Controls.Add(this.caNameTextBox);
       this.Controls.Add(this.caNameLabel);
       this.Controls.Add(this.repeatLabel);
@@ -174,5 +185,6 @@
     private System.Windows.Forms.Label repeatLabel;
     private System.Windows.Forms.TextBox caNameTextBox;
     private System.Windows.Forms.Label caNameLabel;
+    private System.Windows.Forms.Label label1;
   }
 }

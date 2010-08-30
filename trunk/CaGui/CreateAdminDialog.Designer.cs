@@ -44,11 +44,12 @@
       this.passphraseTextBox = new System.Windows.Forms.TextBox();
       this.repeatLabel = new System.Windows.Forms.Label();
       this.repeatTextBox = new System.Windows.Forms.TextBox();
+      this.label1 = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // cancelButton
       // 
-      this.cancelButton.Location = new System.Drawing.Point(332, 194);
+      this.cancelButton.Location = new System.Drawing.Point(332, 214);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
       this.cancelButton.TabIndex = 8;
@@ -59,7 +60,7 @@
       // okButton
       // 
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(251, 194);
+      this.okButton.Location = new System.Drawing.Point(251, 214);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 7;
@@ -137,7 +138,7 @@
       // 
       // validUntilPicker
       // 
-      this.validUntilPicker.Location = new System.Drawing.Point(116, 168);
+      this.validUntilPicker.Location = new System.Drawing.Point(116, 185);
       this.validUntilPicker.Name = "validUntilPicker";
       this.validUntilPicker.Size = new System.Drawing.Size(291, 20);
       this.validUntilPicker.TabIndex = 6;
@@ -145,7 +146,7 @@
       // validUntilLabel
       // 
       this.validUntilLabel.AutoSize = true;
-      this.validUntilLabel.Location = new System.Drawing.Point(16, 171);
+      this.validUntilLabel.Location = new System.Drawing.Point(16, 188);
       this.validUntilLabel.Name = "validUntilLabel";
       this.validUntilLabel.Size = new System.Drawing.Size(55, 14);
       this.validUntilLabel.TabIndex = 15;
@@ -187,12 +188,22 @@
       this.repeatTextBox.TabIndex = 5;
       this.repeatTextBox.TextChanged += new System.EventHandler(this.repeatTextBox_TextChanged);
       // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(113, 165);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(262, 14);
+      this.label1.TabIndex = 20;
+      this.label1.Text = "The passphrase must be at least 12 characters long.";
+      // 
       // CreateAdminDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(419, 226);
+      this.ClientSize = new System.Drawing.Size(419, 249);
       this.ControlBox = false;
+      this.Controls.Add(this.label1);
       this.Controls.Add(this.repeatLabel);
       this.Controls.Add(this.repeatTextBox);
       this.Controls.Add(this.passphraseLabel);
@@ -241,5 +252,6 @@
     private System.Windows.Forms.TextBox passphraseTextBox;
     private System.Windows.Forms.Label repeatLabel;
     private System.Windows.Forms.TextBox repeatTextBox;
+    private System.Windows.Forms.Label label1;
   }
 }
