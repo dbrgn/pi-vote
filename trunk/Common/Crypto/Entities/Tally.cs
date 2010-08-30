@@ -232,17 +232,20 @@ namespace Pirate.PiVote.Crypto
     /// <param name="signedPartialDecipherList">List of partial deciphers.</param>
     public void AddPartialDecipher(Signed<PartialDecipherList> signedPartialDecipherList)
     {
-      if (!signedPartialDecipherList.Verify(this.certificateStorage))
+      PartialDecipherList partialDeciphersList = signedPartialDecipherList.Value;
+
+      if (!(signedPartialDecipherList.Verify(this.certificateStorage, partialDeciphersList.Date) &&
+        partialDeciphersList.Date.Date >= this.parameters.VotingEndDate &&
+        partialDeciphersList.Date.Date <= DateTime.Now.Date) &&
+        signedPartialDecipherList.Certificate is AuthorityCertificate)
         throw new PiSecurityException(ExceptionCode.PartialDecipherBadSignature, "Partial decipher has bad signature.");
 
-      PartialDecipherList partialDeciphersContainer = signedPartialDecipherList.Value;
-
-      if (partialDeciphersContainer.EnvelopeCount != EnvelopeCount)
+      if (partialDeciphersList.EnvelopeCount != EnvelopeCount)
         throw new PiSecurityException(ExceptionCode.PartialDecipherBadEnvelopeCount, "The number of envelopes does not match the partial decipher.");
-      if (!partialDeciphersContainer.EnvelopeHash.Equal(EnvelopeHash))
+      if (!partialDeciphersList.EnvelopeHash.Equal(EnvelopeHash))
         throw new PiSecurityException(ExceptionCode.PartialDecipherBadEnvelopeHash, "The hash over all envelopes does not match the partail decipher.");
 
-      partialDeciphers.AddRange(partialDeciphersContainer.PartialDeciphers);
+      partialDeciphers.AddRange(partialDeciphersList.PartialDeciphers);
     }
 
     /// <summary>

@@ -58,21 +58,22 @@
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.certificateControl.Certificate = null;
       this.certificateControl.CertificateStorage = null;
+      this.certificateControl.Font = new System.Drawing.Font("Arial", 8.25F);
       this.certificateControl.Location = new System.Drawing.Point(0, 0);
       this.certificateControl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
       this.certificateControl.Name = "certificateControl";
-      this.certificateControl.Size = new System.Drawing.Size(472, 46);
+      this.certificateControl.Size = new System.Drawing.Size(472, 22);
       this.certificateControl.TabIndex = 0;
       this.certificateControl.ValidationDate = new System.DateTime(2010, 4, 22, 23, 52, 17, 794);
       // 
-      // ViewShareControl
+      // ViewShareResponseControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.dataLabel);
       this.Controls.Add(this.dataTextBox);
       this.Controls.Add(this.certificateControl);
-      this.Name = "ViewShareControl";
+      this.Name = "ViewShareResponseControl";
       this.Size = new System.Drawing.Size(662, 22);
       this.ResumeLayout(false);
       this.PerformLayout();

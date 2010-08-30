@@ -95,7 +95,8 @@ namespace Pirate.PiVote.Client
         this.organizingCertificate.CertificateStorage = Status.CertificateStorage;
         this.organizingCertificate.Certificate = this.votingMaterial.Parameters.Certificate;
 
-        if (this.votingMaterial.Parameters.Verify(Status.CertificateStorage, parameters.VotingBeginDate))
+        if (this.votingMaterial.Parameters.Verify(Status.CertificateStorage, parameters.VotingBeginDate) &&
+            this.votingMaterial.Parameters.Certificate is AdminCertificate)
         {
           this.organizingSignatureBox.Text = Resources.CertificateValid;
           this.organizingSignatureBox.BackColor = Color.Green;

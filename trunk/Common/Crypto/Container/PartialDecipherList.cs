@@ -45,6 +45,11 @@ namespace Pirate.PiVote.Crypto
     public byte[] EnvelopeHash { get; private set; }
 
     /// <summary>
+    /// Date at which the partial decipher was created.
+    /// </summary>
+    public DateTime Date { get; private set; }
+
+    /// <summary>
     /// Create new list of partial deciphers from an authority.
     /// </summary>
     /// <param name="votingId">Id of voting procedure.</param>
@@ -58,6 +63,7 @@ namespace Pirate.PiVote.Crypto
       PartialDeciphers = new List<PartialDecipher>();
       EnvelopeCount = envelopeCount;
       EnvelopeHash = envelopeHash;
+      Date = DateTime.Now;
     }
 
     /// <summary>
@@ -80,6 +86,7 @@ namespace Pirate.PiVote.Crypto
       context.WriteList(PartialDeciphers);
       context.Write(EnvelopeCount);
       context.Write(EnvelopeHash);
+      context.Write(Date);
     }
 
     /// <summary>
@@ -94,6 +101,7 @@ namespace Pirate.PiVote.Crypto
       PartialDeciphers = context.ReadObjectList<PartialDecipher>();
       EnvelopeCount = context.ReadInt32();
       EnvelopeHash = context.ReadBytes();
+      Date = context.ReadDateTime();
     }
   }
 }

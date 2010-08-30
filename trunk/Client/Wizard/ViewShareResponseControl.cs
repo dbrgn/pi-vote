@@ -44,7 +44,8 @@ namespace Pirate.PiVote.Client
 
         var shareResponse = SignedShareReponse.Value;
 
-        if (SignedShareReponse.Verify(CertificateStorage, ValidationDate))
+        if (SignedShareReponse.Verify(CertificateStorage, ValidationDate) &&
+          SignedShareReponse.Certificate is AuthorityCertificate)
         {
           this.dataTextBox.Text = Resources.CertificateValid;
           this.dataTextBox.BackColor = Color.Green;
