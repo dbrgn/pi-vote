@@ -925,6 +925,15 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid envelope..
+        /// </summary>
+        public static string ExceptionInvalidEnvelope {
+            get {
+                return ResourceManager.GetString("ExceptionInvalidEnvelope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Signature is not valid..
         /// </summary>
         public static string ExceptionInvalidSignature {

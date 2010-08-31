@@ -120,7 +120,7 @@ namespace Pirate.PiVote.Client
       this.familyNameTextBox.Enabled = enable && this.typeComboBox.SelectedIndex >= 0;
       this.functionNameTextBox.Enabled = enable && this.typeComboBox.SelectedIndex >= 1;
       this.emailAddressTextBox.Enabled = enable && this.typeComboBox.SelectedIndex >= 0;
-      this.emailNotificationCheckBox.Enabled = this.typeComboBox.SelectedIndex == 0;
+      this.emailNotificationCheckBox.Enabled = enable && this.typeComboBox.SelectedIndex == 0;
       this.emailNotificationCheckBox.Checked |= this.typeComboBox.SelectedIndex >= 1;
       this.cantonComboBox.Enabled = enable && this.typeComboBox.SelectedIndex == 0;
 

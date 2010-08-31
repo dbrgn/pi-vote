@@ -32,5 +32,8 @@ namespace Pirate.PiVote
     public const string EnvelopeFilePattern = "*.pi-envelope";
     public const string PartialDecipherFileString = "{0:00}.pi-partialdecipher";
     public const string EnvelopeFileString = "{0:00000000}.pi-envelope";
+    public const string SafePrimePattern = "*.pi-safeprime";
+    public const string SafePrimeFileString = "{0}.pi-safeprime";
+    public const string DataFolder = "PiVote";
   }
 }

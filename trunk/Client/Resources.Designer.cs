@@ -1823,6 +1823,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Voting material downloaded..
+        /// </summary>
+        internal static string ViewVotingAuthoritiesDownloaded {
+            get {
+                return ResourceManager.GetString("ViewVotingAuthoritiesDownloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The casting of the vote was canceled..
         /// </summary>
         internal static string VoteCanceled {

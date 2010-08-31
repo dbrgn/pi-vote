@@ -173,21 +173,26 @@ namespace Pirate.PiVote.Client
       }
     }
 
+    private void SetEnable(bool enable)
+    {
+      this.advancedRadioButton.Enabled = enable;
+      this.createRadioButton.Enabled = enable;
+      this.importRadioButton.Enabled = enable;
+      this.firstNameTextBox.Enabled = enable;
+      this.familyNameTextBox.Enabled = enable;
+      this.emailAddressTextBox.Enabled = enable;
+      this.emailNotificationCheckBox.Enabled = enable;
+      this.cantonComboBox.Enabled = enable;
+      this.createButton.Enabled = enable;
+    }
+
     private void createButton_Click(object sender, EventArgs e)
     {
       this.run = true;
       OnUpdateWizard();
 
-      this.advancedRadioButton.Enabled = false;
-      this.createRadioButton.Enabled = false;
-      this.importRadioButton.Enabled = false;
-      this.firstNameTextBox.Enabled = false;
-      this.familyNameTextBox.Enabled = false;
-      this.emailAddressTextBox.Enabled = false;
-      this.emailNotificationCheckBox.Enabled = false;
-      this.cantonComboBox.Enabled = false;
-      this.createButton.Enabled = false;
-
+      SetEnable(false);
+      
       var encryptResult = EncryptPrivateKeyDialog.ShowSetPassphrase();
 
       if (encryptResult.First == DialogResult.OK)
@@ -211,15 +216,7 @@ namespace Pirate.PiVote.Client
         this.run = false;
         OnUpdateWizard();
 
-        this.advancedRadioButton.Enabled = true;
-        this.createRadioButton.Enabled = true;
-        this.importRadioButton.Enabled = true;
-        this.firstNameTextBox.Enabled = true;
-        this.familyNameTextBox.Enabled = true;
-        this.emailAddressTextBox.Enabled = true;
-        this.emailNotificationCheckBox.Enabled = true;
-        this.cantonComboBox.Enabled = true;
-        this.createButton.Enabled = true;
+        SetEnable(true);
       }
     }
 

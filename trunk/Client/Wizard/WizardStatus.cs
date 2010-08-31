@@ -22,8 +22,6 @@ namespace Pirate.PiVote.Client
   {
     private const string ClientConfigFileName = "pi-vote-client.cfg"; 
 
-    private const string DataFolder = "PiVote";
-
     public IClientConfig Config { get; private set; }
 
     public CertificateStorage CertificateStorage { get; set; }
@@ -95,7 +93,7 @@ namespace Pirate.PiVote.Client
       this.progress = progress;
       this.progress.Status = this;
 
-      this.dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), DataFolder);
+      this.dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Files.DataFolder);
       if (!Directory.Exists(DataPath))
         Directory.CreateDirectory(dataPath);
 

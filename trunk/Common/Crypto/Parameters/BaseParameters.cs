@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Security.Cryptography;
+using System.IO;
 using Emil.GMP;
 using Pirate.PiVote.Serialization;
 
@@ -144,6 +145,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <remarks>
     /// This may take a very long time.
+    /// May load safe primes from disk.
     /// </remarks>
     /// <param name="primeBits">Bit length of the numbers.</param>
     public void GenerateNumbers(int primeBits)
@@ -151,7 +153,10 @@ namespace Pirate.PiVote.Crypto
       BigInt prime = null;
       BigInt safePrime = null;
 
-      Prime.FindPrimeAndSafePrimeThreaded(primeBits, out prime, out safePrime);
+      if (!Prime.TryLoadPregeneratedSafePrime(primeBits, out prime, out safePrime))
+      {
+        Prime.FindPrimeAndSafePrimeThreaded(primeBits, out prime, out safePrime);
+      }
 
       SetNumbers(prime, safePrime);
     }
@@ -160,12 +165,8 @@ namespace Pirate.PiVote.Crypto
     /// Creates new parameters using standard parameters.
     /// </summary>
     public BaseParameters()
-    {
-      this.questions = new List<Question>();
-
-      GenerateNumbers(PrimeBits);
-      SetParameters(StandardThereshold, StandardAuthorityCount, StandardProofCount);
-    }
+      : this(PrimeBits)
+    { }
 
     /// <summary>
     /// Creates new parameters using non-standard parameters.

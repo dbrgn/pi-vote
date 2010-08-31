@@ -52,7 +52,7 @@ namespace Pirate.PiVote.Client
 
     public override bool CanCancel
     {
-      get { return true; }
+      get { return !this.run; }
     }
 
     public override bool CanNext
@@ -136,6 +136,8 @@ namespace Pirate.PiVote.Client
         this.response4.CertificateStorage = Status.CertificateStorage;
         this.response4.SignedShareReponse = this.votingMaterial.PublicKeyParts.ElementAt(4);
         this.response4.Display();
+
+        Status.SetMessage(Resources.ViewVotingAuthoritiesDownloaded, MessageType.Success);
       }
 
       OnUpdateWizard();

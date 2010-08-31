@@ -99,8 +99,6 @@ namespace Pirate.PiVote.Crypto
 
       prime = this.prime;
       safePrime = this.safePrime;
-
-      Console.WriteLine("FindPrimeAndSafePrime2   " + DateTime.Now.Subtract(start).ToString());
     }
 
     /// <summary>

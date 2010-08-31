@@ -770,4 +770,7 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="StartVoting" xml:space="preserve">
     <value>&amp;Voting</value>
   </data>
+  <data name="ViewVotingAuthoritiesDownloaded" xml:space="preserve">
+    <value>Voting material downloaded.</value>
+  </data>
 </root>

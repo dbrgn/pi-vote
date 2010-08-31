@@ -760,4 +760,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="StartVoting" xml:space="preserve">
     <value>&amp;Abstimmen</value>
   </data>
+  <data name="ViewVotingAuthoritiesDownloaded" xml:space="preserve">
+    <value>Abstrimmungsmaterial heruntergeladen.</value>
+  </data>
 </root>

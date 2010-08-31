@@ -584,6 +584,30 @@ namespace Pirate.PiVote.Crypto
       if (Parameters.Canton != Canton.None && Parameters.Canton != ((VoterCertificate)signedEnvelope.Certificate).Canton)
         throw new PiArgumentException(ExceptionCode.BadCantonInCertificate, "Wrong canton in certificate.");
 
+      var envelope = signedEnvelope.Value;
+
+      if (envelope.Date.Subtract(DateTime.Now).TotalHours < -1d ||
+          envelope.Date.Subtract(DateTime.Now).TotalHours > 1d)
+        throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Date out of range.");
+      if (envelope.VoterId != signedEnvelope.Certificate.Id)
+        throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Voter id does not match.");
+      if (envelope.Ballots.Count != Parameters.Questions.Count())
+        throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Ballot count does not match.");
+
+      for (int questionIndex = 0; questionIndex < parameters.Questions.Count(); questionIndex++)
+      {
+        var ballot = envelope.Ballots[questionIndex];
+        var question = parameters.Questions.ElementAt(questionIndex);
+
+        if (ballot.SumProves.Count != parameters.ProofCount)
+          throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Number of sum prooves does not match.");
+        if (ballot.Votes.Count != question.Options.Count())
+          throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Vote count does not match.");
+        if (ballot.Votes.Any(vote => vote.RangeProves.Count != parameters.ProofCount))
+          throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Number of range prooves does not match.");
+      }
+
+
       bool hasVoted = DbConnection.ExecuteHasRows(
         "SELECT count(*) FROM envelope WHERE VotingId = @VotingId AND VoterId = @VoterId",
         "@VotingId", Id.ToByteArray(),

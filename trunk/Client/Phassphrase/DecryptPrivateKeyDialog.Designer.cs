@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DecryptPrivateKeyDialog));
       this.infoLabel = new System.Windows.Forms.Label();
       this.passphraseTextBox = new System.Windows.Forms.TextBox();
       this.passphraseLabel = new System.Windows.Forms.Label();
@@ -174,10 +175,12 @@
       this.Controls.Add(this.infoLabel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.KeyPreview = true;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "DecryptPrivateKeyDialog";
+      this.ShowInTaskbar = false;
       this.Text = "Pi-Vote Private Key Protection";
       this.Load += new System.EventHandler(this.EncryptPrivateKeyDialog_Load);
       this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EncryptPrivateKeyDialog_KeyDown);

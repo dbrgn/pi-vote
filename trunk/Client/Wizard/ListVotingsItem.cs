@@ -166,24 +166,29 @@ namespace Pirate.PiVote.Client
       item.SubItems.Add(voting.VoteFrom.ToShortDateString());
       item.SubItems.Add(voting.VoteUntil.ToShortDateString());
 
-      if (voting.AuthoritiesDone == null)
+      switch (voting.Status)
       {
-        item.SubItems.Add(string.Empty);
+        case VotingStatus.New:
+        case VotingStatus.Sharing:
+        case VotingStatus.Deciphering:
+          item.SubItems.Add(voting.AuthoritiesDone.Count().ToString() + " / " + voting.AuthorityCount.ToString());
+          break;
+        default:
+          item.SubItems.Add(string.Empty);
+          break;
       }
-      else
+
+      switch (voting.Status)
       {
-        item.SubItems.Add(voting.AuthoritiesDone.Count().ToString() + " / " + voting.AuthorityCount.ToString());
-      }
-      if (voting.Status == VotingStatus.Voting ||
-          voting.Status == VotingStatus.Deciphering ||
-          voting.Status == VotingStatus.Finished ||
-          voting.Status == VotingStatus.Offline)
-      {
-        item.SubItems.Add(voting.EnvelopeCount.ToString());
-      }
-      else
-      {
-        item.SubItems.Add(string.Empty);
+        case VotingStatus.Voting:
+        case VotingStatus.Deciphering:
+        case VotingStatus.Finished:
+        case VotingStatus.Offline:
+          item.SubItems.Add(voting.EnvelopeCount.ToString());
+          break;
+        default:
+          item.SubItems.Add(string.Empty);
+          break;
       }
 
       if (this.voteReceipts.ContainsKey(voting.Id))
