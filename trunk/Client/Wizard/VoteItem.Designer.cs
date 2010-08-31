@@ -48,9 +48,10 @@ namespace Pirate.PiVote.Client
       // voteControl
       // 
       this.voteControl.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.voteControl.Font = new System.Drawing.Font("Arial", 8.25F);
       this.voteControl.Location = new System.Drawing.Point(0, 0);
       this.voteControl.Name = "voteControl";
-      this.voteControl.Size = new System.Drawing.Size(700, 487);
+      this.voteControl.Size = new System.Drawing.Size(597, 487);
       this.voteControl.TabIndex = 0;
       this.voteControl.Voting = null;
       // 
@@ -59,9 +60,9 @@ namespace Pirate.PiVote.Client
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.voteControl);
-      this.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.Margin = new System.Windows.Forms.Padding(3);
       this.Name = "VoteItem";
-      this.Size = new System.Drawing.Size(700, 487);
+      this.Size = new System.Drawing.Size(597, 487);
       this.ResumeLayout(false);
 
     }
@@ -69,6 +70,7 @@ namespace Pirate.PiVote.Client
     #endregion
 
     private VoteControl voteControl;
+
 
 
 

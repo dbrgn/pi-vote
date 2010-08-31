@@ -37,7 +37,7 @@
       // 
       this.questionLabel.AutoSize = true;
       this.questionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.questionLabel.Location = new System.Drawing.Point(-3, 8);
+      this.questionLabel.Location = new System.Drawing.Point(3, 7);
       this.questionLabel.Name = "questionLabel";
       this.questionLabel.Size = new System.Drawing.Size(61, 16);
       this.questionLabel.TabIndex = 6;
@@ -57,7 +57,7 @@
       // maxOptionsLabel
       // 
       this.maxOptionsLabel.AutoSize = true;
-      this.maxOptionsLabel.Location = new System.Drawing.Point(-3, 34);
+      this.maxOptionsLabel.Location = new System.Drawing.Point(3, 33);
       this.maxOptionsLabel.Name = "maxOptionsLabel";
       this.maxOptionsLabel.Size = new System.Drawing.Size(65, 14);
       this.maxOptionsLabel.TabIndex = 7;

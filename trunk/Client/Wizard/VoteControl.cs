@@ -49,11 +49,11 @@ namespace Pirate.PiVote.Client
         QuestionControl questionControl = new QuestionControl();
         questionControl.Question = question;
         questionControl.Top = top;
-        questionControl.Width = Width;
+        questionControl.Width = this.container.ContentWidth;
         questionControl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
         questionControl.ValidChanged += new EventHandler(questionControl_ValidChanged);
         questionControl.Display(enable);
-        Controls.Add(questionControl);
+        this.container.Controls.Add(questionControl);
         this.questionControls.Add(questionControl);
 
         top += questionControl.Height + space;

@@ -28,14 +28,26 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.container = new Pirate.PiVote.Client.ScrollableContainerControl();
       this.descriptionButton = new System.Windows.Forms.Button();
       this.titleLabel = new System.Windows.Forms.Label();
+      this.container.SuspendLayout();
       this.SuspendLayout();
+      // 
+      // container
+      // 
+      this.container.Controls.Add(this.descriptionButton);
+      this.container.Controls.Add(this.titleLabel);
+      this.container.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.container.Location = new System.Drawing.Point(0, 0);
+      this.container.Name = "container";
+      this.container.Size = new System.Drawing.Size(597, 413);
+      this.container.TabIndex = 4;
       // 
       // descriptionButton
       // 
       this.descriptionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.descriptionButton.Location = new System.Drawing.Point(440, 0);
+      this.descriptionButton.Location = new System.Drawing.Point(467, 0);
       this.descriptionButton.Name = "descriptionButton";
       this.descriptionButton.Size = new System.Drawing.Size(111, 26);
       this.descriptionButton.TabIndex = 2;
@@ -47,7 +59,7 @@
       // 
       this.titleLabel.AutoSize = true;
       this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.titleLabel.Location = new System.Drawing.Point(-3, 4);
+      this.titleLabel.Location = new System.Drawing.Point(3, 4);
       this.titleLabel.Name = "titleLabel";
       this.titleLabel.Size = new System.Drawing.Size(39, 16);
       this.titleLabel.TabIndex = 3;
@@ -57,13 +69,13 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.titleLabel);
-      this.Controls.Add(this.descriptionButton);
+      this.Controls.Add(this.container);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "VoteControl";
-      this.Size = new System.Drawing.Size(551, 257);
+      this.Size = new System.Drawing.Size(597, 413);
+      this.container.ResumeLayout(false);
+      this.container.PerformLayout();
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
@@ -71,5 +83,6 @@
 
     private System.Windows.Forms.Button descriptionButton;
     private System.Windows.Forms.Label titleLabel;
+    private ScrollableContainerControl container;
   }
 }

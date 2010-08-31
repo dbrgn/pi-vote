@@ -100,6 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientMain.cs" />
+    <Compile Include="Controls\ScrollableContainerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ScrollableContainerControl.Designer.cs">
+      <DependentUpon>ScrollableContainerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Phassphrase\DecryptPrivateKeyDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -329,6 +335,9 @@
     <Compile Include="Wizard\WizardStatus.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\ScrollableContainerControl.resx">
+      <DependentUpon>ScrollableContainerControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Phassphrase\DecryptPrivateKeyDialog.resx">
       <DependentUpon>DecryptPrivateKeyDialog.cs</DependentUpon>
     </EmbeddedResource>

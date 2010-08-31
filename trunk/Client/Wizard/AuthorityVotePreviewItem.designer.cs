@@ -54,7 +54,7 @@ namespace Pirate.PiVote.Client
       this.voteControl.Font = new System.Drawing.Font("Arial", 8.25F);
       this.voteControl.Location = new System.Drawing.Point(0, 0);
       this.voteControl.Name = "voteControl";
-      this.voteControl.Size = new System.Drawing.Size(700, 562);
+      this.voteControl.Size = new System.Drawing.Size(700, 531);
       this.voteControl.TabIndex = 0;
       this.voteControl.Voting = null;
       // 
