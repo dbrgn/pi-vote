@@ -49,6 +49,8 @@
       // 
       // caNameTextBox
       // 
+      this.caNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.caNameTextBox.Location = new System.Drawing.Point(103, 38);
       this.caNameTextBox.Name = "caNameTextBox";
       this.caNameTextBox.ReadOnly = true;
@@ -57,6 +59,7 @@
       // 
       // cancelButton
       // 
+      this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.cancelButton.Location = new System.Drawing.Point(368, 90);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
@@ -67,6 +70,7 @@
       // 
       // okButton
       // 
+      this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
       this.okButton.Location = new System.Drawing.Point(287, 90);
       this.okButton.Name = "okButton";
@@ -78,6 +82,8 @@
       // 
       // passphraseTextBox
       // 
+      this.passphraseTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.passphraseTextBox.Location = new System.Drawing.Point(103, 64);
       this.passphraseTextBox.Name = "passphraseTextBox";
       this.passphraseTextBox.PasswordChar = '*';
@@ -96,6 +102,8 @@
       // 
       // caIdTextBox
       // 
+      this.caIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.caIdTextBox.Location = new System.Drawing.Point(103, 12);
       this.caIdTextBox.Name = "caIdTextBox";
       this.caIdTextBox.ReadOnly = true;
@@ -126,7 +134,6 @@
       this.Controls.Add(this.caNameTextBox);
       this.Controls.Add(this.caNameLabel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;
       this.MinimizeBox = false;

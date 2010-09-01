@@ -49,6 +49,7 @@
       // 
       // cancelButton
       // 
+      this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.cancelButton.Location = new System.Drawing.Point(332, 214);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
@@ -59,6 +60,7 @@
       // 
       // okButton
       // 
+      this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
       this.okButton.Location = new System.Drawing.Point(251, 214);
       this.okButton.Name = "okButton";
@@ -70,6 +72,8 @@
       // 
       // firstNameTextBox
       // 
+      this.firstNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.firstNameTextBox.Location = new System.Drawing.Point(116, 12);
       this.firstNameTextBox.Name = "firstNameTextBox";
       this.firstNameTextBox.Size = new System.Drawing.Size(291, 20);
@@ -78,6 +82,8 @@
       // 
       // emailAddressTextBox
       // 
+      this.emailAddressTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.emailAddressTextBox.Location = new System.Drawing.Point(116, 90);
       this.emailAddressTextBox.Name = "emailAddressTextBox";
       this.emailAddressTextBox.Size = new System.Drawing.Size(291, 20);
@@ -113,6 +119,8 @@
       // 
       // familyNameTextBox
       // 
+      this.familyNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.familyNameTextBox.Location = new System.Drawing.Point(116, 38);
       this.familyNameTextBox.Name = "familyNameTextBox";
       this.familyNameTextBox.Size = new System.Drawing.Size(291, 20);
@@ -130,6 +138,8 @@
       // 
       // functionTextBox
       // 
+      this.functionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.functionTextBox.Location = new System.Drawing.Point(116, 64);
       this.functionTextBox.Name = "functionTextBox";
       this.functionTextBox.Size = new System.Drawing.Size(291, 20);
@@ -138,6 +148,8 @@
       // 
       // validUntilPicker
       // 
+      this.validUntilPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.validUntilPicker.Location = new System.Drawing.Point(116, 185);
       this.validUntilPicker.Name = "validUntilPicker";
       this.validUntilPicker.Size = new System.Drawing.Size(291, 20);
@@ -163,6 +175,8 @@
       // 
       // passphraseTextBox
       // 
+      this.passphraseTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.passphraseTextBox.Location = new System.Drawing.Point(116, 116);
       this.passphraseTextBox.Name = "passphraseTextBox";
       this.passphraseTextBox.PasswordChar = '*';
@@ -181,6 +195,8 @@
       // 
       // repeatTextBox
       // 
+      this.repeatTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.repeatTextBox.Location = new System.Drawing.Point(116, 142);
       this.repeatTextBox.Name = "repeatTextBox";
       this.repeatTextBox.PasswordChar = '*';
@@ -221,10 +237,11 @@
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;
+      this.MaximumSize = new System.Drawing.Size(2000, 276);
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(400, 276);
       this.Name = "CreateAdminDialog";
       this.Text = "Create Admin Certificate";
       this.Load += new System.EventHandler(this.CaNameDialog_Load);

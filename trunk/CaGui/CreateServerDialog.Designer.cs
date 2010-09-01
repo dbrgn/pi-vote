@@ -38,6 +38,7 @@
       // 
       // cancelButton
       // 
+      this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.cancelButton.Location = new System.Drawing.Point(309, 62);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
@@ -48,6 +49,7 @@
       // 
       // okButton
       // 
+      this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
       this.okButton.Location = new System.Drawing.Point(228, 62);
       this.okButton.Name = "okButton";
@@ -59,6 +61,8 @@
       // 
       // nameTextBox
       // 
+      this.nameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.nameTextBox.Location = new System.Drawing.Point(93, 12);
       this.nameTextBox.Name = "nameTextBox";
       this.nameTextBox.Size = new System.Drawing.Size(291, 20);
@@ -76,6 +80,8 @@
       // 
       // validUntilPicker
       // 
+      this.validUntilPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.validUntilPicker.Location = new System.Drawing.Point(93, 36);
       this.validUntilPicker.Name = "validUntilPicker";
       this.validUntilPicker.Size = new System.Drawing.Size(291, 20);
@@ -103,10 +109,11 @@
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;
+      this.MaximumSize = new System.Drawing.Size(2000, 124);
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(400, 124);
       this.Name = "CreateServerDialog";
       this.Text = "Create Server Certificate";
       this.Load += new System.EventHandler(this.CaNameDialog_Load);

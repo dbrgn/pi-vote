@@ -552,7 +552,7 @@ namespace Pirate.PiVote.Rpc
     public List<Group> GetGroups()
     {
       MySqlDataReader reader = DbConnection
-        .ExecuteReader("SELECT Id, NameEnglish, NameGerman, NameFrench, NameItalien FROM VotingGroup");
+        .ExecuteReader("SELECT Id, NameEnglish, NameGerman, NameFrench, NameItalien FROM votinggroup");
       List<Group> groupList = new List<Group>();
 
       while (reader.Read())

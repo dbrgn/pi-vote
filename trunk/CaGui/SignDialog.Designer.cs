@@ -279,10 +279,11 @@
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.validUntilLabel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;
+      this.MaximumSize = new System.Drawing.Size(2000, 384);
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(400, 384);
       this.Name = "SignDialog";
       this.Text = "Verify Signature Request";
       this.Load += new System.EventHandler(this.CaNameDialog_Load);

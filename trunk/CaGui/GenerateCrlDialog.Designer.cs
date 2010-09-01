@@ -42,6 +42,7 @@
       // 
       // cancelButton
       // 
+      this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.cancelButton.Location = new System.Drawing.Point(309, 118);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
@@ -52,6 +53,7 @@
       // 
       // okButton
       // 
+      this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
       this.okButton.Location = new System.Drawing.Point(228, 118);
       this.okButton.Name = "okButton";
@@ -63,6 +65,8 @@
       // 
       // idTextBox
       // 
+      this.idTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.idTextBox.Location = new System.Drawing.Point(82, 12);
       this.idTextBox.Name = "idTextBox";
       this.idTextBox.ReadOnly = true;
@@ -71,6 +75,8 @@
       // 
       // nameTextBox
       // 
+      this.nameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.nameTextBox.Location = new System.Drawing.Point(82, 39);
       this.nameTextBox.Name = "nameTextBox";
       this.nameTextBox.ReadOnly = true;
@@ -97,6 +103,8 @@
       // 
       // validUntilPicker
       // 
+      this.validUntilPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.validUntilPicker.Location = new System.Drawing.Point(82, 92);
       this.validUntilPicker.Name = "validUntilPicker";
       this.validUntilPicker.Size = new System.Drawing.Size(302, 20);
@@ -114,6 +122,8 @@
       // 
       // validFromPicker
       // 
+      this.validFromPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.validFromPicker.Location = new System.Drawing.Point(82, 65);
       this.validFromPicker.Name = "validFromPicker";
       this.validFromPicker.Size = new System.Drawing.Size(302, 20);
@@ -146,10 +156,11 @@
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;
+      this.MaximumSize = new System.Drawing.Size(2000, 181);
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(400, 181);
       this.Name = "GenerateCrlDialog";
       this.Text = "Generate Certificate Revocation List";
       this.Load += new System.EventHandler(this.CaNameDialog_Load);

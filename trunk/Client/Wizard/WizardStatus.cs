@@ -101,7 +101,7 @@ namespace Pirate.PiVote.Client
       if (!Directory.Exists(DataPath))
         Directory.CreateDirectory(dataPath);
 
-      Config = new ClientConfig(ClientConfigFileName);
+      Config = new ClientConfig(Path.Combine(Application.StartupPath, ClientConfigFileName));
     }
 
     public void SetMessage(string message, MessageType type)

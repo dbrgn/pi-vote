@@ -43,6 +43,7 @@
       // 
       // cancelButton
       // 
+      this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.cancelButton.Location = new System.Drawing.Point(368, 127);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
@@ -53,6 +54,7 @@
       // 
       // okButton
       // 
+      this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
       this.okButton.Location = new System.Drawing.Point(287, 127);
       this.okButton.Name = "okButton";
@@ -82,6 +84,8 @@
       // 
       // passphraseTextBox
       // 
+      this.passphraseTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.passphraseTextBox.Location = new System.Drawing.Point(103, 58);
       this.passphraseTextBox.Name = "passphraseTextBox";
       this.passphraseTextBox.PasswordChar = '*';
@@ -100,6 +104,8 @@
       // 
       // repeatTextBox
       // 
+      this.repeatTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.repeatTextBox.Location = new System.Drawing.Point(103, 84);
       this.repeatTextBox.Name = "repeatTextBox";
       this.repeatTextBox.PasswordChar = '*';
@@ -118,6 +124,8 @@
       // 
       // caNameTextBox
       // 
+      this.caNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.caNameTextBox.Location = new System.Drawing.Point(103, 12);
       this.caNameTextBox.Name = "caNameTextBox";
       this.caNameTextBox.Size = new System.Drawing.Size(340, 20);
@@ -160,10 +168,11 @@
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;
+      this.MaximumSize = new System.Drawing.Size(2000, 189);
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(400, 189);
       this.Name = "CreateCaDialog";
       this.Text = "Create Certificate Authority";
       this.Load += new System.EventHandler(this.CaNameDialog_Load);

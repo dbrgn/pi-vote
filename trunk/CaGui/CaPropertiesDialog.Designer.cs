@@ -31,8 +31,8 @@
       this.okButton = new System.Windows.Forms.Button();
       this.okPanel = new System.Windows.Forms.Panel();
       this.caPanel = new System.Windows.Forms.Panel();
-      this.caInfo = new Pirate.PiVote.CaGui.CaInfoControl();
       this.parentsPanel = new System.Windows.Forms.Panel();
+      this.caInfo = new Pirate.PiVote.CaGui.CaInfoControl();
       this.okPanel.SuspendLayout();
       this.caPanel.SuspendLayout();
       this.SuspendLayout();
@@ -66,16 +66,6 @@
       this.caPanel.Size = new System.Drawing.Size(403, 93);
       this.caPanel.TabIndex = 4;
       // 
-      // caInfo
-      // 
-      this.caInfo.Certificate = null;
-      this.caInfo.Location = new System.Drawing.Point(12, 12);
-      this.caInfo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-      this.caInfo.Name = "caInfo";
-      this.caInfo.Size = new System.Drawing.Size(375, 67);
-      this.caInfo.TabIndex = 2;
-      this.caInfo.Title = "Certificate Authority";
-      // 
       // parentsPanel
       // 
       this.parentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -83,6 +73,17 @@
       this.parentsPanel.Name = "parentsPanel";
       this.parentsPanel.Size = new System.Drawing.Size(403, 268);
       this.parentsPanel.TabIndex = 5;
+      // 
+      // caInfo
+      // 
+      this.caInfo.Certificate = null;
+      this.caInfo.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.caInfo.Location = new System.Drawing.Point(12, 12);
+      this.caInfo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+      this.caInfo.Name = "caInfo";
+      this.caInfo.Size = new System.Drawing.Size(375, 67);
+      this.caInfo.TabIndex = 2;
+      this.caInfo.Title = "Certificate Authority";
       // 
       // CaPropertiesDialog
       // 
@@ -94,10 +95,11 @@
       this.Controls.Add(this.caPanel);
       this.Controls.Add(this.okPanel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;
+      this.MaximumSize = new System.Drawing.Size(2000, 431);
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(400, 431);
       this.Name = "CaPropertiesDialog";
       this.Text = "Certificate Authoirty Properties";
       this.Load += new System.EventHandler(this.CaNameDialog_Load);

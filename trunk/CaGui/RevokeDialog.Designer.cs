@@ -185,6 +185,8 @@
       // 
       // reasonComboBox
       // 
+      this.reasonComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.reasonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.reasonComboBox.FormattingEnabled = true;
       this.reasonComboBox.Location = new System.Drawing.Point(94, 169);
@@ -225,10 +227,11 @@
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.KeyPreview = true;
       this.MaximizeBox = false;
+      this.MaximumSize = new System.Drawing.Size(2000, 263);
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(400, 263);
       this.Name = "RevokeDialog";
       this.Text = "Revoke Certificate";
       this.Load += new System.EventHandler(this.CaNameDialog_Load);
