@@ -29,20 +29,5 @@ namespace Pirate.PiVote
     /// TCP port on with the server listens.
     /// </summary>
     int ServerPort { get; }
-
-    /// <summary>
-    /// Name of the voting system.
-    /// </summary>
-    MultiLanguageString SystemName { get; }
-
-    /// <summary>
-    /// Welcome message for users.
-    /// </summary>
-    MultiLanguageString WelcomeMessage { get; }
-
-    /// <summary>
-    /// Name of the image file.
-    /// </summary>
-    string ImageFile { get; }
   }
 }

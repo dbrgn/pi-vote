@@ -98,7 +98,7 @@ namespace Pirate.PiVote.Client
       this.familyNameLabel.Text = Resources.CreateCertificateSurname;
       this.emailAddressLabel.Text = Resources.CreateCertificateEmailAddress;
       this.emailNotificationCheckBox.Text = Resources.CreateCertificateEmailNotification;
-      this.cantonLabel.Text = Resources.CreateCertificateCanton;
+      this.groupLabel.Text = Resources.CreateCertificateGroup;
 
       this.advancedRadioButton.Text = Resources.SimpleChooseCertificateAdvancedOption;
       this.createRadioButton.Text = Resources.SimpleChooseCertificateCreateOption;
@@ -112,11 +112,8 @@ namespace Pirate.PiVote.Client
       this.headerLabel.Text = Resources.SimpleChooseCertificateHeader;
       this.explainCreateLabel.Text = Resources.SimpleChooseCertificateCreateExplain;
 
-      this.cantonComboBox.Items.Clear();
-      foreach (Canton canton in Enum.GetValues(typeof(Canton)))
-      {
-        this.cantonComboBox.Items.Add(canton.Text());
-      }
+      this.groupComboBox.Clear();
+      this.groupComboBox.Add(Status.Groups);
     }
 
     private void createRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -126,7 +123,7 @@ namespace Pirate.PiVote.Client
         this.firstNameTextBox.Enabled = true;
         this.familyNameTextBox.Enabled = true;
         this.emailAddressTextBox.Enabled = true;
-        this.cantonComboBox.Enabled = true;
+        this.groupComboBox.Enabled = true;
         CheckValid();
         this.printButton.Enabled = false;
         this.uploadButton.Enabled = false;
@@ -144,7 +141,7 @@ namespace Pirate.PiVote.Client
         this.firstNameTextBox.Enabled = false;
         this.familyNameTextBox.Enabled = false;
         this.emailAddressTextBox.Enabled = false;
-        this.cantonComboBox.Enabled = false;
+        this.groupComboBox.Enabled = false;
         this.createButton.Enabled = false;
         this.printButton.Enabled = false;
         this.uploadButton.Enabled = false;
@@ -162,7 +159,7 @@ namespace Pirate.PiVote.Client
         this.firstNameTextBox.Enabled = false;
         this.familyNameTextBox.Enabled = false;
         this.emailAddressTextBox.Enabled = false;
-        this.cantonComboBox.Enabled = false;
+        this.groupComboBox.Enabled = false;
         this.createRadioButton.Enabled = false;
         this.printButton.Enabled = false;
         this.uploadButton.Enabled = false;
@@ -182,7 +179,7 @@ namespace Pirate.PiVote.Client
       this.familyNameTextBox.Enabled = enable;
       this.emailAddressTextBox.Enabled = enable;
       this.emailNotificationCheckBox.Enabled = enable;
-      this.cantonComboBox.Enabled = enable;
+      this.groupComboBox.Enabled = enable;
       this.createButton.Enabled = enable;
     }
 
@@ -199,7 +196,7 @@ namespace Pirate.PiVote.Client
       {
         string passphrase = encryptResult.Second;
 
-        this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, (Canton)this.cantonComboBox.SelectedIndex);
+        this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, this.groupComboBox.Value.Id);
         this.certificate.CreateSelfSignature();
 
         this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
@@ -226,7 +223,7 @@ namespace Pirate.PiVote.Client
         !this.firstNameTextBox.Text.IsNullOrEmpty() &&
         !this.familyNameTextBox.Text.IsNullOrEmpty() &&
         Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text) &&
-        this.cantonComboBox.SelectedIndex >= 0;
+        this.groupComboBox.SelectedIndex >= 0;
     }
 
     private void firstNameTextBox_TextChanged(object sender, EventArgs e)
@@ -250,7 +247,7 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
       this.printButton.Enabled = false;
 
-      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, this.certificate);
+      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, this.certificate, Status);
       PrintDialog printDialog = new PrintDialog();
       printDialog.Document = document;
 

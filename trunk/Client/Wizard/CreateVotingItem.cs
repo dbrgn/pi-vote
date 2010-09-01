@@ -28,7 +28,7 @@ namespace Pirate.PiVote.Client
     private Thread initThread;
     private List<AuthorityCertificate> authorityCertificates;
     private VotingParameters votingParameters;
-    private Canton canton;
+    private Group group;
 
     public CreateVotingItem()
     {
@@ -133,7 +133,7 @@ namespace Pirate.PiVote.Client
       this.descriptionBox.Enabled = enable;
       this.votingFromPicker.Enabled = enable;
       this.votingUntilPicker.Enabled = enable;
-      this.cantonComboBox.Enabled = enable;
+      this.groupComboBox.Enabled = enable;
 
       if (enable)
       {
@@ -270,7 +270,7 @@ namespace Pirate.PiVote.Client
           this.descriptionBox.Text,
           this.votingFromPicker.Value.Date,
           this.votingUntilPicker.Value.Date,
-          this.canton);
+          this.group.Id);
 
       this.run = false;
     }
@@ -313,7 +313,7 @@ namespace Pirate.PiVote.Client
       enable &= !indices.Any(i => indices.Where(x => x == i).Count() > 1);
 
       enable &= this.questionListView.Items.Count >= 1;
-      enable &= this.cantonComboBox.SelectedIndex >= 0;
+      enable &= this.groupComboBox.SelectedIndex >= 0;
 
       this.createButton.Enabled = enable;
     }
@@ -371,13 +371,10 @@ namespace Pirate.PiVote.Client
       this.questionLabel.Text = Resources.CreateVotingQuestions;
       this.textColumnHeader.Text = Resources.CreateVotingQuestionText;
       this.descriptionColumnHeader.Text = Resources.CreateVotingQuestionDescription;
-      this.cantonLabel.Text = Resources.CreateVotingCanton;
+      this.groupLabel.Text = Resources.CreateVotingGroup;
 
-      this.cantonComboBox.Items.Clear();
-      foreach (Canton canton in Enum.GetValues(typeof(Canton)))
-      {
-        this.cantonComboBox.Items.Add(canton.Text());
-      }
+      this.groupComboBox.Clear();
+      this.groupComboBox.Add(Status.Groups);
     }
 
     private void addToolStripMenuItem_Click(object sender, EventArgs e)
@@ -434,7 +431,7 @@ namespace Pirate.PiVote.Client
 
     private void cantonComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-      this.canton = (Canton)this.cantonComboBox.SelectedIndex;
+      this.group = this.groupComboBox.Value;
       CheckEnable();
     }
   }

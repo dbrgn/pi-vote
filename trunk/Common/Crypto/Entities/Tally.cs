@@ -130,8 +130,7 @@ namespace Pirate.PiVote.Crypto
 
       //Certificate is of voter and valid for that canton.
       acceptVote &= signedEnvelope.Certificate is VoterCertificate &&
-                    (this.parameters.Canton == Canton.None ||
-                    ((VoterCertificate)signedEnvelope.Certificate).Canton == this.parameters.Canton);
+                    ((VoterCertificate)signedEnvelope.Certificate).GroupId == this.parameters.GroupId;
 
       //Signature must be valid.
       acceptVote &= signedEnvelope.Verify(this.certificateStorage, envelope.Date);

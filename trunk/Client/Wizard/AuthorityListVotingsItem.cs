@@ -84,7 +84,7 @@ namespace Pirate.PiVote.Client
           foreach (VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
           {
             ListViewItem item = new ListViewItem(voting.Title.Text);
-            item.SubItems.Add(voting.Canton.Text());
+            item.SubItems.Add(Status.GetGroupName(voting.GroupId));
             item.SubItems.Add(voting.Status.Text());
             item.SubItems.Add(voting.VoteFrom.ToShortDateString());
             item.SubItems.Add(voting.VoteUntil.ToShortDateString());
@@ -362,7 +362,9 @@ namespace Pirate.PiVote.Client
       this.createSharesButton.Text = Resources.AuthorityCreateShares;
       this.checkSharesButton.Text = Resources.AuthorityCheckShares;
       this.decipherButton.Text = Resources.AuthorityDecipher;
+
       this.titleColumnHeader.Text = Resources.AuthorityListTitle;
+      this.groupColumnHeader.Text = Resources.VotingGroup;
       this.statusColumnHeader.Text = Resources.AuthorityListStatus;
       this.voteFromColumnHeader.Text = Resources.VotingListVoteFrom;
       this.voteUntilColumnHeader.Text = Resources.VotingListVoteUntil;

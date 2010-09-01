@@ -244,7 +244,7 @@
     <value>&amp;Erstellen...</value>
   </data>
   <data name="ChooseCertificateFullName" xml:space="preserve">
-    <value>Voller name</value>
+    <value>Gruppe / Name</value>
   </data>
   <data name="ChooseCertificateId" xml:space="preserve">
     <value>Id</value>
@@ -492,8 +492,8 @@
   <data name="SigningRequestDocumentRefusedHasCertificate" xml:space="preserve">
     <value>□ Verweigert, hat ein gültiges Zertifikat</value>
   </data>
-  <data name="SigningRequestDocumentRefusedNoPirate" xml:space="preserve">
-    <value>□ Verweigert, kein Pirat</value>
+  <data name="SigningRequestDocumentRefusedNoMember" xml:space="preserve">
+    <value>□ Verweigert, kein Mitglied in Gruppe</value>
   </data>
   <data name="SigningRequestDocumentRequest" xml:space="preserve">
     <value>Zertifizierungsanfrage</value>
@@ -502,7 +502,7 @@
     <value>□ Widerrufen, vermutlich verloren</value>
   </data>
   <data name="SigningRequestDocumentRevokedNoLonger" xml:space="preserve">
-    <value>□ Widerrufen, kein Pirat mehr</value>
+    <value>□ Widerrufen, kein Mitglied mehr</value>
   </data>
   <data name="SigningRequestDocumentRevokedStolen" xml:space="preserve">
     <value>□ Widerrufen, vermutlich gestolen</value>
@@ -637,20 +637,17 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="VoteDescriptionTitle" xml:space="preserve">
     <value>Beschreibung</value>
   </data>
-  <data name="CreateCertificateCanton" xml:space="preserve">
-    <value>Kanton:</value>
+  <data name="CreateCertificateGroup" xml:space="preserve">
+    <value>Gruppe:</value>
   </data>
-  <data name="CreateVotingCanton" xml:space="preserve">
-    <value>Kanton:</value>
+  <data name="CreateVotingGroup" xml:space="preserve">
+    <value>Gruppe:</value>
   </data>
-  <data name="VotingCanton" xml:space="preserve">
-    <value>Kanton</value>
+  <data name="VotingGroup" xml:space="preserve">
+    <value>Gruppe</value>
   </data>
-  <data name="SigningRequestDocumentCanton" xml:space="preserve">
-    <value>Kanton:</value>
-  </data>
-  <data name="SigningRequestDocumentRevokedMoved" xml:space="preserve">
-    <value>□ Widerrufen, in anderen Kanton umgezogen</value>
+  <data name="SigningRequestDocumentGroup" xml:space="preserve">
+    <value>Gruppe:</value>
   </data>
   <data name="SigningRequestDocumentCertificateType" xml:space="preserve">
     <value>Typ:</value>
@@ -762,5 +759,8 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="ViewVotingAuthoritiesDownloaded" xml:space="preserve">
     <value>Abstrimmungsmaterial heruntergeladen.</value>
+  </data>
+  <data name="StartGettingConfig" xml:space="preserve">
+    <value>Lade Konfiguration herunter</value>
   </data>
 </root>

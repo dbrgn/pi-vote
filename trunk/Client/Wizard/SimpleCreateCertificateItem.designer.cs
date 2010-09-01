@@ -57,8 +57,8 @@ namespace Pirate.PiVote.Client
       this.familyNameLabel = new System.Windows.Forms.Label();
       this.firstNameTextBox = new System.Windows.Forms.TextBox();
       this.firstNameLabel = new System.Windows.Forms.Label();
-      this.cantonComboBox = new System.Windows.Forms.ComboBox();
-      this.cantonLabel = new System.Windows.Forms.Label();
+      this.groupComboBox = new Pirate.PiVote.Client.GroupComboBox();
+      this.groupLabel = new System.Windows.Forms.Label();
       this.emailNotificationCheckBox = new System.Windows.Forms.CheckBox();
       this.SuspendLayout();
       // 
@@ -203,26 +203,27 @@ namespace Pirate.PiVote.Client
       this.firstNameLabel.TabIndex = 17;
       this.firstNameLabel.Text = "First name:";
       // 
-      // cantonComboBox
+      // groupComboBox
       // 
-      this.cantonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.cantonComboBox.FormattingEnabled = true;
-      this.cantonComboBox.Location = new System.Drawing.Point(129, 310);
-      this.cantonComboBox.Margin = new System.Windows.Forms.Padding(2);
-      this.cantonComboBox.Name = "cantonComboBox";
-      this.cantonComboBox.Size = new System.Drawing.Size(402, 22);
-      this.cantonComboBox.TabIndex = 6;
-      this.cantonComboBox.SelectedIndexChanged += new System.EventHandler(this.cantonComboBox_SelectedIndexChanged);
+      this.groupComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.groupComboBox.FormattingEnabled = true;
+      this.groupComboBox.Location = new System.Drawing.Point(129, 310);
+      this.groupComboBox.Margin = new System.Windows.Forms.Padding(2);
+      this.groupComboBox.Name = "groupComboBox";
+      this.groupComboBox.Size = new System.Drawing.Size(402, 22);
+      this.groupComboBox.TabIndex = 6;
+      this.groupComboBox.Value = null;
+      this.groupComboBox.SelectedIndexChanged += new System.EventHandler(this.cantonComboBox_SelectedIndexChanged);
       // 
-      // cantonLabel
+      // groupLabel
       // 
-      this.cantonLabel.AutoSize = true;
-      this.cantonLabel.Location = new System.Drawing.Point(16, 313);
-      this.cantonLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-      this.cantonLabel.Name = "cantonLabel";
-      this.cantonLabel.Size = new System.Drawing.Size(44, 14);
-      this.cantonLabel.TabIndex = 33;
-      this.cantonLabel.Text = "Canton:";
+      this.groupLabel.AutoSize = true;
+      this.groupLabel.Location = new System.Drawing.Point(16, 313);
+      this.groupLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+      this.groupLabel.Name = "groupLabel";
+      this.groupLabel.Size = new System.Drawing.Size(40, 14);
+      this.groupLabel.TabIndex = 33;
+      this.groupLabel.Text = "Group:";
       // 
       // emailNotificationCheckBox
       // 
@@ -239,8 +240,8 @@ namespace Pirate.PiVote.Client
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.emailNotificationCheckBox);
-      this.Controls.Add(this.cantonLabel);
-      this.Controls.Add(this.cantonComboBox);
+      this.Controls.Add(this.groupLabel);
+      this.Controls.Add(this.groupComboBox);
       this.Controls.Add(this.functionNameLabel);
       this.Controls.Add(this.functionNameTextBox);
       this.Controls.Add(this.typeLabel);
@@ -280,8 +281,8 @@ namespace Pirate.PiVote.Client
     private TextBox functionNameTextBox;
     private Label typeLabel;
     private ComboBox typeComboBox;
-    private ComboBox cantonComboBox;
-    private Label cantonLabel;
+    private GroupComboBox groupComboBox;
+    private Label groupLabel;
     private CheckBox emailNotificationCheckBox;
 
   }

@@ -261,6 +261,15 @@ namespace Pirate.PiVote.CaGui
 
       item.SubItems.Add(TypeName(entry.Request.Certificate));
 
+      if (entry.Request.Certificate is VoterCertificate)
+      {
+        item.SubItems.Add(GroupList.GetGroupName(((VoterCertificate)entry.Request.Certificate).GroupId));
+      }
+      else
+      {
+        item.SubItems.Add(string.Empty);
+      }
+
       if (request.FamilyName.IsNullOrEmpty())
       {
         item.SubItems.Add(request.FirstName);
@@ -522,17 +531,17 @@ namespace Pirate.PiVote.CaGui
           {
             entry.Sign(Certificate, dialog.ValidUntil);
             entry.Save(DataPath(fileName));
-            item.SubItems[3].Text = entry.Response.Value.Signature.ValidFrom.ToString();
-            item.SubItems[4].Text = entry.Response.Value.Signature.ValidUntil.ToString();
-            item.SubItems[5].Text = "Valid";
+            item.SubItems[4].Text = entry.Response.Value.Signature.ValidFrom.ToString();
+            item.SubItems[5].Text = entry.Response.Value.Signature.ValidUntil.ToString();
+            item.SubItems[6].Text = "Valid";
           }
           else
           {
             entry.Refuse(Certificate, dialog.Reason);
             entry.Save(DataPath(fileName));
-            item.SubItems[3].Text = "N/A";
             item.SubItems[4].Text = "N/A";
-            item.SubItems[5].Text = "Refused";
+            item.SubItems[5].Text = "N/A";
+            item.SubItems[6].Text = "Refused";
           }
 
           item.Tag = entry;
@@ -565,7 +574,7 @@ namespace Pirate.PiVote.CaGui
         {
           entry.Revoke();
           entry.Save(DataPath(fileName));
-          item.SubItems[5].Text = "Revoked";
+          item.SubItems[6].Text = "Revoked";
         }
       }
     }
@@ -573,8 +582,8 @@ namespace Pirate.PiVote.CaGui
     private void entryListContextMenu_Opening(object sender, CancelEventArgs e)
     {
       bool hasRow = this.entryListView.SelectedItems.Count > 0;
-      bool isAnwered = hasRow && this.entryListView.SelectedItems[0].SubItems[3].Text != string.Empty;
-      bool notAnswered = hasRow && this.entryListView.SelectedItems[0].SubItems[3].Text == string.Empty;
+      bool isAnwered = hasRow && this.entryListView.SelectedItems[0].SubItems[4].Text != string.Empty;
+      bool notAnswered = hasRow && this.entryListView.SelectedItems[0].SubItems[4].Text == string.Empty;
       bool canSign = Certificate != null && Certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid;
 
       this.signToolStripMenuItem.Enabled = notAnswered && canSign;

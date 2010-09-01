@@ -305,6 +305,18 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Get remote client config from server.
+    /// </summary>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void GetConfig(GetConfigCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new GetConfigOperation(callBack));
+      }
+    }
+
+    /// <summary>
     /// Get all valid authority certificates.
     /// </summary>
     /// <param name="callBack">Callback upon completion.</param>

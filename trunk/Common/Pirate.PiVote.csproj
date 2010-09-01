@@ -161,6 +161,9 @@
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\ClientConfig.cs" />
+    <Compile Include="Config\RemoteStoredConfig.cs" />
+    <Compile Include="Config\RemoteConfig.cs" />
+    <Compile Include="Config\IRemoteConfig.cs" />
     <Compile Include="Config\IClientConfig.cs" />
     <Compile Include="Config\DummyConfig.cs" />
     <Compile Include="Config\IServerConfig.cs" />
@@ -171,7 +174,6 @@
     <Compile Include="Crypto\Base\ThreadedPrimeGenerator.cs" />
     <Compile Include="Crypto\Base\VerificationValue.cs" />
     <Compile Include="Crypto\Base\Proof.cs" />
-    <Compile Include="Crypto\Certificate\Canton.cs" />
     <Compile Include="Crypto\Certificate\CertificateAttribute.cs" />
     <Compile Include="Crypto\Certificate\CertificateValidationResult.cs" />
     <Compile Include="Crypto\Certificate\Aes.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="Crypto\Container\VoteReceipt.cs" />
     <Compile Include="Crypto\Container\VotingMaterial.cs" />
     <Compile Include="Crypto\Container\ShareResponse.cs" />
+    <Compile Include="Crypto\Parameters\Group.cs" />
     <Compile Include="Crypto\Parameters\Question.cs" />
     <Compile Include="Crypto\Parameters\Option.cs" />
     <Compile Include="Crypto\Parameters\VotingParameters.cs" />
@@ -245,6 +248,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exception\PiException.cs" />
     <Compile Include="Rpc\Clients\CheckShares.cs" />
+    <Compile Include="Rpc\Clients\GetConfig.cs" />
     <Compile Include="Rpc\Clients\SetCertificateStorage.cs" />
     <Compile Include="Rpc\Clients\DownloadVoting.cs" />
     <Compile Include="Rpc\Clients\GetVotingMaterial.cs" />
@@ -274,6 +278,8 @@
     <Compile Include="Rpc\Generic\RpcRequest.cs" />
     <Compile Include="Rpc\Generic\RpcMessage.cs" />
     <Compile Include="Rpc\Handlers\IBinaryRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\FetchSettingsRequest.cs" />
+    <Compile Include="Rpc\Messages\FetchSettingsResponse.cs" />
     <Compile Include="Rpc\Messages\PushCertificateStorageRequest.cs" />
     <Compile Include="Rpc\Messages\PushCertificateStorageResponse.cs" />
     <Compile Include="Rpc\Messages\KeepAliveRequest.cs" />

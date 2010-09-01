@@ -581,8 +581,8 @@ namespace Pirate.PiVote.Crypto
         throw new PiArgumentException(ExceptionCode.VoteSignatureNotValid, "Vote signature not valid.");
       if (!(signedEnvelope.Certificate is VoterCertificate))
         throw new PiArgumentException(ExceptionCode.NoVoterCertificate, "Not a voter certificate.");
-      if (Parameters.Canton != Canton.None && Parameters.Canton != ((VoterCertificate)signedEnvelope.Certificate).Canton)
-        throw new PiArgumentException(ExceptionCode.BadCantonInCertificate, "Wrong canton in certificate.");
+      if (Parameters.GroupId != ((VoterCertificate)signedEnvelope.Certificate).GroupId)
+        throw new PiArgumentException(ExceptionCode.BadGroupIdInCertificate, "Wrong group id in certificate.");
 
       var envelope = signedEnvelope.Value;
 

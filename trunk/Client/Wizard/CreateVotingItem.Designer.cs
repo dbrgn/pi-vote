@@ -47,8 +47,8 @@ namespace Pirate.PiVote.Client
       this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.cantonLabel = new System.Windows.Forms.Label();
-      this.cantonComboBox = new System.Windows.Forms.ComboBox();
+      this.groupLabel = new System.Windows.Forms.Label();
+      this.groupComboBox = new GroupComboBox();
       this.questionLabel = new System.Windows.Forms.Label();
       this.questionListView = new System.Windows.Forms.ListView();
       this.textColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -102,27 +102,27 @@ namespace Pirate.PiVote.Client
       this.editToolStripMenuItem.Text = "&Edit";
       this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
       // 
-      // cantonLabel
+      // groupLabel
       // 
-      this.cantonLabel.AutoSize = true;
-      this.cantonLabel.Location = new System.Drawing.Point(5, 394);
-      this.cantonLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-      this.cantonLabel.Name = "cantonLabel";
-      this.cantonLabel.Size = new System.Drawing.Size(44, 14);
-      this.cantonLabel.TabIndex = 46;
-      this.cantonLabel.Text = "Canton:";
+      this.groupLabel.AutoSize = true;
+      this.groupLabel.Location = new System.Drawing.Point(5, 394);
+      this.groupLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+      this.groupLabel.Name = "groupLabel";
+      this.groupLabel.Size = new System.Drawing.Size(40, 14);
+      this.groupLabel.TabIndex = 46;
+      this.groupLabel.Text = "Group:";
       // 
-      // cantonComboBox
+      // groupComboBox
       // 
-      this.cantonComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.cantonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.cantonComboBox.FormattingEnabled = true;
-      this.cantonComboBox.Location = new System.Drawing.Point(105, 391);
-      this.cantonComboBox.Margin = new System.Windows.Forms.Padding(2);
-      this.cantonComboBox.Name = "cantonComboBox";
-      this.cantonComboBox.Size = new System.Drawing.Size(224, 22);
-      this.cantonComboBox.TabIndex = 45;
-      this.cantonComboBox.SelectedIndexChanged += new System.EventHandler(this.cantonComboBox_SelectedIndexChanged);
+      this.groupComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.groupComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.groupComboBox.FormattingEnabled = true;
+      this.groupComboBox.Location = new System.Drawing.Point(105, 391);
+      this.groupComboBox.Margin = new System.Windows.Forms.Padding(2);
+      this.groupComboBox.Name = "groupComboBox";
+      this.groupComboBox.Size = new System.Drawing.Size(224, 22);
+      this.groupComboBox.TabIndex = 45;
+      this.groupComboBox.SelectedIndexChanged += new System.EventHandler(this.cantonComboBox_SelectedIndexChanged);
       // 
       // questionLabel
       // 
@@ -341,8 +341,8 @@ namespace Pirate.PiVote.Client
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.Controls.Add(this.cantonLabel);
-      this.Controls.Add(this.cantonComboBox);
+      this.Controls.Add(this.groupLabel);
+      this.Controls.Add(this.groupComboBox);
       this.Controls.Add(this.questionLabel);
       this.Controls.Add(this.questionListView);
       this.Controls.Add(this.authority0List);
@@ -395,8 +395,8 @@ namespace Pirate.PiVote.Client
     private ToolStripMenuItem addToolStripMenuItem;
     private ToolStripMenuItem removeToolStripMenuItem;
     private ToolStripMenuItem editToolStripMenuItem;
-    private Label cantonLabel;
-    private ComboBox cantonComboBox;
+    private Label groupLabel;
+    private GroupComboBox groupComboBox;
 
 
 

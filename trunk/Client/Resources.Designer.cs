@@ -628,7 +628,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Full name.
+        ///   Looks up a localized string similar to Group / Name.
         /// </summary>
         internal static string ChooseCertificateFullName {
             get {
@@ -718,15 +718,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Canton:.
-        /// </summary>
-        internal static string CreateCertificateCanton {
-            get {
-                return ResourceManager.GetString("CreateCertificateCanton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Your request has been submitted to the server. You must now wait for the certificate authority to process it..
         /// </summary>
         internal static string CreateCertificateDone {
@@ -768,6 +759,15 @@ namespace Pirate.PiVote.Client {
         internal static string CreateCertificateFunction {
             get {
                 return ResourceManager.GetString("CreateCertificateFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group:.
+        /// </summary>
+        internal static string CreateCertificateGroup {
+            get {
+                return ResourceManager.GetString("CreateCertificateGroup", resourceCulture);
             }
         }
         
@@ -916,15 +916,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Canton:.
-        /// </summary>
-        internal static string CreateVotingCanton {
-            get {
-                return ResourceManager.GetString("CreateVotingCanton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Created voting on server..
         /// </summary>
         internal static string CreateVotingCreated {
@@ -948,6 +939,15 @@ namespace Pirate.PiVote.Client {
         internal static string CreateVotingDescription {
             get {
                 return ResourceManager.GetString("CreateVotingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group:.
+        /// </summary>
+        internal static string CreateVotingGroup {
+            get {
+                return ResourceManager.GetString("CreateVotingGroup", resourceCulture);
             }
         }
         
@@ -1326,15 +1326,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Canton:.
-        /// </summary>
-        internal static string SigningRequestDocumentCanton {
-            get {
-                return ResourceManager.GetString("SigningRequestDocumentCanton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Fingerprint:.
         /// </summary>
         internal static string SigningRequestDocumentCertificateFingerprint {
@@ -1389,6 +1380,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gruppe:.
+        /// </summary>
+        internal static string SigningRequestDocumentGroup {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to π-Vote.
         /// </summary>
         internal static string SigningRequestDocumentHeaderLeft {
@@ -1425,7 +1425,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to □ Refused, no pirate.
+        ///   Looks up a localized string similar to □ Refused, no member in group.
         /// </summary>
         internal static string SigningRequestDocumentRefusedNoPirate {
             get {
@@ -1470,16 +1470,7 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to □ Revoked, moved to another canton.
-        /// </summary>
-        internal static string SigningRequestDocumentRevokedMoved {
-            get {
-                return ResourceManager.GetString("SigningRequestDocumentRevokedMoved", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to □ Revoked, no longer pirate.
+        ///   Looks up a localized string similar to □ Revoked, no longer member.
         /// </summary>
         internal static string SigningRequestDocumentRevokedNoLonger {
             get {
@@ -1708,6 +1699,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading configuration.
+        /// </summary>
+        internal static string StartGettingConfig {
+            get {
+                return ResourceManager.GetString("StartGettingConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server connection established.
         /// </summary>
         internal static string StartReady {
@@ -1904,11 +1904,11 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Canton.
+        ///   Looks up a localized string similar to Group.
         /// </summary>
-        internal static string VotingCanton {
+        internal static string VotingGroup {
             get {
-                return ResourceManager.GetString("VotingCanton", resourceCulture);
+                return ResourceManager.GetString("VotingGroup", resourceCulture);
             }
         }
         

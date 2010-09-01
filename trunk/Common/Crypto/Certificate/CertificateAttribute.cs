@@ -12,7 +12,7 @@ namespace Pirate.PiVote.Crypto
   public enum CertificateAttributeName
   {
     None = 0,
-    Canton = 1,
+    GroupId = 1,
     Language = 2
   }
 

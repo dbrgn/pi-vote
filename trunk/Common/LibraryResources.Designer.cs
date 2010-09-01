@@ -61,7 +61,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aargau.
+        ///   Looks up a localized string similar to Cantonal Party Aargau.
         /// </summary>
         public static string cantonAG {
             get {
@@ -70,7 +70,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Appenzell Innerrhoden.
+        ///   Looks up a localized string similar to Cantonal Party Appenzell Innerrhoden.
         /// </summary>
         public static string cantonAI {
             get {
@@ -79,7 +79,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Appenzell Ausserrhoden.
+        ///   Looks up a localized string similar to Cantonal Party Appenzell Ausserrhoden.
         /// </summary>
         public static string cantonAR {
             get {
@@ -88,7 +88,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bern.
+        ///   Looks up a localized string similar to Cantonal Party Bern.
         /// </summary>
         public static string cantonBE {
             get {
@@ -97,7 +97,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Basel-Landschaft.
+        ///   Looks up a localized string similar to Cantonal Party Basel-Landschaft.
         /// </summary>
         public static string cantonBL {
             get {
@@ -106,7 +106,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Basel-Stadt.
+        ///   Looks up a localized string similar to Cantonal Party Basel-Stadt.
         /// </summary>
         public static string cantonBS {
             get {
@@ -115,7 +115,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Freiburg.
+        ///   Looks up a localized string similar to Cantonal Party Freiburg.
         /// </summary>
         public static string cantonFR {
             get {
@@ -124,7 +124,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Genf.
+        ///   Looks up a localized string similar to Cantonal Party Genf.
         /// </summary>
         public static string cantonGE {
             get {
@@ -133,7 +133,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Glarus.
+        ///   Looks up a localized string similar to Cantonal Party Glarus.
         /// </summary>
         public static string cantonGL {
             get {
@@ -142,7 +142,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Graubünden.
+        ///   Looks up a localized string similar to Cantonal Party Graubünden.
         /// </summary>
         public static string cantonGR {
             get {
@@ -151,7 +151,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jura.
+        ///   Looks up a localized string similar to Cantonal Party Jura.
         /// </summary>
         public static string cantonJU {
             get {
@@ -160,7 +160,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Luzern.
+        ///   Looks up a localized string similar to Cantonal Party Luzern.
         /// </summary>
         public static string cantonLU {
             get {
@@ -169,7 +169,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Neuenburg.
+        ///   Looks up a localized string similar to Cantonal Party Neuenburg.
         /// </summary>
         public static string cantonNE {
             get {
@@ -178,7 +178,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to None.
+        ///   Looks up a localized string similar to Only National Party.
         /// </summary>
         public static string cantonNone {
             get {
@@ -187,7 +187,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nidwalden.
+        ///   Looks up a localized string similar to Cantonal Party Nidwalden.
         /// </summary>
         public static string cantonNW {
             get {
@@ -196,7 +196,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Obwalden.
+        ///   Looks up a localized string similar to Cantonal Party Obwalden.
         /// </summary>
         public static string cantonOW {
             get {
@@ -205,7 +205,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to St. Gallen.
+        ///   Looks up a localized string similar to Cantonal Party St. Gallen.
         /// </summary>
         public static string cantonSG {
             get {
@@ -214,7 +214,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schaffhausen.
+        ///   Looks up a localized string similar to Cantonal Party Schaffhausen.
         /// </summary>
         public static string cantonSH {
             get {
@@ -223,7 +223,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Solothurn.
+        ///   Looks up a localized string similar to Cantonal Party Solothurn.
         /// </summary>
         public static string cantonSO {
             get {
@@ -232,7 +232,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Schwyz.
+        ///   Looks up a localized string similar to Cantonal Party Schwyz.
         /// </summary>
         public static string cantonSZ {
             get {
@@ -241,7 +241,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thurgau.
+        ///   Looks up a localized string similar to Cantonal Party Thurgau.
         /// </summary>
         public static string cantonTG {
             get {
@@ -250,7 +250,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tessin.
+        ///   Looks up a localized string similar to Cantonal Party Tessin.
         /// </summary>
         public static string cantonTI {
             get {
@@ -259,7 +259,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uri.
+        ///   Looks up a localized string similar to Cantonal Party Uri.
         /// </summary>
         public static string cantonUR {
             get {
@@ -268,7 +268,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Waadt.
+        ///   Looks up a localized string similar to Cantonal Party Waadt.
         /// </summary>
         public static string cantonVD {
             get {
@@ -277,7 +277,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wallis.
+        ///   Looks up a localized string similar to Cantonal Party Wallis.
         /// </summary>
         public static string cantonVS {
             get {
@@ -286,7 +286,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zug.
+        ///   Looks up a localized string similar to Cantonal Party Zug.
         /// </summary>
         public static string cantonZG {
             get {
@@ -295,7 +295,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Zürich.
+        ///   Looks up a localized string similar to Cantonal Party Zürich.
         /// </summary>
         public static string cantonZH {
             get {
@@ -889,11 +889,11 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You ar not allowed to vote in the canton of this voting..
+        ///   Looks up a localized string similar to You ar not allowed to vote in the group of this voting..
         /// </summary>
-        public static string ExceptionBadCantonInCertificate {
+        public static string ExceptionBadGroupIdInCertificate {
             get {
-                return ResourceManager.GetString("ExceptionBadCantonInCertificate", resourceCulture);
+                return ResourceManager.GetString("ExceptionBadGroupIdInCertificate", resourceCulture);
             }
         }
         

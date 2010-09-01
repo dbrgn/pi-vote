@@ -46,8 +46,8 @@ namespace Pirate.PiVote.Client
       this.germanRadio = new System.Windows.Forms.RadioButton();
       this.englishRadio = new System.Windows.Forms.RadioButton();
       this.titlelLabel = new System.Windows.Forms.Label();
-      this.alphaWarningLabel = new System.Windows.Forms.Label();
-      this.alphaBugLink = new System.Windows.Forms.LinkLabel();
+      this.welcomeLabel = new System.Windows.Forms.Label();
+      this.urlLink = new System.Windows.Forms.LinkLabel();
       this.languageGroupBox = new System.Windows.Forms.GroupBox();
       this.optionGroupBox = new System.Windows.Forms.GroupBox();
       this.tallyOnlyRadio = new System.Windows.Forms.RadioButton();
@@ -106,26 +106,26 @@ namespace Pirate.PiVote.Client
       this.titlelLabel.TabIndex = 4;
       this.titlelLabel.Text = "System Name";
       // 
-      // alphaWarningLabel
+      // welcomeLabel
       // 
-      this.alphaWarningLabel.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.alphaWarningLabel.ForeColor = System.Drawing.SystemColors.ControlText;
-      this.alphaWarningLabel.Location = new System.Drawing.Point(206, 35);
-      this.alphaWarningLabel.Name = "alphaWarningLabel";
-      this.alphaWarningLabel.Size = new System.Drawing.Size(488, 138);
-      this.alphaWarningLabel.TabIndex = 5;
-      this.alphaWarningLabel.Text = "Welcome Message";
+      this.welcomeLabel.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.welcomeLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+      this.welcomeLabel.Location = new System.Drawing.Point(206, 35);
+      this.welcomeLabel.Name = "welcomeLabel";
+      this.welcomeLabel.Size = new System.Drawing.Size(488, 138);
+      this.welcomeLabel.TabIndex = 5;
+      this.welcomeLabel.Text = "Welcome Message";
       // 
-      // alphaBugLink
+      // urlLink
       // 
-      this.alphaBugLink.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.alphaBugLink.Location = new System.Drawing.Point(206, 173);
-      this.alphaBugLink.Name = "alphaBugLink";
-      this.alphaBugLink.Size = new System.Drawing.Size(488, 27);
-      this.alphaBugLink.TabIndex = 7;
-      this.alphaBugLink.TabStop = true;
-      this.alphaBugLink.Text = "https://dev.piratenpartei.ch/projects/pi-vote";
-      this.alphaBugLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.alphaBugLink_LinkClicked);
+      this.urlLink.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.urlLink.Location = new System.Drawing.Point(206, 173);
+      this.urlLink.Name = "urlLink";
+      this.urlLink.Size = new System.Drawing.Size(488, 27);
+      this.urlLink.TabIndex = 7;
+      this.urlLink.TabStop = true;
+      this.urlLink.Text = "url";
+      this.urlLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.alphaBugLink_LinkClicked);
       // 
       // languageGroupBox
       // 
@@ -197,8 +197,8 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.tileImage);
       this.Controls.Add(this.optionGroupBox);
       this.Controls.Add(this.languageGroupBox);
-      this.Controls.Add(this.alphaBugLink);
-      this.Controls.Add(this.alphaWarningLabel);
+      this.Controls.Add(this.urlLink);
+      this.Controls.Add(this.welcomeLabel);
       this.Controls.Add(this.titlelLabel);
       this.Margin = new System.Windows.Forms.Padding(3);
       this.Name = "StartItem";
@@ -219,8 +219,8 @@ namespace Pirate.PiVote.Client
     private RadioButton germanRadio;
     private RadioButton englishRadio;
     private Label titlelLabel;
-    private Label alphaWarningLabel;
-    private LinkLabel alphaBugLink;
+    private Label welcomeLabel;
+    private LinkLabel urlLink;
     private GroupBox languageGroupBox;
     private GroupBox optionGroupBox;
     private RadioButton tallyOnlyRadio;

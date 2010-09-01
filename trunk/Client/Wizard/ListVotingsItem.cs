@@ -97,8 +97,7 @@ namespace Pirate.PiVote.Client
           {
             case VotingStatus.Voting:
               return Status.Certificate != null &&
-                (votingDescriptor.Canton == Canton.None ||
-                votingDescriptor.Canton == ((VoterCertificate)Status.Certificate).Canton);
+                (votingDescriptor.GroupId == ((VoterCertificate)Status.Certificate).GroupId);
             case VotingStatus.Finished:
             case VotingStatus.Offline:
               return true;
@@ -142,8 +141,13 @@ namespace Pirate.PiVote.Client
           this.votingList.Items.Clear();
 
           foreach (VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
-          { 
-            AddVotingToList(voting);
+          {
+            if (Status.Certificate == null ||
+                !(Status.Certificate is VoterCertificate) ||
+                ((VoterCertificate)Status.Certificate).GroupId == voting.GroupId)
+            {
+              AddVotingToList(voting);
+            }
           }
         }
 
@@ -161,7 +165,7 @@ namespace Pirate.PiVote.Client
     private void AddVotingToList(VotingDescriptor voting)
     {
       ListViewItem item = new ListViewItem(voting.Title.Text);
-      item.SubItems.Add(voting.Canton.Text());
+      item.SubItems.Add(Status.GetGroupName(voting.GroupId));
       item.SubItems.Add(voting.Status.Text());
       item.SubItems.Add(voting.VoteFrom.ToShortDateString());
       item.SubItems.Add(voting.VoteUntil.ToShortDateString());
@@ -249,7 +253,7 @@ namespace Pirate.PiVote.Client
       base.UpdateLanguage();
 
       this.titleColumnHeader.Text = Resources.VotingTitle;
-      this.cantonColumnHeader.Text = Resources.VotingCanton;
+      this.groupColumnHeader.Text = Resources.VotingGroup;
       this.statusColumnHeader.Text = Resources.VotingStatus;
       this.voteFromColumnHeader.Text = Resources.VotingListVoteFrom;
       this.voteUntilColumnHeader.Text = Resources.VotingListVoteUntil;

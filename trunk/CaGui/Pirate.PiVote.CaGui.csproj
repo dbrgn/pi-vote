@@ -104,6 +104,7 @@
     <Compile Include="DecryptCaKeyDialog.Designer.cs">
       <DependentUpon>DecryptCaKeyDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="GroupList.cs" />
     <Compile Include="RevokeDialog.cs">
       <SubType>Form</SubType>
     </Compile>

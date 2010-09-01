@@ -34,7 +34,7 @@ namespace Pirate.PiVote.Rpc
     private readonly int envelopeCount;
     private readonly List<QuestionDescriptor> questions;
     private readonly string offlinePath;
-    private readonly Canton canton;
+    private readonly int groupId;
 
     /// <summary>
     /// Id of the voting.
@@ -57,9 +57,9 @@ namespace Pirate.PiVote.Rpc
     public VotingStatus Status { get { return this.status; } }
 
     /// <summary>
-    /// Canton in which the voting takes place.
+    /// Id of group in which the voting takes place.
     /// </summary>
-    public Canton Canton { get { return this.canton; } }
+    public int GroupId { get { return this.groupId; } }
 
     /// <summary>
     /// Date when voting begins.
@@ -124,7 +124,7 @@ namespace Pirate.PiVote.Rpc
       this.envelopeCount = offlineDirectory.GetFiles(Files.EnvelopeFilePattern).Count();
       this.questions = new List<QuestionDescriptor>();
       this.questions.AddRange(parameters.Questions.Select(question => new QuestionDescriptor(question)));
-      this.canton = parameters.Canton;
+      this.groupId = parameters.GroupId;
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ namespace Pirate.PiVote.Rpc
       this.envelopeCount = envelopeCount;
       this.questions = new List<QuestionDescriptor>();
       this.questions.AddRange(parameters.Questions.Select(question => new QuestionDescriptor(question)));
-      this.canton = parameters.Canton;
+      this.groupId = parameters.GroupId;
     }
   }
 }

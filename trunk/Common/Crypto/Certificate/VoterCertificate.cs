@@ -28,11 +28,11 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="language">Language preferred by the certificate holder.</param>
     /// <param name="passphrase">Passphrase to encrypt the key with or null for no encryption.</param>
-    /// <param name="canton">Canton the holder inhabits.</param>
-    public VoterCertificate(Language language, string passphrase, Canton canton)
+    /// <param name="groupId">Id of the group one wants to vote in.</param>
+    public VoterCertificate(Language language, string passphrase, int groupId)
       : base(language, passphrase)
     {
-      AddAttribute(new Int32CertificateAttribute(CertificateAttributeName.Canton, (int)canton));
+      AddAttribute(new Int32CertificateAttribute(CertificateAttributeName.GroupId, groupId));
     }
 
     /// <summary>
@@ -109,21 +109,21 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
-    /// Canton the voter inhabites.
+    /// Id of the group one can vote in.
     /// </summary>
-    public Canton Canton
+    public int GroupId
     {
       get
       {
-        int? value = GetAttributeValueInt32(CertificateAttributeName.Canton);
+        int? value = GetAttributeValueInt32(CertificateAttributeName.GroupId);
 
         if (value == null)
         {
-          return Canton.None;
+          return 0;
         }
         else
         {
-          return (Canton)value;
+          return (int)value;
         }
       }
     }

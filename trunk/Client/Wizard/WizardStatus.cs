@@ -24,6 +24,10 @@ namespace Pirate.PiVote.Client
 
     public IClientConfig Config { get; private set; }
 
+    public IRemoteConfig RemoteConfig { get; set; }
+
+    public IEnumerable<Group> Groups { get; set; }
+
     public CertificateStorage CertificateStorage { get; set; }
 
     public Certificate ServerCertificate { get; set; }
@@ -126,6 +130,11 @@ namespace Pirate.PiVote.Client
       this.message.Visible = false;
       this.progress.Visible = true;
       this.progress.Set(message, progress);
+    }
+
+    public string GetGroupName(int groupId)
+    {
+      return Groups.Where(group => group.Id == groupId).First().Name.Text;
     }
   }
 }

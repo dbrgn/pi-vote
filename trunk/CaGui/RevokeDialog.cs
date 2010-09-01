@@ -57,7 +57,7 @@ namespace Pirate.PiVote.CaGui
       this.typeTextBox.Text = certificate.TypeText;
       this.nameTextBox.Text = certificate.FullName;
       this.emailAddressTextBox.Text = request.EmailAddress;
-      this.cantonTextBox.Text = certificate is VoterCertificate ? ((VoterCertificate)certificate).Canton.Text() : "N/A";
+      this.cantonTextBox.Text = certificate is VoterCertificate ? GroupList.GetGroupName(((VoterCertificate)certificate).GroupId) : "N/A";
       this.fingerprintTextBox.Text = certificate.Fingerprint;
       this.language = certificate.Language;
 

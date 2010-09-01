@@ -69,6 +69,7 @@
       this.crlValidFromColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.crlValidUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.revokedCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.groupColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.mainMenu.SuspendLayout();
       this.entryListContextMenu.SuspendLayout();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -222,6 +223,7 @@
       this.entryListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.idColumnHeader,
             this.typeColumnHeader,
+            this.groupColumnHeader,
             this.nameColumnHeader,
             this.validFromColumnHeader,
             this.validUntilColumnHeader,
@@ -408,6 +410,11 @@
       this.revokedCount.Text = "# Revoked";
       this.revokedCount.Width = 100;
       // 
+      // groupColumnHeader
+      // 
+      this.groupColumnHeader.Text = "Group";
+      this.groupColumnHeader.Width = 100;
+      // 
       // Master
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -474,6 +481,7 @@
     private System.Windows.Forms.ComboBox searchStatusBox;
     private System.Windows.Forms.DateTimePicker searchDateBox;
     private System.Windows.Forms.CheckBox searchDateActive;
+    private System.Windows.Forms.ColumnHeader groupColumnHeader;
   }
 }
 

@@ -19,11 +19,13 @@ namespace Pirate.PiVote.Client
   {
     public static void TestSignatureRequestDocument()
     {
-      VoterCertificate voterCert = new VoterCertificate(Language.English, null, Canton.None);
+      VoterCertificate voterCert = new VoterCertificate(Language.English, null, 0);
       voterCert.CreateSelfSignature();
       SignatureRequest request = new SignatureRequest("Hans", "Müller", "hans@mueller.ch");
-
-      SignatureRequestDocument document = new SignatureRequestDocument(request, voterCert);
+      WizardStatus status = new WizardStatus(null, null);
+      status.Groups = new Group[] { new Group(0, new MultiLanguageString("North")) };
+      
+      SignatureRequestDocument document = new SignatureRequestDocument(request, voterCert, status);
 
       PrintDialog dlg = new PrintDialog();
       dlg.Document = document;

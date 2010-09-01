@@ -93,7 +93,7 @@ namespace Pirate.PiVote.Client
       this.emailAddressLabel.Text = Resources.CreateCertificateEmailAddress;
       this.emailNotificationCheckBox.Text = Resources.CreateCertificateEmailNotification;
       this.functionNameLabel.Text = Resources.CreateCertificateFunction;
-      this.cantonLabel.Text = Resources.CreateCertificateCanton;
+      this.groupLabel.Text = Resources.CreateCertificateGroup;
 
       this.createButton.Text = Resources.SimpleChooseCertificateCreateButton;
       this.printButton.Text = Resources.SimpleChooseCertificatePrintButton;
@@ -106,11 +106,8 @@ namespace Pirate.PiVote.Client
       this.typeComboBox.Items.Add(Resources.CreateCertificateTypeAuthority);
       this.typeComboBox.Items.Add(Resources.CreateCertificateTypeAdmin);
 
-      this.cantonComboBox.Items.Clear();
-      foreach (Canton canton in Enum.GetValues(typeof(Canton)))
-      {
-        this.cantonComboBox.Items.Add(canton.Text());
-      }
+      this.groupComboBox.Clear();
+      this.groupComboBox.Add(Status.Groups);
     }
 
     private void SetEnable(bool enable)
@@ -122,7 +119,7 @@ namespace Pirate.PiVote.Client
       this.emailAddressTextBox.Enabled = enable && this.typeComboBox.SelectedIndex >= 0;
       this.emailNotificationCheckBox.Enabled = enable && this.typeComboBox.SelectedIndex == 0;
       this.emailNotificationCheckBox.Checked |= this.typeComboBox.SelectedIndex >= 1;
-      this.cantonComboBox.Enabled = enable && this.typeComboBox.SelectedIndex == 0;
+      this.groupComboBox.Enabled = enable && this.typeComboBox.SelectedIndex == 0;
 
       this.createButton.Enabled =
         enable &&
@@ -131,7 +128,7 @@ namespace Pirate.PiVote.Client
         !this.familyNameTextBox.Text.IsNullOrEmpty() &&
         (!this.functionNameTextBox.Text.IsNullOrEmpty() || this.typeComboBox.SelectedIndex == 0) &&
         Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text) &&
-        (this.typeComboBox.SelectedIndex != 0 || this.cantonComboBox.SelectedIndex >= 0);
+        (this.typeComboBox.SelectedIndex != 0 || this.groupComboBox.SelectedIndex >= 0);
     }
 
     private void createButton_Click(object sender, EventArgs e)
@@ -154,7 +151,7 @@ namespace Pirate.PiVote.Client
         switch (this.typeComboBox.SelectedIndex)
         {
           case 0:
-            this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, (Canton)this.cantonComboBox.SelectedIndex);
+            this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, this.groupComboBox.Value.Id);
             break;
           case 1:
             this.certificate = new AuthorityCertificate(Resources.Culture.ToLanguage(), passphrase, fullName);
@@ -206,7 +203,7 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
       this.printButton.Enabled = false;
 
-      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, this.certificate);
+      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, this.certificate, Status);
       PrintDialog printDialog = new PrintDialog();
       printDialog.Document = document;
 

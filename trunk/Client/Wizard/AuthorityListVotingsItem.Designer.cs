@@ -44,6 +44,7 @@ namespace Pirate.PiVote.Client
     {
       this.votingList = new System.Windows.Forms.ListView();
       this.titleColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.groupColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.statusColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.voteFromColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.voteUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -52,7 +53,6 @@ namespace Pirate.PiVote.Client
       this.decipherButton = new System.Windows.Forms.Button();
       this.checkSharesButton = new System.Windows.Forms.Button();
       this.createSharesButton = new System.Windows.Forms.Button();
-      this.cantonColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.SuspendLayout();
       // 
       // votingList
@@ -62,7 +62,7 @@ namespace Pirate.PiVote.Client
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.votingList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.titleColumnHeader,
-            this.cantonColumnHeader,
+            this.groupColumnHeader,
             this.statusColumnHeader,
             this.voteFromColumnHeader,
             this.voteUntilColumnHeader,
@@ -74,7 +74,7 @@ namespace Pirate.PiVote.Client
       this.votingList.Margin = new System.Windows.Forms.Padding(2);
       this.votingList.MultiSelect = false;
       this.votingList.Name = "votingList";
-      this.votingList.Size = new System.Drawing.Size(602, 211);
+      this.votingList.Size = new System.Drawing.Size(760, 362);
       this.votingList.TabIndex = 0;
       this.votingList.UseCompatibleStateImageBehavior = false;
       this.votingList.View = System.Windows.Forms.View.Details;
@@ -84,6 +84,11 @@ namespace Pirate.PiVote.Client
       // 
       this.titleColumnHeader.Text = "Title";
       this.titleColumnHeader.Width = 300;
+      // 
+      // groupColumnHeader
+      // 
+      this.groupColumnHeader.Text = "Group";
+      this.groupColumnHeader.Width = 120;
       // 
       // statusColumnHeader
       // 
@@ -114,7 +119,7 @@ namespace Pirate.PiVote.Client
       // 
       this.decipherButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.decipherButton.Enabled = false;
-      this.decipherButton.Location = new System.Drawing.Point(461, 217);
+      this.decipherButton.Location = new System.Drawing.Point(619, 368);
       this.decipherButton.Margin = new System.Windows.Forms.Padding(2);
       this.decipherButton.Name = "decipherButton";
       this.decipherButton.Size = new System.Drawing.Size(142, 27);
@@ -127,7 +132,7 @@ namespace Pirate.PiVote.Client
       // 
       this.checkSharesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.checkSharesButton.Enabled = false;
-      this.checkSharesButton.Location = new System.Drawing.Point(313, 217);
+      this.checkSharesButton.Location = new System.Drawing.Point(471, 368);
       this.checkSharesButton.Margin = new System.Windows.Forms.Padding(2);
       this.checkSharesButton.Name = "checkSharesButton";
       this.checkSharesButton.Size = new System.Drawing.Size(144, 27);
@@ -140,7 +145,7 @@ namespace Pirate.PiVote.Client
       // 
       this.createSharesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.createSharesButton.Enabled = false;
-      this.createSharesButton.Location = new System.Drawing.Point(165, 217);
+      this.createSharesButton.Location = new System.Drawing.Point(323, 368);
       this.createSharesButton.Margin = new System.Windows.Forms.Padding(2);
       this.createSharesButton.Name = "createSharesButton";
       this.createSharesButton.Size = new System.Drawing.Size(144, 27);
@@ -148,11 +153,6 @@ namespace Pirate.PiVote.Client
       this.createSharesButton.Text = "Create &Shares";
       this.createSharesButton.UseVisualStyleBackColor = true;
       this.createSharesButton.Click += new System.EventHandler(this.createSharesButton_Click);
-      // 
-      // cantonColumnHeader
-      // 
-      this.cantonColumnHeader.Text = "Canton";
-      this.cantonColumnHeader.Width = 120;
       // 
       // AuthorityListVotingsItem
       // 
@@ -164,7 +164,7 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.votingList);
       this.Margin = new System.Windows.Forms.Padding(1);
       this.Name = "AuthorityListVotingsItem";
-      this.Size = new System.Drawing.Size(605, 248);
+      this.Size = new System.Drawing.Size(763, 399);
       this.ResumeLayout(false);
 
     }
@@ -181,7 +181,7 @@ namespace Pirate.PiVote.Client
     private ColumnHeader voteUntilColumnHeader;
     private ColumnHeader authorityColumnHeader;
     private ColumnHeader envelopesColumnHeader;
-    private ColumnHeader cantonColumnHeader;
+    private ColumnHeader groupColumnHeader;
 
 
 

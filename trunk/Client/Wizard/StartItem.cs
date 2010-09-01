@@ -200,9 +200,9 @@ namespace Pirate.PiVote.Client
           return;
         }
 
-        Status.SetProgress(Resources.StartGettingCertificates, 0.5d);
+        Status.SetProgress(Resources.StartGettingConfig, 0.3d);
         this.run = true;
-        Status.VotingClient.GetCertificateStorage(Status.CertificateStorage, GetCertificateStorageComplete);
+        Status.VotingClient.GetConfig(GetConfigComplete);
 
         while (this.run)
         {
@@ -212,8 +212,28 @@ namespace Pirate.PiVote.Client
 
         if (this.exception == null)
         {
-          Status.SetMessage(Resources.StartReady, MessageType.Success);
+          UpdateMessages();
           this.canNext = true;
+
+          Status.SetProgress(Resources.StartGettingCertificates, 0.6d);
+          this.run = true;
+          Status.VotingClient.GetCertificateStorage(Status.CertificateStorage, GetCertificateStorageComplete);
+
+          while (this.run)
+          {
+            Status.UpdateProgress();
+            Thread.Sleep(10);
+          }
+
+          if (this.exception == null)
+          {
+            Status.SetMessage(Resources.StartReady, MessageType.Success);
+            this.canNext = true;
+          }
+          else
+          {
+            Status.SetMessage(this.exception.Message, MessageType.Error);
+          }
         }
         else
         {
@@ -229,6 +249,14 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
     }
 
+    private void GetConfigComplete(IRemoteConfig config, IEnumerable<Group> groups, Exception exception)
+    {
+      Status.RemoteConfig = config;
+      Status.Groups = groups;
+      this.exception = exception;
+      this.run = false;
+    }
+
     private void GetCertificateStorageComplete(Certificate serverCertificate, Exception exception)
     {
       Status.ServerCertificate = serverCertificate;
@@ -242,21 +270,37 @@ namespace Pirate.PiVote.Client
       this.run = false;
     }
 
+    private void UpdateMessages()
+    {
+      if (Status.RemoteConfig != null)
+      {
+        this.titlelLabel.Text = Status.RemoteConfig.SystemName.Text;
+        this.welcomeLabel.Text = Status.RemoteConfig.WelcomeMessage.Text;
+        this.urlLink.Text = Status.RemoteConfig.Url;
+
+        if (Status.RemoteConfig.Image.Length > 0)
+        {
+          MemoryStream bitmapStream = new MemoryStream(Status.RemoteConfig.Image);
+          this.tileImage.Image = new Bitmap(bitmapStream);
+        }
+      }
+      else
+      {
+        this.titlelLabel.Text = string.Empty;
+        this.welcomeLabel.Text = string.Empty;
+        this.urlLink.Text = string.Empty;
+        this.tileImage.Image = null;
+      }
+    }
+
     public override void UpdateLanguage()
     {
       base.UpdateLanguage();
 
-      this.titlelLabel.Text = Status.Config.SystemName.Text;
-      this.alphaWarningLabel.Text = Status.Config.WelcomeMessage.Text;
       this.votingRadio.Text = Resources.StartVoting;
       this.advancedOptionsRadio.Text = Resources.StartAdvancedOptions;
       this.tallyOnlyRadio.Text = Resources.StartTallyOnly;
-
-      if (!Status.Config.ImageFile.IsNullOrEmpty() &&
-        File.Exists(Path.Combine(Application.StartupPath, Status.Config.ImageFile)))
-      {
-        this.tileImage.Image = new Bitmap(Path.Combine(Application.StartupPath, Status.Config.ImageFile));
-      }
+      UpdateMessages();
 
       if (this.canNext)
       {
@@ -295,7 +339,7 @@ namespace Pirate.PiVote.Client
 
     private void alphaBugLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-      System.Diagnostics.Process.Start("https://dev.piratenpartei.ch/projects/pi-vote");
+      System.Diagnostics.Process.Start(Status.RemoteConfig.Url);
     }
   }
 }

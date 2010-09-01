@@ -445,88 +445,88 @@
     <value>German</value>
   </data>
   <data name="cantonAG" xml:space="preserve">
-    <value>Aargau</value>
+    <value>Cantonal Party Aargau</value>
   </data>
   <data name="cantonAI" xml:space="preserve">
-    <value>Appenzell Innerrhoden</value>
+    <value>Cantonal Party Appenzell Innerrhoden</value>
   </data>
   <data name="cantonAR" xml:space="preserve">
-    <value>Appenzell Ausserrhoden</value>
+    <value>Cantonal Party Appenzell Ausserrhoden</value>
   </data>
   <data name="cantonBE" xml:space="preserve">
-    <value>Bern</value>
+    <value>Cantonal Party Bern</value>
   </data>
   <data name="cantonBL" xml:space="preserve">
-    <value>Basel-Landschaft</value>
+    <value>Cantonal Party Basel-Landschaft</value>
   </data>
   <data name="cantonBS" xml:space="preserve">
-    <value>Basel-Stadt</value>
+    <value>Cantonal Party Basel-Stadt</value>
   </data>
   <data name="cantonFR" xml:space="preserve">
-    <value>Freiburg</value>
+    <value>Cantonal Party Freiburg</value>
   </data>
   <data name="cantonGE" xml:space="preserve">
-    <value>Genf</value>
+    <value>Cantonal Party Genf</value>
   </data>
   <data name="cantonGL" xml:space="preserve">
-    <value>Glarus</value>
+    <value>Cantonal Party Glarus</value>
   </data>
   <data name="cantonGR" xml:space="preserve">
-    <value>Graubünden</value>
+    <value>Cantonal Party Graubünden</value>
   </data>
   <data name="cantonJU" xml:space="preserve">
-    <value>Jura</value>
+    <value>Cantonal Party Jura</value>
   </data>
   <data name="cantonLU" xml:space="preserve">
-    <value>Luzern</value>
+    <value>Cantonal Party Luzern</value>
   </data>
   <data name="cantonNE" xml:space="preserve">
-    <value>Neuenburg</value>
+    <value>Cantonal Party Neuenburg</value>
   </data>
   <data name="cantonNone" xml:space="preserve">
-    <value>None</value>
+    <value>Only National Party</value>
   </data>
   <data name="cantonNW" xml:space="preserve">
-    <value>Nidwalden</value>
+    <value>Cantonal Party Nidwalden</value>
   </data>
   <data name="cantonOW" xml:space="preserve">
-    <value>Obwalden</value>
+    <value>Cantonal Party Obwalden</value>
   </data>
   <data name="cantonSG" xml:space="preserve">
-    <value>St. Gallen</value>
+    <value>Cantonal Party St. Gallen</value>
   </data>
   <data name="cantonSH" xml:space="preserve">
-    <value>Schaffhausen</value>
+    <value>Cantonal Party Schaffhausen</value>
   </data>
   <data name="cantonSO" xml:space="preserve">
-    <value>Solothurn</value>
+    <value>Cantonal Party Solothurn</value>
   </data>
   <data name="cantonSZ" xml:space="preserve">
-    <value>Schwyz</value>
+    <value>Cantonal Party Schwyz</value>
   </data>
   <data name="cantonTG" xml:space="preserve">
-    <value>Thurgau</value>
+    <value>Cantonal Party Thurgau</value>
   </data>
   <data name="cantonTI" xml:space="preserve">
-    <value>Tessin</value>
+    <value>Cantonal Party Tessin</value>
   </data>
   <data name="cantonUR" xml:space="preserve">
-    <value>Uri</value>
+    <value>Cantonal Party Uri</value>
   </data>
   <data name="cantonVD" xml:space="preserve">
-    <value>Waadt</value>
+    <value>Cantonal Party Waadt</value>
   </data>
   <data name="cantonVS" xml:space="preserve">
-    <value>Wallis</value>
+    <value>Cantonal Party Wallis</value>
   </data>
   <data name="cantonZG" xml:space="preserve">
-    <value>Zug</value>
+    <value>Cantonal Party Zug</value>
   </data>
   <data name="cantonZH" xml:space="preserve">
-    <value>Zürich</value>
+    <value>Cantonal Party Zürich</value>
   </data>
-  <data name="ExceptionBadCantonInCertificate" xml:space="preserve">
-    <value>You ar not allowed to vote in the canton of this voting.</value>
+  <data name="ExceptionBadGroupIdInCertificate" xml:space="preserve">
+    <value>You ar not allowed to vote in the group of this voting.</value>
   </data>
   <data name="RefusedFingerprintNoMatch" xml:space="preserve">
     <value>Fingerprint does not match.</value>

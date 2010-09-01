@@ -22,7 +22,15 @@ namespace Pirate.PiVote.Rpc
   /// </summary>
   public class VotingRpcServer : RpcServer
   {
+    /// <summary>
+    /// Config file for the configuration of the server.
+    /// </summary>
     private const string ServerConfigFileName = "pi-vote-server.cfg";
+
+    /// <summary>
+    /// Config file for the remote configuration of the clients.
+    /// </summary>
+    private const string RemoteConfigFileName = "pi-vote-remote.cfg";
 
     /// <summary>
     /// MySQL database connection.
@@ -56,6 +64,11 @@ namespace Pirate.PiVote.Rpc
     {
       get { return this.serverConfig; }
     }
+
+    /// <summary>
+    /// Configures the client remotly.
+    /// </summary>
+    public IRemoteConfig RemoteConfig { get; private set; }
 
     /// <summary>
     /// Sends emails to users and admins.
@@ -98,6 +111,9 @@ namespace Pirate.PiVote.Rpc
 
       this.serverConfig = new ServerConfig(ServerConfigFileName);
       Logger.Log(LogLevel.Info, "Config file is read.");
+
+      RemoteConfig = new RemoteStoredConfig(RemoteConfigFileName);
+      Logger.Log(LogLevel.Info, "Remote config file is read.");
 
       Mailer = new Mailer(this.serverConfig, this.logger);
       Logger.Log(LogLevel.Info, "Mailer is set up.");
@@ -527,6 +543,31 @@ namespace Pirate.PiVote.Rpc
     {
       int certificateCount = CertificateStorage.Certificates.Count();
       Logger.Log(LogLevel.Debug, "Worker idling at {0}.", certificateCount);
+    }
+
+    /// <summary>
+    /// List all groups in database.
+    /// </summary>
+    /// <returns>List of groups.</returns>
+    public List<Group> GetGroups()
+    {
+      MySqlDataReader reader = DbConnection
+        .ExecuteReader("SELECT Id, NameEnglish, NameGerman, NameFrench, NameItalien FROM VotingGroup");
+      List<Group> groupList = new List<Group>();
+
+      while (reader.Read())
+      {
+        MultiLanguageString name = new MultiLanguageString();
+        name.Set(Language.English, reader.GetString(1));
+        name.Set(Language.German, reader.GetString(2));
+        name.Set(Language.French, reader.GetString(3));
+        name.Set(Language.Italien, reader.GetString(4));
+        groupList.Add(new Group(reader.GetInt32(0), name));
+      }
+
+      reader.Close();
+
+      return groupList;
     }
   }
 }

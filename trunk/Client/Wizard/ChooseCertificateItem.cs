@@ -102,7 +102,16 @@ namespace Pirate.PiVote.Client
 
           ListViewItem item = new ListViewItem(certificate.TypeText);
           item.SubItems.Add(certificate.Id.ToString());
-          item.SubItems.Add(certificate.FullName.ToString());
+
+          if (certificate is VoterCertificate)
+          {
+            item.SubItems.Add(Status.GetGroupName(((VoterCertificate)certificate).GroupId));
+          }
+          else
+          {
+            item.SubItems.Add(certificate.FullName);
+          }
+
           item.Tag = new KeyValuePair<string, Certificate>(file.FullName, certificate);
           this.certificateList.Items.Add(item);
         }

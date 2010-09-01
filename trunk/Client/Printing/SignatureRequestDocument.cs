@@ -21,17 +21,21 @@ namespace Pirate.PiVote.Client
     private const string FontFace = "DejaVu Sans";
     private const int BaseFontSize = 12;
 
+    private WizardStatus status;
     private SignatureRequest signatureRequest;
     private Certificate certificate;
     private Graphics graphics;
 
-    public SignatureRequestDocument(SignatureRequest signatureRequest, Certificate certificate)
+    public SignatureRequestDocument(SignatureRequest signatureRequest, Certificate certificate, WizardStatus status)
     {
       if (signatureRequest == null)
         throw new ArgumentNullException("signatureRequest");
       if (certificate == null)
         throw new ArgumentNullException("certificate");
+      if (status == null)
+        throw new ArgumentNullException("status");
 
+      this.status = status;
       this.signatureRequest = signatureRequest;
       this.certificate = certificate;
 
@@ -90,7 +94,7 @@ namespace Pirate.PiVote.Client
       table.AddRow(Resources.SigningRequestDocumentFirstName, this.signatureRequest.FirstName);
       table.AddRow(Resources.SigningRequestDocumentEmailAddress, this.signatureRequest.EmailAddress);
       if (this.certificate is VoterCertificate)
-        table.AddRow(Resources.SigningRequestDocumentCanton, ((VoterCertificate)this.certificate).Canton.Text());
+        table.AddRow(Resources.SigningRequestDocumentGroup, this.status.GetGroupName(((VoterCertificate)this.certificate).GroupId));
       table.AddRow(Resources.SigningRequestDocumentCertificateType, this.certificate.TypeText);
       table.AddRow(Resources.SigningRequestDocumentCertificateId, this.certificate.Id.ToString());
 
@@ -174,7 +178,6 @@ namespace Pirate.PiVote.Client
       if (this.certificate is VoterCertificate)
       {
         table.AddRow(Resources.SigningRequestDocumentRevokedNoLonger);
-        table.AddRow(Resources.SigningRequestDocumentRevokedMoved);
       }
       else
       {

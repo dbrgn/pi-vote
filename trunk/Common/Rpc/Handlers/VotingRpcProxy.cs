@@ -206,6 +206,17 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Pushes a remote request to the server.
+    /// </summary>
+    public Tuple<IRemoteConfig, IEnumerable<Group>> FetchConfig()
+    {
+      var request = new FetchConfigRequest(Guid.NewGuid());
+      var response = Execute<FetchConfigResponse>(request);
+
+      return new Tuple<IRemoteConfig, IEnumerable<Group>>(response.Config, response.Groups);
+    }
+
+    /// <summary>
     /// Starts the processing thread.
     /// </summary>
     public void Start()
