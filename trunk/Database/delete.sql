@@ -8,3 +8,4 @@ DELETE FROM `pivote`.`shareresponse`;
 DELETE FROM `pivote`.`signaturerequest`;
 DELETE FROM `pivote`.`signatureresponse`;
 DELETE FROM `pivote`.`voting`;
+DELETE FROM `pivote`.`votinggroup`;

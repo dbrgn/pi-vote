@@ -60,7 +60,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `pivote`.`revocationlist`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `pivote`.`revocationlist` (
-  `IssuerId` VARBINARY(16) NOT NULL ,
+  `IssuerId` VARBINARY(16) NOT ,
   `ValidFrom` DATETIME NOT NULL ,
   `ValidUntil` DATETIME NOT NULL ,
   `Value` BLOB NULL DEFAULT NULL ,
@@ -123,6 +123,20 @@ CREATE  TABLE IF NOT EXISTS `pivote`.`voting` (
   `Id` VARBINARY(16) NOT NULL ,
   `Parameters` BLOB NOT NULL ,
   `Status` INT(11) NOT NULL ,
+  PRIMARY KEY (`Id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `pivote`.`votinggroup`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `pivote`.`votinggroup` (
+  `Id` INT(11) NOT NULL ,
+  `NameEnglish` VARCHAR(100) NOT NULL ,
+  `NameGerman` VARCHAR(100) NOT NULL ,
+  `NameFrench` VARCHAR(100) NOT NULL ,
+  `NameItalien` VARCHAR(100) NOT NULL ,
   PRIMARY KEY (`Id`) )
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
