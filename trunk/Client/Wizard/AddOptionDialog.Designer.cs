@@ -109,7 +109,7 @@ namespace Pirate.PiVote.Client
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(80, 23);
       this.cancelButton.TabIndex = 4;
-      this.cancelButton.Text = "button1";
+      this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
       this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
       // 
@@ -122,7 +122,7 @@ namespace Pirate.PiVote.Client
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(80, 23);
       this.okButton.TabIndex = 3;
-      this.okButton.Text = "button2";
+      this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
       this.okButton.Click += new System.EventHandler(this.okButton_Click);
       // 
@@ -139,11 +139,11 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.textTextBox);
       this.Controls.Add(this.textLabel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.KeyPreview = true;
       this.Margin = new System.Windows.Forms.Padding(2);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(400, 150);
       this.Name = "AddOptionDialog";
       this.Text = "AddOptionDialog";
       this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddOptionDialog_KeyDown);

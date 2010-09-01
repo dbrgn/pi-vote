@@ -39,6 +39,7 @@
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.certificateControl.Certificate = null;
       this.certificateControl.CertificateStorage = null;
+      this.certificateControl.Font = new System.Drawing.Font("Arial", 8.25F);
       this.certificateControl.Location = new System.Drawing.Point(12, 12);
       this.certificateControl.Margin = new System.Windows.Forms.Padding(72, 34, 72, 34);
       this.certificateControl.Name = "certificateControl";
@@ -65,9 +66,9 @@
       this.Controls.Add(this.closeButton);
       this.Controls.Add(this.certificateControl);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(400, 300);
       this.Name = "CertificateForm";
       this.Text = "View Certificate";
       this.ResumeLayout(false);

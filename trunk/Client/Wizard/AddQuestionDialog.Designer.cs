@@ -52,7 +52,7 @@
       // optionLabel
       // 
       this.optionLabel.AutoSize = true;
-      this.optionLabel.Location = new System.Drawing.Point(5, 88);
+      this.optionLabel.Location = new System.Drawing.Point(5, 102);
       this.optionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.optionLabel.Name = "optionLabel";
       this.optionLabel.Size = new System.Drawing.Size(53, 14);
@@ -69,11 +69,11 @@
             this.descriptionColumnHeader});
       this.optionListView.ContextMenuStrip = this.optionListContextMenu;
       this.optionListView.FullRowSelect = true;
-      this.optionListView.Location = new System.Drawing.Point(108, 84);
+      this.optionListView.Location = new System.Drawing.Point(108, 98);
       this.optionListView.Margin = new System.Windows.Forms.Padding(2);
       this.optionListView.MultiSelect = false;
       this.optionListView.Name = "optionListView";
-      this.optionListView.Size = new System.Drawing.Size(684, 182);
+      this.optionListView.Size = new System.Drawing.Size(684, 168);
       this.optionListView.TabIndex = 2;
       this.optionListView.UseCompatibleStateImageBehavior = false;
       this.optionListView.View = System.Windows.Forms.View.Details;
@@ -171,7 +171,7 @@
       this.descriptionTextBox.Multiline = true;
       this.descriptionTextBox.Name = "descriptionTextBox";
       this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.descriptionTextBox.Size = new System.Drawing.Size(684, 48);
+      this.descriptionTextBox.Size = new System.Drawing.Size(684, 62);
       this.descriptionTextBox.TabIndex = 1;
       // 
       // descriptionLabel
@@ -224,8 +224,8 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(803, 348);
       this.Controls.Add(this.abstentionLabel);
-      this.Controls.Add(this.optionLabel);
       this.Controls.Add(this.descriptionTextBox);
+      this.Controls.Add(this.optionLabel);
       this.Controls.Add(this.textTextBox);
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.descriptionLabel);
@@ -236,6 +236,7 @@
       this.Controls.Add(this.optionNumberLabel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Margin = new System.Windows.Forms.Padding(2);
+      this.MinimumSize = new System.Drawing.Size(400, 300);
       this.Name = "AddQuestionDialog";
       this.Text = "AddQuestionDialog";
       this.optionListContextMenu.ResumeLayout(false);
