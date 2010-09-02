@@ -45,6 +45,8 @@
       this.cancelButton = new System.Windows.Forms.Button();
       this.okButton = new System.Windows.Forms.Button();
       this.abstentionLabel = new System.Windows.Forms.Label();
+      this.urlTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.urlLabel = new System.Windows.Forms.Label();
       this.optionListContextMenu.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.optionNumberUpDown)).BeginInit();
       this.SuspendLayout();
@@ -52,7 +54,7 @@
       // optionLabel
       // 
       this.optionLabel.AutoSize = true;
-      this.optionLabel.Location = new System.Drawing.Point(5, 102);
+      this.optionLabel.Location = new System.Drawing.Point(2, 154);
       this.optionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.optionLabel.Name = "optionLabel";
       this.optionLabel.Size = new System.Drawing.Size(53, 14);
@@ -69,12 +71,12 @@
             this.descriptionColumnHeader});
       this.optionListView.ContextMenuStrip = this.optionListContextMenu;
       this.optionListView.FullRowSelect = true;
-      this.optionListView.Location = new System.Drawing.Point(108, 98);
+      this.optionListView.Location = new System.Drawing.Point(109, 150);
       this.optionListView.Margin = new System.Windows.Forms.Padding(2);
       this.optionListView.MultiSelect = false;
       this.optionListView.Name = "optionListView";
-      this.optionListView.Size = new System.Drawing.Size(684, 168);
-      this.optionListView.TabIndex = 2;
+      this.optionListView.Size = new System.Drawing.Size(683, 116);
+      this.optionListView.TabIndex = 3;
       this.optionListView.UseCompatibleStateImageBehavior = false;
       this.optionListView.View = System.Windows.Forms.View.Details;
       // 
@@ -94,20 +96,20 @@
             this.addToolStripMenuItem,
             this.removeToolStripMenuItem});
       this.optionListContextMenu.Name = "contextMenu";
-      this.optionListContextMenu.Size = new System.Drawing.Size(141, 56);
+      this.optionListContextMenu.Size = new System.Drawing.Size(114, 48);
       this.optionListContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.optionListContextMenu_Opening);
       // 
       // addToolStripMenuItem
       // 
       this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-      this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+      this.addToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
       this.addToolStripMenuItem.Text = "&Add";
       this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
       // 
       // removeToolStripMenuItem
       // 
       this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-      this.removeToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+      this.removeToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
       this.removeToolStripMenuItem.Text = "&Remove";
       this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
       // 
@@ -115,11 +117,11 @@
       // 
       this.textTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.textTextBox.Location = new System.Drawing.Point(108, 5);
+      this.textTextBox.Location = new System.Drawing.Point(109, 5);
       this.textTextBox.Multiline = false;
       this.textTextBox.Name = "textTextBox";
       this.textTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
-      this.textTextBox.Size = new System.Drawing.Size(683, 20);
+      this.textTextBox.Size = new System.Drawing.Size(682, 20);
       this.textTextBox.TabIndex = 0;
       // 
       // textLabel
@@ -157,7 +159,7 @@
       this.optionNumberUpDown.Size = new System.Drawing.Size(77, 20);
       this.optionNumberUpDown.TabIndex = 3;
       this.optionNumberUpDown.Value = new decimal(new int[] {
-            1,
+            4,
             0,
             0,
             0});
@@ -171,7 +173,7 @@
       this.descriptionTextBox.Multiline = true;
       this.descriptionTextBox.Name = "descriptionTextBox";
       this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.descriptionTextBox.Size = new System.Drawing.Size(684, 62);
+      this.descriptionTextBox.Size = new System.Drawing.Size(684, 86);
       this.descriptionTextBox.TabIndex = 1;
       // 
       // descriptionLabel
@@ -191,7 +193,7 @@
       this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(85, 25);
-      this.cancelButton.TabIndex = 5;
+      this.cancelButton.TabIndex = 6;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
       this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -203,7 +205,7 @@
       this.okButton.Margin = new System.Windows.Forms.Padding(2);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(85, 25);
-      this.okButton.TabIndex = 4;
+      this.okButton.TabIndex = 5;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
       this.okButton.Click += new System.EventHandler(this.okButton_Click);
@@ -218,15 +220,38 @@
       this.abstentionLabel.TabIndex = 47;
       this.abstentionLabel.Text = "Abstention will be added automatically.";
       // 
+      // urlTextBox
+      // 
+      this.urlTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.urlTextBox.Location = new System.Drawing.Point(109, 123);
+      this.urlTextBox.Multiline = false;
+      this.urlTextBox.Name = "urlTextBox";
+      this.urlTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+      this.urlTextBox.Size = new System.Drawing.Size(682, 22);
+      this.urlTextBox.TabIndex = 2;
+      // 
+      // urlLabel
+      // 
+      this.urlLabel.AutoSize = true;
+      this.urlLabel.Location = new System.Drawing.Point(2, 126);
+      this.urlLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+      this.urlLabel.Name = "urlLabel";
+      this.urlLabel.Size = new System.Drawing.Size(20, 14);
+      this.urlLabel.TabIndex = 49;
+      this.urlLabel.Text = "Url";
+      // 
       // AddQuestionDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(803, 348);
+      this.Controls.Add(this.urlLabel);
+      this.Controls.Add(this.urlTextBox);
       this.Controls.Add(this.abstentionLabel);
       this.Controls.Add(this.descriptionTextBox);
-      this.Controls.Add(this.optionLabel);
       this.Controls.Add(this.textTextBox);
+      this.Controls.Add(this.optionLabel);
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.descriptionLabel);
       this.Controls.Add(this.okButton);
@@ -264,5 +289,7 @@
     private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
     private System.Windows.Forms.Label abstentionLabel;
+    private MultiLanguageTextBox urlTextBox;
+    private System.Windows.Forms.Label urlLabel;
   }
 }

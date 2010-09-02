@@ -48,7 +48,7 @@ namespace Pirate.PiVote.Client
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.groupLabel = new System.Windows.Forms.Label();
-      this.groupComboBox = new GroupComboBox();
+      this.groupComboBox = new Pirate.PiVote.Client.GroupComboBox();
       this.questionLabel = new System.Windows.Forms.Label();
       this.questionListView = new System.Windows.Forms.ListView();
       this.textColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -68,6 +68,8 @@ namespace Pirate.PiVote.Client
       this.votingUntilPicker = new System.Windows.Forms.DateTimePicker();
       this.titleBox = new Pirate.PiVote.MultiLanguageTextBox();
       this.titleLabel = new System.Windows.Forms.Label();
+      this.urlTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.urlLabel = new System.Windows.Forms.Label();
       this.questionContextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -121,13 +123,14 @@ namespace Pirate.PiVote.Client
       this.groupComboBox.Margin = new System.Windows.Forms.Padding(2);
       this.groupComboBox.Name = "groupComboBox";
       this.groupComboBox.Size = new System.Drawing.Size(224, 22);
-      this.groupComboBox.TabIndex = 45;
+      this.groupComboBox.TabIndex = 11;
+      this.groupComboBox.Value = null;
       this.groupComboBox.SelectedIndexChanged += new System.EventHandler(this.cantonComboBox_SelectedIndexChanged);
       // 
       // questionLabel
       // 
       this.questionLabel.AutoSize = true;
-      this.questionLabel.Location = new System.Drawing.Point(2, 243);
+      this.questionLabel.Location = new System.Drawing.Point(2, 257);
       this.questionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.questionLabel.Name = "questionLabel";
       this.questionLabel.Size = new System.Drawing.Size(56, 14);
@@ -144,12 +147,12 @@ namespace Pirate.PiVote.Client
             this.descriptionColumnHeader});
       this.questionListView.ContextMenuStrip = this.questionContextMenu;
       this.questionListView.FullRowSelect = true;
-      this.questionListView.Location = new System.Drawing.Point(105, 239);
+      this.questionListView.Location = new System.Drawing.Point(105, 253);
       this.questionListView.Margin = new System.Windows.Forms.Padding(2);
       this.questionListView.MultiSelect = false;
       this.questionListView.Name = "questionListView";
-      this.questionListView.Size = new System.Drawing.Size(520, 100);
-      this.questionListView.TabIndex = 44;
+      this.questionListView.Size = new System.Drawing.Size(520, 86);
+      this.questionListView.TabIndex = 8;
       this.questionListView.UseCompatibleStateImageBehavior = false;
       this.questionListView.View = System.Windows.Forms.View.Details;
       // 
@@ -173,7 +176,7 @@ namespace Pirate.PiVote.Client
       this.authority0List.Margin = new System.Windows.Forms.Padding(2);
       this.authority0List.Name = "authority0List";
       this.authority0List.Size = new System.Drawing.Size(520, 22);
-      this.authority0List.TabIndex = 37;
+      this.authority0List.TabIndex = 0;
       this.authority0List.SelectedIndexChanged += new System.EventHandler(this.authority0List_SelectedIndexChanged);
       // 
       // authority4List
@@ -186,7 +189,7 @@ namespace Pirate.PiVote.Client
       this.authority4List.Margin = new System.Windows.Forms.Padding(2);
       this.authority4List.Name = "authority4List";
       this.authority4List.Size = new System.Drawing.Size(520, 22);
-      this.authority4List.TabIndex = 41;
+      this.authority4List.TabIndex = 4;
       this.authority4List.SelectedIndexChanged += new System.EventHandler(this.authority4List_SelectedIndexChanged);
       // 
       // authority2List
@@ -199,7 +202,7 @@ namespace Pirate.PiVote.Client
       this.authority2List.Margin = new System.Windows.Forms.Padding(2);
       this.authority2List.Name = "authority2List";
       this.authority2List.Size = new System.Drawing.Size(520, 22);
-      this.authority2List.TabIndex = 39;
+      this.authority2List.TabIndex = 1;
       this.authority2List.SelectedIndexChanged += new System.EventHandler(this.authority2List_SelectedIndexChanged);
       // 
       // authority3List
@@ -212,7 +215,7 @@ namespace Pirate.PiVote.Client
       this.authority3List.Margin = new System.Windows.Forms.Padding(2);
       this.authority3List.Name = "authority3List";
       this.authority3List.Size = new System.Drawing.Size(520, 22);
-      this.authority3List.TabIndex = 40;
+      this.authority3List.TabIndex = 3;
       this.authority3List.SelectedIndexChanged += new System.EventHandler(this.authority3List_SelectedIndexChanged);
       // 
       // authority1List
@@ -225,7 +228,7 @@ namespace Pirate.PiVote.Client
       this.authority1List.Margin = new System.Windows.Forms.Padding(2);
       this.authority1List.Name = "authority1List";
       this.authority1List.Size = new System.Drawing.Size(520, 22);
-      this.authority1List.TabIndex = 38;
+      this.authority1List.TabIndex = 2;
       this.authority1List.SelectedIndexChanged += new System.EventHandler(this.authority1List_SelectedIndexChanged);
       // 
       // authoritiesLabel
@@ -246,8 +249,8 @@ namespace Pirate.PiVote.Client
       this.descriptionBox.Multiline = true;
       this.descriptionBox.Name = "descriptionBox";
       this.descriptionBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.descriptionBox.Size = new System.Drawing.Size(520, 78);
-      this.descriptionBox.TabIndex = 19;
+      this.descriptionBox.Size = new System.Drawing.Size(520, 70);
+      this.descriptionBox.TabIndex = 6;
       this.descriptionBox.TextChanged += new System.EventHandler(this.descriptionBox_TextChanged);
       // 
       // createButton
@@ -258,7 +261,7 @@ namespace Pirate.PiVote.Client
       this.createButton.Margin = new System.Windows.Forms.Padding(2);
       this.createButton.Name = "createButton";
       this.createButton.Size = new System.Drawing.Size(110, 26);
-      this.createButton.TabIndex = 32;
+      this.createButton.TabIndex = 12;
       this.createButton.Text = "Create";
       this.createButton.UseVisualStyleBackColor = true;
       this.createButton.Click += new System.EventHandler(this.createButton_Click);
@@ -292,7 +295,7 @@ namespace Pirate.PiVote.Client
       this.votingFromPicker.Margin = new System.Windows.Forms.Padding(2);
       this.votingFromPicker.Name = "votingFromPicker";
       this.votingFromPicker.Size = new System.Drawing.Size(224, 20);
-      this.votingFromPicker.TabIndex = 30;
+      this.votingFromPicker.TabIndex = 9;
       this.votingFromPicker.ValueChanged += new System.EventHandler(this.votingFromPicker_ValueChanged);
       // 
       // descriptionLabel
@@ -312,7 +315,7 @@ namespace Pirate.PiVote.Client
       this.votingUntilPicker.Margin = new System.Windows.Forms.Padding(2);
       this.votingUntilPicker.Name = "votingUntilPicker";
       this.votingUntilPicker.Size = new System.Drawing.Size(224, 20);
-      this.votingUntilPicker.TabIndex = 31;
+      this.votingUntilPicker.TabIndex = 10;
       this.votingUntilPicker.ValueChanged += new System.EventHandler(this.votingUntilPicker_ValueChanged);
       // 
       // titleBox
@@ -324,7 +327,7 @@ namespace Pirate.PiVote.Client
       this.titleBox.Name = "titleBox";
       this.titleBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
       this.titleBox.Size = new System.Drawing.Size(520, 20);
-      this.titleBox.TabIndex = 17;
+      this.titleBox.TabIndex = 5;
       this.titleBox.TextChanged += new System.EventHandler(this.titleBox_TextChanged);
       // 
       // titleLabel
@@ -337,10 +340,33 @@ namespace Pirate.PiVote.Client
       this.titleLabel.TabIndex = 16;
       this.titleLabel.Text = "Title";
       // 
+      // urlTextBox
+      // 
+      this.urlTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.urlTextBox.Location = new System.Drawing.Point(104, 230);
+      this.urlTextBox.Multiline = false;
+      this.urlTextBox.Name = "urlTextBox";
+      this.urlTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+      this.urlTextBox.Size = new System.Drawing.Size(520, 22);
+      this.urlTextBox.TabIndex = 7;
+      // 
+      // urlLabel
+      // 
+      this.urlLabel.AutoSize = true;
+      this.urlLabel.Location = new System.Drawing.Point(2, 233);
+      this.urlLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+      this.urlLabel.Name = "urlLabel";
+      this.urlLabel.Size = new System.Drawing.Size(20, 14);
+      this.urlLabel.TabIndex = 48;
+      this.urlLabel.Text = "Url";
+      // 
       // CreateVotingItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.urlLabel);
+      this.Controls.Add(this.urlTextBox);
       this.Controls.Add(this.groupLabel);
       this.Controls.Add(this.groupComboBox);
       this.Controls.Add(this.questionLabel);
@@ -397,6 +423,8 @@ namespace Pirate.PiVote.Client
     private ToolStripMenuItem editToolStripMenuItem;
     private Label groupLabel;
     private GroupComboBox groupComboBox;
+    private MultiLanguageTextBox urlTextBox;
+    private Label urlLabel;
 
 
 

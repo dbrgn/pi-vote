@@ -26,6 +26,7 @@ namespace Pirate.PiVote.Rpc
     private readonly Guid id;
     private readonly MultiLanguageString title;
     private readonly MultiLanguageString descripton;
+    private readonly MultiLanguageString url;
     private readonly VotingStatus status;
     private readonly List<Guid> authoritiesDone;
     private readonly DateTime voteFrom;
@@ -50,6 +51,11 @@ namespace Pirate.PiVote.Rpc
     /// Description of the voting.
     /// </summary>
     public MultiLanguageString Description { get { return this.descripton; } }
+
+    /// <summary>
+    /// Url of the discussion of the voting.
+    /// </summary>
+    public MultiLanguageString Url { get { return this.url; } }
 
     /// <summary>
     /// Status of the voting.
@@ -116,6 +122,7 @@ namespace Pirate.PiVote.Rpc
       this.id = parameters.VotingId;
       this.title = parameters.Title;
       this.descripton = parameters.Description;
+      this.url = parameters.Url;
       this.status = VotingStatus.Offline;
       this.authoritiesDone = null;
       this.voteFrom = parameters.VotingBeginDate;

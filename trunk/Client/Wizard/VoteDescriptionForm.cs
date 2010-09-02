@@ -32,14 +32,20 @@ namespace Pirate.PiVote.Client
       Close();
     }
 
-    public static void ShowDescription(string text, string description)
+    public static void ShowDescription(string text, string description, string url)
     {
       VoteDescriptionForm form = new VoteDescriptionForm();
       form.Text = Resources.VoteDescriptionTitle;
       form.closeButton.Text = Resources.VoteDescriptionCloseButton;
       form.textTextBox.Text = text;
       form.descriptionTextBox.Text = description;
+      form.urlLink.Text = url;
       form.ShowDialog();
+    }
+
+    private void urlLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+      System.Diagnostics.Process.Start(this.urlLink.Text);
     }
   }
 }

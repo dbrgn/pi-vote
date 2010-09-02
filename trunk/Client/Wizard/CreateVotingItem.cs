@@ -191,7 +191,12 @@ namespace Pirate.PiVote.Client
           descriptionString.Set(Language.German, string.Empty);
           descriptionString.Set(Language.French, string.Empty);
 
-          Option abstain = new Option(abstainString, descriptionString);
+          MultiLanguageString urlString = new MultiLanguageString();
+          urlString.Set(Language.English, string.Empty);
+          urlString.Set(Language.German, string.Empty);
+          urlString.Set(Language.French, string.Empty);
+
+          Option abstain = new Option(abstainString, descriptionString, urlString);
           question.AddOption(abstain);
         }
         else
@@ -208,7 +213,12 @@ namespace Pirate.PiVote.Client
             descriptionString.Set(Language.German, string.Empty);
             descriptionString.Set(Language.French, string.Empty);
 
-            Option abstain = new Option(abstainString, descriptionString);
+            MultiLanguageString urlString = new MultiLanguageString();
+            urlString.Set(Language.English, string.Empty);
+            urlString.Set(Language.German, string.Empty);
+            urlString.Set(Language.French, string.Empty);
+
+            Option abstain = new Option(abstainString, descriptionString, urlString);
             question.AddOption(abstain);
           }
         }
@@ -268,6 +278,7 @@ namespace Pirate.PiVote.Client
         new VotingParameters(
           this.titleBox.Text,
           this.descriptionBox.Text,
+          this.urlTextBox.Text,
           this.votingFromPicker.Value.Date,
           this.votingUntilPicker.Value.Date,
           this.group.Id);
@@ -365,6 +376,7 @@ namespace Pirate.PiVote.Client
       this.authoritiesLabel.Text = Resources.CreateVotingAuthorities;
       this.titleLabel.Text = Resources.CreateVotingTitle;
       this.descriptionLabel.Text = Resources.CreateVotingDescription;
+      this.urlLabel.Text = Resources.CreateVotingUrl;
       this.votingFromLabel.Text = Resources.CreateVotingOpenFrom;
       this.votingUntilLabel.Text = Resources.CreateVotingOpenUntil;
       this.createButton.Text = Resources.CreateVotingButton;

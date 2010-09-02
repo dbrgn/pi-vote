@@ -24,6 +24,7 @@ namespace Pirate.PiVote.Rpc
   {
     private readonly MultiLanguageString text;
     private readonly MultiLanguageString description;
+    private readonly MultiLanguageString url;
 
     /// <summary>
     /// Text of the option.
@@ -36,6 +37,11 @@ namespace Pirate.PiVote.Rpc
     public MultiLanguageString Description { get { return this.description; } }
 
     /// <summary>
+    /// Url of the discussion of the option.
+    /// </summary>
+    public MultiLanguageString Url { get { return this.url; } }
+
+    /// <summary>
     /// Creates a new option decriptor.
     /// </summary>
     /// <param name="option">Option to decscribe.</param>
@@ -46,6 +52,7 @@ namespace Pirate.PiVote.Rpc
 
       this.text = option.Text;
       this.description = option.Description;
+      this.url = option.Url;
     }
   }
 }

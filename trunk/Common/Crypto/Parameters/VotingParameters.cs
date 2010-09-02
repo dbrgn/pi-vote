@@ -35,6 +35,11 @@ namespace Pirate.PiVote.Crypto
     public MultiLanguageString Description { get; private set; }
 
     /// <summary>
+    /// Url of the discussion of the voting.
+    /// </summary>
+    public MultiLanguageString Url { get; private set; }
+
+    /// <summary>
     /// Date at which voting begins.
     /// </summary>
     public DateTime VotingBeginDate { get; private set; }
@@ -55,6 +60,7 @@ namespace Pirate.PiVote.Crypto
     public VotingParameters(
       MultiLanguageString title, 
       MultiLanguageString description, 
+      MultiLanguageString url,
       DateTime votingBeginDate, 
       DateTime votingEndDate,
       int groupId)
@@ -67,6 +73,7 @@ namespace Pirate.PiVote.Crypto
       VotingId = Guid.NewGuid();
       Title = title;
       Description = description;
+      Url = url;
       VotingBeginDate = votingBeginDate;
       VotingEndDate = votingEndDate;
       GroupId = groupId;
@@ -79,11 +86,11 @@ namespace Pirate.PiVote.Crypto
     public static VotingParameters CreateTestParameters()
     {
       VotingParameters parameters = new VotingParameters(512);
-      Question question = new Question(new MultiLanguageString("?"), new MultiLanguageString(string.Empty), 2);
-      question.AddOption(new Option(new MultiLanguageString("A"), new MultiLanguageString(string.Empty)));
-      question.AddOption(new Option(new MultiLanguageString("B"), new MultiLanguageString(string.Empty)));
-      question.AddOption(new Option(new MultiLanguageString("C"), new MultiLanguageString(string.Empty)));
-      question.AddOption(new Option(new MultiLanguageString("D"), new MultiLanguageString(string.Empty)));
+      Question question = new Question(new MultiLanguageString("?"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty), 2);
+      question.AddOption(new Option(new MultiLanguageString("A"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty)));
+      question.AddOption(new Option(new MultiLanguageString("B"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty)));
+      question.AddOption(new Option(new MultiLanguageString("C"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty)));
+      question.AddOption(new Option(new MultiLanguageString("D"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty)));
       parameters.AddQuestion(question);
 
       return parameters;

@@ -773,4 +773,16 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="StartGettingConfig" xml:space="preserve">
     <value>Downloading configuration</value>
   </data>
+  <data name="AddOptionUrl" xml:space="preserve">
+    <value>Url:</value>
+  </data>
+  <data name="CreateVotingUrl" xml:space="preserve">
+    <value>Url:</value>
+  </data>
+  <data name="UpdateDialogText" xml:space="preserve">
+    <value>There is a newer version of Pi-Vote available. Dou you wish to update from your version {0} to version {1}? If so the program will close and your browser will be directed to the update site.</value>
+  </data>
+  <data name="UpdateDialogTitle" xml:space="preserve">
+    <value>Pi-Vote Update</value>
+  </data>
 </root>

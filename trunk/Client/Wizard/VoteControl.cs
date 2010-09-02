@@ -88,7 +88,7 @@ namespace Pirate.PiVote.Client
 
     private void descriptionButton_Click(object sender, EventArgs e)
     {
-      VoteDescriptionForm.ShowDescription(Voting.Title.Text, Voting.Description.Text);
+      VoteDescriptionForm.ShowDescription(Voting.Title.Text, Voting.Description.Text, Voting.Url.Text);
     }
 
     public IEnumerable<IEnumerable<bool>> Vota

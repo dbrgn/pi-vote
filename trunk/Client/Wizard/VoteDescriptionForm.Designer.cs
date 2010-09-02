@@ -31,6 +31,9 @@
       this.textTextBox = new System.Windows.Forms.TextBox();
       this.descriptionTextBox = new System.Windows.Forms.TextBox();
       this.closeButton = new System.Windows.Forms.Button();
+      this.urlPanel = new System.Windows.Forms.Panel();
+      this.urlLink = new System.Windows.Forms.LinkLabel();
+      this.urlPanel.SuspendLayout();
       this.SuspendLayout();
       // 
       // textTextBox
@@ -53,7 +56,7 @@
       this.descriptionTextBox.Name = "descriptionTextBox";
       this.descriptionTextBox.ReadOnly = true;
       this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.descriptionTextBox.Size = new System.Drawing.Size(505, 312);
+      this.descriptionTextBox.Size = new System.Drawing.Size(505, 284);
       this.descriptionTextBox.TabIndex = 1;
       // 
       // closeButton
@@ -67,12 +70,33 @@
       this.closeButton.UseVisualStyleBackColor = true;
       this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
       // 
+      // urlPanel
+      // 
+      this.urlPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+      this.urlPanel.Controls.Add(this.urlLink);
+      this.urlPanel.Location = new System.Drawing.Point(12, 331);
+      this.urlPanel.Name = "urlPanel";
+      this.urlPanel.Size = new System.Drawing.Size(505, 23);
+      this.urlPanel.TabIndex = 3;
+      // 
+      // urlLink
+      // 
+      this.urlLink.AutoSize = true;
+      this.urlLink.Location = new System.Drawing.Point(2, 3);
+      this.urlLink.Name = "urlLink";
+      this.urlLink.Size = new System.Drawing.Size(20, 14);
+      this.urlLink.TabIndex = 0;
+      this.urlLink.TabStop = true;
+      this.urlLink.Text = "Url";
+      this.urlLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.urlLink_LinkClicked);
+      // 
       // VoteDescriptionForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(529, 397);
       this.ControlBox = false;
+      this.Controls.Add(this.urlPanel);
       this.Controls.Add(this.closeButton);
       this.Controls.Add(this.descriptionTextBox);
       this.Controls.Add(this.textTextBox);
@@ -81,6 +105,8 @@
       this.MinimizeBox = false;
       this.Name = "VoteDescriptionForm";
       this.Text = "Option Description";
+      this.urlPanel.ResumeLayout(false);
+      this.urlPanel.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -91,5 +117,7 @@
     private System.Windows.Forms.TextBox textTextBox;
     private System.Windows.Forms.TextBox descriptionTextBox;
     private System.Windows.Forms.Button closeButton;
+    private System.Windows.Forms.Panel urlPanel;
+    private System.Windows.Forms.LinkLabel urlLink;
   }
 }

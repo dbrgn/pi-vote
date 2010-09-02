@@ -29,6 +29,7 @@ namespace Pirate.PiVote.Client
       Text = Resources.CreateVotingQuestion;
       this.textLabel.Text = Resources.CreateVotingQuestion;
       this.descriptionLabel.Text = Resources.CreateVotingDescription;
+      this.urlLabel.Text = Resources.CreateVotingUrl;
       this.optionLabel.Text = Resources.CreateVotingAnswers;
       this.optionNumberLabel.Text = Resources.CreateVotingAnswersPerVoter;
       this.textColumnHeader.Text = Resources.CreateVotingOptionText;
@@ -61,7 +62,7 @@ namespace Pirate.PiVote.Client
       {
         ListViewItem item = new ListViewItem(dialog.OptionText.AllLanguages);
         item.SubItems.Add(dialog.OptionDescription.AllLanguages);
-        item.Tag = new Option(dialog.OptionText, dialog.OptionDescription);
+        item.Tag = new Option(dialog.OptionText, dialog.OptionDescription, dialog.OptionUrl);
         this.optionListView.Items.Add(item);
 
         CheckValid();
@@ -112,6 +113,7 @@ namespace Pirate.PiVote.Client
         Question question = new Question(
           dialog.textTextBox.Text,
           dialog.descriptionTextBox.Text,
+          dialog.urlTextBox.Text,
           Convert.ToInt32(dialog.optionNumberUpDown.Value));
 
         foreach (ListViewItem item in dialog.optionListView.Items)

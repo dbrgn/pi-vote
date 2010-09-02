@@ -157,7 +157,7 @@ namespace Pirate.PiVote.Client
 
     private void DescriptionButton_Click(object sender, EventArgs e)
     {
-      VoteDescriptionForm.ShowDescription(Question.Text.Text, Question.Description.Text);
+      VoteDescriptionForm.ShowDescription(Question.Text.Text, Question.Description.Text, Question.Url.Text);
     }
   }
 }

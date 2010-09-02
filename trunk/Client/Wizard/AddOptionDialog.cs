@@ -29,6 +29,7 @@ namespace Pirate.PiVote.Client
       this.cancelButton.Text = Resources.CancelButton;
       this.textLabel.Text = Resources.AddOptionText;
       this.descriptionLabel.Text = Resources.AddOptionDescription;
+      this.urlLabel.Text = Resources.AddOptionUrl;
       Text = Resources.AddOptionTitle;
 
       CenterToScreen();
@@ -72,5 +73,7 @@ namespace Pirate.PiVote.Client
     public MultiLanguageString OptionText { get { return this.textTextBox.Text; } }
 
     public MultiLanguageString OptionDescription { get { return this.descriptionTextBox.Text; } }
+
+    public MultiLanguageString OptionUrl { get { return this.urlTextBox.Text; } }
   }
 }

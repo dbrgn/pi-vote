@@ -33,11 +33,17 @@ namespace Pirate.PiVote.Crypto
     public MultiLanguageString Description { get; private set; }
 
     /// <summary>
+    /// Url of the discussion of the option.
+    /// </summary>
+    public MultiLanguageString Url { get; private set; }
+
+    /// <summary>
     /// Create a new option.
     /// </summary>
     /// <param name="text">Text of option.</param>
     /// <param name="description">Description of option.</param>
-    public Option(MultiLanguageString text, MultiLanguageString description)
+    /// <param name="url">Url of the discussion of the option.</param>
+    public Option(MultiLanguageString text, MultiLanguageString description, MultiLanguageString url)
     {
       if (text == null)
         throw new ArgumentNullException("text");
@@ -46,6 +52,7 @@ namespace Pirate.PiVote.Crypto
 
       Text = text;
       Description = description;
+      Url = url;
     }
 
     /// <summary>
@@ -65,6 +72,7 @@ namespace Pirate.PiVote.Crypto
       base.Serialize(context);
       context.Write(Text);
       context.Write(Description);
+      context.Write(Url);
     }
 
     /// <summary>
@@ -76,6 +84,7 @@ namespace Pirate.PiVote.Crypto
       base.Deserialize(context);
       Text = context.ReadMultiLanguageString();
       Description = context.ReadMultiLanguageString();
+      Url = context.ReadMultiLanguageString();
     }
   }
 }

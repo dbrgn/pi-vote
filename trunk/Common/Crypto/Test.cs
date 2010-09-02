@@ -48,14 +48,15 @@ namespace Pirate.PiVote.Crypto
       VotingParameters parameters = 
         new VotingParameters(
           new MultiLanguageString("Zufrieden"), 
-          new MultiLanguageString("Tada"), 
+          new MultiLanguageString("Tada"),
+          new MultiLanguageString(string.Empty), 
           DateTime.Now, 
           DateTime.Now.AddDays(1),
           0);
 
-      Question question = new Question(new MultiLanguageString("Zufrieden?"), new MultiLanguageString(string.Empty), 1);
-      question.AddOption(new Option(new MultiLanguageString("Nein"), new MultiLanguageString("Dagegen")));
-      question.AddOption(new Option(new MultiLanguageString("Ja"), new MultiLanguageString("Dafür")));
+      Question question = new Question(new MultiLanguageString("Zufrieden?"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty), 1);
+      question.AddOption(new Option(new MultiLanguageString("Nein"), new MultiLanguageString("Dagegen"), new MultiLanguageString(string.Empty)));
+      question.AddOption(new Option(new MultiLanguageString("Ja"), new MultiLanguageString("Dafür"), new MultiLanguageString(string.Empty)));
       parameters.AddQuestion(question);
 
       Signed<VotingParameters> signedParameters = new Signed<VotingParameters>(parameters, admin);
@@ -234,9 +235,9 @@ namespace Pirate.PiVote.Crypto
 
       BaseParameters parameters = new BaseParameters();
 
-      Question question = new Question(new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty), 1);
-      question.AddOption(new Option(new MultiLanguageString("Ja"), new MultiLanguageString(string.Empty)));
-      question.AddOption(new Option(new MultiLanguageString("Nein"), new MultiLanguageString(string.Empty)));
+      Question question = new Question(new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty), 1);
+      question.AddOption(new Option(new MultiLanguageString("Ja"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty)));
+      question.AddOption(new Option(new MultiLanguageString("Nein"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty)));
       parameters.AddQuestion(question);
 
       Authority[] auths = new Authority[5];

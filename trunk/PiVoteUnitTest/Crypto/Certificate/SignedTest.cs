@@ -56,7 +56,7 @@ namespace Pirate.PiVote.UnitTest
     [TestMethod]
     public void SignedVerifyTest()
     {
-      Option option = new Option(new MultiLanguageString("Test"), new MultiLanguageString(string.Empty));
+      Option option = new Option(new MultiLanguageString("Test"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty));
 
       Signed<Option> signed = new Signed<Option>(option, this.admin);
 
@@ -69,7 +69,7 @@ namespace Pirate.PiVote.UnitTest
     [TestMethod]
     public void SignedDontVerifyTest()
     {
-      Option option = new Option(new MultiLanguageString("Test"), new MultiLanguageString(string.Empty));
+      Option option = new Option(new MultiLanguageString("Test"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty));
 
       Signed<Option> signed = new Signed<Option>(option, this.admin);
 

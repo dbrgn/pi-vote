@@ -763,4 +763,16 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="StartGettingConfig" xml:space="preserve">
     <value>Lade Konfiguration herunter</value>
   </data>
+  <data name="AddOptionUrl" xml:space="preserve">
+    <value>Url:</value>
+  </data>
+  <data name="CreateVotingUrl" xml:space="preserve">
+    <value>Url:</value>
+  </data>
+  <data name="UpdateDialogText" xml:space="preserve">
+    <value>Eine neue Version von Pi-Vote ist verfügbar. Willst du von deiner Version {0} auf Version {1} updaten? Wenn ja, wird das Programm geschlossen und dein Browser auf die Update-Seite gelenkt.</value>
+  </data>
+  <data name="UpdateDialogTitle" xml:space="preserve">
+    <value>Pi-Vote Update</value>
+  </data>
 </root>

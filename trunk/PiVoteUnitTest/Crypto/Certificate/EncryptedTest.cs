@@ -60,7 +60,7 @@ namespace Pirate.PiVote.UnitTest
     [TestMethod]
     public void DecryptionTest()
     {
-      Option option = new Option(new MultiLanguageString("Test"), new MultiLanguageString(string.Empty));
+      Option option = new Option(new MultiLanguageString("Test"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty));
 
       Encrypted<Option> encryptedOption = new Encrypted<Option>(option, this.admin.OnlyPublicPart);
 
@@ -73,7 +73,7 @@ namespace Pirate.PiVote.UnitTest
     [ExpectedException(typeof(ArgumentException))]
     public void NonDecryptionTest()
     {
-      Option option = new Option(new MultiLanguageString("Test"), new MultiLanguageString(string.Empty));
+      Option option = new Option(new MultiLanguageString("Test"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty));
 
       Encrypted<Option> encryptedOption = new Encrypted<Option>(option, this.admin.OnlyPublicPart);
 

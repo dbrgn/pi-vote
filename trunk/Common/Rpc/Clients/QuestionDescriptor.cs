@@ -24,6 +24,7 @@ namespace Pirate.PiVote.Rpc
   {
     private readonly MultiLanguageString text;
     private readonly MultiLanguageString description;
+    private readonly MultiLanguageString url;
     private readonly List<OptionDescriptor> options;
     private readonly int maxOptions;
 
@@ -36,6 +37,11 @@ namespace Pirate.PiVote.Rpc
     /// Description of the question.
     /// </summary>
     public MultiLanguageString Description { get { return this.description; } }
+
+    /// <summary>
+    /// Description of the question.
+    /// </summary>
+    public MultiLanguageString Url { get { return this.url; } }
 
     /// <summary>
     /// Options of the question..
@@ -58,6 +64,7 @@ namespace Pirate.PiVote.Rpc
 
       this.text = question.Text;
       this.description = question.Description;
+      this.url = question.Url;
       this.maxOptions = question.MaxVota;
 
       this.options = new List<OptionDescriptor>();

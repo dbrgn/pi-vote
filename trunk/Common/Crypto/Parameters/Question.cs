@@ -47,6 +47,11 @@ namespace Pirate.PiVote.Crypto
     public MultiLanguageString Description { get; private set; }
 
     /// <summary>
+    /// Url of the discussion of the option.
+    /// </summary>
+    public MultiLanguageString Url { get; private set; }
+
+    /// <summary>
     /// List of possible options for the voters.
     /// </summary>
     public IEnumerable<Option> Options
@@ -60,7 +65,8 @@ namespace Pirate.PiVote.Crypto
     /// <param name="question">Text of the question.</param>
     /// <param name="description">Description of the question.</param>
     /// <param name="maxVota">Maximum number of options a voter can select.</param>
-    public Question(MultiLanguageString question, MultiLanguageString description, int maxVota)
+    /// <param name="url">Url of the discussion of the option.</param>
+    public Question(MultiLanguageString question, MultiLanguageString description, MultiLanguageString url, int maxVota)
     {
       if (question == null)
         throw new ArgumentNullException("question");
@@ -71,6 +77,7 @@ namespace Pirate.PiVote.Crypto
 
       Description = description;
       Text = question;
+      Url = url;
       MaxVota = maxVota;
       this.options = new List<Option>();
     }
@@ -104,6 +111,7 @@ namespace Pirate.PiVote.Crypto
       base.Serialize(context);
       context.Write(Text);
       context.Write(Description);
+      context.Write(Url);
       context.Write(MaxVota);
       context.WriteList(this.options);
     }
@@ -117,8 +125,10 @@ namespace Pirate.PiVote.Crypto
       base.Deserialize(context);
       Text = context.ReadMultiLanguageString();
       Description = context.ReadMultiLanguageString();
+      Url = context.ReadMultiLanguageString();
       MaxVota = context.ReadInt32();
       this.options = context.ReadObjectList<Option>();
     }
   }
 }
+

@@ -88,6 +88,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Url:.
+        /// </summary>
+        internal static string AddOptionUrl {
+            get {
+                return ResourceManager.GetString("AddOptionUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create a voting procedure.
         /// </summary>
         internal static string AdminChooseCreateVoting {
@@ -1051,6 +1060,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Url:.
+        /// </summary>
+        internal static string CreateVotingUrl {
+            get {
+                return ResourceManager.GetString("CreateVotingUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Certificate Id:.
         /// </summary>
         internal static string EncryptPrivateKeyCertificateId {
@@ -1801,6 +1819,24 @@ namespace Pirate.PiVote.Client {
         internal static string TotalBallots {
             get {
                 return ResourceManager.GetString("TotalBallots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is a newer version of Pi-Vote available. Dou you wish to update from your version {0} to version {1}? If so the program will close and your browser will be directed to the update site..
+        /// </summary>
+        internal static string UpdateDialogText {
+            get {
+                return ResourceManager.GetString("UpdateDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pi-Vote Update.
+        /// </summary>
+        internal static string UpdateDialogTitle {
+            get {
+                return ResourceManager.GetString("UpdateDialogTitle", resourceCulture);
             }
         }
         

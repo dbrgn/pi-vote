@@ -71,7 +71,7 @@ namespace Pirate.PiVote.Client
 
     private void descriptionButton_Click(object sender, EventArgs e)
     {
-      VoteDescriptionForm.ShowDescription(Option.Text.Text, Option.Description.Text);
+      VoteDescriptionForm.ShowDescription(Option.Text.Text, Option.Description.Text, Option.Url.Text);
     }
 
     private void optionRadioButton_CheckedChanged(object sender, EventArgs e)

@@ -53,6 +53,8 @@ namespace Pirate.PiVote.Client
       this.descriptionLabel = new System.Windows.Forms.Label();
       this.cancelButton = new System.Windows.Forms.Button();
       this.okButton = new System.Windows.Forms.Button();
+      this.urlTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.urlLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // textLabel
@@ -61,9 +63,9 @@ namespace Pirate.PiVote.Client
       this.textLabel.Location = new System.Drawing.Point(8, 11);
       this.textLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.textLabel.Name = "textLabel";
-      this.textLabel.Size = new System.Drawing.Size(35, 14);
+      this.textLabel.Size = new System.Drawing.Size(30, 14);
       this.textLabel.TabIndex = 0;
-      this.textLabel.Text = "label1";
+      this.textLabel.Text = "Text:";
       // 
       // textTextBox
       // 
@@ -88,23 +90,23 @@ namespace Pirate.PiVote.Client
       this.descriptionTextBox.Multiline = true;
       this.descriptionTextBox.Name = "descriptionTextBox";
       this.descriptionTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.descriptionTextBox.Size = new System.Drawing.Size(527, 99);
+      this.descriptionTextBox.Size = new System.Drawing.Size(527, 169);
       this.descriptionTextBox.TabIndex = 1;
       // 
       // descriptionLabel
       // 
       this.descriptionLabel.AutoSize = true;
-      this.descriptionLabel.Location = new System.Drawing.Point(8, 32);
+      this.descriptionLabel.Location = new System.Drawing.Point(8, 35);
       this.descriptionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.descriptionLabel.Name = "descriptionLabel";
-      this.descriptionLabel.Size = new System.Drawing.Size(35, 14);
+      this.descriptionLabel.Size = new System.Drawing.Size(64, 14);
       this.descriptionLabel.TabIndex = 3;
-      this.descriptionLabel.Text = "label2";
+      this.descriptionLabel.Text = "Description:";
       // 
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(554, 135);
+      this.cancelButton.Location = new System.Drawing.Point(554, 231);
       this.cancelButton.Margin = new System.Windows.Forms.Padding(2);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(80, 23);
@@ -117,7 +119,7 @@ namespace Pirate.PiVote.Client
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(470, 135);
+      this.okButton.Location = new System.Drawing.Point(470, 231);
       this.okButton.Margin = new System.Windows.Forms.Padding(2);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(80, 23);
@@ -126,12 +128,36 @@ namespace Pirate.PiVote.Client
       this.okButton.UseVisualStyleBackColor = true;
       this.okButton.Click += new System.EventHandler(this.okButton_Click);
       // 
+      // urlTextBox
+      // 
+      this.urlTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.urlTextBox.Location = new System.Drawing.Point(107, 205);
+      this.urlTextBox.Margin = new System.Windows.Forms.Padding(2);
+      this.urlTextBox.Multiline = false;
+      this.urlTextBox.Name = "urlTextBox";
+      this.urlTextBox.ScrollBars = System.Windows.Forms.ScrollBars.None;
+      this.urlTextBox.Size = new System.Drawing.Size(527, 22);
+      this.urlTextBox.TabIndex = 5;
+      // 
+      // urlLabel
+      // 
+      this.urlLabel.AutoSize = true;
+      this.urlLabel.Location = new System.Drawing.Point(8, 208);
+      this.urlLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+      this.urlLabel.Name = "urlLabel";
+      this.urlLabel.Size = new System.Drawing.Size(23, 14);
+      this.urlLabel.TabIndex = 6;
+      this.urlLabel.Text = "Url:";
+      // 
       // AddOptionDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(645, 169);
+      this.ClientSize = new System.Drawing.Size(645, 265);
       this.ControlBox = false;
+      this.Controls.Add(this.urlLabel);
+      this.Controls.Add(this.urlTextBox);
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.descriptionLabel);
@@ -160,5 +186,7 @@ namespace Pirate.PiVote.Client
     private System.Windows.Forms.Label descriptionLabel;
     private System.Windows.Forms.Button cancelButton;
     private System.Windows.Forms.Button okButton;
+    private MultiLanguageTextBox urlTextBox;
+    private Label urlLabel;
   }
 }
