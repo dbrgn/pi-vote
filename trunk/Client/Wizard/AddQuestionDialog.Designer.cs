@@ -159,7 +159,7 @@
       this.optionNumberUpDown.Size = new System.Drawing.Size(77, 20);
       this.optionNumberUpDown.TabIndex = 3;
       this.optionNumberUpDown.Value = new decimal(new int[] {
-            4,
+            1,
             0,
             0,
             0});

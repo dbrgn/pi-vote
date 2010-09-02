@@ -145,6 +145,7 @@ namespace Pirate.PiVote.Rpc
       this.id = parameters.VotingId;
       this.title = parameters.Title;
       this.descripton = parameters.Description;
+      this.url = parameters.Url;
       this.status = status;
       this.authoritiesDone = authoritiesDone;
       this.voteFrom = parameters.VotingBeginDate;

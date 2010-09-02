@@ -159,16 +159,12 @@ namespace Pirate.PiVote.Client
       base.UpdateLanguage();
 
       this.certificateListLabel.Text = Resources.ChooseCertificateListHeader;
+      this.infoLabel.Text = Resources.ChooseCertificateInfo;
 
-      this.idLabel.Text = Resources.ChooseCertificateId;
-      this.typeLabel.Text = Resources.ChooseCertificateType;
-      this.nameLabel.Text = Resources.ChooseCertificateFullName;
-      
       this.loadButton.Text = Resources.ChooseCertificateLoadButton;
       this.createButton.Text = Resources.ChooseCertificateCreateButton;
 
       this.typeColumnHeader.Text = Resources.ChooseCertificateType;
-      this.idLabel.Text = Resources.ChooseCertificateId;
       this.nameColumnHeader.Text = Resources.ChooseCertificateFullName;
 
       this.verifyShareProofButton.Text = Resources.ChooseCertificateVerifyBadShareProof;
@@ -185,16 +181,6 @@ namespace Pirate.PiVote.Client
           KeyValuePair<string, Certificate> value = (KeyValuePair<string, Certificate>)item.Tag;
           Status.CertificateFileName = value.Key;
           Status.Certificate = value.Value;
-
-          this.idTextBox.Text = Status.Certificate.Id.ToString();
-          this.typeTextBox.Text = Status.Certificate.TypeText;
-          this.nameTextBox.Text = Status.Certificate.FullName;
-        }
-        else
-        {
-          this.idTextBox.Text = string.Empty;
-          this.typeTextBox.Text = string.Empty;
-          this.nameTextBox.Text = string.Empty;
         }
 
         OnUpdateWizard();

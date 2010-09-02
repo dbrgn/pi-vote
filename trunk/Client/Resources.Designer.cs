@@ -655,6 +655,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose a certificate to vote with, create a new one, or import one from a file..
+        /// </summary>
+        internal static string ChooseCertificateInfo {
+            get {
+                return ResourceManager.GetString("ChooseCertificateInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your certificates.
         /// </summary>
         internal static string ChooseCertificateListHeader {

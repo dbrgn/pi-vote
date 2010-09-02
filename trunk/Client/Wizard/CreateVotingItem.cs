@@ -90,11 +90,12 @@ namespace Pirate.PiVote.Client
       {
         if (this.authorityCertificates != null)
         {
-          this.authorityCertificates.ForEach(certificate => this.authority0List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-          this.authorityCertificates.ForEach(certificate => this.authority1List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-          this.authorityCertificates.ForEach(certificate => this.authority2List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-          this.authorityCertificates.ForEach(certificate => this.authority3List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-          this.authorityCertificates.ForEach(certificate => this.authority4List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+          var certificates = this.authorityCertificates.OrderBy(certificate => certificate.FullName);
+          certificates.Foreach(certificate => this.authority0List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+          certificates.Foreach(certificate => this.authority1List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+          certificates.Foreach(certificate => this.authority2List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+          certificates.Foreach(certificate => this.authority3List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+          certificates.Foreach(certificate => this.authority4List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
         }
         else
         {
@@ -131,9 +132,11 @@ namespace Pirate.PiVote.Client
       this.authority4List.Enabled = enable;
       this.titleBox.Enabled = enable;
       this.descriptionBox.Enabled = enable;
+      this.urlTextBox.Enabled = enable;
       this.votingFromPicker.Enabled = enable;
       this.votingUntilPicker.Enabled = enable;
       this.groupComboBox.Enabled = enable;
+      this.questionListView.Enabled = enable;
 
       if (enable)
       {

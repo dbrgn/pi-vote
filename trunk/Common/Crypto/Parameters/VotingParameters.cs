@@ -131,6 +131,7 @@ namespace Pirate.PiVote.Crypto
       context.Write(VotingId);
       context.Write(Title);
       context.Write(Description);
+      context.Write(Url);
       context.Write(VotingBeginDate);
       context.Write(VotingEndDate);
       context.Write(GroupId);
@@ -146,6 +147,7 @@ namespace Pirate.PiVote.Crypto
       VotingId = context.ReadGuid();
       Title = context.ReadMultiLanguageString();
       Description = context.ReadMultiLanguageString();
+      Url = context.ReadMultiLanguageString();
       VotingBeginDate = context.ReadDateTime();
       VotingEndDate = context.ReadDateTime();
       GroupId = context.ReadInt32();
