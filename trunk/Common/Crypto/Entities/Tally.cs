@@ -73,6 +73,11 @@ namespace Pirate.PiVote.Crypto
     public int EnvelopeCount { get; private set; }
 
     /// <summary>
+    /// Number of valid (accepted) envelopes;
+    /// </summary>
+    public int ValidEnvelopeCount { get; private set; }
+
+    /// <summary>
     /// Hash over all envelopes tallied.
     /// </summary>
     public byte[] EnvelopeHash { get; private set; }
@@ -107,6 +112,7 @@ namespace Pirate.PiVote.Crypto
 
       EnvelopeHash = new byte[] { };
       EnvelopeCount = 0;
+      ValidEnvelopeCount = 0;
     }
 
     /// <summary>
@@ -183,6 +189,8 @@ namespace Pirate.PiVote.Crypto
 
         if (envelopeEntry != null)
         {
+          
+          
           Signed<Envelope> signedEnvelope = envelopeEntry.First;
           Envelope envelope = signedEnvelope.Value;
           bool acceptVote = envelopeEntry.Second;
@@ -193,6 +201,8 @@ namespace Pirate.PiVote.Crypto
 
           if (acceptVote)
           {
+            ValidEnvelopeCount++;
+
             for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
             {
               Question question = this.parameters.Questions.ElementAt(questionIndex);

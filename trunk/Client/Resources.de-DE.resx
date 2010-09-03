@@ -778,4 +778,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="ChooseCertificateInfo" xml:space="preserve">
     <value>Wähle eine Zertifikat aus, um abzustimmen, erstelle ein neues Zertifikat oder importiere ein Zertifikat aus einer Datei.</value>
   </data>
+  <data name="InvalidResult" xml:space="preserve">
+    <value>Ungültiges Resultat</value>
+  </data>
 </root>

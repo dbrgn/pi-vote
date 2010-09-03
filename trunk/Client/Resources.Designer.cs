@@ -1182,6 +1182,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Result.
+        /// </summary>
+        internal static string InvalidResult {
+            get {
+                return ResourceManager.GetString("InvalidResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Download.
         /// </summary>
         internal static string ListVotingDownloadMenu {

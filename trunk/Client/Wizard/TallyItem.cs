@@ -134,7 +134,7 @@ namespace Pirate.PiVote.Client
               else
               {
                 ListViewItem optionBallots = new ListViewItem(option.Text.Text);
-                optionBallots.SubItems.Add(option.Result.ToString());
+                optionBallots.SubItems.Add(option.Result >= 0 ? option.Result.ToString() : Resources.InvalidResult);
                 this.resultList.Items.Add(optionBallots);
               }
             }

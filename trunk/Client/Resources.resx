@@ -788,4 +788,7 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="ChooseCertificateInfo" xml:space="preserve">
     <value>Choose a certificate to vote with, create a new one, or import one from a file.</value>
   </data>
+  <data name="InvalidResult" xml:space="preserve">
+    <value>Invalid Result</value>
+  </data>
 </root>

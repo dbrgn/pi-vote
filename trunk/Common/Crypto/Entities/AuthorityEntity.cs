@@ -335,18 +335,23 @@ namespace Pirate.PiVote.Crypto
     {
       if (this.tally == null)
         throw new InvalidOperationException("Tally not yet begun.");
-      if (this.tally.EnvelopeCount < 1)
-        throw new InvalidOperationException("No votes to tally.");
 
       PartialDecipherList partialDecipherList = new PartialDecipherList(this.parameters.VotingId, this.authority.Index, this.tally.EnvelopeCount, this.tally.EnvelopeHash);
 
-      for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
+#if DEBUG
+      if (this.tally.ValidEnvelopeCount >= 1)
+#else
+      if (this.tally.ValidEnvelopeCount >= 20)
+#endif
       {
-        Question question = this.parameters.Questions.ElementAt(questionIndex);
-
-        for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
+        for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
         {
-          partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(this.authority.Index, this.tally.VoteSums[questionIndex][optionIndex], questionIndex, optionIndex));
+          Question question = this.parameters.Questions.ElementAt(questionIndex);
+
+          for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
+          {
+            partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(this.authority.Index, this.tally.VoteSums[questionIndex][optionIndex], questionIndex, optionIndex));
+          }
         }
       }
 
