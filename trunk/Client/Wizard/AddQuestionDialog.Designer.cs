@@ -212,6 +212,7 @@
       // 
       // abstentionLabel
       // 
+      this.abstentionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.abstentionLabel.AutoSize = true;
       this.abstentionLabel.Location = new System.Drawing.Point(105, 268);
       this.abstentionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);

@@ -135,7 +135,7 @@ namespace Pirate.PiVote.Client
 
       valid &= !this.textTextBox.IsEmpty;
       valid &= this.optionListView.Items.Count >= 2;
-      valid &= this.optionListView.Items.Count > this.optionNumberUpDown.Value;
+      valid &= this.optionListView.Items.Count >= this.optionNumberUpDown.Value;
 
       this.okButton.Enabled = valid;
     }

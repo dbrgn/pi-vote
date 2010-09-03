@@ -142,7 +142,7 @@ namespace Pirate.PiVote.Client
             if (hasAbstain)
             {
               ListViewItem abstainBallots = new ListViewItem(Resources.OptionAbstain);
-              abstainBallots.SubItems.Add(abstainCount.ToString());
+              abstainBallots.SubItems.Add(abstainCount >= 0 ? abstainCount.ToString() : Resources.InvalidResult);
               this.resultList.Items.Add(abstainBallots);
             }
           }
