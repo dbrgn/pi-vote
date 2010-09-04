@@ -234,5 +234,10 @@ namespace Pirate.PiVote.Client
     {
       
     }
+
+    public override void UpdateLanguage()
+    {
+      this.pictureBox.Image = Resources.CheckCertificateItem;
+    }
   }
 }

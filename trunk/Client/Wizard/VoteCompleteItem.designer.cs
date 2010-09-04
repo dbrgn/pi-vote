@@ -43,7 +43,8 @@ namespace Pirate.PiVote.Client
     private void InitializeComponent()
     {
       this.castLabel = new System.Windows.Forms.Label();
-      this.spaceLabel = new System.Windows.Forms.Label();
+      this.pictureBox = new System.Windows.Forms.PictureBox();
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
       this.SuspendLayout();
       // 
       // castLabel
@@ -54,26 +55,27 @@ namespace Pirate.PiVote.Client
       this.castLabel.Size = new System.Drawing.Size(0, 14);
       this.castLabel.TabIndex = 2;
       // 
-      // spaceLabel
+      // pictureBox
       // 
-      this.spaceLabel.AutoSize = true;
-      this.spaceLabel.ForeColor = System.Drawing.Color.Red;
-      this.spaceLabel.Location = new System.Drawing.Point(213, 236);
-      this.spaceLabel.Name = "spaceLabel";
-      this.spaceLabel.Size = new System.Drawing.Size(274, 14);
-      this.spaceLabel.TabIndex = 3;
-      this.spaceLabel.Text = "This space shall be occupied by an appropriate picture.";
+      this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.pictureBox.Location = new System.Drawing.Point(0, 0);
+      this.pictureBox.Name = "pictureBox";
+      this.pictureBox.Size = new System.Drawing.Size(700, 487);
+      this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+      this.pictureBox.TabIndex = 3;
+      this.pictureBox.TabStop = false;
       // 
       // VoteCompleteItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.Controls.Add(this.spaceLabel);
+      this.Controls.Add(this.pictureBox);
       this.Controls.Add(this.castLabel);
-      this.Margin = new System.Windows.Forms.Padding(3, 3, 3, 3);
+      this.Margin = new System.Windows.Forms.Padding(3);
       this.Name = "VoteCompleteItem";
       this.Size = new System.Drawing.Size(700, 487);
       this.Load += new System.EventHandler(this.VoteCompleteItem_Load);
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -82,7 +84,7 @@ namespace Pirate.PiVote.Client
     #endregion
 
     private Label castLabel;
-    private Label spaceLabel;
+    private PictureBox pictureBox;
 
 
 

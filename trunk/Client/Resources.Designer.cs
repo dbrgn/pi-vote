@@ -510,6 +510,13 @@ namespace Pirate.PiVote.Client {
             }
         }
         
+        internal static System.Drawing.Bitmap CheckCertificateItem {
+            get {
+                object obj = ResourceManager.GetObject("CheckCertificateItem", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to You need to create a certificate signature request and submit it to the server..
         /// </summary>
@@ -1900,6 +1907,13 @@ namespace Pirate.PiVote.Client {
         internal static string VoteCast {
             get {
                 return ResourceManager.GetString("VoteCast", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap VoteCompleteItem {
+            get {
+                object obj = ResourceManager.GetObject("VoteCompleteItem", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

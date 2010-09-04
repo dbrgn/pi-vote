@@ -42,36 +42,38 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
-      this.spaceLabel = new System.Windows.Forms.Label();
+      this.pictureBox = new System.Windows.Forms.PictureBox();
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
       this.SuspendLayout();
       // 
-      // spaceLabel
+      // pictureBox
       // 
-      this.spaceLabel.AutoSize = true;
-      this.spaceLabel.ForeColor = System.Drawing.Color.Red;
-      this.spaceLabel.Location = new System.Drawing.Point(95, 161);
-      this.spaceLabel.Name = "spaceLabel";
-      this.spaceLabel.Size = new System.Drawing.Size(274, 14);
-      this.spaceLabel.TabIndex = 0;
-      this.spaceLabel.Text = "This space shall be occupied by an appropriate picture.";
+      this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.pictureBox.Location = new System.Drawing.Point(0, 0);
+      this.pictureBox.Name = "pictureBox";
+      this.pictureBox.Size = new System.Drawing.Size(467, 359);
+      this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+      this.pictureBox.TabIndex = 0;
+      this.pictureBox.TabStop = false;
       // 
       // CheckCertificateItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.Controls.Add(this.spaceLabel);
-      this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+      this.Controls.Add(this.pictureBox);
+      this.Margin = new System.Windows.Forms.Padding(1);
       this.Name = "CheckCertificateItem";
       this.Size = new System.Drawing.Size(467, 359);
       this.Load += new System.EventHandler(this.StartWizardItem_Load);
+      ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
     #endregion
 
-    private Label spaceLabel;
+    private PictureBox pictureBox;
+
 
   }
 }

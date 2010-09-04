@@ -485,4 +485,10 @@
       <Name>Pirate.PiVote</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CheckCertificateItem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\VoteCompleteItem.png" />
+  </ItemGroup>
 </Project>
