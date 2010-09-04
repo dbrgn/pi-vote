@@ -1,10 +1,10 @@
 Package: pivote-client
-Version: 0.2.5
+Version: 1.0.0
 Section: security
 Priority: optional
 Architecture: all
 Essential: no
-Depends: libmono-winforms2.0-cil, libgmp3c2
+Depends: libmono-winforms2.0-cil, libgmp3c2, cups-pdf
 Installed-Size: 1024
 Maintainer: Stefan Thoeni [stefan@savvy.ch]
 Description: Secure eVoting Client.

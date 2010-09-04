@@ -4,8 +4,12 @@ $key
 
 rmif ./package/opt
 mkdir ./package/opt/pivote
-cp -r ../../client/bin/release/* ./package/opt/pivote/
-rmif ./package/opt/pivote/*vshost*
+cp -r ../../client/bin/release/de-DE ./package/opt/pivote/
+cp -r ../../client/bin/release/fr-FR ./package/opt/pivote/
+cp ../../client/bin/release/Emil.GMP.dll ./package/opt/pivote/
+cp ../../client/bin/release/MySql.Data.dll ./package/opt/pivote/
+cp ../../client/bin/release/Pirate.PiVote.Client.exe ./package/opt/pivote/
+cp ../../client/bin/release/Pirate.PiVote.dll ./package/opt/pivote/
 cp -r ../files-linux/* ./package/opt/pivote/
 
 cp -r package packagetmp

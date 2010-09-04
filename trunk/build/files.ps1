@@ -9,8 +9,12 @@
 	$tmp = "./pivote-client"
 	rmif $tmp
 	mkif $tmp
-	cp -r ../client/bin/release/* $tmp/
-	rmif $tmp/*vshost*
+	cp -r ../client/bin/release/de-DE $tmp/
+	cp -r ../client/bin/release/fr-FR $tmp/
+	cp ../client/bin/release/Emil.GMP.dll $tmp/
+	cp ../client/bin/release/MySql.Data.dll $tmp/
+	cp ../client/bin/release/Pirate.PiVote.Client.exe $tmp/
+	cp ../client/bin/release/Pirate.PiVote.dll $tmp/
 	cp -r ./files-linux/* $tmp/
 	$name = "PiVote_Client_Linux_x86_" + $version + ".zip"
 	pushd
