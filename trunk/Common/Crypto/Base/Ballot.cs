@@ -25,7 +25,7 @@ namespace Pirate.PiVote.Crypto
     public List<Vote> Votes { get; private set; }
 
     /// <summary>
-    /// Proofes of sum of votes cast.
+    /// Proofs of sum of votes cast.
     /// </summary>
     public List<Proof> SumProves { get; private set; }
 

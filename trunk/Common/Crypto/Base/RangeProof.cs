@@ -22,27 +22,27 @@ namespace Pirate.PiVote.Crypto
   public class RangeProof : Serializable
   {
     /// <summary>
-    /// Whitness for votum equals 0.
+    /// Witness for votum equals 0.
     /// </summary>
     public BigInt T0 { get; private set; }
 
     /// <summary>
-    /// Whitness for votum equals 1.
+    /// Witness for votum equals 1.
     /// </summary>
     public BigInt T1 { get; private set; }
 
     /// <summary>
-    /// Or-Challange
+    /// Or-Challenge
     /// </summary>
     public int C { get; private set; }
 
     /// <summary>
-    /// Challange for vote equals 0.
+    /// Challenge for vote equals 0.
     /// </summary>
     public int C0 { get; private set; }
 
     /// <summary>
-    /// Challange for vote equals 1.
+    /// Challenge for vote equals 1.
     /// </summary>
     public int C1 { get; private set; }
 
