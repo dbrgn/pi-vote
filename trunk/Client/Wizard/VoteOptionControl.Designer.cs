@@ -63,10 +63,10 @@
       // optionCheckBox
       // 
       this.optionCheckBox.AutoSize = true;
-      this.optionCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.optionCheckBox.Font = new System.Drawing.Font("Arial", 8.25F);
       this.optionCheckBox.Location = new System.Drawing.Point(3, 3);
       this.optionCheckBox.Name = "optionCheckBox";
-      this.optionCheckBox.Size = new System.Drawing.Size(66, 20);
+      this.optionCheckBox.Size = new System.Drawing.Size(57, 18);
       this.optionCheckBox.TabIndex = 2;
       this.optionCheckBox.Text = "Option";
       this.optionCheckBox.UseVisualStyleBackColor = true;

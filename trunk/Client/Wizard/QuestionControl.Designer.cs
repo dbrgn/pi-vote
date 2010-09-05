@@ -36,10 +36,10 @@
       // questionLabel
       // 
       this.questionLabel.AutoSize = true;
-      this.questionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.questionLabel.Font = new System.Drawing.Font("Arial", 8.25F);
       this.questionLabel.Location = new System.Drawing.Point(3, 7);
       this.questionLabel.Name = "questionLabel";
-      this.questionLabel.Size = new System.Drawing.Size(61, 16);
+      this.questionLabel.Size = new System.Drawing.Size(50, 14);
       this.questionLabel.TabIndex = 6;
       this.questionLabel.Text = "Question";
       // 

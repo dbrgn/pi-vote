@@ -934,6 +934,51 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid envelope. Wrong number of ballots..
+        /// </summary>
+        public static string ExceptionInvalidEnvelopeBadBallotCount {
+            get {
+                return ResourceManager.GetString("ExceptionInvalidEnvelopeBadBallotCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid envelope. Date or time are incorrect..
+        /// </summary>
+        public static string ExceptionInvalidEnvelopeBadDateTime {
+            get {
+                return ResourceManager.GetString("ExceptionInvalidEnvelopeBadDateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid envelope. Wrong number of proofs..
+        /// </summary>
+        public static string ExceptionInvalidEnvelopeBadProofCount {
+            get {
+                return ResourceManager.GetString("ExceptionInvalidEnvelopeBadProofCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid envelope. Wrong number of votes..
+        /// </summary>
+        public static string ExceptionInvalidEnvelopeBadVoteCount {
+            get {
+                return ResourceManager.GetString("ExceptionInvalidEnvelopeBadVoteCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid envelope. Voter id does not match certificate..
+        /// </summary>
+        public static string ExceptionInvalidEnvelopeBadVoterId {
+            get {
+                return ResourceManager.GetString("ExceptionInvalidEnvelopeBadVoterId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Signature is not valid..
         /// </summary>
         public static string ExceptionInvalidSignature {

@@ -47,12 +47,12 @@ namespace Pirate.PiVote.Client
       this.downloadVotingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.votingList = new System.Windows.Forms.ListView();
       this.titleColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.groupColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.statusColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.voteFromColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.voteUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.authoritiesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.envelopesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.groupColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.votingListContextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -87,6 +87,7 @@ namespace Pirate.PiVote.Client
       this.votingList.ContextMenuStrip = this.votingListContextMenu;
       this.votingList.Enabled = false;
       this.votingList.FullRowSelect = true;
+      this.votingList.HideSelection = false;
       this.votingList.Location = new System.Drawing.Point(3, 3);
       this.votingList.MultiSelect = false;
       this.votingList.Name = "votingList";
@@ -100,6 +101,11 @@ namespace Pirate.PiVote.Client
       // 
       this.titleColumnHeader.Text = "Title";
       this.titleColumnHeader.Width = 300;
+      // 
+      // groupColumnHeader
+      // 
+      this.groupColumnHeader.Text = "Group";
+      this.groupColumnHeader.Width = 150;
       // 
       // statusColumnHeader
       // 
@@ -125,11 +131,6 @@ namespace Pirate.PiVote.Client
       // 
       this.envelopesColumnHeader.Text = "Votes";
       this.envelopesColumnHeader.Width = 70;
-      // 
-      // groupColumnHeader
-      // 
-      this.groupColumnHeader.Text = "Group";
-      this.groupColumnHeader.Width = 150;
       // 
       // ListVotingsItem
       // 

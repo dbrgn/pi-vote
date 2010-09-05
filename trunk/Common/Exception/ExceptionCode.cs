@@ -52,6 +52,11 @@ namespace Pirate.PiVote
     InvalidVoteReceipt                = 4000004,
     BadGroupIdInCertificate           = 4000005,
     InvalidEnvelope                   = 4000006,
+    InvalidEnvelopeBadDateTime        = 4000007,
+    InvalidEnvelopeBadVoterId         = 4000008,
+    InvalidEnvelopeBadBallotCount     = 4000009,
+    InvalidEnvelopeBadProofCount      = 4000010,
+    InvalidEnvelopeBadVoteCount       = 4000011,
 
     SignatureRequestInvalid           = 5000001,
     SignatureRequestResponded         = 5000002,
@@ -168,6 +173,16 @@ namespace Pirate.PiVote
           return LibraryResources.ExceptionBadGroupIdInCertificate;
         case ExceptionCode.InvalidEnvelope:
           return LibraryResources.ExceptionInvalidEnvelope;
+        case ExceptionCode.InvalidEnvelopeBadDateTime:
+          return LibraryResources.ExceptionInvalidEnvelopeBadDateTime;
+        case ExceptionCode.InvalidEnvelopeBadBallotCount:
+          return LibraryResources.ExceptionInvalidEnvelopeBadBallotCount;
+        case ExceptionCode.InvalidEnvelopeBadProofCount:
+          return LibraryResources.ExceptionInvalidEnvelopeBadProofCount;
+        case ExceptionCode.InvalidEnvelopeBadVoteCount:
+          return LibraryResources.ExceptionInvalidEnvelopeBadVoteCount;
+        case ExceptionCode.InvalidEnvelopeBadVoterId:
+          return LibraryResources.ExceptionInvalidEnvelopeBadVoterId;
         default:
           return LibraryResources.ExceptionUnknown;
       }

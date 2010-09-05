@@ -564,4 +564,19 @@
   <data name="ExceptionInvalidEnvelope" xml:space="preserve">
     <value>Invalid envelope.</value>
   </data>
+  <data name="ExceptionInvalidEnvelopeBadBallotCount" xml:space="preserve">
+    <value>Invalid envelope. Wrong number of ballots.</value>
+  </data>
+  <data name="ExceptionInvalidEnvelopeBadDateTime" xml:space="preserve">
+    <value>Invalid envelope. Date or time are incorrect.</value>
+  </data>
+  <data name="ExceptionInvalidEnvelopeBadProofCount" xml:space="preserve">
+    <value>Invalid envelope. Wrong number of proofs.</value>
+  </data>
+  <data name="ExceptionInvalidEnvelopeBadVoteCount" xml:space="preserve">
+    <value>Invalid envelope. Wrong number of votes.</value>
+  </data>
+  <data name="ExceptionInvalidEnvelopeBadVoterId" xml:space="preserve">
+    <value>Invalid envelope. Voter id does not match certificate.</value>
+  </data>
 </root>

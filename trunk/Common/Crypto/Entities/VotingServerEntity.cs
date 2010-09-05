@@ -588,11 +588,11 @@ namespace Pirate.PiVote.Crypto
 
       if (envelope.Date.Subtract(DateTime.Now).TotalHours < -1d ||
           envelope.Date.Subtract(DateTime.Now).TotalHours > 1d)
-        throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Date out of range.");
+        throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadDateTime, "Invalid envelope. Date out of range.");
       if (envelope.VoterId != signedEnvelope.Certificate.Id)
-        throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Voter id does not match.");
+        throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadVoterId, "Invalid envelope. Voter id does not match.");
       if (envelope.Ballots.Count != Parameters.Questions.Count())
-        throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Ballot count does not match.");
+        throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadBallotCount, "Invalid envelope. Ballot count does not match.");
 
       for (int questionIndex = 0; questionIndex < parameters.Questions.Count(); questionIndex++)
       {
@@ -600,11 +600,11 @@ namespace Pirate.PiVote.Crypto
         var question = parameters.Questions.ElementAt(questionIndex);
 
         if (ballot.SumProves.Count != parameters.ProofCount)
-          throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Number of sum prooves does not match.");
+          throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadProofCount, "Invalid envelope. Number of sum prooves does not match.");
         if (ballot.Votes.Count != question.Options.Count())
-          throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Vote count does not match.");
+          throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadVoteCount, "Invalid envelope. Vote count does not match.");
         if (ballot.Votes.Any(vote => vote.RangeProves.Count != parameters.ProofCount))
-          throw new PiArgumentException(ExceptionCode.InvalidEnvelope, "Invalid envelope. Number of range prooves does not match.");
+          throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadProofCount, "Invalid envelope. Number of range prooves does not match.");
       }
 
 

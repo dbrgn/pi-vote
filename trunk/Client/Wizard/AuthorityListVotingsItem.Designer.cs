@@ -70,6 +70,7 @@ namespace Pirate.PiVote.Client
             this.envelopesColumnHeader});
       this.votingList.Enabled = false;
       this.votingList.FullRowSelect = true;
+      this.votingList.HideSelection = false;
       this.votingList.Location = new System.Drawing.Point(2, 2);
       this.votingList.Margin = new System.Windows.Forms.Padding(2);
       this.votingList.MultiSelect = false;

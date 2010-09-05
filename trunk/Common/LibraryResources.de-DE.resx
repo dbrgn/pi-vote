@@ -567,4 +567,19 @@
   <data name="ExceptionInvalidEnvelope" xml:space="preserve">
     <value>Ungültiger Abstimmungsumschlag.</value>
   </data>
+  <data name="ExceptionInvalidEnvelopeBadBallotCount" xml:space="preserve">
+    <value>Ungültiger Abstimmungsumschlag. Falsche Anzahl Ballots.</value>
+  </data>
+  <data name="ExceptionInvalidEnvelopeBadDateTime" xml:space="preserve">
+    <value>Ungültiger Abstimmungsumschlag. Datum oder Zeit sind falsch.</value>
+  </data>
+  <data name="ExceptionInvalidEnvelopeBadProofCount" xml:space="preserve">
+    <value>Ungültiger Abstimmungsumschlag. Falsche Anzahl Beweise.</value>
+  </data>
+  <data name="ExceptionInvalidEnvelopeBadVoteCount" xml:space="preserve">
+    <value>Ungültiger Abstimmungsumschlag. Falsche Anzahl Stimmen.</value>
+  </data>
+  <data name="ExceptionInvalidEnvelopeBadVoterId" xml:space="preserve">
+    <value>Ungültiger Abstimmungsumschlag. Die Id des Abstimmenden stimmt nicht mit dem Zertifikat überein.</value>
+  </data>
 </root>
