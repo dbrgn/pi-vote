@@ -70,6 +70,7 @@ namespace Pirate.PiVote.Client
           try
           {
             Status.Certificate = Serializable.Load<Certificate>(certificateFiles.Single().FullName);
+            Status.CertificateFileName = certificateFiles.Single().FullName;
             CheckCertificateItem item = new CheckCertificateItem();
             item.PreviousItem = this;
             return item;

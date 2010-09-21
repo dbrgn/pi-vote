@@ -19,7 +19,6 @@ namespace Pirate.PiVote.Client
 {
   public partial class SimpleCreateCertificateItem : WizardItem
   {
-    private Certificate certificate;
     private SignatureRequest signatureRequest;
     private SignatureRequestInfo signatureRequestInfo;
     private Secure<SignatureRequest> secureSignatureRequest;
@@ -74,12 +73,73 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
-      SetEnable(true);
+      if (Status.Certificate == null)
+      {
+        SetEnable(true);
+        this.printButton.Enabled = false;
+        this.uploadButton.Enabled = false;
+        this.done = false;
+      }
+      else if (Status.Certificate.Validate(Status.CertificateStorage) == CertificateValidationResult.Valid)
+      {
+        SetEnable(false);
+        this.printButton.Enabled = false;
+        this.uploadButton.Enabled = false;
+        this.done = true;
+        Status.SetMessage(Resources.CheckCertificateReady, MessageType.Info);
+      }
+      else
+      {
+        string signatureRequestDataFileName = Path.Combine(Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestDataExtension);
 
-      this.printButton.Enabled = false;
-      this.uploadButton.Enabled = false;
+        if (File.Exists(signatureRequestDataFileName))
+        {
+          this.signatureRequest = Serializable.Load<SignatureRequest>(signatureRequestDataFileName);
+          this.signatureRequestInfo = new SignatureRequestInfo(this.signatureRequest.EmailAddress);
+          this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, Status.Certificate);
+          this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, Status.Certificate);
 
-      this.done = false;
+          if (Status.Certificate is VoterCertificate)
+          {
+            this.typeComboBox.SelectedIndex = 0;
+          }
+          else if (Status.Certificate is AuthorityCertificate)
+          {
+            this.typeComboBox.SelectedIndex = 1;
+          }
+          else if (Status.Certificate is AdminCertificate)
+          {
+            this.typeComboBox.SelectedIndex = 2;
+          }
+
+          this.firstNameTextBox.Text = this.signatureRequest.FirstName;
+          this.familyNameTextBox.Text = this.signatureRequest.FamilyName;
+          this.emailAddressTextBox.Text = this.signatureRequest.EmailAddress;
+
+          if (Status.Certificate is VoterCertificate)
+          {
+            this.groupComboBox.Value = Status.Groups.Where(group => group.Id == ((VoterCertificate)Status.Certificate).GroupId).Single();
+          }
+
+          SetEnable(false);
+          this.printButton.Enabled = true;
+          this.uploadButton.Enabled = true;
+          this.done = false;
+        }
+        else
+        {
+          File.Move(Status.CertificateFileName, Status.CertificateFileName + Files.BackupExtension);
+          Status.CertificateFileName = null;
+          Status.Certificate = null;
+
+          SetEnable(true);
+          this.printButton.Enabled = false;
+          this.uploadButton.Enabled = false;
+          this.done = false;
+          Status.SetMessage(Resources.SimpleCreateCertificateFileMissing, MessageType.Error);
+        }
+      }
+
       OnUpdateWizard();
     }
 
@@ -151,24 +211,29 @@ namespace Pirate.PiVote.Client
         switch (this.typeComboBox.SelectedIndex)
         {
           case 0:
-            this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, this.groupComboBox.Value.Id);
+            Status.Certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, this.groupComboBox.Value.Id);
             break;
           case 1:
-            this.certificate = new AuthorityCertificate(Resources.Culture.ToLanguage(), passphrase, fullName);
+            Status.Certificate = new AuthorityCertificate(Resources.Culture.ToLanguage(), passphrase, fullName);
             break;
           case 2:
-            this.certificate = new AdminCertificate(Resources.Culture.ToLanguage(), passphrase, fullName);
+            Status.Certificate = new AdminCertificate(Resources.Culture.ToLanguage(), passphrase, fullName);
             break;
           default:
             throw new InvalidOperationException("Bad type selection.");
         }
 
-        this.certificate.CreateSelfSignature();
+        Status.Certificate.CreateSelfSignature();
+        Status.CertificateFileName = Path.Combine(Status.DataPath, Status.Certificate.Id.ToString() + Files.CertificateExtension);
+        Status.Certificate.Save(Status.CertificateFileName);
 
         this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
         this.signatureRequestInfo = new SignatureRequestInfo(this.emailNotificationCheckBox.Checked ? this.emailAddressTextBox.Text : string.Empty);
-        this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, this.certificate);
-        this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, this.certificate);
+        this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, Status.Certificate);
+        this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, Status.Certificate);
+
+        string signatureRequestDataFileName = Path.Combine(Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestDataExtension);
+        this.signatureRequest.Save(signatureRequestDataFileName);
 
         this.run = false;
         OnUpdateWizard();
@@ -203,7 +268,7 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
       this.printButton.Enabled = false;
 
-      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, this.certificate, Status);
+      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, Status.Certificate, Status);
       PrintDialog printDialog = new PrintDialog();
       printDialog.Document = document;
 
@@ -242,10 +307,6 @@ namespace Pirate.PiVote.Client
       {
         Status.SetMessage(Resources.CreateCertificateDone, MessageType.Success);
         this.done = true;
-
-        Status.Certificate = this.certificate;
-        Status.CertificateFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + ".pi-cert");
-        Status.Certificate.Save(Status.CertificateFileName);
       }
       else
       {

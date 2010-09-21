@@ -359,6 +359,7 @@
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Wizard\AddOptionDialog.resx">
       <DependentUpon>AddOptionDialog.cs</DependentUpon>

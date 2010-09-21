@@ -85,6 +85,11 @@ namespace Pirate.PiVote.Client
       get { return !this.run; }
     }
 
+    public override bool CancelIsDone
+    {
+      get { return true; }
+    }
+
     public override bool CanNext
     {
       get

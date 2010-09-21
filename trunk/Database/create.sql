@@ -60,7 +60,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `pivote`.`revocationlist`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `pivote`.`revocationlist` (
-  `IssuerId` VARBINARY(16) NOT ,
+  `IssuerId` VARBINARY(16) NOT NULL,
   `ValidFrom` DATETIME NOT NULL ,
   `ValidUntil` DATETIME NOT NULL ,
   `Value` BLOB NULL DEFAULT NULL ,

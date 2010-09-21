@@ -19,7 +19,6 @@ namespace Pirate.PiVote.Client
 {
   public partial class SimpleChooseCertificateItem : WizardItem
   {
-    private Certificate certificate;
     private SignatureRequest signatureRequest;
     private SignatureRequestInfo signatureRequestInfo;
     private Secure<SignatureRequest> secureSignatureRequest;
@@ -42,8 +41,6 @@ namespace Pirate.PiVote.Client
       }
       else
       {
-        Status.Certificate = this.certificate;
-
         return new CheckCertificateItem();
       }
     }
@@ -196,13 +193,18 @@ namespace Pirate.PiVote.Client
       {
         string passphrase = encryptResult.Second;
 
-        this.certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, this.groupComboBox.Value.Id);
-        this.certificate.CreateSelfSignature();
+        Status.Certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, this.groupComboBox.Value.Id);
+        Status.Certificate.CreateSelfSignature();
+        Status.CertificateFileName = Path.Combine(Status.DataPath, Status.Certificate.Id.ToString() + Files.CertificateExtension);
+        Status.Certificate.Save(Status.CertificateFileName);
 
         this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
         this.signatureRequestInfo = new SignatureRequestInfo(this.emailNotificationCheckBox.Checked ? this.emailAddressTextBox.Text : string.Empty);
-        this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, this.certificate);
-        this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, this.certificate);
+        this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, Status.Certificate);
+        this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, Status.Certificate);
+
+        string signatureRequestDataFileName = Path.Combine(Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestDataExtension);
+        this.signatureRequest.Save(signatureRequestDataFileName);
 
         this.run = false;
         OnUpdateWizard();
@@ -247,7 +249,7 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
       this.printButton.Enabled = false;
 
-      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, this.certificate, Status);
+      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, Status.Certificate, Status);
       PrintDialog printDialog = new PrintDialog();
       printDialog.Document = document;
 
@@ -286,10 +288,6 @@ namespace Pirate.PiVote.Client
       {
         Status.SetMessage(Resources.CreateCertificateDone, MessageType.Success);
         this.done = true;
-
-        Status.Certificate = this.certificate;
-        Status.CertificateFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + ".pi-cert");
-        Status.Certificate.Save(Status.CertificateFileName);
       }
       else
       {
@@ -316,9 +314,9 @@ namespace Pirate.PiVote.Client
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
-        this.certificate = Serializable.Load<Certificate>(dialog.FileName);
+        Status.Certificate = Serializable.Load<Certificate>(dialog.FileName);
 
-        string newFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + ".pi-cert");
+        string newFileName = Path.Combine(Status.DataPath, Status.Certificate.Id.ToString() + ".pi-cert");
         File.Copy(dialog.FileName, newFileName);
 
         this.importButton.Enabled = false;

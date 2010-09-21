@@ -90,6 +90,7 @@ namespace Pirate.PiVote.Client
     {
       this.nextIsCreate = false;
       Status.Certificate = null;
+      Status.CertificateFileName = null;
 
       DirectoryInfo directory = new DirectoryInfo(Status.DataPath);
       this.certificateList.Items.Clear();
@@ -130,6 +131,11 @@ namespace Pirate.PiVote.Client
 
     private void loadButton_Click(object sender, EventArgs e)
     {
+      LoadCertificate();
+    }
+
+    private void LoadCertificate()
+    {
       OpenFileDialog dialog = new OpenFileDialog();
       dialog.Title = Resources.ChooseCertificateLoadDialog;
       dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -144,7 +150,7 @@ namespace Pirate.PiVote.Client
         string newFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + ".pi-cert");
         File.Copy(dialog.FileName, newFileName);
 
-          ListViewItem item = new ListViewItem(certificate.TypeText);
+        ListViewItem item = new ListViewItem(certificate.TypeText);
         item.SubItems.Add(certificate.Id.ToString());
         item.SubItems.Add(certificate.FullName.ToString());
         item.Tag = new KeyValuePair<string, Certificate>(newFileName, certificate);
@@ -163,6 +169,8 @@ namespace Pirate.PiVote.Client
 
       this.loadButton.Text = Resources.ChooseCertificateLoadButton;
       this.createButton.Text = Resources.ChooseCertificateCreateButton;
+      this.saveButton.Text = Resources.ChooseCertificateSaveButton;
+      this.exportButton.Text = Resources.ChooseCertificateExportButton;
 
       this.typeColumnHeader.Text = Resources.ChooseCertificateType;
       this.nameColumnHeader.Text = Resources.ChooseCertificateFullName;
@@ -185,6 +193,8 @@ namespace Pirate.PiVote.Client
 
         OnUpdateWizard();
       }
+
+      this.saveButton.Enabled = this.certificateList.SelectedItems.Count > 0;
     }
 
     private void createButton_Click(object sender, EventArgs e)
@@ -209,6 +219,80 @@ namespace Pirate.PiVote.Client
         this.nextItemBadShareProof.IsAuthority = false;
         this.nextItemBadShareProof.SignedBadShareProof = Serializable.Load<Signed<BadShareProof>>(dialog.FileName);
         OnNextStep();
+      }
+    }
+
+    private void saveButton_Click(object sender, EventArgs e)
+    {
+      SaveCertificate();
+    }
+
+    private void SaveCertificate()
+    {
+      if (this.certificateList.SelectedItems.Count > 0)
+      {
+        SaveFileDialog dialog = new SaveFileDialog();
+        dialog.Title = Resources.ChooseCertificateSaveDialog;
+        dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        dialog.CheckPathExists = true;
+        dialog.Filter = Files.CertificateFileFilter;
+
+        if (dialog.ShowDialog() == DialogResult.OK)
+        {
+          ListViewItem item = this.certificateList.SelectedItems[0];
+          KeyValuePair<string, Certificate> tag = (KeyValuePair<string, Certificate>)item.Tag;
+
+          File.Copy(tag.Key, dialog.FileName);
+        }
+      }
+    }
+
+    private void saveMenu_Click(object sender, EventArgs e)
+    {
+      SaveCertificate();
+    }
+
+    private void loadMenu_Click(object sender, EventArgs e)
+    {
+      LoadCertificate();
+    }
+
+    private void createMenu_Click(object sender, EventArgs e)
+    {
+      this.nextIsCreate = true;
+
+      OnNextStep();
+    }
+
+    private void certificateListMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+      this.saveMenu.Enabled = this.certificateList.SelectedItems.Count > 0;
+    }
+
+    private void exportButton_Click(object sender, EventArgs e)
+    {
+      SaveFileDialog dialog = new SaveFileDialog();
+      dialog.Title = Resources.ChooseCertificateExportDialog;
+      dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+      dialog.CheckPathExists = true;
+      dialog.Filter = Files.FolderFileFilter;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        if (!File.Exists(dialog.FileName))
+        {
+          if (!Directory.Exists(dialog.FileName))
+            Directory.CreateDirectory(dialog.FileName);
+
+          DirectoryInfo dataDirectory = new DirectoryInfo(Status.DataPath);
+
+          foreach (FileInfo file in dataDirectory.GetFiles())
+          {
+            file.CopyTo(Path.Combine(dialog.FileName, file.Name));
+          }
+
+          MessageBox.Show(Resources.ExportDoneDialogText, Resources.ExportDoneDialogTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
       }
     }
   }

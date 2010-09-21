@@ -781,4 +781,28 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="InvalidResult" xml:space="preserve">
     <value>Ungültiges Resultat</value>
   </data>
+  <data name="CheckCertificateRemove" xml:space="preserve">
+    <value>Das ungültige Zertifikat wurde entfernt, so dass du ein neues erstellen kannst.</value>
+  </data>
+  <data name="SimpleCreateCertificateFileMissing" xml:space="preserve">
+    <value>Die Wiederherstellungsdatei für deine Zertifikatsanfrage fehlt. Du musst eine neue Zertifizierungsanfrage erstellen.</value>
+  </data>
+  <data name="ChooseCertificateExportButton" xml:space="preserve">
+    <value>Exportieren...</value>
+  </data>
+  <data name="ChooseCertificateExportDialog" xml:space="preserve">
+    <value>Pi-Vote Dateien Exportieren</value>
+  </data>
+  <data name="ChooseCertificateSaveButton" xml:space="preserve">
+    <value>Speichern...</value>
+  </data>
+  <data name="ChooseCertificateSaveDialog" xml:space="preserve">
+    <value>Zertifikat Speichern</value>
+  </data>
+  <data name="ExportDoneDialogText" xml:space="preserve">
+    <value>Pi-Vote Dateien wurden exportiert.</value>
+  </data>
+  <data name="ExportDoneDialogTitle" xml:space="preserve">
+    <value>Pi-Vote Dateien Exportieren</value>
+  </data>
 </root>

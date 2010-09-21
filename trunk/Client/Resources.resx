@@ -791,11 +791,34 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="InvalidResult" xml:space="preserve">
     <value>Invalid Result</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="CheckCertificateItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\CheckCertificateItem.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="VoteCompleteItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\VoteCompleteItem.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CheckCertificateRemove" xml:space="preserve">
+    <value>The invalid certificate has been removed so you can create a new one.</value>
+  </data>
+  <data name="SimpleCreateCertificateFileMissing" xml:space="preserve">
+    <value>The recovery file for your certificate request is missing. You must create a new request.</value>
+  </data>
+  <data name="ChooseCertificateExportButton" xml:space="preserve">
+    <value>Export...</value>
+  </data>
+  <data name="ChooseCertificateExportDialog" xml:space="preserve">
+    <value>Export Pi-Vote Files</value>
+  </data>
+  <data name="ChooseCertificateSaveButton" xml:space="preserve">
+    <value>Save...</value>
+  </data>
+  <data name="ChooseCertificateSaveDialog" xml:space="preserve">
+    <value>Save Certificate</value>
+  </data>
+  <data name="ExportDoneDialogText" xml:space="preserve">
+    <value>Pi-Vote files were exported.</value>
+  </data>
+  <data name="ExportDoneDialogTitle" xml:space="preserve">
+    <value>Export Pi-Vote Files</value>
   </data>
 </root>

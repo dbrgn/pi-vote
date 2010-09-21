@@ -554,6 +554,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The invalid certificate has been removed so you can create a new one..
+        /// </summary>
+        internal static string CheckCertificateRemove {
+            get {
+                return ResourceManager.GetString("CheckCertificateRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The server sent a response to your certificate signing request and the signature was affixed to your certificate..
         /// </summary>
         internal static string CheckCertificateResponseAccept {
@@ -644,6 +653,24 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export....
+        /// </summary>
+        internal static string ChooseCertificateExportButton {
+            get {
+                return ResourceManager.GetString("ChooseCertificateExportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Pi-Vote Files.
+        /// </summary>
+        internal static string ChooseCertificateExportDialog {
+            get {
+                return ResourceManager.GetString("ChooseCertificateExportDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group / Name.
         /// </summary>
         internal static string ChooseCertificateFullName {
@@ -694,6 +721,24 @@ namespace Pirate.PiVote.Client {
         internal static string ChooseCertificateLoadDialog {
             get {
                 return ResourceManager.GetString("ChooseCertificateLoadDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save....
+        /// </summary>
+        internal static string ChooseCertificateSaveButton {
+            get {
+                return ResourceManager.GetString("ChooseCertificateSaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Certificate.
+        /// </summary>
+        internal static string ChooseCertificateSaveDialog {
+            get {
+                return ResourceManager.GetString("ChooseCertificateSaveDialog", resourceCulture);
             }
         }
         
@@ -1169,6 +1214,24 @@ namespace Pirate.PiVote.Client {
             get {
                 object obj = ResourceManager.GetObject("Error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pi-Vote files were exported..
+        /// </summary>
+        internal static string ExportDoneDialogText {
+            get {
+                return ResourceManager.GetString("ExportDoneDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Pi-Vote Files.
+        /// </summary>
+        internal static string ExportDoneDialogTitle {
+            get {
+                return ResourceManager.GetString("ExportDoneDialogTitle", resourceCulture);
             }
         }
         
@@ -1693,6 +1756,15 @@ namespace Pirate.PiVote.Client {
         internal static string SimpleChooseCertificateUploadButton {
             get {
                 return ResourceManager.GetString("SimpleChooseCertificateUploadButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The recovery file for your certificate request is missing. You must create a new request..
+        /// </summary>
+        internal static string SimpleCreateCertificateFileMissing {
+            get {
+                return ResourceManager.GetString("SimpleCreateCertificateFileMissing", resourceCulture);
             }
         }
         
