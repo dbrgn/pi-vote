@@ -24,7 +24,7 @@ namespace Pirate.PiVote
     public const string RootCertificateFileName = "root.pi-cert";
     public const string CertificateStorageFileFilter = "Pi-Vote Certificate Storage|*.pi-cert-storage";
     public const string CertificateFileFilter = "Pi-Vote Certificate|*.pi-cert";
-    public const string FolderFileFilter = "Folder|*";
+    public const string BackupFileFilter = "Pi-Vote Backup|*.pi-backup";
     public const string CertificateExtension = ".pi-cert";
     public const string SignatureRequestExtension = ".pi-sig-req";
     public const string SignatureRequestDataExtension = ".pi-sig-req-data";
@@ -40,6 +40,6 @@ namespace Pirate.PiVote
     public const string SafePrimePattern = "*.pi-safeprime";
     public const string SafePrimeFileString = "{0}.pi-safeprime";
     public const string DataFolder = "PiVote";
-    public const string BackupExtension = ".bak";
+    public const string BakExtension = ".bak";
   }
 }

@@ -333,6 +333,7 @@
     <Compile Include="Rpc\Messages\CreateVotingResponse.cs" />
     <Compile Include="Rpc\Messages\CreateVotingRequest.cs" />
     <Compile Include="Rpc\Handlers\VotingRpcServer.cs" />
+    <Compile Include="Utilitiy\BackupFile.cs" />
     <Compile Include="Utilitiy\DummyLogger.cs" />
     <Compile Include="Utilitiy\ILogger.cs" />
     <Compile Include="Utilitiy\LogLevel.cs" />

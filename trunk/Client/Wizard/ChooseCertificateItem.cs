@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using System.Threading;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Serialization;
@@ -169,13 +170,17 @@ namespace Pirate.PiVote.Client
 
       this.loadButton.Text = Resources.ChooseCertificateLoadButton;
       this.createButton.Text = Resources.ChooseCertificateCreateButton;
-      this.saveButton.Text = Resources.ChooseCertificateSaveButton;
-      this.exportButton.Text = Resources.ChooseCertificateExportButton;
+      this.backupButton.Text = Resources.ChooseCertificateBackupButton;
+      this.restoreButton.Text = Resources.ChooseCertificateRestoreButton;
+      this.verifyShareProofButton.Text = Resources.ChooseCertificateVerifyBadShareProof;
+
+      this.saveMenu.Text = Resources.ChooseCertificateSaveButton;
+      this.loadMenu.Text = Resources.ChooseCertificateLoadButton;
+      this.createMenu.Text = Resources.ChooseCertificateCreateButton;
+      this.deleteMenu.Text = Resources.ChooseCertificateDeleteButton;
 
       this.typeColumnHeader.Text = Resources.ChooseCertificateType;
       this.nameColumnHeader.Text = Resources.ChooseCertificateFullName;
-
-      this.verifyShareProofButton.Text = Resources.ChooseCertificateVerifyBadShareProof;
     }
 
     private void certificateList_SelectedIndexChanged(object sender, EventArgs e)
@@ -193,8 +198,6 @@ namespace Pirate.PiVote.Client
 
         OnUpdateWizard();
       }
-
-      this.saveButton.Enabled = this.certificateList.SelectedItems.Count > 0;
     }
 
     private void createButton_Click(object sender, EventArgs e)
@@ -247,6 +250,19 @@ namespace Pirate.PiVote.Client
       }
     }
 
+    private void DeleteCertificate()
+    {
+      if (this.certificateList.SelectedItems.Count > 0)
+      {
+        ListViewItem item = this.certificateList.SelectedItems[0];
+        KeyValuePair<string, Certificate> tag = (KeyValuePair<string, Certificate>)item.Tag;
+
+        File.Move(tag.Key, tag.Key + Files.BakExtension);
+
+        item.Remove();
+      }
+    }
+
     private void saveMenu_Click(object sender, EventArgs e)
     {
       SaveCertificate();
@@ -267,33 +283,97 @@ namespace Pirate.PiVote.Client
     private void certificateListMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {
       this.saveMenu.Enabled = this.certificateList.SelectedItems.Count > 0;
+      this.deleteMenu.Enabled = this.certificateList.SelectedItems.Count > 0;
     }
 
-    private void exportButton_Click(object sender, EventArgs e)
+    private void Backup()
     {
       SaveFileDialog dialog = new SaveFileDialog();
-      dialog.Title = Resources.ChooseCertificateExportDialog;
+      dialog.Title = Resources.ChooseCertificateBackupDialog;
       dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       dialog.CheckPathExists = true;
-      dialog.Filter = Files.FolderFileFilter;
+      dialog.OverwritePrompt = true;
+      dialog.Filter = Files.BackupFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
-        if (!File.Exists(dialog.FileName))
+        BackupFile backup = new BackupFile(Status.DataPath, dialog.FileName);
+
+        backup.BeginCreate();
+
+        while (!backup.Complete)
         {
-          if (!Directory.Exists(dialog.FileName))
-            Directory.CreateDirectory(dialog.FileName);
+          Status.SetProgress(Resources.ChooseCertificateBackupRunning, backup.Progress);
+          Thread.Sleep(10);
+        }
 
-          DirectoryInfo dataDirectory = new DirectoryInfo(Status.DataPath);
-
-          foreach (FileInfo file in dataDirectory.GetFiles())
-          {
-            file.CopyTo(Path.Combine(dialog.FileName, file.Name));
-          }
-
-          MessageBox.Show(Resources.ExportDoneDialogText, Resources.ExportDoneDialogTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        if (backup.Exception == null)
+        {
+          Status.SetMessage(Resources.ChooseCertificateBackupSuccess, MessageType.Success);
+        }
+        else
+        {
+          Status.SetMessage(Resources.ChooseCertificateBackupFailed + backup.Exception.Message, MessageType.Error);
         }
       }
+    }
+
+    private void Restore()
+    {
+      OpenFileDialog dialog = new OpenFileDialog();
+      dialog.Title = Resources.ChooseCertificateRestoreDialog;
+      dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+      dialog.CheckPathExists = true;
+      dialog.CheckFileExists = true;
+      dialog.Filter = Files.BackupFileFilter;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        BackupFile backup = new BackupFile(Status.DataPath, dialog.FileName);
+
+        backup.BeginExtract();
+
+        while (!backup.Complete)
+        {
+          Status.SetProgress(Resources.ChooseCertificateRestoreRunning, backup.Progress);
+          Thread.Sleep(10);
+        }
+
+        if (backup.Exception == null)
+        {
+          Status.SetMessage(Resources.ChooseCertificateRestoreSuccess, MessageType.Success);
+          Begin();
+        }
+        else
+        {
+          Status.SetMessage(Resources.ChooseCertificateRestoreFailed + backup.Exception.Message, MessageType.Error);
+        }
+      }
+    }
+
+    private void SetEnable(bool enable)
+    {
+      this.loadButton.Enabled = enable;
+      this.createButton.Enabled = enable;
+      this.backupButton.Enabled = enable;
+      this.restoreButton.Enabled = enable;
+      this.verifyShareProofButton.Enabled = enable;
+      this.certificateList.Enabled = enable;
+    }
+
+    private void backupButton_Click(object sender, EventArgs e)
+    {
+      Backup();
+    }
+
+    private void restoreButton_Click(object sender, EventArgs e)
+    {
+      Restore();
+    }
+
+    private void deleteMenu_Click(object sender, EventArgs e)
+    {
+      DeleteCertificate();
     }
   }
 }

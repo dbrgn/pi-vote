@@ -644,6 +644,51 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Backup....
+        /// </summary>
+        internal static string ChooseCertificateBackupButton {
+            get {
+                return ResourceManager.GetString("ChooseCertificateBackupButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup Pi-Vote Files.
+        /// </summary>
+        internal static string ChooseCertificateBackupDialog {
+            get {
+                return ResourceManager.GetString("ChooseCertificateBackupDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup failed: .
+        /// </summary>
+        internal static string ChooseCertificateBackupFailed {
+            get {
+                return ResourceManager.GetString("ChooseCertificateBackupFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating backup....
+        /// </summary>
+        internal static string ChooseCertificateBackupRunning {
+            get {
+                return ResourceManager.GetString("ChooseCertificateBackupRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup created..
+        /// </summary>
+        internal static string ChooseCertificateBackupSuccess {
+            get {
+                return ResourceManager.GetString("ChooseCertificateBackupSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Create....
         /// </summary>
         internal static string ChooseCertificateCreateButton {
@@ -653,20 +698,11 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Export....
+        ///   Looks up a localized string similar to &amp;Delete.
         /// </summary>
-        internal static string ChooseCertificateExportButton {
+        internal static string ChooseCertificateDeleteButton {
             get {
-                return ResourceManager.GetString("ChooseCertificateExportButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export Pi-Vote Files.
-        /// </summary>
-        internal static string ChooseCertificateExportDialog {
-            get {
-                return ResourceManager.GetString("ChooseCertificateExportDialog", resourceCulture);
+                return ResourceManager.GetString("ChooseCertificateDeleteButton", resourceCulture);
             }
         }
         
@@ -725,7 +761,52 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save....
+        ///   Looks up a localized string similar to &amp;Restore....
+        /// </summary>
+        internal static string ChooseCertificateRestoreButton {
+            get {
+                return ResourceManager.GetString("ChooseCertificateRestoreButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore Pi-Vote Files.
+        /// </summary>
+        internal static string ChooseCertificateRestoreDialog {
+            get {
+                return ResourceManager.GetString("ChooseCertificateRestoreDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore failed: .
+        /// </summary>
+        internal static string ChooseCertificateRestoreFailed {
+            get {
+                return ResourceManager.GetString("ChooseCertificateRestoreFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restoring backup....
+        /// </summary>
+        internal static string ChooseCertificateRestoreRunning {
+            get {
+                return ResourceManager.GetString("ChooseCertificateRestoreRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backup restored..
+        /// </summary>
+        internal static string ChooseCertificateRestoreSuccess {
+            get {
+                return ResourceManager.GetString("ChooseCertificateRestoreSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Save....
         /// </summary>
         internal static string ChooseCertificateSaveButton {
             get {
@@ -1214,24 +1295,6 @@ namespace Pirate.PiVote.Client {
             get {
                 object obj = ResourceManager.GetObject("Error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pi-Vote files were exported..
-        /// </summary>
-        internal static string ExportDoneDialogText {
-            get {
-                return ResourceManager.GetString("ExportDoneDialogText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Export Pi-Vote Files.
-        /// </summary>
-        internal static string ExportDoneDialogTitle {
-            get {
-                return ResourceManager.GetString("ExportDoneDialogTitle", resourceCulture);
             }
         }
         

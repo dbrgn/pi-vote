@@ -803,22 +803,43 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="SimpleCreateCertificateFileMissing" xml:space="preserve">
     <value>The recovery file for your certificate request is missing. You must create a new request.</value>
   </data>
-  <data name="ChooseCertificateExportButton" xml:space="preserve">
-    <value>Export...</value>
-  </data>
-  <data name="ChooseCertificateExportDialog" xml:space="preserve">
-    <value>Export Pi-Vote Files</value>
-  </data>
   <data name="ChooseCertificateSaveButton" xml:space="preserve">
-    <value>Save...</value>
+    <value>&amp;Save...</value>
   </data>
   <data name="ChooseCertificateSaveDialog" xml:space="preserve">
     <value>Save Certificate</value>
   </data>
-  <data name="ExportDoneDialogText" xml:space="preserve">
-    <value>Pi-Vote files were exported.</value>
+  <data name="ChooseCertificateBackupButton" xml:space="preserve">
+    <value>&amp;Backup...</value>
   </data>
-  <data name="ExportDoneDialogTitle" xml:space="preserve">
-    <value>Export Pi-Vote Files</value>
+  <data name="ChooseCertificateBackupDialog" xml:space="preserve">
+    <value>Backup Pi-Vote Files</value>
+  </data>
+  <data name="ChooseCertificateBackupFailed" xml:space="preserve">
+    <value>Backup failed: </value>
+  </data>
+  <data name="ChooseCertificateBackupSuccess" xml:space="preserve">
+    <value>Backup created.</value>
+  </data>
+  <data name="ChooseCertificateRestoreButton" xml:space="preserve">
+    <value>&amp;Restore...</value>
+  </data>
+  <data name="ChooseCertificateRestoreDialog" xml:space="preserve">
+    <value>Restore Pi-Vote Files</value>
+  </data>
+  <data name="ChooseCertificateRestoreFailed" xml:space="preserve">
+    <value>Restore failed: </value>
+  </data>
+  <data name="ChooseCertificateRestoreSuccess" xml:space="preserve">
+    <value>Backup restored.</value>
+  </data>
+  <data name="ChooseCertificateBackupRunning" xml:space="preserve">
+    <value>Creating backup...</value>
+  </data>
+  <data name="ChooseCertificateDeleteButton" xml:space="preserve">
+    <value>&amp;Delete</value>
+  </data>
+  <data name="ChooseCertificateRestoreRunning" xml:space="preserve">
+    <value>Restoring backup...</value>
   </data>
 </root>

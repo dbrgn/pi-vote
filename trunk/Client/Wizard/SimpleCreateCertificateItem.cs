@@ -128,7 +128,7 @@ namespace Pirate.PiVote.Client
         }
         else
         {
-          File.Move(Status.CertificateFileName, Status.CertificateFileName + Files.BackupExtension);
+          File.Move(Status.CertificateFileName, Status.CertificateFileName + Files.BakExtension);
           Status.CertificateFileName = null;
           Status.Certificate = null;
 

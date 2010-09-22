@@ -223,7 +223,7 @@ namespace Pirate.PiVote.Client
 
       if (this.status == CheckStatus.CheckCertificateDeclined)
       {
-        File.Move(Status.CertificateFileName, Status.CertificateFileName + Files.BackupExtension);
+        File.Move(Status.CertificateFileName, Status.CertificateFileName + Files.BakExtension);
         Status.CertificateFileName = null;
         Status.Certificate = null;
       }
