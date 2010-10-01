@@ -86,7 +86,12 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Logs messages to file.
     /// </summary>
-    private ILogger logger;
+    public ILogger Logger { get; private set; }
+
+    /// <summary>
+    /// When was the last processing done?
+    /// </summary>
+    private DateTime lastProcessDone;
 
     /// <summary>
     /// Create a new TCP RPC server.
@@ -94,7 +99,7 @@ namespace Pirate.PiVote.Rpc
     /// <param name="rpcServer">Voting RPC server.</param>
     public TcpRpcServer(RpcServer rpcServer)
     {
-      this.logger = rpcServer.Logger;
+      Logger = rpcServer.Logger;
 
       this.port = rpcServer.ServerConfig.Port;
       this.workerCount = rpcServer.ServerConfig.WorkerCount;
@@ -113,6 +118,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     public void Start()
     {
+      this.lastProcessDone = DateTime.Now;
       this.run = true;
 
       this.listenerThread = new Thread(Listen);
@@ -136,7 +142,7 @@ namespace Pirate.PiVote.Rpc
       this.run = false;
       this.listenerThread.Join();
       this.workerThreads.ForEach(workerThread => workerThread.Join());
-      this.logger.Close();
+      Logger.Close();
     }
 
     /// <summary>
@@ -144,71 +150,118 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     private void Worker()
     {
+      int failCount = 0;
       DateTime lastWorkDone = DateTime.Now;
 
       while (this.run)
       {
-        bool doneSomeWork = false;
-
-        for (int processIndex = 0; processIndex < this.connections.Count; processIndex++)
+        try
         {
-          TcpRpcConnection connection = null;
+          bool doneSomeWork = WorkConnections();
 
-          lock (this.connections)
+          WorkProcess();
+
+          if (doneSomeWork)
           {
-            if (this.connections.Count > 0)
-            {
-              connection = this.connections.Dequeue();
-            }
-          }
-
-          if (connection != null)
-          {
-            try
-            {
-              doneSomeWork |= connection.Process();
-
-              if (connection.Overdue)
-              {
-                this.logger.Log(LogLevel.Info, "Connection from {0} was overdue and therefore dropped.", connection.RemoteEndPointText);
-                connection.Close();
-              }
-              else
-              {
-                lock (this.connections)
-                {
-                  this.connections.Enqueue(connection);
-                }
-              }
-            }
-            catch (Exception exception)
-            {
-              this.logger.Log(LogLevel.Warning, "Connection from {0} faild and was therefore dropped. Exception: {1}", connection.RemoteEndPointText, exception.ToString());
-              connection.Close();
-            }
-          }
-        }
-
-        if (doneSomeWork)
-        {
-          lastWorkDone = DateTime.Now;
-          Thread.Sleep(this.workerShortWait);
-        }
-        else
-        {
-          if (DateTime.Now.Subtract(lastWorkDone).TotalSeconds > this.sqlKeepAliveTime)
-          {
-            lock (this.rpcServer)
-            {
-              this.rpcServer.Idle();
-            }
-
             lastWorkDone = DateTime.Now;
+            Thread.Sleep(this.workerShortWait);
           }
+          else
+          {
+            if (DateTime.Now.Subtract(lastWorkDone).TotalSeconds > this.sqlKeepAliveTime)
+            {
+              lock (this.rpcServer)
+              {
+                this.rpcServer.Idle();
+              }
 
-          Thread.Sleep(this.workerLongWait);
+              lastWorkDone = DateTime.Now;
+            }
+
+            Thread.Sleep(this.workerLongWait);
+          }
+        }
+        catch (Exception exception)
+        {
+          failCount++;
+          Logger.Log(LogLevel.Error, "Worker thread {0} failed the {1} time with exception {2}", Thread.CurrentThread.ManagedThreadId, failCount, exception.ToString());
+
+          if (failCount < 10)
+          {
+            Thread.Sleep(1000 * failCount);
+          }
+          else
+          {
+            Logger.Log(LogLevel.Error, "Worker thread {0} failed too many times.", Thread.CurrentThread.ManagedThreadId, exception.ToString());
+            throw exception;
+          }
         }
       }
+    }
+
+    /// <summary>
+    /// Works the server processing when needed.
+    /// </summary>
+    private void WorkProcess()
+    {
+      if (DateTime.Now.Subtract(this.lastProcessDone).TotalSeconds > this.sqlKeepAliveTime)
+      {
+        lock (this.rpcServer)
+        {
+          this.rpcServer.Process();
+        }
+
+        this.lastProcessDone = DateTime.Now;
+      }
+    }
+
+    /// <summary>
+    /// Works all connections.
+    /// </summary>
+    /// <returns>Was some work done?</returns>
+    private bool WorkConnections()
+    {
+      bool doneSomeWork = false;
+
+      for (int processIndex = 0; processIndex < this.connections.Count; processIndex++)
+      {
+        TcpRpcConnection connection = null;
+
+        lock (this.connections)
+        {
+          if (this.connections.Count > 0)
+          {
+            connection = this.connections.Dequeue();
+          }
+        }
+
+        if (connection != null)
+        {
+          try
+          {
+            doneSomeWork |= connection.Process();
+
+            if (connection.Overdue)
+            {
+              Logger.Log(LogLevel.Info, "Connection from {0} was overdue and therefore dropped.", connection.RemoteEndPointText);
+              connection.Close();
+            }
+            else
+            {
+              lock (this.connections)
+              {
+                this.connections.Enqueue(connection);
+              }
+            }
+          }
+          catch (Exception exception)
+          {
+            Logger.Log(LogLevel.Warning, "Connection from {0} faild and was therefore dropped. Exception: {1}", connection.RemoteEndPointText, exception.ToString());
+            connection.Close();
+          }
+        }
+      }
+      return doneSomeWork;
     }
 
     /// <summary>
@@ -230,7 +283,7 @@ namespace Pirate.PiVote.Rpc
             this.connections.Enqueue(connection);
           }
 
-          this.logger.Log(LogLevel.Info, "New connection from {0}.", connection.RemoteEndPointText);
+          Logger.Log(LogLevel.Info, "New connection from {0}.", connection.RemoteEndPointText);
 
           Thread.Sleep(1);
         }

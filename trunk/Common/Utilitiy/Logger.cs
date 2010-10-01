@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Diagnostics;
 
 namespace Pirate.PiVote
 {
@@ -18,7 +19,20 @@ namespace Pirate.PiVote
   /// </summary>
   public class Logger : ILogger
   {
+    /// <summary>
+    /// File name for the log file.
+    /// </summary>
     public const string ServerLogFileName = "pi-vote-server.log";
+
+    /// <summary>
+    /// Source name in the event log.
+    /// </summary>
+    public const string EventLogSource = "Pi-Vote";
+
+    /// <summary>
+    /// Log name of the event log.
+    /// </summary>
+    public const string EventLogName = "Application";
 
     /// <summary>
     /// File stream of the log file.
@@ -45,6 +59,11 @@ namespace Pirate.PiVote
       this.maxLogLevel = maxLogLevel;
       this.logFileStream = new FileStream(logFileName, FileMode.Append, FileAccess.Write);
       this.logWriter = new StreamWriter(this.logFileStream);
+
+      if (!EventLog.SourceExists(EventLogSource))
+      {
+        EventLog.CreateEventSource(EventLogSource, EventLogName);
+      }
     }
 
     /// <summary>
@@ -62,6 +81,7 @@ namespace Pirate.PiVote
           Console.WriteLine(DateTime.Now.ToString("s") + " \t" + logLevel.ToString() + " \t" + message, values);
           this.logWriter.WriteLine(DateTime.Now.ToString("s") + " \t" + logLevel.ToString() + " \t" + message, values);
           this.logWriter.Flush();
+          EventLog.WriteEntry(EventLogSource, string.Format(message, values), logLevel.ToLogEntryType());
         }
       }
     }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Diagnostics;
 
 namespace Pirate.PiVote
 {
@@ -42,5 +43,30 @@ namespace Pirate.PiVote
     /// Output only for debug.
     /// </summary>
     Debug = 5
+  }
+
+  /// <summary>
+  /// Extension method for the LogLevel
+  /// </summary>
+  public static class LogLevelExtensions
+  {
+    public static EventLogEntryType ToLogEntryType(this LogLevel logLevel)
+    {
+      switch (logLevel)
+      {
+        case LogLevel.Debug:
+          return EventLogEntryType.Information;
+        case LogLevel.Info:
+          return EventLogEntryType.Information;
+        case LogLevel.Warning:
+          return EventLogEntryType.Warning;
+        case LogLevel.Error:
+          return EventLogEntryType.Error;
+        case  LogLevel.Emergency:
+          return EventLogEntryType.Error;
+        default:
+          return EventLogEntryType.Warning;
+      }
+    }
   }
 }

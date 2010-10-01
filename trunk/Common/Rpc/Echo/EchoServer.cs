@@ -48,6 +48,10 @@ namespace Pirate.PiVote.Rpc
     {
     }
 
+    public override void Process()
+    {
+    }
+
     /// <summary>
     /// Excecutes a RPC request.
     /// </summary>

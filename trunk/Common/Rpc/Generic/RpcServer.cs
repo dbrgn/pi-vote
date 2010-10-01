@@ -29,6 +29,11 @@ namespace Pirate.PiVote.Rpc
     public abstract void Idle();
 
     /// <summary>
+    /// Lets the server do something once ine a while.
+    /// </summary>
+    public abstract void Process();
+
+    /// <summary>
     /// Excecutes a RPC request.
     /// </summary>
     /// <param name="requestData">Serialized request data.</param>

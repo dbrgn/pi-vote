@@ -536,13 +536,20 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
-    /// Called from time to time when idle.
+    /// Called at regular intervals.
     /// Has to keep the DB connection alive.
+    /// </summary>
+    public override void Process()
+    {
+      int certificateCount = CertificateStorage.Certificates.Count();
+      Logger.Log(LogLevel.Debug, "SQL keep alive.", certificateCount);
+    }
+
+    /// <summary>
+    /// Called from time to time when idle.
     /// </summary>
     public override void Idle()
     {
-      int certificateCount = CertificateStorage.Certificates.Count();
-      Logger.Log(LogLevel.Debug, "Worker idling at {0}.", certificateCount);
     }
 
     /// <summary>
