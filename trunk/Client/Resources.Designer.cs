@@ -716,6 +716,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string ChooseCertificateGroupNameUnknown {
+            get {
+                return ResourceManager.GetString("ChooseCertificateGroupNameUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Id.
         /// </summary>
         internal static string ChooseCertificateId {

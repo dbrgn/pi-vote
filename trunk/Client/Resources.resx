@@ -842,4 +842,7 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="ChooseCertificateRestoreRunning" xml:space="preserve">
     <value>Restoring backup...</value>
   </data>
+  <data name="ChooseCertificateGroupNameUnknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
 </root>

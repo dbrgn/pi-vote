@@ -826,4 +826,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="ChooseCertificateRestoreRunning" xml:space="preserve">
     <value>Backup wird wiederhergestellt...</value>
   </data>
+  <data name="ChooseCertificateGroupNameUnknown" xml:space="preserve">
+    <value>Unbekannt</value>
+  </data>
 </root>

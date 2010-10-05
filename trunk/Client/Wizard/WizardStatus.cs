@@ -134,7 +134,16 @@ namespace Pirate.PiVote.Client
 
     public string GetGroupName(int groupId)
     {
-      return Groups.Where(group => group.Id == groupId).First().Name.Text;
+      var groups = Groups.Where(group => group.Id == groupId);
+
+      if (groups.Count() > 0)
+      {
+        return groups.First().Name.Text;
+      }
+      else
+      {
+        return Resources.ChooseCertificateGroupNameUnknown;
+      }
     }
   }
 }

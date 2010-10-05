@@ -4,7 +4,7 @@ cls
 
 $user = "exception"
 $server = "lechuck.piratenpartei.ch"
-$port = 59922
+$port = 14022
 $dir = "/home/exception/"
 $key = "D:\Security\PPS\piratenpartei.ch-ssh-rsa-4096.ppk"
 $zip = "C:\Program Files (x86)\7-Zip\7z.exe"
