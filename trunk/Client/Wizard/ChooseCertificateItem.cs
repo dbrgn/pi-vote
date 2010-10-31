@@ -36,6 +36,7 @@ namespace Pirate.PiVote.Client
       }
       if (this.nextIsCreate)
       {
+        Status.Certificate = null;
         return new SimpleCreateCertificateItem();
       }
       else

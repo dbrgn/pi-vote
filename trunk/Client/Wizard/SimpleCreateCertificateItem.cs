@@ -266,7 +266,6 @@ namespace Pirate.PiVote.Client
     {
       this.run = true;
       OnUpdateWizard();
-      this.printButton.Enabled = false;
 
       SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, Status.Certificate, Status);
       PrintDialog printDialog = new PrintDialog();

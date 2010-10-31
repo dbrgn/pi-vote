@@ -407,9 +407,11 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public void ImportStorageIfNeed()
     {
-      long certificateCount = (long)DbConnection.ExecuteScalar("SELECT count(*) FROM certificate");
+      long validCertificateCount = Certificates
+        .Where(certificate => certificate.Validate(this) == CertificateValidationResult.Valid)
+        .Count();
 
-      if (certificateCount < 2)
+      if (validCertificateCount < 2)
       {
         if (!File.Exists(LoadStorageFileName))
           throw new InvalidOperationException("Certificate storage preload file not found.");

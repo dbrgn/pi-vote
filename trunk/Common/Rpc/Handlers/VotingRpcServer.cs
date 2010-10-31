@@ -243,6 +243,7 @@ namespace Pirate.PiVote.Rpc
       VotingServerEntity voting = new VotingServerEntity(this, signedVotingParameters, CertificateStorage, this.serverCertificate);
       authorities.Foreach(authority => voting.AddAuthority(authority));
       this.votings.Add(voting.Id, voting);
+      voting.SendAuthorityActionRequiredMail();
     }
 
     /// <summary>

@@ -205,7 +205,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Send action required mail to all authorities
     /// </summary>
-    private void SendAuthorityActionRequiredMail()
+    public void SendAuthorityActionRequiredMail()
     {
       List<string> authorities = new List<string>(
         Authorities
