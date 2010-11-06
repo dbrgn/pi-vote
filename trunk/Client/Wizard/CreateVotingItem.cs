@@ -88,14 +88,17 @@ namespace Pirate.PiVote.Client
 
       if (this.exception == null)
       {
-        if (this.authorityCertificates != null)
+        if (this.authorityCertificates != null &&
+            this.authorityCertificates.Count > 0)
         {
-          var certificates = this.authorityCertificates.OrderBy(certificate => certificate.FullName);
+          var certificates = this.authorityCertificates;
           certificates.Foreach(certificate => this.authority0List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
           certificates.Foreach(certificate => this.authority1List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
           certificates.Foreach(certificate => this.authority2List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
           certificates.Foreach(certificate => this.authority3List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
           certificates.Foreach(certificate => this.authority4List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+
+          Status.SetMessage("Authority certificates downloaded from server.", MessageType.Success);
         }
         else
         {
@@ -116,7 +119,7 @@ namespace Pirate.PiVote.Client
     {
       if (exception == null)
       {
-        this.authorityCertificates = new List<AuthorityCertificate>(authorityCertificates);
+        this.authorityCertificates = new List<AuthorityCertificate>(authorityCertificates.OrderBy(certificate => certificate.FullName));
       }
 
       this.exception = exception;

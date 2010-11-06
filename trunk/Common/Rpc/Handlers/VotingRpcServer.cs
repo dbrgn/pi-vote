@@ -368,6 +368,28 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Gets all signature requests.
+    /// </summary>
+    /// <returns>List of signed signature request.</returns>
+    public IEnumerable<Secure<SignatureRequest>> GetSignatureRequests()
+    {
+      MySqlDataReader reader = DbConnection
+        .ExecuteReader("SELECT Value FROM signaturerequest");
+
+      List<Secure<SignatureRequest>> requests = new List<Secure<SignatureRequest>>();
+        
+      while (reader.Read())
+      {
+        byte[] signatureRequestData = reader.GetBlob(0);
+        requests.Add( Serializable.FromBinary<Secure<SignatureRequest>>(signatureRequestData));
+      }
+
+      reader.Close();
+
+      return requests;
+    }
+    
+    /// <summary>
     /// Get a signature request info.
     /// </summary>
     /// <param name="id">Id of the signature request.</param>
@@ -507,14 +529,21 @@ namespace Pirate.PiVote.Rpc
     {
       List<AuthorityCertificate> authorityCertificates = new List<AuthorityCertificate>();
 
+      Console.WriteLine();
+      Console.WriteLine();
+
       foreach (Certificate certificate in CertificateStorage.Certificates)
       {
+        Console.WriteLine("{0} from {1} is {2}", certificate.Id.ToString(), certificate.FullName, certificate.Validate(CertificateStorage));
+
         if (certificate is AuthorityCertificate &&
           certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid)
         {
           authorityCertificates.Add((AuthorityCertificate)certificate);
         }
       }
+
+      Console.WriteLine();
 
       return authorityCertificates;
     }
