@@ -829,4 +829,19 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="ChooseCertificateGroupNameUnknown" xml:space="preserve">
     <value>Unbekannt</value>
   </data>
+  <data name="ChangePassphraseMessageChange" xml:space="preserve">
+    <value>Alte und neue Passphrase eingeben um diese zu ändern.</value>
+  </data>
+  <data name="ChangePassphraseMessageWrong" xml:space="preserve">
+    <value>Alte Passphrase falsch.</value>
+  </data>
+  <data name="ChangePassphraseNewPassphrase" xml:space="preserve">
+    <value>Neue Passphrase:</value>
+  </data>
+  <data name="ChangePassphraseOldPassphrase" xml:space="preserve">
+    <value>Alte Passphrase:</value>
+  </data>
+  <data name="EncryptPrivateKeyWrongPassphrase" xml:space="preserve">
+    <value>Passphrase falsch.</value>
+  </data>
 </root>

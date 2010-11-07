@@ -846,7 +846,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Decrypts the private key.
     /// </summary>
-    /// <param name="passphrase">Passphrase protecting the private key.</param>
+    /// <param name="oldPassphrase">Passphrase protecting the private key.</param>
     public void Unlock(string passphrase)
     {
       if (passphrase.IsNullOrEmpty())
@@ -882,6 +882,129 @@ namespace Pirate.PiVote.Crypto
       else if (PrivateKeyStatus == PrivateKeyStatus.Decrypted)
       {
         //Do nothing at all.
+      }
+      else
+      {
+        throw new InvalidOperationException("Private key is not encrypted.");
+      }
+    }
+
+    /// <summary>
+    /// Decrypts the private key permanently.
+    /// </summary>
+    /// <param name="oldPassphrase">Passphrase protecting the private key.</param>
+    public void DecryptPrivateKey(string passphrase)
+    {
+      if (passphrase.IsNullOrEmpty())
+        throw new ArgumentException("Passphrase must not be null or empty.");
+
+      if (PrivateKeyStatus == PrivateKeyStatus.Encrypted)
+      {
+        Rfc2898DeriveBytes derive = new Rfc2898DeriveBytes(passphrase, this.passphraseSalt, 1024);
+        byte[] key = derive.GetBytes(32);
+
+        try
+        {
+          byte[] data = Aes.Decrypt(this.privateKeyData, key, this.privateKeySalt);
+          SHA256Managed sha256 = new SHA256Managed();
+          int hashLength = sha256.HashSize / 8;
+
+          if (data.Length > hashLength &&
+            sha256.ComputeHash(data.Part(0, data.Length - hashLength)).Equal(data.Part(data.Length - hashLength, hashLength)))
+          {
+            this.privateKeyData = data.Part(0, data.Length - hashLength);
+            PrivateKeyStatus = PrivateKeyStatus.Unencrypted;
+          }
+          else
+          {
+            throw new CryptographicException("Passphrase wrong.");
+          }
+        }
+        catch (CryptographicException)
+        {
+          throw new CryptographicException("Passphrase wrong.");
+        }
+      }
+      else if (PrivateKeyStatus == PrivateKeyStatus.Decrypted)
+      {
+        //Do nothing at all.
+      }
+      else
+      {
+        throw new InvalidOperationException("Private key is not encrypted.");
+      }
+    }
+
+    /// <summary>
+    /// Encrypt the private key with a passphrase.
+    /// </summary>
+    /// <param name="passphrase">Passphrase for encryption.</param>
+    public void EncryptPrivateKey(string passphrase)
+    {
+      if (passphrase.IsNullOrEmpty())
+        throw new ArgumentException("Passphrase must not be null or empty.");
+
+      if (PrivateKeyStatus != PrivateKeyStatus.Unencrypted)
+        throw new InvalidOperationException("Already encrypted.");
+
+      var rsaProvider = GetRsaProvider(true);
+      EncryptPrivateKey(passphrase, rsaProvider);
+    }
+
+    /// <summary>
+    /// Changes the passphrase.
+    /// </summary>
+    /// <param name="oldPassphrase">Passphrase currently protecting the private key.</param>
+    /// <param name="newPassphrase">New passphrase to be set.</param>
+    public void ChangePassphrase(string oldPassphrase, string newPassphrase)
+    {
+      if (oldPassphrase.IsNullOrEmpty())
+        throw new ArgumentException("Passphrase must not be null or empty.");
+
+      if (PrivateKeyStatus == PrivateKeyStatus.Decrypted)
+      {
+        Lock();
+      }
+
+      if (PrivateKeyStatus == PrivateKeyStatus.Encrypted)
+      {
+        Rfc2898DeriveBytes oldDerive = new Rfc2898DeriveBytes(oldPassphrase, this.passphraseSalt, 1024);
+        byte[] oldKey = oldDerive.GetBytes(32);
+
+        try
+        {
+          byte[] data = Aes.Decrypt(this.privateKeyData, oldKey, this.privateKeySalt);
+          SHA256Managed sha256 = new SHA256Managed();
+          int hashLength = sha256.HashSize / 8;
+
+          if (data.Length > hashLength &&
+            sha256.ComputeHash(data.Part(0, data.Length - hashLength)).Equal(data.Part(data.Length - hashLength, hashLength)))
+          {
+            this.privateKeyDecrypted = data.Part(0, data.Length - hashLength);
+            PrivateKeyStatus = PrivateKeyStatus.Decrypted;
+
+            RandomNumberGenerator rng = RandomNumberGenerator.Create();
+            this.passphraseSalt = new byte[32];
+            rng.GetBytes(this.passphraseSalt);
+
+            Rfc2898DeriveBytes newDerive = new Rfc2898DeriveBytes(newPassphrase, this.passphraseSalt, 1024);
+            byte[] newKey = newDerive.GetBytes(32);
+
+            this.privateKeySalt = new byte[16];
+            rng.GetBytes(this.privateKeySalt);
+
+            this.privateKeyData = Aes.Encrypt(data, newKey, this.privateKeySalt);
+            PrivateKeyStatus = PrivateKeyStatus.Encrypted;
+          }
+          else
+          {
+            throw new CryptographicException("Passphrase wrong.");
+          }
+        }
+        catch (CryptographicException)
+        {
+          throw new CryptographicException("Passphrase wrong.");
+        }
       }
       else
       {

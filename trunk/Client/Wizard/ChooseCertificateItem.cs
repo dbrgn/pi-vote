@@ -7,11 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
-using System.Windows.Forms;
 using System.Threading;
+using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Serialization;
@@ -285,6 +285,37 @@ namespace Pirate.PiVote.Client
     {
       this.saveMenu.Enabled = this.certificateList.SelectedItems.Count > 0;
       this.deleteMenu.Enabled = this.certificateList.SelectedItems.Count > 0;
+
+      if (this.certificateList.SelectedItems.Count > 0)
+      {
+        ListViewItem item = this.certificateList.SelectedItems[0];
+
+        if (item.Tag != null)
+        {
+          KeyValuePair<string, Certificate> value = (KeyValuePair<string, Certificate>)item.Tag;
+
+          if (value.Value.PrivateKeyStatus == PrivateKeyStatus.Unencrypted)
+          {
+            this.encryptMenu.Enabled = true;
+            this.changePassphraseMenu.Enabled = false;
+          }
+          else
+          {
+            this.encryptMenu.Enabled = false;
+            this.changePassphraseMenu.Enabled = true;
+          }
+        }
+        else
+        {
+          this.encryptMenu.Enabled = false;
+          this.changePassphraseMenu.Enabled = false;
+        }
+      }
+      else
+      {
+        this.encryptMenu.Enabled = false;
+        this.changePassphraseMenu.Enabled = false;
+      }
     }
 
     private void Backup()
@@ -375,6 +406,82 @@ namespace Pirate.PiVote.Client
     private void deleteMenu_Click(object sender, EventArgs e)
     {
       DeleteCertificate();
+    }
+
+    private void encryptMenu_Click(object sender, EventArgs e)
+    {
+      if (this.certificateList.SelectedItems.Count > 0)
+      {
+        ListViewItem item = this.certificateList.SelectedItems[0];
+
+        if (item.Tag != null)
+        {
+          KeyValuePair<string, Certificate> value = (KeyValuePair<string, Certificate>)item.Tag;
+
+          if (value.Value.PrivateKeyStatus == PrivateKeyStatus.Unencrypted)
+          {
+            var result = EncryptPrivateKeyDialog.ShowSetPassphrase();
+
+            if (result.First == DialogResult.OK &&
+                !result.Second.IsNullOrEmpty())
+            {
+              value.Value.EncryptPrivateKey(result.Second);
+              value.Value.Save(value.Key);
+            }
+          }
+        }
+      }
+    }
+
+    private void changePassphraseMenu_Click(object sender, EventArgs e)
+    {
+      if (this.certificateList.SelectedItems.Count > 0)
+      {
+        ListViewItem item = this.certificateList.SelectedItems[0];
+
+        if (item.Tag != null)
+        {
+          KeyValuePair<string, Certificate> value = (KeyValuePair<string, Certificate>)item.Tag;
+
+          if (value.Value.PrivateKeyStatus == PrivateKeyStatus.Encrypted || 
+              value.Value.PrivateKeyStatus == PrivateKeyStatus.Decrypted)
+          {
+            bool done = false;
+            string message = null;
+
+            while (!done)
+            {
+              var result = ChangePassphraseDialog.ShowChangePassphrase(message);
+
+              if (result.First == DialogResult.OK)
+              {
+                try
+                {
+                  if (result.Third.IsNullOrEmpty())
+                  {
+                    value.Value.DecryptPrivateKey(result.Second);
+                  }
+                  else
+                  {
+                    value.Value.ChangePassphrase(result.Second, result.Third);
+                  }
+
+                  value.Value.Save(value.Key);
+                  done = true;
+                }
+                catch
+                {
+                  message = Resources.ChangePassphraseMessageWrong;
+                }
+              }
+              else
+              {
+                done = true;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

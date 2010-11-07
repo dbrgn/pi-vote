@@ -93,7 +93,7 @@ namespace Pirate.PiVote.Client
       if (original != null)
       {
         dialog.textTextBox.Text = original.Text;
-        dialog.descriptionTextBox.Text = original.Text;
+        dialog.descriptionTextBox.Text = original.Description;
         dialog.optionNumberUpDown.Value = original.MaxVota;
 
         dialog.optionListView.Items.Clear();

@@ -510,6 +510,42 @@ namespace Pirate.PiVote.Client {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Enter old and now passphrase to change it..
+        /// </summary>
+        internal static string ChangePassphraseMessageChange {
+            get {
+                return ResourceManager.GetString("ChangePassphraseMessageChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Old passphrase is wrong..
+        /// </summary>
+        internal static string ChangePassphraseMessageWrong {
+            get {
+                return ResourceManager.GetString("ChangePassphraseMessageWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Passphrase:.
+        /// </summary>
+        internal static string ChangePassphraseNewPassphrase {
+            get {
+                return ResourceManager.GetString("ChangePassphraseNewPassphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Old Passphrase:.
+        /// </summary>
+        internal static string ChangePassphraseOldPassphrase {
+            get {
+                return ResourceManager.GetString("ChangePassphraseOldPassphrase", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap CheckCertificateItem {
             get {
                 object obj = ResourceManager.GetObject("CheckCertificateItem", resourceCulture);
@@ -1297,6 +1333,15 @@ namespace Pirate.PiVote.Client {
         internal static string EncryptPrivateKeyUnlockAction {
             get {
                 return ResourceManager.GetString("EncryptPrivateKeyUnlockAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Passphrase is wrong..
+        /// </summary>
+        internal static string EncryptPrivateKeyWrongPassphrase {
+            get {
+                return ResourceManager.GetString("EncryptPrivateKeyWrongPassphrase", resourceCulture);
             }
         }
         

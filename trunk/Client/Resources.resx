@@ -845,4 +845,19 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="ChooseCertificateGroupNameUnknown" xml:space="preserve">
     <value>Unknown</value>
   </data>
+  <data name="ChangePassphraseMessageChange" xml:space="preserve">
+    <value>Enter old and now passphrase to change it.</value>
+  </data>
+  <data name="ChangePassphraseMessageWrong" xml:space="preserve">
+    <value>Old passphrase is wrong.</value>
+  </data>
+  <data name="ChangePassphraseNewPassphrase" xml:space="preserve">
+    <value>New Passphrase:</value>
+  </data>
+  <data name="ChangePassphraseOldPassphrase" xml:space="preserve">
+    <value>Old Passphrase:</value>
+  </data>
+  <data name="EncryptPrivateKeyWrongPassphrase" xml:space="preserve">
+    <value>Passphrase is wrong.</value>
+  </data>
 </root>

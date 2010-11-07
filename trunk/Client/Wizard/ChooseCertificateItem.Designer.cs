@@ -56,6 +56,8 @@ namespace Pirate.PiVote.Client
       this.deleteMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.loadMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.createMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.encryptMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.changePassphraseMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.loadButton = new System.Windows.Forms.Button();
       this.backupButton = new System.Windows.Forms.Button();
       this.restoreButton = new System.Windows.Forms.Button();
@@ -145,38 +147,54 @@ namespace Pirate.PiVote.Client
             this.saveMenu,
             this.deleteMenu,
             this.loadMenu,
-            this.createMenu});
+            this.createMenu,
+            this.encryptMenu,
+            this.changePassphraseMenu});
       this.certificateListMenu.Name = "certificateListMenu";
-      this.certificateListMenu.Size = new System.Drawing.Size(120, 92);
+      this.certificateListMenu.Size = new System.Drawing.Size(182, 158);
       this.certificateListMenu.Opening += new System.ComponentModel.CancelEventHandler(this.certificateListMenu_Opening);
       // 
       // saveMenu
       // 
       this.saveMenu.Name = "saveMenu";
-      this.saveMenu.Size = new System.Drawing.Size(119, 22);
+      this.saveMenu.Size = new System.Drawing.Size(181, 22);
       this.saveMenu.Text = "&Save...";
       this.saveMenu.Click += new System.EventHandler(this.saveMenu_Click);
       // 
       // deleteMenu
       // 
       this.deleteMenu.Name = "deleteMenu";
-      this.deleteMenu.Size = new System.Drawing.Size(119, 22);
+      this.deleteMenu.Size = new System.Drawing.Size(181, 22);
       this.deleteMenu.Text = "&Delete";
       this.deleteMenu.Click += new System.EventHandler(this.deleteMenu_Click);
       // 
       // loadMenu
       // 
       this.loadMenu.Name = "loadMenu";
-      this.loadMenu.Size = new System.Drawing.Size(119, 22);
+      this.loadMenu.Size = new System.Drawing.Size(181, 22);
       this.loadMenu.Text = "&Load...";
       this.loadMenu.Click += new System.EventHandler(this.loadMenu_Click);
       // 
       // createMenu
       // 
       this.createMenu.Name = "createMenu";
-      this.createMenu.Size = new System.Drawing.Size(119, 22);
+      this.createMenu.Size = new System.Drawing.Size(181, 22);
       this.createMenu.Text = "&Create...";
       this.createMenu.Click += new System.EventHandler(this.createMenu_Click);
+      // 
+      // encryptMenu
+      // 
+      this.encryptMenu.Name = "encryptMenu";
+      this.encryptMenu.Size = new System.Drawing.Size(181, 22);
+      this.encryptMenu.Text = "&Encrypt...";
+      this.encryptMenu.Click += new System.EventHandler(this.encryptMenu_Click);
+      // 
+      // changePassphraseMenu
+      // 
+      this.changePassphraseMenu.Name = "changePassphraseMenu";
+      this.changePassphraseMenu.Size = new System.Drawing.Size(181, 22);
+      this.changePassphraseMenu.Text = "Change &Passphrase...";
+      this.changePassphraseMenu.Click += new System.EventHandler(this.changePassphraseMenu_Click);
       // 
       // loadButton
       // 
@@ -251,5 +269,7 @@ namespace Pirate.PiVote.Client
     private Button backupButton;
     private Button restoreButton;
     private ToolStripMenuItem deleteMenu;
+    private ToolStripMenuItem encryptMenu;
+    private ToolStripMenuItem changePassphraseMenu;
   }
 }

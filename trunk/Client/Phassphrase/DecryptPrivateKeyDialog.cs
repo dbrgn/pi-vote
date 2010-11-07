@@ -22,7 +22,6 @@ namespace Pirate.PiVote.Client
       CenterToScreen();
 
       Text = Resources.EncryptPrivateKeyTitle;
-      this.infoLabel.Text = Resources.EncryptPrivateKeyEncrypted;
       this.certificateIdLabel.Text = Resources.EncryptPrivateKeyCertificateId;
       this.certificateTypeLabel.Text = Resources.EncryptPrivateKeyCertificateType;
       this.actionLabel.Text = Resources.EncryptPrivateKeyUnlockAction;
@@ -84,12 +83,22 @@ namespace Pirate.PiVote.Client
       }
     }
 
-    public static string ShowSetPassphrase(string certificateId, string certificateType, string actionName)
+    public static string ShowSetPassphrase(string certificateId, string certificateType, string actionName, string message)
     {
       DecryptPrivateKeyDialog dialog = new DecryptPrivateKeyDialog();
       dialog.certificateIdTextBox.Text = certificateId;
       dialog.certificateTypeTextBox.Text = certificateType;
       dialog.actionTextBox.Text = actionName;
+
+      if (message == null)
+      {
+        dialog.infoLabel.Text = Resources.EncryptPrivateKeyEncrypted;
+      }
+      else
+      {
+        dialog.infoLabel.BackColor = Color.Red;
+        dialog.infoLabel.Text = message;
+      }
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -106,10 +115,11 @@ namespace Pirate.PiVote.Client
       if (certificate.PrivateKeyStatus == PrivateKeyStatus.Encrypted)
       {
         bool unlocked = false;
+        string message = null;
 
         while (!unlocked)
         {
-          string passphrase = ShowSetPassphrase(certificate.Id.ToString(), certificate.TypeText, actionName);
+          string passphrase = ShowSetPassphrase(certificate.Id.ToString(), certificate.TypeText, actionName, message);
 
           if (passphrase.IsNullOrEmpty())
             break;
@@ -119,7 +129,10 @@ namespace Pirate.PiVote.Client
             certificate.Unlock(passphrase);
             unlocked = true;
           }
-          catch { }
+          catch
+          {
+            message = Resources.EncryptPrivateKeyWrongPassphrase;
+          }
         }
 
         return unlocked;

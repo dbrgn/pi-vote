@@ -112,7 +112,14 @@ namespace Pirate.PiVote
       {
         foreach (KeyValuePair<Language, TextBox> item in this.textBoxes)
         {
-          item.Value.Text = value.Get(item.Key);
+          string stringValue = value.Get(item.Key);
+
+          if (!stringValue.IsNullOrEmpty())
+          {
+            item.Value.Text = stringValue;
+            item.Value.ForeColor = Color.Black;
+            this.langaugeDisplay[item.Value] = false;
+          }
         }
       }
     }
