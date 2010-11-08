@@ -439,5 +439,18 @@ namespace Pirate.PiVote.Rpc
         this.operations.Enqueue(new SetCertificateStorageOperation(certificateStorage, callBack));
       }
     }
+
+    /// <summary>
+    /// Set a certificate storage on the server.
+    /// </summary>
+    /// <param name="comand">Command to delete a voting.</param>
+    /// <param name="callBack">Callback upon completion</param>
+    public void DeleteVoting(Signed<DeleteVotingRequest.Command> comand, DeleteVotingCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new DeleteVotingOperation(comand, callBack));
+      }
+    }
   }
 }

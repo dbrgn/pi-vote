@@ -291,6 +291,40 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Deletes the voting.
+    /// </summary>
+    public void Delete()
+    {
+      MySqlTransaction transaction = DbConnection.BeginTransaction();
+
+      MySqlCommand deleteDecipherCommand = new MySqlCommand("DELETE FROM deciphers WHERE VotingId = @VotingId", DbConnection, transaction);
+      deleteDecipherCommand.Parameters.Add(new MySqlParameter("@VotingId", Id.ToByteArray()));
+      deleteDecipherCommand.ExecuteNonQuery();
+
+      MySqlCommand deleteEnvelopeCommand = new MySqlCommand("DELETE FROM envelope WHERE VotingId = @VotingId", DbConnection, transaction);
+      deleteEnvelopeCommand.Parameters.Add(new MySqlParameter("@VotingId", Id.ToByteArray()));
+      deleteEnvelopeCommand.ExecuteNonQuery();
+
+      MySqlCommand deleteShareResponseCommand = new MySqlCommand("DELETE FROM shareresponse WHERE VotingId = @VotingId", DbConnection, transaction);
+      deleteShareResponseCommand.Parameters.Add(new MySqlParameter("@VotingId", Id.ToByteArray()));
+      deleteShareResponseCommand.ExecuteNonQuery();
+
+      MySqlCommand deleteSharePartCommand = new MySqlCommand("DELETE FROM sharepart WHERE VotingId = @VotingId", DbConnection, transaction);
+      deleteSharePartCommand.Parameters.Add(new MySqlParameter("@VotingId", Id.ToByteArray()));
+      deleteSharePartCommand.ExecuteNonQuery();
+
+      MySqlCommand deleteAuthorityCommand = new MySqlCommand("DELETE FROM authority WHERE VotingId = @VotingId", DbConnection, transaction);
+      deleteAuthorityCommand.Parameters.Add(new MySqlParameter("@VotingId", Id.ToByteArray()));
+      deleteAuthorityCommand.ExecuteNonQuery();
+
+      MySqlCommand deleteVotingCommand = new MySqlCommand("DELETE FROM voting WHERE Id = @Id", DbConnection, transaction);
+      deleteVotingCommand.Parameters.Add(new MySqlParameter("@Id", Id.ToByteArray()));
+      deleteVotingCommand.ExecuteNonQuery();
+
+      transaction.Commit();
+    }
+
+    /// <summary>
     /// Add an authority.
     /// </summary>
     /// <param name="certificate">Authority to be added.</param>

@@ -97,11 +97,20 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create a voting procedure.
+        ///   Looks up a localized string similar to &amp;Create voting procedure.
         /// </summary>
         internal static string AdminChooseCreateVoting {
             get {
                 return ResourceManager.GetString("AdminChooseCreateVoting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Delete voting procedure.
+        /// </summary>
+        internal static string AdminChooseDeleteVoting {
+            get {
+                return ResourceManager.GetString("AdminChooseDeleteVoting", resourceCulture);
             }
         }
         
@@ -129,6 +138,33 @@ namespace Pirate.PiVote.Client {
         internal static string AdminChooseUploadSignatureRessponse {
             get {
                 return ResourceManager.GetString("AdminChooseUploadSignatureRessponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign command to delete voting..
+        /// </summary>
+        internal static string AdminDeleteVotingAction {
+            get {
+                return ResourceManager.GetString("AdminDeleteVotingAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voting deleted from server..
+        /// </summary>
+        internal static string AdminDeleteVotingDone {
+            get {
+                return ResourceManager.GetString("AdminDeleteVotingDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete voting id {0} title {1} ?.
+        /// </summary>
+        internal static string AdminDeleteVotingWarning {
+            get {
+                return ResourceManager.GetString("AdminDeleteVotingWarning", resourceCulture);
             }
         }
         

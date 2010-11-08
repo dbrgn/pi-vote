@@ -582,4 +582,13 @@
   <data name="ExceptionInvalidEnvelopeBadVoterId" xml:space="preserve">
     <value>Ungültiger Abstimmungsumschlag. Die Id des Abstimmenden stimmt nicht mit dem Zertifikat überein.</value>
   </data>
+  <data name="ClientDeleteVoting" xml:space="preserve">
+    <value>Lösche Abstimmungsprozedur.</value>
+  </data>
+  <data name="CommandNotAllowedInStatus" xml:space="preserve">
+    <value>Dieses Kommando ist im aktuellen Status nicht erlaubt.</value>
+  </data>
+  <data name="CommandNotFromAdmin" xml:space="preserve">
+    <value>Das Kommando ist von keinem Admin signiert.</value>
+  </data>
 </root>

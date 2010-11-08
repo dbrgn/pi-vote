@@ -77,6 +77,9 @@ namespace Pirate.PiVote
     ShareResponseWrongAuthority       = 9000002,
     ShareResponseNotAccepted          = 9000003,
     ShareResponseParametersDontMatch  = 9000004,
+
+    CommandNotFromAdmin               = 19000001,
+    CommandNotAllowedInStatus         = 19000002,
   }
 
   public static class ExceptionCodeExtension
@@ -183,6 +186,10 @@ namespace Pirate.PiVote
           return LibraryResources.ExceptionInvalidEnvelopeBadVoteCount;
         case ExceptionCode.InvalidEnvelopeBadVoterId:
           return LibraryResources.ExceptionInvalidEnvelopeBadVoterId;
+        case ExceptionCode.CommandNotFromAdmin:
+          return LibraryResources.CommandNotFromAdmin;
+        case ExceptionCode.CommandNotAllowedInStatus:
+          return LibraryResources.CommandNotAllowedInStatus;
         default:
           return LibraryResources.ExceptionUnknown;
       }

@@ -556,6 +556,15 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deleting voting procedure..
+        /// </summary>
+        public static string ClientDeleteVoting {
+            get {
+                return ResourceManager.GetString("ClientDeleteVoting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fetching envelopes {0} / {1}.
         /// </summary>
         public static string ClientDownloadVotingFetchEnvelopesOf {
@@ -804,6 +813,24 @@ namespace Pirate.PiVote {
         public static string ClientVotePushVote {
             get {
                 return ResourceManager.GetString("ClientVotePushVote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This command is not allowed in current state..
+        /// </summary>
+        public static string CommandNotAllowedInStatus {
+            get {
+                return ResourceManager.GetString("CommandNotAllowedInStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The command is not signed by an admin..
+        /// </summary>
+        public static string CommandNotFromAdmin {
+            get {
+                return ResourceManager.GetString("CommandNotFromAdmin", resourceCulture);
             }
         }
         

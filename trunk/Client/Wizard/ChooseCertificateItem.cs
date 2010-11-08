@@ -451,7 +451,7 @@ namespace Pirate.PiVote.Client
 
             while (!done)
             {
-              var result = ChangePassphraseDialog.ShowChangePassphrase(message);
+              var result = ChangePassphraseDialog.ShowChangePassphrase(value.Value, message);
 
               if (result.First == DialogResult.OK)
               {

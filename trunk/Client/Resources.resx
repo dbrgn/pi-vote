@@ -133,7 +133,7 @@
     <value>Add Vote Option</value>
   </data>
   <data name="AdminChooseCreateVoting" xml:space="preserve">
-    <value>Create a voting procedure</value>
+    <value>&amp;Create voting procedure</value>
   </data>
   <data name="AdminChooseDownloadSignatureRequests" xml:space="preserve">
     <value>Download signature requests from server...</value>
@@ -859,5 +859,17 @@ Finally you need to upload your request for certificate signing to the server to
   </data>
   <data name="EncryptPrivateKeyWrongPassphrase" xml:space="preserve">
     <value>Passphrase is wrong.</value>
+  </data>
+  <data name="AdminChooseDeleteVoting" xml:space="preserve">
+    <value>&amp;Delete voting procedure</value>
+  </data>
+  <data name="AdminDeleteVotingAction" xml:space="preserve">
+    <value>Sign command to delete voting.</value>
+  </data>
+  <data name="AdminDeleteVotingDone" xml:space="preserve">
+    <value>Voting deleted from server.</value>
+  </data>
+  <data name="AdminDeleteVotingWarning" xml:space="preserve">
+    <value>Do you really want to delete voting id {0} title {1} ?</value>
   </data>
 </root>

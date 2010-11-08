@@ -579,4 +579,13 @@
   <data name="ExceptionInvalidEnvelopeBadVoterId" xml:space="preserve">
     <value>Invalid envelope. Voter id does not match certificate.</value>
   </data>
+  <data name="ClientDeleteVoting" xml:space="preserve">
+    <value>Deleting voting procedure.</value>
+  </data>
+  <data name="CommandNotAllowedInStatus" xml:space="preserve">
+    <value>This command is not allowed in current state.</value>
+  </data>
+  <data name="CommandNotFromAdmin" xml:space="preserve">
+    <value>The command is not signed by an admin.</value>
+  </data>
 </root>

@@ -133,7 +133,7 @@
     <value>Abstimmungsoption hinzufügen</value>
   </data>
   <data name="AdminChooseCreateVoting" xml:space="preserve">
-    <value>Abstimmungsprozedur erstellen</value>
+    <value>Abstimmungsprozedur &amp;erstellen</value>
   </data>
   <data name="AdminChooseDownloadSignatureRequests" xml:space="preserve">
     <value>Zertifizierungsanfragen vom Server herunterladen</value>
@@ -843,5 +843,17 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="EncryptPrivateKeyWrongPassphrase" xml:space="preserve">
     <value>Passphrase falsch.</value>
+  </data>
+  <data name="AdminChooseDeleteVoting" xml:space="preserve">
+    <value>Abstimmungsprozedur &amp;löschen</value>
+  </data>
+  <data name="AdminDeleteVotingAction" xml:space="preserve">
+    <value>Signieren des Kommandos zum Löschen einer Abstimmung.</value>
+  </data>
+  <data name="AdminDeleteVotingDone" xml:space="preserve">
+    <value>Abstimmung vom Server gelöscht.</value>
+  </data>
+  <data name="AdminDeleteVotingWarning" xml:space="preserve">
+    <value>Willst du wirklich die Abstimmung Id {0} Titel {1} löschen?</value>
   </data>
 </root>

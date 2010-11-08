@@ -42,77 +42,177 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
-      this.downloadSignatureRequestsButton = new System.Windows.Forms.Button();
-      this.uploadSignatureResponsesButton = new System.Windows.Forms.Button();
-      this.createVotingButton = new System.Windows.Forms.Button();
-      this.uploadCertificateStorageButton = new System.Windows.Forms.Button();
+      this.components = new System.ComponentModel.Container();
+      this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.createVotingMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.deleteMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+      this.downloadSignatureRequestsMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.uploadSignatureResponsesMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+      this.uploadCertificateStorageMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.titleColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.groupColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.statusColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.voteFromColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.voteUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.authorityColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.envelopesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.votingList = new System.Windows.Forms.ListView();
+      this.contextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
-      // downloadSignatureRequestsButton
+      // contextMenu
       // 
-      this.downloadSignatureRequestsButton.Location = new System.Drawing.Point(2, 2);
-      this.downloadSignatureRequestsButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-      this.downloadSignatureRequestsButton.Name = "downloadSignatureRequestsButton";
-      this.downloadSignatureRequestsButton.Size = new System.Drawing.Size(411, 25);
-      this.downloadSignatureRequestsButton.TabIndex = 5;
-      this.downloadSignatureRequestsButton.Text = "Download signature requests from server...";
-      this.downloadSignatureRequestsButton.UseVisualStyleBackColor = true;
-      this.downloadSignatureRequestsButton.Click += new System.EventHandler(this.saveToButton_Click);
+      this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createVotingMenu,
+            this.deleteMenu,
+            this.toolStripMenuItem1,
+            this.downloadSignatureRequestsMenu,
+            this.uploadSignatureResponsesMenu,
+            this.toolStripMenuItem2,
+            this.uploadCertificateStorageMenu});
+      this.contextMenu.Name = "contextMenu";
+      this.contextMenu.Size = new System.Drawing.Size(219, 148);
+      this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
       // 
-      // uploadSignatureResponsesButton
+      // createVotingMenu
       // 
-      this.uploadSignatureResponsesButton.Location = new System.Drawing.Point(2, 31);
-      this.uploadSignatureResponsesButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-      this.uploadSignatureResponsesButton.Name = "uploadSignatureResponsesButton";
-      this.uploadSignatureResponsesButton.Size = new System.Drawing.Size(411, 25);
-      this.uploadSignatureResponsesButton.TabIndex = 6;
-      this.uploadSignatureResponsesButton.Text = "Upload signature responses to server...";
-      this.uploadSignatureResponsesButton.UseVisualStyleBackColor = true;
-      this.uploadSignatureResponsesButton.Click += new System.EventHandler(this.openButton_Click);
+      this.createVotingMenu.Name = "createVotingMenu";
+      this.createVotingMenu.Size = new System.Drawing.Size(218, 22);
+      this.createVotingMenu.Text = "&Create";
+      this.createVotingMenu.Click += new System.EventHandler(this.createVotingMenu_Click);
       // 
-      // createVotingButton
+      // deleteMenu
       // 
-      this.createVotingButton.Location = new System.Drawing.Point(2, 89);
-      this.createVotingButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-      this.createVotingButton.Name = "createVotingButton";
-      this.createVotingButton.Size = new System.Drawing.Size(411, 25);
-      this.createVotingButton.TabIndex = 7;
-      this.createVotingButton.Text = "Create a voting procedure";
-      this.createVotingButton.UseVisualStyleBackColor = true;
-      this.createVotingButton.Click += new System.EventHandler(this.createVotingButton_Click);
+      this.deleteMenu.Name = "deleteMenu";
+      this.deleteMenu.Size = new System.Drawing.Size(218, 22);
+      this.deleteMenu.Text = "&Delete";
+      this.deleteMenu.Click += new System.EventHandler(this.deleteMenu_Click);
       // 
-      // uploadCertificateStorageButton
+      // toolStripMenuItem1
       // 
-      this.uploadCertificateStorageButton.Location = new System.Drawing.Point(2, 60);
-      this.uploadCertificateStorageButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-      this.uploadCertificateStorageButton.Name = "uploadCertificateStorageButton";
-      this.uploadCertificateStorageButton.Size = new System.Drawing.Size(411, 25);
-      this.uploadCertificateStorageButton.TabIndex = 8;
-      this.uploadCertificateStorageButton.Text = "Upload certificate storage to server...";
-      this.uploadCertificateStorageButton.UseVisualStyleBackColor = true;
-      this.uploadCertificateStorageButton.Click += new System.EventHandler(this.uploadCertificateStorageButton_Click);
+      this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+      this.toolStripMenuItem1.Size = new System.Drawing.Size(215, 6);
+      // 
+      // downloadSignatureRequestsMenu
+      // 
+      this.downloadSignatureRequestsMenu.Name = "downloadSignatureRequestsMenu";
+      this.downloadSignatureRequestsMenu.Size = new System.Drawing.Size(218, 22);
+      this.downloadSignatureRequestsMenu.Text = "&Download Signature Requests";
+      this.downloadSignatureRequestsMenu.Click += new System.EventHandler(this.downloadSignatureRequestsMenu_Click);
+      // 
+      // uploadSignatureResponsesMenu
+      // 
+      this.uploadSignatureResponsesMenu.Name = "uploadSignatureResponsesMenu";
+      this.uploadSignatureResponsesMenu.Size = new System.Drawing.Size(218, 22);
+      this.uploadSignatureResponsesMenu.Text = "&Upload Signature Responses";
+      this.uploadSignatureResponsesMenu.Click += new System.EventHandler(this.uploadSignatureResponsesMenu_Click);
+      // 
+      // toolStripMenuItem2
+      // 
+      this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+      this.toolStripMenuItem2.Size = new System.Drawing.Size(215, 6);
+      // 
+      // uploadCertificateStorageMenu
+      // 
+      this.uploadCertificateStorageMenu.Name = "uploadCertificateStorageMenu";
+      this.uploadCertificateStorageMenu.Size = new System.Drawing.Size(218, 22);
+      this.uploadCertificateStorageMenu.Text = "Upload Certificate &Storage";
+      this.uploadCertificateStorageMenu.Click += new System.EventHandler(this.uploadCertificateStorageToolStripMenuItem_Click);
+      // 
+      // titleColumnHeader
+      // 
+      this.titleColumnHeader.Text = "Title";
+      this.titleColumnHeader.Width = 300;
+      // 
+      // groupColumnHeader
+      // 
+      this.groupColumnHeader.Text = "Group";
+      this.groupColumnHeader.Width = 120;
+      // 
+      // statusColumnHeader
+      // 
+      this.statusColumnHeader.Text = "Status";
+      this.statusColumnHeader.Width = 100;
+      // 
+      // voteFromColumnHeader
+      // 
+      this.voteFromColumnHeader.Text = "From";
+      this.voteFromColumnHeader.Width = 70;
+      // 
+      // voteUntilColumnHeader
+      // 
+      this.voteUntilColumnHeader.Text = "Until";
+      this.voteUntilColumnHeader.Width = 70;
+      // 
+      // authorityColumnHeader
+      // 
+      this.authorityColumnHeader.Text = "Authorities";
+      this.authorityColumnHeader.Width = 70;
+      // 
+      // envelopesColumnHeader
+      // 
+      this.envelopesColumnHeader.Text = "Votes";
+      this.envelopesColumnHeader.Width = 70;
+      // 
+      // votingList
+      // 
+      this.votingList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.votingList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.titleColumnHeader,
+            this.groupColumnHeader,
+            this.statusColumnHeader,
+            this.voteFromColumnHeader,
+            this.voteUntilColumnHeader,
+            this.authorityColumnHeader,
+            this.envelopesColumnHeader});
+      this.votingList.ContextMenuStrip = this.contextMenu;
+      this.votingList.Enabled = false;
+      this.votingList.FullRowSelect = true;
+      this.votingList.HideSelection = false;
+      this.votingList.Location = new System.Drawing.Point(2, 2);
+      this.votingList.Margin = new System.Windows.Forms.Padding(2);
+      this.votingList.MultiSelect = false;
+      this.votingList.Name = "votingList";
+      this.votingList.Size = new System.Drawing.Size(756, 358);
+      this.votingList.TabIndex = 9;
+      this.votingList.UseCompatibleStateImageBehavior = false;
+      this.votingList.View = System.Windows.Forms.View.Details;
       // 
       // AdminChooseItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.Controls.Add(this.uploadCertificateStorageButton);
-      this.Controls.Add(this.createVotingButton);
-      this.Controls.Add(this.uploadSignatureResponsesButton);
-      this.Controls.Add(this.downloadSignatureRequestsButton);
-      this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+      this.Controls.Add(this.votingList);
+      this.Margin = new System.Windows.Forms.Padding(1);
       this.Name = "AdminChooseItem";
-      this.Size = new System.Drawing.Size(467, 359);
+      this.Size = new System.Drawing.Size(760, 362);
+      this.contextMenu.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
 
     #endregion
 
-    private Button downloadSignatureRequestsButton;
-    private Button uploadSignatureResponsesButton;
-    private Button createVotingButton;
-    private Button uploadCertificateStorageButton;
+    private ContextMenuStrip contextMenu;
+    private ToolStripMenuItem deleteMenu;
+    private ColumnHeader titleColumnHeader;
+    private ColumnHeader groupColumnHeader;
+    private ColumnHeader statusColumnHeader;
+    private ColumnHeader voteFromColumnHeader;
+    private ColumnHeader voteUntilColumnHeader;
+    private ColumnHeader authorityColumnHeader;
+    private ColumnHeader envelopesColumnHeader;
+    private ListView votingList;
+    private ToolStripMenuItem createVotingMenu;
+    private ToolStripSeparator toolStripMenuItem1;
+    private ToolStripMenuItem downloadSignatureRequestsMenu;
+    private ToolStripMenuItem uploadSignatureResponsesMenu;
+    private ToolStripSeparator toolStripMenuItem2;
+    private ToolStripMenuItem uploadCertificateStorageMenu;
 
 
 

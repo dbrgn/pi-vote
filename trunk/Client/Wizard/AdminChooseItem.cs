@@ -22,8 +22,9 @@ namespace Pirate.PiVote.Client
 {
   public partial class AdminChooseItem : WizardItem
   {
-    private bool run = false;
+    private bool run;
     private Exception exception;
+    private IEnumerable<VotingDescriptor> votings;
 
     public AdminChooseItem()
     {
@@ -62,35 +63,107 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
+      this.run = true;
       OnUpdateWizard();
+
+      Status.VotingClient.GetVotingList(Status.CertificateStorage, Status.DataPath, GetVotingListCompleted);
+
+      while (this.run)
+      {
+        Status.UpdateProgress();
+        Thread.Sleep(10);
+      }
+
+      Status.UpdateProgress();
+
+      if (this.exception == null)
+      {
+        if (this.votings != null)
+        {
+          foreach (VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
+          {
+            ListViewItem item = new ListViewItem(voting.Title.Text);
+            item.SubItems.Add(Status.GetGroupName(voting.GroupId));
+            item.SubItems.Add(voting.Status.Text());
+            item.SubItems.Add(voting.VoteFrom.ToShortDateString());
+            item.SubItems.Add(voting.VoteUntil.ToShortDateString());
+
+            switch (voting.Status)
+            {
+              case VotingStatus.New:
+              case VotingStatus.Sharing:
+              case VotingStatus.Deciphering:
+                item.SubItems.Add(voting.AuthoritiesDone.Count().ToString() + " / " + voting.AuthorityCount.ToString());
+                break;
+              default:
+                item.SubItems.Add(string.Empty);
+                break;
+            }
+
+            switch (voting.Status)
+            {
+              case VotingStatus.Voting:
+              case VotingStatus.Deciphering:
+              case VotingStatus.Finished:
+              case VotingStatus.Offline:
+                item.SubItems.Add(voting.EnvelopeCount.ToString());
+                break;
+              default:
+                item.SubItems.Add(string.Empty);
+                break;
+            }
+
+            item.Tag = voting;
+            this.votingList.Items.Add(item);
+          }
+        }
+
+        Status.SetMessage(Resources.VotingListDownloaded, MessageType.Info);
+      }
+      else
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
+      }
+
+      OnUpdateWizard();
+      this.votingList.Enabled = true;
     }
 
-    private void getSignatureRequestsRadio_CheckedChanged(object sender, EventArgs e)
+    private void GetVotingListCompleted(IEnumerable<VotingDescriptor> votingList, Exception exception)
     {
-      OnUpdateWizard();
+      this.exception = exception;
+      this.votings = votingList;
+      this.run = false;
     }
 
-    private void setSignatureResponsesRadio_CheckedChanged(object sender, EventArgs e)
+    private void votingList_SelectedIndexChanged(object sender, EventArgs e)
     {
-      OnUpdateWizard();
-    }
-
-    private void createVotingRadio_CheckedChanged(object sender, EventArgs e)
-    {
-      OnUpdateWizard();
+      if (this.votingList.SelectedIndices.Count > 0)
+      {
+        ListViewItem item = this.votingList.SelectedItems[0];
+        VotingDescriptor voting = (VotingDescriptor)item.Tag;
+      }
     }
 
     public override void UpdateLanguage()
     {
       base.UpdateLanguage();
 
-      this.createVotingButton.Text = Resources.AdminChooseCreateVoting;
-      this.downloadSignatureRequestsButton.Text = Resources.AdminChooseDownloadSignatureRequests;
-      this.uploadSignatureResponsesButton.Text = Resources.AdminChooseUploadSignatureRessponse;
-      this.uploadCertificateStorageButton.Text = Resources.AdminChooseUploadCertificateStorage; 
+      this.createVotingMenu.Text = Resources.AdminChooseCreateVoting;
+      this.downloadSignatureRequestsMenu.Text = Resources.AdminChooseDownloadSignatureRequests;
+      this.uploadSignatureResponsesMenu.Text = Resources.AdminChooseUploadSignatureRessponse;
+      this.uploadCertificateStorageMenu.Text = Resources.AdminChooseUploadCertificateStorage;
+
+      this.titleColumnHeader.Text = Resources.AuthorityListTitle;
+      this.groupColumnHeader.Text = Resources.VotingGroup;
+      this.statusColumnHeader.Text = Resources.AuthorityListStatus;
+      this.voteFromColumnHeader.Text = Resources.VotingListVoteFrom;
+      this.voteUntilColumnHeader.Text = Resources.VotingListVoteUntil;
+      this.authorityColumnHeader.Text = Resources.VotingListAuthorities;
+      this.envelopesColumnHeader.Text = Resources.VotingListEnvelopes;
     }
 
-    private void saveToButton_Click(object sender, EventArgs e)
+    private void downloadSignatureRequestsMenu_Click(object sender, EventArgs e)
     {
       SaveFileDialog dialog = new SaveFileDialog();
       dialog.Title = Resources.SaveSignatureRequestDialog;
@@ -129,7 +202,7 @@ namespace Pirate.PiVote.Client
       this.run = false;
     }
 
-    private void openButton_Click(object sender, EventArgs e)
+    private void uploadSignatureResponsesMenu_Click(object sender, EventArgs e)
     {
       OpenFileDialog dialog = new OpenFileDialog();
       dialog.Title = Resources.OpenSignatureResponseDialog;
@@ -172,12 +245,12 @@ namespace Pirate.PiVote.Client
       this.run = false;
     }
 
-    private void createVotingButton_Click(object sender, EventArgs e)
+    private void createVotingMenu_Click(object sender, EventArgs e)
     {
       OnNextStep();
     }
 
-    private void uploadCertificateStorageButton_Click(object sender, EventArgs e)
+    private void uploadCertificateStorageToolStripMenuItem_Click(object sender, EventArgs e)
     {
       OpenFileDialog dialog = new OpenFileDialog();
       dialog.Title = Resources.OpenCertificateStorageDialog;
@@ -219,6 +292,83 @@ namespace Pirate.PiVote.Client
     {
       this.exception = exception;
       this.run = false;
+    }
+
+    private void deleteMenu_Click(object sender, EventArgs e)
+    {
+      if (this.votingList.SelectedIndices.Count > 0)
+      {
+        ListViewItem item = this.votingList.SelectedItems[0];
+        VotingDescriptor voting = (VotingDescriptor)item.Tag;
+
+        if (MessageBox.Show(
+          string.Format(Resources.AdminDeleteVotingWarning, voting.Id.ToString(), voting.Title.Text), 
+          Resources.MessageBoxTitle, 
+          MessageBoxButtons.YesNo, 
+          MessageBoxIcon.Question) 
+          == DialogResult.Yes)
+        {
+          if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.AdminDeleteVotingAction))
+          {
+            var command = new DeleteVotingRequest.Command(voting.Id);
+            var signedCommand = new Signed<DeleteVotingRequest.Command>(command, Status.Certificate);
+            this.run = true;
+
+            Status.VotingClient.DeleteVoting(signedCommand, DeleteVotingComplete);
+
+            while (this.run)
+            {
+              Status.UpdateProgress();
+              Thread.Sleep(10);
+            }
+
+            Status.UpdateProgress();
+
+            if (this.exception == null)
+            {
+              Status.SetMessage(Resources.AdminDeleteVotingDone, MessageType.Success);
+            }
+            else
+            {
+              Status.SetMessage(this.exception.Message, MessageType.Error);
+            }
+
+            item.Remove();
+
+            OnUpdateWizard();
+          }
+        }
+      }
+    }
+
+    private void DeleteVotingComplete(Exception exception)
+    {
+      this.exception = exception;
+      this.run = false;
+    }
+
+    private void contextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+      if (this.votingList.SelectedIndices.Count > 0)
+      {
+        ListViewItem item = this.votingList.SelectedItems[0];
+        VotingDescriptor voting = (VotingDescriptor)item.Tag;
+
+        switch (voting.Status)
+        {
+          case VotingStatus.New:
+          case VotingStatus.Sharing:
+            this.deleteMenu.Enabled = true;
+            break;
+          default:
+            this.deleteMenu.Enabled = false;
+            break;
+        }
+      }
+      else
+      {
+        this.deleteMenu.Enabled = false;
+      }
     }
   }
 }

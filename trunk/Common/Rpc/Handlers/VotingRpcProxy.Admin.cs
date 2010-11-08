@@ -21,6 +21,17 @@ namespace Pirate.PiVote.Rpc
   public partial class VotingRpcProxy
   {
     /// <summary>
+    /// Deletes a voting procedure.
+    /// </summary>
+    /// <param name="command">Command to delete the voting.</param>
+    /// <returns>Id of the voting procedure.</returns>
+    public void DeleteVoting(Signed<DeleteVotingRequest.Command> command)
+    {
+      var request = new DeleteVotingRequest(Guid.NewGuid(), command);
+      var response = Execute<DeleteVotingResponse>(request);
+    }
+
+    /// <summary>
     /// Creates a new voting procedure.
     /// </summary>
     /// <param name="votingParameters">Parameters for new voting procedure.</param>

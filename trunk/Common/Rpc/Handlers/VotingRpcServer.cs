@@ -183,6 +183,26 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Delete a voting.
+    /// </summary>
+    /// <param name="votingId">Id of voting to delete.</param>
+    public void DeleteVoting(Guid votingId)
+    {
+      VotingServerEntity voting = GetVoting(votingId);
+
+      switch (voting.Status)
+      {
+        case VotingStatus.New:
+        case VotingStatus.Sharing:
+          voting.Delete();
+          this.votings.Remove(votingId);
+          break;
+        default:
+          throw new PiException(ExceptionCode.CommandNotAllowedInStatus, "Deletion of voting is not allowed in current status.");
+      }
+    }
+
+    /// <summary>
     /// Creates a new voting.
     /// </summary>
     /// <param name="votingParameters">Parameters for the voting.</param>
