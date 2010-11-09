@@ -35,13 +35,12 @@
       // 
       // optionRadioButton
       // 
-      this.optionRadioButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                  | System.Windows.Forms.AnchorStyles.Left)));
-      this.optionRadioButton.AutoSize = true;
+      this.optionRadioButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.optionRadioButton.Font = new System.Drawing.Font("Arial", 8.25F);
       this.optionRadioButton.Location = new System.Drawing.Point(3, 4);
       this.optionRadioButton.Name = "optionRadioButton";
-      this.optionRadioButton.Size = new System.Drawing.Size(56, 18);
+      this.optionRadioButton.Size = new System.Drawing.Size(376, 18);
       this.optionRadioButton.TabIndex = 0;
       this.optionRadioButton.TabStop = true;
       this.optionRadioButton.Text = "Option";
@@ -62,11 +61,12 @@
       // 
       // optionCheckBox
       // 
-      this.optionCheckBox.AutoSize = true;
+      this.optionCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.optionCheckBox.Font = new System.Drawing.Font("Arial", 8.25F);
       this.optionCheckBox.Location = new System.Drawing.Point(3, 4);
       this.optionCheckBox.Name = "optionCheckBox";
-      this.optionCheckBox.Size = new System.Drawing.Size(57, 18);
+      this.optionCheckBox.Size = new System.Drawing.Size(377, 18);
       this.optionCheckBox.TabIndex = 2;
       this.optionCheckBox.Text = "Option";
       this.optionCheckBox.UseVisualStyleBackColor = true;
@@ -83,7 +83,6 @@
       this.Name = "VoteOptionControl";
       this.Size = new System.Drawing.Size(496, 26);
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 

@@ -59,11 +59,12 @@
       // 
       // titleLabel
       // 
-      this.titleLabel.AutoSize = true;
+      this.titleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.titleLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold);
       this.titleLabel.Location = new System.Drawing.Point(3, 4);
       this.titleLabel.Name = "titleLabel";
-      this.titleLabel.Size = new System.Drawing.Size(36, 16);
+      this.titleLabel.Size = new System.Drawing.Size(458, 16);
       this.titleLabel.TabIndex = 3;
       this.titleLabel.Text = "Title";
       // 
@@ -76,7 +77,6 @@
       this.Name = "VoteControl";
       this.Size = new System.Drawing.Size(597, 413);
       this.container.ResumeLayout(false);
-      this.container.PerformLayout();
       this.ResumeLayout(false);
 
     }

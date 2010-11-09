@@ -406,5 +406,15 @@ namespace Pirate.PiVote.Client
 
       return false;
     }
+
+    private void selectPanel_Resize(object sender, EventArgs e)
+    {
+      this.languagePanel.Top = this.selectPanel.Height / 2 - this.languagePanel.Height / 2;
+      this.optionPanel.Top = this.selectPanel.Height / 2 - this.optionPanel.Height / 2;
+
+      int border = 20;
+      this.languagePanel.Left = Math.Min(border, this.selectPanel.Width - -this.languagePanel.Width - this.optionPanel.Width - border);
+      this.optionPanel.Left = this.languagePanel.Left + this.languagePanel.Width;
+    }
   }
 }

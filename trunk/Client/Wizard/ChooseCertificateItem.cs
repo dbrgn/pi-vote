@@ -169,16 +169,18 @@ namespace Pirate.PiVote.Client
       this.certificateListLabel.Text = Resources.ChooseCertificateListHeader;
       this.infoLabel.Text = Resources.ChooseCertificateInfo;
 
-      this.loadButton.Text = Resources.ChooseCertificateLoadButton;
-      this.createButton.Text = Resources.ChooseCertificateCreateButton;
-      this.backupButton.Text = Resources.ChooseCertificateBackupButton;
-      this.restoreButton.Text = Resources.ChooseCertificateRestoreButton;
-      this.verifyShareProofButton.Text = Resources.ChooseCertificateVerifyBadShareProof;
-
+      this.createMenu.Text = Resources.ChooseCertificateCreateButton;
       this.saveMenu.Text = Resources.ChooseCertificateSaveButton;
       this.loadMenu.Text = Resources.ChooseCertificateLoadButton;
-      this.createMenu.Text = Resources.ChooseCertificateCreateButton;
       this.deleteMenu.Text = Resources.ChooseCertificateDeleteButton;
+
+      this.backupMenu.Text = Resources.ChooseCertificateBackupButton;
+      this.restoreMenu.Text = Resources.ChooseCertificateRestoreButton;
+
+      this.backupMenu.Text = Resources.ChooseCertificateBackupButton;
+      this.restoreMenu.Text = Resources.ChooseCertificateRestoreButton;
+
+      this.verifyShareproofMenu.Text = Resources.ChooseCertificateVerifyBadShareProof;
 
       this.typeColumnHeader.Text = Resources.ChooseCertificateType;
       this.nameColumnHeader.Text = Resources.ChooseCertificateFullName;
@@ -208,7 +210,7 @@ namespace Pirate.PiVote.Client
       OnNextStep();
     }
 
-    private void verifyShareProofButton_Click(object sender, EventArgs e)
+    private void VerifyShareProof()
     {
       OpenFileDialog dialog = new OpenFileDialog();
       dialog.Title = Resources.ChooseCertificateLoadDialog;
@@ -385,22 +387,7 @@ namespace Pirate.PiVote.Client
 
     private void SetEnable(bool enable)
     {
-      this.loadButton.Enabled = enable;
-      this.createButton.Enabled = enable;
-      this.backupButton.Enabled = enable;
-      this.restoreButton.Enabled = enable;
-      this.verifyShareProofButton.Enabled = enable;
       this.certificateList.Enabled = enable;
-    }
-
-    private void backupButton_Click(object sender, EventArgs e)
-    {
-      Backup();
-    }
-
-    private void restoreButton_Click(object sender, EventArgs e)
-    {
-      Restore();
     }
 
     private void deleteMenu_Click(object sender, EventArgs e)
@@ -482,6 +469,21 @@ namespace Pirate.PiVote.Client
           }
         }
       }
+    }
+
+    private void backupMenu_Click(object sender, EventArgs e)
+    {
+      Backup();
+    }
+
+    private void restoreMenu_Click(object sender, EventArgs e)
+    {
+      Restore();
+    }
+
+    private void verifyShareproofMenu_Click(object sender, EventArgs e)
+    {
+      VerifyShareProof();
     }
   }
 }

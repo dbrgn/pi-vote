@@ -45,22 +45,23 @@ namespace Pirate.PiVote.Client
       this.components = new System.ComponentModel.Container();
       this.infoLabel = new System.Windows.Forms.Label();
       this.certificateListLabel = new System.Windows.Forms.Label();
-      this.verifyShareProofButton = new System.Windows.Forms.Button();
-      this.createButton = new System.Windows.Forms.Button();
       this.certificateList = new System.Windows.Forms.ListView();
       this.typeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.idColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.nameColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.certificateListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.createMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.loadMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.saveMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.deleteMenu = new System.Windows.Forms.ToolStripMenuItem();
-      this.loadMenu = new System.Windows.Forms.ToolStripMenuItem();
-      this.createMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
       this.encryptMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.changePassphraseMenu = new System.Windows.Forms.ToolStripMenuItem();
-      this.loadButton = new System.Windows.Forms.Button();
-      this.backupButton = new System.Windows.Forms.Button();
-      this.restoreButton = new System.Windows.Forms.Button();
+      this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+      this.backupMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.restoreMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+      this.verifyShareproofMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.certificateListMenu.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -84,28 +85,6 @@ namespace Pirate.PiVote.Client
       this.certificateListLabel.TabIndex = 10;
       this.certificateListLabel.Text = "Your certificates";
       // 
-      // verifyShareProofButton
-      // 
-      this.verifyShareProofButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.verifyShareProofButton.Location = new System.Drawing.Point(239, 361);
-      this.verifyShareProofButton.Name = "verifyShareProofButton";
-      this.verifyShareProofButton.Size = new System.Drawing.Size(156, 23);
-      this.verifyShareProofButton.TabIndex = 9;
-      this.verifyShareProofButton.Text = "Verfiy share &proof...";
-      this.verifyShareProofButton.UseVisualStyleBackColor = true;
-      this.verifyShareProofButton.Click += new System.EventHandler(this.verifyShareProofButton_Click);
-      // 
-      // createButton
-      // 
-      this.createButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.createButton.Location = new System.Drawing.Point(121, 361);
-      this.createButton.Name = "createButton";
-      this.createButton.Size = new System.Drawing.Size(112, 23);
-      this.createButton.TabIndex = 8;
-      this.createButton.Text = "&Create...";
-      this.createButton.UseVisualStyleBackColor = true;
-      this.createButton.Click += new System.EventHandler(this.createButton_Click);
-      // 
       // certificateList
       // 
       this.certificateList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -120,7 +99,7 @@ namespace Pirate.PiVote.Client
       this.certificateList.Location = new System.Drawing.Point(3, 52);
       this.certificateList.MultiSelect = false;
       this.certificateList.Name = "certificateList";
-      this.certificateList.Size = new System.Drawing.Size(694, 303);
+      this.certificateList.Size = new System.Drawing.Size(694, 332);
       this.certificateList.TabIndex = 7;
       this.certificateList.UseCompatibleStateImageBehavior = false;
       this.certificateList.View = System.Windows.Forms.View.Details;
@@ -144,15 +123,35 @@ namespace Pirate.PiVote.Client
       // certificateListMenu
       // 
       this.certificateListMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createMenu,
+            this.loadMenu,
             this.saveMenu,
             this.deleteMenu,
-            this.loadMenu,
-            this.createMenu,
+            this.toolStripMenuItem1,
             this.encryptMenu,
-            this.changePassphraseMenu});
+            this.changePassphraseMenu,
+            this.toolStripMenuItem2,
+            this.backupMenu,
+            this.restoreMenu,
+            this.toolStripMenuItem3,
+            this.verifyShareproofMenu});
       this.certificateListMenu.Name = "certificateListMenu";
-      this.certificateListMenu.Size = new System.Drawing.Size(182, 158);
+      this.certificateListMenu.Size = new System.Drawing.Size(182, 220);
       this.certificateListMenu.Opening += new System.ComponentModel.CancelEventHandler(this.certificateListMenu_Opening);
+      // 
+      // createMenu
+      // 
+      this.createMenu.Name = "createMenu";
+      this.createMenu.Size = new System.Drawing.Size(181, 22);
+      this.createMenu.Text = "&Create...";
+      this.createMenu.Click += new System.EventHandler(this.createMenu_Click);
+      // 
+      // loadMenu
+      // 
+      this.loadMenu.Name = "loadMenu";
+      this.loadMenu.Size = new System.Drawing.Size(181, 22);
+      this.loadMenu.Text = "&Load...";
+      this.loadMenu.Click += new System.EventHandler(this.loadMenu_Click);
       // 
       // saveMenu
       // 
@@ -168,19 +167,10 @@ namespace Pirate.PiVote.Client
       this.deleteMenu.Text = "&Delete";
       this.deleteMenu.Click += new System.EventHandler(this.deleteMenu_Click);
       // 
-      // loadMenu
+      // toolStripMenuItem1
       // 
-      this.loadMenu.Name = "loadMenu";
-      this.loadMenu.Size = new System.Drawing.Size(181, 22);
-      this.loadMenu.Text = "&Load...";
-      this.loadMenu.Click += new System.EventHandler(this.loadMenu_Click);
-      // 
-      // createMenu
-      // 
-      this.createMenu.Name = "createMenu";
-      this.createMenu.Size = new System.Drawing.Size(181, 22);
-      this.createMenu.Text = "&Create...";
-      this.createMenu.Click += new System.EventHandler(this.createMenu_Click);
+      this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+      this.toolStripMenuItem1.Size = new System.Drawing.Size(178, 6);
       // 
       // encryptMenu
       // 
@@ -196,51 +186,44 @@ namespace Pirate.PiVote.Client
       this.changePassphraseMenu.Text = "Change &Passphrase...";
       this.changePassphraseMenu.Click += new System.EventHandler(this.changePassphraseMenu_Click);
       // 
-      // loadButton
+      // toolStripMenuItem2
       // 
-      this.loadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.loadButton.Location = new System.Drawing.Point(3, 361);
-      this.loadButton.Name = "loadButton";
-      this.loadButton.Size = new System.Drawing.Size(112, 23);
-      this.loadButton.TabIndex = 0;
-      this.loadButton.Text = "&Load...";
-      this.loadButton.UseVisualStyleBackColor = true;
-      this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+      this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+      this.toolStripMenuItem2.Size = new System.Drawing.Size(178, 6);
       // 
-      // backupButton
+      // backupMenu
       // 
-      this.backupButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.backupButton.Location = new System.Drawing.Point(401, 361);
-      this.backupButton.Name = "backupButton";
-      this.backupButton.Size = new System.Drawing.Size(112, 23);
-      this.backupButton.TabIndex = 14;
-      this.backupButton.Text = "&Backup...";
-      this.backupButton.UseVisualStyleBackColor = true;
-      this.backupButton.Click += new System.EventHandler(this.backupButton_Click);
+      this.backupMenu.Name = "backupMenu";
+      this.backupMenu.Size = new System.Drawing.Size(181, 22);
+      this.backupMenu.Text = "&Backup";
+      this.backupMenu.Click += new System.EventHandler(this.backupMenu_Click);
       // 
-      // restoreButton
+      // restoreMenu
       // 
-      this.restoreButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.restoreButton.Location = new System.Drawing.Point(519, 361);
-      this.restoreButton.Name = "restoreButton";
-      this.restoreButton.Size = new System.Drawing.Size(112, 23);
-      this.restoreButton.TabIndex = 15;
-      this.restoreButton.Text = "&Restore...";
-      this.restoreButton.UseVisualStyleBackColor = true;
-      this.restoreButton.Click += new System.EventHandler(this.restoreButton_Click);
+      this.restoreMenu.Name = "restoreMenu";
+      this.restoreMenu.Size = new System.Drawing.Size(181, 22);
+      this.restoreMenu.Text = "&Restore";
+      this.restoreMenu.Click += new System.EventHandler(this.restoreMenu_Click);
+      // 
+      // toolStripMenuItem3
+      // 
+      this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+      this.toolStripMenuItem3.Size = new System.Drawing.Size(178, 6);
+      // 
+      // verifyShareproofMenu
+      // 
+      this.verifyShareproofMenu.Name = "verifyShareproofMenu";
+      this.verifyShareproofMenu.Size = new System.Drawing.Size(181, 22);
+      this.verifyShareproofMenu.Text = "Verify share &proof";
+      this.verifyShareproofMenu.Click += new System.EventHandler(this.verifyShareproofMenu_Click);
       // 
       // ChooseCertificateItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.certificateList);
-      this.Controls.Add(this.restoreButton);
       this.Controls.Add(this.infoLabel);
-      this.Controls.Add(this.backupButton);
       this.Controls.Add(this.certificateListLabel);
-      this.Controls.Add(this.verifyShareProofButton);
-      this.Controls.Add(this.createButton);
-      this.Controls.Add(this.loadButton);
       this.Margin = new System.Windows.Forms.Padding(3);
       this.Name = "ChooseCertificateItem";
       this.Size = new System.Drawing.Size(700, 387);
@@ -253,23 +236,24 @@ namespace Pirate.PiVote.Client
 
     #endregion
 
-    private Button loadButton;
     private ListView certificateList;
     private ColumnHeader typeColumnHeader;
     private ColumnHeader idColumnHeader;
     private ColumnHeader nameColumnHeader;
-    private Button createButton;
-    private Button verifyShareProofButton;
     private Label certificateListLabel;
     private Label infoLabel;
     private ContextMenuStrip certificateListMenu;
     private ToolStripMenuItem saveMenu;
     private ToolStripMenuItem loadMenu;
     private ToolStripMenuItem createMenu;
-    private Button backupButton;
-    private Button restoreButton;
     private ToolStripMenuItem deleteMenu;
     private ToolStripMenuItem encryptMenu;
     private ToolStripMenuItem changePassphraseMenu;
+    private ToolStripSeparator toolStripMenuItem1;
+    private ToolStripSeparator toolStripMenuItem2;
+    private ToolStripMenuItem backupMenu;
+    private ToolStripMenuItem restoreMenu;
+    private ToolStripSeparator toolStripMenuItem3;
+    private ToolStripMenuItem verifyShareproofMenu;
   }
 }

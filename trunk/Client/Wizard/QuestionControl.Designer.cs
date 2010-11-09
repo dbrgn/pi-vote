@@ -35,11 +35,12 @@
       // 
       // questionLabel
       // 
-      this.questionLabel.AutoSize = true;
+      this.questionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.questionLabel.Font = new System.Drawing.Font("Arial", 8.25F);
       this.questionLabel.Location = new System.Drawing.Point(3, 7);
       this.questionLabel.Name = "questionLabel";
-      this.questionLabel.Size = new System.Drawing.Size(50, 14);
+      this.questionLabel.Size = new System.Drawing.Size(458, 26);
       this.questionLabel.TabIndex = 6;
       this.questionLabel.Text = "Question";
       // 
@@ -56,10 +57,11 @@
       // 
       // maxOptionsLabel
       // 
-      this.maxOptionsLabel.AutoSize = true;
+      this.maxOptionsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.maxOptionsLabel.Location = new System.Drawing.Point(3, 33);
       this.maxOptionsLabel.Name = "maxOptionsLabel";
-      this.maxOptionsLabel.Size = new System.Drawing.Size(65, 14);
+      this.maxOptionsLabel.Size = new System.Drawing.Size(458, 14);
       this.maxOptionsLabel.TabIndex = 7;
       this.maxOptionsLabel.Text = "max options";
       // 
@@ -74,7 +76,6 @@
       this.Name = "QuestionControl";
       this.Size = new System.Drawing.Size(581, 194);
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 

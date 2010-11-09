@@ -67,8 +67,8 @@ namespace Pirate.PiVote.Client
       this.status.VotingClient = new VotingClient(this.status.CertificateStorage);
 
       float dpiScale = Graphics.FromHwnd(Handle).DpiX / 96f;
-      this.Height = Convert.ToInt32(600f * dpiScale);
-      this.Width = Convert.ToInt32(800f * dpiScale);
+      this.Height = Math.Min(Screen.PrimaryScreen.WorkingArea.Height, Convert.ToInt32(600f * dpiScale));
+      this.Width = Math.Min(Screen.PrimaryScreen.WorkingArea.Width, Convert.ToInt32(800f * dpiScale));
 
       CenterToScreen();
       Show();
