@@ -39,7 +39,9 @@
       this.container.Controls.Add(this.descriptionButton);
       this.container.Controls.Add(this.titleLabel);
       this.container.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.container.Font = new System.Drawing.Font("Arial", 8.25F);
       this.container.Location = new System.Drawing.Point(0, 0);
+      this.container.Margin = new System.Windows.Forms.Padding(5);
       this.container.Name = "container";
       this.container.Size = new System.Drawing.Size(597, 413);
       this.container.TabIndex = 4;
@@ -58,10 +60,10 @@
       // titleLabel
       // 
       this.titleLabel.AutoSize = true;
-      this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.titleLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold);
       this.titleLabel.Location = new System.Drawing.Point(3, 4);
       this.titleLabel.Name = "titleLabel";
-      this.titleLabel.Size = new System.Drawing.Size(39, 16);
+      this.titleLabel.Size = new System.Drawing.Size(36, 16);
       this.titleLabel.TabIndex = 3;
       this.titleLabel.Text = "Title";
       // 

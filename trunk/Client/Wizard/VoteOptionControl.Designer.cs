@@ -38,10 +38,10 @@
       this.optionRadioButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                   | System.Windows.Forms.AnchorStyles.Left)));
       this.optionRadioButton.AutoSize = true;
-      this.optionRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.optionRadioButton.Location = new System.Drawing.Point(3, 2);
+      this.optionRadioButton.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.optionRadioButton.Location = new System.Drawing.Point(3, 4);
       this.optionRadioButton.Name = "optionRadioButton";
-      this.optionRadioButton.Size = new System.Drawing.Size(65, 20);
+      this.optionRadioButton.Size = new System.Drawing.Size(56, 18);
       this.optionRadioButton.TabIndex = 0;
       this.optionRadioButton.TabStop = true;
       this.optionRadioButton.Text = "Option";
@@ -64,7 +64,7 @@
       // 
       this.optionCheckBox.AutoSize = true;
       this.optionCheckBox.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.optionCheckBox.Location = new System.Drawing.Point(3, 3);
+      this.optionCheckBox.Location = new System.Drawing.Point(3, 4);
       this.optionCheckBox.Name = "optionCheckBox";
       this.optionCheckBox.Size = new System.Drawing.Size(57, 18);
       this.optionCheckBox.TabIndex = 2;
