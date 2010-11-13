@@ -3,13 +3,14 @@ cls
 ./functions.ps1
 
 $user = "exception"
-$server = "lechuck.piratenpartei.ch"
+$server = "fester.piratenpartei.ch"
 $port = 14022
 $dir = "/home/exception/"
-$key = "D:\Security\PPS\piratenpartei.ch-ssh-rsa-4096.ppk"
+$key = "D:\Security\PPS\fester.piratenpartei.ch-ssh-rsa-2048.ppk"
 $zip = "C:\Program Files (x86)\7-Zip\7z.exe"
 $output = ".\output"
 $tgt = $user + "@" + $server + ":" + $dir
+$svr = $user + "@" + $server
 
 write-host "PiVote build process commencing...";
 

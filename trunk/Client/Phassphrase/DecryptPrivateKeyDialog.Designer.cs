@@ -47,9 +47,9 @@
       this.infoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.infoLabel.Location = new System.Drawing.Point(12, 10);
+      this.infoLabel.Location = new System.Drawing.Point(12, 9);
       this.infoLabel.Name = "infoLabel";
-      this.infoLabel.Size = new System.Drawing.Size(465, 0);
+      this.infoLabel.Size = new System.Drawing.Size(465, 18);
       this.infoLabel.TabIndex = 0;
       this.infoLabel.Text = "Your private key is encrypted. You need to enter your passphrase to decrypt it.";
       // 
@@ -57,7 +57,7 @@
       // 
       this.passphraseTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.passphraseTextBox.Location = new System.Drawing.Point(133, 91);
+      this.passphraseTextBox.Location = new System.Drawing.Point(131, 108);
       this.passphraseTextBox.Name = "passphraseTextBox";
       this.passphraseTextBox.PasswordChar = '*';
       this.passphraseTextBox.Size = new System.Drawing.Size(344, 20);
@@ -67,7 +67,7 @@
       // passphraseLabel
       // 
       this.passphraseLabel.AutoSize = true;
-      this.passphraseLabel.Location = new System.Drawing.Point(12, 93);
+      this.passphraseLabel.Location = new System.Drawing.Point(10, 110);
       this.passphraseLabel.Name = "passphraseLabel";
       this.passphraseLabel.Size = new System.Drawing.Size(68, 14);
       this.passphraseLabel.TabIndex = 3;
@@ -76,7 +76,7 @@
       // okButton
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.okButton.Location = new System.Drawing.Point(285, 117);
+      this.okButton.Location = new System.Drawing.Point(283, 134);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(93, 26);
       this.okButton.TabIndex = 1;
@@ -87,7 +87,7 @@
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(385, 117);
+      this.cancelButton.Location = new System.Drawing.Point(383, 134);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(93, 26);
       this.cancelButton.TabIndex = 2;
@@ -99,7 +99,7 @@
       // 
       this.actionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.actionTextBox.Location = new System.Drawing.Point(133, 65);
+      this.actionTextBox.Location = new System.Drawing.Point(131, 82);
       this.actionTextBox.Name = "actionTextBox";
       this.actionTextBox.ReadOnly = true;
       this.actionTextBox.Size = new System.Drawing.Size(344, 20);
@@ -109,7 +109,7 @@
       // 
       this.certificateTypeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.certificateTypeTextBox.Location = new System.Drawing.Point(133, 39);
+      this.certificateTypeTextBox.Location = new System.Drawing.Point(131, 56);
       this.certificateTypeTextBox.Name = "certificateTypeTextBox";
       this.certificateTypeTextBox.ReadOnly = true;
       this.certificateTypeTextBox.Size = new System.Drawing.Size(344, 20);
@@ -119,7 +119,7 @@
       // 
       this.certificateIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.certificateIdTextBox.Location = new System.Drawing.Point(133, 13);
+      this.certificateIdTextBox.Location = new System.Drawing.Point(131, 30);
       this.certificateIdTextBox.Name = "certificateIdTextBox";
       this.certificateIdTextBox.ReadOnly = true;
       this.certificateIdTextBox.Size = new System.Drawing.Size(344, 20);
@@ -128,7 +128,7 @@
       // actionLabel
       // 
       this.actionLabel.AutoSize = true;
-      this.actionLabel.Location = new System.Drawing.Point(13, 67);
+      this.actionLabel.Location = new System.Drawing.Point(11, 84);
       this.actionLabel.Name = "actionLabel";
       this.actionLabel.Size = new System.Drawing.Size(41, 14);
       this.actionLabel.TabIndex = 8;
@@ -137,7 +137,7 @@
       // certificateTypeLabel
       // 
       this.certificateTypeLabel.AutoSize = true;
-      this.certificateTypeLabel.Location = new System.Drawing.Point(13, 42);
+      this.certificateTypeLabel.Location = new System.Drawing.Point(11, 59);
       this.certificateTypeLabel.Name = "certificateTypeLabel";
       this.certificateTypeLabel.Size = new System.Drawing.Size(85, 14);
       this.certificateTypeLabel.TabIndex = 9;
@@ -146,7 +146,7 @@
       // certificateIdLabel
       // 
       this.certificateIdLabel.AutoSize = true;
-      this.certificateIdLabel.Location = new System.Drawing.Point(13, 16);
+      this.certificateIdLabel.Location = new System.Drawing.Point(11, 33);
       this.certificateIdLabel.Name = "certificateIdLabel";
       this.certificateIdLabel.Size = new System.Drawing.Size(70, 14);
       this.certificateIdLabel.TabIndex = 10;
@@ -156,7 +156,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(489, 153);
+      this.ClientSize = new System.Drawing.Size(489, 172);
       this.ControlBox = false;
       this.Controls.Add(this.certificateIdLabel);
       this.Controls.Add(this.certificateTypeLabel);

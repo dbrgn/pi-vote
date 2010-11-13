@@ -20,16 +20,16 @@ foreach ($svndir in $svndirs)
 }
 
 rmif pivote-client.deb
-plink -i $key -pw $pass -P $port $tgt rm -r packagetmp
-plink -i $key -pw $pass -P $port $tgt rm pivote-client.deb
+plink -i $key -pw $pass -P $port $svr rm -r packagetmp
+plink -i $key -pw $pass -P $port $svr rm pivote-client.deb
 pscp -i $key -pw $pass -P $port -r packagetmp $tgt
-plink -i $key -pw $pass -P $port $tgt chmod u+x packagetmp/usr/bin/pivote
-plink -i $key -pw $pass -P $port $tgt chmod 0755 packagetmp/DEBIAN/postinst
-plink -i $key -pw $pass -P $port $tgt chmod 0755 packagetmp/DEBIAN/postrm
-plink -i $key -pw $pass -P $port $tgt dpkg -b packagetmp pivote-client.deb
+plink -i $key -pw $pass -P $port $svr chmod u+x packagetmp/usr/bin/pivote
+plink -i $key -pw $pass -P $port $svr chmod 0755 packagetmp/DEBIAN/postinst
+plink -i $key -pw $pass -P $port $svr chmod 0755 packagetmp/DEBIAN/postrm
+plink -i $key -pw $pass -P $port $svr dpkg -b packagetmp pivote-client.deb
 pscp -i $key -pw $pass -P $port $tgt/pivote-client.deb .
-plink -i $key -pw $pass -P $port $tgt rm -r packagetmp
-plink -i $key -pw $pass -P $port $tgt rm pivote-client.deb
+plink -i $key -pw $pass -P $port $svr rm -r packagetmp
+plink -i $key -pw $pass -P $port $svr rm pivote-client.deb
 
 rmif ./packagetmp
 rmif ./package/opt

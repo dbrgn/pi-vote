@@ -285,7 +285,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client, Version=1.0.1.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client, Version=1.0.2.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_0583866E7D9E44529A28AFFDBA13A654"
@@ -316,7 +316,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.resources, Version=1.0.1.0, Culture=de-DE, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.resources, Version=1.0.2.0, Culture=de-DE, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_18F26FADC1A54820BF71B7F626F26142"
@@ -347,7 +347,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client.resources, Version=1.0.1.0, Culture=de-DE, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client.resources, Version=1.0.2.0, Culture=de-DE, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_360A6B59FE6549E68F034A5EF8E3949F"
@@ -378,7 +378,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_3C1E80C8D343052811A7D5A57917A042"
@@ -511,7 +511,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client.resources, Version=1.0.1.0, Culture=fr-FR, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.Client.resources, Version=1.0.2.0, Culture=fr-FR, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_62249F58F277463BBE827B1898679DE6"
@@ -562,7 +562,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.resources, Version=1.0.1.0, Culture=fr-FR, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote.resources, Version=1.0.2.0, Culture=fr-FR, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_B34CBB58876843B7BBE1094F48AFF3E0"
@@ -707,15 +707,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PiVote Client"
-        "ProductCode" = "8:{879EBAD4-FE4F-4719-8F3E-A3F3FF000D95}"
-        "PackageCode" = "8:{D396C834-B96E-40BF-AEED-AC7E42162716}"
+        "ProductCode" = "8:{4442DC7D-7E7D-4C11-B4B0-03A864689A87}"
+        "PackageCode" = "8:{B16A290F-D20B-42EC-AB22-8C193E38E837}"
         "UpgradeCode" = "8:{7F36B602-1CBB-449B-AA17-69145F1FFB38}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.2"
+        "ProductVersion" = "8:1.0.3"
         "Manufacturer" = "8:Pirate Party Switzerland"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.pirateparty.ch"

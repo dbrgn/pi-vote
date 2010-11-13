@@ -103,12 +103,6 @@
     <Compile Include="Controls\GroupComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\ScrollableContainerControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ScrollableContainerControl.Designer.cs">
-      <DependentUpon>ScrollableContainerControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Phassphrase\ChangePassphraseDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -344,9 +338,6 @@
     <Compile Include="Wizard\WizardStatus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\ScrollableContainerControl.resx">
-      <DependentUpon>ScrollableContainerControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Phassphrase\ChangePassphraseDialog.resx">
       <DependentUpon>ChangePassphraseDialog.cs</DependentUpon>
     </EmbeddedResource>

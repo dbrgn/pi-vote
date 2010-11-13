@@ -96,7 +96,7 @@ namespace Pirate.PiVote.Client
       }
       else
       {
-        dialog.infoLabel.BackColor = Color.Red;
+        dialog.infoLabel.ForeColor = Color.Red;
         dialog.infoLabel.Text = message;
       }
 
