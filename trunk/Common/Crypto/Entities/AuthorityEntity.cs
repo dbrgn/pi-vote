@@ -326,6 +326,20 @@ namespace Pirate.PiVote.Crypto
 
       return publicKey;
     }
+
+    /// <summary>
+    /// Number of valid envelopes in current tally.
+    /// </summary>
+    public int TallyValidEnvelopeCount
+    {
+      get
+      {
+        if (this.tally == null)
+          throw new InvalidOperationException("Tally not yet begun.");
+
+        return this.tally.ValidEnvelopeCount;
+      }
+    }
     
     /// <summary>
     /// Partially deciphers the sum of votes.
@@ -341,7 +355,7 @@ namespace Pirate.PiVote.Crypto
 #if DEBUG
       if (this.tally.ValidEnvelopeCount >= 1)
 #else
-      if (this.tally.ValidEnvelopeCount >= 20)
+      if (this.tally.ValidEnvelopeCount >= 3)
 #endif
       {
         for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)

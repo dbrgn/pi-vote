@@ -53,13 +53,16 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
 
-      context.Write(this.votingMaterials.Count);
-
-      foreach (var votingMaterial in this.votingMaterials)
+      if (Exception == null)
       {
-        context.Write(votingMaterial.First);
-        context.Write((int)votingMaterial.Second);
-        context.WriteList(votingMaterial.Third);
+        context.Write(this.votingMaterials.Count);
+
+        foreach (var votingMaterial in this.votingMaterials)
+        {
+          context.Write(votingMaterial.First);
+          context.Write((int)votingMaterial.Second);
+          context.WriteList(votingMaterial.Third);
+        }
       }
     }
 
@@ -71,16 +74,19 @@ namespace Pirate.PiVote.Rpc
     {
       base.Deserialize(context);
 
-      this.votingMaterials = new List<Tuple<VotingMaterial, VotingStatus, List<Guid>>>();
-      int count = context.ReadInt32();
-
-      for (int index = 0; index < count; index++)
+      if (Exception == null)
       {
-        this.votingMaterials.Add(
-          new Tuple<VotingMaterial, VotingStatus, List<Guid>>(
-            context.ReadObject<VotingMaterial>(),
-            (VotingStatus)context.ReadInt32(),
-            context.ReadGuidList()));
+        this.votingMaterials = new List<Tuple<VotingMaterial, VotingStatus, List<Guid>>>();
+        int count = context.ReadInt32();
+
+        for (int index = 0; index < count; index++)
+        {
+          this.votingMaterials.Add(
+            new Tuple<VotingMaterial, VotingStatus, List<Guid>>(
+              context.ReadObject<VotingMaterial>(),
+              (VotingStatus)context.ReadInt32(),
+              context.ReadGuidList()));
+        }
       }
     }
   }

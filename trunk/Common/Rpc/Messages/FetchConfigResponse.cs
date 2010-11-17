@@ -1,5 +1,4 @@
 ﻿
-
 /*
  *  <project description>
  * 
@@ -16,14 +15,17 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
-  public class FetchSignatureRequestListResponse : RpcResponse
+  public class FetchConfigResponse : RpcResponse
   {
-    public List<Guid> SignatureRequestList { get; private set; }
+    public RemoteConfig Config { get; private set; }
 
-    public FetchSignatureRequestListResponse(Guid requestId, List<Guid> signatureRequestList)
+    public List<Group> Groups { get; private set; }
+
+    public FetchConfigResponse(Guid requestId, IRemoteConfig config, List<Group> groups)
       : base(requestId)
     {
-      SignatureRequestList = signatureRequestList;
+      Config = new RemoteConfig(config);
+      Groups = groups;
     }
 
     /// <summary>
@@ -31,7 +33,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="requestId">Id of the request.</param>
     /// <param name="exception">Exception that occured when executing the request.</param>
-    public FetchSignatureRequestListResponse(Guid requestId, PiException exception)
+    public FetchConfigResponse(Guid requestId, PiException exception)
       : base(requestId, exception)
     { }
 
@@ -39,7 +41,7 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchSignatureRequestListResponse(DeserializeContext context)
+    public FetchConfigResponse(DeserializeContext context)
       : base(context)
     { }
 
@@ -53,12 +55,8 @@ namespace Pirate.PiVote.Rpc
 
       if (Exception == null)
       {
-        context.Write(SignatureRequestList.Count);
-
-        foreach (Guid id in SignatureRequestList)
-        {
-          context.Write(id);
-        }
+        context.Write(Config);
+        context.WriteList(Groups);
       }
     }
 
@@ -72,12 +70,8 @@ namespace Pirate.PiVote.Rpc
 
       if (Exception == null)
       {
-        SignatureRequestList = new List<Guid>();
-        int count = context.ReadInt32();
-        for (int index = 0; index < count; index++)
-        {
-          SignatureRequestList.Add(context.ReadGuid());
-        }
+        Config = context.ReadObject<RemoteConfig>();
+        Groups = context.ReadObjectList<Group>();
       }
     }
   }

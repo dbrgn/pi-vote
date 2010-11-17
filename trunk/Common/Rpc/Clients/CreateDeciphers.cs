@@ -29,6 +29,13 @@ namespace Pirate.PiVote.Rpc
     public delegate void CreateDeciphersCallBack(VotingDescriptor votingDescriptor, Exception exception);
 
     /// <summary>
+    /// Callback to ask for permission to partially decipher.
+    /// </summary>
+    /// <param name="validEnvelopeCount">Number of valid envelopes.</param>
+    /// <returns>Continue with partially deciphering?</returns>
+    public delegate bool AskForPartiallyDecipherCallBack(int validEnvelopeCount);
+
+    /// <summary>
     /// Create decipherss parts.
     /// </summary>
     private class CreateDeciphersOperation : Operation
@@ -52,6 +59,11 @@ namespace Pirate.PiVote.Rpc
       /// Callback upon completion.
       /// </summary>
       private CreateDeciphersCallBack callBack;
+
+      /// <summary>
+      /// Callback to ask for permission to partially decipher.
+      /// </summary>
+      private AskForPartiallyDecipherCallBack askCallBack;
 
       /// <summary>
       /// Number of envelopes fetched from the server.
@@ -94,13 +106,15 @@ namespace Pirate.PiVote.Rpc
       /// <param name="votingId">Id of the voting.</param>
       /// <param name="authorityFileName">Filename to save authority data.</param>
       /// <param name="authorityCertificate">Authority's certificate.</param>
+      /// <param name="askCallBack">Callback to ask for permission to partially decipher.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public CreateDeciphersOperation(Guid votingId, AuthorityCertificate authorityCertificate, string authorityFileName, CreateDeciphersCallBack callBack)
+      public CreateDeciphersOperation(Guid votingId, AuthorityCertificate authorityCertificate, string authorityFileName, AskForPartiallyDecipherCallBack askCallBack, CreateDeciphersCallBack callBack)
       {
         this.votingId = votingId;
         this.authorityFileName = authorityFileName;
         this.authorityCertificate = authorityCertificate;
         this.callBack = callBack;
+        this.askCallBack = askCallBack;
       }
 
       /// <summary>
@@ -162,24 +176,31 @@ namespace Pirate.PiVote.Rpc
           Text = LibraryResources.ClientCreateDeciphersCreatePartialDecipher;
           Progress = 0.7d;
 
-          var decipherList = client.authorityEntity.PartiallyDecipher();
+          if (this.askCallBack == null || this.askCallBack(client.authorityEntity.TallyValidEnvelopeCount))
+          {
+            var decipherList = client.authorityEntity.PartiallyDecipher();
 
-          Text = LibraryResources.ClientCreateDeciphersPushPartialDecipher;
-          Progress = 0.8d;
-          
-          client.proxy.PushPartailDecipher(this.votingId, decipherList);
+            Text = LibraryResources.ClientCreateDeciphersPushPartialDecipher;
+            Progress = 0.8d;
 
-          Text = LibraryResources.ClientCreateDeciphersFetchVotingStatus;
-          Progress = 0.9d;
+            client.proxy.PushPartailDecipher(this.votingId, decipherList);
 
-          material = client.proxy.FetchVotingMaterial(this.votingId);
-          List<Guid> authoritieDone;
-          VotingStatus status = client.proxy.FetchVotingStatus(this.votingId, out authoritieDone);
-          var votingDescriptor = new VotingDescriptor(material.Parameters.Value, status, authoritieDone, material.CastEnvelopeCount);
+            Text = LibraryResources.ClientCreateDeciphersFetchVotingStatus;
+            Progress = 0.9d;
 
-          Progress = 1d;
+            material = client.proxy.FetchVotingMaterial(this.votingId);
+            List<Guid> authoritieDone;
+            VotingStatus status = client.proxy.FetchVotingStatus(this.votingId, out authoritieDone);
+            var votingDescriptor = new VotingDescriptor(material.Parameters.Value, status, authoritieDone, material.CastEnvelopeCount);
 
-          this.callBack(votingDescriptor, null);
+            Progress = 1d;
+
+            this.callBack(votingDescriptor, null);
+          }
+          else
+          {
+            this.callBack(null, new PiException(ExceptionCode.CanceledByUser, "Operation was canceled by user."));
+          }
         }
         catch (Exception exception)
         {

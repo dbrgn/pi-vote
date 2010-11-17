@@ -30,6 +30,7 @@ namespace Pirate.PiVote
     InvalidSignature                  = 9,
     InvalidSignatureRequest           = 10,
     ServerCertificateInvalid          = 11,
+    CanceledByUser                    = 12,
 
     AuthorityCountOutOfRange          = 1000001,
     TheresholdOutOfRange              = 1000002,
@@ -190,6 +191,8 @@ namespace Pirate.PiVote
           return LibraryResources.CommandNotFromAdmin;
         case ExceptionCode.CommandNotAllowedInStatus:
           return LibraryResources.CommandNotAllowedInStatus;
+        case ExceptionCode.CanceledByUser:
+          return LibraryResources.ExceptionCanceledByUser;
         default:
           return LibraryResources.ExceptionUnknown;
       }

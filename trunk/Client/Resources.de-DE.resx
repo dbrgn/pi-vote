@@ -856,4 +856,22 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="AdminDeleteVotingWarning" xml:space="preserve">
     <value>Willst du wirklich die Abstimmung Id {0} Titel {1} löschen?</value>
   </data>
+  <data name="AbortButton" xml:space="preserve">
+    <value>&amp;Abbrechen</value>
+  </data>
+  <data name="AskForPartiallyDecipher" xml:space="preserve">
+    <value>Es sind {0} gültige Stimmen vorhandel. Wenn diese Zahl zu klein erscheint, könnte ein Sicherheitsproblem bestehen. Wenn das der Fall ist, musst du das Resultat nicht Entschlüsseln, sondern die anderen Autoritäten und Administratoren verständigen. Mit Entschlüsseln weiterfahren?</value>
+  </data>
+  <data name="IgnoreButton" xml:space="preserve">
+    <value>&amp;Ignorieren</value>
+  </data>
+  <data name="NoButton" xml:space="preserve">
+    <value>&amp;Nein</value>
+  </data>
+  <data name="RetryButton" xml:space="preserve">
+    <value>&amp;Wiederholen</value>
+  </data>
+  <data name="YesButton" xml:space="preserve">
+    <value>&amp;Ja</value>
+  </data>
 </root>

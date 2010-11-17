@@ -418,12 +418,13 @@ namespace Pirate.PiVote.Rpc
     /// <param name="votingId">Id of the voting.</param>
     /// <param name="authorityFileName">Filename to load authority data.</param>
     /// <param name="authorityCertificate">Authority's certificate.</param>
+    /// <param name="askCallBack">Callback to ask for permission to partially decipher.</param>
     /// <param name="callBack">Callback upon completion.</param>
-    public void CreateDeciphers(Guid votingId, AuthorityCertificate authorityCertificate, string authorityFileName, CreateDeciphersCallBack callBack)
+    public void CreateDeciphers(Guid votingId, AuthorityCertificate authorityCertificate, string authorityFileName, AskForPartiallyDecipherCallBack askCallBack, CreateDeciphersCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new CreateDeciphersOperation(votingId, authorityCertificate, authorityFileName, callBack));
+        this.operations.Enqueue(new CreateDeciphersOperation(votingId, authorityCertificate, authorityFileName, askCallBack, callBack));
       }
     }
 

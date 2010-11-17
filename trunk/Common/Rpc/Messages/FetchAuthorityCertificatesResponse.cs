@@ -60,7 +60,11 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.WriteList(AuthorityCertificates);
+
+      if (Exception == null)
+      {
+        context.WriteList(AuthorityCertificates);
+      }
     }
 
     /// <summary>
@@ -70,7 +74,11 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      AuthorityCertificates = context.ReadObjectList<AuthorityCertificate>();
+
+      if (Exception == null)
+      {
+        AuthorityCertificates = context.ReadObjectList<AuthorityCertificate>();
+      }
     }
   }
 }

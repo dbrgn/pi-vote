@@ -21,11 +21,20 @@ namespace Pirate.PiVote.Client
 {
   public partial class AuthorityListVotingsItem : WizardItem
   {
+    private enum AskForPartiallyDecipherCallBackState
+    {
+      Before,
+      During,
+      After
+    }
+
     private bool run;
     private Exception exception;
     private VotingDescriptor votingDescriptor;
     private IEnumerable<VotingDescriptor> votings;
     private WizardItem nextItem;
+    private AskForPartiallyDecipherCallBackState askForPartiallyDecipherCallBackState;
+    private bool askForPartiallyDecipherCallBackResult;
 
     public AuthorityListVotingsItem()
     {
@@ -300,10 +309,24 @@ namespace Pirate.PiVote.Client
 
           if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.AuthorityDecipherUnlockAction))
           {
-            Status.VotingClient.CreateDeciphers(voting.Id, (AuthorityCertificate)Status.Certificate, filePath, CreateDeciphersCompleteCallBack);
+            this.askForPartiallyDecipherCallBackState = AskForPartiallyDecipherCallBackState.Before;
+
+            Status.VotingClient.CreateDeciphers(voting.Id, (AuthorityCertificate)Status.Certificate, filePath, AskForPartiallyDecipherCallBack, CreateDeciphersCompleteCallBack);
 
             while (this.run)
             {
+              if (this.askForPartiallyDecipherCallBackState == AskForPartiallyDecipherCallBackState.During)
+              {
+                this.askForPartiallyDecipherCallBackResult =
+                  MessageForm.Show(
+                  Resources.AskForPartiallyDecipher,
+                  Resources.MessageBoxTitle,
+                  MessageBoxButtons.YesNo,
+                  MessageBoxIcon.Question,
+                  DialogResult.No)
+                  == DialogResult.Yes;
+              }
+
               Status.UpdateProgress();
               Thread.Sleep(10);
             }
@@ -346,6 +369,18 @@ namespace Pirate.PiVote.Client
 
         SetGuiEnable(true);
       }
+    }
+
+    private bool AskForPartiallyDecipherCallBack(int validEnvelopeCount)
+    {
+      this.askForPartiallyDecipherCallBackState = AskForPartiallyDecipherCallBackState.During;
+
+      while (this.askForPartiallyDecipherCallBackState == AskForPartiallyDecipherCallBackState.During)
+      {
+        Thread.Sleep(10);
+      }
+
+      return this.askForPartiallyDecipherCallBackResult;
     }
 
     private void CreateDeciphersCompleteCallBack(VotingDescriptor votingDescriptor, Exception exception)

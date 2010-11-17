@@ -703,9 +703,11 @@ namespace Pirate.PiVote.Crypto
       Certificate certificate = GetAuthority(partialDecipherList.AuthorityIndex);
 
       if (!signedPartialDecipherList.Verify(this.certificateStorage))
-        throw new ArgumentException("Bad signature.");
+        throw new PiArgumentException(ExceptionCode.InvalidSignature, "Bad signature.");
       if (!signedPartialDecipherList.Certificate.IsIdentic(certificate))
-        throw new ArgumentException("Not signed by proper authority.");
+        throw new PiArgumentException(ExceptionCode.AuthorityInvalid, "Not signed by proper authority.");
+      if (partialDecipherList.PartialDeciphers.Count < 4)
+        throw new PiArgumentException(ExceptionCode.AuthorityCountMismatch, "Your Pi-Vote client is outdated.");
 
       bool exists = DbConnection.ExecuteHasRows(
         "SELECT count(*) FROM deciphers WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",

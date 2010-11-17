@@ -588,4 +588,7 @@
   <data name="CommandNotFromAdmin" xml:space="preserve">
     <value>The command is not signed by an admin.</value>
   </data>
+  <data name="ExceptionCanceledByUser" xml:space="preserve">
+    <value>Operation was canceled by user.</value>
+  </data>
 </root>

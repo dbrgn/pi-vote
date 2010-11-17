@@ -368,7 +368,13 @@ namespace Pirate.PiVote.Client
         string version = string.Format("{0}.{1}.{2}.{3}", major, minor, build, revision);
         string text = string.Format(Resources.UpdateDialogText, assemblyVersion.ToString(), version);
 
-        if (MessageBox.Show(text, Resources.UpdateDialogTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+        if (MessageForm.Show(
+          text, 
+          Resources.UpdateDialogTitle, 
+          MessageBoxButtons.YesNo, 
+          MessageBoxIcon.Information, 
+          DialogResult.Yes)
+          == DialogResult.Yes)
         {
           System.Diagnostics.Process.Start(Status.RemoteConfig.UpdateUrl);
           System.Diagnostics.Process.GetCurrentProcess().Kill();

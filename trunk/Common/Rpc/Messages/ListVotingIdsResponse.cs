@@ -50,10 +50,15 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(VotingIds.Count);
-      foreach (Guid votingId in VotingIds)
+
+      if (Exception == null)
       {
-        context.Write(votingId);
+        context.Write(VotingIds.Count);
+
+        foreach (Guid votingId in VotingIds)
+        {
+          context.Write(votingId);
+        }
       }
     }
 
@@ -64,11 +69,16 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      int count = context.ReadInt32();
-      VotingIds = new List<Guid>();
-      for (int index = 0; index < count; index++)
+
+      if (Exception == null)
       {
-        VotingIds.Add(context.ReadGuid());
+        int count = context.ReadInt32();
+        VotingIds = new List<Guid>();
+
+        for (int index = 0; index < count; index++)
+        {
+          VotingIds.Add(context.ReadGuid());
+        }
       }
     }
   }

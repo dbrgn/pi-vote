@@ -943,6 +943,15 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation was canceled by user..
+        /// </summary>
+        public static string ExceptionCanceledByUser {
+            get {
+                return ResourceManager.GetString("ExceptionCanceledByUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Certificate is not valid..
         /// </summary>
         public static string ExceptionInvalidCertificate {

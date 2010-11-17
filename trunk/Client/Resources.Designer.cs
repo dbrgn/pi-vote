@@ -61,6 +61,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Abort.
+        /// </summary>
+        internal static string AbortButton {
+            get {
+                return ResourceManager.GetString("AbortButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         internal static string AddOptionDescription {
@@ -165,6 +174,15 @@ namespace Pirate.PiVote.Client {
         internal static string AdminDeleteVotingWarning {
             get {
                 return ResourceManager.GetString("AdminDeleteVotingWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are {0} valid ballots. If this number seems too low, there could be a security problem. Do not decipher the result and contact the other authorities and administrators in this case. Proceed with deciphering?.
+        /// </summary>
+        internal static string AskForPartiallyDecipher {
+            get {
+                return ResourceManager.GetString("AskForPartiallyDecipher", resourceCulture);
             }
         }
         
@@ -1388,6 +1406,15 @@ namespace Pirate.PiVote.Client {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Ignore.
+        /// </summary>
+        internal static string IgnoreButton {
+            get {
+                return ResourceManager.GetString("IgnoreButton", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap Info {
             get {
                 object obj = ResourceManager.GetObject("Info", resourceCulture);
@@ -1464,6 +1491,15 @@ namespace Pirate.PiVote.Client {
         internal static string MessageBoxTitle {
             get {
                 return ResourceManager.GetString("MessageBoxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;No.
+        /// </summary>
+        internal static string NoButton {
+            get {
+                return ResourceManager.GetString("NoButton", resourceCulture);
             }
         }
         
@@ -1545,6 +1581,15 @@ namespace Pirate.PiVote.Client {
         internal static string PiVoteClient {
             get {
                 return ResourceManager.GetString("PiVoteClient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Retry.
+        /// </summary>
+        internal static string RetryButton {
+            get {
+                return ResourceManager.GetString("RetryButton", resourceCulture);
             }
         }
         
@@ -2301,6 +2346,15 @@ namespace Pirate.PiVote.Client {
         internal static string WizardPreviousButton {
             get {
                 return ResourceManager.GetString("WizardPreviousButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Yes.
+        /// </summary>
+        internal static string YesButton {
+            get {
+                return ResourceManager.GetString("YesButton", resourceCulture);
             }
         }
     }

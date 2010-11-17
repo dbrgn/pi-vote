@@ -177,6 +177,7 @@
     <Compile Include="Crypto\Certificate\CertificateAttribute.cs" />
     <Compile Include="Crypto\Certificate\CertificateValidationResult.cs" />
     <Compile Include="Crypto\Certificate\Aes.cs" />
+    <Compile Include="Crypto\Certificate\SignatureRequest2.cs" />
     <Compile Include="Crypto\Certificate\PrivateKeyStatus.cs" />
     <Compile Include="Crypto\Certificate\SignatureRequestInfo.cs" />
     <Compile Include="Crypto\Certificate\Secure.cs" />
@@ -281,8 +282,8 @@
     <Compile Include="Rpc\Handlers\IBinaryRpcProxy.cs" />
     <Compile Include="Rpc\Messages\DeleteVotingRequest.cs" />
     <Compile Include="Rpc\Messages\DeleteVotingResponse.cs" />
-    <Compile Include="Rpc\Messages\FetchSettingsRequest.cs" />
-    <Compile Include="Rpc\Messages\FetchSettingsResponse.cs" />
+    <Compile Include="Rpc\Messages\FetchConfigRequest.cs" />
+    <Compile Include="Rpc\Messages\FetchConfigResponse.cs" />
     <Compile Include="Rpc\Messages\PushCertificateStorageRequest.cs" />
     <Compile Include="Rpc\Messages\PushCertificateStorageResponse.cs" />
     <Compile Include="Rpc\Messages\KeepAliveRequest.cs" />

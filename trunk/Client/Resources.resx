@@ -872,4 +872,22 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="AdminDeleteVotingWarning" xml:space="preserve">
     <value>Do you really want to delete voting id {0} title {1} ?</value>
   </data>
+  <data name="AbortButton" xml:space="preserve">
+    <value>&amp;Abort</value>
+  </data>
+  <data name="IgnoreButton" xml:space="preserve">
+    <value>&amp;Ignore</value>
+  </data>
+  <data name="NoButton" xml:space="preserve">
+    <value>&amp;No</value>
+  </data>
+  <data name="RetryButton" xml:space="preserve">
+    <value>&amp;Retry</value>
+  </data>
+  <data name="YesButton" xml:space="preserve">
+    <value>&amp;Yes</value>
+  </data>
+  <data name="AskForPartiallyDecipher" xml:space="preserve">
+    <value>There are {0} valid ballots. If this number seems too low, there could be a security problem. Do not decipher the result and contact the other authorities and administrators in this case. Proceed with deciphering?</value>
+  </data>
 </root>

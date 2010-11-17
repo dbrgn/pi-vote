@@ -301,11 +301,12 @@ namespace Pirate.PiVote.Client
         ListViewItem item = this.votingList.SelectedItems[0];
         VotingDescriptor voting = (VotingDescriptor)item.Tag;
 
-        if (MessageBox.Show(
+        if (MessageForm.Show(
           string.Format(Resources.AdminDeleteVotingWarning, voting.Id.ToString(), voting.Title.Text), 
           Resources.MessageBoxTitle, 
           MessageBoxButtons.YesNo, 
-          MessageBoxIcon.Question) 
+          MessageBoxIcon.Question,
+          DialogResult.No) 
           == DialogResult.Yes)
         {
           if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.AdminDeleteVotingAction))

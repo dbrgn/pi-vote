@@ -591,4 +591,7 @@
   <data name="CommandNotFromAdmin" xml:space="preserve">
     <value>Das Kommando ist von keinem Admin signiert.</value>
   </data>
+  <data name="ExceptionCanceledByUser" xml:space="preserve">
+    <value>Operation wurde durch den Benutzer abgebrochen.</value>
+  </data>
 </root>
