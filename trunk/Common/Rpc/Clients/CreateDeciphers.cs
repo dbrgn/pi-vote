@@ -199,7 +199,7 @@ namespace Pirate.PiVote.Rpc
           }
           else
           {
-            this.callBack(null, new PiException(ExceptionCode.CanceledByUser, "Operation was canceled by user."));
+            this.callBack(null, new PiException(ExceptionCode.CanceledByUser, LibraryResources.ExceptionCanceledByUser));
           }
         }
         catch (Exception exception)

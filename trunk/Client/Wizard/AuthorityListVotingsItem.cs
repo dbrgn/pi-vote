@@ -35,6 +35,7 @@ namespace Pirate.PiVote.Client
     private WizardItem nextItem;
     private AskForPartiallyDecipherCallBackState askForPartiallyDecipherCallBackState;
     private bool askForPartiallyDecipherCallBackResult;
+    private int askForPartiallyDecipherValidBallots;
 
     public AuthorityListVotingsItem()
     {
@@ -319,12 +320,14 @@ namespace Pirate.PiVote.Client
               {
                 this.askForPartiallyDecipherCallBackResult =
                   MessageForm.Show(
-                  Resources.AskForPartiallyDecipher,
+                  string.Format(Resources.AskForPartiallyDecipher, this.askForPartiallyDecipherValidBallots),
                   Resources.MessageBoxTitle,
                   MessageBoxButtons.YesNo,
                   MessageBoxIcon.Question,
                   DialogResult.No)
                   == DialogResult.Yes;
+
+                this.askForPartiallyDecipherCallBackState = AskForPartiallyDecipherCallBackState.After;
               }
 
               Status.UpdateProgress();
@@ -373,6 +376,7 @@ namespace Pirate.PiVote.Client
 
     private bool AskForPartiallyDecipherCallBack(int validEnvelopeCount)
     {
+      this.askForPartiallyDecipherValidBallots = validEnvelopeCount;
       this.askForPartiallyDecipherCallBackState = AskForPartiallyDecipherCallBackState.During;
 
       while (this.askForPartiallyDecipherCallBackState == AskForPartiallyDecipherCallBackState.During)

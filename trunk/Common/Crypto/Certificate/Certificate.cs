@@ -370,6 +370,32 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Determines until when the certificate will stay valid, provided it isn't revoked until then.
+    /// The date may lay in the past if the certificate is not valid now.
+    /// </summary>
+    /// <param name="certificateStorage">Storage of certificates.</param>
+    /// <param name="date">Date on which signers certificates must be valid.</param>
+    /// <returns>Date the certificate will expire after.</returns>
+    public DateTime ExpectedValidUntil(ICertificateStorage certificateStorage, DateTime date)
+    {
+      if (SelfSignatureValid)
+      {
+        if (certificateStorage.IsRootCertificate(this))
+        {
+          return DateTime.MaxValue;
+        }
+        else
+        {
+          return this.signatures.Max(signature => signature.ExpectedValidUntil(GetSignatureContent(), certificateStorage, date));
+        }
+      }
+      else
+      {
+        return DateTime.MinValue;
+      }
+    }
+
+    /// <summary>
     /// This this certificate identic to another one?
     /// </summary>
     /// <param name="other">Other certificate to compare.</param>

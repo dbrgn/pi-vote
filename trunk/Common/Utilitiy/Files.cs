@@ -26,6 +26,7 @@ namespace Pirate.PiVote
     public const string CertificateFileFilter = "Pi-Vote Certificate|*.pi-cert";
     public const string BackupFileFilter = "Pi-Vote Backup|*.pi-backup";
     public const string CertificateExtension = ".pi-cert";
+    public const string CertificatePattern = "*.pi-cert";
     public const string SignatureRequestExtension = ".pi-sig-req";
     public const string SignatureRequestDataExtension = ".pi-sig-req-data";
     public const string SignatureRequestInfoExtension = ".pi-sig-req-info";

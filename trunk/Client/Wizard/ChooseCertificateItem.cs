@@ -97,7 +97,7 @@ namespace Pirate.PiVote.Client
       DirectoryInfo directory = new DirectoryInfo(Status.DataPath);
       this.certificateList.Items.Clear();
 
-      foreach (FileInfo file in directory.GetFiles("*.pi-cert"))
+      foreach (FileInfo file in directory.GetFiles(Files.CertificatePattern))
       {
         try
         {

@@ -246,6 +246,17 @@
     <Compile Include="MultiLanguage\MultiLanguageTextBox.Designer.cs">
       <DependentUpon>MultiLanguageTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Printing\DocumentTest.cs" />
+    <Compile Include="Printing\DrawObject.cs" />
+    <Compile Include="Printing\SignatureRequestDocument.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Printing\SignObject.cs" />
+    <Compile Include="Printing\StringObject.cs" />
+    <Compile Include="Printing\Table.cs" />
+    <Compile Include="Printing\TableCell.cs" />
+    <Compile Include="Printing\TableColumn.cs" />
+    <Compile Include="Printing\TableRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exception\PiException.cs" />
     <Compile Include="Rpc\Clients\CheckShares.cs" />

@@ -25,6 +25,7 @@ namespace Pirate.PiVote.CaGui
     private int refusedPersonNoPirateIndex;
     private int refusedPersonNotInOfficeIndex;
     private int refusedRequestNotValidIndex;
+    private bool expiryDateEnable;
   
     public SignDialog()
     {
@@ -50,20 +51,70 @@ namespace Pirate.PiVote.CaGui
       Close();
     }
 
-    public void Display(CertificateAuthorityEntry entry, CertificateStorage storage, Certificate caCertificate)
+    public void Display(CertificateAuthorityEntry entry, CertificateStorage storage, Certificate caCertificate, IEnumerable<CertificateAuthorityEntry> allEntries)
     {
       Certificate certificate = entry.Certificate;
       SignatureRequest request = entry.RequestValue(caCertificate);
 
       this.idTextBox.Text = certificate.Id.ToString();
       this.typeTextBox.Text = certificate.TypeText;
-      this.nameTextBox.Text = certificate.FullName;
+      this.nameTextBox.Text = request.FullName;
       this.emailAddressTextBox.Text = request.EmailAddress;
       this.cantonTextBox.Text = certificate is VoterCertificate ? ((VoterCertificate)certificate).GroupId.ToString() : "N/A";
       this.fingerprintTextBox.Text = certificate.Fingerprint;
       this.language = certificate.Language;
 
-      if (entry.Request.VerifySimple())
+      bool requestValid = true;
+
+      if (request is SignatureRequest2)
+      {
+        SignatureRequest2 request2 = (SignatureRequest2)request;
+        CertificateAuthorityEntry signingEntry = allEntries.Where(e => e.Certificate.IsIdentic(request2.SigningCertificate)).FirstOrDefault();
+        requestValid &= signingEntry != null;
+        requestValid &= signingEntry.Certificate.Fingerprint == request2.SigningCertificate.Fingerprint;
+
+        this.signedByIdTextBox.Text = request2.SigningCertificate.Id.ToString();
+        this.signedByFingerprintTextBox.Text = request2.SigningCertificate.Fingerprint;
+
+        if (signingEntry != null)
+        {
+          SignatureRequest signingRequest = signingEntry.Request.Value.Decrypt(caCertificate);
+
+          this.signedByNameTextBox.Text = signingRequest.FullName;
+          this.signedByEmailAddressTextBox.Text = signingRequest.EmailAddress;
+
+          this.validUntilPicker.Value = request2.SigningCertificate.ExpectedValidUntil(storage, DateTime.Now);
+          this.validUntilPicker.Enabled = false;
+          this.expiryDateEnable = false;
+        }
+        else
+        {
+          this.signedByNameTextBox.Text = "N/A";
+          this.signedByEmailAddressTextBox.Text = "N/A";
+          this.expiryDateEnable = true;
+        }
+
+        var result = request2.SigningCertificate.Validate(storage);
+        requestValid &= result == CertificateValidationResult.Valid;
+        this.signedByStatusTextBox.Text = result.ToString();
+        this.signedByStatusTextBox.BackColor = result == CertificateValidationResult.Valid ? Color.Green : Color.Red;
+
+        bool signatureValid = request2.IsSignatureValid();
+        requestValid &= signatureValid;
+        this.signedBySignatureTextBox.Text = signatureValid ? "Valid" : "Invalid";
+        this.signedBySignatureTextBox.BackColor = signatureValid ? Color.Green : Color.Red;
+      }
+      else
+      {
+        this.signedByIdTextBox.Text = "N/A";
+        this.signedByFingerprintTextBox.Text = "N/A";
+        this.signedByNameTextBox.Text = "N/A";
+        this.signedByEmailAddressTextBox.Text = "N/A";
+        this.signedByStatusTextBox.Text = "N/A";
+        this.signedBySignatureTextBox.Text = "N/A";
+      }
+
+      if (requestValid && entry.Request.VerifySimple())
       {
         LibraryResources.Culture = Language.English.ToCulture();
         this.refusedFingerprintNoMatchIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedFingerprintNoMatch);
@@ -120,14 +171,14 @@ namespace Pirate.PiVote.CaGui
 
     private void acceptSignRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-      this.validUntilPicker.Enabled = this.acceptSignRadioButton.Checked;
+      this.validUntilPicker.Enabled = this.acceptSignRadioButton.Checked && this.expiryDateEnable;
       this.reasonComboBox.Enabled = this.refuseRadioButton.Checked;
       CheckValid();
     }
 
     private void refuseRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-      this.validUntilPicker.Enabled = this.acceptSignRadioButton.Checked;
+      this.validUntilPicker.Enabled = this.acceptSignRadioButton.Checked && this.expiryDateEnable;
       this.reasonComboBox.Enabled = this.refuseRadioButton.Checked;
       CheckValid();
     }

@@ -523,7 +523,7 @@ namespace Pirate.PiVote.CaGui
         CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
 
         SignDialog dialog = new SignDialog();
-        dialog.Display(entry, CertificateStorage, Certificate);
+        dialog.Display(entry, CertificateStorage, Certificate, Items.Keys);
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {

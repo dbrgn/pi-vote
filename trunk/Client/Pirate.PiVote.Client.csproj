@@ -127,17 +127,6 @@
     <Compile Include="Phassphrase\EncryptPrivateKeyDialog.Designer.cs">
       <DependentUpon>EncryptPrivateKeyDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Printing\SignObject.cs" />
-    <Compile Include="Printing\TableRow.cs" />
-    <Compile Include="Printing\TableColumn.cs" />
-    <Compile Include="Printing\Table.cs" />
-    <Compile Include="Printing\DrawObject.cs" />
-    <Compile Include="Printing\StringObject.cs" />
-    <Compile Include="Printing\DocumentTest.cs" />
-    <Compile Include="Printing\SignatureRequestDocument.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Printing\TableCell.cs" />
     <Compile Include="Resources.de-DE.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

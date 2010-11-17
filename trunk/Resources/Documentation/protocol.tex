@@ -1,0 +1,590 @@
+% This file was converted to LaTeX by Writer2LaTeX ver. 1.0.2
+% see http://writer2latex.sourceforge.net for more info
+\documentclass[a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb,amsfonts,textcomp}
+\usepackage{color}
+\usepackage{array}
+\usepackage{supertabular}
+\usepackage{hhline}
+\usepackage{hyperref}
+\hypersetup{pdftex, colorlinks=true, linkcolor=blue, citecolor=blue, filecolor=blue, urlcolor=blue, pdftitle=, pdfauthor=, pdfsubject=, pdfkeywords=}
+% Outline numbering
+\setcounter{secnumdepth}{0}
+\makeatletter
+\newcommand\arraybslash{\let\\\@arraycr}
+\makeatother
+% Page layout (geometry)
+\setlength\voffset{-1in}
+\setlength\hoffset{-1in}
+\setlength\topmargin{2cm}
+\setlength\oddsidemargin{2cm}
+\setlength\textheight{25.7cm}
+\setlength\textwidth{17.001cm}
+\setlength\footskip{0.0cm}
+\setlength\headheight{0cm}
+\setlength\headsep{0cm}
+% Footnote rule
+\setlength{\skip\footins}{0.119cm}
+\renewcommand\footnoterule{\vspace*{-0.018cm}\setlength\leftskip{0pt}\setlength\rightskip{0pt plus 1fil}\noindent\textcolor{black}{\rule{0.25\columnwidth}{0.018cm}}\vspace*{0.101cm}}
+% Pages styles
+\makeatletter
+\newcommand\ps@Standard{
+  \renewcommand\@oddhead{}
+  \renewcommand\@evenhead{}
+  \renewcommand\@oddfoot{}
+  \renewcommand\@evenfoot{}
+  \renewcommand\thepage{\arabic{page}}
+}
+\makeatother
+\pagestyle{Standard}
+\setlength\tabcolsep{1mm}
+\renewcommand\arraystretch{1.3}
+\title{}
+\author{}
+\date{2010-11-09T19:50:18.91}
+\begin{document}
+\section{Pi-Vote Protocol Documentation}
+{\sffamily
+The following documents describes the protocol used by the Pi-Vote
+secure eVoting system.}
+
+\subsection{RPC}
+{\sffamily
+Pi-Vote uses an Remote Procedure Call protocol over TCP. To establish
+communication the client opens a TCP connection to the server. All
+action is initiated by the client sending a request. The server
+processes these request and answers each one with a response.}
+
+\subsubsection{Messages}
+{\sffamily
+Both request and response are messages which use a common transmission
+format.}
+
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{2.7159998cm}|m{2.225cm}|m{11.459001cm}|}
+\hline
+\sffamily\bfseries Part &
+\sffamily\bfseries Type &
+\sffamily\bfseries Usage\\\hline
+\sffamily Length &
+\sffamily Int32 &
+\sffamily Contains the length of the following data.\\\hline
+\sffamily Data &
+\sffamily Byte[] &
+\sffamily Contains the serialized message data.\\\hline
+\end{supertabular}
+\end{center}
+
+\bigskip
+
+{\sffamily
+The Data contains a serialized message as described below.}
+
+\subsubsection{Formats}
+{\sffamily
+All Formats are binary serialized objects.}
+
+\subsubsection{Basic Types}
+{\sffamily
+Basic data types are serialized as follows.}
+
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{2.582cm}|m{14.026cm}|}
+\hline
+\sffamily\bfseries Type &
+\sffamily\bfseries Serialization\\\hline
+\sffamily Int32 &
+\sffamily 4 byte signed integer written in little endian format.\\\hline
+\sffamily UInt32 &
+\sffamily 4 byte unsigned integer written in little endian
+format.\\\hline
+\sffamily Int64 &
+\sffamily 8 byte signed integer written in little endian format.\\\hline
+\sffamily UInt64 &
+\sffamily 8 byte unsigned integer written in little endian
+format.\\\hline
+\sffamily Float &
+\sffamily 4 byte floating point written as per IEEE 754\\\hline
+\sffamily Double &
+\sffamily 8 byte floating point written as per IEEE 754\\\hline
+\sffamily Bool &
+\sffamily 1 byte boolean written as 0 when false and 1 when true\\\hline
+\sffamily String &
+\sffamily String written as UInt32 length followed by UTF8 encoded
+string data\\\hline
+\sffamily Byte[] &
+\sffamily Byte array written as bytes\\\hline
+\sffamily DateTime &
+\sffamily The number of 100-nanosecond intervals that have elapsed since
+12:00:00 midnight, January 1, 0001 written as Int64\\\hline
+\sffamily Guid &
+\sffamily 16 byte integer written as Byte[]\\\hline
+\sffamily BigInt &
+\sffamily Arbitrary-sized integer as specified by GMP written as
+Byte[]\\\hline
+\end{supertabular}
+\end{center}
+
+\bigskip
+
+\subsubsection{Composites}
+{\sffamily
+Simple composite values are serialized as follows.}
+
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{4.1200004cm}|m{12.488cm}|}
+\hline
+\sffamily\bfseries Type &
+\sffamily\bfseries Serialization\\\hline
+\sffamily Language &
+\sffamily Language enumeration written as Int32. Values are 0 for
+English, 1 for German, 2 for French and 3 for Italien.\\\hline
+\sffamily MultiLanguageString &
+\sffamily String in several languages written as the number of languages
+contained followed by a pair of Language and String.\\\hline
+\sffamily List{\textless}Byte[]{\textgreater} &
+\sffamily List of byte arrays written as number of arrays as Int32
+followed by each Byte[]\\\hline
+\sffamily List{\textless}Guid{\textgreater} &
+\sffamily List of Guids written as number of Guids as Int32 followed by
+each Guid\\\hline
+\sffamily Serializable &
+\sffamily Serializable object written as string representing its final
+type or an empty string if the object is null followed by any object
+fields.\\\hline
+\sffamily List{\textless}Serializable{\textgreater} &
+\sffamily List of Serializables written as number of Serializables as
+Int32 followed by each \ Serializable\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\clearpage\subsubsection{Containers}
+{\sffamily
+The following describes container types used to convey information
+exchanged by Pi-Vote.}
+
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{3.27cm}|m{3.4199998cm}|m{9.711cm}|}
+\hline
+\multicolumn{3}{|m{16.800999cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.Proof : Serializable}\\\hline
+\sffamily T0 &
+\sffamily BigInt &
+\sffamily Whitness\\\hline
+\sffamily C0 &
+\sffamily Int32 &
+\sffamily Challange\\\hline
+\sffamily S0 &
+\sffamily BigInt &
+\sffamily Response\\\hline
+\end{supertabular}
+\end{center}
+
+\bigskip
+
+
+\bigskip
+
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{3.27cm}|m{3.4199998cm}|m{9.711cm}|}
+\hline
+\multicolumn{3}{|m{16.800999cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.RangeProof : Serializable}\\\hline
+\sffamily T0 &
+\sffamily BigInt &
+\sffamily Witness for votum equals 0\\\hline
+\sffamily T1 &
+\sffamily BigInt &
+\sffamily Witness for votum equals 1\\\hline
+\sffamily C &
+\sffamily Int32 &
+\sffamily Or-Challenge\\\hline
+\sffamily C0 &
+\sffamily Int32 &
+\sffamily Challenge for vote equals 0\\\hline
+\sffamily C1 &
+\sffamily Int32 &
+\sffamily Challenge for vote equals 1\\\hline
+\sffamily S0 &
+\sffamily BigInt &
+\sffamily Response for vote equals 0\\\hline
+\sffamily S1 &
+\sffamily BigInt &
+\sffamily Response for vote equals 1\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{3.27cm}|m{3.4199998cm}|m{9.711cm}|}
+\hline
+\multicolumn{3}{|m{16.800999cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.Vote : Serializable}\\\hline
+\sffamily HalfKey &
+\sffamily BigInt &
+\sffamily Diffie-Hellman halfkey\\\hline
+\sffamily Ciphertext &
+\sffamily BigInt &
+\sffamily Ciphertext\\\hline
+\sffamily P &
+\sffamily BigInt &
+\sffamily Prime number defining the modular arithmetic\\\hline
+\sffamily RangeProves &
+\sffamily List{\textless}RangeProof{\textgreater} &
+\sffamily All range proves for this vote\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{5.1410003cm}|m{1.548cm}|m{9.711cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.Share : Serializable}\\\hline
+\sffamily Value &
+\sffamily BigInt &
+\sffamily Value of share\\\hline
+\sffamily SourceAuthorityIndex &
+\sffamily Int32 &
+\sffamily Index of issuing authority\\\hline
+\sffamily DestinationAuthorityIndex &
+\sffamily Int32 &
+\sffamily Index of receiving authority\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{3.455cm}|m{3.234cm}|m{9.711cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.Ballot : Serializable}\\\hline
+\sffamily Votes &
+\sffamily List{\textless}Vote{\textgreater} &
+\sffamily Votes for each option\\\hline
+\sffamily SumProves &
+\sffamily List{\textless}Proof{\textgreater} &
+\sffamily Proofs of sum of votes cast\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{3.455cm}|m{3.234cm}|m{9.711cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.PartialDecipher : Serializable}\\\hline
+\sffamily QuestionIndex &
+\sffamily Int32 &
+\sffamily Index of the question in question\\\hline
+\sffamily OptionIndex &
+\sffamily Int32 &
+\sffamily Index of the option in question\\\hline
+\sffamily AuthorityIndex &
+\sffamily Int32 &
+\sffamily Index of the deciphering authority\\\hline
+\sffamily GroupIndex &
+\sffamily Int32 &
+\sffamily Index of the partial decipher group\\\hline
+\sffamily Value &
+\sffamily BigInt &
+\sffamily Value of the partial decipher\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{4.513cm}|m{2.1759999cm}|m{9.711cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.VerificationValue : Serializable}\\\hline
+\sffamily Value &
+\sffamily BigInt &
+\sffamily Value used to verify shares\\\hline
+\sffamily SourceAuthorityIndex &
+\sffamily Int32 &
+\sffamily Index of the issuing authority\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{4.511cm}|m{2.1759999cm}|m{9.713cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.Signature : Serializable}\\\hline
+\sffamily SignerId &
+\sffamily Guid &
+\sffamily Certificate id of the signer\\\hline
+\sffamily Data &
+\sffamily Byte[] &
+\sffamily Signature data\\\hline
+\sffamily ValidFrom &
+\sffamily DateTime &
+\sffamily This signature is valid from then on\\\hline
+\sffamily ValidUntil &
+\sffamily DateTime &
+\sffamily This signature is valid until then\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{4.511cm}m{2.1759999cm}m{9.713cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.CertificateAttribute : Serializable}\\\hline
+\multicolumn{1}{|m{4.511cm}|}{\sffamily Name} &
+\multicolumn{1}{m{2.1759999cm}|}{\sffamily Int32} &
+\sffamily None = 0, GroupId = 1, Language = 2\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{4.511cm}m{2.1759999cm}m{9.713cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.Int32CertificateAttribute :
+\ CertificateAttribute}\\\hline
+\multicolumn{1}{|m{4.511cm}|}{\sffamily Value} &
+\multicolumn{1}{m{2.1759999cm}|}{\sffamily Int32} &
+~
+\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{4.511cm}m{2.1759999cm}m{9.713cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.BooleanCertificateAttribute :
+CertificateAttribute}\\\hline
+\multicolumn{1}{|m{4.511cm}|}{\sffamily Value} &
+\multicolumn{1}{m{2.1759999cm}|}{\sffamily Bool} &
+~
+\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection[]{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{4.511cm}m{2.1759999cm}m{9.713cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.StringCertificateAttribute :
+CertificateAttribute}\\\hline
+\multicolumn{1}{|m{4.511cm}|}{\sffamily Value} &
+\multicolumn{1}{m{2.1759999cm}|}{\sffamily String} &
+~
+\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{flushright}
+\tablehead{}
+\begin{supertabular}{|m{3.541cm}|m{4.033cm}|m{8.808001cm}|}
+\hline
+\multicolumn{3}{|m{16.782cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.Certificate : Serializable}\\\hline
+\sffamily MagicTypeConstant &
+\sffamily Byte[] &
+\sffamily Static data dependent of the certificate type\\\hline
+\sffamily Id &
+\sffamily Guid &
+\sffamily Id of the certificate\\\hline
+\sffamily CreationDate &
+\sffamily DateTime &
+\sffamily Creation date of the certificate\\\hline
+\sffamily PublicKey &
+\sffamily Byte[] &
+\sffamily Data generated by ExportCspBlob(false) See Mono documentation
+for details\\\hline
+\sffamily SelfSignature &
+\sffamily Byte[] &
+\sffamily Signature of the certificate itself over the certificate
+data\\\hline
+\sffamily Attributes &
+\sffamily List{\textless}CertificateAttribute{\textgreater} &
+\sffamily List of attributes of the certificate\\\hline
+\sffamily Signatures &
+\sffamily List{\textless}Signature{\textgreater} &
+\sffamily List of signatures affixed to the certificate\\\hline
+\sffamily PrivateKeyStatus &
+\sffamily Int32 &
+\sffamily Status of the private key. Unavailable = 0, Unencrypted = 1,
+Encrypted = 2, Decrypted = 3\\\hline
+\sffamily PrivateKeyData &
+\sffamily Byte[] &
+\sffamily Data generated by ExportCspBlob(true) See Mono documentation
+for details. When PrivateKeyStatus = Encrypted then encrypted with AES
+and a key generated according Rfc2898 from the passphrase with the
+PassphraseSalt and PrivateKeySalt as IV.\\\hline
+\sffamily PrivateKeySalt &
+\sffamily Byte[] &
+\sffamily Salt for the AES encryption of private key data.\\\hline
+\sffamily PassphraseSalt &
+\sffamily Byte[] &
+\sffamily Salt for Rfc2898 generation of a key from a passphrase\\\hline
+\sffamily Comment &
+\multicolumn{2}{m{13.041cm}|}{\sffamily When create a signature the data
+used consists of MagicTypeConstant, CreationDate, Id, PublicKey and any
+attributes in binary plus other data added by subtypes of
+Certificate.}\\\hline
+\sffamily Comment &
+\multicolumn{2}{m{13.041cm}|}{\sffamily Encryption with a certificate
+means encrypting with AES256 in CBC mode and ISO10126 padding using
+random key and random IV. The key is then encrypted using RSA with OEAP
+padding. The final data consists of the encrypted key concatenated with
+the IV and the encrypted data.}\\\hline
+\sffamily Comment &
+\multicolumn{2}{m{13.041cm}|}{\sffamily Signing with a certificate means
+creating an RSA-SHA256 signature.}\\\hline
+\end{supertabular}
+\end{flushright}
+\subsubsection{}
+\begin{flushright}
+\tablehead{}
+\begin{supertabular}{|m{3.541cm}|m{4.033cm}m{8.808001cm}|}
+\hline
+\multicolumn{3}{|m{16.782cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.AdminCertificate : Certificate}\\\hline
+\sffamily FullName &
+\multicolumn{1}{m{4.033cm}|}{\sffamily String} &
+\sffamily Full name of the administrator.\\\hline
+\sffamily Comment &
+\multicolumn{2}{m{13.041cm}|}{\sffamily When create a signature the
+FullName is added to data signed data}\\\hline
+\sffamily Comment &
+\multicolumn{2}{m{13.041cm}|}{\sffamily MagicTypeConstant is UTF8
+encoding of
+{\textquotedblleft}AdminCertificate{\textquotedblright}}\\\hline
+\end{supertabular}
+\end{flushright}
+\subsubsection[]{}
+\begin{flushright}
+\tablehead{}
+\begin{supertabular}{|m{3.541cm}|m{4.033cm}m{8.808001cm}|}
+\hline
+\multicolumn{3}{|m{16.782cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.AuthorityCertificate : Certificate}\\\hline
+\sffamily FullName &
+\multicolumn{1}{m{4.033cm}|}{\sffamily String} &
+\sffamily Full name of the administrator.\\\hline
+\sffamily Comment &
+\multicolumn{2}{m{13.041cm}|}{\sffamily When create a signature the
+FullName is added to data signed data}\\\hline
+\sffamily Comment &
+\multicolumn{2}{m{13.041cm}|}{\sffamily MagicTypeConstant is UTF8
+encoding of
+{\textquotedblleft}AuthorityCertificate{\textquotedblright}}\\\hline
+\end{supertabular}
+\end{flushright}
+\subsubsection{}
+\begin{flushright}
+\tablehead{}
+\begin{supertabular}{|m{3.541cm}|m{4.033cm}m{8.808001cm}|}
+\hline
+\multicolumn{3}{|m{16.782cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.ServerCertificate : Certificate}\\\hline
+\sffamily FullName &
+\multicolumn{1}{m{4.033cm}|}{\sffamily String} &
+\sffamily Full name of the administrator.\\\hline
+\sffamily Comment &
+\multicolumn{2}{m{13.041cm}|}{\sffamily When create a signature the
+FullName is added to data signed data}\\\hline
+\sffamily Comment &
+\multicolumn{2}{m{13.041cm}|}{\sffamily MagicTypeConstant is UTF8
+encoding of
+{\textquotedblleft}ServerCertificate{\textquotedblright}}\\\hline
+\end{supertabular}
+\end{flushright}
+\subsubsection{}
+\begin{flushright}
+\tablehead{}
+\begin{supertabular}{|m{3.541cm}|m{13.042cm}|}
+\hline
+\multicolumn{2}{|m{16.782999cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.VoterCertificate : Certificate}\\\hline
+\sffamily Comment &
+\sffamily When create a signature no additional data is added to data
+signed data\\\hline
+\sffamily Comment &
+\sffamily MagicTypeConstant is UTF8 encoding of
+{\textquotedblleft}VoterCertificate{\textquotedblright}\\\hline
+\end{supertabular}
+\end{flushright}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{4.511cm}m{2.1759999cm}m{9.713cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.BooleanCertificateAttribute :
+CertificateAttribute}\\\hline
+\multicolumn{1}{|m{4.511cm}|}{\sffamily Value} &
+\multicolumn{1}{m{2.1759999cm}|}{\sffamily Bool} &
+~
+\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{4.511cm}|m{2.1759999cm}|m{9.713cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.Signed{\textless}ObjectType{\textgreater} :
+Serializable}\\\hline
+\sffamily Data &
+\sffamily Byte[] &
+\sffamily Binary data of serializable object of type ObjectType\\\hline
+\sffamily Signature &
+\sffamily Byte[] &
+\sffamily Signature over Data by the certificate\\\hline
+\sffamily CertificateData &
+\sffamily Byte[] &
+\sffamily Binary data of the certificate without private key
+data\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{4.511cm}|m{2.202cm}|m{9.687cm}|}
+\hline
+\multicolumn{3}{|m{16.8cm}|}{\sffamily\bfseries
+Pirate.PiVote.Crypto.Encrypted{\textless}ObjectType{\textgreater} :
+Serializable}\\\hline
+\sffamily ReceiverId &
+\sffamily Guid &
+\sffamily Id of the intended receiver\\\hline
+\sffamily Data &
+\sffamily Byte[] &
+\sffamily Encrypted data of a serialized object of type
+ObjectType\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection{}
+\begin{center}
+\tablehead{}
+\begin{supertabular}{|m{16.8cm}|}
+\hline
+\sffamily\bfseries
+Pirate.PiVote.Crypto.Secure{\textless}ObjectType{\textgreater} :
+Signed{\textless}Encrypted{\textless}ObjectType{\textgreater}{\textgreater}\\\hline
+\end{supertabular}
+\end{center}
+\subsubsection[]{}
+\clearpage\subsubsection{Messages}
+\end{document}

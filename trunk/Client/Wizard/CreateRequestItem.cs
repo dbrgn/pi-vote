@@ -16,6 +16,7 @@ using System.Net;
 using System.Threading;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Printing;
 
 namespace Pirate.PiVote.Client
 {
@@ -109,7 +110,7 @@ namespace Pirate.PiVote.Client
         = new SignatureRequestInfo(
           this.emailAddressTextBox.Text);
 
-      SignatureRequestDocument document = new SignatureRequestDocument(signatureRequest, Status.Certificate, Status);
+      SignatureRequestDocument document = new SignatureRequestDocument(signatureRequest, Status.Certificate, Status.GetGroupName);
       PrintDialog printDialog = new PrintDialog();
       printDialog.Document = document;
 

@@ -122,6 +122,42 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Determines until when the signature will be valid if ever.
+    /// The date may lay in the past if it is not valid any more.
+    /// </summary>
+    /// <param name="objectData">Data to check against.</param>
+    /// <param name="certificateStorage">Storage of certificates.</param>
+    /// <param name="date">Date at which the signers certificate must be valid.</param>
+    /// <returns>Date after which the signature expires.</returns>
+    public DateTime ExpectedValidUntil(byte[] objectData, ICertificateStorage certificateStorage, DateTime date)
+    {
+      if (certificateStorage.Has(SignerId))
+      {
+        Certificate signer = certificateStorage.Get(SignerId);
+
+        if (signer.VerifySimple(AssmblySigningData(objectData), Data))
+        {
+          if (signer.Validate(certificateStorage, date) == CertificateValidationResult.Valid)
+          {
+            return ValidUntil;
+          }
+          else
+          {
+            return DateTime.MinValue;
+          }
+        }
+        else
+        {
+          return DateTime.MinValue;
+        }
+      }
+      else
+      {
+        return DateTime.MinValue;
+      }
+    }
+
+    /// <summary>
     /// Assembles the data to be signed.
     /// </summary>
     /// <param name="objectData">Data of the object to be signed.</param>

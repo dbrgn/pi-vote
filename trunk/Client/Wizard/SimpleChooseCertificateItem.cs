@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Threading;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Serialization;
+using Pirate.PiVote.Printing;
 
 namespace Pirate.PiVote.Client
 {
@@ -180,6 +181,42 @@ namespace Pirate.PiVote.Client
       this.createButton.Enabled = enable;
     }
 
+    private Certificate TryFindValidParentCertificate()
+    {
+      if (Status.Certificate != null &&
+        Status.Certificate is VoterCertificate)
+      {
+        DirectoryInfo directory = new DirectoryInfo(Status.DataPath);
+        List<Certificate> candidates = new List<Certificate>();
+
+        foreach (FileInfo file in directory.GetFiles(Files.CertificatePattern))
+        {
+          try
+          {
+            Certificate certificate = Serializable.Load<Certificate>(file.FullName);
+
+            if (certificate is VoterCertificate &&
+              ((VoterCertificate)certificate).GroupId != ((VoterCertificate)Status.Certificate).GroupId &&
+              certificate.Validate(Status.CertificateStorage) == CertificateValidationResult.Valid)
+            {
+              candidates.Add(certificate);
+            }
+          }
+          catch
+          {
+          }
+        }
+
+        return candidates
+          .OrderByDescending(candidate => candidate.ExpectedValidUntil(Status.CertificateStorage, DateTime.Now))
+          .FirstOrDefault();
+      }
+      else
+      {
+        return null;
+      }
+    }
+
     private void createButton_Click(object sender, EventArgs e)
     {
       this.run = true;
@@ -198,7 +235,38 @@ namespace Pirate.PiVote.Client
         Status.CertificateFileName = Path.Combine(Status.DataPath, Status.Certificate.Id.ToString() + Files.CertificateExtension);
         Status.Certificate.Save(Status.CertificateFileName);
 
-        this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
+        Certificate parentCertificate = TryFindValidParentCertificate();
+
+        if (parentCertificate != null)
+        {
+          DateTime parentValidUntil = parentCertificate.ExpectedValidUntil(Status.CertificateStorage, DateTime.Now);
+          DialogResult result = DialogResult.Yes;
+
+          while (result == DialogResult.Yes)
+          {
+            result = MessageForm.Show(
+              string.Format(Resources.AskToSignSignatureRequestWithParent, parentValidUntil),
+              Resources.MessageBoxTitle,
+              MessageBoxButtons.YesNo,
+              MessageBoxIcon.Question,
+              DialogResult.Yes);
+
+            if (result == DialogResult.Yes &&
+              DecryptPrivateKeyDialog.TryDecryptIfNessecary(parentCertificate, string.Empty))
+            {
+              this.signatureRequest = new SignatureRequest2(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text, parentCertificate);
+              result = DialogResult.OK;
+            }
+
+            parentCertificate.Lock();
+          }
+        }
+
+        if (this.signatureRequest == null)
+        {
+          this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
+        }
+
         this.signatureRequestInfo = new SignatureRequestInfo(this.emailNotificationCheckBox.Checked ? this.emailAddressTextBox.Text : string.Empty);
         this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, Status.Certificate);
         this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, Status.Certificate);
@@ -208,7 +276,15 @@ namespace Pirate.PiVote.Client
 
         this.run = false;
         OnUpdateWizard();
-        this.printButton.Enabled = true;
+
+        if (this.signatureRequest is SignatureRequest2)
+        {
+          this.uploadButton.Enabled = true;
+        }
+        else
+        {
+          this.printButton.Enabled = true;
+        }
       }
       else
       {
@@ -249,7 +325,7 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
       this.printButton.Enabled = false;
 
-      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, Status.Certificate, Status);
+      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, Status.Certificate, Status.GetGroupName);
       PrintDialog printDialog = new PrintDialog();
       printDialog.Document = document;
 

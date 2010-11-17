@@ -1411,6 +1411,258 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to □ Accepted, valid until __________________________.
+        /// </summary>
+        public static string SigningRequestDocumentAccepted {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fingerprint:.
+        /// </summary>
+        public static string SigningRequestDocumentCertificateFingerprint {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentCertificateFingerprint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Identifier:.
+        /// </summary>
+        public static string SigningRequestDocumentCertificateId {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentCertificateId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type:.
+        /// </summary>
+        public static string SigningRequestDocumentCertificateType {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentCertificateType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email address:.
+        /// </summary>
+        public static string SigningRequestDocumentEmailAddress {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentEmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Family name:.
+        /// </summary>
+        public static string SigningRequestDocumentFamilyName {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentFamilyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First name:.
+        /// </summary>
+        public static string SigningRequestDocumentFirstName {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentFirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gruppe:.
+        /// </summary>
+        public static string SigningRequestDocumentGroup {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to π-Vote.
+        /// </summary>
+        public static string SigningRequestDocumentHeaderLeft {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentHeaderLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pirate Party Switzerland.
+        /// </summary>
+        public static string SigningRequestDocumentHeaderRight {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentHeaderRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Based on certificate.
+        /// </summary>
+        public static string SigningRequestDocumentParent {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentParent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to □ Refused, fingerprint does not match.
+        /// </summary>
+        public static string SigningRequestDocumentRefusedFingerprintMismatch {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRefusedFingerprintMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to □ Refused, already has valid certificate.
+        /// </summary>
+        public static string SigningRequestDocumentRefusedHasCertificate {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRefusedHasCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to □ Refused, no member in group.
+        /// </summary>
+        public static string SigningRequestDocumentRefusedNoPirate {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRefusedNoPirate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to □ Refused, not in office.
+        /// </summary>
+        public static string SigningRequestDocumentRefusedNotFx {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRefusedNotFx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request for certificate signing.
+        /// </summary>
+        public static string SigningRequestDocumentRequest {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to □ Revoked, passphrase forgotten.
+        /// </summary>
+        public static string SigningRequestDocumentRevokedForgotten {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRevokedForgotten", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to □ Revoked, presumed lost.
+        /// </summary>
+        public static string SigningRequestDocumentRevokedLost {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRevokedLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to □ Revoked, no longer member.
+        /// </summary>
+        public static string SigningRequestDocumentRevokedNoLonger {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRevokedNoLonger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to □ Revoked, no longer in office.
+        /// </summary>
+        public static string SigningRequestDocumentRevokedNoMoreFx {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRevokedNoMoreFx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to □ Revoked, presumed stolen.
+        /// </summary>
+        public static string SigningRequestDocumentRevokedStolen {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRevokedStolen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate Authority.
+        /// </summary>
+        public static string SigningRequestDocumentSignCA {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentSignCA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string SigningRequestDocumentSignDate {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentSignDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Authority.
+        /// </summary>
+        public static string SigningRequestDocumentSignFirstAuthority {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentSignFirstAuthority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requester.
+        /// </summary>
+        public static string SigningRequestDocumentSignRequester {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentSignRequester", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second Authority.
+        /// </summary>
+        public static string SigningRequestDocumentSignSecondAuthority {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentSignSecondAuthority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signature.
+        /// </summary>
+        public static string SigningRequestDocumentSignSignature {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentSignSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Third Authority.
+        /// </summary>
+        public static string SigningRequestDocumentSignThirdAuthority {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentSignThirdAuthority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aborted.
         /// </summary>
         public static string VotingStatusAborted {
