@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Printing;
 
 namespace Pirate.PiVote.CaGui
 {
@@ -26,6 +27,9 @@ namespace Pirate.PiVote.CaGui
     private int refusedPersonNotInOfficeIndex;
     private int refusedRequestNotValidIndex;
     private bool expiryDateEnable;
+    private bool needsToPrint;
+    private SignatureRequest request;
+    private Certificate certificate;
   
     public SignDialog()
     {
@@ -53,22 +57,22 @@ namespace Pirate.PiVote.CaGui
 
     public void Display(CertificateAuthorityEntry entry, CertificateStorage storage, Certificate caCertificate, IEnumerable<CertificateAuthorityEntry> allEntries)
     {
-      Certificate certificate = entry.Certificate;
-      SignatureRequest request = entry.RequestValue(caCertificate);
+      this.certificate = entry.Certificate;
+      this.request = entry.RequestValue(caCertificate);
 
-      this.idTextBox.Text = certificate.Id.ToString();
-      this.typeTextBox.Text = certificate.TypeText;
-      this.nameTextBox.Text = request.FullName;
-      this.emailAddressTextBox.Text = request.EmailAddress;
-      this.cantonTextBox.Text = certificate is VoterCertificate ? ((VoterCertificate)certificate).GroupId.ToString() : "N/A";
-      this.fingerprintTextBox.Text = certificate.Fingerprint;
-      this.language = certificate.Language;
+      this.idTextBox.Text = this.certificate.Id.ToString();
+      this.typeTextBox.Text = this.certificate.TypeText;
+      this.nameTextBox.Text = this.request.FullName;
+      this.emailAddressTextBox.Text = this.request.EmailAddress;
+      this.cantonTextBox.Text = this.certificate is VoterCertificate ? GroupList.GetGroupName(((VoterCertificate)this.certificate).GroupId) : "N/A";
+      this.fingerprintTextBox.Text = this.certificate.Fingerprint;
+      this.language = this.certificate.Language;
 
       bool requestValid = true;
 
-      if (request is SignatureRequest2)
+      if (this.request is SignatureRequest2)
       {
-        SignatureRequest2 request2 = (SignatureRequest2)request;
+        SignatureRequest2 request2 = (SignatureRequest2)this.request;
         CertificateAuthorityEntry signingEntry = allEntries.Where(e => e.Certificate.IsIdentic(request2.SigningCertificate)).FirstOrDefault();
         requestValid &= signingEntry != null;
         requestValid &= signingEntry.Certificate.Fingerprint == request2.SigningCertificate.Fingerprint;
@@ -86,12 +90,16 @@ namespace Pirate.PiVote.CaGui
           this.validUntilPicker.Value = request2.SigningCertificate.ExpectedValidUntil(storage, DateTime.Now);
           this.validUntilPicker.Enabled = false;
           this.expiryDateEnable = false;
+          this.printButton.Enabled = true;
+          this.needsToPrint = true;
         }
         else
         {
           this.signedByNameTextBox.Text = "N/A";
           this.signedByEmailAddressTextBox.Text = "N/A";
           this.expiryDateEnable = true;
+          this.printButton.Enabled = false;
+          this.needsToPrint = false;
         }
 
         var result = request2.SigningCertificate.Validate(storage);
@@ -165,8 +173,9 @@ namespace Pirate.PiVote.CaGui
 
     private void CheckValid()
     {
-      this.okButton.Enabled = (this.acceptSignRadioButton.Checked && this.validUntilPicker.Value > DateTime.Now) ||
-                              (this.reasonComboBox.Enabled && this.reasonComboBox.SelectedIndex >= 0);
+      this.okButton.Enabled = ((this.acceptSignRadioButton.Checked && this.validUntilPicker.Value > DateTime.Now) ||
+                              (this.reasonComboBox.Enabled && this.reasonComboBox.SelectedIndex >= 0)) &&
+                              !this.needsToPrint;
     }
 
     private void acceptSignRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -229,6 +238,24 @@ namespace Pirate.PiVote.CaGui
     public DateTime ValidUntil
     {
       get { return this.validUntilPicker.Value; }
+    }
+
+    private void printButton_Click(object sender, EventArgs e)
+    {
+      if (this.request == null)
+        throw new InvalidOperationException("Request is null.");
+
+      SignatureRequestDocument document = new SignatureRequestDocument(this.request, this.certificate, GroupList.GetGroupName);
+
+      PrintDialog dialog = new PrintDialog();
+      dialog.Document = document;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        document.Print();
+        this.needsToPrint = false;
+        CheckValid();
+      }
     }
   }
 }

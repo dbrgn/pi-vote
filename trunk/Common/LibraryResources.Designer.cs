@@ -1474,7 +1474,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gruppe:.
+        ///   Looks up a localized string similar to Group:.
         /// </summary>
         public static string SigningRequestDocumentGroup {
             get {

@@ -161,16 +161,6 @@ namespace Pirate.PiVote.Crypto
       {
         this.authorities.Add(index + 1, list.Authorities[index]);
       }
-
-      foreach (Certificate certificate in list.Certificates)
-      {
-        this.certificateStorage.Add(certificate);
-      }
-
-      foreach (Signed<RevocationList> signedRevocationList in list.RevocationLists)
-      {
-        this.certificateStorage.AddRevocationList(signedRevocationList);
-      }
     }
 
     /// <summary>

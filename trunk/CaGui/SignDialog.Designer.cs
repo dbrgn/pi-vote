@@ -61,12 +61,13 @@
       this.signedByStatusTextBox = new System.Windows.Forms.TextBox();
       this.signedBySignatureLabel = new System.Windows.Forms.Label();
       this.signedBySignatureTextBox = new System.Windows.Forms.TextBox();
+      this.printButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // validUntilLabel
       // 
       this.validUntilLabel.AutoSize = true;
-      this.validUntilLabel.Location = new System.Drawing.Point(10, 450);
+      this.validUntilLabel.Location = new System.Drawing.Point(10, 480);
       this.validUntilLabel.Name = "validUntilLabel";
       this.validUntilLabel.Size = new System.Drawing.Size(55, 14);
       this.validUntilLabel.TabIndex = 0;
@@ -75,7 +76,7 @@
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(463, 538);
+      this.cancelButton.Location = new System.Drawing.Point(463, 578);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
       this.cancelButton.TabIndex = 2;
@@ -87,7 +88,7 @@
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(382, 538);
+      this.okButton.Location = new System.Drawing.Point(382, 578);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(75, 23);
       this.okButton.TabIndex = 1;
@@ -138,7 +139,7 @@
       this.validUntilPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.validUntilPicker.Enabled = false;
-      this.validUntilPicker.Location = new System.Drawing.Point(93, 445);
+      this.validUntilPicker.Location = new System.Drawing.Point(93, 475);
       this.validUntilPicker.Name = "validUntilPicker";
       this.validUntilPicker.Size = new System.Drawing.Size(444, 20);
       this.validUntilPicker.TabIndex = 7;
@@ -224,7 +225,7 @@
       // acceptSignRadioButton
       // 
       this.acceptSignRadioButton.AutoSize = true;
-      this.acceptSignRadioButton.Location = new System.Drawing.Point(11, 421);
+      this.acceptSignRadioButton.Location = new System.Drawing.Point(11, 451);
       this.acceptSignRadioButton.Name = "acceptSignRadioButton";
       this.acceptSignRadioButton.Size = new System.Drawing.Size(105, 18);
       this.acceptSignRadioButton.TabIndex = 16;
@@ -238,7 +239,7 @@
       this.reasonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.reasonComboBox.Enabled = false;
       this.reasonComboBox.FormattingEnabled = true;
-      this.reasonComboBox.Location = new System.Drawing.Point(93, 504);
+      this.reasonComboBox.Location = new System.Drawing.Point(93, 534);
       this.reasonComboBox.Name = "reasonComboBox";
       this.reasonComboBox.Size = new System.Drawing.Size(444, 22);
       this.reasonComboBox.TabIndex = 17;
@@ -247,7 +248,7 @@
       // reasonLabel
       // 
       this.reasonLabel.AutoSize = true;
-      this.reasonLabel.Location = new System.Drawing.Point(10, 507);
+      this.reasonLabel.Location = new System.Drawing.Point(10, 537);
       this.reasonLabel.Name = "reasonLabel";
       this.reasonLabel.Size = new System.Drawing.Size(47, 14);
       this.reasonLabel.TabIndex = 18;
@@ -256,7 +257,7 @@
       // refuseRadioButton
       // 
       this.refuseRadioButton.AutoSize = true;
-      this.refuseRadioButton.Location = new System.Drawing.Point(11, 480);
+      this.refuseRadioButton.Location = new System.Drawing.Point(11, 510);
       this.refuseRadioButton.Name = "refuseRadioButton";
       this.refuseRadioButton.Size = new System.Drawing.Size(60, 18);
       this.refuseRadioButton.TabIndex = 19;
@@ -268,7 +269,7 @@
       // signedByFingerPrintLabel
       // 
       this.signedByFingerPrintLabel.AutoSize = true;
-      this.signedByFingerPrintLabel.Location = new System.Drawing.Point(12, 305);
+      this.signedByFingerPrintLabel.Location = new System.Drawing.Point(12, 310);
       this.signedByFingerPrintLabel.Name = "signedByFingerPrintLabel";
       this.signedByFingerPrintLabel.Size = new System.Drawing.Size(61, 14);
       this.signedByFingerPrintLabel.TabIndex = 27;
@@ -278,7 +279,7 @@
       // 
       this.signedByFingerprintTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.signedByFingerprintTextBox.Location = new System.Drawing.Point(94, 302);
+      this.signedByFingerprintTextBox.Location = new System.Drawing.Point(94, 307);
       this.signedByFingerprintTextBox.Multiline = true;
       this.signedByFingerprintTextBox.Name = "signedByFingerprintTextBox";
       this.signedByFingerprintTextBox.ReadOnly = true;
@@ -288,7 +289,7 @@
       // signedByEmailAddressLabel
       // 
       this.signedByEmailAddressLabel.AutoSize = true;
-      this.signedByEmailAddressLabel.Location = new System.Drawing.Point(12, 279);
+      this.signedByEmailAddressLabel.Location = new System.Drawing.Point(12, 284);
       this.signedByEmailAddressLabel.Name = "signedByEmailAddressLabel";
       this.signedByEmailAddressLabel.Size = new System.Drawing.Size(77, 14);
       this.signedByEmailAddressLabel.TabIndex = 25;
@@ -298,7 +299,7 @@
       // 
       this.signedByEmailAddressTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.signedByEmailAddressTextBox.Location = new System.Drawing.Point(94, 276);
+      this.signedByEmailAddressTextBox.Location = new System.Drawing.Point(94, 281);
       this.signedByEmailAddressTextBox.Name = "signedByEmailAddressTextBox";
       this.signedByEmailAddressTextBox.ReadOnly = true;
       this.signedByEmailAddressTextBox.Size = new System.Drawing.Size(444, 20);
@@ -316,7 +317,7 @@
       // signedByNameLabel
       // 
       this.signedByNameLabel.AutoSize = true;
-      this.signedByNameLabel.Location = new System.Drawing.Point(12, 253);
+      this.signedByNameLabel.Location = new System.Drawing.Point(12, 258);
       this.signedByNameLabel.Name = "signedByNameLabel";
       this.signedByNameLabel.Size = new System.Drawing.Size(37, 14);
       this.signedByNameLabel.TabIndex = 22;
@@ -326,7 +327,7 @@
       // 
       this.signedByNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.signedByNameTextBox.Location = new System.Drawing.Point(94, 250);
+      this.signedByNameTextBox.Location = new System.Drawing.Point(94, 255);
       this.signedByNameTextBox.Name = "signedByNameTextBox";
       this.signedByNameTextBox.ReadOnly = true;
       this.signedByNameTextBox.Size = new System.Drawing.Size(444, 20);
@@ -336,7 +337,7 @@
       // 
       this.signedByIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.signedByIdTextBox.Location = new System.Drawing.Point(94, 224);
+      this.signedByIdTextBox.Location = new System.Drawing.Point(94, 229);
       this.signedByIdTextBox.Name = "signedByIdTextBox";
       this.signedByIdTextBox.ReadOnly = true;
       this.signedByIdTextBox.Size = new System.Drawing.Size(444, 20);
@@ -346,7 +347,7 @@
       // 
       this.signedByLabel.AutoSize = true;
       this.signedByLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.signedByLabel.Location = new System.Drawing.Point(8, 207);
+      this.signedByLabel.Location = new System.Drawing.Point(8, 212);
       this.signedByLabel.Name = "signedByLabel";
       this.signedByLabel.Size = new System.Drawing.Size(122, 14);
       this.signedByLabel.TabIndex = 28;
@@ -355,7 +356,7 @@
       // signedByStatusLabel
       // 
       this.signedByStatusLabel.AutoSize = true;
-      this.signedByStatusLabel.Location = new System.Drawing.Point(12, 360);
+      this.signedByStatusLabel.Location = new System.Drawing.Point(12, 365);
       this.signedByStatusLabel.Name = "signedByStatusLabel";
       this.signedByStatusLabel.Size = new System.Drawing.Size(41, 14);
       this.signedByStatusLabel.TabIndex = 30;
@@ -365,7 +366,7 @@
       // 
       this.signedByStatusTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.signedByStatusTextBox.Location = new System.Drawing.Point(94, 357);
+      this.signedByStatusTextBox.Location = new System.Drawing.Point(94, 362);
       this.signedByStatusTextBox.Name = "signedByStatusTextBox";
       this.signedByStatusTextBox.ReadOnly = true;
       this.signedByStatusTextBox.Size = new System.Drawing.Size(444, 20);
@@ -374,7 +375,7 @@
       // signedBySignatureLabel
       // 
       this.signedBySignatureLabel.AutoSize = true;
-      this.signedBySignatureLabel.Location = new System.Drawing.Point(11, 386);
+      this.signedBySignatureLabel.Location = new System.Drawing.Point(11, 391);
       this.signedBySignatureLabel.Name = "signedBySignatureLabel";
       this.signedBySignatureLabel.Size = new System.Drawing.Size(56, 14);
       this.signedBySignatureLabel.TabIndex = 32;
@@ -384,18 +385,31 @@
       // 
       this.signedBySignatureTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.signedBySignatureTextBox.Location = new System.Drawing.Point(93, 383);
+      this.signedBySignatureTextBox.Location = new System.Drawing.Point(93, 388);
       this.signedBySignatureTextBox.Name = "signedBySignatureTextBox";
       this.signedBySignatureTextBox.ReadOnly = true;
       this.signedBySignatureTextBox.Size = new System.Drawing.Size(444, 20);
       this.signedBySignatureTextBox.TabIndex = 31;
       // 
+      // printButton
+      // 
+      this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.printButton.Enabled = false;
+      this.printButton.Location = new System.Drawing.Point(445, 414);
+      this.printButton.Name = "printButton";
+      this.printButton.Size = new System.Drawing.Size(92, 23);
+      this.printButton.TabIndex = 33;
+      this.printButton.Text = "&Print";
+      this.printButton.UseVisualStyleBackColor = true;
+      this.printButton.Click += new System.EventHandler(this.printButton_Click);
+      // 
       // SignDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(550, 573);
+      this.ClientSize = new System.Drawing.Size(550, 613);
       this.ControlBox = false;
+      this.Controls.Add(this.printButton);
       this.Controls.Add(this.signedBySignatureLabel);
       this.Controls.Add(this.signedBySignatureTextBox);
       this.Controls.Add(this.signedByStatusLabel);
@@ -432,9 +446,9 @@
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.KeyPreview = true;
       this.MaximizeBox = false;
-      this.MaximumSize = new System.Drawing.Size(2000, 600);
+      this.MaximumSize = new System.Drawing.Size(2000, 640);
       this.MinimizeBox = false;
-      this.MinimumSize = new System.Drawing.Size(400, 600);
+      this.MinimumSize = new System.Drawing.Size(400, 630);
       this.Name = "SignDialog";
       this.Text = "Verify Signature Request";
       this.Load += new System.EventHandler(this.CaNameDialog_Load);
@@ -479,5 +493,6 @@
     private System.Windows.Forms.TextBox signedByStatusTextBox;
     private System.Windows.Forms.Label signedBySignatureLabel;
     private System.Windows.Forms.TextBox signedBySignatureTextBox;
+    private System.Windows.Forms.Button printButton;
   }
 }

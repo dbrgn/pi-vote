@@ -25,10 +25,10 @@ namespace Pirate.PiVote.Printing
 
       SignatureRequestDocument document = new SignatureRequestDocument(request, voterCert, GetGroupName);
 
-      PrintDialog dlg = new PrintDialog();
-      dlg.Document = document;
+      PrintDialog dialog = new PrintDialog();
+      dialog.Document = document;
 
-      if (dlg.ShowDialog() == DialogResult.OK)
+      if (dialog.ShowDialog() == DialogResult.OK)
       {
         document.Print();
       }

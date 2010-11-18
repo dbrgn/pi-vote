@@ -129,6 +129,7 @@ namespace Pirate.PiVote.Printing
       table.AddColumn(bounds.Width - 200f);
 
       table.AddRow(LibraryResources.SigningRequestDocumentParent, 2, FontStyle.Bold);
+      table.AddRow(" ", 2);
       table.AddRow(LibraryResources.SigningRequestDocumentCertificateId, signingCertificate.Id.ToString());
       string fingerprint = signingCertificate.Fingerprint;
       string fingerprintLine1 = ReworkFingerprintLine(fingerprint.Substring(0, fingerprint.Length / 2));

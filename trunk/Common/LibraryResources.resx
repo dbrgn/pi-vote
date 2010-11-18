@@ -613,7 +613,7 @@
     <value>First name:</value>
   </data>
   <data name="SigningRequestDocumentGroup" xml:space="preserve">
-    <value>Gruppe:</value>
+    <value>Group:</value>
   </data>
   <data name="SigningRequestDocumentHeaderLeft" xml:space="preserve">
     <value>π-Vote</value>
