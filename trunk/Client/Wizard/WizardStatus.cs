@@ -97,9 +97,21 @@ namespace Pirate.PiVote.Client
       this.progress = progress;
       this.progress.Status = this;
 
-      this.dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Files.DataFolder);
-      if (!Directory.Exists(DataPath))
-        Directory.CreateDirectory(dataPath);
+      string portableDataPath = Path.Combine(Application.StartupPath, Files.PortableDataFolder);
+
+      if (Directory.Exists(portableDataPath))
+      {
+        this.dataPath = portableDataPath;
+      }
+      else
+      {
+        this.dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Files.DataFolder);
+
+        if (!Directory.Exists(this.dataPath))
+        {
+          Directory.CreateDirectory(this.dataPath);
+        }
+      }
 
       Config = new ClientConfig(Path.Combine(Application.StartupPath, ClientConfigFileName));
     }

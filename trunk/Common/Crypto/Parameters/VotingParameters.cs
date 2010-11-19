@@ -57,13 +57,22 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Create a new voting.
     /// </summary>
+    /// <param name="dataPath">Path where application data is stored.</param>
+    /// <param name="title">Title of this voting.</param>
+    /// <param name="description">Description of this voting.</param>
+    /// <param name="url">Url of the discussion of the voting.</param>
+    /// <param name="votingBeginDate">Date at which voting begins.</param>
+    /// <param name="votingEndDate">Date a which voting ends.</param>
+    /// <param name="groupId">Id of the group in which the voting takes place.</param>
     public VotingParameters(
+      string dataPath,
       MultiLanguageString title, 
       MultiLanguageString description, 
       MultiLanguageString url,
       DateTime votingBeginDate, 
       DateTime votingEndDate,
       int groupId)
+      : base(dataPath)
     {
       if (title == null)
         throw new ArgumentNullException("title");
@@ -82,10 +91,11 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Creates a set of test parameters.
     /// </summary>
+    /// <param name="dataPath">Path where application data is stored.</param>
     /// <returns>Test voting parameters</returns>
-    public static VotingParameters CreateTestParameters()
+    public static VotingParameters CreateTestParameters(string dataPath)
     {
-      VotingParameters parameters = new VotingParameters(512);
+      VotingParameters parameters = new VotingParameters(dataPath, 512);
       Question question = new Question(new MultiLanguageString("?"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty), 2);
       question.AddOption(new Option(new MultiLanguageString("A"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty)));
       question.AddOption(new Option(new MultiLanguageString("B"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty)));
@@ -103,8 +113,9 @@ namespace Pirate.PiVote.Crypto
     /// Must only be used for testing.
     /// </remarks>
     /// <param name="primeBits">Number of bits of the safe prime.</param>
-    private VotingParameters(int primeBits)
-      : base(primeBits)
+    /// <param name="dataPath">Path where application data is stored.</param>
+    private VotingParameters(string dataPath, int primeBits)
+      : base(dataPath, primeBits)
     {
       VotingId = Guid.NewGuid();
       Title = new MultiLanguageString("Test");

@@ -41,6 +41,15 @@ namespace Pirate.PiVote
     public const string SafePrimePattern = "*.pi-safeprime";
     public const string SafePrimeFileString = "{0}.pi-safeprime";
     public const string DataFolder = "PiVote";
+    public const string PortableDataFolder = "Data";
     public const string BakExtension = ".bak";
+
+    public static string TestDataPath
+    {
+      get
+      {
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), DataFolder);
+      }
+    }
   }
 }

@@ -278,10 +278,14 @@ namespace Pirate.PiVote.Client
       this.run = false;
     }
 
+    /// <summary>
+    /// Initilaizes the voting data.
+    /// </summary>
     private void Init()
     {
       this.votingParameters =
         new VotingParameters(
+          Status.DataPath,
           this.titleBox.Text,
           this.descriptionBox.Text,
           this.urlTextBox.Text,

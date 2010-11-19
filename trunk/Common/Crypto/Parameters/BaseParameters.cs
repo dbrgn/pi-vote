@@ -147,13 +147,14 @@ namespace Pirate.PiVote.Crypto
     /// This may take a very long time.
     /// May load safe primes from disk.
     /// </remarks>
+    /// <param name="dataPath">Path where application data is stored.</param>
     /// <param name="primeBits">Bit length of the numbers.</param>
-    public void GenerateNumbers(int primeBits)
+    public void GenerateNumbers(string dataPath, int primeBits)
     {
       BigInt prime = null;
       BigInt safePrime = null;
 
-      if (!Prime.TryLoadPregeneratedSafePrime(primeBits, out prime, out safePrime))
+      if (!Prime.TryLoadPregeneratedSafePrime(dataPath, primeBits, out prime, out safePrime))
       {
         Prime.FindPrimeAndSafePrimeThreaded(primeBits, out prime, out safePrime);
       }
@@ -164,18 +165,21 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Creates new parameters using standard parameters.
     /// </summary>
-    public BaseParameters()
-      : this(PrimeBits)
+    /// <param name="dataPath">Path where application data is stored.</param>
+    public BaseParameters(string dataPath)
+      : this(dataPath, PrimeBits)
     { }
 
     /// <summary>
     /// Creates new parameters using non-standard parameters.
     /// </summary>
-    public BaseParameters(int primeBits)
+    /// <param name="dataPath">Path where application data is stored.</param>
+    /// <param name="primeBits">Bit length of the numbers.</param>
+    public BaseParameters(string dataPath, int primeBits)
     {
       this.questions = new List<Question>();
 
-      GenerateNumbers(primeBits);
+      GenerateNumbers(dataPath, primeBits);
       SetParameters(StandardThereshold, StandardAuthorityCount, StandardProofCount);
     }
 

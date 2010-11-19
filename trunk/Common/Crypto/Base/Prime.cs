@@ -203,14 +203,13 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Tries to load a pregenerated safe prime.
     /// </summary>
+    /// <param name="dataPath">Path where application data is stored.</param>
     /// <param name="bitLength">Length of the prime.</param>
     /// <param name="prime">Prime loaded.</param>
     /// <param name="safePrime">Safe prime loaded.</param>
     /// <returns>Was a prime and safe prime found?</returns>
-    public static bool TryLoadPregeneratedSafePrime(int bitLength, out BigInt prime, out BigInt safePrime)
+    public static bool TryLoadPregeneratedSafePrime(string dataPath, int bitLength, out BigInt prime, out BigInt safePrime)
     {
-      string dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Files.DataFolder);
-
       var dataDirectory = new DirectoryInfo(dataPath);
       var files = dataDirectory.GetFiles(Files.SafePrimePattern);
 
@@ -251,7 +250,8 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Generates and stores prime and safe prime.
     /// </summary>
-    public static void GenerateAndStoreSafePrime()
+    /// <param name="dataPath">Path where application data is stored.</param>
+    public static void GenerateAndStoreSafePrime(string dataPath)
     {
 
       BigInt prime = null;
@@ -259,7 +259,6 @@ namespace Pirate.PiVote.Crypto
 
       Prime.FindPrimeAndSafePrimeThreaded(4096, out prime, out safePrime);
 
-      string dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Files.DataFolder);
       string fileName = Path.Combine(dataPath, string.Format(Files.SafePrimeFileString, DateTime.Now.Ticks));
       FileStream file = new FileStream(fileName, FileMode.Create, FileAccess.Write);
       SerializeContext context = new SerializeContext(file);

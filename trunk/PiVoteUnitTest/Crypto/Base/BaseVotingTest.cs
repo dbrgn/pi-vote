@@ -21,7 +21,7 @@ namespace Pirate.PiVote.UnitTest
     [TestInitialize()]
     public void MyTestInitialize()
     {
-      this.parameters = VotingParameters.CreateTestParameters();
+      this.parameters = VotingParameters.CreateTestParameters(Files.TestDataPath);
     }
 
     [TestCleanup()]
