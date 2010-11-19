@@ -63,13 +63,13 @@
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.searchDateActive = new System.Windows.Forms.CheckBox();
       this.searchTestBox = new System.Windows.Forms.TextBox();
-      this.searchTypeBox = new CertificateTypeBox();
-      this.searchStatusBox = new CertificateStatusBox();
       this.searchDateBox = new System.Windows.Forms.DateTimePicker();
       this.crlListView = new System.Windows.Forms.ListView();
       this.crlValidFromColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.crlValidUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.revokedCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.searchTypeBox = new Pirate.PiVote.CaGui.CertificateTypeBox();
+      this.searchStatusBox = new Pirate.PiVote.CaGui.CertificateStatusBox();
       this.mainMenu.SuspendLayout();
       this.entryListContextMenu.SuspendLayout();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -233,13 +233,14 @@
       this.entryListView.FullRowSelect = true;
       this.entryListView.HideSelection = false;
       this.entryListView.Location = new System.Drawing.Point(0, 39);
-      this.entryListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.entryListView.Margin = new System.Windows.Forms.Padding(4);
       this.entryListView.MultiSelect = false;
       this.entryListView.Name = "entryListView";
       this.entryListView.Size = new System.Drawing.Size(1312, 505);
       this.entryListView.TabIndex = 1;
       this.entryListView.UseCompatibleStateImageBehavior = false;
       this.entryListView.View = System.Windows.Forms.View.Details;
+      this.entryListView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.entryListView_ColumnClick);
       this.entryListView.SelectedIndexChanged += new System.EventHandler(this.entryListView_SelectedIndexChanged);
       // 
       // idColumnHeader
@@ -284,27 +285,27 @@
             this.exportResponseToolStripMenuItem,
             this.revokeToolStripMenuItem});
       this.entryListContextMenu.Name = "entryListContextMenu";
-      this.entryListContextMenu.Size = new System.Drawing.Size(157, 92);
+      this.entryListContextMenu.Size = new System.Drawing.Size(187, 70);
       this.entryListContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.entryListContextMenu_Opening);
       // 
       // signToolStripMenuItem
       // 
       this.signToolStripMenuItem.Name = "signToolStripMenuItem";
-      this.signToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+      this.signToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
       this.signToolStripMenuItem.Text = "&Verify...";
       this.signToolStripMenuItem.Click += new System.EventHandler(this.signToolStripMenuItem_Click);
       // 
       // exportResponseToolStripMenuItem
       // 
       this.exportResponseToolStripMenuItem.Name = "exportResponseToolStripMenuItem";
-      this.exportResponseToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+      this.exportResponseToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
       this.exportResponseToolStripMenuItem.Text = "&Export Response";
       this.exportResponseToolStripMenuItem.Click += new System.EventHandler(this.exportResponseToolStripMenuItem_Click);
       // 
       // revokeToolStripMenuItem
       // 
       this.revokeToolStripMenuItem.Name = "revokeToolStripMenuItem";
-      this.revokeToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+      this.revokeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
       this.revokeToolStripMenuItem.Text = "&Revoke";
       this.revokeToolStripMenuItem.Click += new System.EventHandler(this.revokeToolStripMenuItem_Click);
       // 
@@ -312,7 +313,7 @@
       // 
       this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.splitContainer1.Location = new System.Drawing.Point(0, 26);
-      this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
       this.splitContainer1.Name = "splitContainer1";
       this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
       // 
@@ -338,7 +339,7 @@
       this.searchDateActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.searchDateActive.AutoSize = true;
       this.searchDateActive.Location = new System.Drawing.Point(943, 9);
-      this.searchDateActive.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.searchDateActive.Margin = new System.Windows.Forms.Padding(4);
       this.searchDateActive.Name = "searchDateActive";
       this.searchDateActive.Size = new System.Drawing.Size(18, 17);
       this.searchDateActive.TabIndex = 6;
@@ -350,42 +351,18 @@
       this.searchTestBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.searchTestBox.Location = new System.Drawing.Point(4, 5);
-      this.searchTestBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.searchTestBox.Margin = new System.Windows.Forms.Padding(4);
       this.searchTestBox.Name = "searchTestBox";
       this.searchTestBox.Size = new System.Drawing.Size(683, 23);
       this.searchTestBox.TabIndex = 5;
       this.searchTestBox.TextChanged += new System.EventHandler(this.searchTestBox_TextChanged);
-      // 
-      // searchTypeBox
-      // 
-      this.searchTypeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.searchTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.searchTypeBox.FormattingEnabled = true;
-      this.searchTypeBox.Location = new System.Drawing.Point(695, 5);
-      this.searchTypeBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-      this.searchTypeBox.Name = "searchTypeBox";
-      this.searchTypeBox.Size = new System.Drawing.Size(239, 24);
-      this.searchTypeBox.TabIndex = 4;
-      this.searchTypeBox.SelectedIndexChanged += new System.EventHandler(this.searchTypeBox_SelectedIndexChanged);
-      // 
-      // searchStatusBox
-      // 
-      this.searchStatusBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.searchStatusBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.searchStatusBox.FormattingEnabled = true;
-      this.searchStatusBox.Location = new System.Drawing.Point(1102, 5);
-      this.searchStatusBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-      this.searchStatusBox.Name = "searchStatusBox";
-      this.searchStatusBox.Size = new System.Drawing.Size(209, 24);
-      this.searchStatusBox.TabIndex = 3;
-      this.searchStatusBox.SelectedIndexChanged += new System.EventHandler(this.searchStatusBox_SelectedIndexChanged);
       // 
       // searchDateBox
       // 
       this.searchDateBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.searchDateBox.Format = System.Windows.Forms.DateTimePickerFormat.Short;
       this.searchDateBox.Location = new System.Drawing.Point(969, 5);
-      this.searchDateBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.searchDateBox.Margin = new System.Windows.Forms.Padding(4);
       this.searchDateBox.Name = "searchDateBox";
       this.searchDateBox.Size = new System.Drawing.Size(125, 23);
       this.searchDateBox.TabIndex = 2;
@@ -402,7 +379,7 @@
       this.crlListView.FullRowSelect = true;
       this.crlListView.HideSelection = false;
       this.crlListView.Location = new System.Drawing.Point(0, 0);
-      this.crlListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.crlListView.Margin = new System.Windows.Forms.Padding(4);
       this.crlListView.MultiSelect = false;
       this.crlListView.Name = "crlListView";
       this.crlListView.Size = new System.Drawing.Size(1312, 263);
@@ -425,6 +402,45 @@
       this.revokedCount.Text = "# Revoked";
       this.revokedCount.Width = 100;
       // 
+      // searchTypeBox
+      // 
+      this.searchTypeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.searchTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.searchTypeBox.FormattingEnabled = true;
+      this.searchTypeBox.Items.AddRange(new object[] {
+            "All Types",
+            "CA",
+            "Admin",
+            "Authority",
+            "Voter",
+            "Server"});
+      this.searchTypeBox.Location = new System.Drawing.Point(695, 5);
+      this.searchTypeBox.Margin = new System.Windows.Forms.Padding(4);
+      this.searchTypeBox.Name = "searchTypeBox";
+      this.searchTypeBox.Size = new System.Drawing.Size(239, 24);
+      this.searchTypeBox.TabIndex = 4;
+      this.searchTypeBox.Value = Pirate.PiVote.CaGui.CertificateType.All;
+      this.searchTypeBox.SelectedIndexChanged += new System.EventHandler(this.searchTypeBox_SelectedIndexChanged);
+      // 
+      // searchStatusBox
+      // 
+      this.searchStatusBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.searchStatusBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.searchStatusBox.FormattingEnabled = true;
+      this.searchStatusBox.Items.AddRange(new object[] {
+            "All Status",
+            "New",
+            "Valid",
+            "Revoked",
+            "Refused"});
+      this.searchStatusBox.Location = new System.Drawing.Point(1102, 5);
+      this.searchStatusBox.Margin = new System.Windows.Forms.Padding(4);
+      this.searchStatusBox.Name = "searchStatusBox";
+      this.searchStatusBox.Size = new System.Drawing.Size(209, 24);
+      this.searchStatusBox.TabIndex = 3;
+      this.searchStatusBox.Value = Pirate.PiVote.CaGui.CertificateStatus.All;
+      this.searchStatusBox.SelectedIndexChanged += new System.EventHandler(this.searchStatusBox_SelectedIndexChanged);
+      // 
       // Master
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -435,7 +451,7 @@
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.mainMenu;
-      this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.Margin = new System.Windows.Forms.Padding(4);
       this.Name = "Master";
       this.Text = "PiVote Certificate Authority";
       this.Load += new System.EventHandler(this.Master_Load);

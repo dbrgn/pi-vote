@@ -1,4 +1,4 @@
-﻿/*
+﻿ /*
  *  <project description>
  * 
  *  Copyright (c) 2008-2009 Stefan Thöni <stefan@savvy.ch> 
@@ -22,12 +22,27 @@ namespace Pirate.PiVote.CaGui
 {
   public partial class Master : Form
   {
+    private enum Column
+    {
+      Id = 0,
+      Type = 1,
+      Group = 2,
+      Name = 3,
+      ValidFrom = 4,
+      ValidUntil = 5,
+      Status = 6
+    }
+
     private const string CaCertFileName = "ca.pi-cert";
     private const string StorageFileName = "ca.pi-cert-storage";
     private const string DataPathPart = "Data";
 
     private string dataPath;
     private double loadProgress;
+
+    private Column orderBy = Column.Name;
+
+    private bool sortDescending = false;
 
     private CACertificate CaCertificate { get; set; }
 
@@ -136,7 +151,65 @@ namespace Pirate.PiVote.CaGui
 
     private void DisplayEntries()
     {
-      Entries.ForEach(listEntry => this.entryListView.Items.Add(listEntry.CreateItem(CaCertificate)));
+      SortEntries(FilterEntries(Entries))
+        .Foreach(listEntry => this.entryListView.Items.Add(listEntry.CreateItem(CaCertificate)));
+    }
+
+    private IEnumerable<ListEntry> FilterEntries(IEnumerable<ListEntry> input)
+    {
+      return input
+        .Where(listEntry => listEntry.ContainsToken(this.searchTestBox.Text, CaCertificate))
+        .Where(listEntry => listEntry.IsOfType(this.searchTypeBox.Value))
+        .Where(listEntry => listEntry.IsOfStatus(this.searchStatusBox.Value))
+        .Where(listEntry => !this.searchDateActive.Checked || listEntry.IsOfDate(this.searchDateBox.Value));
+    }
+
+    private IEnumerable<ListEntry> SortEntries(IEnumerable<ListEntry> input)
+    {
+      if (this.sortDescending)
+      {
+        switch (this.orderBy)
+        {
+          case Column.Id:
+            return input.OrderByDescending(listEntry => listEntry.Entry.Certificate.Id.ToString());
+          case Column.Type:
+            return input.OrderByDescending(listEntry => listEntry.Entry.Certificate.ToType());
+          case Column.Group:
+            return input.OrderByDescending(listEntry => listEntry.Entry.Certificate.GetGroupName());
+          case Column.Name:
+            return input.OrderByDescending(listEntry => listEntry.Entry.RequestValue(CaCertificate).FullName);
+          case Column.ValidFrom:
+            return input.OrderByDescending(listEntry => listEntry.ValidFrom);
+          case Column.ValidUntil:
+            return input.OrderByDescending(listEntry => listEntry.ValidUntil);
+          case Column.Status:
+            return input.OrderByDescending(listEntry => listEntry.Status);
+          default:
+            return input;
+        }
+      }
+      else
+      {
+        switch (this.orderBy)
+        {
+          case Column.Id:
+            return input.OrderBy(listEntry => listEntry.Entry.Certificate.Id.ToString());
+          case Column.Type:
+            return input.OrderBy(listEntry => listEntry.Entry.Certificate.ToType());
+          case Column.Group:
+            return input.OrderBy(listEntry => listEntry.Entry.Certificate.GetGroupName());
+          case Column.Name:
+            return input.OrderBy(listEntry => listEntry.Entry.RequestValue(CaCertificate).FullName);
+          case Column.ValidFrom:
+            return input.OrderBy(listEntry => listEntry.ValidFrom);
+          case Column.ValidUntil:
+            return input.OrderBy(listEntry => listEntry.ValidUntil);
+          case Column.Status:
+            return input.OrderBy(listEntry => listEntry.Status);
+          default:
+            return input;
+        }
+      }
     }
 
     private void UpdateList()
@@ -145,11 +218,7 @@ namespace Pirate.PiVote.CaGui
       {
         this.entryListView.Items.Clear();
 
-        Entries
-          .Where(listEntry => listEntry.ContainsToken(this.searchTestBox.Text, CaCertificate))
-          .Where(listEntry => listEntry.IsOfType(this.searchTypeBox.Value))
-          .Where(listEntry => listEntry.IsOfStatus(this.searchStatusBox.Value))
-          .Where(listEntry => !this.searchDateActive.Checked || listEntry.IsOfDate(this.searchDateBox.Value))
+        SortEntries(FilterEntries(Entries))
           .Foreach(listEntry => this.entryListView.Items.Add(listEntry.Item));
       }
     }
@@ -597,6 +666,23 @@ namespace Pirate.PiVote.CaGui
 
     private void searchDateBox_ValueChanged(object sender, EventArgs e)
     {
+      UpdateList();
+    }
+
+    private void entryListView_ColumnClick(object sender, ColumnClickEventArgs e)
+    {
+      Column newColumn = (Column)e.Column;
+
+      if (this.orderBy != newColumn)
+      {
+        this.orderBy = newColumn;
+        this.sortDescending = false;
+      }
+      else
+      {
+        this.sortDescending = !this.sortDescending;
+      }
+
       UpdateList();
     }
   }

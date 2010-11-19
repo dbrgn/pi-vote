@@ -33,7 +33,7 @@ namespace Pirate.PiVote.CaGui
     {
       SignatureRequest request = Entry.RequestValue(caCertificate);
       Item.Text = Entry.Certificate.Id.ToString();
-      Item.SubItems[1].Text = TypeName(Entry.Request.Certificate);
+      Item.SubItems[1].Text = Entry.Request.Certificate.ToType().Text();
 
       if (Entry.Request.Certificate is VoterCertificate)
       {
@@ -111,7 +111,7 @@ namespace Pirate.PiVote.CaGui
       SignatureRequest request = Entry.RequestValue(caCertificate);
       Item = new ListViewItem(Entry.Certificate.Id.ToString());
 
-      Item.SubItems.Add(TypeName(Entry.Request.Certificate));
+      Item.SubItems.Add(Entry.Request.Certificate.ToType().Text());
 
       if (Entry.Request.Certificate is VoterCertificate)
       {
@@ -177,6 +177,36 @@ namespace Pirate.PiVote.CaGui
         Entry.Request.Certificate.Id.ToString().ToLower().Contains(token.ToLower());
     }
 
+    public DateTime ValidFrom
+    {
+      get
+      {
+        if (Entry.Response == null)
+        {
+          return DateTime.MaxValue;
+        }
+        else
+        {
+          return Entry.Response.Value.Signature.ValidFrom;
+        }
+      }
+    }
+
+    public DateTime ValidUntil
+    {
+      get
+      {
+        if (Entry.Response == null)
+        {
+          return DateTime.MaxValue;
+        }
+        else
+        {
+          return Entry.Response.Value.Signature.ValidUntil;
+        }
+      }
+    }
+
     public bool IsOfType(CertificateType type)
     {
       return type.IsOfType(Entry.Request.Certificate);
@@ -214,34 +244,6 @@ namespace Pirate.PiVote.CaGui
     public void Save()
     {
       Entry.Save(this.FileName);
-    }
-
-    private string TypeName(Certificate certificate)
-    {
-      if (certificate is CACertificate)
-      {
-        return "CA";
-      }
-      else if (certificate is AdminCertificate)
-      {
-        return "Admin";
-      }
-      else if (certificate is AuthorityCertificate)
-      {
-        return "Authority";
-      }
-      else if (certificate is VoterCertificate)
-      {
-        return "Voter";
-      }
-      else if (certificate is ServerCertificate)
-      {
-        return "Server";
-      }
-      else
-      {
-        return "Unknown";
-      }
     }
   }
 }

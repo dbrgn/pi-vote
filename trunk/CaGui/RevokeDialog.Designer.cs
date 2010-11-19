@@ -49,9 +49,10 @@
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(463, 201);
+      this.cancelButton.Location = new System.Drawing.Point(581, 243);
+      this.cancelButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.cancelButton.Name = "cancelButton";
-      this.cancelButton.Size = new System.Drawing.Size(75, 23);
+      this.cancelButton.Size = new System.Drawing.Size(94, 29);
       this.cancelButton.TabIndex = 2;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
@@ -61,9 +62,10 @@
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(382, 201);
+      this.okButton.Location = new System.Drawing.Point(477, 243);
+      this.okButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.okButton.Name = "okButton";
-      this.okButton.Size = new System.Drawing.Size(75, 23);
+      this.okButton.Size = new System.Drawing.Size(94, 29);
       this.okButton.TabIndex = 1;
       this.okButton.Text = "&Revoke";
       this.okButton.UseVisualStyleBackColor = true;
@@ -73,46 +75,51 @@
       // 
       this.idTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.idTextBox.Location = new System.Drawing.Point(94, 12);
+      this.idTextBox.Location = new System.Drawing.Point(118, 15);
+      this.idTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.idTextBox.Name = "idTextBox";
       this.idTextBox.ReadOnly = true;
-      this.idTextBox.Size = new System.Drawing.Size(444, 20);
+      this.idTextBox.Size = new System.Drawing.Size(554, 23);
       this.idTextBox.TabIndex = 3;
       // 
       // nameTextBox
       // 
       this.nameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.nameTextBox.Location = new System.Drawing.Point(94, 65);
+      this.nameTextBox.Location = new System.Drawing.Point(118, 81);
+      this.nameTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.nameTextBox.Name = "nameTextBox";
       this.nameTextBox.ReadOnly = true;
-      this.nameTextBox.Size = new System.Drawing.Size(444, 20);
+      this.nameTextBox.Size = new System.Drawing.Size(554, 23);
       this.nameTextBox.TabIndex = 4;
       // 
       // nameLabel
       // 
       this.nameLabel.AutoSize = true;
-      this.nameLabel.Location = new System.Drawing.Point(11, 69);
+      this.nameLabel.Location = new System.Drawing.Point(14, 86);
+      this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.nameLabel.Name = "nameLabel";
-      this.nameLabel.Size = new System.Drawing.Size(37, 14);
+      this.nameLabel.Size = new System.Drawing.Size(48, 16);
       this.nameLabel.TabIndex = 5;
       this.nameLabel.Text = "Name:";
       // 
       // idLabel
       // 
       this.idLabel.AutoSize = true;
-      this.idLabel.Location = new System.Drawing.Point(12, 15);
+      this.idLabel.Location = new System.Drawing.Point(15, 19);
+      this.idLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.idLabel.Name = "idLabel";
-      this.idLabel.Size = new System.Drawing.Size(18, 14);
+      this.idLabel.Size = new System.Drawing.Size(23, 16);
       this.idLabel.TabIndex = 6;
       this.idLabel.Text = "Id:";
       // 
       // typeLabel
       // 
       this.typeLabel.AutoSize = true;
-      this.typeLabel.Location = new System.Drawing.Point(11, 42);
+      this.typeLabel.Location = new System.Drawing.Point(14, 52);
+      this.typeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.typeLabel.Name = "typeLabel";
-      this.typeLabel.Size = new System.Drawing.Size(33, 14);
+      this.typeLabel.Size = new System.Drawing.Size(43, 16);
       this.typeLabel.TabIndex = 9;
       this.typeLabel.Text = "Type:";
       // 
@@ -120,18 +127,20 @@
       // 
       this.typeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.typeTextBox.Location = new System.Drawing.Point(94, 39);
+      this.typeTextBox.Location = new System.Drawing.Point(118, 49);
+      this.typeTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.typeTextBox.Name = "typeTextBox";
       this.typeTextBox.ReadOnly = true;
-      this.typeTextBox.Size = new System.Drawing.Size(444, 20);
+      this.typeTextBox.Size = new System.Drawing.Size(554, 23);
       this.typeTextBox.TabIndex = 8;
       // 
       // emailAddressLabel
       // 
       this.emailAddressLabel.AutoSize = true;
-      this.emailAddressLabel.Location = new System.Drawing.Point(11, 95);
+      this.emailAddressLabel.Location = new System.Drawing.Point(14, 119);
+      this.emailAddressLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.emailAddressLabel.Name = "emailAddressLabel";
-      this.emailAddressLabel.Size = new System.Drawing.Size(77, 14);
+      this.emailAddressLabel.Size = new System.Drawing.Size(101, 16);
       this.emailAddressLabel.TabIndex = 11;
       this.emailAddressLabel.Text = "Email address:";
       // 
@@ -139,18 +148,20 @@
       // 
       this.emailAddressTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.emailAddressTextBox.Location = new System.Drawing.Point(94, 91);
+      this.emailAddressTextBox.Location = new System.Drawing.Point(118, 114);
+      this.emailAddressTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.emailAddressTextBox.Name = "emailAddressTextBox";
       this.emailAddressTextBox.ReadOnly = true;
-      this.emailAddressTextBox.Size = new System.Drawing.Size(444, 20);
+      this.emailAddressTextBox.Size = new System.Drawing.Size(554, 23);
       this.emailAddressTextBox.TabIndex = 10;
       // 
       // cantonlabel
       // 
       this.cantonlabel.AutoSize = true;
-      this.cantonlabel.Location = new System.Drawing.Point(11, 121);
+      this.cantonlabel.Location = new System.Drawing.Point(14, 151);
+      this.cantonlabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.cantonlabel.Name = "cantonlabel";
-      this.cantonlabel.Size = new System.Drawing.Size(44, 14);
+      this.cantonlabel.Size = new System.Drawing.Size(58, 16);
       this.cantonlabel.TabIndex = 13;
       this.cantonlabel.Text = "Canton:";
       // 
@@ -158,18 +169,20 @@
       // 
       this.cantonTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.cantonTextBox.Location = new System.Drawing.Point(94, 117);
+      this.cantonTextBox.Location = new System.Drawing.Point(118, 146);
+      this.cantonTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.cantonTextBox.Name = "cantonTextBox";
       this.cantonTextBox.ReadOnly = true;
-      this.cantonTextBox.Size = new System.Drawing.Size(444, 20);
+      this.cantonTextBox.Size = new System.Drawing.Size(554, 23);
       this.cantonTextBox.TabIndex = 12;
       // 
       // fingerprintLabel
       // 
       this.fingerprintLabel.AutoSize = true;
-      this.fingerprintLabel.Location = new System.Drawing.Point(11, 147);
+      this.fingerprintLabel.Location = new System.Drawing.Point(14, 184);
+      this.fingerprintLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.fingerprintLabel.Name = "fingerprintLabel";
-      this.fingerprintLabel.Size = new System.Drawing.Size(61, 14);
+      this.fingerprintLabel.Size = new System.Drawing.Size(81, 16);
       this.fingerprintLabel.TabIndex = 15;
       this.fingerprintLabel.Text = "Fingerprint:";
       // 
@@ -177,10 +190,11 @@
       // 
       this.fingerprintTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.fingerprintTextBox.Location = new System.Drawing.Point(94, 143);
+      this.fingerprintTextBox.Location = new System.Drawing.Point(118, 179);
+      this.fingerprintTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.fingerprintTextBox.Name = "fingerprintTextBox";
       this.fingerprintTextBox.ReadOnly = true;
-      this.fingerprintTextBox.Size = new System.Drawing.Size(444, 20);
+      this.fingerprintTextBox.Size = new System.Drawing.Size(554, 23);
       this.fingerprintTextBox.TabIndex = 14;
       // 
       // reasonComboBox
@@ -189,26 +203,28 @@
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.reasonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.reasonComboBox.FormattingEnabled = true;
-      this.reasonComboBox.Location = new System.Drawing.Point(94, 169);
+      this.reasonComboBox.Location = new System.Drawing.Point(118, 211);
+      this.reasonComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.reasonComboBox.Name = "reasonComboBox";
-      this.reasonComboBox.Size = new System.Drawing.Size(444, 22);
+      this.reasonComboBox.Size = new System.Drawing.Size(554, 24);
       this.reasonComboBox.TabIndex = 17;
       this.reasonComboBox.SelectedIndexChanged += new System.EventHandler(this.reasonComboBox_SelectedIndexChanged);
       // 
       // reasonLabel
       // 
       this.reasonLabel.AutoSize = true;
-      this.reasonLabel.Location = new System.Drawing.Point(11, 172);
+      this.reasonLabel.Location = new System.Drawing.Point(14, 215);
+      this.reasonLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
       this.reasonLabel.Name = "reasonLabel";
-      this.reasonLabel.Size = new System.Drawing.Size(47, 14);
+      this.reasonLabel.Size = new System.Drawing.Size(61, 16);
       this.reasonLabel.TabIndex = 18;
       this.reasonLabel.Text = "Reason:";
       // 
       // RevokeDialog
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.ClientSize = new System.Drawing.Size(550, 236);
+      this.ClientSize = new System.Drawing.Size(688, 279);
       this.ControlBox = false;
       this.Controls.Add(this.reasonLabel);
       this.Controls.Add(this.reasonComboBox);
@@ -228,10 +244,11 @@
       this.Controls.Add(this.cancelButton);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.KeyPreview = true;
+      this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
       this.MaximizeBox = false;
-      this.MaximumSize = new System.Drawing.Size(2000, 263);
+      this.MaximumSize = new System.Drawing.Size(2498, 319);
       this.MinimizeBox = false;
-      this.MinimumSize = new System.Drawing.Size(400, 263);
+      this.MinimumSize = new System.Drawing.Size(498, 319);
       this.Name = "RevokeDialog";
       this.Text = "Revoke Certificate";
       this.Load += new System.EventHandler(this.CaNameDialog_Load);

@@ -21,6 +21,18 @@ namespace Pirate.PiVote.CaGui
 
   public static class CertificateTypeExtension
   {
+    public static string GetGroupName(this Certificate certificate)
+    {
+      if (certificate is VoterCertificate)
+      {
+        return GroupList.GetGroupName(((VoterCertificate)certificate).GroupId);
+      }
+      else
+      {
+        return string.Empty;
+      }
+    }
+
     public static CertificateType ToType(this Certificate certificate)
     {
       if (certificate is CACertificate)
