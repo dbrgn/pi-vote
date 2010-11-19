@@ -10,10 +10,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
-using System.IO;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Serialization;
 
@@ -26,12 +27,13 @@ namespace Pirate.PiVote.CaGui
     private const string DataPathPart = "Data";
 
     private string dataPath;
+    private double loadProgress;
 
-    private CACertificate Certificate { get; set; }
+    private CACertificate CaCertificate { get; set; }
 
     private CertificateStorage CertificateStorage { get; set; }
 
-    private Dictionary<CertificateAuthorityEntry, ListViewItem> Items { get; set; }
+    private List<ListEntry> Entries { get; set; }
 
     public Master()
     {
@@ -42,90 +44,29 @@ namespace Pirate.PiVote.CaGui
     {
       CenterToScreen();
 
-      PrepareSearch();
+      WaitForm waitForm = new WaitForm();
+      waitForm.Update("Loading CA GUI...", "Loading basic files...", 0d);
+      waitForm.Show();
 
       LoadFiles();
 
-      LoadEntries();
-    }
+      Thread loadDataThread = new Thread(LoadEntries);
+      this.loadProgress = 0;
+      loadDataThread.Start();
 
-    private void PrepareSearch()
-    {
-      this.searchTypeBox.Items.Add("All Types");
-      this.searchTypeBox.Items.Add("CA");
-      this.searchTypeBox.Items.Add("Admin");
-      this.searchTypeBox.Items.Add("Authority");
-      this.searchTypeBox.Items.Add("Voter");
-      this.searchTypeBox.Items.Add("Server");
-      this.searchTypeBox.SelectedIndex = 0;
+      while (loadDataThread.IsAlive)
+      {
+        waitForm.Update("Loading CA GUI...", "Loading entries...", this.loadProgress);
+        Application.DoEvents();
+        Thread.Sleep(1);
+      }
 
-      this.searchStatusBox.Items.Add("All Status");
-      this.searchStatusBox.Items.Add("New");
-      this.searchStatusBox.Items.Add("Valid");
-      this.searchStatusBox.Items.Add("Revoked");
-      this.searchStatusBox.Items.Add("Refused");
-      this.searchStatusBox.SelectedIndex = 0;
-    }
+      waitForm.Update("Loading CA GUI...", "Loading main view...", 0d);
+      DisplayEntries();
 
-    private bool IsOfSearchedStatus(CertificateAuthorityEntry entry)
-    {
-      if (this.searchStatusBox.SelectedIndex == 0)
-        return true;
+      waitForm.Close();
 
-      if (entry.Response == null)
-      {
-        return this.searchStatusBox.SelectedIndex == 1;
-      }
-      else if (entry.Response.Value.Status == SignatureResponseStatus.Accepted)
-      {
-        if (entry.Revoked)
-        {
-          return this.searchStatusBox.SelectedIndex == 3;
-        }
-        else
-        {
-          return this.searchStatusBox.SelectedIndex == 2;
-        }
-      }
-      else if (entry.Response.Value.Status == SignatureResponseStatus.Declined)
-      {
-        return this.searchStatusBox.SelectedIndex == 4;
-      }
-      else
-      {
-        return true;
-      }
-    }
-
-    private bool IsOfSearchedType(Certificate certificate)
-    {
-      if (this.searchTypeBox.SelectedIndex == 0)
-        return true;
-
-      if (certificate is CACertificate)
-      {
-        return this.searchTypeBox.SelectedIndex == 1;
-      }
-      else if (certificate is AdminCertificate)
-      {
-        return this.searchTypeBox.SelectedIndex == 2;
-      }
-      else if (certificate is AuthorityCertificate)
-      {
-        return this.searchTypeBox.SelectedIndex == 3;
-      }
-      else if (certificate is VoterCertificate)
-      {
-        return this.searchTypeBox.SelectedIndex == 4;
-      }
-      else if (certificate is ServerCertificate)
-      {
-        return this.searchTypeBox.SelectedIndex == 5;
-      }
-      else
-      {
-        return true;
-      }
+      Show();
     }
 
     private string DataPath(string fileName)
@@ -144,9 +85,9 @@ namespace Pirate.PiVote.CaGui
 
       if (File.Exists(DataPath(CaCertFileName)))
       {
-        Certificate = Serializable.Load<CACertificate>(DataPath(CaCertFileName));
+        CaCertificate = Serializable.Load<CACertificate>(DataPath(CaCertFileName));
 
-        if (!DecryptCaKeyDialog.TryUnlock(Certificate))
+        if (!DecryptCaKeyDialog.TryUnlock(CaCertificate))
         {
           Close();
           return;
@@ -163,7 +104,7 @@ namespace Pirate.PiVote.CaGui
         CertificateStorage.Save(DataPath(StorageFileName));
       }
 
-      foreach (Signed<RevocationList> signedRevocationList in CertificateStorage.SignedRevocationLists.Where(list => list.Certificate.IsIdentic(Certificate)))
+      foreach (Signed<RevocationList> signedRevocationList in CertificateStorage.SignedRevocationLists.Where(list => list.Certificate.IsIdentic(CaCertificate)))
       {
         AddRevocationList(signedRevocationList.Value);
       }
@@ -179,144 +120,38 @@ namespace Pirate.PiVote.CaGui
 
     private void LoadEntries()
     {
-      Items = new Dictionary<CertificateAuthorityEntry, ListViewItem>();
+      Entries = new List<ListEntry>();
       DirectoryInfo directory = new DirectoryInfo(this.dataPath);
+      var files = directory.GetFiles("*.pi-ca-entry");
+      int counter = 0;
 
-      foreach (FileInfo file in directory.GetFiles("*.pi-ca-entry"))
+      foreach (FileInfo file in files)
       {
-        CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(file.FullName);
-        AddEntry(entry, file.FullName);
+        Entries.Add(new ListEntry(file.FullName));
+
+        counter++;
+        this.loadProgress = 100d / (double)files.Count() * (double)counter;
       }
     }
 
-    private string TypeName(Certificate certificate)
+    private void DisplayEntries()
     {
-      if (certificate is CACertificate)
-      {
-        return "CA";
-      }
-      else if (certificate is AdminCertificate)
-      {
-        return "Admin";
-      }
-      else if (certificate is AuthorityCertificate)
-      {
-        return "Authority";
-      }
-      else if (certificate is VoterCertificate)
-      {
-        return "Voter";
-      }
-      else if (certificate is ServerCertificate)
-      {
-        return "Server";
-      }
-      else
-      {
-        return "Unknown";
-      }
-    }
-
-    private bool IsOfSearchedDate(CertificateAuthorityEntry entry)
-    {
-      if (this.searchDateActive.Checked)
-      {
-        if (entry.Response == null)
-        {
-          return false;
-        }
-        else if (entry.Response.Value.Status == SignatureResponseStatus.Accepted)
-        {
-          return entry.Response.Value.Signature.ValidFrom <= this.searchDateBox.Value &&
-                 entry.Response.Value.Signature.ValidUntil >= this.searchDateBox.Value;
-        }
-        else
-        {
-          return false;
-        }
-      }
-      else
-      {
-        return true;
-      }
+      Entries.ForEach(listEntry => this.entryListView.Items.Add(listEntry.CreateItem(CaCertificate)));
     }
 
     private void UpdateList()
     {
-      this.entryListView.Items.Clear();
-
-      Items
-        .Where(entry => entry.Key.RequestValue(Certificate).FullName.ToLower().Contains(this.searchTestBox.Text.ToLower()) || entry.Key.Request.Certificate.Id.ToString().ToLower().Contains(this.searchTestBox.Text.ToLower()))
-        .Where(entry => IsOfSearchedType(entry.Key.Request.Certificate))
-        .Where(entry => IsOfSearchedStatus(entry.Key))
-        .Where(entry => IsOfSearchedDate(entry.Key))
-        .Select(entry => entry.Value)
-        .Foreach(item => this.entryListView.Items.Add(item));
-    }
-
-    private void AddEntry(CertificateAuthorityEntry entry, string fileName)
-    {
-      SignatureRequest request = entry.RequestValue(Certificate);
-      ListViewItem item = new ListViewItem(entry.Certificate.Id.ToString());
-
-      item.SubItems.Add(TypeName(entry.Request.Certificate));
-
-      if (entry.Request.Certificate is VoterCertificate)
+      if (Entries != null)
       {
-        item.SubItems.Add(GroupList.GetGroupName(((VoterCertificate)entry.Request.Certificate).GroupId));
-      }
-      else
-      {
-        item.SubItems.Add(string.Empty);
-      }
+        this.entryListView.Items.Clear();
 
-      if (request.FamilyName.IsNullOrEmpty())
-      {
-        item.SubItems.Add(request.FirstName);
+        Entries
+          .Where(listEntry => listEntry.ContainsToken(this.searchTestBox.Text, CaCertificate))
+          .Where(listEntry => listEntry.IsOfType(this.searchTypeBox.Value))
+          .Where(listEntry => listEntry.IsOfStatus(this.searchStatusBox.Value))
+          .Where(listEntry => !this.searchDateActive.Checked || listEntry.IsOfDate(this.searchDateBox.Value))
+          .Foreach(listEntry => this.entryListView.Items.Add(listEntry.Item));
       }
-      else
-      {
-        item.SubItems.Add(string.Format("{0}, {1}", request.FamilyName, request.FirstName));
-      }
-
-      if (entry.Response == null)
-      {
-        item.SubItems.Add(string.Empty);
-        item.SubItems.Add(string.Empty);
-        item.SubItems.Add("New");
-      }
-      else
-      {
-        SignatureResponse response = entry.Response.Value;
-        switch (response.Status)
-        {
-          case SignatureResponseStatus.Accepted:
-            item.SubItems.Add(response.Signature.ValidFrom.ToString());
-            item.SubItems.Add(response.Signature.ValidUntil.ToString());
-
-            if (entry.Revoked)
-            {
-              item.SubItems.Add("Revoked");
-            }
-            else
-            {
-              item.SubItems.Add("Valid");
-            }
-            break;
-          case SignatureResponseStatus.Declined:
-            item.SubItems.Add("N/A");
-            item.SubItems.Add("N/A");
-            item.SubItems.Add("Refused");
-            break;
-          default:
-            break;
-        }
-      }
-
-      item.Tag = fileName;
-
-      Items.Add(entry, item);
-      UpdateList();
     }
 
     private void createToolStripMenuItem_Click(object sender, EventArgs e)
@@ -327,10 +162,10 @@ namespace Pirate.PiVote.CaGui
       {
         if (dialog.RootCa)
         {
-          Certificate = new CACertificate(dialog.Passphrase, dialog.CaName);
-          Certificate.CreateSelfSignature();
-          Certificate.Save(DataPath(CaCertFileName));
-          CertificateStorage.AddRoot(Certificate.OnlyPublicPart);
+          CaCertificate = new CACertificate(dialog.Passphrase, dialog.CaName);
+          CaCertificate.CreateSelfSignature();
+          CaCertificate.Save(DataPath(CaCertFileName));
+          CertificateStorage.AddRoot(CaCertificate.OnlyPublicPart);
           CertificateStorage.Save(DataPath(StorageFileName));
         }
         else
@@ -345,10 +180,10 @@ namespace Pirate.PiVote.CaGui
           {
             CACertificate caCertificate = Serializable.Load<CACertificate>(openDialog.FileName);
             CertificateStorage.AddRoot(caCertificate);
-            Certificate = new CACertificate(dialog.Passphrase, dialog.CaName);
-            Certificate.CreateSelfSignature();
-            Certificate.Save(DataPath(CaCertFileName));
-            CertificateStorage.Add(Certificate.OnlyPublicPart);
+            CaCertificate = new CACertificate(dialog.Passphrase, dialog.CaName);
+            CaCertificate.CreateSelfSignature();
+            CaCertificate.Save(DataPath(CaCertFileName));
+            CertificateStorage.Add(CaCertificate.OnlyPublicPart);
             CertificateStorage.Save(DataPath(StorageFileName));
           }
         }
@@ -369,8 +204,8 @@ namespace Pirate.PiVote.CaGui
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
-        SignatureRequest request = new SignatureRequest(Certificate.FullName, "CA", string.Empty);
-        Signed<SignatureRequest> signedRequest = new Signed<SignatureRequest>(request, Certificate);
+        SignatureRequest request = new SignatureRequest(CaCertificate.FullName, "CA", string.Empty);
+        Signed<SignatureRequest> signedRequest = new Signed<SignatureRequest>(request, CaCertificate);
         signedRequest.Save(dialog.FileName);
       }
     }
@@ -394,9 +229,9 @@ namespace Pirate.PiVote.CaGui
           switch (response.Status)
           {
             case SignatureResponseStatus.Accepted:
-              Certificate.AddSignature(response.Signature);
-              CertificateStorage.Get(Certificate.Id).AddSignature(response.Signature);
-              Certificate.Save(DataPath(CaCertFileName));
+              CaCertificate.AddSignature(response.Signature);
+              CertificateStorage.Get(CaCertificate.Id).AddSignature(response.Signature);
+              CaCertificate.Save(DataPath(CaCertFileName));
               CertificateStorage.Save(DataPath(StorageFileName));
               MessageBox.Show("Signature added to CA certificate.", "Signature response", MessageBoxButtons.OK, MessageBoxIcon.Information);
               break;
@@ -456,28 +291,70 @@ namespace Pirate.PiVote.CaGui
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
+        List<string> alreadyAddedList = new List<string>();
+        List<string> invalidList = new List<string>();
+
         foreach (string fileName in dialog.FileNames)
         {
           Secure<SignatureRequest> secureSignatureRequest = Serializable.Load<Secure<SignatureRequest>>(fileName);
 
           if (secureSignatureRequest.VerifySimple())
           {
-            if (Items.Where(entry => entry.Key.Certificate.Id ==  secureSignatureRequest.Certificate.Id).Count() < 1)
+            if (Entries.Any(listEntry => listEntry.Entry.Certificate.Id == secureSignatureRequest.Certificate.Id))
+            {
+              alreadyAddedList.Add(fileName);
+            }
+            else
             {
               CertificateAuthorityEntry entry = new CertificateAuthorityEntry(secureSignatureRequest);
               string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
               entry.Save(DataPath(entryFileName));
-              AddEntry(entry, entryFileName);
-            }
-            else
-            {
-              MessageBox.Show("Request in file " + fileName + " is already added.", "CaGui", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+              ListEntry listEntry = new ListEntry(entryFileName, entry);
+              Entries.Add(listEntry);
+              this.entryListView.Items.Add(listEntry.CreateItem(CaCertificate));
             }
           }
           else
           {
-            MessageBox.Show("Request in file " + fileName + " is not valid.", "CaGui", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            invalidList.Add(fileName);
           }
+        }
+
+        if (invalidList.Count > 0)
+        {
+          StringBuilder message = new StringBuilder();
+          message.AppendLine("The following request are not valid:");
+          invalidList.ForEach(invalidRequest => message.AppendLine(invalidRequest));
+          MessageBox.Show(message.ToString(), "Pi-Vote CA GUI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        if (alreadyAddedList.Count > 0)
+        {
+          StringBuilder message = new StringBuilder();
+          message.AppendLine("The following request are already in your list:");
+          alreadyAddedList.ForEach(invalidRequest => message.AppendLine(invalidRequest));
+          MessageBox.Show(message.ToString(), "Pi-Vote CA GUI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+      }
+    }
+
+    private bool EntrySelected
+    {
+      get { return this.entryListView.SelectedItems.Count > 0; }
+    }
+
+    private ListEntry SelectedEntry
+    {
+      get
+      {
+        if (EntrySelected)
+        {
+          return (ListEntry)this.entryListView.SelectedItems[0].Tag;
+        }
+        else
+        {
+          return null;
         }
       }
     }
@@ -485,29 +362,17 @@ namespace Pirate.PiVote.CaGui
     private void generateRevocationListToolStripMenuItem_Click(object sender, EventArgs e)
     {
       GenerateCrlDialog dialog = new GenerateCrlDialog();
-      dialog.CertificateId = Certificate.Id.ToString();
-      dialog.CertificateName = Certificate.FullName;
+      dialog.CertificateId = CaCertificate.Id.ToString();
+      dialog.CertificateName = CaCertificate.FullName;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
-        List<Guid> revokedIds = new List<Guid>();
-
-        foreach (ListViewItem item in this.entryListView.Items)
-        {
-          string fileName = (string)item.Tag;
-          CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
-
-          if (entry.Revoked)
-          {
-            revokedIds.Add(entry.Request.Certificate.Id);
-          }
-        }
-
-        RevocationList revocationList = new RevocationList(Certificate.Id, dialog.ValidFrom, dialog.ValidUntil, revokedIds);
+        IEnumerable<Guid> revokedIds = Entries.Where(listEntry => listEntry.Entry.Revoked).Select(listEntry => listEntry.Entry.Certificate.Id);
+        RevocationList revocationList = new RevocationList(CaCertificate.Id, dialog.ValidFrom, dialog.ValidUntil, revokedIds);
         string validFrom = revocationList.ValidFrom.ToString("yyyyMMdd");
         string validUntil = revocationList.ValidUntil.ToString("yyyyMMdd");
-        string crlFileName = string.Format("{0}_{1}_{2}.pi-crl", Certificate.Id.ToString(), validFrom, validUntil);
-        Signed<RevocationList> signedRevocationList = new Signed<RevocationList>(revocationList, Certificate);
+        string crlFileName = string.Format("{0}_{1}_{2}.pi-crl", CaCertificate.Id.ToString(), validFrom, validUntil);
+        Signed<RevocationList> signedRevocationList = new Signed<RevocationList>(revocationList, CaCertificate);
         CertificateStorage.AddRevocationList(signedRevocationList);
         CertificateStorage.Save(DataPath(StorageFileName));
         AddRevocationList(revocationList);
@@ -516,35 +381,27 @@ namespace Pirate.PiVote.CaGui
 
     private void signToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      if (this.entryListView.SelectedItems.Count > 0)
+      if (EntrySelected)
       {
-        ListViewItem item = this.entryListView.SelectedItems[0];
-        string fileName = (string)item.Tag;
-        CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
+        var listEntry = SelectedEntry;
 
         SignDialog dialog = new SignDialog();
-        dialog.Display(entry, CertificateStorage, Certificate, Items.Keys);
+        dialog.Display(listEntry.Entry, CertificateStorage, CaCertificate, Entries.Select(lstEntry => lstEntry.Entry));
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
           if (dialog.Accept)
           {
-            entry.Sign(Certificate, dialog.ValidUntil);
-            entry.Save(DataPath(fileName));
-            item.SubItems[4].Text = entry.Response.Value.Signature.ValidFrom.ToString();
-            item.SubItems[5].Text = entry.Response.Value.Signature.ValidUntil.ToString();
-            item.SubItems[6].Text = "Valid";
+            listEntry.Entry.Sign(CaCertificate, dialog.ValidUntil);
+            listEntry.Save();
+            listEntry.UpdateItem(CaCertificate);
           }
           else
           {
-            entry.Refuse(Certificate, dialog.Reason);
-            entry.Save(DataPath(fileName));
-            item.SubItems[4].Text = "N/A";
-            item.SubItems[5].Text = "N/A";
-            item.SubItems[6].Text = "Refused";
+            listEntry.Entry.Refuse(CaCertificate, dialog.Reason);
+            listEntry.Save();
+            listEntry.UpdateItem(CaCertificate);
           }
-
-          item.Tag = entry;
 
           SaveFileDialog saveDialog = new SaveFileDialog();
           saveDialog.Title = "Export Signature Response";
@@ -553,7 +410,7 @@ namespace Pirate.PiVote.CaGui
 
           if (saveDialog.ShowDialog() == DialogResult.OK)
           {
-            entry.Response.Save(saveDialog.FileName);
+            listEntry.Entry.Response.Save(saveDialog.FileName);
           }
         }
       }
@@ -561,20 +418,18 @@ namespace Pirate.PiVote.CaGui
 
     private void revokeToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      if (this.entryListView.SelectedItems.Count > 0)
+      if (EntrySelected)
       {
-        ListViewItem item = this.entryListView.SelectedItems[0];
-        string fileName = (string)this.entryListView.SelectedItems[0].Tag;
-        CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
+        var listEntry = SelectedEntry;
 
         RevokeDialog dialog = new RevokeDialog();
-        dialog.Display(entry, CertificateStorage, Certificate);
+        dialog.Display(listEntry.Entry, CertificateStorage, CaCertificate);
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
-          entry.Revoke();
-          entry.Save(DataPath(fileName));
-          item.SubItems[6].Text = "Revoked";
+          listEntry.Entry.Revoke();
+          listEntry.Save();
+          listEntry.UpdateItem(CaCertificate);
         }
       }
     }
@@ -584,7 +439,7 @@ namespace Pirate.PiVote.CaGui
       bool hasRow = this.entryListView.SelectedItems.Count > 0;
       bool isAnwered = hasRow && this.entryListView.SelectedItems[0].SubItems[4].Text != string.Empty;
       bool notAnswered = hasRow && this.entryListView.SelectedItems[0].SubItems[4].Text == string.Empty;
-      bool canSign = Certificate != null && Certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid;
+      bool canSign = CaCertificate != null && CaCertificate.Validate(CertificateStorage) == CertificateValidationResult.Valid;
 
       this.signToolStripMenuItem.Enabled = notAnswered && canSign;
       this.revokeToolStripMenuItem.Enabled = isAnwered && canSign;
@@ -593,10 +448,9 @@ namespace Pirate.PiVote.CaGui
 
     private void exportResponseToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      if (this.entryListView.SelectedItems.Count > 0)
+      if (EntrySelected)
       {
-        string fileName = (string)this.entryListView.SelectedItems[0].Tag;
-        CertificateAuthorityEntry entry = Serializable.Load<CertificateAuthorityEntry>(fileName);
+        var listEntry = SelectedEntry;
 
         SaveFileDialog dialog = new SaveFileDialog();
         dialog.Title = "Export Signature Response";
@@ -605,7 +459,7 @@ namespace Pirate.PiVote.CaGui
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
-          entry.Response.Save(dialog.FileName);
+          listEntry.Entry.Response.Save(dialog.FileName);
         }
       }
     }
@@ -627,7 +481,7 @@ namespace Pirate.PiVote.CaGui
     private void cAPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
     {
       CaPropertiesDialog dialog = new CaPropertiesDialog();
-      dialog.Set(Certificate, CertificateStorage);
+      dialog.Set(CaCertificate, CertificateStorage);
       dialog.ShowDialog();
     }
 
@@ -649,15 +503,18 @@ namespace Pirate.PiVote.CaGui
           certificate.CreateSelfSignature();
 
           SignatureRequest request = new SignatureRequest(dialog.FirstName, dialog.FamilyName, dialog.EmailAddress);
-          Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, Certificate, certificate);
+          Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, CaCertificate, certificate);
 
           CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
-          entry.Sign(Certificate, dialog.ValidUntil);
+          entry.Sign(CaCertificate, dialog.ValidUntil);
           certificate.AddSignature(entry.Response.Value.Signature);
 
           string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
           entry.Save(DataPath(entryFileName));
-          AddEntry(entry, entryFileName);
+
+          ListEntry listEntry = new ListEntry(entryFileName, entry);
+          Entries.Add(listEntry);
+          this.entryListView.Items.Add(listEntry.CreateItem(CaCertificate));
 
           certificate.Save(saveDialog.FileName);
         }
@@ -666,11 +523,11 @@ namespace Pirate.PiVote.CaGui
 
     private void mainMenu_MenuActivate(object sender, EventArgs e)
     {
-      bool haveCertificate = Certificate != null;
+      bool haveCertificate = CaCertificate != null;
       bool validCertificate = haveCertificate &&
-        Certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid;
+        CaCertificate.Validate(CertificateStorage) == CertificateValidationResult.Valid;
       bool canSign = validCertificate &&
-        CertificateStorage.HasValidRevocationList(Certificate.Id, DateTime.Now);
+        CertificateStorage.HasValidRevocationList(CaCertificate.Id, DateTime.Now);
 
       this.createToolStripMenuItem.Enabled = !haveCertificate;
       this.signatureRequestToolStripMenuItem.Enabled = haveCertificate;
@@ -700,15 +557,18 @@ namespace Pirate.PiVote.CaGui
           certificate.CreateSelfSignature();
 
           SignatureRequest request = new SignatureRequest(dialog.FullName, string.Empty, string.Empty);
-          Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, Certificate, certificate);
+          Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, CaCertificate, certificate);
 
           CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
-          entry.Sign(Certificate, dialog.ValidUntil);
+          entry.Sign(CaCertificate, dialog.ValidUntil);
           certificate.AddSignature(entry.Response.Value.Signature);
 
           string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
           entry.Save(DataPath(entryFileName));
-          AddEntry(entry, entryFileName);
+
+          ListEntry listEntry = new ListEntry(entryFileName, entry);
+          Entries.Add(listEntry);
+          this.entryListView.Items.Add(listEntry.CreateItem(CaCertificate));
 
           certificate.Save(saveDialog.FileName);
         }
@@ -717,42 +577,27 @@ namespace Pirate.PiVote.CaGui
 
     private void searchTestBox_TextChanged(object sender, EventArgs e)
     {
-      if (Items != null)
-      {
-        UpdateList();
-      }
+      UpdateList();
     }
 
     private void searchTypeBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-      if (Items != null)
-      {
-        UpdateList();
-      }
+      UpdateList();
     }
 
     private void searchStatusBox_SelectedIndexChanged(object sender, EventArgs e)
     {
-      if (Items != null)
-      {
-        UpdateList();
-      }
+      UpdateList();
     }
 
     private void searchDateActive_CheckedChanged(object sender, EventArgs e)
     {
-      if (Items != null)
-      {
-        UpdateList();
-      }
+      UpdateList();
     }
 
     private void searchDateBox_ValueChanged(object sender, EventArgs e)
     {
-      if (Items != null)
-      {
-        UpdateList();
-      }
+      UpdateList();
     }
   }
 }
