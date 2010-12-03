@@ -1530,9 +1530,9 @@ namespace Pirate.PiVote {
         /// <summary>
         ///   Looks up a localized string similar to □ Refused, no member in group.
         /// </summary>
-        public static string SigningRequestDocumentRefusedNoPirate {
+        public static string SigningRequestDocumentRefusedNoMember {
             get {
-                return ResourceManager.GetString("SigningRequestDocumentRefusedNoPirate", resourceCulture);
+                return ResourceManager.GetString("SigningRequestDocumentRefusedNoMember", resourceCulture);
             }
         }
         

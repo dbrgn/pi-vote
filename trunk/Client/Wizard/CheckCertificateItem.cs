@@ -145,6 +145,7 @@ namespace Pirate.PiVote.Client
           Status.SetMessage(Resources.CheckCertificateReady, MessageType.Info);
           break;
         case CertificateValidationResult.Outdated:
+        case CertificateValidationResult.NotYetValid:
         case CertificateValidationResult.Revoked:
         case CertificateValidationResult.SelfsignatureInvalid:
         case CertificateValidationResult.SignatureDataInvalid:
@@ -156,6 +157,9 @@ namespace Pirate.PiVote.Client
           {
             case CertificateValidationResult.Outdated:
               message = Resources.CheckCertificateOutdated;
+              break;
+            case CertificateValidationResult.NotYetValid:
+              message = string.Format(Resources.CheckCertificateNotYetValid, Status.Certificate.ExpectedValidFrom(Status.CertificateStorage));
               break;
             case CertificateValidationResult.Revoked:
               message = Resources.CheckCertificateRevoked;

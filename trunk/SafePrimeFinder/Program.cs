@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Windows.Forms;
 using Emil.GMP;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Serialization;
@@ -31,13 +32,30 @@ namespace Pirate.PiVote.SafePrimeFinder
       Console.WriteLine("Library version {0}", libraryName.Version.ToString());
       Console.WriteLine();
 
+      string portableDataPath = Path.Combine(Application.StartupPath, Files.PortableDataFolder);
+      string dataPath = null;
+
+      if (Directory.Exists(portableDataPath))
+      {
+        dataPath = portableDataPath;
+      }
+      else
+      {
+        dataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Files.DataFolder);
+
+        if (!Directory.Exists(dataPath))
+        {
+          Directory.CreateDirectory(dataPath);
+        }
+      }
+
       Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.BelowNormal;
 
       while (true)
       {
         Console.Write("Searching safe prime...");
 
-        Prime.GenerateAndStoreSafePrime();
+        Prime.GenerateAndStoreSafePrime(dataPath);
 
         Console.WriteLine("Found");
       }

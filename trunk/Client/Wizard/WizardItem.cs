@@ -95,5 +95,9 @@ namespace Pirate.PiVote.Client
     public virtual void UpdateLanguage()
     { 
     }
+
+    public virtual void RefreshData()
+    { 
+    }
   }
 }

@@ -63,6 +63,11 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
+      RefreshList();
+    }
+
+    public void RefreshList()
+    {
       this.run = true;
       OnUpdateWizard();
 
@@ -78,6 +83,8 @@ namespace Pirate.PiVote.Client
 
       if (this.exception == null)
       {
+        this.votingList.Items.Clear();
+
         if (this.votings != null)
         {
           foreach (VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
@@ -370,6 +377,16 @@ namespace Pirate.PiVote.Client
       {
         this.deleteMenu.Enabled = false;
       }
+    }
+
+    private void refreshMenu_Click(object sender, EventArgs e)
+    {
+      RefreshList();
+    }
+
+    public override void RefreshData()
+    {
+      RefreshList();
     }
   }
 }

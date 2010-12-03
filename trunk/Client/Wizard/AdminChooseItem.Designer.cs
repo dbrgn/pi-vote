@@ -59,12 +59,16 @@ namespace Pirate.PiVote.Client
       this.authorityColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.envelopesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.votingList = new System.Windows.Forms.ListView();
+      this.refreshMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
       this.contextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
       // contextMenu
       // 
       this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshMenu,
+            this.toolStripMenuItem3,
             this.createVotingMenu,
             this.deleteMenu,
             this.toolStripMenuItem1,
@@ -73,7 +77,7 @@ namespace Pirate.PiVote.Client
             this.toolStripMenuItem2,
             this.uploadCertificateStorageMenu});
       this.contextMenu.Name = "contextMenu";
-      this.contextMenu.Size = new System.Drawing.Size(219, 148);
+      this.contextMenu.Size = new System.Drawing.Size(219, 176);
       this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
       // 
       // createVotingMenu
@@ -182,6 +186,18 @@ namespace Pirate.PiVote.Client
       this.votingList.UseCompatibleStateImageBehavior = false;
       this.votingList.View = System.Windows.Forms.View.Details;
       // 
+      // refreshMenu
+      // 
+      this.refreshMenu.Name = "refreshMenu";
+      this.refreshMenu.Size = new System.Drawing.Size(218, 22);
+      this.refreshMenu.Text = "&Refresh";
+      this.refreshMenu.Click += new System.EventHandler(this.refreshMenu_Click);
+      // 
+      // toolStripMenuItem3
+      // 
+      this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+      this.toolStripMenuItem3.Size = new System.Drawing.Size(215, 6);
+      // 
       // AdminChooseItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -213,6 +229,8 @@ namespace Pirate.PiVote.Client
     private ToolStripMenuItem uploadSignatureResponsesMenu;
     private ToolStripSeparator toolStripMenuItem2;
     private ToolStripMenuItem uploadCertificateStorageMenu;
+    private ToolStripMenuItem refreshMenu;
+    private ToolStripSeparator toolStripMenuItem3;
 
 
 

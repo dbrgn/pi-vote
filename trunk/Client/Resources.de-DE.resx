@@ -796,4 +796,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="AskToSignSignatureRequestWithParent" xml:space="preserve">
     <value>Du hast ein gültiges Zertifikat, mit dem du deine Zertifizierungsanfrage signieren kannst. Wenn du das tust, musst du die Zertifizierungsanfrage nicht ausdrucken und keine Unterschriften von Autoritäten einholen, aber das neue Zertifikat wird nur so lange gültig sein, wie das existierende, also bis zum {0:d}. Möchtest du deine Zertifizierungsanfrage mit deinem existierenden Zertifikat signieren?</value>
   </data>
+  <data name="CheckCertificateNotYetValid" xml:space="preserve">
+    <value>Dein Zertifikat is noch nicht gültig. Es wird vom {0:d} an gültig.</value>
+  </data>
 </root>

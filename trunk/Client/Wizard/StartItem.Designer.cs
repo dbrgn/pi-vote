@@ -55,6 +55,7 @@ namespace Pirate.PiVote.Client
       this.votingRadio = new System.Windows.Forms.RadioButton();
       this.advancedOptionsRadio = new System.Windows.Forms.RadioButton();
       this.selectPanel = new System.Windows.Forms.Panel();
+      this.versionLabel = new System.Windows.Forms.Label();
       ((System.ComponentModel.ISupportInitialize)(this.tileImage)).BeginInit();
       this.languagePanel.SuspendLayout();
       this.optionPanel.SuspendLayout();
@@ -207,10 +208,19 @@ namespace Pirate.PiVote.Client
       this.selectPanel.TabIndex = 14;
       this.selectPanel.Resize += new System.EventHandler(this.selectPanel_Resize);
       // 
+      // versionLabel
+      // 
+      this.versionLabel.Location = new System.Drawing.Point(0, 0);
+      this.versionLabel.Name = "versionLabel";
+      this.versionLabel.Size = new System.Drawing.Size(87, 17);
+      this.versionLabel.TabIndex = 15;
+      this.versionLabel.Text = "0.0.0.0";
+      // 
       // StartItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.versionLabel);
       this.Controls.Add(this.selectPanel);
       this.Controls.Add(this.tileImage);
       this.Controls.Add(this.urlLink);
@@ -245,5 +255,6 @@ namespace Pirate.PiVote.Client
     private RadioButton votingRadio;
     private RadioButton advancedOptionsRadio;
     private Panel selectPanel;
+    private Label versionLabel;
   }
 }

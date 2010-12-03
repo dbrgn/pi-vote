@@ -97,11 +97,12 @@ namespace Pirate.PiVote.Crypto
     /// Signs the certificates and create response
     /// </summary>
     /// <param name="caCertificate">Certificate of the CA.</param>
+    /// <param name="validUntil">Signature valid from.</param>
     /// <param name="validUntil">Signature valid until.</param>
-    public void Sign(CACertificate caCertificate, DateTime validUntil)
+    public void Sign(CACertificate caCertificate, DateTime validFrom, DateTime validUntil)
     {
       SignatureRequest request = RequestValue(caCertificate);
-      Signature signature = Certificate.AddSignature(caCertificate, validUntil);
+      Signature signature = Certificate.AddSignature(caCertificate, validFrom, validUntil);
       SignatureResponse response = new SignatureResponse(Request.Certificate.Id, signature);
       Response = new Signed<SignatureResponse>(response, caCertificate);
     }

@@ -42,6 +42,7 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       this.votingList = new System.Windows.Forms.ListView();
       this.titleColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.groupColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -53,6 +54,9 @@ namespace Pirate.PiVote.Client
       this.decipherButton = new System.Windows.Forms.Button();
       this.checkSharesButton = new System.Windows.Forms.Button();
       this.createSharesButton = new System.Windows.Forms.Button();
+      this.votingListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.refreshMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.votingListMenu.SuspendLayout();
       this.SuspendLayout();
       // 
       // votingList
@@ -68,6 +72,7 @@ namespace Pirate.PiVote.Client
             this.voteUntilColumnHeader,
             this.authorityColumnHeader,
             this.envelopesColumnHeader});
+      this.votingList.ContextMenuStrip = this.votingListMenu;
       this.votingList.Enabled = false;
       this.votingList.FullRowSelect = true;
       this.votingList.HideSelection = false;
@@ -155,6 +160,20 @@ namespace Pirate.PiVote.Client
       this.createSharesButton.UseVisualStyleBackColor = true;
       this.createSharesButton.Click += new System.EventHandler(this.createSharesButton_Click);
       // 
+      // votingListMenu
+      // 
+      this.votingListMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshMenu});
+      this.votingListMenu.Name = "votingListMenu";
+      this.votingListMenu.Size = new System.Drawing.Size(153, 48);
+      // 
+      // refreshMenu
+      // 
+      this.refreshMenu.Name = "refreshMenu";
+      this.refreshMenu.Size = new System.Drawing.Size(152, 22);
+      this.refreshMenu.Text = "&Refresh";
+      this.refreshMenu.Click += new System.EventHandler(this.refreshMenu_Click);
+      // 
       // AuthorityListVotingsItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -166,6 +185,7 @@ namespace Pirate.PiVote.Client
       this.Margin = new System.Windows.Forms.Padding(1);
       this.Name = "AuthorityListVotingsItem";
       this.Size = new System.Drawing.Size(763, 399);
+      this.votingListMenu.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -183,6 +203,8 @@ namespace Pirate.PiVote.Client
     private ColumnHeader authorityColumnHeader;
     private ColumnHeader envelopesColumnHeader;
     private ColumnHeader groupColumnHeader;
+    private ContextMenuStrip votingListMenu;
+    private ToolStripMenuItem refreshMenu;
 
 
 

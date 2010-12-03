@@ -185,7 +185,7 @@ namespace Pirate.PiVote.Printing
       table.AddRow(LibraryResources.SigningRequestDocumentRefusedFingerprintMismatch);
       if (this.certificate is VoterCertificate)
       {
-        table.AddRow(LibraryResources.SigningRequestDocumentRefusedNoPirate);
+        table.AddRow(LibraryResources.SigningRequestDocumentRefusedNoMember);
       }
       else
       {

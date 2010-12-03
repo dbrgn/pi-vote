@@ -21,6 +21,7 @@ namespace Pirate.PiVote.Crypto
     SelfsignatureInvalid,
     NoSignature,
     Outdated,
+    NotYetValid,
     Revoked,
     SignerInvalid,
     UnknownSigner,

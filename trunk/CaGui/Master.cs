@@ -158,10 +158,10 @@ namespace Pirate.PiVote.CaGui
     private IEnumerable<ListEntry> FilterEntries(IEnumerable<ListEntry> input)
     {
       return input
-        .Where(listEntry => listEntry.ContainsToken(this.searchTestBox.Text, CaCertificate))
-        .Where(listEntry => listEntry.IsOfType(this.searchTypeBox.Value))
-        .Where(listEntry => listEntry.IsOfStatus(this.searchStatusBox.Value))
-        .Where(listEntry => !this.searchDateActive.Checked || listEntry.IsOfDate(this.searchDateBox.Value));
+        .Where(listEntry => listEntry.ContainsToken(this.searchTestBox.Text, CaCertificate) &&
+                            listEntry.IsOfType(this.searchTypeBox.Value) &&
+                            listEntry.IsOfStatus(this.searchStatusBox.Value) &&
+                            !this.searchDateActive.Checked || listEntry.IsOfDate(this.searchDateBox.Value));
     }
 
     private IEnumerable<ListEntry> SortEntries(IEnumerable<ListEntry> input)
@@ -216,10 +216,14 @@ namespace Pirate.PiVote.CaGui
     {
       if (Entries != null)
       {
+        SuspendLayout();
+
         this.entryListView.Items.Clear();
 
         SortEntries(FilterEntries(Entries))
           .Foreach(listEntry => this.entryListView.Items.Add(listEntry.Item));
+
+        ResumeLayout();
       }
     }
 
@@ -461,7 +465,7 @@ namespace Pirate.PiVote.CaGui
         {
           if (dialog.Accept)
           {
-            listEntry.Entry.Sign(CaCertificate, dialog.ValidUntil);
+            listEntry.Entry.Sign(CaCertificate, dialog.ValidFrom, dialog.ValidUntil);
             listEntry.Save();
             listEntry.UpdateItem(CaCertificate);
           }
@@ -575,7 +579,7 @@ namespace Pirate.PiVote.CaGui
           Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, CaCertificate, certificate);
 
           CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
-          entry.Sign(CaCertificate, dialog.ValidUntil);
+          entry.Sign(CaCertificate, DateTime.Now, dialog.ValidUntil);
           certificate.AddSignature(entry.Response.Value.Signature);
 
           string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
@@ -629,7 +633,7 @@ namespace Pirate.PiVote.CaGui
           Secure<SignatureRequest> signedRequest = new Secure<SignatureRequest>(request, CaCertificate, certificate);
 
           CertificateAuthorityEntry entry = new CertificateAuthorityEntry(signedRequest);
-          entry.Sign(CaCertificate, dialog.ValidUntil);
+          entry.Sign(CaCertificate, DateTime.Now, dialog.ValidUntil);
           certificate.AddSignature(entry.Response.Value.Signature);
 
           string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");

@@ -630,7 +630,7 @@
   <data name="SigningRequestDocumentRefusedHasCertificate" xml:space="preserve">
     <value>□ Refused, already has valid certificate</value>
   </data>
-  <data name="SigningRequestDocumentRefusedNoPirate" xml:space="preserve">
+  <data name="SigningRequestDocumentRefusedNoMember" xml:space="preserve">
     <value>□ Refused, no member in group</value>
   </data>
   <data name="SigningRequestDocumentRefusedNotFx" xml:space="preserve">

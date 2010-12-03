@@ -626,6 +626,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your certificate is not yet valid. It will be valid from {0:d}..
+        /// </summary>
+        internal static string CheckCertificateNotYetValid {
+            get {
+                return ResourceManager.GetString("CheckCertificateNotYetValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your certificate is outdated. You need to create a new one..
         /// </summary>
         internal static string CheckCertificateOutdated {

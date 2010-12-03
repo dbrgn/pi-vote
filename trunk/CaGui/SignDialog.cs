@@ -39,8 +39,6 @@ namespace Pirate.PiVote.CaGui
     private void CaNameDialog_Load(object sender, EventArgs e)
     {
       CenterToScreen();
-
-      this.validUntilPicker.Value = DateTime.Now.AddYears(2);
     }
 
     private void okButton_Click(object sender, EventArgs e)
@@ -67,6 +65,7 @@ namespace Pirate.PiVote.CaGui
       this.cantonTextBox.Text = this.certificate is VoterCertificate ? GroupList.GetGroupName(((VoterCertificate)this.certificate).GroupId) : "N/A";
       this.fingerprintTextBox.Text = this.certificate.Fingerprint;
       this.language = this.certificate.Language;
+      this.validFromPicker.Value = DateTime.Now;
 
       bool requestValid = true;
 
@@ -120,6 +119,10 @@ namespace Pirate.PiVote.CaGui
         this.signedByEmailAddressTextBox.Text = "N/A";
         this.signedByStatusTextBox.Text = "N/A";
         this.signedBySignatureTextBox.Text = "N/A";
+        this.expiryDateEnable = true;
+        this.printButton.Enabled = false;
+        this.needsToPrint = false;
+        this.validUntilPicker.Value = DateTime.Now.AddYears(3);
       }
 
       if (requestValid && entry.Request.VerifySimple())
@@ -146,6 +149,8 @@ namespace Pirate.PiVote.CaGui
         this.refuseRadioButton.Checked = true;
         this.acceptSignRadioButton.Enabled = false;
       }
+
+      CheckValid();
     }
 
     private void RefuseDialog_KeyDown(object sender, KeyEventArgs e)
@@ -240,6 +245,11 @@ namespace Pirate.PiVote.CaGui
       get { return this.validUntilPicker.Value; }
     }
 
+    public DateTime ValidFrom
+    {
+      get { return this.validFromPicker.Value; }
+    }
+
     private void printButton_Click(object sender, EventArgs e)
     {
       if (this.request == null)
@@ -256,6 +266,11 @@ namespace Pirate.PiVote.CaGui
         this.needsToPrint = false;
         CheckValid();
       }
+    }
+
+    private void validFromPicker_ValueChanged(object sender, EventArgs e)
+    {
+      this.validUntilPicker.Value = this.validFromPicker.Value.AddYears(3);
     }
   }
 }

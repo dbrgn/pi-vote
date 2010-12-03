@@ -53,21 +53,23 @@ namespace Pirate.PiVote.Client
       this.voteUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.authoritiesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.envelopesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.refreshItem = new System.Windows.Forms.ToolStripMenuItem();
       this.votingListContextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
       // votingListContextMenu
       // 
       this.votingListContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshItem,
             this.downloadVotingMenuItem});
       this.votingListContextMenu.Name = "votingListContextMenu";
-      this.votingListContextMenu.Size = new System.Drawing.Size(122, 26);
+      this.votingListContextMenu.Size = new System.Drawing.Size(153, 70);
       this.votingListContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.votingListContextMenu_Opening);
       // 
       // downloadVotingMenuItem
       // 
       this.downloadVotingMenuItem.Name = "downloadVotingMenuItem";
-      this.downloadVotingMenuItem.Size = new System.Drawing.Size(121, 22);
+      this.downloadVotingMenuItem.Size = new System.Drawing.Size(152, 22);
       this.downloadVotingMenuItem.Text = "&Download";
       this.downloadVotingMenuItem.Click += new System.EventHandler(this.downloadVotingMenuItem_Click);
       // 
@@ -132,6 +134,13 @@ namespace Pirate.PiVote.Client
       this.envelopesColumnHeader.Text = "Votes";
       this.envelopesColumnHeader.Width = 70;
       // 
+      // refreshItem
+      // 
+      this.refreshItem.Name = "refreshItem";
+      this.refreshItem.Size = new System.Drawing.Size(152, 22);
+      this.refreshItem.Text = "&Refresh";
+      this.refreshItem.Click += new System.EventHandler(this.refreshItem_Click);
+      // 
       // ListVotingsItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -157,6 +166,7 @@ namespace Pirate.PiVote.Client
     private ContextMenuStrip votingListContextMenu;
     private ToolStripMenuItem downloadVotingMenuItem;
     private ColumnHeader groupColumnHeader;
+    private ToolStripMenuItem refreshItem;
 
 
 

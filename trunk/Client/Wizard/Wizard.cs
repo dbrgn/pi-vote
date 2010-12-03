@@ -185,5 +185,16 @@ namespace Pirate.PiVote.Client
         Close();
       }
     }
+
+    private void Wizard_KeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.KeyCode == Keys.F5)
+      {
+        if (item != null)
+        {
+          item.RefreshData();
+        }
+      }
+    }
   }
 }

@@ -166,6 +166,8 @@ namespace Pirate.PiVote.Client
         }
       }
 
+      this.versionLabel.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
       OnUpdateWizard();
 
       if (!Status.VotingClient.Connected)

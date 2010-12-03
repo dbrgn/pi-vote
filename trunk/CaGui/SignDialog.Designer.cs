@@ -62,12 +62,14 @@
       this.signedBySignatureLabel = new System.Windows.Forms.Label();
       this.signedBySignatureTextBox = new System.Windows.Forms.TextBox();
       this.printButton = new System.Windows.Forms.Button();
+      this.validFromPicker = new System.Windows.Forms.DateTimePicker();
+      this.validFromLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // validUntilLabel
       // 
       this.validUntilLabel.AutoSize = true;
-      this.validUntilLabel.Location = new System.Drawing.Point(10, 480);
+      this.validUntilLabel.Location = new System.Drawing.Point(11, 498);
       this.validUntilLabel.Name = "validUntilLabel";
       this.validUntilLabel.Size = new System.Drawing.Size(55, 14);
       this.validUntilLabel.TabIndex = 0;
@@ -76,10 +78,10 @@
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(463, 578);
+      this.cancelButton.Location = new System.Drawing.Point(462, 569);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(75, 23);
-      this.cancelButton.TabIndex = 2;
+      this.cancelButton.TabIndex = 7;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
       this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -88,10 +90,10 @@
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.okButton.Enabled = false;
-      this.okButton.Location = new System.Drawing.Point(382, 578);
+      this.okButton.Location = new System.Drawing.Point(381, 569);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(75, 23);
-      this.okButton.TabIndex = 1;
+      this.okButton.TabIndex = 6;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
       this.okButton.Click += new System.EventHandler(this.okButton_Click);
@@ -139,10 +141,10 @@
       this.validUntilPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.validUntilPicker.Enabled = false;
-      this.validUntilPicker.Location = new System.Drawing.Point(93, 475);
+      this.validUntilPicker.Location = new System.Drawing.Point(94, 493);
       this.validUntilPicker.Name = "validUntilPicker";
       this.validUntilPicker.Size = new System.Drawing.Size(444, 20);
-      this.validUntilPicker.TabIndex = 7;
+      this.validUntilPicker.TabIndex = 3;
       this.validUntilPicker.ValueChanged += new System.EventHandler(this.validUntilPicker_ValueChanged);
       // 
       // typeLabel
@@ -225,10 +227,10 @@
       // acceptSignRadioButton
       // 
       this.acceptSignRadioButton.AutoSize = true;
-      this.acceptSignRadioButton.Location = new System.Drawing.Point(11, 451);
+      this.acceptSignRadioButton.Location = new System.Drawing.Point(11, 442);
       this.acceptSignRadioButton.Name = "acceptSignRadioButton";
       this.acceptSignRadioButton.Size = new System.Drawing.Size(105, 18);
-      this.acceptSignRadioButton.TabIndex = 16;
+      this.acceptSignRadioButton.TabIndex = 1;
       this.acceptSignRadioButton.TabStop = true;
       this.acceptSignRadioButton.Text = "Accept and Sign";
       this.acceptSignRadioButton.UseVisualStyleBackColor = true;
@@ -239,16 +241,16 @@
       this.reasonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.reasonComboBox.Enabled = false;
       this.reasonComboBox.FormattingEnabled = true;
-      this.reasonComboBox.Location = new System.Drawing.Point(93, 534);
+      this.reasonComboBox.Location = new System.Drawing.Point(93, 550);
       this.reasonComboBox.Name = "reasonComboBox";
       this.reasonComboBox.Size = new System.Drawing.Size(444, 22);
-      this.reasonComboBox.TabIndex = 17;
+      this.reasonComboBox.TabIndex = 5;
       this.reasonComboBox.SelectedIndexChanged += new System.EventHandler(this.reasonComboBox_SelectedIndexChanged);
       // 
       // reasonLabel
       // 
       this.reasonLabel.AutoSize = true;
-      this.reasonLabel.Location = new System.Drawing.Point(10, 537);
+      this.reasonLabel.Location = new System.Drawing.Point(10, 553);
       this.reasonLabel.Name = "reasonLabel";
       this.reasonLabel.Size = new System.Drawing.Size(47, 14);
       this.reasonLabel.TabIndex = 18;
@@ -257,10 +259,10 @@
       // refuseRadioButton
       // 
       this.refuseRadioButton.AutoSize = true;
-      this.refuseRadioButton.Location = new System.Drawing.Point(11, 510);
+      this.refuseRadioButton.Location = new System.Drawing.Point(11, 526);
       this.refuseRadioButton.Name = "refuseRadioButton";
       this.refuseRadioButton.Size = new System.Drawing.Size(60, 18);
-      this.refuseRadioButton.TabIndex = 19;
+      this.refuseRadioButton.TabIndex = 4;
       this.refuseRadioButton.TabStop = true;
       this.refuseRadioButton.Text = "Refuse";
       this.refuseRadioButton.UseVisualStyleBackColor = true;
@@ -395,13 +397,33 @@
       // 
       this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.printButton.Enabled = false;
-      this.printButton.Location = new System.Drawing.Point(445, 414);
+      this.printButton.Location = new System.Drawing.Point(445, 405);
       this.printButton.Name = "printButton";
       this.printButton.Size = new System.Drawing.Size(92, 23);
-      this.printButton.TabIndex = 33;
+      this.printButton.TabIndex = 0;
       this.printButton.Text = "&Print";
       this.printButton.UseVisualStyleBackColor = true;
       this.printButton.Click += new System.EventHandler(this.printButton_Click);
+      // 
+      // validFromPicker
+      // 
+      this.validFromPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.validFromPicker.Enabled = false;
+      this.validFromPicker.Location = new System.Drawing.Point(94, 467);
+      this.validFromPicker.Name = "validFromPicker";
+      this.validFromPicker.Size = new System.Drawing.Size(444, 20);
+      this.validFromPicker.TabIndex = 2;
+      this.validFromPicker.ValueChanged += new System.EventHandler(this.validFromPicker_ValueChanged);
+      // 
+      // validFromLabel
+      // 
+      this.validFromLabel.AutoSize = true;
+      this.validFromLabel.Location = new System.Drawing.Point(10, 472);
+      this.validFromLabel.Name = "validFromLabel";
+      this.validFromLabel.Size = new System.Drawing.Size(58, 14);
+      this.validFromLabel.TabIndex = 35;
+      this.validFromLabel.Text = "Valid from:";
       // 
       // SignDialog
       // 
@@ -409,6 +431,8 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.ClientSize = new System.Drawing.Size(550, 613);
       this.ControlBox = false;
+      this.Controls.Add(this.validFromLabel);
+      this.Controls.Add(this.validFromPicker);
       this.Controls.Add(this.printButton);
       this.Controls.Add(this.signedBySignatureLabel);
       this.Controls.Add(this.signedBySignatureTextBox);
@@ -494,5 +518,7 @@
     private System.Windows.Forms.Label signedBySignatureLabel;
     private System.Windows.Forms.TextBox signedBySignatureTextBox;
     private System.Windows.Forms.Button printButton;
+    private System.Windows.Forms.DateTimePicker validFromPicker;
+    private System.Windows.Forms.Label validFromLabel;
   }
 }

@@ -44,12 +44,12 @@ namespace Pirate.PiVote.Client
     {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Wizard));
       this.nextPanel = new System.Windows.Forms.Panel();
-      this.progress1 = new Pirate.PiVote.Client.Progress();
-      this.message1 = new Pirate.PiVote.Client.Message();
       this.previouseButton = new System.Windows.Forms.Button();
       this.nextButton = new System.Windows.Forms.Button();
       this.cancelButton = new System.Windows.Forms.Button();
       this.itemPanel = new System.Windows.Forms.Panel();
+      this.progress1 = new Pirate.PiVote.Client.Progress();
+      this.message1 = new Pirate.PiVote.Client.Message();
       this.nextPanel.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -66,29 +66,6 @@ namespace Pirate.PiVote.Client
       this.nextPanel.Name = "nextPanel";
       this.nextPanel.Size = new System.Drawing.Size(528, 105);
       this.nextPanel.TabIndex = 0;
-      // 
-      // progress1
-      // 
-      this.progress1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.progress1.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.progress1.Location = new System.Drawing.Point(8, 4);
-      this.progress1.Margin = new System.Windows.Forms.Padding(1);
-      this.progress1.Name = "progress1";
-      this.progress1.Size = new System.Drawing.Size(512, 63);
-      this.progress1.Status = null;
-      this.progress1.TabIndex = 4;
-      // 
-      // message1
-      // 
-      this.message1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.message1.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.message1.Location = new System.Drawing.Point(8, 4);
-      this.message1.Margin = new System.Windows.Forms.Padding(1);
-      this.message1.Name = "message1";
-      this.message1.Size = new System.Drawing.Size(512, 63);
-      this.message1.TabIndex = 3;
       // 
       // previouseButton
       // 
@@ -136,6 +113,29 @@ namespace Pirate.PiVote.Client
       this.itemPanel.TabIndex = 1;
       this.itemPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.itemPanel_Paint);
       // 
+      // progress1
+      // 
+      this.progress1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.progress1.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.progress1.Location = new System.Drawing.Point(8, 4);
+      this.progress1.Margin = new System.Windows.Forms.Padding(1);
+      this.progress1.Name = "progress1";
+      this.progress1.Size = new System.Drawing.Size(512, 63);
+      this.progress1.Status = null;
+      this.progress1.TabIndex = 4;
+      // 
+      // message1
+      // 
+      this.message1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.message1.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.message1.Location = new System.Drawing.Point(8, 4);
+      this.message1.Margin = new System.Windows.Forms.Padding(1);
+      this.message1.Name = "message1";
+      this.message1.Size = new System.Drawing.Size(512, 63);
+      this.message1.TabIndex = 3;
+      // 
       // Wizard
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -146,6 +146,7 @@ namespace Pirate.PiVote.Client
       this.Controls.Add(this.nextPanel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+      this.KeyPreview = true;
       this.Margin = new System.Windows.Forms.Padding(2);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
@@ -153,6 +154,7 @@ namespace Pirate.PiVote.Client
       this.Name = "Wizard";
       this.Text = "Pi-Vote";
       this.Load += new System.EventHandler(this.Wizard_Load);
+      this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Wizard_KeyDown);
       this.nextPanel.ResumeLayout(false);
       this.ResumeLayout(false);
 

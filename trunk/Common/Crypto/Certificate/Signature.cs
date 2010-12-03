@@ -48,6 +48,17 @@ namespace Pirate.PiVote.Crypto
     /// <param name="objectData">Object data to be signed.</param>
     /// <param name="validUntil">This signature is valid until then.</param>
     public Signature(Certificate signer, byte[] objectData, DateTime validUntil)
+      : this(signer, objectData, DateTime.Now, validUntil)
+    { }
+
+    /// <summary>
+    /// Create a new signature.
+    /// </summary>
+    /// <param name="signer">Certificate of the signer.</param>
+    /// <param name="objectData">Object data to be signed.</param>
+    /// <param name="validFrom">This signature is not valid before then.</param>
+    /// <param name="validUntil">This signature is valid until then.</param>
+    public Signature(Certificate signer, byte[] objectData, DateTime validFrom, DateTime validUntil)
     {
       SignerId = signer.Id;
       ValidFrom = DateTime.Now;
@@ -87,37 +98,43 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Is the signature valid.</returns>
     public CertificateValidationResult Verify(byte[] objectData, ICertificateStorage certificateStorage, DateTime date)
     {
-      if (ValidFrom.Date <= date.Date &&
-          ValidUntil.Date >= date.Date)
+      if (ValidFrom.Date <= date.Date)
       {
-        if (certificateStorage.Has(SignerId))
+        if (ValidUntil.Date >= date.Date)
         {
-          Certificate signer = certificateStorage.Get(SignerId);
-
-          if (signer.VerifySimple(AssmblySigningData(objectData), Data))
+          if (certificateStorage.Has(SignerId))
           {
-            if (signer.Validate(certificateStorage, date) == CertificateValidationResult.Valid)
+            Certificate signer = certificateStorage.Get(SignerId);
+
+            if (signer.VerifySimple(AssmblySigningData(objectData), Data))
             {
-              return CertificateValidationResult.Valid;
+              if (signer.Validate(certificateStorage, date) == CertificateValidationResult.Valid)
+              {
+                return CertificateValidationResult.Valid;
+              }
+              else
+              {
+                return CertificateValidationResult.SignerInvalid;
+              }
             }
             else
             {
-              return CertificateValidationResult.SignerInvalid;
+              return CertificateValidationResult.SignatureDataInvalid;
             }
           }
           else
           {
-            return CertificateValidationResult.SignatureDataInvalid;
+            return CertificateValidationResult.UnknownSigner;
           }
         }
         else
         {
-          return CertificateValidationResult.UnknownSigner;
+          return CertificateValidationResult.Outdated;
         }
       }
       else
       {
-        return CertificateValidationResult.Outdated;
+        return CertificateValidationResult.NotYetValid;
       }
     }
 
@@ -154,6 +171,33 @@ namespace Pirate.PiVote.Crypto
       else
       {
         return DateTime.MinValue;
+      }
+    }
+
+    /// <summary>
+    /// Determines until when the signature will become valid.
+    /// </summary>
+    /// <param name="certificateStorage">Storage of certificates.</param>
+    /// <param name="date">Date at which the signers certificate must be valid.</param>
+    /// <returns>Date after which the signature expires.</returns>
+    public DateTime ExpectedValidFrom(byte[] objectData, ICertificateStorage certificateStorage)
+    {
+      if (certificateStorage.Has(SignerId))
+      {
+        Certificate signer = certificateStorage.Get(SignerId);
+
+        if (signer.VerifySimple(AssmblySigningData(objectData), Data))
+        {
+          return ValidFrom;
+        }
+        else
+        {
+          return DateTime.MaxValue;
+        }
+      }
+      else
+      {
+        return DateTime.MaxValue;
       }
     }
 

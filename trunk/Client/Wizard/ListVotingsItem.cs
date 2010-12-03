@@ -119,10 +119,15 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
-      UpdateVotingList();
+      RefreshList();
     }
 
-    private void UpdateVotingList()
+    public override void RefreshData()
+    {
+      RefreshList();
+    }
+
+    private void RefreshList()
     {
       this.run = true;
       OnUpdateWizard();
@@ -295,7 +300,7 @@ namespace Pirate.PiVote.Client
 
       if (this.exception == null)
       {
-        UpdateVotingList();
+        RefreshList();
 
         Status.SetMessage(Resources.ListVotingDownloadSuccess, MessageType.Success);
       }
@@ -324,6 +329,15 @@ namespace Pirate.PiVote.Client
 
         this.downloadVotingMenuItem.Enabled = votingDescriptor.Status == VotingStatus.Finished;
       }
+      else
+      {
+        this.downloadVotingMenuItem.Enabled = false;
+      }
+    }
+
+    private void refreshItem_Click(object sender, EventArgs e)
+    {
+      RefreshList();
     }
   }
 }

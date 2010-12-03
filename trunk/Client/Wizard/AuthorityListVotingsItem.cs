@@ -74,6 +74,16 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
+      RefreshList();
+    }
+
+    public override void RefreshData()
+    {
+      RefreshList();
+    }
+
+    public void RefreshList()
+    {
       this.run = true;
       OnUpdateWizard();
 
@@ -89,45 +99,7 @@ namespace Pirate.PiVote.Client
 
       if (this.exception == null)
       {
-        if (this.votings != null)
-        {
-          foreach (VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
-          {
-            ListViewItem item = new ListViewItem(voting.Title.Text);
-            item.SubItems.Add(Status.GetGroupName(voting.GroupId));
-            item.SubItems.Add(voting.Status.Text());
-            item.SubItems.Add(voting.VoteFrom.ToShortDateString());
-            item.SubItems.Add(voting.VoteUntil.ToShortDateString());
-
-            switch (voting.Status)
-            {
-              case VotingStatus.New:
-              case VotingStatus.Sharing:
-              case VotingStatus.Deciphering:
-                item.SubItems.Add(voting.AuthoritiesDone.Count().ToString() + " / " + voting.AuthorityCount.ToString());
-                break;
-              default:
-                item.SubItems.Add(string.Empty);
-                break;
-            }
-
-            switch (voting.Status)
-            {
-              case VotingStatus.Voting:
-              case VotingStatus.Deciphering:
-              case VotingStatus.Finished:
-              case VotingStatus.Offline:
-                item.SubItems.Add(voting.EnvelopeCount.ToString());
-                break;
-              default:
-                item.SubItems.Add(string.Empty);
-                break;
-            }
-
-            item.Tag = voting;
-            this.votingList.Items.Add(item);
-          }
-        }
+        ReloadList();
 
         Status.SetMessage(Resources.VotingListDownloaded, MessageType.Info);
       }
@@ -138,6 +110,51 @@ namespace Pirate.PiVote.Client
 
       OnUpdateWizard();
       this.votingList.Enabled = true;
+    }
+
+    private void ReloadList()
+    {
+      this.votingList.Items.Clear();
+
+      if (this.votings != null)
+      {
+        foreach (VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
+        {
+          ListViewItem item = new ListViewItem(voting.Title.Text);
+          item.SubItems.Add(Status.GetGroupName(voting.GroupId));
+          item.SubItems.Add(voting.Status.Text());
+          item.SubItems.Add(voting.VoteFrom.ToShortDateString());
+          item.SubItems.Add(voting.VoteUntil.ToShortDateString());
+
+          switch (voting.Status)
+          {
+            case VotingStatus.New:
+            case VotingStatus.Sharing:
+            case VotingStatus.Deciphering:
+              item.SubItems.Add(voting.AuthoritiesDone.Count().ToString() + " / " + voting.AuthorityCount.ToString());
+              break;
+            default:
+              item.SubItems.Add(string.Empty);
+              break;
+          }
+
+          switch (voting.Status)
+          {
+            case VotingStatus.Voting:
+            case VotingStatus.Deciphering:
+            case VotingStatus.Finished:
+            case VotingStatus.Offline:
+              item.SubItems.Add(voting.EnvelopeCount.ToString());
+              break;
+            default:
+              item.SubItems.Add(string.Empty);
+              break;
+          }
+
+          item.Tag = voting;
+          this.votingList.Items.Add(item);
+        }
+      }
     }
 
     private void GetVotingListCompleted(IEnumerable<VotingDescriptor> votingList, Exception exception)
@@ -409,6 +426,11 @@ namespace Pirate.PiVote.Client
       this.voteUntilColumnHeader.Text = Resources.VotingListVoteUntil;
       this.authorityColumnHeader.Text = Resources.VotingListAuthorities;
       this.envelopesColumnHeader.Text = Resources.VotingListEnvelopes;
+    }
+
+    private void refreshMenu_Click(object sender, EventArgs e)
+    {
+      RefreshList();
     }
   }
 }

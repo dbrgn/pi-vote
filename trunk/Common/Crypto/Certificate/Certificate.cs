@@ -396,6 +396,30 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Determines until when the certificate will become valid, provided it isn't revoked until then.
+    /// </summary>
+    /// <param name="certificateStorage">Storage of certificates.</param>
+    /// <returns>Date the certificate will become valid.</returns>
+    public DateTime ExpectedValidFrom(ICertificateStorage certificateStorage)
+    {
+      if (SelfSignatureValid)
+      {
+        if (certificateStorage.IsRootCertificate(this))
+        {
+          return DateTime.MinValue;
+        }
+        else
+        {
+          return this.signatures.Min(signature => signature.ExpectedValidFrom(GetSignatureContent(), certificateStorage));
+        }
+      }
+      else
+      {
+        return DateTime.MinValue;
+      }
+    }
+    
+    /// <summary>
     /// This this certificate identic to another one?
     /// </summary>
     /// <param name="other">Other certificate to compare.</param>
@@ -650,18 +674,31 @@ namespace Pirate.PiVote.Crypto
     /// Add a signature to the certificate.
     /// </summary>
     /// <param name="signer">Certificate used to sign this one.</param>
+    /// <param name="validUntil">This signature is valid until then.</param>
     /// <returns>New signature.</returns>
     public Signature AddSignature(Certificate signer, DateTime validUntil)
+    {
+      return AddSignature(signer, DateTime.Now, validUntil);
+    }
+
+    /// <summary>
+    /// Add a signature to the certificate.
+    /// </summary>
+    /// <param name="signer">Certificate used to sign this one.</param>
+    /// <param name="validFrom">This signature is not valid before then.</param>
+    /// <param name="validUntil">This signature is valid until then.</param>
+    /// <returns>New signature.</returns>
+    public Signature AddSignature(Certificate signer, DateTime validFrom, DateTime validUntil)
     {
       if (signer == null)
         throw new ArgumentNullException("signer");
 
-      Signature signature = new Signature(signer, GetSignatureContent(), validUntil);
+      Signature signature = new Signature(signer, GetSignatureContent(), validFrom, validUntil);
       AddSignature(signature);
 
       return signature;
     }
-
+    
     /// <summary>
     /// Add a signature to the certificate.
     /// </summary>
