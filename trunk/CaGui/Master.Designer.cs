@@ -356,19 +356,6 @@
       this.searchTypeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.searchTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.searchTypeBox.FormattingEnabled = true;
-      this.searchTypeBox.Items.AddRange(new object[] {
-            "All Types",
-            "CA",
-            "Admin",
-            "Authority",
-            "Voter",
-            "Server",
-            "All Types",
-            "CA",
-            "Admin",
-            "Authority",
-            "Voter",
-            "Server"});
       this.searchTypeBox.Location = new System.Drawing.Point(556, 4);
       this.searchTypeBox.Name = "searchTypeBox";
       this.searchTypeBox.Size = new System.Drawing.Size(192, 22);
@@ -381,17 +368,6 @@
       this.searchStatusBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.searchStatusBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.searchStatusBox.FormattingEnabled = true;
-      this.searchStatusBox.Items.AddRange(new object[] {
-            "All Status",
-            "New",
-            "Valid",
-            "Revoked",
-            "Refused",
-            "All Status",
-            "New",
-            "Valid",
-            "Revoked",
-            "Refused"});
       this.searchStatusBox.Location = new System.Drawing.Point(882, 4);
       this.searchStatusBox.Name = "searchStatusBox";
       this.searchStatusBox.Size = new System.Drawing.Size(168, 22);

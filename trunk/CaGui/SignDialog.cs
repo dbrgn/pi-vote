@@ -53,10 +53,10 @@ namespace Pirate.PiVote.CaGui
       Close();
     }
 
-    public void Display(CertificateAuthorityEntry entry, CertificateStorage storage, Certificate caCertificate, IEnumerable<CertificateAuthorityEntry> allEntries)
+    public void Display(ListEntry listEntry, CertificateStorage storage, Certificate caCertificate, IEnumerable<ListEntry> allListEntries)
     {
-      this.certificate = entry.Certificate;
-      this.request = entry.RequestValue(caCertificate);
+      this.certificate = listEntry.Certificate;
+      this.request = listEntry.Request;
 
       this.idTextBox.Text = this.certificate.Id.ToString();
       this.typeTextBox.Text = this.certificate.TypeText;
@@ -72,19 +72,17 @@ namespace Pirate.PiVote.CaGui
       if (this.request is SignatureRequest2)
       {
         SignatureRequest2 request2 = (SignatureRequest2)this.request;
-        CertificateAuthorityEntry signingEntry = allEntries.Where(e => e.Certificate.IsIdentic(request2.SigningCertificate)).FirstOrDefault();
-        requestValid &= signingEntry != null;
-        requestValid &= signingEntry.Certificate.Fingerprint == request2.SigningCertificate.Fingerprint;
+        ListEntry signingListEntry = allListEntries.Where(le => le.Certificate.IsIdentic(request2.SigningCertificate)).FirstOrDefault();
+        requestValid &= signingListEntry != null;
+        requestValid &= signingListEntry.Certificate.Fingerprint == request2.SigningCertificate.Fingerprint;
 
         this.signedByIdTextBox.Text = request2.SigningCertificate.Id.ToString();
         this.signedByFingerprintTextBox.Text = request2.SigningCertificate.Fingerprint;
 
-        if (signingEntry != null)
+        if (signingListEntry != null)
         {
-          SignatureRequest signingRequest = signingEntry.Request.Value.Decrypt(caCertificate);
-
-          this.signedByNameTextBox.Text = signingRequest.FullName;
-          this.signedByEmailAddressTextBox.Text = signingRequest.EmailAddress;
+          this.signedByNameTextBox.Text = signingListEntry.Request.FullName;
+          this.signedByEmailAddressTextBox.Text = signingListEntry.Request.EmailAddress;
 
           this.validUntilPicker.Value = request2.SigningCertificate.ExpectedValidUntil(storage, DateTime.Now);
           this.validUntilPicker.Enabled = false;
@@ -125,7 +123,7 @@ namespace Pirate.PiVote.CaGui
         this.validUntilPicker.Value = DateTime.Now.AddYears(3);
       }
 
-      if (requestValid && entry.Request.VerifySimple())
+      if (requestValid && listEntry.VerifyRequestSimple())
       {
         LibraryResources.Culture = Language.English.ToCulture();
         this.refusedFingerprintNoMatchIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedFingerprintNoMatch);
@@ -185,6 +183,7 @@ namespace Pirate.PiVote.CaGui
 
     private void acceptSignRadioButton_CheckedChanged(object sender, EventArgs e)
     {
+      this.validFromPicker.Enabled = true;
       this.validUntilPicker.Enabled = this.acceptSignRadioButton.Checked && this.expiryDateEnable;
       this.reasonComboBox.Enabled = this.refuseRadioButton.Checked;
       CheckValid();

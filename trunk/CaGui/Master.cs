@@ -142,7 +142,7 @@ namespace Pirate.PiVote.CaGui
 
       foreach (FileInfo file in files)
       {
-        Entries.Add(new ListEntry(file.FullName));
+        Entries.Add(new ListEntry(file.FullName, CaCertificate));
 
         counter++;
         this.loadProgress = 100d / (double)files.Count() * (double)counter;
@@ -161,7 +161,7 @@ namespace Pirate.PiVote.CaGui
         .Where(listEntry => listEntry.ContainsToken(this.searchTestBox.Text, CaCertificate) &&
                             listEntry.IsOfType(this.searchTypeBox.Value) &&
                             listEntry.IsOfStatus(this.searchStatusBox.Value) &&
-                            !this.searchDateActive.Checked || listEntry.IsOfDate(this.searchDateBox.Value));
+                            (!this.searchDateActive.Checked || listEntry.IsOfDate(this.searchDateBox.Value)));
     }
 
     private IEnumerable<ListEntry> SortEntries(IEnumerable<ListEntry> input)
@@ -171,13 +171,13 @@ namespace Pirate.PiVote.CaGui
         switch (this.orderBy)
         {
           case Column.Id:
-            return input.OrderByDescending(listEntry => listEntry.Entry.Certificate.Id.ToString());
+            return input.OrderByDescending(listEntry => listEntry.Certificate.Id.ToString());
           case Column.Type:
-            return input.OrderByDescending(listEntry => listEntry.Entry.Certificate.ToType());
+            return input.OrderByDescending(listEntry => listEntry.Certificate.ToType());
           case Column.Group:
-            return input.OrderByDescending(listEntry => listEntry.Entry.Certificate.GetGroupName());
+            return input.OrderByDescending(listEntry => listEntry.Certificate.GetGroupName());
           case Column.Name:
-            return input.OrderByDescending(listEntry => listEntry.Entry.RequestValue(CaCertificate).FullName);
+            return input.OrderByDescending(listEntry => listEntry.Request.FullName);
           case Column.ValidFrom:
             return input.OrderByDescending(listEntry => listEntry.ValidFrom);
           case Column.ValidUntil:
@@ -193,13 +193,13 @@ namespace Pirate.PiVote.CaGui
         switch (this.orderBy)
         {
           case Column.Id:
-            return input.OrderBy(listEntry => listEntry.Entry.Certificate.Id.ToString());
+            return input.OrderBy(listEntry => listEntry.Certificate.Id.ToString());
           case Column.Type:
-            return input.OrderBy(listEntry => listEntry.Entry.Certificate.ToType());
+            return input.OrderBy(listEntry => listEntry.Certificate.ToType());
           case Column.Group:
-            return input.OrderBy(listEntry => listEntry.Entry.Certificate.GetGroupName());
+            return input.OrderBy(listEntry => listEntry.Certificate.GetGroupName());
           case Column.Name:
-            return input.OrderBy(listEntry => listEntry.Entry.RequestValue(CaCertificate).FullName);
+            return input.OrderBy(listEntry => listEntry.Request.FullName);
           case Column.ValidFrom:
             return input.OrderBy(listEntry => listEntry.ValidFrom);
           case Column.ValidUntil:
@@ -373,7 +373,7 @@ namespace Pirate.PiVote.CaGui
 
           if (secureSignatureRequest.VerifySimple())
           {
-            if (Entries.Any(listEntry => listEntry.Entry.Certificate.Id == secureSignatureRequest.Certificate.Id))
+            if (Entries.Any(listEntry => listEntry.Certificate.Id == secureSignatureRequest.Certificate.Id))
             {
               alreadyAddedList.Add(fileName);
             }
@@ -383,7 +383,7 @@ namespace Pirate.PiVote.CaGui
               string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
               entry.Save(DataPath(entryFileName));
 
-              ListEntry listEntry = new ListEntry(entryFileName, entry);
+              ListEntry listEntry = new ListEntry(entryFileName, entry, CaCertificate);
               Entries.Add(listEntry);
               this.entryListView.Items.Add(listEntry.CreateItem(CaCertificate));
             }
@@ -440,7 +440,7 @@ namespace Pirate.PiVote.CaGui
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
-        IEnumerable<Guid> revokedIds = Entries.Where(listEntry => listEntry.Entry.Revoked).Select(listEntry => listEntry.Entry.Certificate.Id);
+        IEnumerable<Guid> revokedIds = Entries.Where(listEntry => listEntry.Revoked).Select(listEntry => listEntry.Certificate.Id);
         RevocationList revocationList = new RevocationList(CaCertificate.Id, dialog.ValidFrom, dialog.ValidUntil, revokedIds);
         string validFrom = revocationList.ValidFrom.ToString("yyyyMMdd");
         string validUntil = revocationList.ValidUntil.ToString("yyyyMMdd");
@@ -459,19 +459,19 @@ namespace Pirate.PiVote.CaGui
         var listEntry = SelectedEntry;
 
         SignDialog dialog = new SignDialog();
-        dialog.Display(listEntry.Entry, CertificateStorage, CaCertificate, Entries.Select(lstEntry => lstEntry.Entry));
+        dialog.Display(listEntry, CertificateStorage, CaCertificate, Entries);
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
           if (dialog.Accept)
           {
-            listEntry.Entry.Sign(CaCertificate, dialog.ValidFrom, dialog.ValidUntil);
+            listEntry.Sign(CaCertificate, dialog.ValidFrom, dialog.ValidUntil);
             listEntry.Save();
             listEntry.UpdateItem(CaCertificate);
           }
           else
           {
-            listEntry.Entry.Refuse(CaCertificate, dialog.Reason);
+            listEntry.Refuse(CaCertificate, dialog.Reason);
             listEntry.Save();
             listEntry.UpdateItem(CaCertificate);
           }
@@ -483,7 +483,7 @@ namespace Pirate.PiVote.CaGui
 
           if (saveDialog.ShowDialog() == DialogResult.OK)
           {
-            listEntry.Entry.Response.Save(saveDialog.FileName);
+            listEntry.SaveResponse(saveDialog.FileName);
           }
         }
       }
@@ -500,7 +500,7 @@ namespace Pirate.PiVote.CaGui
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
-          listEntry.Entry.Revoke();
+          listEntry.Revoke();
           listEntry.Save();
           listEntry.UpdateItem(CaCertificate);
         }
@@ -532,7 +532,7 @@ namespace Pirate.PiVote.CaGui
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {
-          listEntry.Entry.Response.Save(dialog.FileName);
+          listEntry.SaveResponse(dialog.FileName);
         }
       }
     }
@@ -585,7 +585,7 @@ namespace Pirate.PiVote.CaGui
           string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
           entry.Save(DataPath(entryFileName));
 
-          ListEntry listEntry = new ListEntry(entryFileName, entry);
+          ListEntry listEntry = new ListEntry(entryFileName, entry, CaCertificate);
           Entries.Add(listEntry);
           this.entryListView.Items.Add(listEntry.CreateItem(CaCertificate));
 
@@ -639,7 +639,7 @@ namespace Pirate.PiVote.CaGui
           string entryFileName = DataPath(entry.Certificate.Id.ToString() + ".pi-ca-entry");
           entry.Save(DataPath(entryFileName));
 
-          ListEntry listEntry = new ListEntry(entryFileName, entry);
+          ListEntry listEntry = new ListEntry(entryFileName, entry, CaCertificate);
           Entries.Add(listEntry);
           this.entryListView.Items.Add(listEntry.CreateItem(CaCertificate));
 

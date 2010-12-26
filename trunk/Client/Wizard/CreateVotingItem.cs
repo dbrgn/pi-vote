@@ -22,11 +22,42 @@ namespace Pirate.PiVote.Client
 {
   public partial class CreateVotingItem : WizardItem
   {
+    public class VotingAuthoritiesFile : Serializable
+    {
+      public List<Guid> AuthorityIds { get; private set; }
+
+      public VotingAuthoritiesFile(List<AuthorityCertificate> authorityCertificates)
+      {
+        AuthorityIds = new List<Guid>(authorityCertificates.Select(certificate => certificate.Id));
+      }
+
+      public VotingAuthoritiesFile(DeserializeContext context)
+        : base(context)
+      {
+      }
+
+      public override void Serialize(SerializeContext context)
+      {
+        base.Serialize(context);
+        context.WriteList(AuthorityIds);
+      }
+
+      protected override void Deserialize(DeserializeContext context)
+      {
+        base.Deserialize(context);
+        AuthorityIds = context.ReadGuidList();
+      }
+    }
+
+    private const string SavedVotingParametersFileName = "current-voting.pi-parameters";
+    private const string SavedVotingAuthoritiesFileName = "current-voting.pi-authorities";
+
     private bool done = false;
     private bool run = false;
     private Exception exception;
     private Thread initThread;
     private List<AuthorityCertificate> authorityCertificates;
+    private Dictionary<Guid, int> authorityIndices;
     private VotingParameters votingParameters;
     private Group group;
 
@@ -91,12 +122,14 @@ namespace Pirate.PiVote.Client
         if (this.authorityCertificates != null &&
             this.authorityCertificates.Count > 0)
         {
-          var certificates = this.authorityCertificates;
-          certificates.Foreach(certificate => this.authority0List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-          certificates.Foreach(certificate => this.authority1List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-          certificates.Foreach(certificate => this.authority2List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-          certificates.Foreach(certificate => this.authority3List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
-          certificates.Foreach(certificate => this.authority4List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName)));
+          this.authorityIndices = new Dictionary<Guid, int>();
+          this.authorityCertificates.Foreach(certificate => this.authorityIndices.Add(certificate.Id, this.authority0List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName))));
+          this.authorityCertificates.Foreach(certificate => this.authorityIndices.Add(certificate.Id, this.authority1List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName))));
+          this.authorityCertificates.Foreach(certificate => this.authorityIndices.Add(certificate.Id, this.authority2List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName))));
+          this.authorityCertificates.Foreach(certificate => this.authorityIndices.Add(certificate.Id, this.authority3List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName))));
+          this.authorityCertificates.Foreach(certificate => this.authorityIndices.Add(certificate.Id, this.authority4List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName))));
+
+          TryLoadVoting();
 
           Status.SetMessage("Authority certificates downloaded from server.", MessageType.Success);
         }
@@ -113,6 +146,42 @@ namespace Pirate.PiVote.Client
       SetEnable(true);
       this.run = false;
       OnUpdateWizard();
+    }
+
+    private void TryLoadVoting()
+    {
+      string fileNameParameters = Path.Combine(Status.DataPath, SavedVotingParametersFileName);
+      string fileNameAuthorities = Path.Combine(Status.DataPath, SavedVotingAuthoritiesFileName);
+
+      if (File.Exists(fileNameParameters))
+      {
+        this.votingParameters = Serializable.Load<VotingParameters>(fileNameParameters);
+
+        this.titleBox.Text = this.votingParameters.Title;
+        this.descriptionBox.Text = this.votingParameters.Description;
+        this.urlTextBox.Text = this.votingParameters.Url;
+        this.votingFromPicker.Value = this.votingParameters.VotingBeginDate;
+        this.votingUntilPicker.Value = this.votingParameters.VotingEndDate;
+        this.groupComboBox.Value = Status.Groups.Where(group => group.Id == this.votingParameters.GroupId).FirstOrDefault();
+
+        foreach (Question question in this.votingParameters.Questions)
+        {
+          ListViewItem item = new ListViewItem(question.Text.AllLanguages);
+          item.SubItems.Add(question.Description.AllLanguages);
+          item.Tag = question;
+          this.questionListView.Items.Add(item);
+        }
+      }
+
+      if (File.Exists(fileNameAuthorities))
+      {
+        VotingAuthoritiesFile authoritiesFile = Serializable.Load<VotingAuthoritiesFile>(fileNameAuthorities);
+        this.authority0List.SelectedIndex = this.authorityIndices[authoritiesFile.AuthorityIds.ElementAt(0)];
+        this.authority1List.SelectedIndex = this.authorityIndices[authoritiesFile.AuthorityIds.ElementAt(1)];
+        this.authority2List.SelectedIndex = this.authorityIndices[authoritiesFile.AuthorityIds.ElementAt(2)];
+        this.authority3List.SelectedIndex = this.authorityIndices[authoritiesFile.AuthorityIds.ElementAt(3)];
+        this.authority4List.SelectedIndex = this.authorityIndices[authoritiesFile.AuthorityIds.ElementAt(4)];
+      }
     }
 
     private void GetAuthorityCertificatesCompleted(IEnumerable<AuthorityCertificate> authorityCertificates, Exception exception)
@@ -232,15 +301,20 @@ namespace Pirate.PiVote.Client
         votingParameters.AddQuestion(question);
       }
 
+      votingParameters.Save(SavedVotingParametersFileName);
+
+      List<AuthorityCertificate> authorities = new List<AuthorityCertificate>();
+      authorities.Add(this.authorityCertificates[this.authority0List.SelectedIndex]);
+      authorities.Add(this.authorityCertificates[this.authority1List.SelectedIndex]);
+      authorities.Add(this.authorityCertificates[this.authority2List.SelectedIndex]);
+      authorities.Add(this.authorityCertificates[this.authority3List.SelectedIndex]);
+      authorities.Add(this.authorityCertificates[this.authority4List.SelectedIndex]);
+      var authoritiesFile = new VotingAuthoritiesFile(authorities);
+      authoritiesFile.Save(SavedVotingAuthoritiesFileName);
+
       if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.CreateVotingUnlockAction))
       {
         Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);
-        List<AuthorityCertificate> authorities = new List<AuthorityCertificate>();
-        authorities.Add(this.authorityCertificates[this.authority0List.SelectedIndex]);
-        authorities.Add(this.authorityCertificates[this.authority1List.SelectedIndex]);
-        authorities.Add(this.authorityCertificates[this.authority2List.SelectedIndex]);
-        authorities.Add(this.authorityCertificates[this.authority3List.SelectedIndex]);
-        authorities.Add(this.authorityCertificates[this.authority4List.SelectedIndex]);
 
         Status.VotingClient.CreateVoting(signedVotingParameters, authorities, CreateVotingCompleted);
 
@@ -390,6 +464,7 @@ namespace Pirate.PiVote.Client
       this.votingFromLabel.Text = Resources.CreateVotingOpenFrom;
       this.votingUntilLabel.Text = Resources.CreateVotingOpenUntil;
       this.createButton.Text = Resources.CreateVotingButton;
+      this.clearButton.Text = Resources.CreateVotingClearButton;
       this.questionLabel.Text = Resources.CreateVotingQuestions;
       this.textColumnHeader.Text = Resources.CreateVotingQuestionText;
       this.descriptionColumnHeader.Text = Resources.CreateVotingQuestionDescription;
@@ -455,6 +530,22 @@ namespace Pirate.PiVote.Client
     {
       this.group = this.groupComboBox.Value;
       CheckEnable();
+    }
+
+    private void clearButton_Click(object sender, EventArgs e)
+    {
+      this.authority0List.SelectedIndex = -1;
+      this.authority1List.SelectedIndex = -1;
+      this.authority2List.SelectedIndex = -1;
+      this.authority3List.SelectedIndex = -1;
+      this.authority4List.SelectedIndex = -1;
+      this.titleBox.Clear();
+      this.descriptionBox.Clear();
+      this.urlTextBox.Clear();
+      this.votingFromPicker.Value = DateTime.Now;
+      this.votingUntilPicker.Value = DateTime.Now;
+      this.questionListView.Items.Clear();
+      this.groupComboBox.SelectedIndex = -1;
     }
   }
 }

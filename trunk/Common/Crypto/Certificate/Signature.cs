@@ -61,7 +61,7 @@ namespace Pirate.PiVote.Crypto
     public Signature(Certificate signer, byte[] objectData, DateTime validFrom, DateTime validUntil)
     {
       SignerId = signer.Id;
-      ValidFrom = DateTime.Now;
+      ValidFrom = validFrom;
       ValidUntil = validUntil;
       Data = signer.Sign(AssmblySigningData(objectData));
     }

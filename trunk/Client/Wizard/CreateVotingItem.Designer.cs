@@ -70,6 +70,7 @@ namespace Pirate.PiVote.Client
       this.titleLabel = new System.Windows.Forms.Label();
       this.urlTextBox = new Pirate.PiVote.MultiLanguageTextBox();
       this.urlLabel = new System.Windows.Forms.Label();
+      this.clearButton = new System.Windows.Forms.Button();
       this.questionContextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -361,10 +362,24 @@ namespace Pirate.PiVote.Client
       this.urlLabel.TabIndex = 48;
       this.urlLabel.Text = "Url";
       // 
+      // clearButton
+      // 
+      this.clearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.clearButton.Enabled = false;
+      this.clearButton.Location = new System.Drawing.Point(219, 417);
+      this.clearButton.Margin = new System.Windows.Forms.Padding(2);
+      this.clearButton.Name = "clearButton";
+      this.clearButton.Size = new System.Drawing.Size(110, 26);
+      this.clearButton.TabIndex = 49;
+      this.clearButton.Text = "Clear";
+      this.clearButton.UseVisualStyleBackColor = true;
+      this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
+      // 
       // CreateVotingItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.Controls.Add(this.clearButton);
       this.Controls.Add(this.urlLabel);
       this.Controls.Add(this.urlTextBox);
       this.Controls.Add(this.groupLabel);
@@ -425,6 +440,7 @@ namespace Pirate.PiVote.Client
     private GroupComboBox groupComboBox;
     private MultiLanguageTextBox urlTextBox;
     private Label urlLabel;
+    private Button clearButton;
 
 
 

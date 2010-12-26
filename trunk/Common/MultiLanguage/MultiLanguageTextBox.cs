@@ -88,6 +88,15 @@ namespace Pirate.PiVote
       }
     }
 
+    public void Clear()
+    {
+      foreach (TextBox textBox in this.textBoxes.Values)
+      {
+        textBox.Text = string.Empty;
+        this.langaugeDisplay[textBox] = true;
+      }
+    }
+
     public new MultiLanguageString Text
     {
       get

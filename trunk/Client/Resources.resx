@@ -815,4 +815,13 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="CheckCertificateNotYetValid" xml:space="preserve">
     <value>Your certificate is not yet valid. It will be valid from {0:d}.</value>
   </data>
+  <data name="SignRequestUnlockAction" xml:space="preserve">
+    <value>Recover your certificate request.</value>
+  </data>
+  <data name="SimpleCreateCertificateSigningCanceled" xml:space="preserve">
+    <value>You canceled the signing of your certificate request.</value>
+  </data>
+  <data name="CreateVotingClearButton" xml:space="preserve">
+    <value>&amp;Clear</value>
+  </data>
 </root>

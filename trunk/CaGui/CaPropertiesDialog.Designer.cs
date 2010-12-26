@@ -31,8 +31,8 @@
       this.okButton = new System.Windows.Forms.Button();
       this.okPanel = new System.Windows.Forms.Panel();
       this.caPanel = new System.Windows.Forms.Panel();
-      this.parentsPanel = new System.Windows.Forms.Panel();
       this.caInfo = new Pirate.PiVote.CaGui.CaInfoControl();
+      this.parentsPanel = new System.Windows.Forms.Panel();
       this.okPanel.SuspendLayout();
       this.caPanel.SuspendLayout();
       this.SuspendLayout();
@@ -66,14 +66,6 @@
       this.caPanel.Size = new System.Drawing.Size(403, 93);
       this.caPanel.TabIndex = 4;
       // 
-      // parentsPanel
-      // 
-      this.parentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.parentsPanel.Location = new System.Drawing.Point(0, 93);
-      this.parentsPanel.Name = "parentsPanel";
-      this.parentsPanel.Size = new System.Drawing.Size(403, 268);
-      this.parentsPanel.TabIndex = 5;
-      // 
       // caInfo
       // 
       this.caInfo.Certificate = null;
@@ -84,6 +76,14 @@
       this.caInfo.Size = new System.Drawing.Size(375, 67);
       this.caInfo.TabIndex = 2;
       this.caInfo.Title = "Certificate Authority";
+      // 
+      // parentsPanel
+      // 
+      this.parentsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.parentsPanel.Location = new System.Drawing.Point(0, 93);
+      this.parentsPanel.Name = "parentsPanel";
+      this.parentsPanel.Size = new System.Drawing.Size(403, 268);
+      this.parentsPanel.TabIndex = 5;
       // 
       // CaPropertiesDialog
       // 

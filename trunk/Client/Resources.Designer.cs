@@ -1184,6 +1184,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Clear.
+        /// </summary>
+        internal static string CreateVotingClearButton {
+            get {
+                return ResourceManager.GetString("CreateVotingClearButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created voting on server..
         /// </summary>
         internal static string CreateVotingCreated {
@@ -1639,6 +1648,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recover your certificate request..
+        /// </summary>
+        internal static string SignRequestUnlockAction {
+            get {
+                return ResourceManager.GetString("SignRequestUnlockAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show me more options.
         /// </summary>
         internal static string SimpleChooseCertificateAdvancedOption {
@@ -1738,6 +1756,15 @@ namespace Pirate.PiVote.Client {
         internal static string SimpleCreateCertificateFileMissing {
             get {
                 return ResourceManager.GetString("SimpleCreateCertificateFileMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You canceled the signing of your certificate request..
+        /// </summary>
+        internal static string SimpleCreateCertificateSigningCanceled {
+            get {
+                return ResourceManager.GetString("SimpleCreateCertificateSigningCanceled", resourceCulture);
             }
         }
         

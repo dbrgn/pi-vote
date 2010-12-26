@@ -95,37 +95,51 @@ namespace Pirate.PiVote.Client
 
         if (File.Exists(signatureRequestDataFileName))
         {
-          this.signatureRequest = Serializable.Load<SignatureRequest>(signatureRequestDataFileName);
-          this.signatureRequestInfo = new SignatureRequestInfo(this.signatureRequest.EmailAddress);
-          this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, Status.Certificate);
-          this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, Status.Certificate);
-
-          if (Status.Certificate is VoterCertificate)
+          if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.SignRequestUnlockAction))
           {
-            this.typeComboBox.SelectedIndex = 0;
-          }
-          else if (Status.Certificate is AuthorityCertificate)
-          {
-            this.typeComboBox.SelectedIndex = 1;
-          }
-          else if (Status.Certificate is AdminCertificate)
-          {
-            this.typeComboBox.SelectedIndex = 2;
-          }
+            this.signatureRequest = Serializable.Load<SignatureRequest>(signatureRequestDataFileName);
+            this.signatureRequestInfo = new SignatureRequestInfo(this.signatureRequest.EmailAddress);
+            this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, Status.Certificate);
+            this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, Status.Certificate);
 
-          this.firstNameTextBox.Text = this.signatureRequest.FirstName;
-          this.familyNameTextBox.Text = this.signatureRequest.FamilyName;
-          this.emailAddressTextBox.Text = this.signatureRequest.EmailAddress;
+            if (Status.Certificate is VoterCertificate)
+            {
+              this.typeComboBox.SelectedIndex = 0;
+            }
+            else if (Status.Certificate is AuthorityCertificate)
+            {
+              this.typeComboBox.SelectedIndex = 1;
+            }
+            else if (Status.Certificate is AdminCertificate)
+            {
+              this.typeComboBox.SelectedIndex = 2;
+            }
 
-          if (Status.Certificate is VoterCertificate)
-          {
-            this.groupComboBox.Value = Status.Groups.Where(group => group.Id == ((VoterCertificate)Status.Certificate).GroupId).Single();
+            this.firstNameTextBox.Text = this.signatureRequest.FirstName;
+            this.familyNameTextBox.Text = this.signatureRequest.FamilyName;
+            this.emailAddressTextBox.Text = this.signatureRequest.EmailAddress;
+
+            if (Status.Certificate is VoterCertificate)
+            {
+              this.groupComboBox.Value = Status.Groups.Where(group => group.Id == ((VoterCertificate)Status.Certificate).GroupId).Single();
+            }
+
+            SetEnable(false);
+            this.printButton.Enabled = true;
+            this.uploadButton.Enabled = true;
+            this.done = false;
           }
+          else
+          {
+            Status.CertificateFileName = null;
+            Status.Certificate = null;
 
-          SetEnable(false);
-          this.printButton.Enabled = true;
-          this.uploadButton.Enabled = true;
-          this.done = false;
+            SetEnable(true);
+            this.printButton.Enabled = false;
+            this.uploadButton.Enabled = false;
+            this.done = false;
+            Status.SetMessage(Resources.SimpleCreateCertificateSigningCanceled, MessageType.Info);
+          }
         }
         else
         {

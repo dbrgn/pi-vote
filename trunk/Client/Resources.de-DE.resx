@@ -799,4 +799,13 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="CheckCertificateNotYetValid" xml:space="preserve">
     <value>Dein Zertifikat is noch nicht gültig. Es wird vom {0:d} an gültig.</value>
   </data>
+  <data name="SignRequestUnlockAction" xml:space="preserve">
+    <value>Deine Zertifikatsanfrage signieren.</value>
+  </data>
+  <data name="SimpleCreateCertificateSigningCanceled" xml:space="preserve">
+    <value>Du hast das Signieren deiner Zertifikatsanfrage abgebrochen.</value>
+  </data>
+  <data name="CreateVotingClearButton" xml:space="preserve">
+    <value>&amp;Zurücksetzen</value>
+  </data>
 </root>
