@@ -19,16 +19,19 @@ namespace Pirate.PiVote.Crypto
   /// <remarks>
   /// Example: National Party, Cantonal Party, etc.
   /// </remarks>
+  [SerializeObject("An group which may organize votings.")]
   public class Group : Serializable
   {
     /// <summary>
     /// Id of the group.
     /// </summary>
+    [SerializeField(0, "Id of the group.")]
     public int Id { get; private set; }
 
     /// <summary>
     /// Name of the group.
     /// </summary>
+    [SerializeField(1, "Name of the group.")]
     public MultiLanguageString Name { get; private set; }
 
     /// <summary>

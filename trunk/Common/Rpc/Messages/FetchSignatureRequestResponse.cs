@@ -16,11 +16,16 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering the signature request.
+  /// </summary>
+  [SerializeObject("RPC response delivering the signature request.")]
   public class FetchSignatureRequestResponse : RpcResponse
   {
     /// <summary>
-    /// Signature Response signed and encrypted for the CA.
+    /// Signature request signed and encrypted for the CA.
     /// </summary>
+    [SerializeField(0, "Signature request signed and encrypted for the CA.")]
     public Secure<SignatureRequest> SecureSignatureRequest { get; private set; }
 
     public FetchSignatureRequestResponse(Guid requestId, Secure<SignatureRequest> signatureRequest)

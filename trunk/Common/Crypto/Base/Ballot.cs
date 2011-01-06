@@ -17,16 +17,19 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Container for all votes from a voter.
   /// </summary>
+  [SerializeObject("Container for all votes from a voter.")]
   public class Ballot : Serializable
   {
     /// <summary>
     /// Votes for each option.
     /// </summary>
+    [SerializeField(0, "Votes for each option.")]
     public List<Vote> Votes { get; private set; }
 
     /// <summary>
     /// Proofs of sum of votes cast.
     /// </summary>
+    [SerializeField(1, "Proofs of sum of votes cast.")]
     public List<Proof> SumProves { get; private set; }
 
     /// <summary>

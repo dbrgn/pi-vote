@@ -16,8 +16,16 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering the list of voting ids.
+  /// </summary>
+  [SerializeObject("RPC response delivering the list of voting ids.")]
   public class ListVotingIdsResponse : RpcResponse
   {
+    /// <summary>
+    /// List of voting ids.
+    /// </summary>
+    [SerializeField(0, "List of voting ids.")]
     public List<Guid> VotingIds { get; private set; }
 
     public ListVotingIdsResponse(Guid requestId, IEnumerable<Guid> votingIds)
@@ -50,16 +58,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-
-      if (Exception == null)
-      {
-        context.Write(VotingIds.Count);
-
-        foreach (Guid votingId in VotingIds)
-        {
-          context.Write(votingId);
-        }
-      }
+      context.WriteList(VotingIds);
     }
 
     /// <summary>
@@ -69,17 +68,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-
-      if (Exception == null)
-      {
-        int count = context.ReadInt32();
-        VotingIds = new List<Guid>();
-
-        for (int index = 0; index < count; index++)
-        {
-          VotingIds.Add(context.ReadGuid());
-        }
-      }
+      VotingIds = context.ReadGuidList();
     }
   }
 }

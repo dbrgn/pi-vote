@@ -16,15 +16,17 @@ using Pirate.PiVote.Crypto;
 namespace Pirate.PiVote.Rpc
 {
   /// <summary>
-  /// Fetches voting material and status.
+  /// RPC request to fetch voting material and status.
   /// May fetch material and status of one, some or all votings at once.
   /// </summary>
+  [SerializeObject("RPC request to fetch voting material and status.")]
   public class FetchVotingMaterialVoterRequest : RpcRequest<VotingRpcServer, FetchVotingMaterialVoterResponse>
   {
     /// <summary>
     /// List of ids of the votings to get.
     /// May be null in case all votings are requested.
     /// </summary>
+    [SerializeField(0, "List of ids of the votings to get.")]
     private List<Guid> votingIds;
 
     /// <summary>

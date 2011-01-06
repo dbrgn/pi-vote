@@ -17,41 +17,49 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Contains all parameters of a voting.
   /// </summary>
+  [SerializeObject("Contains all parameters of a voting.")]
   public class VotingParameters : BaseParameters
   {
     /// <summary>
     /// Id of this voting.
     /// </summary>
+    [SerializeField(0, "Id of this voting.")]
     public Guid VotingId { get; private set; }
 
     /// <summary>
     /// Title of this voting.
     /// </summary>
+    [SerializeField(1, "Title of this voting.")]
     public MultiLanguageString Title { get; private set; }
 
     /// <summary>
     /// Description of this voting.
     /// </summary>
+    [SerializeField(2, "Description of this voting.")]
     public MultiLanguageString Description { get; private set; }
 
     /// <summary>
     /// Url of the discussion of the voting.
     /// </summary>
+    [SerializeField(3, "Url of the discussion of the voting.")]
     public MultiLanguageString Url { get; private set; }
 
     /// <summary>
     /// Date at which voting begins.
     /// </summary>
+    [SerializeField(4, "Date at which voting begins.")]
     public DateTime VotingBeginDate { get; private set; }
 
     /// <summary>
     /// Date a which voting ends.
     /// </summary>
+    [SerializeField(5, "Date a which voting ends.")]
     public DateTime VotingEndDate { get; private set; }
 
     /// <summary>
     /// Id of the group in which the voting takes place.
     /// </summary>
+    [SerializeField(6, "Id of the group in which the voting takes place.")]
     public int GroupId { get; private set; }
     
     /// <summary>

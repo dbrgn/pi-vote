@@ -15,8 +15,13 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to fetch all shares of a voting.
+  /// </summary>
+  [SerializeObject("RPC request to fetch all shares of a voting.")]
   public class FetchAllSharesRequest : RpcRequest<VotingRpcServer, FetchAllSharesResponse>
   {
+    [SerializeField(0, "Id of the voting.")]
     private Guid votingId;
 
     public FetchAllSharesRequest(

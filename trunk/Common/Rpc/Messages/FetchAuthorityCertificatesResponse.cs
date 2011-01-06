@@ -16,13 +16,15 @@ using Pirate.PiVote.Serialization;
 namespace Pirate.PiVote.Rpc
 {
   /// <summary>
-  /// Response to the request to fetch all valid authority certificates.
+  /// RPC response to the request to fetch all valid authority certificates.
   /// </summary>
+  [SerializeObject("RPC response to the request to fetch all valid authority certificates.")]
   public class FetchAuthorityCertificatesResponse : RpcResponse
   {
     /// <summary>
     /// List of all valid authority certificates.
     /// </summary>
+    [SerializeField(0, "List of all valid authority certificates.")]
     public List<AuthorityCertificate> AuthorityCertificates { get; private set; }
 
     /// <summary>
@@ -60,11 +62,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-
-      if (Exception == null)
-      {
-        context.WriteList(AuthorityCertificates);
-      }
+      context.WriteList(AuthorityCertificates);
     }
 
     /// <summary>
@@ -74,11 +72,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-
-      if (Exception == null)
-      {
-        AuthorityCertificates = context.ReadObjectList<AuthorityCertificate>();
-      }
+      AuthorityCertificates = context.ReadObjectList<AuthorityCertificate>();
     }
   }
 }

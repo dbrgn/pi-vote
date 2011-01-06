@@ -20,16 +20,19 @@ namespace Pirate.PiVote.Crypto
   /// certificate without the private key. It also allows
   /// verification of said encryption.
   /// </summary>
+  [SerializeObject("A trapdoor enabled encryption of data encrypted for some certificate without the private key.")]
   public class TrapDoor : Serializable
   {
     /// <summary>
     /// Id of the issuer of this trapdoor.
     /// </summary>
+    [SerializeField(0, "Id of the issuer of this trapdoor.")]
     public Guid IssuerId { get; private set; }
 
     /// <summary>
     /// Symmetric key allowing decryption.
     /// </summary>
+    [SerializeField(1, "Symmetric key allowing decryption.")]
     public byte[] SymmetricKey { get; private set; }
 
     /// <summary>

@@ -18,26 +18,31 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Stores certificates for validation.
   /// </summary>
+  [SerializeObject("Stores certificates for validation.")]
   public class CertificateStorage : Serializable, ICertificateStorage
   {
     /// <summary>
     /// Ids of root certificates.
     /// </summary>
+    [SerializeField(0, "Ids of root certificates.")]
     private List<Guid> rootCertificateIds;
 
     /// <summary>
     /// List of certificates.
     /// </summary>
+    [SerializeField(1, "List of certificates.", typeof(List<Certificate>))]
     private Dictionary<Guid, Certificate> certificates;
 
     /// <summary>
     /// Certificate revocation lists for certificate authorities.
     /// </summary>
+    [SerializeField(2, "Certificate revocation lists for certificate authorities.")]
     private List<RevocationList> revocationLists;
 
     /// <summary>
     /// Signed certificate revocation lists for certificate authorities.
     /// </summary>
+    [SerializeField(3, "Signed certificate revocation lists for certificate authorities.")]
     private List<Signed<RevocationList>> signedRevocationLists;
 
     /// <summary>
@@ -76,8 +81,7 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(this.rootCertificateIds.Count);
-      this.rootCertificateIds.ForEach(rootCertificateId => context.Write(rootCertificateId));
+      context.WriteList(this.rootCertificateIds);
       context.WriteList(this.certificates.Values);
       context.WriteList(this.revocationLists);
       context.WriteList(this.signedRevocationLists);
@@ -91,9 +95,7 @@ namespace Pirate.PiVote.Crypto
     {
       base.Deserialize(context);
 
-      int count = context.ReadInt32();
-      this.rootCertificateIds = new List<Guid>();
-      count.Times(() => this.rootCertificateIds.Add(context.ReadGuid()));
+      this.rootCertificateIds = context.ReadGuidList();
 
       this.certificates = new Dictionary<Guid,Certificate>();
       List<Certificate> certificates = context.ReadObjectList<Certificate>();

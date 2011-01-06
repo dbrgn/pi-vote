@@ -17,21 +17,25 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Request for a signature by a CA.
   /// </summary>
+  [SerializeObject("Request for a signature by a CA.")]
   public class SignatureRequest : Serializable
   {
     /// <summary>
     /// First name of requester.
     /// </summary>
+    [SerializeField(0, "First name of requester.")]
     public string FirstName { get; private set; }
 
     /// <summary>
     /// Family name of requester.
     /// </summary>
+    [SerializeField(1, "Family name of requester.")]
     public string FamilyName { get; private set; }
 
     /// <summary>
     /// Email address of requester.
     /// </summary>
+    [SerializeField(2, "Email address of requester.")]
     public string EmailAddress { get; private set; }
 
     /// <summary>

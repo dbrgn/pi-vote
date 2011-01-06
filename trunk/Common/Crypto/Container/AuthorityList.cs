@@ -16,26 +16,31 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// List of all authorities in the voting procedure.
   /// </summary>
+  [SerializeObject("List of all authorities in the voting procedure.")]
   public class AuthorityList : Serializable
   {
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
+    [SerializeField(0, "Id of the voting procedure.")]
     public int VotingId { get; private set; }
 
     /// <summary>
     /// List of all authorities in the voting procedure.
     /// </summary>
+    [SerializeField(1, "List of all authorities in the voting procedure.")]
     public List<Certificate> Authorities { get; private set; }
 
     /// <summary>
     /// Intermediate certificates.
     /// </summary>
+    [SerializeField(2, "Intermediate certificates.")]
     public List<Certificate> Certificates { get; private set; }
 
     /// <summary>
     /// Certificate revocation list for CAs.
     /// </summary>
+    [SerializeField(3, "Certificate revocation list for CAs.")]
     public List<Signed<RevocationList>> RevocationLists { get; private set; }
 
     /// <summary>

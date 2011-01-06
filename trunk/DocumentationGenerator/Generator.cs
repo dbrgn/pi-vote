@@ -1,0 +1,224 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace DocumentationGenerator
+{
+  public class Generator
+  {
+    private StringBuilder document;
+
+    public Generator()
+    { 
+    }
+
+    public void Generate(IEnumerable<FieldType> types)
+    {
+      string version = typeof(Pirate.PiVote.Serialization.Serializable).Assembly.GetName().Version.ToString();
+
+      this.document = new StringBuilder();
+
+      this.document.AppendLine(@"\documentclass[a4paper]{article}");
+      this.document.AppendLine(@"\usepackage[UTF8]{inputenc}");
+      this.document.AppendLine(@"\usepackage{supertabular}");
+      this.document.AppendLine(@"\usepackage{fullpage}");
+
+      this.document.AppendLine();
+      this.document.AppendLine(@"\title{Pi-Vote Protocol Documentation}");
+      this.document.AppendLine(@"\author{");
+      this.document.AppendLine(@"\and");
+      this.document.AppendLine(@"Pi-Vote Doc Generator, Pirate Party Switzerland");
+      this.document.AppendLine(@"\and");
+      this.document.AppendLine(@"Stefan Thöni, Pirate Party Switzerland");
+      this.document.AppendLine(@"}");
+      this.document.AppendLine(@"\date{Steinhausen, \today, Version " + version + "}");
+
+      this.document.AppendLine();
+      this.document.AppendLine(@"\begin{document}");
+      this.document.AppendLine();
+      this.document.AppendLine(@"\maketitle");
+
+      GenerateRpc();
+
+      GenerateTypes(types);
+
+      this.document.AppendLine(@"\end{document}");
+    }
+
+    private void GenerateRpc()
+    {
+      this.document.AppendLine(@"\section{RPC Protocol}");
+      this.document.AppendLine();
+      this.document.AppendLine(@"Pi-Vote uses an Remote Procedure Call protocol over TCP. To establish");
+      this.document.AppendLine(@"communication the client opens a TCP connection to the server. All");
+      this.document.AppendLine(@"action is initiated by the client sending a request. The server");
+      this.document.AppendLine(@"processes these request and answers each one with a response.");
+
+      this.document.AppendLine(@"\subsection{Messages}");
+      this.document.AppendLine();
+      this.document.AppendLine(@"Both request and response are messages which use a common transmission");
+      this.document.AppendLine(@"format.");
+
+      this.document.AppendLine(@"\begin{center}");
+      this.document.AppendLine(@"\begin{supertabular}{| p{2cm} | p{2cm} | p{8cm}|}");
+
+      this.document.AppendLine(@"\hline");
+      this.document.AppendLine(@"\bf{Part} &");
+      this.document.AppendLine(@"\bf{Type} &");
+      this.document.AppendLine(@"\bf{Usage} \\");
+
+      this.document.AppendLine(@"\hline");
+      this.document.AppendLine(@"Length &");
+      this.document.AppendLine(@"Int32 &");
+      this.document.AppendLine(@"Contains the length of the following data.\\");
+
+      this.document.AppendLine(@"\hline");
+      this.document.AppendLine(@"Data &");
+      this.document.AppendLine(@"Byte[] &");
+      this.document.AppendLine(@"Contains the serialized message data.\\");
+
+      this.document.AppendLine(@"\hline");
+      this.document.AppendLine(@"\end{supertabular}");
+      this.document.AppendLine(@"\end{center}");
+
+      this.document.AppendLine();
+      this.document.AppendLine();
+    }
+
+    private void GenerateTypes(IEnumerable<FieldType> types)
+    {
+      this.document.AppendLine(@"\section{Types}");
+      this.document.AppendLine();
+      this.document.AppendLine("The following type formats are used for messages and other containers contained in messages.");
+      this.document.AppendLine();
+
+      GenerateBasics(types);
+
+      this.document.AppendLine(@"\newpage");
+
+      GenerateEnums(types);
+
+      this.document.AppendLine(@"\newpage");
+
+      GenerateObjects(types);
+    }
+
+    private void GenerateEnums(IEnumerable<FieldType> types)
+    {
+      this.document.AppendLine(@"\subsection{Enumerations}");
+      this.document.AppendLine();
+
+      foreach (EnumType type in types.Where(t => t is EnumType))
+      {
+        this.document.AppendLine(@"\begin{centering}");
+        this.document.AppendLine(@"\begin{supertabular}{| p{2.2cm} | p{10.4cm} p{1.8cm} |}");
+
+        this.document.AppendLine(@"\hline");
+        this.document.AppendLine(@"\bf{Type} &");
+        this.document.AppendLine(type.Name + " &");
+        this.document.AppendLine(@" \\");
+
+        this.document.AppendLine(@"\bf{Comment} &");
+        this.document.AppendLine(type.Comment + " &");
+        this.document.AppendLine(@" \\");
+
+        this.document.AppendLine(@"\hline");
+
+        bool firstValue = true;
+
+        foreach (var value in type.Values)
+        {
+          if (firstValue)
+          {
+            this.document.AppendLine(@"\bf{Values} &");
+            firstValue = false;
+          }
+          else
+          {
+            this.document.AppendLine(" &");
+          }
+
+          this.document.AppendLine(value.Name + " &");
+          this.document.AppendLine(value.Value.ToString() + @" \\");
+        }
+        
+        this.document.AppendLine(@"\hline");
+
+        this.document.AppendLine(@"\end{supertabular}");
+        this.document.AppendLine(@"\end{centering}");
+        this.document.AppendLine(@"\vspace{0.3cm}");
+        this.document.AppendLine();
+      }
+    }
+
+    private void GenerateBasics(IEnumerable<FieldType> types)
+    {
+      this.document.AppendLine(@"\subsection{Basic Types}");
+      this.document.AppendLine();
+
+      foreach (BasicType type in types.Where(t => t is BasicType))
+      {
+        this.document.AppendLine(@"\begin{centering}");
+        this.document.AppendLine(@"\begin{supertabular}{| p{2.2cm} | p{12.6cm} |}");
+
+        this.document.AppendLine(@"\hline");
+        this.document.AppendLine(@"\bf{Type} &");
+        this.document.AppendLine(type.Name + @" \\");
+
+        this.document.AppendLine(@"\bf{Serialize} &");
+        this.document.AppendLine(type.Comment + @" \\");
+
+        this.document.AppendLine(@"\hline");
+
+        this.document.AppendLine(@"\end{supertabular}");
+        this.document.AppendLine(@"\end{centering}");
+        this.document.AppendLine(@"\vspace{0.3cm}");
+        this.document.AppendLine();
+      }
+    }
+
+    private void GenerateObjects(IEnumerable<FieldType> types)
+    {
+      this.document.AppendLine(@"\subsection{Objects}");
+      this.document.AppendLine();
+
+      foreach (ObjectType type in types.Where(t => t is ObjectType))
+      {
+        this.document.AppendLine(@"\begin{centering}");
+        this.document.AppendLine(@"\begin{supertabular}{| p{2.2cm} | p{12.6cm} |}");
+
+        this.document.AppendLine(@"\hline");
+
+        this.document.AppendLine(@"\bf{Type} &");
+        this.document.AppendLine(type.Name + @" \\");
+
+        this.document.AppendLine(@"\bf{Comment} &");
+        this.document.AppendLine(type.Comment + @" \\");
+
+        foreach (var fields in type.Fields)
+        {
+          this.document.AppendLine(@"\hline");
+
+          this.document.AppendLine(@"\bf{Field Type} &");
+          this.document.AppendLine(fields.Type.ShortName + @" \\");
+
+          this.document.AppendLine(@"\bf{Field Name }&");
+          this.document.AppendLine(fields.Name + @" \\");
+
+          this.document.AppendLine(@"\bf{Comment} &");
+          this.document.AppendLine(fields.Comment + @" \\");
+        }
+
+        this.document.AppendLine(@"\hline");
+
+        this.document.AppendLine(@"\end{supertabular}");
+        this.document.AppendLine(@"\end{centering}");
+        this.document.AppendLine(@"\vspace{0.3cm}");
+        this.document.AppendLine();
+      }
+    }
+
+    public string Text { get { return this.document.ToString(); } }
+  }
+}

@@ -15,24 +15,30 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to push of signature request.
+  /// </summary>
+  [SerializeObject("RPC request to push of signature request.")]
   public class PushSignatureRequestRequest : RpcRequest<VotingRpcServer, PushSignatureRequestResponse>
   {
     /// <summary>
-    /// Signature Request signed and encrypted for the CA.
+    /// Signature request signed and encrypted for the CA.
     /// </summary>
+    [SerializeField(0, "Signature request signed and encrypted for the CA.")]
     private Secure<SignatureRequest> signatureRequest;
 
     /// <summary>
-    /// Signature Request signed and encrypted for the Server.
+    /// Signature request signed and encrypted for the server.
     /// </summary>
+    [SerializeField(1, "Signature request signed and encrypted for the server.")]
     private Secure<SignatureRequestInfo> signatureRequestInfo;
 
     /// <summary>
-    /// Creates a new Signature Request Request.
+    /// Creates a new signature request request.
     /// </summary>
     /// <param name="requestId">Unique Id of the request.</param>
-    /// <param name="signatureRequest">Signature Request signed and encrypted for the CA.</param>
-    /// <param name="signatureRequestInfo">Signature Request Info signed and encrypted for the Server.</param>
+    /// <param name="signatureRequest">Signature request signed and encrypted for the CA.</param>
+    /// <param name="signatureRequestInfo">Signature request Info signed and encrypted for the server.</param>
     public PushSignatureRequestRequest(
       Guid requestId,
       Secure<SignatureRequest> signatureRequest,

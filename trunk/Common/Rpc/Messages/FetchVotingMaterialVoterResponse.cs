@@ -16,10 +16,18 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering voting material.
+  /// </summary>
+  [SerializeObject("RPC response delivering voting material.")]
   public class FetchVotingMaterialVoterResponse : RpcResponse
   {
+    [SerializeField(0, "List of tuples of voting material, status, and authorities.")]
     private List<Tuple<VotingMaterial, VotingStatus, List<Guid>>> votingMaterials;
 
+    /// <summary>
+    /// List of tuples of voting material, status, and authorities.
+    /// </summary>
     public IEnumerable<Tuple<VotingMaterial, VotingStatus, List<Guid>>> VotingMaterials { get { return this.votingMaterials; } }
 
     public FetchVotingMaterialVoterResponse(Guid requestId, IEnumerable<Tuple<VotingMaterial, VotingStatus, List<Guid>>> votingMaterials)

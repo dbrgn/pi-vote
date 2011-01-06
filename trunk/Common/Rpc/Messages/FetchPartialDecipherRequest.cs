@@ -15,9 +15,22 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to fetch a partial decipher.
+  /// </summary>
+  [SerializeObject("RPC request to fetch a partial decipher.")]
   public class FetchPartialDecipherRequest : RpcRequest<VotingRpcServer, FetchPartialDecipherResponse>
   {
+    /// <summary>
+    /// Id of the voting.
+    /// </summary>
+    [SerializeField(0, "Id of the voting.")]
     private Guid votingId;
+
+    /// <summary>
+    /// Index of the authority.
+    /// </summary>
+    [SerializeField(1, "Index of the authority.")]
     private int authorityIndex;
 
     public FetchPartialDecipherRequest(

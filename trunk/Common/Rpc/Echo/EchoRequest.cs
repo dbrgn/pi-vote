@@ -15,8 +15,16 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to echo.
+  /// </summary>
+  [SerializeObject("RPC request to echo.")]
   public class EchoRequest : RpcRequest<EchoServer, EchoResponse>
   {
+    /// <summary>
+    /// Message to echo.
+    /// </summary>
+    [SerializeField(0, "Message to echo.")]
     private string message;
 
     public EchoRequest(

@@ -16,10 +16,22 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering a signature response.
+  /// </summary>
+  [SerializeObject("RPC response delivering a signature response.")]
   public class FetchSignatureResponseResponse : RpcResponse
   {
+    /// <summary>
+    /// Status of the signature response.
+    /// </summary>
+    [SerializeField(0, "Status of the signature response.")]
     public SignatureResponseStatus Status { get; private set; }
 
+    /// <summary>
+    /// Signed signature response.
+    /// </summary>
+    [SerializeField(1, "Signed signature response.")]
     public Signed<SignatureResponse> SignatureResponse { get; private set; }
 
     public FetchSignatureResponseResponse(Guid requestId, SignatureResponseStatus status, Signed<SignatureResponse> signatureResponse)
@@ -53,6 +65,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+
       context.Write((int)Status);
       context.Write(SignatureResponse);
     }
@@ -64,6 +77,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+
       Status = (SignatureResponseStatus)context.ReadInt32();
       SignatureResponse = context.ReadObject<Signed<SignatureResponse>>();
     }

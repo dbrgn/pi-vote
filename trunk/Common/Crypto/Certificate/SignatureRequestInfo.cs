@@ -17,11 +17,13 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Information that accompanies a request for a signature by a CA.
   /// </summary>
+  [SerializeObject("Information that accompanies a request for a signature by a CA.")]
   public class SignatureRequestInfo : Serializable
   {
     /// <summary>
     /// Email address of requester.
     /// </summary>
+    [SerializeField(0, "Email address of requester.")]
     public string EmailAddress { get; private set; }
 
     /// <summary>

@@ -16,8 +16,16 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering an envelope.
+  /// </summary>
+  [SerializeObject("RPC response delivering an envelope.")]
   public class FetchEnvelopeResponse : RpcResponse
   {
+    /// <summary>
+    /// Signed envelope.
+    /// </summary>
+    [SerializeField(0, "Signed envelope.")]
     public Signed<Envelope> Envelope { get; private set; }
 
     public FetchEnvelopeResponse(Guid requestId, Signed<Envelope> envelope)

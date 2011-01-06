@@ -15,14 +15,22 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering the voting status.
+  /// </summary>
+  [SerializeObject("RPC response delivering the voting status.")]
   public class VotingStatusResponse : RpcResponse
   {
+    /// <summary>
+    /// Status of the voting.
+    /// </summary>
+    [SerializeField(0, "Status of the voting.")]
     public VotingStatus VotingStatus { get; private set; }
 
     /// <summary>
     /// List of authorities that have done the current step.
-    /// Null if not appliable.
     /// </summary>
+    [SerializeField(1, "List of authorities that have done the current step.")]
     public List<Guid> AuthoritiesDone { get; private set; }
 
     public VotingStatusResponse(Guid requestId, VotingStatus votingStatus, List<Guid> authoritiesDone)

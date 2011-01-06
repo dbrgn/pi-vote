@@ -16,8 +16,16 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering the partial deciphers.
+  /// </summary>
+  [SerializeObject("RPC response delivering the partial deciphers.")]
   public class FetchPartialDecipherResponse : RpcResponse
   {
+    /// <summary>
+    /// Signed list of partial deciphers.
+    /// </summary>
+    [SerializeField(0, "Signed list of partial deciphers.")]
     public Signed<PartialDecipherList> PartialDecipherList { get; private set; }
 
     public FetchPartialDecipherResponse(Guid requestId, Signed<PartialDecipherList> partialDecipherList)

@@ -17,11 +17,13 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// Message to or from RPC server.
   /// </summary>
+  [SerializeObject("Message to or from RPC server.")]
   public abstract class RpcMessage : Serializable
   {
     /// <summary>
     /// Id of the request.
     /// </summary>
+    [SerializeField(0, "Id of the request.")]
     public Guid RequestId { get; private set; }
 
     /// <summary>

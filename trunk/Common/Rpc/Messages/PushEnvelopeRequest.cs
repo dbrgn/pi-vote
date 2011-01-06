@@ -15,10 +15,22 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to push an envelope.
+  /// </summary>
+  [SerializeObject("RPC request to push an envelope.")]
   public class PushEnvelopeRequest : RpcRequest<VotingRpcServer, PushEnvelopeResponse>
   {
+    /// <summary>
+    /// Id of the voting.
+    /// </summary>
+    [SerializeField(0, "Id of the voting.")]
     private Guid votingId;
 
+    /// <summary>
+    /// Signed envelope.
+    /// </summary>
+    [SerializeField(1, "Signed envelope.")]
     private Signed<Envelope> signedEnvelope;
 
     public PushEnvelopeRequest(

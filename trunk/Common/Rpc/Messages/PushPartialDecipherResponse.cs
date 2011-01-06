@@ -15,6 +15,10 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response to push of partial decipher.
+  /// </summary>
+  [SerializeObject("RPC response to push of partial decipher.")]
   public class PushPartialDecipherResponse : RpcResponse
   {
     public PushPartialDecipherResponse(Guid requestId)

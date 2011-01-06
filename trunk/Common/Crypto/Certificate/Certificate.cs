@@ -18,36 +18,43 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Certificate of identity.
   /// </summary>
+  [SerializeObject("Certificate of identity.")]
   public abstract class Certificate : Serializable
   {
     /// <summary>
     /// Id of the certificate.
     /// </summary>
+    [SerializeField(1, "Id of the certificate.")]
     public Guid Id { get; private set; }
 
     /// <summary>
     /// Public key of the certificate.
     /// </summary>
+    [SerializeField(3, "Public key of the certificate.")]
     private byte[] PublicKey { get; set; }
 
     /// <summary>
     /// Status of the private key.
     /// </summary>
-    public PrivateKeyStatus PrivateKeyStatus  { get; private set; }
+    [SerializeField(7, "Status of the private key. Saved as Encrypted even when Decrypted.")]
+    public PrivateKeyStatus PrivateKeyStatus { get; private set; }
 
     /// <summary>
     /// Data of the private key, either encrypted or unencrypted.
     /// </summary>
+    [SerializeField(8, "Data of the private key, either encrypted or unencrypted.", "PrivateKeyStatus is not Unavailable.", null)]
     private byte[] privateKeyData;
 
     /// <summary>
     /// Salt used in encryption of the private key.
     /// </summary>
+    [SerializeField(9, "Salt used in encryption of the private key.", "PrivateKeyStatus is Encrypted or Decrypted.", null)]
     private byte[] privateKeySalt;
 
     /// <summary>
     /// Salt used to strengthen the passphrase.
     /// </summary>
+    [SerializeField(10, "Salt used to strengthen the passphrase.", "PrivateKeyStatus is Encrypted or Decrypted.", null)]
     private byte[] passphraseSalt;
 
     /// <summary>
@@ -81,6 +88,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Signatures affixed to the certificate.
     /// </summary>
+    [SerializeField(6, "Signatures affixed to the certificate.")]
     private List<Signature> signatures;
 
     /// <summary>
@@ -94,13 +102,19 @@ namespace Pirate.PiVote.Crypto
     /// <remarks>
     /// This is necessary to hold together the parts securely.
     /// </remarks>
+    [SerializeField(4, "Signature from the certificate itself.")]
     private byte[] SelfSignature { get; set; }
 
     /// <summary>
     /// Date of creation of this certificate.
     /// </summary>
+    [SerializeField(2, "Date of creation of this certificate.")]
     public DateTime CreationDate { get; private set; }
 
+    /// <summary>
+    /// Attributes of the certificate.
+    /// </summary>
+    [SerializeField(5, "Attributes of the certificate.")]
     private List<CertificateAttribute> attributes;
 
     /// <summary>
@@ -774,6 +788,7 @@ namespace Pirate.PiVote.Crypto
     /// a certificate is never mistaken for another type
     /// of certificate.
     /// </summary>
+    [SerializeField(0, "The magic certificate type.")]
     public abstract byte[] MagicTypeConstant { get; }
 
     /// <summary>

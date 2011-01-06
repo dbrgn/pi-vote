@@ -20,16 +20,19 @@ namespace Pirate.PiVote.Crypto
   /// <remarks>
   /// Used by authorities to verify share parts.
   /// </remarks>
+  [SerializeObject("Assembly of all share parts from all authorities.")]
   public class AllShareParts : Serializable
   {
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
+    [SerializeField(0, "Id of the voting procedure.")]
     public Guid VotingId { get; private set; }
 
     /// <summary>
     /// Share parts from all authorities.
     /// </summary>
+    [SerializeField(1, "Share parts from all authorities.")]
     public List<Signed<SharePart>> ShareParts { get; private set; }
 
     /// <summary>

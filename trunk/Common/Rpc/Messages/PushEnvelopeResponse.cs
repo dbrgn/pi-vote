@@ -15,11 +15,16 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response to push of envelope.
+  /// </summary>
+  [SerializeObject("RPC response to push of envelope.")]
   public class PushEnvelopeResponse : RpcResponse
   {
     /// <summary>
     /// Receipt of the cast vote or null in case of exception.
     /// </summary>
+    [SerializeField(0, "Receipt of the cast vote or null in case of exception.")]
     public Signed<VoteReceipt> VoteReceipt { get; private set; }
 
     public PushEnvelopeResponse(Guid requestId, Signed<VoteReceipt> voteReceipt)

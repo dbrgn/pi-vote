@@ -16,6 +16,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Authenticated and encrypted serializable object.
   /// </summary>
+  [SerializeObject("Authenticated and encrypted serializable object.")]
   public class Secure<TValue> : Signed<Encrypted<TValue>>
     where TValue : Serializable
   {

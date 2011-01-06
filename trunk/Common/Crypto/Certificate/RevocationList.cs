@@ -16,26 +16,31 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Certificate revocation list.
   /// </summary>
+  [SerializeObject("Certificate revocation list.")]
   public class RevocationList : Serializable
   {
     /// <summary>
     /// Id of the issuer.
     /// </summary>
+    [SerializeField(0, "Id of the issuer.")]
     public Guid IssuerId { get; private set; }
 
     /// <summary>
     /// List valid from date.
     /// </summary>
+    [SerializeField(1, "List valid from date.")]
     public DateTime ValidFrom { get; private set; }
 
     /// <summary>
     /// List valid until date.
     /// </summary>
+    [SerializeField(2, "List valid until date.")]
     public DateTime ValidUntil { get; private set; }
 
     /// <summary>
     /// List of revoked certificates.
     /// </summary>
+    [SerializeField(3, "List of revoked certificates.")]
     public List<Guid> RevokedCertificates { get; private set; }
 
     /// <summary>
@@ -71,11 +76,7 @@ namespace Pirate.PiVote.Crypto
       context.Write(IssuerId);
       context.Write(ValidFrom);
       context.Write(ValidUntil);
-      context.Write(RevokedCertificates.Count);
-      foreach (Guid certificateId in RevokedCertificates)
-      {
-        context.Write(certificateId);
-      }
+      context.WriteList(RevokedCertificates);
     }
 
     /// <summary>
@@ -88,12 +89,7 @@ namespace Pirate.PiVote.Crypto
       IssuerId = context.ReadGuid();
       ValidFrom = context.ReadDateTime();
       ValidUntil = context.ReadDateTime();
-      RevokedCertificates = new List<Guid>();
-      int count = context.ReadInt32();
-      for (int index = 0; index < count; index++)
-      {
-        RevokedCertificates.Add(context.ReadGuid());
-      }
+      RevokedCertificates = context.ReadGuidList();
     }
   }
 }

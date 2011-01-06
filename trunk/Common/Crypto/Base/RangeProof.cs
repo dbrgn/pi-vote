@@ -19,41 +19,49 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Non-interactive zero knowledge proof that a vote is in range 0-1.
   /// </summary>
+  [SerializeObject("Non-interactive zero knowledge proof that a vote is in range 0-1.")]
   public class RangeProof : Serializable
   {
     /// <summary>
     /// Witness for votum equals 0.
     /// </summary>
+    [SerializeField(0, "Witness for votum equals 0.")]
     public BigInt T0 { get; private set; }
 
     /// <summary>
     /// Witness for votum equals 1.
     /// </summary>
+    [SerializeField(1, "Witness for votum equals 1.")]
     public BigInt T1 { get; private set; }
 
     /// <summary>
-    /// Or-Challenge
+    /// Or-Challenge.
     /// </summary>
+    [SerializeField(2, "Or-Challenge.")]
     public int C { get; private set; }
 
     /// <summary>
     /// Challenge for vote equals 0.
     /// </summary>
+    [SerializeField(3, "Challenge for vote equals 0.")]
     public int C0 { get; private set; }
 
     /// <summary>
     /// Challenge for vote equals 1.
     /// </summary>
+    [SerializeField(4, "Challenge for vote equals 1.")]
     public int C1 { get; private set; }
 
     /// <summary>
     /// Response for vote equals 0.
     /// </summary>
+    [SerializeField(5, "Response for vote equals 0.")]
     public BigInt S0 { get; private set; }
 
     /// <summary>
     /// Response for vote equals 1.
     /// </summary>
+    [SerializeField(6, "Response for vote equals 1.")]
     public BigInt S1 { get; private set; }
 
     /// <summary>

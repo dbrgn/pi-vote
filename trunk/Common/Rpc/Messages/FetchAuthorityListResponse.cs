@@ -16,13 +16,15 @@ using Pirate.PiVote.Serialization;
 namespace Pirate.PiVote.Rpc
 {
   /// <summary>
-  /// Response to a request to fetch the list of authorities.
+  /// RPC response to a request to fetch the list of authorities.
   /// </summary>
+  [SerializeObject("RPC response to a request to fetch the list of authorities.")]
   public class FetchAuthorityListResponse : RpcResponse
   {
     /// <summary>
     /// List of authorities for the voting.
     /// </summary>
+    [SerializeField(0, "List of authorities for the voting.")]
     public AuthorityList AuthorityList { get; private set; }
 
     /// <summary>

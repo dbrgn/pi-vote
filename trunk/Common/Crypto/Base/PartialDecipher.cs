@@ -17,21 +17,25 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// A partial decipher of a vote from an authority.
   /// </summary>
+  [SerializeObject("A partial decipher of a vote from an authority.")]
   public class PartialDecipher : Serializable
   {
     /// <summary>
     /// Index of the question in question.
     /// </summary>
+    [SerializeField(0, "Index of the question in question.")]
     public int QuestionIndex { get;private set; }
 
     /// <summary>
     /// Index of the option in question.
     /// </summary>
+    [SerializeField(1, "Index of the option in question.")]
     public int OptionIndex { get; private set; }
 
     /// <summary>
     /// Index of the deciphering authority.
     /// </summary>
+    [SerializeField(2, "Index of the deciphering authority.")]
     public int AuthorityIndex { get; private set; }
 
     /// <summary>
@@ -41,11 +45,13 @@ namespace Pirate.PiVote.Crypto
     /// Used to put the right partial decipher together to a full decipher.
     /// Equals index of the authority NOT in this group..
     /// </remarks>
+    [SerializeField(3, "Index of the partial decipher group.")]
     public int GroupIndex { get; private set; }
 
     /// <summary>
     /// Value of the partial decipher.
     /// </summary>
+    [SerializeField(4, "Value of the partial decipher.")]
     public BigInt Value { get; private set; }
 
     /// <summary>

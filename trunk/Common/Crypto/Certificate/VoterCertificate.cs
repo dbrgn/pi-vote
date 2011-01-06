@@ -21,6 +21,7 @@ namespace Pirate.PiVote.Crypto
   /// <remarks>
   /// Does not contain the voter's name to keep his identity confidential.
   /// </remarks>
+  [SerializeObject("Certificate for a voter.")]
   public class VoterCertificate : Certificate
   {
     /// <summary>

@@ -18,6 +18,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Certificate entry at a CA.
   /// </summary>
+  [SerializeObject("Certificate entry at a CA.")]
   public class CertificateAuthorityEntry : Serializable
   {
     /// <summary>
@@ -28,16 +29,19 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Request for signature.
     /// </summary>
+    [SerializeField(0, "Request for signature.")]
     public Secure<SignatureRequest> Request { get; private set; }
 
     /// <summary>
     /// Response to signature request.
     /// </summary>
+    [SerializeField(1, "Response to signature request.")]
     public Signed<SignatureResponse> Response { get; private set; }
 
     /// <summary>
     /// Is this certificate revoked?
     /// </summary>
+    [SerializeField(2, "Is this certificate revoked?")]
     public bool Revoked { get; private set; }
 
     /// <summary>

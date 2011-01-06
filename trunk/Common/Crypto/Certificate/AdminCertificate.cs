@@ -18,11 +18,13 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Certificate of a voting administrator.
   /// </summary>
+  [SerializeObject("Certificate of a voting administrator.")]
   public class AdminCertificate : Certificate
   {
     /// <summary>
     /// Full name of the administrator.
     /// </summary>
+    [SerializeField(0, "Full name of the administrator.")]
     private string fullName;
 
     /// <summary>

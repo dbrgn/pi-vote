@@ -16,26 +16,31 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Container for a ballot.
   /// </summary>
+  [SerializeObject("Container for a ballot.")]
   public class Envelope : Serializable
   {
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
+    [SerializeField(0, "Id of the voting procedure.")]
     public Guid VotingId { get; private set; }
 
     /// <summary>
     /// Id of the voter.
     /// </summary>
+    [SerializeField(1, "Id of the voter.")]
     public Guid VoterId { get; private set; }
 
     /// <summary>
     /// Casted ballot.
     /// </summary>
+    [SerializeField(2, "Casted ballot.")]
     public List<Ballot> Ballots { get; private set; }
 
     /// <summary>
     /// Date this envelope was formed.
     /// </summary>
+    [SerializeField(3, "Date this envelope was formed.")]
     public DateTime Date { get; private set; }
 
     /// <summary>

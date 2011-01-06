@@ -17,26 +17,31 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Response to a signature request.
   /// </summary>
+  [SerializeObject("Response to a signature request.")]
   public class SignatureResponse : Serializable
   {
     /// <summary>
     /// Id of the subject of this signature request response.
     /// </summary>
+    [SerializeField(0, "Id of the subject of this signature request response.")]
     public Guid SubjectId { get; private set; }
 
     /// <summary>
     /// Status of the signature request.
     /// </summary>
+    [SerializeField(1, "Status of the signature request.")]
     public SignatureResponseStatus Status { get; private set; }
 
     /// <summary>
     /// Reason the request was declined or empty.
     /// </summary>
+    [SerializeField(2, "Reason the request was declined or empty.")]
     public string Reason { get; private set; }
 
     /// <summary>
     /// Signature of CA if accepted.
     /// </summary>
+    [SerializeField(3, "Signature of CA if accepted.")]
     public Signature Signature { get; private set; }
 
     /// <summary>

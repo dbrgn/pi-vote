@@ -16,10 +16,22 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering the certificate storage.
+  /// </summary>
+  [SerializeObject("RPC response delivering the certificate storage.")]
   public class FetchCertificateStorageResponse : RpcResponse
   {
+    /// <summary>
+    /// Certificate storage from server.
+    /// </summary>
+    [SerializeField(0, "Certificate storage from server.")]
     public CertificateStorage CertificateStorage { get; private set; }
 
+    /// <summary>
+    /// Certificate of the server.
+    /// </summary>
+    [SerializeField(1, "Certificate of the server.")]
     public Certificate ServerCertificate { get; private set; }
 
     public FetchCertificateStorageResponse(Guid requestId, CertificateStorage certificateStorage, Certificate serverCertificate)

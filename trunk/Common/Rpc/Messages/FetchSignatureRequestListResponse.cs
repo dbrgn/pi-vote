@@ -16,8 +16,16 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering list of signature requests.
+  /// </summary>
+  [SerializeObject("RPC response delivering list of signature requests.")]
   public class FetchSignatureRequestListResponse : RpcResponse
   {
+    /// <summary>
+    /// List of signature request ids.
+    /// </summary>
+    [SerializeField(0, "List of signature request ids.")]
     public List<Guid> SignatureRequestList { get; private set; }
 
     public FetchSignatureRequestListResponse(Guid requestId, List<Guid> signatureRequestList)
@@ -50,16 +58,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-
-      if (Exception == null)
-      {
-        context.Write(SignatureRequestList.Count);
-
-        foreach (Guid id in SignatureRequestList)
-        {
-          context.Write(id);
-        }
-      }
+      context.WriteList(SignatureRequestList);
     }
 
     /// <summary>
@@ -69,16 +68,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-
-      if (Exception == null)
-      {
-        SignatureRequestList = new List<Guid>();
-        int count = context.ReadInt32();
-        for (int index = 0; index < count; index++)
-        {
-          SignatureRequestList.Add(context.ReadGuid());
-        }
-      }
+      SignatureRequestList = context.ReadGuidList();
     }
   }
 }

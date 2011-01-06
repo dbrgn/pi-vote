@@ -17,6 +17,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// A signature to be fixed at a certificate.
   /// </summary>
+  [SerializeObject("A signature to be fixed at a certificate.")]
   public class Signature : Serializable
   {
     private static byte[] MagicBytes = Encoding.UTF8.GetBytes("Signature");
@@ -24,21 +25,25 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Certificate id of the signer.
     /// </summary>
+    [SerializeField(0, "Certificate id of the signer.")]
     public Guid SignerId { get; private set; }
 
     /// <summary>
     /// Signature data.
     /// </summary>
+    [SerializeField(1, "Signature data.")]
     public byte[] Data { get; private set; }
 
     /// <summary>
     /// This signature is valid from then on.
     /// </summary>
+    [SerializeField(2, "This signature is valid from then on.")]
     public DateTime ValidFrom { get; private set; }
 
     /// <summary>
     /// This signature is valid until then.
     /// </summary>
+    [SerializeField(3, "This signature is valid until then.")]
     public DateTime ValidUntil { get; private set; }
 
     /// <summary>

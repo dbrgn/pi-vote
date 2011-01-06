@@ -16,8 +16,9 @@ using Pirate.PiVote.Serialization;
 namespace Pirate.PiVote.Crypto
 {
   /// <summary>
-  /// Status of a private key
+  /// Status of a private key.
   /// </summary>
+  [SerializeEnum("Status of a private key.")]
   public enum PrivateKeyStatus
   {
     Unavailable = 0,

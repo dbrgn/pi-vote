@@ -16,8 +16,16 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering all shares of a voting.
+  /// </summary>
+  [SerializeObject("Response to a request for ending a voting.")]
   public class FetchAllSharesResponse : RpcResponse
   {
+    /// <summary>
+    /// All shares of the voting.
+    /// </summary>
+    [SerializeField(0, "All shares of the voting.")]
     public AllShareParts AllShareParts { get; private set; }
 
     public FetchAllSharesResponse(Guid requestId, AllShareParts allShareParts)

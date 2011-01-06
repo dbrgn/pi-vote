@@ -19,21 +19,25 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Non-interactive zero knowledge proof that a vote sum is MaxVota.
   /// </summary>
+  [SerializeObject("Non-interactive zero knowledge proof that a vote sum is MaxVota.")]
   public class Proof : Serializable
   {
     /// <summary>
     /// Whitness.
     /// </summary>
+    [SerializeField(0, "Whitness.")]
     public BigInt T0 { get; private set; }
 
     /// <summary>
     /// Challange.
     /// </summary>
+    [SerializeField(1, "Challange.")]
     public int C0 { get; private set; }
 
     /// <summary>
     /// Response.
     /// </summary>
+    [SerializeField(2, "Response.")]
     public BigInt S0 { get; private set; }
 
     /// <summary>

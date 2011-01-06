@@ -17,16 +17,19 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Verification value from an authority used to check shares.
   /// </summary>
+  [SerializeObject("Verification value from an authority used to check shares.")]
   public class VerificationValue : Serializable
   {
     /// <summary>
     /// Value used to verify shares.
     /// </summary>
+    [SerializeField(0, "Value used to verify shares.")]
     public BigInt Value { get; private set; }
 
     /// <summary>
     /// Index of the issuing authority.
     /// </summary>
+    [SerializeField(1, "Index of the issuing authority.")]
     public int SourceAuthorityIndex { get; private set; }
 
     /// <summary>

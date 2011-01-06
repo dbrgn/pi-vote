@@ -17,6 +17,7 @@ namespace Pirate.PiVote
   /// <summary>
   /// Language of the interface and texts.
   /// </summary>
+  [SerializeEnum("Language of the interface and texts.")]
   public enum Language
   {
     English = 0,

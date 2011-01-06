@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManager", "Resource
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirate.PiVote.SafePrimeFinder", "SafePrimeFinder\Pirate.PiVote.SafePrimeFinder.csproj", "{DDC49E5E-660D-4B40-82C4-EC2C53CAFE98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentationGenerator", "DocumentationGenerator\DocumentationGenerator.csproj", "{E136C8D6-D263-4414-869B-567EB4ED63F0}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = PiVote.vsmdi
@@ -187,6 +189,7 @@ Global
 		{512BE396-1DAB-415B-9A19-BBD5F4061035}.Release|x86.ActiveCfg = Release|x86
 		{512BE396-1DAB-415B-9A19-BBD5F4061035}.Release|x86.Build.0 = Release|x86
 		{DDC49E5E-660D-4B40-82C4-EC2C53CAFE98}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{DDC49E5E-660D-4B40-82C4-EC2C53CAFE98}.Debug|Any CPU.Build.0 = Debug|x86
 		{DDC49E5E-660D-4B40-82C4-EC2C53CAFE98}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{DDC49E5E-660D-4B40-82C4-EC2C53CAFE98}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{DDC49E5E-660D-4B40-82C4-EC2C53CAFE98}.Debug|x64.ActiveCfg = Debug|x86
@@ -204,6 +207,25 @@ Global
 		{DDC49E5E-660D-4B40-82C4-EC2C53CAFE98}.Release|x64.ActiveCfg = Release|x86
 		{DDC49E5E-660D-4B40-82C4-EC2C53CAFE98}.Release|x86.ActiveCfg = Release|x86
 		{DDC49E5E-660D-4B40-82C4-EC2C53CAFE98}.Release|x86.Build.0 = Release|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Debug|Any CPU.Build.0 = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Debug|x64.ActiveCfg = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Debug|x86.ActiveCfg = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Debug|x86.Build.0 = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Local Debug|Any CPU.ActiveCfg = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Local Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Local Debug|Mixed Platforms.Build.0 = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Local Debug|x64.ActiveCfg = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Local Debug|x86.ActiveCfg = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Local Debug|x86.Build.0 = Debug|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Release|Any CPU.ActiveCfg = Release|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Release|Mixed Platforms.Build.0 = Release|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Release|x64.ActiveCfg = Release|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Release|x86.ActiveCfg = Release|x86
+		{E136C8D6-D263-4414-869B-567EB4ED63F0}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

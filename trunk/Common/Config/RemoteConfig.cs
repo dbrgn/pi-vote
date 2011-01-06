@@ -19,6 +19,7 @@ namespace Pirate.PiVote
   /// <summary>
   /// Config file for the voting server.
   /// </summary>
+  [SerializeObject("Config file for the voting server.")]
   public class RemoteConfig : Serializable, IRemoteConfig
   {
     public RemoteConfig(IRemoteConfig config)
@@ -73,31 +74,37 @@ namespace Pirate.PiVote
     /// <summary>
     /// Name of the eVoting system.
     /// </summary>
+    [SerializeField(0, "Name of the eVoting system.")]
     public MultiLanguageString SystemName { get; private set; }
 
     /// <summary>
     /// Welcome message to users.
     /// </summary>
+    [SerializeField(1, "Welcome message to users.")]
     public MultiLanguageString WelcomeMessage { get; private set; }
 
     /// <summary>
     /// Image file on the start wizard item.
     /// </summary>
+    [SerializeField(2, "Image file on the start wizard item.")]
     public byte[] Image { get; private set; }
 
     /// <summary>
     /// Url of the project.
     /// </summary>
+    [SerializeField(3, "Url of the project.")]
     public string Url { get; private set; }
 
     /// <summary>
     /// The newest available version one could update to.
     /// </summary>
+    [SerializeField(4, "The newest available version one could update to.")]
     public string UpdateVersion { get; private set; }
 
     /// <summary>
     /// Url were one can get the update.
     /// </summary>
+    [SerializeField(5, "Url were one can get the update.")]
     public string UpdateUrl { get; private set; }
   }
 }

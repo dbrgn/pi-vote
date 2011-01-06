@@ -18,6 +18,7 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// RPC request to fetch all valid authority certificates.
   /// </summary>
+  [SerializeObject("RPC request to fetch all valid authority certificates.")]
   public class FetchAuthorityCertificatesRequest : RpcRequest<VotingRpcServer, FetchAuthorityCertificatesResponse>
   {
     /// <summary>

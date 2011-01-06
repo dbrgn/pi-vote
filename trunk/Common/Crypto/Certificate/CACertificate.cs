@@ -18,11 +18,13 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Certificate of a certificate authority.
   /// </summary>
+  [SerializeObject("Certificate of a certificate authority.")]
   public class CACertificate : Certificate
   {
     /// <summary>
     /// Full name of the certificate authority.
     /// </summary>
+    [SerializeField(0, "Full name of the certificate authority.")]
     public string fullName;
 
     /// <summary>

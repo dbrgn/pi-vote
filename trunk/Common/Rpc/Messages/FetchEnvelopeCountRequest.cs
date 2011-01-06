@@ -15,8 +15,16 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// Request to fetch the number of envelopes in a voting.
+  /// </summary>
+  [SerializeObject("Request to fetch the number of envelopes in a voting.")]
   public class FetchEnvelopeCountRequest : RpcRequest<VotingRpcServer, FetchEnvelopeCountResponse>
   {
+    /// <summary>
+    /// Id of the voting.
+    /// </summary>
+    [SerializeField(0, "Id of the voting.")]
     private Guid votingId;
 
     public FetchEnvelopeCountRequest(

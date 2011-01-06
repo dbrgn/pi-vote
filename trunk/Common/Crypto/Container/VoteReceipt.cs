@@ -21,14 +21,31 @@ namespace Pirate.PiVote.Crypto
   /// <remarks>
   /// To be signed by the server.
   /// </remarks>
+  [SerializeObject("Receipt for a cast vote.")]
   public class VoteReceipt : Serializable
   {
+    /// <summary>
+    /// Id of the voting.
+    /// </summary>
+    [SerializeField(0, "Id of the voting.")]
     public Guid VotingId { get; private set; }
 
+    /// <summary>
+    /// Title of the voting.
+    /// </summary>
+    [SerializeField(3, "Title of the voting.")]
     public MultiLanguageString VotingTitle { get; private set; }
 
+    /// <summary>
+    /// Id of the voter.
+    /// </summary>
+    [SerializeField(1, "Id of the voter.")]
     public Guid VoterId { get; private set; }
 
+    /// <summary>
+    /// Hash of the signed envelope.
+    /// </summary>
+    [SerializeField(2, "Hash of the signed envelope.")]
     private byte[] SignedEnvelopeHash { get; set; }
 
     /// <summary>

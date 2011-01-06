@@ -17,6 +17,7 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// Response to a voting creation RPC request.
   /// </summary>
+  [SerializeObject("Response to a voting creation RPC request.")]
   public class CreateVotingResponse : RpcResponse
   {
     /// <summary>

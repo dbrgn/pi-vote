@@ -10,12 +10,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote
 {
   /// <summary>
   /// Codes for identifiing exceptions.
   /// </summary>
+  [SerializeEnum("Codes for identifiing exceptions.")]
   public enum ExceptionCode
   {
     Unknown                           = 0,

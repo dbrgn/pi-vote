@@ -19,6 +19,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Base for the voting parameters.
   /// </summary>
+  [SerializeObject("Base for the voting parameters.")]
   public class BaseParameters : Serializable
   {
     public const int PrimeBits = 4096;
@@ -29,6 +30,7 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Questions in the voting.
     /// </summary>
+    [SerializeField(7, "Questions in the voting.")]
     private List<Question> questions;
 
     /// <summary>
@@ -39,39 +41,46 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Number of adversaries that can be tolerated.
     /// </summary>
+    [SerializeField(4, "Number of adversaries that can be tolerated.")]
     public int Thereshold { get; private set; }
 
     /// <summary>
     /// Number of authorities.
     /// </summary>
+    [SerializeField(5, "Number of authorities.")]
     public int AuthorityCount { get; private set; }
 
     /// <summary>
     /// Number of proves required to proof a single fact.
     /// </summary>
+    [SerializeField(6, "Number of proves required to proof a single fact.")]
     public int ProofCount { get; private set; }
 
     /// <summary>
-    /// Prime
+    /// Prime.
     /// </summary>
+    [SerializeField(1, "Prime.")]
     public BigInt Q { get; private set; }
 
     /// <summary>
-    /// Safe Prime
+    /// Safe Prime.
     /// P = 2 * Q + 1
     /// </summary>
+    [SerializeField(0, "Safe Prime.")]
     public BigInt P { get; private set; }
 
     /// <summary>
-    /// Order Q element of Zp*
+    /// Order Q element of Zp*.
     /// G = a ^ Q mod P where a random
     /// </summary>
+    [SerializeField(2, "Order Q element of Zp*.")]
     public BigInt G { get; private set; }
 
     /// <summary>
-    /// element of <G>
+    /// Element of <G>
     /// F = G ^ b mod P where b random
     /// </summary>
+    [SerializeField(3, "Element of <G>.")]
     public BigInt F { get; private set; }
 
     /// <summary>

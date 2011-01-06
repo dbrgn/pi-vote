@@ -15,8 +15,16 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to push signature response.
+  /// </summary>
+  [SerializeObject("RPC request to push signature response.")]
   public class PushSignatureResponseRequest : RpcRequest<VotingRpcServer, PushSignatureResponseResponse>
   {
+    /// <summary>
+    /// Signed signature response.
+    /// </summary>
+    [SerializeField(0, "Signed signature response.")]
     private Signed<SignatureResponse> signatureResponse;
 
     public PushSignatureResponseRequest(

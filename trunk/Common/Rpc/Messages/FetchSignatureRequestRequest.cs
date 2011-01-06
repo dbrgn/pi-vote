@@ -15,8 +15,16 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to fetch a signature request.
+  /// </summary>
+  [SerializeObject("RPC request to fetch a signature request.")]
   public class FetchSignatureRequestRequest : RpcRequest<VotingRpcServer, FetchSignatureRequestResponse>
   {
+    /// <summary>
+    /// Id of the signature request.
+    /// </summary>
+    [SerializeField(0, "Id of the signature request.")]
     private Guid signatureRequestId;
 
     public FetchSignatureRequestRequest(

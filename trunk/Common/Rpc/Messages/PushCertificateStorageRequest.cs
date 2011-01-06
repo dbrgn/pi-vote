@@ -16,13 +16,18 @@ using Pirate.PiVote.Crypto;
 namespace Pirate.PiVote.Rpc
 {
   /// <summary>
-  /// Request to add a certificate storage to the server's data.
+  /// RPC request to add a certificate storage to the server's data.
   /// </summary>
   /// <remarks>
   /// Used to add new CRLs.
   /// </remarks>
+  [SerializeObject("RPC request to add a certificate storage to the server's data.")]
   public class PushCertificateStorageRequest : RpcRequest<VotingRpcServer, PushCertificateStorageResponse>
   {
+    /// <summary>
+    /// Certificate storage to add.
+    /// </summary>
+    [SerializeField(0, "Certificate storage to add.")]
     private CertificateStorage certificateStorage;
 
     public PushCertificateStorageRequest(

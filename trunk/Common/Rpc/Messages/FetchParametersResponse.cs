@@ -16,18 +16,21 @@ using Pirate.PiVote.Serialization;
 namespace Pirate.PiVote.Rpc
 {
   /// <summary>
-  /// Response to the request to fetch voting parameters.
+  /// RPC response to the request to fetch voting parameters.
   /// </summary>
+  [SerializeObject("RPC response to the request to fetch voting parameters.")]
   public class FetchParametersResponse : RpcResponse
   {
     /// <summary>
     /// Index of the authority.
     /// </summary>
+    [SerializeField(0, "Index of the authority.")]
     public int AuthorityIndex { get; private set; }
 
     /// <summary>
     /// Parameters of the voting.
     /// </summary>
+    [SerializeField(1, "Parameters of the voting.")]
     public Signed<VotingParameters> VotingParameters { get; private set; }
 
     /// <summary>

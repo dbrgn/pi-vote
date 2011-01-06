@@ -23,21 +23,25 @@ namespace Pirate.PiVote.Crypto
   /// (AcceptShares = true) in which case it also contains the
   /// public key part from that authority.
   /// </remarks>
+  [SerializeObject("Response of an authority to the sharings.")]
   public class ShareResponse : Serializable
   {
     /// <summary>
     /// Id of the voting procedure.
     /// </summary>
+    [SerializeField(0, "Id of the voting procedure.")]
     public Guid VotingId { get; private set; }
 
     /// <summary>
     /// Index of the issuing authority.
     /// </summary>
+    [SerializeField(1, "Index of the issuing authority.")]
     public int AuthorityIndex { get; private set; }
 
     /// <summary>
     /// Does the authority accept all the shares?
     /// </summary>
+    [SerializeField(2, "Does the authority accept all the shares?")]
     public bool AcceptShares { get; private set; }
 
     /// <summary>
@@ -46,11 +50,13 @@ namespace Pirate.PiVote.Crypto
     /// <remarks>
     /// Must be 0 if shares are not accepted.
     /// </remarks>
+    [SerializeField(3, "Public key part from that authority.")]
     public BigInt PublicKeyPart { get; private set; }
 
     /// <summary>
     /// Hash over the signed voting parameters.
     /// </summary>
+    [SerializeField(4, "Hash over the signed voting parameters.")]
     public byte[] VotingParametersHash { get; private set; }
 
     /// <summary>

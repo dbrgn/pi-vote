@@ -17,16 +17,19 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Request for a signature by a CA signed by another certificate.
   /// </summary>
+  [SerializeObject("Request for a signature by a CA signed by another certificate.")]
   public class SignatureRequest2 : SignatureRequest
   {
     /// <summary>
     /// Signature from the signing certificate.
     /// </summary>
+    [SerializeField(0, "Signature from the signing certificate.")]
     public byte[] Signature { get; private set; }
 
     /// <summary>
     /// Signing certificate.
     /// </summary>
+    [SerializeField(1, "Signing certificate.")]
     public Certificate SigningCertificate { get; private set; }
 
     /// <summary>

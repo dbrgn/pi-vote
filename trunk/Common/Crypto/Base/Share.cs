@@ -17,21 +17,25 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Share from one authority given to another.
   /// </summary>
+  [SerializeObject("Share from one authority given to another.")]
   public class Share : Serializable
   {
     /// <summary>
     /// Value of share.
     /// </summary>
+    [SerializeField(2, "Value of share.")]
     public BigInt Value { get; private set; }
 
     /// <summary>
     /// Index of issuing authority.
     /// </summary>
+    [SerializeField(0, "Index of issuing authority.")]
     public int SourceAuthorityIndex { get; private set; }
 
     /// <summary>
     /// Index of receiving authority.
     /// </summary>
+    [SerializeField(1, "Index of receiving authority.")]
     public int DestinationAuthorityIndex { get; private set; }
 
     public Share(BigInt value, int sourceAuthorityIndex, int destinationAuthorityIndex)

@@ -14,11 +14,15 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
+  /// <summary>
+  /// Status of the signature response.
+  /// </summary>
+  [SerializeEnum("Status of the signature response.")]
   public enum SignatureResponseStatus
   {
-    Unknown,
-    Pending,
-    Accepted,
-    Declined
+    Unknown = 0,
+    Pending = 1,
+    Accepted = 2,
+    Declined = 3
   }
 }

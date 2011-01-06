@@ -16,21 +16,25 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// All things a voter needs to cast his vote.
   /// </summary>
+  [SerializeObject("All things a voter needs to cast his vote.")]
   public class VotingMaterial : Serializable
   {
     /// <summary>
     /// Defines voting procedure.
     /// </summary>
+    [SerializeField(0, "Defines voting procedure.")]
     public Signed<VotingParameters> Parameters { get; private set; }
 
     /// <summary>
     /// Responses that can be combined to a public key.
     /// </summary>
+    [SerializeField(1, "Responses that can be combined to a public key.")]
     public List<Signed<ShareResponse>> PublicKeyParts { get; private set; }
 
     /// <summary>
     /// Number of cast envelopes.
     /// </summary>
+    [SerializeField(2, "Number of cast envelopes.")]
     public int CastEnvelopeCount { get; private set; }
 
     /// <summary>

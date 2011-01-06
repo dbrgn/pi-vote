@@ -15,8 +15,16 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to get voting status.
+  /// </summary>
+  [SerializeObject("RPC request to get voting status.")]
   public class VotingStatusRequest : RpcRequest<VotingRpcServer, VotingStatusResponse>
   {
+    /// <summary>
+    /// Id of the voting.
+    /// </summary>
+    [SerializeField(0, "Id of the voting.")]
     private Guid votingId;
 
     public VotingStatusRequest(

@@ -16,6 +16,10 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response to push of share response.
+  /// </summary>
+  [SerializeObject("RPC response to push of share response.")]
   public class PushShareResponseResponse : RpcResponse
   {
     public PushShareResponseResponse(Guid requestId)

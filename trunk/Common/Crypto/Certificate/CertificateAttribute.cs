@@ -9,6 +9,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Name of the certificate attribute.
   /// </summary>
+  [SerializeEnum("Name of the certificate attribute.")]
   public enum CertificateAttributeName
   {
     None = 0,
@@ -19,11 +20,13 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Attribute of a certificate.
   /// </summary>
+  [SerializeObject("Attribute of a certificate.")]
   public abstract class CertificateAttribute : Serializable
   {
     /// <summary>
     /// Name of the certificate attribute.
     /// </summary>
+    [SerializeField(0, "Name of the certificate attribute.")]
     public CertificateAttributeName Name { get; private set; }
 
     public CertificateAttribute(CertificateAttributeName name)
@@ -57,6 +60,7 @@ namespace Pirate.PiVote.Crypto
   /// Attribute of a certificate.
   /// </summary>
   /// <typeparam name="TValue">Type of the value.</typeparam>
+  [SerializeObject("Attribute of a certificate.")]
   public abstract class CertificateAttribute<TValue> : CertificateAttribute
   {
     /// <summary>
@@ -88,6 +92,8 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Integer attribute of certificate.
   /// </summary>
+  [SerializeObject("Integer attribute of certificate.")]
+  [SerializeAdditionalField(typeof(int), "Value", 0, "Value of the certificate attribute.")]
   public class Int32CertificateAttribute : CertificateAttribute<int>
   {
     public Int32CertificateAttribute(CertificateAttributeName name, int value)
@@ -119,6 +125,8 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Boolean attribute of certificate.
   /// </summary>
+  [SerializeObject("Boolean attribute of certificate.")]
+  [SerializeAdditionalField(typeof(bool), "Value", 0, "Value of the certificate attribute.")]
   public class BooleanCertificateAttribute : CertificateAttribute<bool>
   {
     public BooleanCertificateAttribute(CertificateAttributeName name, bool value)
@@ -150,6 +158,8 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// String attribute of certificate.
   /// </summary>
+  [SerializeObject("String attribute of certificate.")]
+  [SerializeAdditionalField(typeof(string), "Value", 0, "Value of the certificate attribute.")]
   public class StringCertificateAttribute : CertificateAttribute<string>
   {
     public StringCertificateAttribute(CertificateAttributeName name, string value)

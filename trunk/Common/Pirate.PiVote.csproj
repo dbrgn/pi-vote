@@ -348,6 +348,9 @@
     <Compile Include="Rpc\Messages\CreateVotingResponse.cs" />
     <Compile Include="Rpc\Messages\CreateVotingRequest.cs" />
     <Compile Include="Rpc\Handlers\VotingRpcServer.cs" />
+    <Compile Include="Serialization\SerializeEnumAttribute.cs" />
+    <Compile Include="Serialization\SerializeAdditionalFieldAttribute.cs" />
+    <Compile Include="Serialization\SerializeObjectAttribute.cs" />
     <Compile Include="Utilitiy\BackupFile.cs" />
     <Compile Include="Utilitiy\DummyLogger.cs" />
     <Compile Include="Utilitiy\ILogger.cs" />
@@ -362,12 +365,13 @@
     <Compile Include="Rpc\Tcp\TcpRpcConnection.cs" />
     <Compile Include="Rpc\Tcp\TcpRpcServer.cs" />
     <Compile Include="Utilitiy\Bytes.cs" />
-    <Compile Include="Utilitiy\DeserializeContext.cs" />
+    <Compile Include="Serialization\DeserializeContext.cs" />
     <Compile Include="Utilitiy\IEnumerableExtensions.cs" />
     <Compile Include="Utilitiy\IntegerExtensions.cs" />
     <Compile Include="Utilitiy\MySqlExtensions.cs" />
-    <Compile Include="Utilitiy\Serializable.cs" />
-    <Compile Include="Utilitiy\SerializeContext.cs" />
+    <Compile Include="Serialization\Serializable.cs" />
+    <Compile Include="Serialization\SerializeFieldAttribute.cs" />
+    <Compile Include="Serialization\SerializeContext.cs" />
     <Compile Include="Utilitiy\SystemExtensions.cs" />
     <Compile Include="Utilitiy\Tools.cs" />
     <Compile Include="Utilitiy\Tuple.cs" />
@@ -409,4 +413,5 @@
   <ItemGroup>
     <Content Include="Emil.GMP.dll" />
   </ItemGroup>
+  <ItemGroup />
 </Project>

@@ -17,26 +17,31 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Elgamal encrypted vote.
   /// </summary>
+  [SerializeObject("Elgamal encrypted vote.")]
   public class Vote : Serializable
   {
     /// <summary>
     /// Diffie-Hellman halfkey.
     /// </summary>
+    [SerializeField(0, "Diffie-Hellman halfkey.")]
     public BigInt HalfKey { get; private set; }
 
     /// <summary>
     /// Ciphertext.
     /// </summary>
+    [SerializeField(1, "Ciphertext.")]
     public BigInt Ciphertext { get; private set; }
 
     /// <summary>
     /// Prime number defining the modular arithmetic.
     /// </summary>
+    [SerializeField(2, "Prime number defining the modular arithmetic.")]
     public BigInt P { get; private set; }
 
     /// <summary>
     /// All range proves for this vote.
     /// </summary>
+    [SerializeField(3, "All range proves for this vote.")]
     public List<RangeProof> RangeProves { get; private set; }
 
     /// <summary>

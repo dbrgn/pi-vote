@@ -19,6 +19,7 @@ namespace Pirate.PiVote.Rpc
   /// Request message to the RPC server.
   /// </summary>
   /// <typeparam name="TRpcServer">Type of RPC server.</typeparam>
+  [SerializeObject("Request message to the RPC server.")]
   public abstract class RpcRequest<TRpcServer> : RpcMessage
     where TRpcServer : RpcServer
   {
@@ -73,6 +74,7 @@ namespace Pirate.PiVote.Rpc
   /// </summary>
   /// <typeparam name="TRpcServer">Type of RPC server.</typeparam>
   /// <typeparam name="TResponse">Type of RPC response.</typeparam>
+  [SerializeObject("Request message to the RPC server.")]
   public abstract class RpcRequest<TRpcServer, TResponse> : RpcRequest<TRpcServer>
     where TRpcServer : RpcServer
     where TResponse : RpcResponse

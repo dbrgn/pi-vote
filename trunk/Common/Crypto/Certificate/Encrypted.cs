@@ -16,16 +16,19 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Encrypted serializable object.
   /// </summary>
+  [SerializeObject("Encrypted serializable object.")]
   public class Encrypted : Serializable
   {
     /// <summary>
     /// Id of the intended receiver.
     /// </summary>
+    [SerializeField(0, "Id of the intended receiver.")]
     public Guid ReceiverId { get; protected set; }
 
     /// <summary>
     /// Encrypted data of serializable object.
     /// </summary>
+    [SerializeField(1, "Encrypted data of serializable object.")]
     public byte[] Data { get; protected set; }
 
     /// <summary>
@@ -68,6 +71,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Encrypted serializable object.
   /// </summary>
+  [SerializeObject("Encrypted serializable object.")]
   public class Encrypted<TValue> : Encrypted
     where TValue : Serializable
   {

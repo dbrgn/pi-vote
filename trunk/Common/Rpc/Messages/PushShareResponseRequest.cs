@@ -15,10 +15,22 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to push share response.
+  /// </summary>
+  [SerializeObject("RPC request to push share response.")]
   public class PushShareResponseRequest : RpcRequest<VotingRpcServer, PushShareResponseResponse>
   {
+    /// <summary>
+    /// Id of the voting.
+    /// </summary>
+    [SerializeField(0, "Id of the voting.")]
     private Guid votingId;
 
+    /// <summary>
+    /// Signed share response.
+    /// </summary>
+    [SerializeField(1, "Signed share response.")]
     private Signed<ShareResponse> signedShareResponse;
 
     public PushShareResponseRequest(

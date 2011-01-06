@@ -15,8 +15,16 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering the echo.
+  /// </summary>
+  [SerializeObject("RPC response delivering the echo.")]
   public class EchoResponse : RpcResponse
   {
+    /// <summary>
+    /// Echoed message.
+    /// </summary>
+    [SerializeField(0, "Echoed message.")]
     public string Message { get; set; }
 
     public EchoResponse(Guid requestId, string message)

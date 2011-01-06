@@ -15,6 +15,10 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response to push of signature response.
+  /// </summary>
+  [SerializeObject("RPC response to push of signature response.")]
   public class PushSignatureResponseResponse : RpcResponse
   {
     public PushSignatureResponseResponse(Guid requestId)

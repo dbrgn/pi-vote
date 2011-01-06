@@ -15,6 +15,10 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to fetch list signature requests.
+  /// </summary>
+  [SerializeObject("RPC request to fetch list signature requests.")]
   public class FetchSignatureRequestListRequest : RpcRequest<VotingRpcServer, FetchSignatureRequestListResponse>
   {
     public FetchSignatureRequestListRequest(

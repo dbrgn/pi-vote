@@ -18,13 +18,16 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// RPC request creates a new voting.
   /// </summary>
+  [SerializeObject("RPC request creates a new voting.")]
   public class DeleteVotingRequest : RpcRequest<VotingRpcServer, CreateVotingResponse>
   {
     /// <summary>
     /// Command to delete a voting.
     /// </summary>
+    [SerializeObject("Command to delete a voting.")]
     public class Command : Serializable
     {
+      [SerializeField(0, "Id of the voting to delete.")]
       public Guid VotingId { get; private set; }
 
       public Command(Guid votingId)
@@ -52,6 +55,7 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Signed command to delete the voting.
     /// </summary>
+    [SerializeField(0, "Signed command to delete the voting.")]
     private Signed<Command> command;
 
     /// <summary>

@@ -19,6 +19,7 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// Response to a request for ending a voting.
   /// </summary>
+  [SerializeObject("Response to a request for ending a voting.")]
   public class EndVotingResponse : RpcResponse
   {
     /// <summary>

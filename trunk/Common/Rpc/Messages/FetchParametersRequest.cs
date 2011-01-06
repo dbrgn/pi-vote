@@ -18,16 +18,19 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// RPC request to fetch voting parameters.
   /// </summary>
+  [SerializeObject("RPC request to fetch voting parameters.")]
   public class FetchParametersRequest : RpcRequest<VotingRpcServer, FetchParametersResponse>
   {
     /// <summary>
     /// Id of the voting.
     /// </summary>
+    [SerializeField(0, "Id of the voting.")]
     private Guid votingId;
 
     /// <summary>
     /// Certificate of the authorities.
     /// </summary>
+    [SerializeField(1, "Certificate of the authorities.")]
     private AuthorityCertificate certificate;
 
     /// <summary>

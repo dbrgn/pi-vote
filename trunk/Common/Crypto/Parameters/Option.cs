@@ -16,6 +16,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// An option for which voters may vote.
   /// </summary>
+  [SerializeObject("An option for which voters may vote.")]
   public class Option : Serializable
   {
     /// <summary>
@@ -25,16 +26,19 @@ namespace Pirate.PiVote.Crypto
     /// Yes / No / Abstain
     /// Alice Shepard / Bob Miller
     /// </example>
+    [SerializeField(0, "Text of option.")]
     public MultiLanguageString Text { get; private set; }
 
     /// <summary>
     /// Description of the option.
     /// </summary>
+    [SerializeField(1, "Description of the option.")]
     public MultiLanguageString Description { get; private set; }
 
     /// <summary>
     /// Url of the discussion of the option.
     /// </summary>
+    [SerializeField(2, "Url of the discussion of the option.")]
     public MultiLanguageString Url { get; private set; }
 
     /// <summary>

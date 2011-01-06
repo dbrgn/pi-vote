@@ -17,11 +17,13 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// RPC response message.
   /// </summary>
+  [SerializeObject("RPC response message.")]
   public class RpcResponse : RpcMessage
   {
     /// <summary>
     /// Exception throw by the RPC call if any.
     /// </summary>
+    [SerializeField(0, "Exception throw by the RPC call if any.")]
     public PiException Exception { get; protected set; }
 
     /// <summary>

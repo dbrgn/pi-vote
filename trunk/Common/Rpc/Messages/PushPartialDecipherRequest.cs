@@ -15,10 +15,22 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to push a partial decipher.
+  /// </summary>
+  [SerializeObject("RPC request to push a partial decipher.")]
   public class PushPartialDecipherRequest : RpcRequest<VotingRpcServer, PushPartialDecipherResponse>
   {
+    /// <summary>
+    /// Id of the voting.
+    /// </summary>
+    [SerializeField(0, "Id of the voting.")]
     private Guid votingId;
 
+    /// <summary>
+    /// Signed list of partial deciphers.
+    /// </summary>
+    [SerializeField(1, "Signed list of partial deciphers.")]
     private Signed<PartialDecipherList> signedPartialDecipherList;
 
     public PushPartialDecipherRequest(

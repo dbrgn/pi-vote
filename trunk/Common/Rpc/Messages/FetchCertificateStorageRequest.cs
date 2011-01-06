@@ -15,6 +15,10 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to fetch the certificate storage.
+  /// </summary>
+  [SerializeObject("RPC request to fetch the certificate storage.")]
   public class FetchCertificateStorageRequest : RpcRequest<VotingRpcServer, FetchCertificateStorageResponse>
   {
     public FetchCertificateStorageRequest(

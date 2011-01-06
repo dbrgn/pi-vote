@@ -17,16 +17,17 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Status of the voting procedure.
   /// </summary>
+  [SerializeEnum("Status of the voting procedure.")]
   public enum VotingStatus
   {
-    New,
-    Sharing,
-    Voting,
-    Aborted,
-    Ready,
-    Deciphering,
-    Finished,
-    Offline
+    New = 0,
+    Sharing = 1,
+    Voting = 2,
+    Aborted = 3,
+    Ready = 4,
+    Deciphering = 5,
+    Finished = 6,
+    Offline = 7
   }
 
   public static class VotingStatusExtension

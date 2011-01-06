@@ -16,6 +16,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Contains all the shares and verification values of one authority.
   /// </summary>
+  [SerializeObject("Contains all the shares and verification values of one authority.")]
   public class SharePart : Serializable
   {
     /// <summary>
@@ -26,16 +27,19 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Index of the issuing authority.
     /// </summary>
+    [SerializeField(0, "Index of the issuing authority.")]
     public int AuthorityIndex { get; private set; }
 
     /// <summary>
     /// Encrypted shares for the other authorities.
     /// </summary>
+    [SerializeField(1, "Encrypted shares for the other authorities.")]
     public List<Encrypted<Share>> EncryptedShares { get; private set; }
 
     /// <summary>
     /// Verification values for the shares.
     /// </summary>
+    [SerializeField(2, "Verification values for the shares.")]
     public List<VerificationValue> VerificationValues { get; private set; }
 
     /// <summary>

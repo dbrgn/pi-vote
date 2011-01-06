@@ -15,6 +15,10 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to fetch the config.
+  /// </summary>
+  [SerializeObject("RPC request to fetch the config.")]
   public class FetchConfigRequest : RpcRequest<VotingRpcServer, FetchConfigResponse>
   {
     public FetchConfigRequest(

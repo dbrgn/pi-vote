@@ -15,6 +15,10 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC keep alive response.
+  /// </summary>
+  [SerializeObject("RPC keep alive response.")]
   public class KeepAliveResponse : RpcResponse
   {
     public KeepAliveResponse(Guid requestId)

@@ -14,20 +14,51 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
+  /// <summary>
+  /// Proof of a bad sharing.
+  /// </summary>
+  [SerializeObject("Proof of a bad sharing.")]
   public class BadShareProof : Serializable
   {
+    /// <summary>
+    /// Index of the complaining authority.
+    /// </summary>
+    [SerializeField(0, "Index of the complaining authority.")]
     public int ComplainingAuthorityIndex { get; private set; }
 
+    /// <summary>
+    /// Involved authorities.
+    /// </summary>
+    [SerializeField(5, "Involved authorities.")]
     public Dictionary<int, Certificate> Authorities { get; private set; }
 
+    /// <summary>
+    /// Certificate storage.
+    /// </summary>
+    [SerializeField(1, "Certificate storage.")]
     public CertificateStorage CertificateStorage { get; private set; }
 
+    /// <summary>
+    /// Signed voting parameters.
+    /// </summary>
+    [SerializeField(2, "Signed voting parameters.")]
     public Signed<VotingParameters> SignedParameters { get; private set; }
 
+    /// <summary>
+    /// Voting parameters.
+    /// </summary>
     public VotingParameters Parameters { get { return SignedParameters.Value; } }
 
+    /// <summary>
+    /// All share parts.
+    /// </summary>
+    [SerializeField(3, "All share parts.")]
     public AllShareParts AllShareParts { get; private set; }
 
+    /// <summary>
+    /// Trap doors.
+    /// </summary>
+    [SerializeField(4, "Trap doors.")]
     public Dictionary<int, TrapDoor> TrapDoors { get; private set; }
 
     public string FileName(Guid authorityId)

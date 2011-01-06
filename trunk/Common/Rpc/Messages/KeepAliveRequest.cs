@@ -15,6 +15,10 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC keep alive request.
+  /// </summary>
+  [SerializeObject("RPC keep alive request.")]
   public class KeepAliveRequest : RpcRequest<VotingRpcServer, KeepAliveResponse>
   {
     public KeepAliveRequest(

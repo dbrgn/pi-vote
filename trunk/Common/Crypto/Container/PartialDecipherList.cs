@@ -17,36 +17,43 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// List of partial deciphers from an authority.
   /// </summary>
+  [SerializeObject("List of partial deciphers from an authority.")]
   public class PartialDecipherList : Serializable
   {
     /// <summary>
     /// Id of voting procedure.
     /// </summary>
+    [SerializeField(0, "Id of voting procedure.")]
     public Guid VotingId { get; private set; }
 
     /// <summary>
     /// Index of issuing authority.
     /// </summary>
+    [SerializeField(1, "Index of issuing authority.")]
     public int AuthorityIndex { get; private set; }
 
     /// <summary>
     /// Partial deciphers from authority.
     /// </summary>
+    [SerializeField(2, "Partial deciphers from authority.")]
     public List<PartialDecipher> PartialDeciphers { get; private set; }
 
     /// <summary>
     /// Number of envelopes that where partially deciphered.
     /// </summary>
+    [SerializeField(3, "Number of envelopes that where partially deciphered.")]
     public int EnvelopeCount { get; private set; }
 
     /// <summary>
     /// Hash over all envelopes that where partially deciphered.
     /// </summary>
+    [SerializeField(4, "Hash over all envelopes that where partially deciphered.")]
     public byte[] EnvelopeHash { get; private set; }
 
     /// <summary>
     /// Date at which the partial decipher was created.
     /// </summary>
+    [SerializeField(5, "Date at which the partial decipher was created.")]
     public DateTime Date { get; private set; }
 
     /// <summary>

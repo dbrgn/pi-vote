@@ -18,16 +18,19 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// RPC request creates a new voting.
   /// </summary>
+  [SerializeObject("RPC request creates a new voting.")]
   public class CreateVotingRequest : RpcRequest<VotingRpcServer, CreateVotingResponse>
   {
     /// <summary>
     /// Parameters for the new voting.
     /// </summary>
+    [SerializeField(0, "Parameters for the new voting.")]
     private Signed<VotingParameters> votingParameters;
 
     /// <summary>
     /// List of authorities to oversee the voting.
     /// </summary>
+    [SerializeField(1, "List of authorities to oversee the voting.")]
     private List<AuthorityCertificate> authorities;
 
     /// <summary>
@@ -61,6 +64,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
+
       context.Write(this.votingParameters);
       context.WriteList(authorities);
     }
@@ -72,6 +76,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
+
       this.votingParameters = context.ReadObject<Signed<VotingParameters>>();
       this.authorities = context.ReadObjectList<AuthorityCertificate>();
     }

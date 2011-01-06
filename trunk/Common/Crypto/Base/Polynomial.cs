@@ -17,11 +17,13 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Integer field polynomial.
   /// </summary>
+  [SerializeObject("Integer field polynomial.")]
   public class Polynomial : Serializable
   {
     /// <summary>
     /// Coefficients of the polynom.
     /// </summary>
+    [SerializeField(0, "Coefficients of the polynom.")]
     private List<BigInt> coefficients;
 
     /// <summary>
@@ -39,16 +41,13 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(this.coefficients.Count);
-      this.coefficients.ForEach(coefficient => context.Write(coefficient));
+      context.WriteList(this.coefficients);
     }
 
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-      this.coefficients = new List<BigInt>();
-      int count = context.ReadInt32();
-      count.Times(() => this.coefficients.Add(context.ReadBigInt()));
+      this.coefficients = context.ReadBigIntList();
     }
 
     /// <summary>

@@ -18,11 +18,13 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// RPC request to end a voting procedure.
   /// </summary>
+  [SerializeObject("RPC request to end a voting procedure.")]
   public class EndVotingRequest : RpcRequest<VotingRpcServer, EndVotingResponse>
   {
     /// <summary>
     /// Id of the voting.
     /// </summary>
+    [SerializeField(0, "Id of the voting.")]
     private Guid votingId;
 
     /// <summary>

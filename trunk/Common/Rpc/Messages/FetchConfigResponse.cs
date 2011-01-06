@@ -15,10 +15,22 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering the config.
+  /// </summary>
+  [SerializeObject("RPC response delivering the config.")]
   public class FetchConfigResponse : RpcResponse
   {
+    /// <summary>
+    /// Configuration for the client.
+    /// </summary>
+    [SerializeField(0, "Configuration for the client.")]
     public RemoteConfig Config { get; private set; }
 
+    /// <summary>
+    /// List of voting groups on the server.
+    /// </summary>
+    [SerializeField(1, "List of voting groups on the server.")]
     public List<Group> Groups { get; private set; }
 
     public FetchConfigResponse(Guid requestId, IRemoteConfig config, List<Group> groups)
@@ -52,12 +64,8 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-
-      if (Exception == null)
-      {
-        context.Write(Config);
-        context.WriteList(Groups);
-      }
+      context.Write(Config);
+      context.WriteList(Groups);
     }
 
     /// <summary>
@@ -67,12 +75,8 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context)
     {
       base.Deserialize(context);
-
-      if (Exception == null)
-      {
-        Config = context.ReadObject<RemoteConfig>();
-        Groups = context.ReadObjectList<Group>();
-      }
+      Config = context.ReadObject<RemoteConfig>();
+      Groups = context.ReadObjectList<Group>();
     }
   }
 }

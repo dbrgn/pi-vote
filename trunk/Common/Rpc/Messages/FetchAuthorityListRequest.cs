@@ -18,11 +18,13 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// RPC request to fetch the list of authorities.
   /// </summary>
+  [SerializeObject("RPC request to fetch the list of authorities.")]
   public class FetchAuthorityListRequest : RpcRequest<VotingRpcServer, FetchAuthorityListResponse>
   {
     /// <summary>
     /// Id of the voting.
     /// </summary>
+    [SerializeField(0, "Id of the voting.")]
     private Guid votingId;
 
     /// <summary>

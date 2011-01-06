@@ -18,16 +18,19 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// A question in a voting.
   /// </summary>
+  [SerializeObject("A question in a voting.")]
   public class Question : Serializable
   {
     /// <summary>
     /// Number of vota each voter may cast.
     /// </summary>
+    [SerializeField(3, "Number of vota each voter may cast.")]
     public int MaxVota { get; private set; }
 
     /// <summary>
     /// List of possible options for the voters.
     /// </summary>
+    [SerializeField(4, "List of possible options for the voters.")]
     private List<Option> options;
 
     /// <summary>
@@ -36,6 +39,7 @@ namespace Pirate.PiVote.Crypto
     /// <example>
     /// Do you wish to abolish the army?
     /// </example>
+    [SerializeField(0, "Text of the question.")]
     public MultiLanguageString Text { get; private set; }
 
     /// <summary>
@@ -44,11 +48,13 @@ namespace Pirate.PiVote.Crypto
     /// <example>
     /// This would mean we could save 100 million $ each year.
     /// </example>
+    [SerializeField(1, "Description or explaination of the question.")]
     public MultiLanguageString Description { get; private set; }
 
     /// <summary>
     /// Url of the discussion of the option.
     /// </summary>
+    [SerializeField(2, "Url of the discussion of the option.")]
     public MultiLanguageString Url { get; private set; }
 
     /// <summary>

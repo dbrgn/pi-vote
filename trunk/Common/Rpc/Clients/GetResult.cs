@@ -21,6 +21,7 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// Status of a vote receipt to check.
   /// </summary>
+  [SerializeEnum("Status of a vote receipt to check.")]
   public enum VoteReceiptStatus
   {
     NotFound,

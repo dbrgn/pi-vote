@@ -15,6 +15,10 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to list voting ids.
+  /// </summary>
+  [SerializeObject("RPC request to list voting ids.")]
   public class ListVotingIdsRequest : RpcRequest<VotingRpcServer, ListVotingIdsResponse>
   {
     public ListVotingIdsRequest(

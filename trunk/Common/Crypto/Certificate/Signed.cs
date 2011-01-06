@@ -16,21 +16,25 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Signed serializable object.
   /// </summary>
+  [SerializeObject("Signed serializable object.")]
   public class Signed : Serializable
   {
     /// <summary>
     /// Binary data of serializable object.
     /// </summary>
+    [SerializeField(0, "Binary data of serializable object.")]
     public byte[] Data { get; protected set; }
 
     /// <summary>
     /// Signature.
     /// </summary>
+    [SerializeField(1, "Signature.")]
     public byte[] Signature { get; protected set; }
 
     /// <summary>
     /// Binary data of the certificate.
     /// </summary>
+    [SerializeField(2, "Binary data of the certificate.")]
     public byte[] CertificateData { get; protected set; }
 
     /// <summary>
@@ -75,6 +79,7 @@ namespace Pirate.PiVote.Crypto
   /// <summary>
   /// Binary data of serializable object.
   /// </summary>
+  [SerializeObject("Signed serializable object.")]
   public class Signed<TValue> : Signed
     where TValue : Serializable
   {

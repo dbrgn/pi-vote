@@ -15,9 +15,22 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to fetch an envelope.
+  /// </summary>
+  [SerializeObject("RPC request to fetch an envelope.")]
   public class FetchEnvelopeRequest : RpcRequest<VotingRpcServer, FetchEnvelopeResponse>
   {
+    /// <summary>
+    /// Id of the voting.
+    /// </summary>
+    [SerializeField(0, "Id of the voting.")]
     private Guid votingId;
+
+    /// <summary>
+    /// Index of the envelope.
+    /// </summary>
+    [SerializeField(1, "Index of the envelope.")]
     private int envelopeIndex;
 
     public FetchEnvelopeRequest(
