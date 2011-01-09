@@ -348,6 +348,7 @@
     <Compile Include="Rpc\Messages\CreateVotingResponse.cs" />
     <Compile Include="Rpc\Messages\CreateVotingRequest.cs" />
     <Compile Include="Rpc\Handlers\VotingRpcServer.cs" />
+    <Compile Include="Serialization\GenericArgumentAttribute.cs" />
     <Compile Include="Serialization\SerializeEnumAttribute.cs" />
     <Compile Include="Serialization\SerializeAdditionalFieldAttribute.cs" />
     <Compile Include="Serialization\SerializeObjectAttribute.cs" />

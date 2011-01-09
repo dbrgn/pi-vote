@@ -80,6 +80,7 @@ namespace Pirate.PiVote.Crypto
   /// Binary data of serializable object.
   /// </summary>
   [SerializeObject("Signed serializable object.")]
+  [GenericArgument(0, "TValue", "Type of bject to be signed.")]
   public class Signed<TValue> : Signed
     where TValue : Serializable
   {

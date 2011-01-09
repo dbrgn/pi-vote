@@ -61,6 +61,7 @@ namespace Pirate.PiVote.Crypto
   /// </summary>
   /// <typeparam name="TValue">Type of the value.</typeparam>
   [SerializeObject("Attribute of a certificate.")]
+  [GenericArgument(0, "TValue", "Type of the attribute value.")]
   public abstract class CertificateAttribute<TValue> : CertificateAttribute
   {
     /// <summary>

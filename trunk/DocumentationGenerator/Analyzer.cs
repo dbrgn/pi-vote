@@ -23,6 +23,11 @@ namespace DocumentationGenerator
       this.types.Add(name, new BasicType(name, comment));
     }
 
+    private void AddBaseListType(string name, string comment)
+    {
+      this.types.Add(name, new BaseListType(name, comment));
+    }
+
     public void Analyze()
     {
       this.types = new Dictionary<string, FieldType>();
@@ -41,6 +46,8 @@ namespace DocumentationGenerator
       AddBasicType("Emil.GMP.BigInt", "Arbitrary-sized integer as specified by GNU Multiprecision Library written as Byte[]");
       AddBasicType("Pirate.PiVote.PiException", "Exception code as Int32 followed by String message.");
       AddBasicType("Pirate.PiVote.MultiLanguageString", "Number of language entries as Int32 followed by each entry as Language as Int32 and String text");
+      AddBaseListType("System.Collections.Generic.List", "Number of entries followed by the serialization of each entry");
+      AddBaseListType("System.Collections.Generic.Dictionary", "Number of entries followed by the serialization of each key and value");
 
       var assembly = this.serializableType.Assembly;
 
@@ -62,17 +69,29 @@ namespace DocumentationGenerator
 
     private void AnalyzeType(Type type)
     {
-      if (!this.types.ContainsKey(type.ProperFullName()))
+      if (!this.types.ContainsKey(type.GenericFullName()))
       {
         if (type.IsEnum)
         {
           AnalyzeEnumType(type);
         }
-        if (type.IsSubclassOf(this.serializableType))
+        else if (type == typeof(Serializable) || type.IsSubclassOf(this.serializableType))
         {
           var soa = (SerializeObjectAttribute)type.GetCustomAttributes(this.serializeObjectAttribute, false).SingleOrDefault();
 
-          ObjectType objectType = new ObjectType(type.ProperFullName(), soa.Comment);
+          ObjectType inherits = null;
+
+          if (type.BaseType != typeof(object))
+          {
+            if (!this.types.ContainsKey(type.BaseType.GenericFullName()))
+            {
+              AnalyzeType(type.BaseType);
+            }
+
+            inherits = this.types[type.BaseType.GenericFullName()] as ObjectType;
+          }
+
+          ObjectType objectType = new ObjectType(type.GenericFullName(), soa.Comment, inherits);
 
           foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
           {
@@ -92,7 +111,8 @@ namespace DocumentationGenerator
 
           if (soa == null)
           {
-            Console.WriteLine("  Serialize Object Attribute missing");
+            Console.WriteLine("  Serialize Object Attribute on type " + type.FullName + " missing");
+            Console.ReadLine();
           }
 
           objectType.Validate();
@@ -106,7 +126,7 @@ namespace DocumentationGenerator
         }
         else if (type.OwnName() == "System.Tuple")
         {
-          ObjectType objectType = new ObjectType(type.ProperFullName(), "Tuple of values.");
+          ObjectType objectType = new ObjectType(type.GenericFullName(), "Tuple of values.", null);
 
           foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public))
           {
@@ -119,7 +139,8 @@ namespace DocumentationGenerator
         }
         else
         {
-          Console.WriteLine("**  Type {0} cannot be analyzed.", type.ProperFullName());
+          Console.WriteLine("**  Type {0} cannot be analyzed.", type.GenericFullName());
+          Console.ReadLine();
         }
       }
     }
@@ -143,6 +164,7 @@ namespace DocumentationGenerator
       if (enumAttribute == null)
       {
         Console.WriteLine("**  Serialize Enum Attribute on " + type.FullName + " missing");
+        Console.ReadLine();
       }
     }
 
@@ -176,28 +198,29 @@ namespace DocumentationGenerator
     
     private void AnalyzeType(ObjectType objectType, Type type, SerializeFieldAttribute attribute, string fieldName)
     {
-      if (this.types.ContainsKey(type.ProperFullName()))
+      if (this.types.ContainsKey(type.GenericFullName()))
       {
-        objectType.AddField(attribute.Index, new Field(this.types[type.ProperFullName()], fieldName, attribute.Comment));
+        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition));
       }
       else if (type.IsSubclassOf(this.serializableType))
       {
         AnalyzeType(type);
-        objectType.AddField(attribute.Index, new Field(this.types[type.ProperFullName()], fieldName, attribute.Comment));
+        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition));
       }
       else if (IsListOf(type))
       {
         AnalyzeListType(type);
-        objectType.AddField(attribute.Index, new Field(this.types[type.ProperFullName()], fieldName, attribute.Comment));
+        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition));
       }
       else if (type.IsEnum)
       {
         AnalyzeEnumType(type);
-        objectType.AddField(attribute.Index, new Field(this.types[type.ProperFullName()], fieldName, attribute.Comment));
+        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition));
       }
       else
       {
-        Console.WriteLine("**  Type {0} not recognized", type.ProperFullName());
+        Console.WriteLine("**  Type {0} not recognized", type.GenericFullName());
+        Console.ReadLine();
       }
     }
 
@@ -206,22 +229,22 @@ namespace DocumentationGenerator
       switch (type.OwnName())
       {
         case "System.Collections.Generic.List":
-          if (!this.types.ContainsKey(type.GetGenericArguments()[0].ProperFullName()))
+          if (!this.types.ContainsKey(type.GetGenericArguments()[0].GenericFullName()))
           {
             AnalyzeType(type.GetGenericArguments()[0]);
           }
 
-          var listType = new ListType(type.ProperFullName(), this.types[type.GetGenericArguments()[0].ProperFullName()]);
+          var listType = new ListType(type.GenericFullName(), this.types[type.GetGenericArguments()[0].GenericFullName()]);
           this.types.Add(listType.Name, listType);
 
           break;
         case "System.Collections.Generic.Dictionary":
-          if (!this.types.ContainsKey(type.GetGenericArguments()[1].ProperFullName()))
+          if (!this.types.ContainsKey(type.GetGenericArguments()[1].GenericFullName()))
           {
             AnalyzeType(type.GetGenericArguments()[1]);
           }
 
-          var listType2 = new ListType(type.ProperFullName(), this.types[type.GetGenericArguments()[1].ProperFullName()]);
+          var listType2 = new ListType(type.GenericFullName(), this.types[type.GetGenericArguments()[1].GenericFullName()]);
           this.types.Add(listType2.Name, listType2);
 
           break;
@@ -238,13 +261,13 @@ namespace DocumentationGenerator
         {
           case "System.Collections.Generic.List":
             return 
-              this.types.ContainsKey(type.GetGenericArguments()[0].ProperFullName()) ||
+              this.types.ContainsKey(type.GetGenericArguments()[0].GenericFullName()) ||
               type.GetGenericArguments()[0].IsSubclassOf(typeof(Serializable)) ||
               type.GetGenericArguments()[0].OwnName() == "System.Tuple";
           case "System.Collections.Generic.Dictionary":
             return
               type.GetGenericArguments()[0] == typeof(int) &&
-              (this.types.ContainsKey(type.GetGenericArguments()[1].ProperFullName()) ||
+              (this.types.ContainsKey(type.GetGenericArguments()[1].GenericFullName()) ||
               type.GetGenericArguments()[1].IsSubclassOf(typeof(Serializable)) ||
               type.GetGenericArguments()[1].OwnName() == "System.Tuple");
           default:

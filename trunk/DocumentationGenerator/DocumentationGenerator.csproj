@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Analyzer.cs" />
     <Compile Include="BasicType.cs" />
+    <Compile Include="BaseListType.cs" />
     <Compile Include="EnumType.cs" />
     <Compile Include="EnumValue.cs" />
     <Compile Include="Field.cs" />

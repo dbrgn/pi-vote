@@ -72,6 +72,7 @@ namespace Pirate.PiVote.Crypto
   /// Encrypted serializable object.
   /// </summary>
   [SerializeObject("Encrypted serializable object.")]
+  [GenericArgument(0, "TValue", "Type of object to be encrypted.")]
   public class Encrypted<TValue> : Encrypted
     where TValue : Serializable
   {

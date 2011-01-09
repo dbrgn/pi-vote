@@ -9,18 +9,11 @@ namespace DocumentationGenerator
   {
     public string Name { get; private set; }
 
-    public string LatexName
-    {
-      get { return Name; }
-    }
-
     public string ShortName
     {
       get
       {
-        return LatexName
-          .Replace("System.Collections.Generic.", string.Empty)
-          .Replace("Pirate.PiVote.Crypto.", string.Empty)
+        return Name
           .Replace("Pirate.PiVote.", string.Empty)
           .Replace("System.", string.Empty);
       }

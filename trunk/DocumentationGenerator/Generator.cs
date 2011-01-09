@@ -38,6 +38,10 @@ namespace DocumentationGenerator
       this.document.AppendLine(@"\begin{document}");
       this.document.AppendLine();
       this.document.AppendLine(@"\maketitle");
+      this.document.AppendLine();
+      this.document.AppendLine(@"\tableofcontents");
+      this.document.AppendLine();
+      this.document.AppendLine(@"\newpage");
 
       GenerateRpc();
 
@@ -83,6 +87,7 @@ namespace DocumentationGenerator
       this.document.AppendLine(@"\end{center}");
 
       this.document.AppendLine();
+      this.document.AppendLine(@"\newpage");
       this.document.AppendLine();
     }
 
@@ -97,6 +102,10 @@ namespace DocumentationGenerator
 
       this.document.AppendLine(@"\newpage");
 
+      GenerateLists(types);
+
+      this.document.AppendLine(@"\newpage");
+
       GenerateEnums(types);
 
       this.document.AppendLine(@"\newpage");
@@ -108,8 +117,10 @@ namespace DocumentationGenerator
     {
       this.document.AppendLine(@"\subsection{Enumerations}");
       this.document.AppendLine();
+      this.document.AppendLine(@"The following enumerations are used. The values and their names are specified below.");
+      this.document.AppendLine();
 
-      foreach (EnumType type in types.Where(t => t is EnumType))
+      foreach (EnumType type in types.Where(t => t is EnumType).OrderBy(t => t.Name))
       {
         this.document.AppendLine(@"\begin{centering}");
         this.document.AppendLine(@"\begin{supertabular}{| p{2.2cm} | p{10.4cm} p{1.8cm} |}");
@@ -118,6 +129,12 @@ namespace DocumentationGenerator
         this.document.AppendLine(@"\bf{Type} &");
         this.document.AppendLine(type.Name + " &");
         this.document.AppendLine(@" \\");
+
+        if (type.ShortName != type.Name)
+        {
+          this.document.AppendLine(@"\bf{Short} &");
+          this.document.AppendLine(type.ShortName + @" \\");
+        }
 
         this.document.AppendLine(@"\bf{Comment} &");
         this.document.AppendLine(type.Comment + " &");
@@ -156,8 +173,10 @@ namespace DocumentationGenerator
     {
       this.document.AppendLine(@"\subsection{Basic Types}");
       this.document.AppendLine();
+      this.document.AppendLine(@"The following basic types are used throughout Pi-Vote.");
+      this.document.AppendLine();
 
-      foreach (BasicType type in types.Where(t => t is BasicType))
+      foreach (BasicType type in types.Where(t => t is BasicType).OrderBy(t => t.Name))
       {
         this.document.AppendLine(@"\begin{centering}");
         this.document.AppendLine(@"\begin{supertabular}{| p{2.2cm} | p{12.6cm} |}");
@@ -165,6 +184,12 @@ namespace DocumentationGenerator
         this.document.AppendLine(@"\hline");
         this.document.AppendLine(@"\bf{Type} &");
         this.document.AppendLine(type.Name + @" \\");
+
+        if (type.ShortName != type.Name)
+        {
+          this.document.AppendLine(@"\bf{Short} &");
+          this.document.AppendLine(type.ShortName + @" \\");
+        }
 
         this.document.AppendLine(@"\bf{Serialize} &");
         this.document.AppendLine(type.Comment + @" \\");
@@ -178,20 +203,68 @@ namespace DocumentationGenerator
       }
     }
 
+    private void GenerateLists(IEnumerable<FieldType> types)
+    {
+      this.document.AppendLine(@"\subsection{List Types}");
+      this.document.AppendLine();
+      this.document.AppendLine(@"The following list types are used. They are all generic an can contains any number of items.");
+      this.document.AppendLine();
+
+      foreach (BaseListType type in types.Where(t => t is BaseListType).OrderBy(t => t.Name))
+      {
+        this.document.AppendLine(@"\begin{centering}");
+        this.document.AppendLine(@"\begin{supertabular}{| p{2.2cm} | p{12.6cm} |}");
+
+        this.document.AppendLine(@"\hline");
+        this.document.AppendLine(@"\bf{Type} &");
+        this.document.AppendLine(type.Name + @" \\");
+
+        if (type.ShortName != type.Name)
+        {
+          this.document.AppendLine(@"\bf{Short} &");
+          this.document.AppendLine(type.ShortName + @" \\");
+        }
+
+        this.document.AppendLine(@"\bf{Serialize} &");
+        this.document.AppendLine(type.Comment + @" \\");
+
+        this.document.AppendLine(@"\hline");
+
+        this.document.AppendLine(@"\end{supertabular}");
+        this.document.AppendLine(@"\end{centering}");
+        this.document.AppendLine(@"\vspace{0.3cm}");
+        this.document.AppendLine();
+      }
+    }
+    
     private void GenerateObjects(IEnumerable<FieldType> types)
     {
       this.document.AppendLine(@"\subsection{Objects}");
       this.document.AppendLine();
+      this.document.AppendLine(@"The following composite types are used. They inherit their fields from one another.");
+      this.document.AppendLine();
 
-      foreach (ObjectType type in types.Where(t => t is ObjectType))
+      foreach (ObjectType type in types.Where(t => t is ObjectType).OrderBy(t => t.Name))
       {
         this.document.AppendLine(@"\begin{centering}");
         this.document.AppendLine(@"\begin{supertabular}{| p{2.2cm} | p{12.6cm} |}");
 
         this.document.AppendLine(@"\hline");
 
-        this.document.AppendLine(@"\bf{Type} &");
+        this.document.AppendLine(@"\bf{Type Name} &");
         this.document.AppendLine(type.Name + @" \\");
+
+        if (type.ShortName != type.Name)
+        {
+          this.document.AppendLine(@"\bf{Short Name} &");
+          this.document.AppendLine(type.ShortName + @" \\");
+        }
+
+        if (type.Inherits != null)
+        {
+          this.document.AppendLine(@"\bf{Inherits} &");
+          this.document.AppendLine(type.Inherits.ShortName + @" \\");
+        }
 
         this.document.AppendLine(@"\bf{Comment} &");
         this.document.AppendLine(type.Comment + @" \\");
@@ -201,13 +274,19 @@ namespace DocumentationGenerator
           this.document.AppendLine(@"\hline");
 
           this.document.AppendLine(@"\bf{Field Type} &");
-          this.document.AppendLine(fields.Type.ShortName + @" \\");
+          this.document.AppendLine(fields.ShortFieldTypeName + @" \\");
 
           this.document.AppendLine(@"\bf{Field Name }&");
           this.document.AppendLine(fields.Name + @" \\");
 
           this.document.AppendLine(@"\bf{Comment} &");
           this.document.AppendLine(fields.Comment + @" \\");
+
+          if (!string.IsNullOrEmpty(fields.Condition))
+          {
+            this.document.AppendLine(@"\bf{Condition} &");
+            this.document.AppendLine(fields.Condition + @" \\");
+          }
         }
 
         this.document.AppendLine(@"\hline");
