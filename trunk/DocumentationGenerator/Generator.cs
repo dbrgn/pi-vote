@@ -86,6 +86,46 @@ namespace DocumentationGenerator
       this.document.AppendLine(@"\end{supertabular}");
       this.document.AppendLine(@"\end{center}");
 
+      this.document.AppendLine(@"\subsection{Example}");
+      this.document.AppendLine();
+      this.document.AppendLine(@"Exampele of a keep alive request.");
+
+      this.document.AppendLine(@"\begin{center}");
+      this.document.AppendLine(@"\begin{supertabular}{| p{7cm} | p{8cm} |}");
+      this.document.AppendLine(@"\hline");
+      this.document.AppendLine(@"Hex bytes &");
+      this.document.AppendLine(@"Comment \\");
+      this.document.AppendLine(@"\hline");
+      this.document.AppendLine(@"37 00 00 00 &");
+      this.document.AppendLine(@"Length of the following data. \\");
+      this.document.AppendLine(@"22 50 69 72 61 74 65 2e  50 69 56 6f 74 65 2e 52 70 63 2e 4b 65 65 70 41 6c 69 76 65 52 65 71 75 65 73 74 &");
+      this.document.AppendLine(@"String 'Pirate.PiVote.Rpc.KeepAliveRequest' in UTF8 with prefixed length. \\");
+      this.document.AppendLine(@"10 00 00 00 09 35 5d d3  9a b9 8a 41 96 e0 41 18 82 a5 85 90 &");
+      this.document.AppendLine(@"Request Guid as 16 bytes with prefixed length. \\");
+      this.document.AppendLine(@"\hline");
+      this.document.AppendLine(@"\end{supertabular}");
+      this.document.AppendLine(@"\end{center}");
+
+      this.document.AppendLine(@"And the corresponding keep alive response:");
+
+      this.document.AppendLine(@"\begin{center}");
+      this.document.AppendLine(@"\begin{supertabular}{| p{7cm} | p{8cm} |}");
+      this.document.AppendLine(@"\hline");
+      this.document.AppendLine(@"Hex bytes &");
+      this.document.AppendLine(@"Comment \\");
+      this.document.AppendLine(@"\hline");
+      this.document.AppendLine(@"39 00 00 00 &");
+      this.document.AppendLine(@"Length of the following data. \\");
+      this.document.AppendLine(@"23 50 69 72 61 74 65 2e  50 69 56 6f 74 65 2e 52 70 63 2e 4b 65 65 70 41  6c 69 76 65 52 65 73 70 6f 6e 73 65 &");
+      this.document.AppendLine(@"String 'Pirate.PiVote.Rpc.KeepAliveResponse' in UTF8 with prefixed length. \\");
+      this.document.AppendLine(@"10 00 00 00 09 35 5d d3  9a b9 8a 41 96 e0 41 18 82 a5 85 90 &");
+      this.document.AppendLine(@"Request Guid as 16 bytes with prefixed length. \\");
+      this.document.AppendLine(@"01 &");
+      this.document.AppendLine(@"Boolean specifying that no exception occurred in execution. \\");
+      this.document.AppendLine(@"\hline");
+      this.document.AppendLine(@"\end{supertabular}");
+      this.document.AppendLine(@"\end{center}"); 
+      
       this.document.AppendLine();
       this.document.AppendLine(@"\newpage");
       this.document.AppendLine();
