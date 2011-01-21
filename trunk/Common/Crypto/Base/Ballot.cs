@@ -70,7 +70,8 @@ namespace Pirate.PiVote.Crypto
       }
 
       progress.Down(1d / (vota.Count() + 1) * vota.Count());
-      List<Vote> voteList = Parallel.Work(CreateVote, voteWorkList, progress.Set); 
+      List<Vote> voteList = Parallel
+        .Work<Tuple<int, BigInt, BaseParameters, BigInt>, Vote>(CreateVote, voteWorkList, progress.Set); 
       progress.Up();
 
       foreach (Vote vote in voteList)
@@ -125,7 +126,8 @@ namespace Pirate.PiVote.Crypto
         voteWorkList.Add(new Tuple<int, BigInt, BaseParameters, BigInt>(votum, nonce, parameters, publicKey));
       }
 
-      List<Vote> voteList = Parallel.Work(CreateVote, voteWorkList, null);
+      List<Vote> voteList = Parallel
+        .Work<Tuple<int, BigInt, BaseParameters, BigInt>, Vote>(CreateVote, voteWorkList, null);
 
       foreach (Vote vote in voteList)
       {

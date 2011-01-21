@@ -81,7 +81,8 @@ namespace Pirate.PiVote.Crypto
           inputs.Add(new Tuple<IEnumerable<int>, VotingParameters, Question, BigInt>(questionVota, this.parameters, question, this.publicKey));
         }
 
-        List<Ballot> ballots = Parallel.Work(CreateBallot, inputs, progressHandler);
+        List<Ballot> ballots = Parallel
+          .Work<Tuple<IEnumerable<int>, VotingParameters, Question, BigInt>, Ballot>(CreateBallot, inputs, progressHandler);
 
         Envelope ballotContainer = new Envelope(this.parameters.VotingId, voterCertificate.Id, ballots);
 
