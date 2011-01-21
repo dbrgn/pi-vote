@@ -138,13 +138,13 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
-    <Reference Include="Emil.GMP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Emil.GMP, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Downloads\GnuMpDotNet-0.1.0-Binaries\Emil.GMP.dll</HintPath>
+      <HintPath>..\Libraries\Emil.GMP.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.2.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Downloads\mysql-connector-net-6.3.3-noinstall\v2\MySql.Data.dll</HintPath>
+      <HintPath>..\Libraries\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
