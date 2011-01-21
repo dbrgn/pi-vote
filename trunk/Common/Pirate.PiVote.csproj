@@ -358,6 +358,7 @@
     <Compile Include="Utilitiy\LogLevel.cs" />
     <Compile Include="Utilitiy\Mailer.cs" />
     <Compile Include="Utilitiy\Parallel.cs" />
+    <Compile Include="Utilitiy\PeriodicTask.cs" />
     <Compile Include="Utilitiy\ProgressHandler.cs" />
     <Compile Include="Utilitiy\Files.cs" />
     <Compile Include="Utilitiy\Logger.cs" />

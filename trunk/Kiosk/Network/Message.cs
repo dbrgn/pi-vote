@@ -5,14 +5,27 @@ using System.Text;
 
 namespace Pirate.PiVote.Kiosk
 {
-  public enum Message
+  public enum MessageType : byte
   {
-    Invalid                     = 0,
-    Reply                       = 1,
-    Error                       = 2,
-    FetchUserData               = 100000,
-    PushSignatureRequest        = 100001,
-    FetchCertificateStorage     = 100002,
-    FetchServerCertificate      = 100003
+    Unknown                       = 0x00,
+    Request                       = 0x01,
+    Reply                         = 0x02
+  }
+
+  public enum MessageFunction : byte
+  {
+    Unknown                       = 0x00,
+    FetchUserData                 = 0x01,
+    PushSignatureRequest          = 0x02,
+    FetchCertificateStorage       = 0x03,
+    FetchServerCertificate        = 0x04
+  }
+
+  public enum MessageStatus : byte
+  {
+    Unknown                       = 0x00,
+    Success                       = 0x01,
+    FailBadRequest                = 0x02,
+    FailServerError               = 0x03
   }
 }

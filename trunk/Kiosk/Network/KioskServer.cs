@@ -10,41 +10,78 @@ namespace Pirate.PiVote.Kiosk
 {
   public class KioskServer
   {
-    public  SignatureRequest UserData { get; set; }
+    private TcpServer tcpServer;
 
-    public Secure<SignatureRequest> Request { get; set; }
+    private byte[] certificateStorageBinary;
 
-    public Secure<SignatureRequestInfo> RequestInfo { get; set; }
+    private byte[] serverCertificateBinary;
 
-    public CertificateStorage CertificateStorage { get; set; }
+    public SignatureRequest UserData { get; set; }
 
-    public Certificate ServerCertificate { get; set; }
+    public Queue<RequestContainer> Requests { get; private set; }
+
+    public KioskServer(CertificateStorage certificateStorage, Certificate serverCertificate)
+    {
+      Requests = new Queue<RequestContainer>();
+      this.certificateStorageBinary = certificateStorage.ToBinary();
+      this.serverCertificateBinary = serverCertificate.ToBinary();
+      this.tcpServer = new TcpServer(this);
+    }
+
+    public void Start()
+    {
+      this.tcpServer.Start();
+    }
+
+    public void Stop()
+    {
+      this.tcpServer.Stop();
+    }
 
     public byte[] FetchUserData()
     {
-      return UserData.ToBinary();
+      if (UserData == null)
+      {
+        throw new InvalidOperationException("User data not available.");
+      }
+      else
+      {
+        return UserData.ToBinary();
+      }
     }
 
     public byte[] FetchCertificateStorage()
     {
-      return CertificateStorage.ToBinary();
+      if (this.certificateStorageBinary == null)
+      {
+        throw new InvalidOperationException("Certificate storage not available.");
+      }
+      else
+      {
+        return this.certificateStorageBinary;
+      }
     }
 
     public byte[] FetchServerCertificate()
     {
-      return ServerCertificate.ToBinary();
+      if (this.serverCertificateBinary == null)
+      {
+        throw new InvalidOperationException("Server certificate not available.");
+      }
+      else
+      {
+        return this.serverCertificateBinary;
+      }
     }
 
     public void PushSignatureRequest(byte[] data)
     {
-      MemoryStream memoryStream = new MemoryStream(data);
-      DeserializeContext context = new DeserializeContext(memoryStream);
+      var request = Serializable.FromBinary<RequestContainer>(data);
 
-      Request = context.ReadObject<Secure<SignatureRequest>>();
-      RequestInfo = context.ReadObject<Secure<SignatureRequestInfo>>();
-
-      context.Close();
-      memoryStream.Close();
+      lock (Requests)
+      {
+        Requests.Enqueue(request);
+      }
     }
   }
 }

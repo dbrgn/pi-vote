@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Reflection;
 using Emil.GMP;
 
 namespace Pirate.PiVote.Serialization
@@ -112,7 +113,16 @@ namespace Pirate.PiVote.Serialization
           else
           {
             type = Type.GetType(typeName);
-            Types.Add(typeName, type);
+
+            if (type != null)
+            {
+              Types.Add(typeName, type);
+            }
+            else
+            {
+              type = Assembly.GetEntryAssembly().GetType(typeName, true);
+              Types.Add(typeName, type);
+            }
           }
         }
 

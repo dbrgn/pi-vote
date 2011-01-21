@@ -194,6 +194,7 @@ namespace Pirate.PiVote.Rpc
       {
         case VotingStatus.New:
         case VotingStatus.Sharing:
+        case VotingStatus.Ready:
           voting.Delete();
           this.votings.Remove(votingId);
           break;

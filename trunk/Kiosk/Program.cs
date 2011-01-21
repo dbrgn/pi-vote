@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Pirate.PiVote.Kiosk
 {
@@ -13,20 +14,17 @@ namespace Pirate.PiVote.Kiosk
     [STAThread]
     public static void Main()
     {
-      var ks = new KioskServer();
-      ks.CertificateStorage = new Crypto.CertificateStorage();
-      var ts = new TcpServer(ks);
-      ts.Start();
-      var c = new Client();
-      c.Connect(System.Net.IPAddress.Parse("127.0.0.1"));
-      var cs = c.FetchCertificateStroage();
-
-      Console.WriteLine(cs.Certificates.Count());
-      Console.ReadLine();
-
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new Form1());
+
+      if (Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName + ".vshost").Count() > 0)
+      {
+        Application.Run(new KioskForm());
+      }
+      else
+      {
+        Application.Run(new ControlForm());
+      }
     }
   }
 }

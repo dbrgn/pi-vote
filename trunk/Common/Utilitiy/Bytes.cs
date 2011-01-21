@@ -14,6 +14,11 @@ namespace System
 {
   public static class Bytes
   {
+    public static string ToHexString(this byte[] data)
+    {
+      return string.Join(string.Empty, data.Select(b => string.Format("{0:x2}", b)).ToArray());
+    }
+
     public static byte[] Concat(this byte[] part0, params byte[][] parts)
     {
       if (part0 == null)

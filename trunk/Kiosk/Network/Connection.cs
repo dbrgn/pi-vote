@@ -14,11 +14,16 @@ namespace Pirate.PiVote.Kiosk
 
     private DateTime created;
 
-    private int length;
+    private bool haveHeader;
+    MessageType requestType;
+    MessageFunction requestFunction;
+    MessageStatus requestStatus;
+    byte requestTag;
+    int requestLength;
 
     private BinaryReader reader;
 
-    private StreamWriter writer;
+    private BinaryWriter writer;
 
     private KioskServer kiosk;
 
@@ -27,9 +32,9 @@ namespace Pirate.PiVote.Kiosk
       this.client = client;
       this.kiosk = kiosk;
       this.reader = new BinaryReader(this.client.GetStream());
-      this.writer = new StreamWriter(this.client.GetStream());
+      this.writer = new BinaryWriter(this.client.GetStream());
       this.created = DateTime.Now;
-      this.length = -1;
+      this.haveHeader = false;
     }
 
     public bool Overdue
@@ -44,82 +49,86 @@ namespace Pirate.PiVote.Kiosk
     {
       try
       {
-        if (this.length < 0)
+        if (!this.haveHeader)
         {
-          if (this.client.Available >= sizeof(int))
+          if (this.client.Available >= 8)
           {
-            this.length = this.reader.ReadInt32();
+            this.requestType = (MessageType)this.reader.ReadByte();
+            this.requestFunction = (MessageFunction)this.reader.ReadByte();
+            this.requestStatus = (MessageStatus)this.reader.ReadByte();
+            this.requestTag = this.reader.ReadByte();
+            this.requestLength = this.reader.ReadInt32();
+
+            if (this.requestLength > 0)
+            {
+              this.haveHeader = true;
+            }
+            else
+            {
+              Handle(new byte[] { });
+            }
           }
         }
         else
         {
-          if (this.client.Available >= this.length)
+          if (this.client.Available >= this.requestLength)
           {
-            if (this.length >= 4)
-            {
-              Message message = (Message)this.reader.ReadInt32();
+            byte[] requestData = this.reader.ReadBytes(this.requestLength);
 
-              if (this.length > 4)
-              {
-                byte[] data = this.reader.ReadBytes(this.length - 4);
-                Handle(message, data);
-              }
-              else
-              {
-                Handle(message, new byte[] { });
-              }
-            }
-            else
-            {
-              this.reader.ReadBytes(this.length);
-              Reply(Message.Error);
-            }
+            Handle(requestData);
+            
+            this.haveHeader = false;
           }
         }
       }
       catch { }
     }
 
-    private void Handle(Message message, byte[] data)
+    private void Handle(byte[] requestData)
     {
       try
       {
-        switch (message)
+        switch (this.requestFunction)
         {
-          case Message.FetchUserData:
-            Reply(Message.Reply, this.kiosk.FetchUserData());
+          case MessageFunction.FetchUserData:
+            Reply(MessageStatus.Success, this.kiosk.FetchUserData());
             break;
-          case Message.PushSignatureRequest:
-            this.kiosk.PushSignatureRequest(data);
-            Reply(Message.Reply);
+          case MessageFunction.PushSignatureRequest:
+            this.kiosk.PushSignatureRequest(requestData);
+            Reply(MessageStatus.Success);
             break;
-          case Message.FetchCertificateStorage:
-            Reply(Message.Reply, this.kiosk.FetchCertificateStorage());
+          case MessageFunction.FetchCertificateStorage:
+            Reply(MessageStatus.Success, this.kiosk.FetchCertificateStorage());
             break;
-          case Message.FetchServerCertificate:
-            Reply(Message.Reply, this.kiosk.FetchServerCertificate());
+          case MessageFunction.FetchServerCertificate:
+            Reply(MessageStatus.Success, this.kiosk.FetchServerCertificate());
             break;
           default:
-            Reply(Message.Error);
+            Reply(MessageStatus.FailBadRequest);
             break;
         }
       }
-      catch
+      catch (Exception exception)
       {
-        Reply(Message.Error);
+        Reply(MessageStatus.FailServerError, Encoding.UTF8.GetBytes(exception.Message));
       }
     }
 
-    private void Reply(Message message)
+    private void Reply(MessageStatus replyStatus)
     {
-      Reply(message, new byte[] { });
+      Reply(replyStatus, new byte[] { });
     }
 
-    private void Reply(Message message, byte[] data)
+    private void Reply(MessageStatus replyStatus, byte[] replyData)
     {
-      this.writer.Write(data.Length + sizeof(int));
-      this.writer.Write((int)message);
-      this.writer.Write(data);
+      this.writer.Write((byte)MessageType.Reply);
+      this.writer.Write((byte)this.requestFunction);
+      this.writer.Write((byte)replyStatus);
+      this.writer.Write((byte)this.requestTag);
+      this.writer.Write(replyData.Length);
+      this.writer.Flush();
+
+      this.writer.Write(replyData);
       this.writer.Flush();
     }
 

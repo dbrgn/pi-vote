@@ -51,6 +51,35 @@ namespace Pirate.PiVote.Serialization
       return memoyrStream.ToArray();
     }
 
+    public static byte[] ToBinary(Serializable first, Serializable second, Serializable third)
+    {
+      MemoryStream memoyrStream = new MemoryStream();
+      SerializeContext context = new SerializeContext(memoyrStream);
+
+      first.Serialize(context);
+      second.Serialize(context);
+      third.Serialize(context);
+
+      context.Close();
+      memoyrStream.Close();
+
+      return memoyrStream.ToArray();
+    }
+
+    public static byte[] ToBinary(Serializable first, Serializable second)
+    {
+      MemoryStream memoyrStream = new MemoryStream();
+      SerializeContext context = new SerializeContext(memoyrStream);
+
+      first.Serialize(context);
+      second.Serialize(context);
+
+      context.Close();
+      memoyrStream.Close();
+
+      return memoyrStream.ToArray();
+    }
+
     public static TValue FromBinary<TValue>(byte[] data)
       where TValue : Serializable
     {
@@ -65,6 +94,54 @@ namespace Pirate.PiVote.Serialization
         memoryStream.Close();
 
         return obj;
+      }
+      catch
+      {
+        throw new PiFormatException(ExceptionCode.BadSerializableFormat, "Bad serializable format.");
+      }
+    }
+
+    public static Tuple<TValue1, TValue2> FromBinary<TValue1, TValue2>(byte[] data)
+      where TValue1 : Serializable
+      where TValue2 : Serializable
+    {
+      try
+      {
+        MemoryStream memoryStream = new MemoryStream(data);
+        DeserializeContext context = new DeserializeContext(memoryStream);
+
+        TValue1 obj1 = context.ReadObject<TValue1>();
+        TValue2 obj2 = context.ReadObject<TValue2>();
+
+        context.Close();
+        memoryStream.Close();
+
+        return new Tuple<TValue1, TValue2>(obj1, obj2);
+      }
+      catch
+      {
+        throw new PiFormatException(ExceptionCode.BadSerializableFormat, "Bad serializable format.");
+      }
+    }
+    
+    public static Tuple<TValue1, TValue2, TValue3> FromBinary<TValue1, TValue2, TValue3>(byte[] data)
+      where TValue1 : Serializable
+      where TValue2 : Serializable
+      where TValue3 : Serializable
+    {
+      try
+      {
+        MemoryStream memoryStream = new MemoryStream(data);
+        DeserializeContext context = new DeserializeContext(memoryStream);
+
+        TValue1 obj1 = context.ReadObject<TValue1>();
+        TValue2 obj2 = context.ReadObject<TValue2>();
+        TValue3 obj3 = context.ReadObject<TValue3>();
+
+        context.Close();
+        memoryStream.Close();
+
+        return new Tuple<TValue1, TValue2, TValue3>(obj1, obj2, obj3);
       }
       catch
       {

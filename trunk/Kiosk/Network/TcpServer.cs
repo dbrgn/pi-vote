@@ -15,11 +15,9 @@ namespace Pirate.PiVote.Kiosk
 
     private TcpListener listener;
 
-    private Thread listenThread;
+    private PeriodicTask listenTask;
 
-    private Thread workerThread;
-
-    private bool run;
+    private PeriodicTask workerTask;
 
     private KioskServer kiosk;
 
@@ -36,71 +34,69 @@ namespace Pirate.PiVote.Kiosk
       this.listener = new TcpListener(localEndPoint);
       this.listener.Start();
 
-      this.run = true;
-      this.listenThread = new Thread(Listen);
-      this.listenThread.Start();
-      this.workerThread = new Thread(Worker);
-      this.workerThread.Start();
+      this.listenTask = new PeriodicTask(Listen);
+      this.listenTask.Start();
+      this.workerTask = new PeriodicTask(Work);
+      this.workerTask.Start();
     }
 
     public void Stop()
     {
-      this.run = false;
-      this.listenThread.Join();
-      this.workerThread.Join();
-
+      this.listenTask.Stop();
+      this.workerTask.Stop();
       this.listener.Stop();
     }
 
     private void Listen()
     {
-      while (this.run)
+      if (this.listener.Pending())
       {
-        if (this.listener.Pending())
+        var client = this.listener.AcceptTcpClient();
+        var connection = new Connection(client, this.kiosk);
+
+        lock (this.connetions)
         {
-          var client = this.listener.AcceptTcpClient();
-          var connection = new Connection(client, this.kiosk);
           this.connetions.Enqueue(connection);
         }
-
-        Thread.Sleep(10);
       }
+
+      Thread.Sleep(10);
     }
 
-    private void Worker()
+    private void Work()
     {
-      while (this.run)
+      int workCount = this.connetions.Count;
+
+      for (int workIndex = 0; workIndex < workCount; workIndex++)
       {
-        int workCount = this.connetions.Count;
+        Connection connection = null;
 
-        for (int workIndex = 0; workIndex < workCount; workIndex++)
+
+
+        lock (this.connetions)
         {
-          Connection connection = null;
-
-          lock (this.connetions)
+          if (this.connetions.Count > 0)
           {
-            if (this.connetions.Count > 0)
-            {
-              connection = this.connetions.Dequeue();
-            }
+            connection = this.connetions.Dequeue();
           }
+        }
 
-          if (connection != null)
+        if (connection != null)
+        {
+          if (connection.Overdue)
           {
-            if (connection.Overdue)
-            {
-              connection.Close();
-            }
-            else
-            {
-              connection.Process();
+            connection.Close();
+          }
+          else
+          {
+            connection.Process();
 
+            lock (this.connetions)
+            {
               this.connetions.Enqueue(connection);
             }
           }
         }
-
-        Thread.Sleep(10);
       }
     }
   }

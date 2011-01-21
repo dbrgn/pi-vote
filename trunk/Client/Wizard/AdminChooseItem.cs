@@ -366,6 +366,7 @@ namespace Pirate.PiVote.Client
         {
           case VotingStatus.New:
           case VotingStatus.Sharing:
+          case VotingStatus.Ready:
             this.deleteMenu.Enabled = true;
             break;
           default:

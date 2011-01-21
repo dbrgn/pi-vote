@@ -57,7 +57,7 @@ namespace Pirate.PiVote.Client
     private Exception exception;
     private Thread initThread;
     private List<AuthorityCertificate> authorityCertificates;
-    private Dictionary<Guid, int> authorityIndices;
+    private Dictionary<ComboBox, Dictionary<Guid, int>> authorityIndices;
     private VotingParameters votingParameters;
     private Group group;
 
@@ -122,12 +122,15 @@ namespace Pirate.PiVote.Client
         if (this.authorityCertificates != null &&
             this.authorityCertificates.Count > 0)
         {
-          this.authorityIndices = new Dictionary<Guid, int>();
-          this.authorityCertificates.Foreach(certificate => this.authorityIndices.Add(certificate.Id, this.authority0List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName))));
-          this.authorityCertificates.Foreach(certificate => this.authorityIndices.Add(certificate.Id, this.authority1List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName))));
-          this.authorityCertificates.Foreach(certificate => this.authorityIndices.Add(certificate.Id, this.authority2List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName))));
-          this.authorityCertificates.Foreach(certificate => this.authorityIndices.Add(certificate.Id, this.authority3List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName))));
-          this.authorityCertificates.Foreach(certificate => this.authorityIndices.Add(certificate.Id, this.authority4List.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName))));
+          this.authorityIndices = new Dictionary<ComboBox,Dictionary<Guid,int>>();
+          ComboBox[] authorityComboBoxes = new ComboBox[]{this.authority0List, this.authority1List, this.authority2List, this.authority3List, this.authority4List};
+
+          foreach (var authorityComboBox in authorityComboBoxes)
+          {
+            this.authorityIndices.Add(authorityComboBox, new Dictionary<Guid,int>());
+            this.authorityCertificates.Foreach(certificate => this.authorityIndices[authorityComboBox]
+              .Add(certificate.Id, authorityComboBox.Items.Add(string.Format("{0}, {1}", certificate.Id.ToString(), certificate.FullName))));          
+          }
 
           TryLoadVoting();
 
@@ -176,11 +179,11 @@ namespace Pirate.PiVote.Client
       if (File.Exists(fileNameAuthorities))
       {
         VotingAuthoritiesFile authoritiesFile = Serializable.Load<VotingAuthoritiesFile>(fileNameAuthorities);
-        this.authority0List.SelectedIndex = this.authorityIndices[authoritiesFile.AuthorityIds.ElementAt(0)];
-        this.authority1List.SelectedIndex = this.authorityIndices[authoritiesFile.AuthorityIds.ElementAt(1)];
-        this.authority2List.SelectedIndex = this.authorityIndices[authoritiesFile.AuthorityIds.ElementAt(2)];
-        this.authority3List.SelectedIndex = this.authorityIndices[authoritiesFile.AuthorityIds.ElementAt(3)];
-        this.authority4List.SelectedIndex = this.authorityIndices[authoritiesFile.AuthorityIds.ElementAt(4)];
+        this.authority0List.SelectedIndex = this.authorityIndices[this.authority0List][authoritiesFile.AuthorityIds.ElementAt(0)];
+        this.authority1List.SelectedIndex = this.authorityIndices[this.authority1List][authoritiesFile.AuthorityIds.ElementAt(1)];
+        this.authority2List.SelectedIndex = this.authorityIndices[this.authority2List][authoritiesFile.AuthorityIds.ElementAt(2)];
+        this.authority3List.SelectedIndex = this.authorityIndices[this.authority3List][authoritiesFile.AuthorityIds.ElementAt(3)];
+        this.authority4List.SelectedIndex = this.authorityIndices[this.authority4List][authoritiesFile.AuthorityIds.ElementAt(4)];
       }
     }
 
@@ -301,7 +304,7 @@ namespace Pirate.PiVote.Client
         votingParameters.AddQuestion(question);
       }
 
-      votingParameters.Save(SavedVotingParametersFileName);
+      votingParameters.Save(Path.Combine(Status.DataPath, SavedVotingParametersFileName));
 
       List<AuthorityCertificate> authorities = new List<AuthorityCertificate>();
       authorities.Add(this.authorityCertificates[this.authority0List.SelectedIndex]);
@@ -310,7 +313,7 @@ namespace Pirate.PiVote.Client
       authorities.Add(this.authorityCertificates[this.authority3List.SelectedIndex]);
       authorities.Add(this.authorityCertificates[this.authority4List.SelectedIndex]);
       var authoritiesFile = new VotingAuthoritiesFile(authorities);
-      authoritiesFile.Save(SavedVotingAuthoritiesFileName);
+      authoritiesFile.Save(Path.Combine(Status.DataPath, SavedVotingAuthoritiesFileName));
 
       if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.CreateVotingUnlockAction))
       {
