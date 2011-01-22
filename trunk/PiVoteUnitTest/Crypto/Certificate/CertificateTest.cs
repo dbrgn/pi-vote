@@ -131,11 +131,11 @@ namespace Pirate.PiVote.UnitTest
       Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddYears(1)));
       Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddYears(5)));
 
-      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddDays(-1)));
-      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddDays(-5)));
-      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddDays(-30)));
-      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddYears(-1)));
-      Assert.AreEqual(CertificateValidationResult.Outdated, test.Validate(storage, DateTime.Now.AddYears(-5)));
+      Assert.AreEqual(CertificateValidationResult.NotYetValid, test.Validate(storage, DateTime.Now.AddDays(-1)));
+      Assert.AreEqual(CertificateValidationResult.NotYetValid, test.Validate(storage, DateTime.Now.AddDays(-5)));
+      Assert.AreEqual(CertificateValidationResult.NotYetValid, test.Validate(storage, DateTime.Now.AddDays(-30)));
+      Assert.AreEqual(CertificateValidationResult.NotYetValid, test.Validate(storage, DateTime.Now.AddYears(-1)));
+      Assert.AreEqual(CertificateValidationResult.NotYetValid, test.Validate(storage, DateTime.Now.AddYears(-5)));
     }
 
     [TestMethod]
