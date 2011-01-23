@@ -29,5 +29,15 @@ namespace Pirate.PiVote
     /// TCP port on with the server listens.
     /// </summary>
     int ServerPort { get; }
+
+    /// <summary>
+    /// TCP port on which the proxy listens.
+    /// </summary>
+    int ProxyPort { get; }
+
+    /// <summary>
+    /// DNS or IP address of the proxy.
+    /// </summary>
+    string ProxyAddress { get; }
   }
 }

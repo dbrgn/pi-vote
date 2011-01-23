@@ -91,6 +91,35 @@ namespace Pirate.PiVote.Client
       }
     }
 
+    public IPEndPoint ProxyEndPoint
+    {
+      get
+      {
+        try
+        {
+#if LOCAL
+          return null;
+#else
+          if (!Config.ProxyAddress.IsNullOrEmpty() &&
+              Config.ProxyPort > 0)
+          {
+            IPAddress ipAddress = Dns.GetHostEntry(Config.ProxyAddress).AddressList.First();
+
+            return new IPEndPoint(ipAddress, Config.ProxyPort);
+          }
+          else
+          {
+            return null;
+          }
+#endif
+        }
+        catch (System.Net.Sockets.SocketException)
+        {
+          return null;
+        }
+      }
+    }
+    
     public WizardStatus(Message message, Progress progress)
     {
       this.message = message;

@@ -93,6 +93,18 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Connect to the server.
+    /// </summary>
+    /// <param name="serverEndPoint">IP address and port of the server.</param>
+    /// <param name="serverEndPoint">Proxy IP address and port.</param>
+    public void Connect(IPEndPoint serverEndPoint, IPEndPoint proxyEndPoint)
+    {
+      this.client.Connect(serverEndPoint, proxyEndPoint);
+      this.proxy = new VotingRpcProxy(this.client);
+      this.proxy.Start();
+    }
+    
+    /// <summary>
     /// Closes the client connection.
     /// </summary>
     public void Close()
@@ -193,6 +205,20 @@ namespace Pirate.PiVote.Rpc
       }
     }
 
+    /// <summary>
+    /// Connect to the server.
+    /// </summary>
+    /// <param name="serverEndPoint">IP address and port of the server.</param>
+    /// <param name="proxyEndPoint">Proxy IP address and port.</param>
+    /// <param name="callBack">Callback upon connection.</param>
+    public void Connect(IPEndPoint serverEndPoint, IPEndPoint proxyEndPoint, ConnectCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new ConnectOperation(serverEndPoint, proxyEndPoint, callBack));
+      }
+    }
+    
     /// <summary>
     /// Get voting list from server.
     /// </summary>

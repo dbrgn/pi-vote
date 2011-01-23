@@ -40,6 +40,22 @@ namespace Pirate.PiVote
       get { return ReadString("ServerAddress", "pivote.server.org"); }
     }
 
+    /// <summary>
+    /// TCP port on which the proxy listens.
+    /// </summary>
+    public int ProxyPort
+    {
+      get { return ReadInt32("ProxyPort", 0); }
+    }
+    
+    /// <summary>
+    /// DNS or IP address of the proxy.
+    /// </summary>
+    public string ProxyAddress
+    {
+      get { return ReadString("ProxyAddress", string.Empty); }
+    }
+
     protected override void Validate()
     {
       string dummy = null;

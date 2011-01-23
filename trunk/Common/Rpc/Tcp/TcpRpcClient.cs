@@ -35,6 +35,16 @@ namespace Pirate.PiVote.Rpc
     private NetworkStream stream;
 
     /// <summary>
+    /// TCP stream writer.
+    /// </summary>
+    private BinaryWriter writer;
+
+    /// <summary>
+    /// TCP stream reader.
+    /// </summary>
+    private BinaryReader reader;
+
+    /// <summary>
     /// Creates a new TCP RPC client.
     /// </summary>
     public TcpRpcClient()
@@ -50,6 +60,24 @@ namespace Pirate.PiVote.Rpc
     {
       this.client.Connect(serverEndPoint);
       this.stream = this.client.GetStream();
+      this.writer = new BinaryWriter(this.stream);
+      this.reader = new BinaryReader(this.stream);
+    }
+
+    /// <summary>
+    /// Connects the client to the server.
+    /// </summary>
+    /// <param name="serverEndPoint">Server IP address and port.</param>
+    /// <param name="serverEndPoint">Proxy IP address and port.</param>
+    public void Connect(IPEndPoint serverEndPoint, IPEndPoint proxyEndPoint)
+    {
+      this.client.Connect(proxyEndPoint);
+      this.stream = this.client.GetStream();
+      this.writer = new BinaryWriter(this.stream);
+      this.reader = new BinaryReader(this.stream);
+
+      this.writer.Write(string.Format("CONNECT {0}:{1}", serverEndPoint.Address.ToString(), serverEndPoint.Port.ToString()));
+      this.writer.Flush();
     }
 
     /// <summary>
@@ -75,6 +103,8 @@ namespace Pirate.PiVote.Rpc
         this.client.Close();
         this.client = null;
         this.stream = null;
+        this.reader = null;
+        this.writer = null;
       }
     }
 
@@ -85,13 +115,12 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Binary data of the RPC response.</returns>
     public byte[] Execute(byte[] requestData)
     {
-      BinaryWriter writer = new BinaryWriter(this.stream);
-      writer.Write(requestData.Length);
-      writer.Write(requestData, 0, requestData.Length);
+      this.writer.Write(requestData.Length);
+      this.writer.Write(requestData, 0, requestData.Length);
+      this.writer.Flush();
 
-      BinaryReader reader = new BinaryReader(this.stream);
-      int packetLength = reader.ReadInt32();
-      byte[] responseData = reader.ReadBytes(packetLength);
+      int packetLength = this.reader.ReadInt32();
+      byte[] responseData = this.reader.ReadBytes(packetLength);
 
       return responseData;
     }

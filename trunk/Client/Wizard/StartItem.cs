@@ -173,6 +173,7 @@ namespace Pirate.PiVote.Client
       if (!Status.VotingClient.Connected)
       {
         IPEndPoint serverEndPoint = Status.ServerEndPoint;
+        IPEndPoint proxyEndPoint = Status.ProxyEndPoint;
 
         if (serverEndPoint == null)
         {
@@ -183,7 +184,7 @@ namespace Pirate.PiVote.Client
 
         Status.SetProgress(Resources.StartConnecting, 0d);
         this.run = true;
-        Status.VotingClient.Connect(serverEndPoint, ConnectComplete);
+        Status.VotingClient.Connect(serverEndPoint, proxyEndPoint, ConnectComplete);
 
         while (this.run)
         {

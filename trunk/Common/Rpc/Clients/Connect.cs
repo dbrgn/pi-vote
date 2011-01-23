@@ -39,6 +39,11 @@ namespace Pirate.PiVote.Rpc
       private IPEndPoint serverEndPoint;
 
       /// <summary>
+      /// Proxy IP address and port.
+      /// </summary>
+      private IPEndPoint proxyEndPoint;
+
+      /// <summary>
       /// Callback upon completion.
       /// </summary>
       private ConnectCallBack callBack;
@@ -51,9 +56,23 @@ namespace Pirate.PiVote.Rpc
       public ConnectOperation(IPEndPoint serverEndPoint, ConnectCallBack callBack)
       {
         this.serverEndPoint = serverEndPoint;
+        this.proxyEndPoint = null;
         this.callBack = callBack;
       }
 
+      /// <summary>
+      /// Create a new connect operation.
+      /// </summary>
+      /// <param name="serverEndPoint">IP address and port of server.</param>
+      /// <param name="proxyEndPoint">Proxy IP address and port.</param>
+      /// <param name="callBack">Callback upon completion.</param>
+      public ConnectOperation(IPEndPoint serverEndPoint, IPEndPoint proxyEndPoint, ConnectCallBack callBack)
+      {
+        this.serverEndPoint = serverEndPoint;
+        this.proxyEndPoint = proxyEndPoint;
+        this.callBack = callBack;
+      }
+      
       /// <summary>
       /// Execute the operation.
       /// </summary>
@@ -69,7 +88,14 @@ namespace Pirate.PiVote.Rpc
 
           if (!client.client.Connected)
           {
-            client.Connect(this.serverEndPoint);
+            if (proxyEndPoint == null)
+            {
+              client.Connect(this.serverEndPoint);
+            }
+            else
+            {
+              client.Connect(this.serverEndPoint, this.proxyEndPoint);
+            }
           }
 
           Progress = 1d;
