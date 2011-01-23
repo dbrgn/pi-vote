@@ -76,7 +76,7 @@ namespace Pirate.PiVote.Rpc
       this.writer = new BinaryWriter(this.stream);
       this.reader = new BinaryReader(this.stream);
 
-      this.writer.Write(string.Format("CONNECT {0}:{1}", serverEndPoint.Address.ToString(), serverEndPoint.Port.ToString()));
+      this.writer.Write(string.Format("CONNECT {0}:{1} HTTP/1.0\r\n\r\n", serverEndPoint.Address.ToString(), serverEndPoint.Port.ToString()));
       this.writer.Flush();
     }
 
