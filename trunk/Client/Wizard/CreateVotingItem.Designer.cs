@@ -365,7 +365,6 @@ namespace Pirate.PiVote.Client
       // clearButton
       // 
       this.clearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.clearButton.Enabled = false;
       this.clearButton.Location = new System.Drawing.Point(219, 417);
       this.clearButton.Margin = new System.Windows.Forms.Padding(2);
       this.clearButton.Name = "clearButton";

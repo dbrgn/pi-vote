@@ -412,8 +412,5 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Emil.GMP.dll" />
-  </ItemGroup>
   <ItemGroup />
 </Project>

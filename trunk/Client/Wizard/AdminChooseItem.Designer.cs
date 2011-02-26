@@ -44,6 +44,8 @@ namespace Pirate.PiVote.Client
     {
       this.components = new System.ComponentModel.Container();
       this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.refreshMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
       this.createVotingMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.deleteMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -59,8 +61,6 @@ namespace Pirate.PiVote.Client
       this.authorityColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.envelopesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.votingList = new System.Windows.Forms.ListView();
-      this.refreshMenu = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
       this.contextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -79,6 +79,18 @@ namespace Pirate.PiVote.Client
       this.contextMenu.Name = "contextMenu";
       this.contextMenu.Size = new System.Drawing.Size(219, 176);
       this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
+      // 
+      // refreshMenu
+      // 
+      this.refreshMenu.Name = "refreshMenu";
+      this.refreshMenu.Size = new System.Drawing.Size(218, 22);
+      this.refreshMenu.Text = "&Refresh";
+      this.refreshMenu.Click += new System.EventHandler(this.refreshMenu_Click);
+      // 
+      // toolStripMenuItem3
+      // 
+      this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+      this.toolStripMenuItem3.Size = new System.Drawing.Size(215, 6);
       // 
       // createVotingMenu
       // 
@@ -138,7 +150,7 @@ namespace Pirate.PiVote.Client
       // statusColumnHeader
       // 
       this.statusColumnHeader.Text = "Status";
-      this.statusColumnHeader.Width = 100;
+      this.statusColumnHeader.Width = 150;
       // 
       // voteFromColumnHeader
       // 
@@ -166,9 +178,9 @@ namespace Pirate.PiVote.Client
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.votingList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.statusColumnHeader,
             this.titleColumnHeader,
             this.groupColumnHeader,
-            this.statusColumnHeader,
             this.voteFromColumnHeader,
             this.voteUntilColumnHeader,
             this.authorityColumnHeader,
@@ -185,18 +197,6 @@ namespace Pirate.PiVote.Client
       this.votingList.TabIndex = 9;
       this.votingList.UseCompatibleStateImageBehavior = false;
       this.votingList.View = System.Windows.Forms.View.Details;
-      // 
-      // refreshMenu
-      // 
-      this.refreshMenu.Name = "refreshMenu";
-      this.refreshMenu.Size = new System.Drawing.Size(218, 22);
-      this.refreshMenu.Text = "&Refresh";
-      this.refreshMenu.Click += new System.EventHandler(this.refreshMenu_Click);
-      // 
-      // toolStripMenuItem3
-      // 
-      this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-      this.toolStripMenuItem3.Size = new System.Drawing.Size(215, 6);
       // 
       // AdminChooseItem
       // 

@@ -169,9 +169,15 @@ namespace Pirate.PiVote.Client
 
         foreach (Question question in this.votingParameters.Questions)
         {
+          Question newQuestion = new Question(question.Text, question.Description, question.Url, question.MaxVota);
+          question.Options
+            .Where(option => option.Text.Get(Language.English) != Resources.OptionAbstainEnglish &&
+                             option.Text.Get(Language.English) != Resources.OptionAbstainSpecial)
+            .Foreach(option => newQuestion.AddOption(option));
+
           ListViewItem item = new ListViewItem(question.Text.AllLanguages);
           item.SubItems.Add(question.Description.AllLanguages);
-          item.Tag = question;
+          item.Tag = newQuestion;
           this.questionListView.Items.Add(item);
         }
       }

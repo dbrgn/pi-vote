@@ -218,7 +218,6 @@ namespace Pirate.PiVote.Client
         if (this.exception == null)
         {
           UpdateMessages();
-          this.canNext = true;
 
           Status.SetProgress(Resources.StartGettingCertificates, 0.6d);
           this.run = true;

@@ -51,11 +51,11 @@ namespace Pirate.PiVote.Client
       this.voteUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.authorityColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.envelopesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.votingListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.refreshMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.decipherButton = new System.Windows.Forms.Button();
       this.checkSharesButton = new System.Windows.Forms.Button();
       this.createSharesButton = new System.Windows.Forms.Button();
-      this.votingListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.refreshMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.votingListMenu.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -65,9 +65,9 @@ namespace Pirate.PiVote.Client
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.votingList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.statusColumnHeader,
             this.titleColumnHeader,
             this.groupColumnHeader,
-            this.statusColumnHeader,
             this.voteFromColumnHeader,
             this.voteUntilColumnHeader,
             this.authorityColumnHeader,
@@ -99,7 +99,7 @@ namespace Pirate.PiVote.Client
       // statusColumnHeader
       // 
       this.statusColumnHeader.Text = "Status";
-      this.statusColumnHeader.Width = 100;
+      this.statusColumnHeader.Width = 150;
       // 
       // voteFromColumnHeader
       // 
@@ -120,6 +120,20 @@ namespace Pirate.PiVote.Client
       // 
       this.envelopesColumnHeader.Text = "Votes";
       this.envelopesColumnHeader.Width = 70;
+      // 
+      // votingListMenu
+      // 
+      this.votingListMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshMenu});
+      this.votingListMenu.Name = "votingListMenu";
+      this.votingListMenu.Size = new System.Drawing.Size(153, 48);
+      // 
+      // refreshMenu
+      // 
+      this.refreshMenu.Name = "refreshMenu";
+      this.refreshMenu.Size = new System.Drawing.Size(152, 22);
+      this.refreshMenu.Text = "&Refresh";
+      this.refreshMenu.Click += new System.EventHandler(this.refreshMenu_Click);
       // 
       // decipherButton
       // 
@@ -159,20 +173,6 @@ namespace Pirate.PiVote.Client
       this.createSharesButton.Text = "Create &Shares";
       this.createSharesButton.UseVisualStyleBackColor = true;
       this.createSharesButton.Click += new System.EventHandler(this.createSharesButton_Click);
-      // 
-      // votingListMenu
-      // 
-      this.votingListMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.refreshMenu});
-      this.votingListMenu.Name = "votingListMenu";
-      this.votingListMenu.Size = new System.Drawing.Size(153, 48);
-      // 
-      // refreshMenu
-      // 
-      this.refreshMenu.Name = "refreshMenu";
-      this.refreshMenu.Size = new System.Drawing.Size(152, 22);
-      this.refreshMenu.Text = "&Refresh";
-      this.refreshMenu.Click += new System.EventHandler(this.refreshMenu_Click);
       // 
       // AuthorityListVotingsItem
       // 

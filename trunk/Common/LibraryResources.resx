@@ -385,19 +385,19 @@
     <value>Aborted</value>
   </data>
   <data name="VotingStatusDeciphering" xml:space="preserve">
-    <value>Deciphering</value>
+    <value>Fnishing (Deciphering)</value>
   </data>
   <data name="VotingStatusFinished" xml:space="preserve">
-    <value>Finished</value>
+    <value>Finished and Tallying</value>
   </data>
   <data name="VotingStatusNew" xml:space="preserve">
-    <value>New</value>
+    <value>Announced (Preparation 1)</value>
   </data>
   <data name="VotingStatusReady" xml:space="preserve">
-    <value>Ready</value>
+    <value>Announced (Ready)</value>
   </data>
   <data name="VotingStatusSharing" xml:space="preserve">
-    <value>Sharing</value>
+    <value>Announced (Preparation 2)</value>
   </data>
   <data name="VotingStatusVoting" xml:space="preserve">
     <value>Voting</value>
@@ -427,7 +427,7 @@
     <value>Fetching envelopes {0} / {1}</value>
   </data>
   <data name="VotingStatusOffline" xml:space="preserve">
-    <value>Offline</value>
+    <value>Downloaded</value>
   </data>
   <data name="ClientSetCertificateStorage" xml:space="preserve">
     <value>Uploading certificate storage to the server.</value>

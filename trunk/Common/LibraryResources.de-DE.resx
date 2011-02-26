@@ -394,19 +394,19 @@
     <value>Abgebrochen</value>
   </data>
   <data name="VotingStatusDeciphering" xml:space="preserve">
-    <value>Entschlüsseln</value>
+    <value>Nachbereitung (Entschlüsseln)</value>
   </data>
   <data name="VotingStatusFinished" xml:space="preserve">
-    <value>Beendet</value>
+    <value>Beendet und Auszählung</value>
   </data>
   <data name="VotingStatusNew" xml:space="preserve">
-    <value>Neu</value>
+    <value>Angekündigt (Vorbereitung  1)</value>
   </data>
   <data name="VotingStatusReady" xml:space="preserve">
-    <value>Bereit</value>
+    <value>Angekündigt (Bereit)</value>
   </data>
   <data name="VotingStatusSharing" xml:space="preserve">
-    <value>Verteile</value>
+    <value>Angekündigt (Vorbereitung  2)</value>
   </data>
   <data name="VotingStatusVoting" xml:space="preserve">
     <value>Abstimmen</value>
@@ -427,7 +427,7 @@
     <value>Lade umschläge herunter {0} / {1}</value>
   </data>
   <data name="VotingStatusOffline" xml:space="preserve">
-    <value>Offline</value>
+    <value>Heruntergeladen</value>
   </data>
   <data name="ClientSetCertificateStorage" xml:space="preserve">
     <value>Lade Zertifikatsspeicher auf den Server herauf.</value>

@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentationGenerator", "D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirate.PiVote.Kiosk", "Kiosk\Pirate.PiVote.Kiosk.csproj", "{C65F8B78-A8E9-414B-A88D-F151E902B3DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirate.PiVote.Cli", "Cli\Pirate.PiVote.Cli.csproj", "{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = PiVote.vsmdi
@@ -247,6 +249,24 @@ Global
 		{C65F8B78-A8E9-414B-A88D-F151E902B3DE}.Release|x64.ActiveCfg = Release|x86
 		{C65F8B78-A8E9-414B-A88D-F151E902B3DE}.Release|x86.ActiveCfg = Release|x86
 		{C65F8B78-A8E9-414B-A88D-F151E902B3DE}.Release|x86.Build.0 = Release|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Debug|x64.ActiveCfg = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Debug|x86.ActiveCfg = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Debug|x86.Build.0 = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Local Debug|Any CPU.ActiveCfg = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Local Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Local Debug|Mixed Platforms.Build.0 = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Local Debug|x64.ActiveCfg = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Local Debug|x86.ActiveCfg = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Local Debug|x86.Build.0 = Debug|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Release|Any CPU.ActiveCfg = Release|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Release|Mixed Platforms.Build.0 = Release|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Release|x64.ActiveCfg = Release|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Release|x86.ActiveCfg = Release|x86
+		{588CA8F2-EFA5-40F3-9BAD-41F6C6DD8DEB}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -150,7 +150,7 @@ namespace Pirate.PiVote.Client
 
           this.votingList.Items.Clear();
 
-          foreach (VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
+          foreach (VotingDescriptor voting in this.votings.OrderByDescending(v => v.VoteFrom))
           {
             if (Status.Certificate == null ||
                 !(Status.Certificate is VoterCertificate) ||
@@ -174,9 +174,9 @@ namespace Pirate.PiVote.Client
 
     private void AddVotingToList(VotingDescriptor voting)
     {
-      ListViewItem item = new ListViewItem(voting.Title.Text);
+      ListViewItem item = new ListViewItem(voting.Status.Text());
+      item.SubItems.Add(voting.Title.Text);
       item.SubItems.Add(Status.GetGroupName(voting.GroupId));
-      item.SubItems.Add(voting.Status.Text());
       item.SubItems.Add(voting.VoteFrom.ToShortDateString());
       item.SubItems.Add(voting.VoteUntil.ToShortDateString());
 

@@ -118,11 +118,11 @@ namespace Pirate.PiVote.Client
 
       if (this.votings != null)
       {
-        foreach (VotingDescriptor voting in this.votings.OrderBy(v => v.VoteFrom))
+        foreach (VotingDescriptor voting in this.votings.OrderByDescending(v => v.VoteFrom))
         {
-          ListViewItem item = new ListViewItem(voting.Title.Text);
+          ListViewItem item = new ListViewItem(voting.Status.Text());
+          item.SubItems.Add(voting.Title.Text);
           item.SubItems.Add(Status.GetGroupName(voting.GroupId));
-          item.SubItems.Add(voting.Status.Text());
           item.SubItems.Add(voting.VoteFrom.ToShortDateString());
           item.SubItems.Add(voting.VoteUntil.ToShortDateString());
 
@@ -220,7 +220,7 @@ namespace Pirate.PiVote.Client
           if (this.exception == null)
           {
             item.Tag = this.votingDescriptor;
-            item.SubItems[2].Text = this.votingDescriptor.Status.Text();
+            item.SubItems[0].Text = this.votingDescriptor.Status.Text();
             item.SubItems[5].Text =
               this.votingDescriptor.Status == VotingStatus.New ||
               this.votingDescriptor.Status == VotingStatus.Sharing ||
@@ -356,7 +356,7 @@ namespace Pirate.PiVote.Client
             if (this.exception == null)
             {
               item.Tag = this.votingDescriptor;
-              item.SubItems[2].Text = this.votingDescriptor.Status.Text();
+              item.SubItems[0].Text = this.votingDescriptor.Status.Text();
               item.SubItems[5].Text =
                 this.votingDescriptor.Status == VotingStatus.New ||
                 this.votingDescriptor.Status == VotingStatus.Sharing ||

@@ -44,6 +44,7 @@ namespace Pirate.PiVote.Client
     {
       this.components = new System.ComponentModel.Container();
       this.votingListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.refreshItem = new System.Windows.Forms.ToolStripMenuItem();
       this.downloadVotingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.votingList = new System.Windows.Forms.ListView();
       this.titleColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -53,7 +54,6 @@ namespace Pirate.PiVote.Client
       this.voteUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.authoritiesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.envelopesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.refreshItem = new System.Windows.Forms.ToolStripMenuItem();
       this.votingListContextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -65,6 +65,13 @@ namespace Pirate.PiVote.Client
       this.votingListContextMenu.Name = "votingListContextMenu";
       this.votingListContextMenu.Size = new System.Drawing.Size(153, 70);
       this.votingListContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.votingListContextMenu_Opening);
+      // 
+      // refreshItem
+      // 
+      this.refreshItem.Name = "refreshItem";
+      this.refreshItem.Size = new System.Drawing.Size(152, 22);
+      this.refreshItem.Text = "&Refresh";
+      this.refreshItem.Click += new System.EventHandler(this.refreshItem_Click);
       // 
       // downloadVotingMenuItem
       // 
@@ -79,9 +86,9 @@ namespace Pirate.PiVote.Client
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.votingList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.statusColumnHeader,
             this.titleColumnHeader,
             this.groupColumnHeader,
-            this.statusColumnHeader,
             this.voteFromColumnHeader,
             this.voteUntilColumnHeader,
             this.authoritiesColumnHeader,
@@ -112,7 +119,7 @@ namespace Pirate.PiVote.Client
       // statusColumnHeader
       // 
       this.statusColumnHeader.Text = "Status";
-      this.statusColumnHeader.Width = 100;
+      this.statusColumnHeader.Width = 150;
       // 
       // voteFromColumnHeader
       // 
@@ -133,13 +140,6 @@ namespace Pirate.PiVote.Client
       // 
       this.envelopesColumnHeader.Text = "Votes";
       this.envelopesColumnHeader.Width = 70;
-      // 
-      // refreshItem
-      // 
-      this.refreshItem.Name = "refreshItem";
-      this.refreshItem.Size = new System.Drawing.Size(152, 22);
-      this.refreshItem.Text = "&Refresh";
-      this.refreshItem.Click += new System.EventHandler(this.refreshItem_Click);
       // 
       // ListVotingsItem
       // 

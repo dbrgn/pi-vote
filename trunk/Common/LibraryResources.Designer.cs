@@ -1672,7 +1672,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Deciphering.
+        ///   Looks up a localized string similar to Fnishing (Deciphering).
         /// </summary>
         public static string VotingStatusDeciphering {
             get {
@@ -1681,7 +1681,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finished.
+        ///   Looks up a localized string similar to Finished and Tallying.
         /// </summary>
         public static string VotingStatusFinished {
             get {
@@ -1690,7 +1690,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New.
+        ///   Looks up a localized string similar to Announced (Preparation 1).
         /// </summary>
         public static string VotingStatusNew {
             get {
@@ -1699,7 +1699,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Offline.
+        ///   Looks up a localized string similar to Downloaded.
         /// </summary>
         public static string VotingStatusOffline {
             get {
@@ -1708,7 +1708,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ready.
+        ///   Looks up a localized string similar to Announced (Ready).
         /// </summary>
         public static string VotingStatusReady {
             get {
@@ -1717,7 +1717,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sharing.
+        ///   Looks up a localized string similar to Announced (Preparation 2).
         /// </summary>
         public static string VotingStatusSharing {
             get {
