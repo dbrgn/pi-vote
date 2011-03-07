@@ -57,17 +57,29 @@ namespace Pirate.PiVote.Cli
           return;
         }
 
+        string passphrase = ReadPasswordRepeated("Enter new passphrase: ", "Repeat passphrase: ");
+
+        if (passphrase == null)
+        {
+          Console.WriteLine("Passphrases do not match.");
+          return;
+        }
+        else if (passphrase == string.Empty)
+        {
+          passphrase = null;
+        }
+
         string fullName = string.Format("{0} {1}, {2}",
           firstName,
           lastName,
           functionName);
-        Status.Certificate = new AuthorityCertificate(Language.English, null, fullName);
+        Status.Certificate = new AuthorityCertificate(Language.English, passphrase, fullName);
         Status.Certificate.CreateSelfSignature();
-        Status.Certificate.Save(Status.CertificateFileName);
-
+        SaveCertificate(Status.Certificate);
+        
         var request = new SignatureRequest(firstName, lastName, emailAddress);
 
-        request.Save(Status.SignatureRequestDataFileName);
+        request.Save(SignatureRequestDataFileName(Status.Certificate));
 
         Console.WriteLine("Certificate with id {0} created.", Status.Certificate.Id.ToString());
       }
@@ -115,13 +127,25 @@ namespace Pirate.PiVote.Cli
           return;
         }
 
-        Status.Certificate = new VoterCertificate(Language.English, null, groupId);
-        Status.Certificate.CreateSelfSignature(); 
-        Status.Certificate.Save(Status.CertificateFileName);
+        string passphrase = ReadPasswordRepeated("Enter new passphrase: ", "Repeat passphrase: ");
+
+        if (passphrase == null)
+        {
+          Console.WriteLine("Passphrases do not match.");
+          return;
+        }
+        else if (passphrase == string.Empty)
+        {
+          passphrase = null;
+        }
+
+        Status.Certificate = new VoterCertificate(Language.English, passphrase, groupId);
+        Status.Certificate.CreateSelfSignature();
+        SaveCertificate(Status.Certificate);
 
         var request = new SignatureRequest(firstName, lastName, emailAddress);
 
-        request.Save(Status.SignatureRequestDataFileName);
+        request.Save(SignatureRequestDataFileName(Status.Certificate));
 
         Console.WriteLine("Certificate with id {0} created.", Status.Certificate.Id.ToString());
       }
@@ -142,7 +166,7 @@ namespace Pirate.PiVote.Cli
 
     public override string HelpText
     {
-      get { return "Lists all votings."; }
+      get { return "Createes a certificate."; }
     }
   }
 }

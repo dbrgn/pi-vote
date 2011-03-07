@@ -32,6 +32,7 @@ namespace Pirate.PiVote.Cli
       catch (Exception exception)
       {
         Console.WriteLine("Connection failed: " + exception.Message);
+        Status.Continue = false;
       }
     }
 

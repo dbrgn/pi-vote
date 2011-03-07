@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,6 +48,12 @@
     <Compile Include="Command.cs" />
     <Compile Include="ConnectCommand.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="ChangePassphraseCommand.cs" />
+    <Compile Include="CheckCommand.cs" />
+    <Compile Include="UploadCommand.cs" />
+    <Compile Include="ListPrintersCommand.cs" />
+    <Compile Include="PrintCommand.cs" />
+    <Compile Include="DeleteCertificateCommand.cs" />
     <Compile Include="CreateCertificateCommand.cs" />
     <Compile Include="ListCertificatesCommand.cs" />
     <Compile Include="HelpCommand.cs" />
@@ -62,9 +69,6 @@
       <Project>{3A570D23-A292-4B5C-A62E-C7295888EAA0}</Project>
       <Name>Pirate.PiVote</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

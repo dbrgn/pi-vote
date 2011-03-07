@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Cli
 {
@@ -98,6 +101,43 @@ namespace Pirate.PiVote.Cli
       return this.arguments.ElementAt(index);
     }
 
+    protected bool ArgGetBoolean(int index)
+    {
+      string text = ArgGetString(index);
+
+      switch (text.ToLower())
+      {
+        case "0":
+        case "f":
+        case "false":
+          return false;
+        case "1":
+        case "t":
+        case "true":
+          return true;
+        default:
+          throw new ArgumentOutOfRangeException("Argument is not boolean.");
+      }
+    }
+
+    protected bool ArgIsBoolean(int index)
+    {
+      string text = ArgGetString(index);
+
+      switch (text.ToLower())
+      {
+        case "0":
+        case "f":
+        case "false":
+        case "1":
+        case "t":
+        case "true":
+          return true;
+        default:
+          return false;
+      }
+    }
+
     protected int ArgGetInt32(int index)
     {
       return int.Parse(this.arguments.ElementAt(index));
@@ -160,6 +200,106 @@ namespace Pirate.PiVote.Cli
       if (!string.IsNullOrEmpty(current))
       {
         yield return current;
+      }
+    }
+
+    protected string ReadPasswordRepeated(string message, string repeatMessage)
+    {
+      string password1 = ReadPassword(message);
+      string password2 = ReadPassword(repeatMessage);
+
+      if (password1 == password2)
+      {
+        return password1;
+      }
+      else
+      {
+        return null;
+      }
+    }
+
+    protected string ReadPassword(string message)
+    {
+      string password = string.Empty;
+
+      Console.Write(message);
+
+      while (true)
+      {
+        var key = Console.ReadKey(true);
+
+        switch (key.Key)
+        {
+          case ConsoleKey.Enter:
+            Console.WriteLine();
+            return password;
+          case ConsoleKey.Backspace:
+            if (password.Length > 0)
+            {
+              password = password.Substring(0, password.Length - 1);
+              Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+              Console.Write(" ");
+              Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+            }
+
+            break;
+          default:
+            password += key.KeyChar;
+            Console.Write("*");
+            break;
+        }
+      }
+    }
+
+    protected IEnumerable<Certificate> Certificates
+    {
+      get
+      {
+        DirectoryInfo directory = new DirectoryInfo(Status.DataPath);
+
+        foreach (var file in directory.GetFiles(Files.CertificatePattern))
+        {
+          var certificate = Serializable.Load<Certificate>(file.FullName);
+
+          yield return certificate;
+        }
+      }
+    }
+
+    protected string GetCertificateFileName(Certificate certificate)
+    {
+      return Path.Combine(Status.DataPath, certificate.Id.ToString() + Files.CertificateExtension);
+    }
+
+    protected void SaveCertificate(Certificate certificate)
+    {
+      var fileName = GetCertificateFileName(certificate);
+      certificate.Save(fileName);
+    }
+
+    protected bool HasSignatureRequestDataFile(Certificate certificate)
+    {
+      return File.Exists(SignatureRequestDataFileName(certificate));
+    }
+
+    protected string SignatureRequestDataFileName(Certificate certificate)
+    {
+      return Path.Combine(Status.DataPath, certificate.Id.ToString() + Files.SignatureRequestDataExtension);
+    }
+
+    protected bool UnlockCertificate(Certificate certificate)
+    { 
+      string passphrase = ReadPassword("Enter passphrase: ");
+
+      try
+      {
+        certificate.Unlock(passphrase);
+        return true;
+      }
+      catch (Exception exception)
+      {
+        Console.WriteLine(exception.Message);
+        return false;
       }
     }
   }

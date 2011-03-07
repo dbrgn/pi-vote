@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Text;
-using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Printing;
+using Pirate.PiVote.Rpc;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Cli
 {
-  public class HelpCommand : Command
+  public class ListPrintersCommand : Command
   {
-    public HelpCommand(Status status)
+    public ListPrintersCommand(Status status)
       : base(status)
     { }
 
@@ -17,12 +21,11 @@ namespace Pirate.PiVote.Cli
     {
       StringTable table = new StringTable();
 
-      table.AddColumn("Command");
-      table.AddColumn("Description");
+      table.AddColumn("Printer Name");
 
-      foreach (var command in Status.Controller.Commands.OrderBy(c => c.Aliases.First()))
+      foreach (string printerName in PrinterSettings.InstalledPrinters)
       {
-        table.AddRow(command.Aliases.First(), command.HelpText);
+        table.AddRow(printerName);
       }
 
       Console.WriteLine(table.Render());
@@ -32,13 +35,13 @@ namespace Pirate.PiVote.Cli
     {
       get
       {
-        yield return "help";
+        yield return "printers";
       }
     }
 
     public override string HelpText
     {
-      get { return "Show help text for all commands."; }
+      get { return "List all installed printers."; }
     }
   }
 }

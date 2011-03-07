@@ -34,30 +34,6 @@ namespace Pirate.PiVote.Cli
 
     public IRemoteConfig RemoteConfig { get; set; }
 
-    public bool HasSignatureRequestDataFile
-    {
-      get
-      {
-        return File.Exists(SignatureRequestDataFileName);
-      }
-    }
-
-    public string SignatureRequestDataFileName
-    {
-      get
-      {
-        return Path.Combine(DataPath, Certificate.Id.ToString() + Files.SignatureRequestDataExtension);
-      }
-    }
-
-    public string CertificateFileName
-    {
-      get
-      {
-        return Path.Combine(DataPath, Certificate.Id.ToString() + Files.CertificateExtension);
-      }
-    }
-
     public Status(Controller controller)
     {
       Controller = controller;
@@ -80,6 +56,15 @@ namespace Pirate.PiVote.Cli
       }
 
       Config = new ClientConfig(Path.Combine(Application.StartupPath, ClientConfigFileName));
+    }
+
+    public void Disconnect()
+    {
+      if (Client != null)
+      {
+        Client.Close();
+        Client = null;
+      }
     }
 
     public void Connect()

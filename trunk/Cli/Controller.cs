@@ -19,18 +19,27 @@ namespace Pirate.PiVote.Cli
       this.commands = new List<Command>();
       this.commands.Add(new ExitCommand(this.status));
       this.commands.Add(new HelpCommand(this.status));
-      this.commands.Add(new ConnectCommand(this.status));
       this.commands.Add(new ListVotingsCommend(this.status));
       this.commands.Add(new ListCertificatesCommand(this.status));
       this.commands.Add(new CreateCertificateCommand(this.status));
+      this.commands.Add(new DeleteCertificateCommand(this.status));
+      this.commands.Add(new ChangePassphraseCommand(this.status));
+      this.commands.Add(new PrintCommand(this.status));
+      this.commands.Add(new ListPrintersCommand(this.status));
+      this.commands.Add(new UploadCommand(this.status));
+      this.commands.Add(new CheckCommand(this.status));
     }
 
     public void Loop()
     {
+      new ConnectCommand(this.status).Execute(string.Empty);
+
       while (this.status.Continue)
       {
         ReadCommand();
       }
+
+      this.status.Disconnect();
     }
 
     private void ReadCommand()
@@ -38,7 +47,8 @@ namespace Pirate.PiVote.Cli
       Console.Write("PiVote: ");
       string commandText = Console.ReadLine();
 
-      var commands = this.commands.Where(cmd => cmd.Aliases.Any(alias => commandText.StartsWith(alias)));
+      string commandAlias = commandText.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries)[0];
+      var commands = this.commands.Where(cmd => cmd.Aliases.Contains(commandAlias));
 
       if (commands.Count() == 1)
       {
