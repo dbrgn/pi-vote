@@ -147,18 +147,27 @@ namespace Pirate.PiVote.Client
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
-        Certificate certificate = Serializable.Load<Certificate>(dialog.FileName);
+        try
+        {
+          Certificate certificate = Serializable.Load<Certificate>(dialog.FileName);
 
-        string newFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + ".pi-cert");
-        File.Copy(dialog.FileName, newFileName);
+          string newFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + ".pi-cert");
+          File.Copy(dialog.FileName, newFileName);
 
-        ListViewItem item = new ListViewItem(certificate.TypeText);
-        item.SubItems.Add(certificate.Id.ToString());
-        item.SubItems.Add(certificate.FullName.ToString());
-        item.Tag = new KeyValuePair<string, Certificate>(newFileName, certificate);
-        this.certificateList.Items.Add(item);
+          ListViewItem item = new ListViewItem(certificate.TypeText);
+          item.SubItems.Add(certificate.Id.ToString());
+          item.SubItems.Add(certificate.FullName.ToString());
+          item.Tag = new KeyValuePair<string, Certificate>(newFileName, certificate);
+          this.certificateList.Items.Add(item);
 
-        item.Selected = true;
+          item.Selected = true;
+
+          Status.SetMessage(Resources.SimpleChooseCertificateImportDone, MessageType.Success);
+        }
+        catch
+        {
+          Status.SetMessage(Resources.CertificateLoadInvalid, MessageType.Error);
+        }
       }
     }
 

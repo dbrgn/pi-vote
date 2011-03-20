@@ -824,4 +824,7 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="CreateVotingClearButton" xml:space="preserve">
     <value>&amp;Clear</value>
   </data>
+  <data name="CertificateLoadInvalid" xml:space="preserve">
+    <value>The certificate file is not valid.</value>
+  </data>
 </root>

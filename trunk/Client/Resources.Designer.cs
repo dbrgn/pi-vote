@@ -457,6 +457,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The certificate file is not valid..
+        /// </summary>
+        internal static string CertificateLoadInvalid {
+            get {
+                return ResourceManager.GetString("CertificateLoadInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name:.
         /// </summary>
         internal static string CertificateName {

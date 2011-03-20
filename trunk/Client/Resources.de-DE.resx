@@ -808,4 +808,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="CreateVotingClearButton" xml:space="preserve">
     <value>&amp;Zurücksetzen</value>
   </data>
+  <data name="CertificateLoadInvalid" xml:space="preserve">
+    <value>Die Zertifikatdatei is ungültig.</value>
+  </data>
 </root>

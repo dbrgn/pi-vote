@@ -390,17 +390,24 @@ namespace Pirate.PiVote.Client
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
-        Status.Certificate = Serializable.Load<Certificate>(dialog.FileName);
+        try
+        {
+          Status.Certificate = Serializable.Load<Certificate>(dialog.FileName);
 
-        string newFileName = Path.Combine(Status.DataPath, Status.Certificate.Id.ToString() + ".pi-cert");
-        File.Copy(dialog.FileName, newFileName);
+          string newFileName = Path.Combine(Status.DataPath, Status.Certificate.Id.ToString() + ".pi-cert");
+          File.Copy(dialog.FileName, newFileName);
 
-        this.importButton.Enabled = false;
-        this.createRadioButton.Enabled = false;
-        this.importRadioButton.Enabled = false;
-        this.advancedRadioButton.Enabled = false;
+          this.importButton.Enabled = false;
+          this.createRadioButton.Enabled = false;
+          this.importRadioButton.Enabled = false;
+          this.advancedRadioButton.Enabled = false;
 
-        Status.SetMessage(Resources.SimpleChooseCertificateImportDone, MessageType.Success);
+          Status.SetMessage(Resources.SimpleChooseCertificateImportDone, MessageType.Success);
+        }
+        catch
+        {
+          Status.SetMessage(Resources.CertificateLoadInvalid, MessageType.Error);
+        }
       }
 
       this.canNext = true;
