@@ -47,13 +47,13 @@ namespace Pirate.PiVote.Crypto
 
       VotingParameters parameters = 
         new VotingParameters(
-          Files.TestDataPath,
           new MultiLanguageString("Zufrieden"), 
           new MultiLanguageString("Tada"),
           new MultiLanguageString(string.Empty), 
           DateTime.Now, 
           DateTime.Now.AddDays(1),
           0);
+      parameters.GenerateNumbers(Files.TestDataPath);
 
       Question question = new Question(new MultiLanguageString("Zufrieden?"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty), 1);
       question.AddOption(new Option(new MultiLanguageString("Nein"), new MultiLanguageString("Dagegen"), new MultiLanguageString(string.Empty)));
@@ -234,7 +234,8 @@ namespace Pirate.PiVote.Crypto
       BigInt prime = Prime.Find(80);
       BigInt safePrime = Prime.FindSafe(88);
 
-      BaseParameters parameters = new BaseParameters(Files.TestDataPath);
+      BaseParameters parameters = new BaseParameters();
+      parameters.GenerateNumbers(Files.TestDataPath);
 
       Question question = new Question(new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty), 1);
       question.AddOption(new Option(new MultiLanguageString("Ja"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty)));

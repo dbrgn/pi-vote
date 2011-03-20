@@ -10,7 +10,15 @@ namespace Pirate.PiVote.Cli
     public static void Main(string[] args)
     {
       Controller controller = new Controller();
-      controller.Loop();
+
+      if (args.Length >= 1)
+      {
+        controller.Execute(args);
+      }
+      else
+      {
+        controller.Loop();
+      }
     }
   }
 }

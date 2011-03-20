@@ -73,14 +73,12 @@ namespace Pirate.PiVote.Crypto
     /// <param name="votingEndDate">Date a which voting ends.</param>
     /// <param name="groupId">Id of the group in which the voting takes place.</param>
     public VotingParameters(
-      string dataPath,
       MultiLanguageString title, 
       MultiLanguageString description, 
       MultiLanguageString url,
       DateTime votingBeginDate, 
       DateTime votingEndDate,
       int groupId)
-      : base(dataPath)
     {
       if (title == null)
         throw new ArgumentNullException("title");
@@ -103,7 +101,8 @@ namespace Pirate.PiVote.Crypto
     /// <returns>Test voting parameters</returns>
     public static VotingParameters CreateTestParameters(string dataPath)
     {
-      VotingParameters parameters = new VotingParameters(dataPath, 512);
+      VotingParameters parameters = new VotingParameters();
+      parameters.GenerateNumbers(dataPath, 512);
       Question question = new Question(new MultiLanguageString("?"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty), 2);
       question.AddOption(new Option(new MultiLanguageString("A"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty)));
       question.AddOption(new Option(new MultiLanguageString("B"), new MultiLanguageString(string.Empty), new MultiLanguageString(string.Empty)));
@@ -122,8 +121,7 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     /// <param name="primeBits">Number of bits of the safe prime.</param>
     /// <param name="dataPath">Path where application data is stored.</param>
-    private VotingParameters(string dataPath, int primeBits)
-      : base(dataPath, primeBits)
+    private VotingParameters()
     {
       VotingId = Guid.NewGuid();
       Title = new MultiLanguageString("Test");
@@ -139,6 +137,16 @@ namespace Pirate.PiVote.Crypto
     public VotingParameters(DeserializeContext context)
       : base(context)
     { }
+
+    public override bool Valid
+    {
+      get
+      {
+        return base.Valid &&
+          !Title.Text.IsNullOrEmpty() &&
+          VotingEndDate >= VotingBeginDate;
+      }
+    }
 
     /// <summary>
     /// Serializes the object to binary.

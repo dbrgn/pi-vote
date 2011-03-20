@@ -132,6 +132,20 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Are these parameters valid.
+    /// </summary>
+    public virtual bool Valid
+    {
+      get
+      {
+        return P.BitLength >= 128 &&
+               Q.BitLength >= 128 &&
+               G.BitLength >= 128 &&
+               F.BitLength >= 128;
+      }
+    }
+
+    /// <summary>
     /// Creates a random number in Zp*
     /// </summary>
     /// <returns>New random number.</returns>
@@ -147,6 +161,19 @@ namespace Pirate.PiVote.Crypto
       }
 
       return value;
+    }
+
+    /// <summary>
+    /// Generates numbers for cryptography with default length.
+    /// </summary>
+    /// <remarks>
+    /// This may take a very long time.
+    /// May load safe primes from disk.
+    /// </remarks>
+    /// <param name="dataPath">Path where application data is stored.</param>
+    public void GenerateNumbers(string dataPath)
+    {
+      GenerateNumbers(dataPath, PrimeBits);
     }
 
     /// <summary>
@@ -172,24 +199,14 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
-    /// Creates new parameters using standard parameters.
-    /// </summary>
-    /// <param name="dataPath">Path where application data is stored.</param>
-    public BaseParameters(string dataPath)
-      : this(dataPath, PrimeBits)
-    { }
-
-    /// <summary>
     /// Creates new parameters using non-standard parameters.
     /// </summary>
-    /// <param name="dataPath">Path where application data is stored.</param>
-    /// <param name="primeBits">Bit length of the numbers.</param>
-    public BaseParameters(string dataPath, int primeBits)
+    public BaseParameters()
     {
       this.questions = new List<Question>();
 
-      GenerateNumbers(dataPath, primeBits);
       SetParameters(StandardThereshold, StandardAuthorityCount, StandardProofCount);
+      SetNumbers(4, 4);
     }
 
     /// <summary>

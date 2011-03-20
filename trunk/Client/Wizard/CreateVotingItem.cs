@@ -55,7 +55,7 @@ namespace Pirate.PiVote.Client
     private bool done = false;
     private bool run = false;
     private Exception exception;
-    private Thread initThread;
+    private Thread generateThread;
     private List<AuthorityCertificate> authorityCertificates;
     private Dictionary<ComboBox, Dictionary<Guid, int>> authorityIndices;
     private VotingParameters votingParameters;
@@ -191,6 +191,8 @@ namespace Pirate.PiVote.Client
         this.authority3List.SelectedIndex = this.authorityIndices[this.authority3List][authoritiesFile.AuthorityIds.ElementAt(3)];
         this.authority4List.SelectedIndex = this.authorityIndices[this.authority4List][authoritiesFile.AuthorityIds.ElementAt(4)];
       }
+
+      SetEnable(true);
     }
 
     private void GetAuthorityCertificatesCompleted(IEnumerable<AuthorityCertificate> authorityCertificates, Exception exception)
@@ -218,6 +220,7 @@ namespace Pirate.PiVote.Client
       this.votingUntilPicker.Enabled = enable;
       this.groupComboBox.Enabled = enable;
       this.questionListView.Enabled = enable;
+      this.clearButton.Enabled = enable;
 
       if (enable)
       {
@@ -235,27 +238,15 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
       SetEnable(false);
 
-      this.initThread = new Thread(Init);
-      this.initThread.Start();
+      this.votingParameters =
+        new VotingParameters(
+          this.titleBox.Text,
+          this.descriptionBox.Text,
+          this.urlTextBox.Text,
+          this.votingFromPicker.Value.Date,
+          this.votingUntilPicker.Value.Date,
+          this.group.Id);
 
-      DateTime lastUpdate = DateTime.Now;
-      int progress = 0;
-      Status.SetProgress(Resources.CreateVotingSearchPrime, (double)progress / 10d);
-
-      while (this.run)
-      {
-        if (DateTime.Now.Subtract(lastUpdate).TotalSeconds > 0.25d)
-        {
-          progress = (progress + 1) % 11;
-          Status.SetProgress(Resources.CreateVotingSearchPrime, (double)progress / 10d);
-          lastUpdate = DateTime.Now;
-        }
-
-        Application.DoEvents();
-        Thread.Sleep(10);
-      }
-
-      this.run = true;
       Status.SetProgress(Resources.CreateVotingCreating, 0d);
       Application.DoEvents();
 
@@ -321,28 +312,37 @@ namespace Pirate.PiVote.Client
       var authoritiesFile = new VotingAuthoritiesFile(authorities);
       authoritiesFile.Save(Path.Combine(Status.DataPath, SavedVotingAuthoritiesFileName));
 
-      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.CreateVotingUnlockAction))
+      WaitForGeneration();
+
+      if (this.votingParameters.Valid)
       {
-        Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);
-
-        Status.VotingClient.CreateVoting(signedVotingParameters, authorities, CreateVotingCompleted);
-
-        while (this.run)
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.CreateVotingUnlockAction))
         {
-          Application.DoEvents();
-          Thread.Sleep(10);
-        }
+          Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);
 
-        if (this.exception == null)
-        {
-          Status.SetMessage(Resources.CreateVotingCreated, MessageType.Success);
+          Status.VotingClient.CreateVoting(signedVotingParameters, authorities, CreateVotingCompleted);
+
+          while (this.run)
+          {
+            Application.DoEvents();
+            Thread.Sleep(10);
+          }
+
+          if (this.exception == null)
+          {
+            Status.SetMessage(Resources.CreateVotingCreated, MessageType.Success);
+          }
+          else
+          {
+            Status.SetMessage(this.exception.Message, MessageType.Error);
+          }
+
+          Status.Certificate.Lock();
         }
         else
         {
-          Status.SetMessage(this.exception.Message, MessageType.Error);
+          Status.SetMessage(Resources.CreateVotingCanceled, MessageType.Info);
         }
-
-        Status.Certificate.Lock();
       }
       else
       {
@@ -355,6 +355,30 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
     }
 
+    private void WaitForGeneration()
+    {
+      this.run = true;
+      this.generateThread = new Thread(Generate);
+      this.generateThread.Start();
+
+      DateTime lastUpdate = DateTime.Now;
+      int progress = 0;
+      Status.SetProgress(Resources.CreateVotingSearchPrime, (double)progress / 10d);
+
+      while (this.run)
+      {
+        if (DateTime.Now.Subtract(lastUpdate).TotalSeconds > 0.25d)
+        {
+          progress = (progress + 1) % 11;
+          Status.SetProgress(Resources.CreateVotingSearchPrime, (double)progress / 10d);
+          lastUpdate = DateTime.Now;
+        }
+
+        Application.DoEvents();
+        Thread.Sleep(10);
+      }
+    }
+
     private void CreateVotingCompleted(Exception exception)
     {
       this.exception = exception;
@@ -362,19 +386,11 @@ namespace Pirate.PiVote.Client
     }
 
     /// <summary>
-    /// Initilaizes the voting data.
+    /// Generates the prime numbers.
     /// </summary>
-    private void Init()
+    private void Generate()
     {
-      this.votingParameters =
-        new VotingParameters(
-          Status.DataPath,
-          this.titleBox.Text,
-          this.descriptionBox.Text,
-          this.urlTextBox.Text,
-          this.votingFromPicker.Value.Date,
-          this.votingUntilPicker.Value.Date,
-          this.group.Id);
+      this.votingParameters.GenerateNumbers(Status.DataPath);
 
       this.run = false;
     }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Pirate.PiVote.Cli
 {
@@ -28,6 +30,21 @@ namespace Pirate.PiVote.Cli
       this.commands.Add(new ListPrintersCommand(this.status));
       this.commands.Add(new UploadCommand(this.status));
       this.commands.Add(new CheckCommand(this.status));
+      this.commands.Add(new AutoCACommand(this.status));
+    }
+
+    public void Execute(string[] commandLine)
+    {
+      new ConnectCommand(this.status).Execute(string.Empty);
+
+      string fileName = Assembly.GetEntryAssembly().GetFiles().Single().Name;
+      int fileNameIndex = Environment.CommandLine.IndexOf(fileName);
+      string commandText = Environment.CommandLine.Substring(fileNameIndex + fileName.Length + 1).Trim();
+      Console.WriteLine(commandText);
+
+      ExecuteCommand(commandText);
+
+      this.status.Disconnect();
     }
 
     public void Loop()
@@ -47,6 +64,11 @@ namespace Pirate.PiVote.Cli
       Console.Write("PiVote: ");
       string commandText = Console.ReadLine();
 
+      ExecuteCommand(commandText);
+    }
+
+    private void ExecuteCommand(string commandText)
+    {
       string commandAlias = commandText.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries)[0];
       var commands = this.commands.Where(cmd => cmd.Aliases.Contains(commandAlias));
 

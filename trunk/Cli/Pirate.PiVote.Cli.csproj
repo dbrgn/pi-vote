@@ -48,6 +48,7 @@
     <Compile Include="Command.cs" />
     <Compile Include="ConnectCommand.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="AutoCACommand.cs" />
     <Compile Include="ChangePassphraseCommand.cs" />
     <Compile Include="CheckCommand.cs" />
     <Compile Include="UploadCommand.cs" />
