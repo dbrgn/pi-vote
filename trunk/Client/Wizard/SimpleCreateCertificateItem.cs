@@ -356,6 +356,7 @@ namespace Pirate.PiVote.Client
     {
       this.run = true;
       OnUpdateWizard();
+      this.printButton.Enabled = false;
 
       SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, Status.Certificate, Status.GetGroupName);
       PrintDialog printDialog = new PrintDialog();
@@ -367,11 +368,8 @@ namespace Pirate.PiVote.Client
         document.Print();
         this.uploadButton.Enabled = true;
       }
-      else
-      {
-        this.printButton.Enabled = true;
-      }
 
+      this.printButton.Enabled = true;
       this.run = false;
       OnUpdateWizard();
     }

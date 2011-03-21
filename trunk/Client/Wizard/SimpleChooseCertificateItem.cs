@@ -335,11 +335,8 @@ namespace Pirate.PiVote.Client
         document.Print();
         this.uploadButton.Enabled = true;
       }
-      else
-      {
-        this.printButton.Enabled = true;
-      }
 
+      this.printButton.Enabled = true;
       this.run = false;
       OnUpdateWizard();
     }

@@ -15,6 +15,8 @@ namespace Pirate.PiVote.CaGui
       AddItem(CertificateStatus.All);
       AddItem(CertificateStatus.New);
       AddItem(CertificateStatus.Valid);
+      AddItem(CertificateStatus.NotYet);
+      AddItem(CertificateStatus.Outdated);
       AddItem(CertificateStatus.Revoked);
       AddItem(CertificateStatus.Refused);
 

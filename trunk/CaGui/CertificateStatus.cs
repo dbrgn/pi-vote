@@ -12,6 +12,8 @@ namespace Pirate.PiVote.CaGui
     Valid,
     Revoked,
     Refused,
+    Outdated,
+    NotYet,
     All
   }
 
@@ -31,6 +33,10 @@ namespace Pirate.PiVote.CaGui
           return "Revoked";
         case CertificateStatus.Refused:
           return "Refused";
+        case CertificateStatus.Outdated:
+          return "Outdated";
+        case CertificateStatus.NotYet:
+          return "Not yet valid";
         default:
           return "Unknown";
       }

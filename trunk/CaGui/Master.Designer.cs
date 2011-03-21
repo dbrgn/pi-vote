@@ -70,6 +70,8 @@
       this.crlValidFromColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.crlValidUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.revokedCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+      this.countCertificatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.mainMenu.SuspendLayout();
       this.entryListContextMenu.SuspendLayout();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -177,7 +179,9 @@
             this.generateRevocationListToolStripMenuItem,
             this.toolStripMenuItem4,
             this.createAdminCertificateToolStripMenuItem,
-            this.createServerCertifiToolStripMenuItem});
+            this.createServerCertifiToolStripMenuItem,
+            this.toolStripMenuItem5,
+            this.countCertificatesToolStripMenuItem});
       this.signaturesToolStripMenuItem.Name = "signaturesToolStripMenuItem";
       this.signaturesToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
       this.signaturesToolStripMenuItem.Text = "&Signatures";
@@ -356,6 +360,13 @@
       this.searchTypeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.searchTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.searchTypeBox.FormattingEnabled = true;
+      this.searchTypeBox.Items.AddRange(new object[] {
+            "All Types",
+            "CA",
+            "Admin",
+            "Authority",
+            "Voter",
+            "Server"});
       this.searchTypeBox.Location = new System.Drawing.Point(556, 4);
       this.searchTypeBox.Name = "searchTypeBox";
       this.searchTypeBox.Size = new System.Drawing.Size(192, 22);
@@ -417,6 +428,18 @@
       // 
       this.revokedCount.Text = "# Revoked";
       this.revokedCount.Width = 100;
+      // 
+      // toolStripMenuItem5
+      // 
+      this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+      this.toolStripMenuItem5.Size = new System.Drawing.Size(192, 6);
+      // 
+      // countCertificatesToolStripMenuItem
+      // 
+      this.countCertificatesToolStripMenuItem.Name = "countCertificatesToolStripMenuItem";
+      this.countCertificatesToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+      this.countCertificatesToolStripMenuItem.Text = "&Count Certificates";
+      this.countCertificatesToolStripMenuItem.Click += new System.EventHandler(this.CountCertificatesToolStripMenuItem_Click);
       // 
       // Master
       // 
@@ -485,6 +508,8 @@
     private System.Windows.Forms.DateTimePicker searchDateBox;
     private System.Windows.Forms.CheckBox searchDateActive;
     private System.Windows.Forms.ColumnHeader groupColumnHeader;
+    private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
+    private System.Windows.Forms.ToolStripMenuItem countCertificatesToolStripMenuItem;
   }
 }
 

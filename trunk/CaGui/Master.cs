@@ -689,5 +689,12 @@ namespace Pirate.PiVote.CaGui
 
       UpdateList();
     }
+
+    private void CountCertificatesToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      CountDialog dialog = new CountDialog();
+      dialog.Entries = Entries;
+      dialog.ShowDialog();
+    }
   }
 }

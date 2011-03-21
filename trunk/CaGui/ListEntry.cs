@@ -107,28 +107,43 @@ namespace Pirate.PiVote.CaGui
     {
       get
       {
-        if (this.response == null)
+        return StatusAtDate(DateTime.Now);
+      }
+    }
+
+    public CertificateStatus StatusAtDate(DateTime date)
+    {
+      if (this.response == null)
+      {
+        return CertificateStatus.New;
+      }
+      else
+      {
+        switch (this.response.Status)
         {
-          return CertificateStatus.New;
-        }
-        else
-        {
-          switch (this.response.Status)
-          {
-            case SignatureResponseStatus.Accepted:
-              if (this.entry.Revoked)
-              {
-                return CertificateStatus.Revoked;
-              }
-              else
-              {
-                return CertificateStatus.Valid;
-              }
-            case SignatureResponseStatus.Declined:
-              return CertificateStatus.Refused;
-            default:
-              return CertificateStatus.None;
-          }
+          case SignatureResponseStatus.Accepted:
+            if (this.entry.Response != null &&
+              date.Date < this.entry.Response.Value.Signature.ValidFrom)
+            {
+              return CertificateStatus.NotYet;
+            }
+            else if (this.entry.Response != null &&
+              date.Date > this.entry.Response.Value.Signature.ValidUntil)
+            {
+              return CertificateStatus.Outdated;
+            }
+            else if (this.entry.Revoked)
+            {
+              return CertificateStatus.Revoked;
+            }
+            else
+            {
+              return CertificateStatus.Valid;
+            }
+          case SignatureResponseStatus.Declined:
+            return CertificateStatus.Refused;
+          default:
+            return CertificateStatus.None;
         }
       }
     }

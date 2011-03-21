@@ -72,7 +72,7 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Previous()
     {
-      return null;
+      return new StartItem();
     }
 
     public override WizardItem Cancel()
@@ -86,6 +86,11 @@ namespace Pirate.PiVote.Client
     }
 
     public override bool CancelIsDone
+    {
+      get { return true; }
+    }
+
+    public override bool CanPrevious
     {
       get { return true; }
     }
