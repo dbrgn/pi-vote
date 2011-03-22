@@ -1,16 +1,17 @@
 ﻿/*
- *  <project description>
+ * Copyright (c) 2009, Pirate Party Switzerland
+ * All rights reserved.
  * 
- *  Copyright (c) 2008-2009 Stefan Thöni <stefan@savvy.ch> 
- *  <BSD Like license>
+ * Licensed under the New BSD License as seen in License.txt
  */
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
 using System.Windows.Forms;
+using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.Client
 {
@@ -48,7 +49,7 @@ namespace Pirate.PiVote.Client
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.groupLabel = new System.Windows.Forms.Label();
-      this.groupComboBox = new Pirate.PiVote.Client.GroupComboBox();
+      this.groupComboBox = new Pirate.PiVote.Gui.GroupComboBox();
       this.questionLabel = new System.Windows.Forms.Label();
       this.questionListView = new System.Windows.Forms.ListView();
       this.textColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));

@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2009, Pirate Party Switzerland
+ * All rights reserved.
+ * 
+ * Licensed under the New BSD License as seen in License.txt
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

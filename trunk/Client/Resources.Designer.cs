@@ -61,20 +61,20 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Abort.
-        /// </summary>
-        internal static string AbortButton {
-            get {
-                return ResourceManager.GetString("AbortButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         internal static string AddOptionDescription {
             get {
                 return ResourceManager.GetString("AddOptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;OK.
+        /// </summary>
+        internal static string AddOptionOkButton {
+            get {
+                return ResourceManager.GetString("AddOptionOkButton", resourceCulture);
             }
         }
         
@@ -394,15 +394,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Cancel.
-        /// </summary>
-        internal static string CancelButton {
-            get {
-                return ResourceManager.GetString("CancelButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Creation Date:.
         /// </summary>
         internal static string CertificateCreationDate {
@@ -579,42 +570,6 @@ namespace Pirate.PiVote.Client {
         internal static string CertificateValid {
             get {
                 return ResourceManager.GetString("CertificateValid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter old and now passphrase to change it..
-        /// </summary>
-        internal static string ChangePassphraseMessageChange {
-            get {
-                return ResourceManager.GetString("ChangePassphraseMessageChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Old passphrase is wrong..
-        /// </summary>
-        internal static string ChangePassphraseMessageWrong {
-            get {
-                return ResourceManager.GetString("ChangePassphraseMessageWrong", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Passphrase:.
-        /// </summary>
-        internal static string ChangePassphraseNewPassphrase {
-            get {
-                return ResourceManager.GetString("ChangePassphraseNewPassphrase", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Old Passphrase:.
-        /// </summary>
-        internal static string ChangePassphraseOldPassphrase {
-            get {
-                return ResourceManager.GetString("ChangePassphraseOldPassphrase", resourceCulture);
             }
         }
         
@@ -1345,109 +1300,10 @@ namespace Pirate.PiVote.Client {
             }
         }
         
-        /// <summary>
-        ///   Looks up a localized string similar to Certificate Id:.
-        /// </summary>
-        internal static string EncryptPrivateKeyCertificateId {
-            get {
-                return ResourceManager.GetString("EncryptPrivateKeyCertificateId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Certificate Type:.
-        /// </summary>
-        internal static string EncryptPrivateKeyCertificateType {
-            get {
-                return ResourceManager.GetString("EncryptPrivateKeyCertificateType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Encrypt my private key.
-        /// </summary>
-        internal static string EncryptPrivateKeyChoose {
-            get {
-                return ResourceManager.GetString("EncryptPrivateKeyChoose", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Your private key is encrypted. You need to enter your passphrase to decrypt it..
-        /// </summary>
-        internal static string EncryptPrivateKeyEncrypted {
-            get {
-                return ResourceManager.GetString("EncryptPrivateKeyEncrypted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You may encrypt the private key of your certificate to proctet it against unauthorized use. If you do so you will be prompted to enter your passphrase when your private key is used..
-        /// </summary>
-        internal static string EncryptPrivateKeyInfo {
-            get {
-                return ResourceManager.GetString("EncryptPrivateKeyInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Passphrase:.
-        /// </summary>
-        internal static string EncryptPrivateKeyPassphrase {
-            get {
-                return ResourceManager.GetString("EncryptPrivateKeyPassphrase", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Repeat passphrase:.
-        /// </summary>
-        internal static string EncryptPrivateKeyRepeat {
-            get {
-                return ResourceManager.GetString("EncryptPrivateKeyRepeat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pi-Vote Private Key Protection.
-        /// </summary>
-        internal static string EncryptPrivateKeyTitle {
-            get {
-                return ResourceManager.GetString("EncryptPrivateKeyTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Action:.
-        /// </summary>
-        internal static string EncryptPrivateKeyUnlockAction {
-            get {
-                return ResourceManager.GetString("EncryptPrivateKeyUnlockAction", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Passphrase is wrong..
-        /// </summary>
-        internal static string EncryptPrivateKeyWrongPassphrase {
-            get {
-                return ResourceManager.GetString("EncryptPrivateKeyWrongPassphrase", resourceCulture);
-            }
-        }
-        
         internal static System.Drawing.Bitmap Error {
             get {
                 object obj = ResourceManager.GetObject("Error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Ignore.
-        /// </summary>
-        internal static string IgnoreButton {
-            get {
-                return ResourceManager.GetString("IgnoreButton", resourceCulture);
             }
         }
         
@@ -1522,33 +1378,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pi-Vote.
-        /// </summary>
-        internal static string MessageBoxTitle {
-            get {
-                return ResourceManager.GetString("MessageBoxTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;No.
-        /// </summary>
-        internal static string NoButton {
-            get {
-                return ResourceManager.GetString("NoButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;OK.
-        /// </summary>
-        internal static string OkButton {
-            get {
-                return ResourceManager.GetString("OkButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Open Certificate Storage.
         /// </summary>
         internal static string OpenCertificateStorageDialog {
@@ -1617,15 +1446,6 @@ namespace Pirate.PiVote.Client {
         internal static string PiVoteClient {
             get {
                 return ResourceManager.GetString("PiVoteClient", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Retry.
-        /// </summary>
-        internal static string RetryButton {
-            get {
-                return ResourceManager.GetString("RetryButton", resourceCulture);
             }
         }
         
@@ -2157,15 +1977,6 @@ namespace Pirate.PiVote.Client {
         internal static string WizardPreviousButton {
             get {
                 return ResourceManager.GetString("WizardPreviousButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Yes.
-        /// </summary>
-        internal static string YesButton {
-            get {
-                return ResourceManager.GetString("YesButton", resourceCulture);
             }
         }
     }

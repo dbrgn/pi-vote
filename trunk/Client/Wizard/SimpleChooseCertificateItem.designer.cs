@@ -1,8 +1,8 @@
 ﻿/*
- *  <project description>
+ * Copyright (c) 2009, Pirate Party Switzerland
+ * All rights reserved.
  * 
- *  Copyright (c) 2008-2009 Stefan Thöni <stefan@savvy.ch> 
- *  <BSD Like license>
+ * Licensed under the New BSD License as seen in License.txt
  */
 
 using System;
@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
+using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.Client
 {
@@ -49,7 +50,7 @@ namespace Pirate.PiVote.Client
       this.createRadioButton = new System.Windows.Forms.RadioButton();
       this.groupLabel = new System.Windows.Forms.Label();
       this.importRadioButton = new System.Windows.Forms.RadioButton();
-      this.groupComboBox = new Pirate.PiVote.Client.GroupComboBox();
+      this.groupComboBox = new Pirate.PiVote.Gui.GroupComboBox();
       this.advancedRadioButton = new System.Windows.Forms.RadioButton();
       this.importButton = new System.Windows.Forms.Button();
       this.firstNameLabel = new System.Windows.Forms.Label();

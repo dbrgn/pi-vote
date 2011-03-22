@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CancelButton" xml:space="preserve">
-    <value>&amp;Abbrechen</value>
-  </data>
   <data name="AddOptionDescription" xml:space="preserve">
     <value>Beschreibung</value>
   </data>
@@ -402,9 +399,6 @@
   <data name="BadShareProofVotingTitle" xml:space="preserve">
     <value>Titel:</value>
   </data>
-  <data name="ChooseCertificateVerifyBadShareProof" xml:space="preserve">
-    <value>Verteilungs&amp;beweis prüfen...</value>
-  </data>
   <data name="ListVotingsVotedNo" xml:space="preserve">
     <value>Nein</value>
   </data>
@@ -443,12 +437,6 @@
   </data>
   <data name="VoteDescriptionButton" xml:space="preserve">
     <value>&amp;Beschreibung...</value>
-  </data>
-  <data name="VoteOptionDescriptionCloseButton" xml:space="preserve">
-    <value>&amp;Schliessen</value>
-  </data>
-  <data name="VoteOptionDescriptionTitle" xml:space="preserve">
-    <value>Beschreibung</value>
   </data>
   <data name="ContextMenuEdit" xml:space="preserve">
     <value>&amp;Bearbeiten</value>
@@ -628,33 +616,6 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="CreateVotingUnlockAction" xml:space="preserve">
     <value>Abstimmungsparameter signieren</value>
   </data>
-  <data name="EncryptPrivateKeyCertificateId" xml:space="preserve">
-    <value>Zertifikatsid:</value>
-  </data>
-  <data name="EncryptPrivateKeyCertificateType" xml:space="preserve">
-    <value>Zertifikatstyp:</value>
-  </data>
-  <data name="EncryptPrivateKeyChoose" xml:space="preserve">
-    <value>Privaten Schlüssel verschlüsseln</value>
-  </data>
-  <data name="EncryptPrivateKeyEncrypted" xml:space="preserve">
-    <value>Dein privater Schlüssel ist verschlüsselt. Gib deine Passphrase ein, um ihn zu entschlüsseln.</value>
-  </data>
-  <data name="EncryptPrivateKeyInfo" xml:space="preserve">
-    <value>Du kannst deinen privaten Schlüssel verschlüsseln, um ihn gegen unbefugte Benutzung zu schützen. Wenn du das tust, musst du deine Passphrase jeweils eingeben, wenn der Schlüssel benutz wird.</value>
-  </data>
-  <data name="EncryptPrivateKeyPassphrase" xml:space="preserve">
-    <value>Passphrase:</value>
-  </data>
-  <data name="EncryptPrivateKeyRepeat" xml:space="preserve">
-    <value>Passphrase wiederholen:</value>
-  </data>
-  <data name="EncryptPrivateKeyTitle" xml:space="preserve">
-    <value>Pi-Vote Schutz des privaten Schlüssels</value>
-  </data>
-  <data name="EncryptPrivateKeyUnlockAction" xml:space="preserve">
-    <value>Vorgang:</value>
-  </data>
   <data name="VoteCanceled" xml:space="preserve">
     <value>Die Stimmabgabe wurde abgebrochen.</value>
   </data>
@@ -748,21 +709,6 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="ChooseCertificateGroupNameUnknown" xml:space="preserve">
     <value>Unbekannt</value>
   </data>
-  <data name="ChangePassphraseMessageChange" xml:space="preserve">
-    <value>Alte und neue Passphrase eingeben um diese zu ändern.</value>
-  </data>
-  <data name="ChangePassphraseMessageWrong" xml:space="preserve">
-    <value>Alte Passphrase falsch.</value>
-  </data>
-  <data name="ChangePassphraseNewPassphrase" xml:space="preserve">
-    <value>Neue Passphrase:</value>
-  </data>
-  <data name="ChangePassphraseOldPassphrase" xml:space="preserve">
-    <value>Alte Passphrase:</value>
-  </data>
-  <data name="EncryptPrivateKeyWrongPassphrase" xml:space="preserve">
-    <value>Passphrase falsch.</value>
-  </data>
   <data name="AdminChooseDeleteVoting" xml:space="preserve">
     <value>Abstimmungsprozedur &amp;löschen</value>
   </data>
@@ -775,9 +721,6 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="AdminDeleteVotingWarning" xml:space="preserve">
     <value>Willst du wirklich die Abstimmung Id {0} Titel {1} löschen?</value>
   </data>
-  <data name="AbortButton" xml:space="preserve">
-    <value>&amp;Abbrechen</value>
-  </data>
   <data name="AskForPartiallyDecipher" xml:space="preserve">
     <value>Es sind {0} gültige Stimmen vorhandel. Wenn diese Zahl zu klein erscheint, könnte ein Sicherheitsproblem bestehen. Wenn das der Fall ist, musst du das Resultat nicht Entschlüsseln, sondern die anderen Autoritäten und Administratoren verständigen. Mit Entschlüsseln weiterfahren?</value>
   </data>
@@ -786,12 +729,6 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="NoButton" xml:space="preserve">
     <value>&amp;Nein</value>
-  </data>
-  <data name="RetryButton" xml:space="preserve">
-    <value>&amp;Wiederholen</value>
-  </data>
-  <data name="YesButton" xml:space="preserve">
-    <value>&amp;Ja</value>
   </data>
   <data name="AskToSignSignatureRequestWithParent" xml:space="preserve">
     <value>Du hast ein gültiges Zertifikat, mit dem du deine Zertifizierungsanfrage signieren kannst. Wenn du das tust, musst du die Zertifizierungsanfrage nicht ausdrucken und keine Unterschriften von Autoritäten einholen, aber das neue Zertifikat wird nur so lange gültig sein, wie das existierende, also bis zum {0:d}. Möchtest du deine Zertifizierungsanfrage mit deinem existierenden Zertifikat signieren?</value>
@@ -810,5 +747,8 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="CertificateLoadInvalid" xml:space="preserve">
     <value>Die Zertifikatdatei is ungültig.</value>
+  </data>
+  <data name="ChooseCertificateVerifyBadShareProof" xml:space="preserve">
+    <value>Verteilungs&amp;beweis prüfen...</value>
   </data>
 </root>

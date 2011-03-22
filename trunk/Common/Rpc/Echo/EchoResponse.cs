@@ -1,9 +1,8 @@
-﻿
-/*
- *  <project description>
+﻿/*
+ * Copyright (c) 2009, Pirate Party Switzerland
+ * All rights reserved.
  * 
- *  Copyright (c) 2008-2009 Stefan Thöni <stefan@savvy.ch> 
- *  <BSD Like license>
+ * Licensed under the New BSD License as seen in License.txt
  */
 
 using System;

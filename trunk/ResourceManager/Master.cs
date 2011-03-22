@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2009, Pirate Party Switzerland
+ * All rights reserved.
+ * 
+ * Licensed under the New BSD License as seen in License.txt
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +16,7 @@ using System.Windows.Forms;
 using System.IO;
 using Pirate.PiVote;
 
-namespace ResourceManager
+namespace Pirate.PiVote.ResourceManager
 {
   public partial class Master : Form
   {

@@ -1,8 +1,8 @@
 ﻿/*
- *  <project description>
+ * Copyright (c) 2009, Pirate Party Switzerland
+ * All rights reserved.
  * 
- *  Copyright (c) 2008-2009 Stefan Thöni <stefan@savvy.ch> 
- *  <BSD Like license>
+ * Licensed under the New BSD License as seen in License.txt
  */
 
 using System;
@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Gui;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Serialization;
 
@@ -467,7 +468,7 @@ namespace Pirate.PiVote.Client
                 }
                 catch
                 {
-                  message = Resources.ChangePassphraseMessageWrong;
+                  message = GuiResources.ChangePassphraseMessageWrong;
                 }
               }
               else

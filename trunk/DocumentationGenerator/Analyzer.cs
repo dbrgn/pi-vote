@@ -1,11 +1,18 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2009, Pirate Party Switzerland
+ * All rights reserved.
+ * 
+ * Licensed under the New BSD License as seen in License.txt
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
 using Pirate.PiVote.Serialization;
 
-namespace DocumentationGenerator
+namespace Pirate.PiVote.DocumentationGenerator
 {
   public class Analyzer
   {
