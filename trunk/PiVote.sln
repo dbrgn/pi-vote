@@ -13,9 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		License.txt = License.txt
 		Local.testsettings = Local.testsettings
-		Performance1.psess = Performance1.psess
 		PiVote.vsmdi = PiVote.vsmdi
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PiVoteClientSetup", "PiVoteClientSetup\PiVoteClientSetup.vdproj", "{6A2B0419-7BAA-41F3-9C45-39D8D91842A9}"

@@ -33,32 +33,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3C1E80C8D343052811A7D5A57917A042"
-        "OwnerKey" = "8:_0583866E7D9E44529A28AFFDBA13A654"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_486E4EA3DE1746F2A6D07CE0F7534F92"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_56C46E5B886E4236AB4E1CE337A02255"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5C14CEDA1C0BEEC6ED410305C493E763"
-        "OwnerKey" = "8:_3C1E80C8D343052811A7D5A57917A042"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5D85095738773B5106D4CCE47C78D787"
-        "OwnerKey" = "8:_3C1E80C8D343052811A7D5A57917A042"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -69,8 +45,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_63C3EF8D27E7499B8D37447BE3F97830"
+        "MsmKey" = "8:_6CAF88E0FFC94D2186DBC27710B7B81B"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_85002FD2C2BA49DCB2C9737336A0BABE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8942304B962A43F65F5E43E80F1326B8"
+        "OwnerKey" = "8:_0583866E7D9E44529A28AFFDBA13A654"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -89,6 +77,18 @@
         {
         "MsmKey" = "8:_E71DEBFA787E40648C0259C01834D3CD"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E8B9AFB3061FFD6F9BA8692146B0FE15"
+        "OwnerKey" = "8:_8942304B962A43F65F5E43E80F1326B8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E8CCEED71F3391DC4080002DBE8AA96A"
+        "OwnerKey" = "8:_8942304B962A43F65F5E43E80F1326B8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -124,19 +124,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3C1E80C8D343052811A7D5A57917A042"
+        "OwnerKey" = "8:_8942304B962A43F65F5E43E80F1326B8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5C14CEDA1C0BEEC6ED410305C493E763"
+        "OwnerKey" = "8:_E8CCEED71F3391DC4080002DBE8AA96A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5D85095738773B5106D4CCE47C78D787"
+        "OwnerKey" = "8:_E8B9AFB3061FFD6F9BA8692146B0FE15"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -374,37 +374,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3C1E80C8D343052811A7D5A57917A042"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pirate.PiVote, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_3C1E80C8D343052811A7D5A57917A042"
-                    {
-                    "Name" = "8:Pirate.PiVote.DLL"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Pirate.PiVote.DLL"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_486E4EA3DE1746F2A6D07CE0F7534F92"
             {
             "SourcePath" = "8:..\\build\\files-windows\\libgmp-3.dll"
@@ -423,88 +392,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_56C46E5B886E4236AB4E1CE337A02255"
-            {
-            "SourcePath" = "8:..\\logos\\setupbanner.jpg"
-            "TargetName" = "8:setupbanner.jpg"
-            "Tag" = "8:"
-            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5C14CEDA1C0BEEC6ED410305C493E763"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.3.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_5C14CEDA1C0BEEC6ED410305C493E763"
-                    {
-                    "Name" = "8:MySql.Data.DLL"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:MySql.Data.DLL"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5D85095738773B5106D4CCE47C78D787"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Emil.GMP, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_5D85095738773B5106D4CCE47C78D787"
-                    {
-                    "Name" = "8:Emil.GMP.DLL"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Emil.GMP.DLL"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_62249F58F277463BBE827B1898679DE6"
@@ -538,9 +425,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_63C3EF8D27E7499B8D37447BE3F97830"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6CAF88E0FFC94D2186DBC27710B7B81B"
             {
-            "SourcePath" = "8:..\\build\\files-windows\\ballot.ico"
+            "SourcePath" = "8:..\\Resources\\Logos\\ballot.ico"
             "TargetName" = "8:ballot.ico"
             "Tag" = "8:"
             "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
@@ -556,6 +443,57 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_85002FD2C2BA49DCB2C9737336A0BABE"
+            {
+            "SourcePath" = "8:..\\Resources\\Logos\\setupbanner.jpg"
+            "TargetName" = "8:setupbanner.jpg"
+            "Tag" = "8:"
+            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8942304B962A43F65F5E43E80F1326B8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Pirate.PiVote, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_8942304B962A43F65F5E43E80F1326B8"
+                    {
+                    "Name" = "8:Pirate.PiVote.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Pirate.PiVote.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B34CBB58876843B7BBE1094F48AFF3E0"
@@ -627,6 +565,68 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E8B9AFB3061FFD6F9BA8692146B0FE15"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Emil.GMP, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_E8B9AFB3061FFD6F9BA8692146B0FE15"
+                    {
+                    "Name" = "8:Emil.GMP.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Emil.GMP.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E8CCEED71F3391DC4080002DBE8AA96A"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MySql.Data, Version=6.3.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_E8CCEED71F3391DC4080002DBE8AA96A"
+                    {
+                    "Name" = "8:MySql.Data.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MySql.Data.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E55824479EB3467F94CB9C80360A0B76"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -708,7 +708,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PiVote Client"
         "ProductCode" = "8:{94511D9B-2AB4-476A-B7C8-EC532204C876}"
-        "PackageCode" = "8:{54417F51-C279-4A18-9E54-9A5E01B91C97}"
+        "PackageCode" = "8:{DAAF31E2-28F5-480A-84E7-F82D9D396836}"
         "UpgradeCode" = "8:{7F36B602-1CBB-449B-AA17-69145F1FFB38}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -725,7 +725,7 @@
         "Keywords" = "8:eVoting, Secure"
         "ARPCOMMENTS" = "8:Secure internet voting client."
         "ARPURLINFOABOUT" = "8:http://www.pirateparty.ch"
-        "ARPPRODUCTICON" = "8:_63C3EF8D27E7499B8D37447BE3F97830"
+        "ARPPRODUCTICON" = "8:_6CAF88E0FFC94D2186DBC27710B7B81B"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -839,7 +839,7 @@
             "Target" = "8:_0583866E7D9E44529A28AFFDBA13A654"
             "Folder" = "8:_3FDD2400DA8A47BD8963BDD4C3770416"
             "WorkingFolder" = "8:_E55824479EB3467F94CB9C80360A0B76"
-            "Icon" = "8:_63C3EF8D27E7499B8D37447BE3F97830"
+            "Icon" = "8:_6CAF88E0FFC94D2186DBC27710B7B81B"
             "Feature" = "8:"
             }
         }
@@ -870,7 +870,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_56C46E5B886E4236AB4E1CE337A02255"
+                            "Value" = "8:_85002FD2C2BA49DCB2C9737336A0BABE"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "UpdateText"
@@ -946,7 +946,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_56C46E5B886E4236AB4E1CE337A02255"
+                            "Value" = "8:_85002FD2C2BA49DCB2C9737336A0BABE"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -995,7 +995,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_56C46E5B886E4236AB4E1CE337A02255"
+                            "Value" = "8:_85002FD2C2BA49DCB2C9737336A0BABE"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -1018,7 +1018,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_56C46E5B886E4236AB4E1CE337A02255"
+                            "Value" = "8:_85002FD2C2BA49DCB2C9737336A0BABE"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "InstallAllUsersVisible"
@@ -1220,7 +1220,7 @@
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
                             "Setting" = "3:2"
-                            "Value" = "8:_56C46E5B886E4236AB4E1CE337A02255"
+                            "Value" = "8:_85002FD2C2BA49DCB2C9737336A0BABE"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
