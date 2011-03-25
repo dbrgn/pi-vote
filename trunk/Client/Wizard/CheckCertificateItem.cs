@@ -21,18 +21,19 @@ namespace Pirate.PiVote.Client
 {
   public partial class CheckCertificateItem : WizardItem
   {
-    public enum CheckStatus
+    public enum ContinueTo
     {
-      Unknown,
-      CheckCertificate,
-      CheckCertificateAccepted,
-      CheckCertificateDeclined,
-      CheckCertificatePending,
-      CheckCertificateNeeded,
-      CheckCertificateFailed
+      Undetermined,
+      NoWhere,
+      NextScreen,
+      ChooseCertificate,
+      CreateCertificate,
     }
 
-    private CheckStatus status;
+    private bool run;
+    private ContinueTo continueTo;
+    private Signed<SignatureResponse> response;
+    private SignatureResponseStatus responseStatus;
     private string message;
     private Exception exception;
     public WizardItem PreviousItem { get; set; }
@@ -40,16 +41,20 @@ namespace Pirate.PiVote.Client
     public CheckCertificateItem()
     {
       InitializeComponent();
+
+      this.continueTo = ContinueTo.Undetermined;
     }
 
     public override WizardItem Next()
     {
-      switch (this.status)
+      switch (this.continueTo)
       {
-        case CheckStatus.CheckCertificateNeeded:
-          return new SimpleCreateCertificateItem();
-        case CheckStatus.CheckCertificateAccepted:
-          if (Status.Certificate is AdminCertificate)
+        case ContinueTo.NextScreen:
+          if (Status.Certificate is AuthorityCertificate)
+          {
+            return new AuthorityListVotingsItem();
+          }
+          else if (Status.Certificate is AdminCertificate)
           {
             return new AdminChooseItem();
           }
@@ -57,16 +62,14 @@ namespace Pirate.PiVote.Client
           {
             return new ListVotingsItem();
           }
-          else if (Status.Certificate is AuthorityCertificate)
-          {
-            return new AuthorityListVotingsItem();
-          }
           else
           {
-            return new ChooseCertificateItem();
+            return null;
           }
-        case CheckStatus.CheckCertificateDeclined:
+        case ContinueTo.ChooseCertificate:
           return new ChooseCertificateItem();
+        case ContinueTo.CreateCertificate:
+          return new SimpleCreateCertificateItem();
         default:
           return null;
       }
@@ -86,16 +89,12 @@ namespace Pirate.PiVote.Client
     {
       get
       {
-        switch (this.status)
+        switch (this.continueTo)
         {
-          case CheckStatus.CheckCertificateAccepted:
-          case CheckStatus.CheckCertificateDeclined:
-          case CheckStatus.CheckCertificatePending:
-          case CheckStatus.CheckCertificateFailed:
-          case CheckStatus.CheckCertificateNeeded:
-            return true;
-          default:
+          case ContinueTo.Undetermined:
             return false;
+          default:
+            return true;
         }
       }
     }
@@ -104,132 +103,110 @@ namespace Pirate.PiVote.Client
     {
       get
       {
-        return
-          this.status == CheckStatus.CheckCertificateAccepted ||
-          this.status == CheckStatus.CheckCertificateNeeded;
+        switch (this.continueTo)
+        {
+          case ContinueTo.Undetermined:
+          case ContinueTo.NoWhere:
+            return false;
+          default:
+            return true;
+        }
       }
     }
 
     public override bool CanPrevious
     {
-      get { return PreviousItem != null; }
-    }
-
-    public override bool CancelIsDone
-    {
       get
       {
-        switch (this.status)
+        switch (this.continueTo)
         {
-          case CheckStatus.CheckCertificateDeclined:
-          case CheckStatus.CheckCertificatePending:
-          case CheckStatus.CheckCertificateFailed:
-            return true;
-          default:
+          case ContinueTo.Undetermined:
             return false;
+          default:
+            return PreviousItem != null;
         }
       }
     }
 
+    public override bool CancelIsDone
+    {
+      get { return this.continueTo == ContinueTo.NoWhere; }
+    }
+
     public override void Begin()
     {
-      this.status = CheckStatus.CheckCertificate;
       Status.UpdateProgress();
 
-      CertificateValidationResult result = Status.Certificate.Validate(Status.CertificateStorage);
-
-      switch (result)
+      if (Status.Certificate is VoterCertificate)
       {
-        case CertificateValidationResult.Valid:
-          this.status = CheckStatus.CheckCertificateAccepted;
-          Status.SetMessage(Resources.CheckCertificateReady, MessageType.Info);
-          break;
-        case CertificateValidationResult.Outdated:
-        case CertificateValidationResult.NotYetValid:
-        case CertificateValidationResult.Revoked:
-        case CertificateValidationResult.SelfsignatureInvalid:
-        case CertificateValidationResult.SignatureDataInvalid:
-        case CertificateValidationResult.SignerInvalid:
-        case CertificateValidationResult.UnknownSigner:
-          string msessage = string.Empty;
-
-          switch (result)
-          {
-            case CertificateValidationResult.Outdated:
-              message = Resources.CheckCertificateOutdated;
-              break;
-            case CertificateValidationResult.NotYetValid:
-              message = string.Format(Resources.CheckCertificateNotYetValid, Status.Certificate.ExpectedValidFrom(Status.CertificateStorage));
-              break;
-            case CertificateValidationResult.Revoked:
-              message = Resources.CheckCertificateRevoked;
-              break;
-            case CertificateValidationResult.SelfsignatureInvalid:
-              message = Resources.CheckCertificateSelfsignatureInvalid;
-              break;
-            case CertificateValidationResult.SignatureDataInvalid:
-              message = Resources.CheckCertificateSignatureDataInvalid;
-              break;
-            case CertificateValidationResult.SignerInvalid:
-              message = Resources.CheckCertificateSignerInvalid;
-              break;
-            case CertificateValidationResult.UnknownSigner:
-              message = Resources.CheckCertificateUnknownSigner;
-              break;
-          }
-
-          message += " " + Resources.CheckCertificateRemove;
-
-          this.status = CheckStatus.CheckCertificateDeclined;
-          Status.SetMessage(message, MessageType.Error);
-          break;
-        case CertificateValidationResult.NoSignature:
-          Status.VotingClient.GetSignatureResponse(Status.Certificate.Id, GetSignatureResponseComplete);
-
-          while (this.status == CheckStatus.CheckCertificate)
-          {
-            Status.UpdateProgress();
-            Thread.Sleep(1);
-          }
-
-          if (this.status == CheckStatus.CheckCertificateFailed)
-          {
-            Status.SetMessage(this.exception.Message, MessageType.Error);
-            OnUpdateWizard();
-            return;
-          }
-
-          MessageType type = MessageType.Info;
-          switch (this.status)
-          {
-            case CheckStatus.CheckCertificateAccepted:
-              type = MessageType.Success;
-              break;
-            case CheckStatus.CheckCertificateDeclined:
-              type = MessageType.Info;
-              break;
-            case CheckStatus.CheckCertificatePending:
-              type = MessageType.Info;
-              break;
-            case CheckStatus.CheckCertificateFailed:
-              type = MessageType.Error;
-              break;
-            case CheckStatus.CheckCertificateNeeded:
-              type = MessageType.Info;
-              break;
-          }
-
-          Status.SetMessage(this.message, type);
-          break;
-        default:
-          throw new InvalidOperationException("Unknown certificate validation result");
+        CheckValidityOfVoter();
+      }
+      else
+      {
+        CheckValidityOfOther();
       }
 
-      if (this.status == CheckStatus.CheckCertificateDeclined)
+      OnUpdateWizard();
+    }
+
+    private void HandleSignatureResponseUpdate()
+    {
+      this.run = true;
+      Status.VotingClient.GetSignatureResponse(Status.Certificate.Id, GetSignatureResponseComplete);
+
+      while (this.run)
       {
-        File.Move(Status.CertificateFileName, Status.CertificateFileName + Files.BakExtension);
-        Status.CertificateFileName = null;
-        Status.Certificate = null;
+        Status.UpdateProgress();
+        Thread.Sleep(1);
+      }
+
+      if (this.exception == null)
+      {
+        switch (this.responseStatus)
+        {
+          case SignatureResponseStatus.Accepted:
+            if (this.response.Verify(Status.CertificateStorage) &&
+                this.response.Value.Status == this.responseStatus)
+            {
+              Status.Certificate.AddSignature(response.Value.Signature);
+              Status.Certificate.Save(Status.CertificateFileName);
+              Status.SetMessage(Resources.CheckCertificateResponseAccept, MessageType.Success);
+              this.continueTo = ContinueTo.NextScreen;
+            }
+            else
+            {
+              Status.SetMessage(Resources.CheckCertificateResponseInvalid, MessageType.Error);
+              this.continueTo = ContinueTo.NoWhere;
+            }
+            break;
+          case SignatureResponseStatus.Declined:
+            if (this.response.Verify(Status.CertificateStorage) &&
+                this.response.Value.Status == this.responseStatus)
+            {
+              Status.SetMessage(Resources.CheckCertificateResponseDeclined + this.response.Value.Reason, MessageType.Info);
+              RemoveCertificate();
+              this.continueTo = ContinueTo.NoWhere;
+            }
+            else
+            {
+              Status.SetMessage(Resources.CheckCertificateResponseInvalid, MessageType.Error);
+              this.continueTo = ContinueTo.NoWhere;
+            }
+            break;
+          case SignatureResponseStatus.Pending:
+            Status.SetMessage(Resources.CheckCertificatePending, MessageType.Info);
+            this.continueTo = ContinueTo.NoWhere;
+            break;
+          default:
+            Status.SetMessage(Resources.CheckCertificateNeedRequest, MessageType.Info);
+            this.continueTo = ContinueTo.CreateCertificate;
+            break;
+        }
+      }
+      else
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
+        this.continueTo = ContinueTo.NoWhere;
       }
 
       OnUpdateWizard();
@@ -238,57 +215,121 @@ namespace Pirate.PiVote.Client
     private void GetSignatureResponseComplete(SignatureResponseStatus status, Signed<SignatureResponse> response, Exception exception)
     {
       this.exception = exception;
+      this.response = response;
+      this.responseStatus = status;
+    }
 
-      if (exception == null)
-      {
-        switch (status)
-        {
-          case SignatureResponseStatus.Accepted:
-            if (response.Verify(Status.CertificateStorage))
-            {
-              Status.Certificate.AddSignature(response.Value.Signature);
-              Status.Certificate.Save(Status.CertificateFileName);
+    private void CheckValidityOfOther()
+    {
+      CertificateValidationResult result = Status.Certificate.Validate(Status.CertificateStorage);
 
-              this.message = Resources.CheckCertificateResponseAccept;
-              this.status = CheckStatus.CheckCertificateAccepted;
-            }
-            else
-            {
-              this.message = Resources.CheckCertificateResponseInvalid;
-              this.status = CheckStatus.CheckCertificateDeclined;
-            }
-            break;
-          case SignatureResponseStatus.Declined:
-            if (response.Verify(Status.CertificateStorage))
-            {
-              this.message = Resources.CheckCertificateResponseDeclined + response.Value.Reason;
-              this.status = CheckStatus.CheckCertificateDeclined;
-            }
-            else
-            {
-              this.message = Resources.CheckCertificateResponseInvalid;
-              this.status = CheckStatus.CheckCertificateDeclined;
-            }
-            break;
-          case SignatureResponseStatus.Pending:
-            this.message = Resources.CheckCertificatePending;
-            this.status = CheckStatus.CheckCertificatePending;
-            break;
-          default:
-            this.message = Resources.CheckCertificateNeedRequest;
-            this.status = CheckStatus.CheckCertificateNeeded;
-            break;
-        }
-      }
-      else
+      switch (result)
       {
-        this.status = CheckStatus.CheckCertificateFailed;
+        case CertificateValidationResult.Valid:
+          Status.SetMessage(Resources.CheckCertificateReady, MessageType.Info);
+          this.continueTo = ContinueTo.NextScreen;
+          break;
+        case CertificateValidationResult.Outdated:
+          Status.SetMessage(Resources.CheckCertificateOutdated, MessageType.Error);
+          this.continueTo = ContinueTo.NextScreen;
+          break;
+        case CertificateValidationResult.NotYetValid:
+          Status.SetMessage(string.Format(Resources.CheckCertificateNotYetValid, Status.Certificate.ExpectedValidFrom(Status.CertificateStorage)), MessageType.Error);
+          this.continueTo = ContinueTo.NextScreen;
+          break;
+        case CertificateValidationResult.Revoked:
+          Status.SetMessage(Resources.CheckCertificateRevoked, MessageType.Error);
+          this.continueTo = ContinueTo.NextScreen;
+          break;
+        case CertificateValidationResult.CrlMissing:
+          Status.SetMessage(Resources.CheckCertificateCrlMissing, MessageType.Error);
+          this.continueTo = ContinueTo.NextScreen;
+          break;
+        case CertificateValidationResult.SignerInvalid:
+          Status.SetMessage(Resources.CheckCertificateSignerInvalid, MessageType.Error);
+          this.continueTo = ContinueTo.NextScreen;
+          break;
+        case CertificateValidationResult.UnknownSigner:
+          Status.SetMessage(Resources.CheckCertificateUnknownSigner, MessageType.Error);
+          this.continueTo = ContinueTo.NextScreen;
+          break;
+        case CertificateValidationResult.SelfsignatureInvalid:
+          Status.SetMessage(Resources.CheckCertificateSelfsignatureInvalid + " " + Resources.CheckCertificateRemove, MessageType.Error);
+          RemoveCertificate();
+          this.continueTo = ContinueTo.NoWhere;
+          break;
+        case CertificateValidationResult.SignatureDataInvalid:
+          Status.SetMessage(Resources.CheckCertificateSignatureDataInvalid + " " + Resources.CheckCertificateRemove, MessageType.Error);
+          RemoveCertificate();
+          this.continueTo = ContinueTo.NoWhere;
+          break;
+        case CertificateValidationResult.NoSignature:
+          HandleSignatureResponseUpdate();
+          break;
+        default:
+          throw new InvalidOperationException("Unknown certificate validation result");
       }
     }
 
-    private void StartWizardItem_Load(object sender, EventArgs e)
+    private void CheckValidityOfVoter()
     {
+      CertificateValidationResult result = Status.Certificate.Validate(Status.CertificateStorage);
 
+      switch (result)
+      {
+        case CertificateValidationResult.Valid:
+          Status.SetMessage(Resources.CheckCertificateReady, MessageType.Info);
+          this.continueTo = ContinueTo.NextScreen;
+          break;
+        case CertificateValidationResult.Outdated:
+          Status.SetMessage(Resources.CheckCertificateOutdated + " " + Resources.CheckCertificateRemove, MessageType.Error);
+          RemoveCertificate();
+          this.continueTo = ContinueTo.CreateCertificate;
+          break;
+        case CertificateValidationResult.NotYetValid:
+          Status.SetMessage(string.Format(Resources.CheckCertificateNotYetValid, Status.Certificate.ExpectedValidFrom(Status.CertificateStorage)), MessageType.Error);
+          this.continueTo = ContinueTo.NoWhere;
+          break;
+        case CertificateValidationResult.Revoked:
+          Status.SetMessage(Resources.CheckCertificateRevoked, MessageType.Error);
+          RemoveCertificate();
+          this.continueTo = ContinueTo.CreateCertificate;
+          break;
+        case CertificateValidationResult.CrlMissing:
+          Status.SetMessage(Resources.CheckCertificateCrlMissing, MessageType.Error);
+          this.continueTo = ContinueTo.NoWhere;
+          break;
+        case CertificateValidationResult.SignerInvalid:
+          Status.SetMessage(Resources.CheckCertificateSignerInvalid, MessageType.Error);
+          this.continueTo = ContinueTo.NoWhere;
+          break;
+        case CertificateValidationResult.UnknownSigner:
+          Status.SetMessage(Resources.CheckCertificateUnknownSigner, MessageType.Error);
+          this.continueTo = ContinueTo.NoWhere;
+          break;
+        case CertificateValidationResult.SelfsignatureInvalid:
+          Status.SetMessage(Resources.CheckCertificateSelfsignatureInvalid + " " + Resources.CheckCertificateRemove, MessageType.Error);
+          RemoveCertificate();
+          this.continueTo = ContinueTo.NoWhere;
+          break;
+        case CertificateValidationResult.SignatureDataInvalid:
+          Status.SetMessage(Resources.CheckCertificateSignatureDataInvalid + " " + Resources.CheckCertificateRemove, MessageType.Error);
+          RemoveCertificate();
+          this.continueTo = ContinueTo.NoWhere;
+          break;
+        case CertificateValidationResult.NoSignature:
+          HandleSignatureResponseUpdate();
+          break;
+        default:
+          throw new InvalidOperationException("Unknown certificate validation result");
+      }
+    }
+
+    private void RemoveCertificate()
+    {
+      File.Move(Status.CertificateFileName, Status.CertificateFileName + Files.BakExtension);
+      Status.CertificateFileName = null;
+      Status.Certificate = null;
     }
 
     public override void UpdateLanguage()

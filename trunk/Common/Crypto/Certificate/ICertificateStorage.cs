@@ -82,7 +82,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="issuerId">Id of the issuer of a signature.</param>
     /// <param name="certificateId">Id of the certificate.</param>
     /// <returns>Is it revoked.</returns>
-    bool IsRevoked(Guid issuerId, Guid certificateId, DateTime date);
+    CertificateValidationResult IsRevoked(Guid issuerId, Guid certificateId, DateTime date);
 
     /// <summary>
     /// Adds all certificates and revocation lists from a storage.

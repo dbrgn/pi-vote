@@ -23,6 +23,7 @@ namespace Pirate.PiVote.Crypto
     Outdated,
     NotYetValid,
     Revoked,
+    CrlMissing,
     SignerInvalid,
     UnknownSigner,
     SignatureDataInvalid

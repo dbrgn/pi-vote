@@ -9,6 +9,7 @@ cp -r ../../client/bin/release/fr-FR ./package/opt/pivote/
 cp ../../client/bin/release/Emil.GMP.dll ./package/opt/pivote/
 cp ../../client/bin/release/MySql.Data.dll ./package/opt/pivote/
 cp ../../client/bin/release/Pirate.PiVote.Client.exe ./package/opt/pivote/
+cp ../../client/bin/release/Pirate.PiVote.Gui.dll ./package/opt/pivote/
 cp ../../client/bin/release/Pirate.PiVote.dll ./package/opt/pivote/
 cp -r ../files-linux/* ./package/opt/pivote/
 

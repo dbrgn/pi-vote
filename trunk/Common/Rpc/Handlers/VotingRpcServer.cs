@@ -215,12 +215,12 @@ namespace Pirate.PiVote.Rpc
       if (authorities == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "Authority list cannot be null.");
 
-      if (!signedVotingParameters.Verify(CertificateStorage))
+      VotingParameters votingParameters = signedVotingParameters.Value;
+
+      if (!signedVotingParameters.Verify(CertificateStorage, votingParameters.VotingBeginDate))
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Invalid signature.");
       if (!(signedVotingParameters.Certificate is AdminCertificate))
         throw new PiSecurityException(ExceptionCode.NoAuthorizedAdmin, "No authorized admin.");
-
-      VotingParameters votingParameters = signedVotingParameters.Value;
 
       if (votingParameters.P == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "P cannot be null.");
@@ -252,7 +252,7 @@ namespace Pirate.PiVote.Rpc
 
       if (votingParameters.AuthorityCount != authorities.Count())
         throw new PiArgumentException(ExceptionCode.AuthorityCountMismatch, "Authority count does not match number of provided authorities.");
-      if (!authorities.All(authority => authority.Validate(CertificateStorage) == CertificateValidationResult.Valid))
+      if (!authorities.All(authority => authority.Validate(CertificateStorage, votingParameters.VotingBeginDate) == CertificateValidationResult.Valid))
         throw new PiArgumentException(ExceptionCode.AuthorityInvalid, "Authority certificate invalid or not recognized.");
 
       MySqlCommand insertCommand = new MySqlCommand("INSERT INTO voting (Id, Parameters, Status) VALUES (@Id, @Parameters, @Status)", DbConnection);
@@ -578,8 +578,10 @@ namespace Pirate.PiVote.Rpc
     /// <param name="certificateStorage">Certificate storage to add.</param>
     public void AddCertificateStorage(CertificateStorage certificateStorage)
     {
-      if (!certificateStorage.SignedRevocationLists.All(crl => crl.Verify(CertificateStorage)))
-        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature on CRL not valid.");
+      if (!certificateStorage.SignedRevocationLists.All(crl => crl.Certificate is CACertificate &&
+                                                               crl.Value.IssuerId.Equals(crl.Certificate.Id) &&
+                                                               crl.Verify(CertificateStorage)))
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature on CRL or issuer not valid.");
       if (!certificateStorage.Certificates.All(certificate => certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid))
         throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Certificate not valid.");
 

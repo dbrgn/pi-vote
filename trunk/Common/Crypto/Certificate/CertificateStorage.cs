@@ -237,7 +237,7 @@ namespace Pirate.PiVote.Crypto
     /// <param name="issuerId">Id of the issuer of a signature.</param>
     /// <param name="certificateId">Id of the certificate.</param>
     /// <returns>Is it revoked.</returns>
-    public bool IsRevoked(Guid issuerId, Guid certificateId, DateTime date)
+    public CertificateValidationResult IsRevoked(Guid issuerId, Guid certificateId, DateTime date)
     {
       RevocationList revocationList = this.revocationLists
         .Where(list => list.IssuerId == issuerId &&
@@ -247,11 +247,18 @@ namespace Pirate.PiVote.Crypto
 
       if (revocationList == null)
       {
-        return true;
+        return CertificateValidationResult.CrlMissing;
       }
       else
       {
-        return revocationList.RevokedCertificates.Contains(certificateId);
+        if (revocationList.RevokedCertificates.Contains(certificateId))
+        {
+          return CertificateValidationResult.Revoked;
+        }
+        else
+        {
+          return CertificateValidationResult.Valid;
+        }
       }
     }
 

@@ -363,14 +363,7 @@ namespace Pirate.PiVote.Crypto
 
             if (result == CertificateValidationResult.Valid)
             {
-              if (certificateStorage.IsRevoked(signature.SignerId, Id, date))
-              {
-                result = CertificateValidationResult.Revoked;
-              }
-              else
-              {
-                return CertificateValidationResult.Valid;
-              }
+              return certificateStorage.IsRevoked(signature.SignerId, Id, date);
             }
           }
 

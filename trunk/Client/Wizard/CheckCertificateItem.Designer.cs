@@ -64,7 +64,6 @@ namespace Pirate.PiVote.Client
       this.Margin = new System.Windows.Forms.Padding(1);
       this.Name = "CheckCertificateItem";
       this.Size = new System.Drawing.Size(467, 359);
-      this.Load += new System.EventHandler(this.StartWizardItem_Load);
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
       this.ResumeLayout(false);
 

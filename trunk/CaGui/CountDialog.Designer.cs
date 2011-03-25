@@ -238,6 +238,7 @@ namespace Pirate.PiVote.CaGui
       this.Controls.Add(this.totalLabel);
       this.Controls.Add(this.datePicker);
       this.Controls.Add(this.dateLabel);
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.MinimumSize = new System.Drawing.Size(200, 27);

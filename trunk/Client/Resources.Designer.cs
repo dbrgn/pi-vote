@@ -573,6 +573,15 @@ namespace Pirate.PiVote.Client {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to There is no valid certificate revocation list..
+        /// </summary>
+        internal static string CheckCertificateCrlMissing {
+            get {
+                return ResourceManager.GetString("CheckCertificateCrlMissing", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap CheckCertificateItem {
             get {
                 object obj = ResourceManager.GetObject("CheckCertificateItem", resourceCulture);
@@ -1189,6 +1198,15 @@ namespace Pirate.PiVote.Client {
         internal static string CreateVotingGroup {
             get {
                 return ResourceManager.GetString("CreateVotingGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following authorities are not valid on the voting begin date:.
+        /// </summary>
+        internal static string CreateVotingInvalidAuthorities {
+            get {
+                return ResourceManager.GetString("CreateVotingInvalidAuthorities", resourceCulture);
             }
         }
         

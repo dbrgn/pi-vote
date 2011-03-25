@@ -310,6 +310,18 @@ namespace Pirate.PiVote.Client
       authorities.Add(this.authorityCertificates[this.authority2List.SelectedIndex]);
       authorities.Add(this.authorityCertificates[this.authority3List.SelectedIndex]);
       authorities.Add(this.authorityCertificates[this.authority4List.SelectedIndex]);
+
+      var invalidAuthorities = authorities
+        .Where(authority => authority.Validate(Status.CertificateStorage, votingParameters.VotingBeginDate) != CertificateValidationResult.Valid);
+
+      if (invalidAuthorities.Count() > 0)
+      {
+        StringBuilder message = new StringBuilder();
+        message.AppendLine(Resources.CreateVotingInvalidAuthorities);
+        invalidAuthorities.Foreach(authority => message.AppendLine(authority.Id.ToString() + " " + authority.FullName));
+        MessageForm.Show(message.ToString(), GuiResources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+      }
+
       var authoritiesFile = new VotingAuthoritiesFile(authorities);
       authoritiesFile.Save(Path.Combine(Status.DataPath, SavedVotingAuthoritiesFileName));
 

@@ -54,13 +54,13 @@ namespace Pirate.PiVote.Gui
       this.infoBox.Name = "infoBox";
       this.infoBox.ReadOnly = true;
       this.infoBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.infoBox.Size = new System.Drawing.Size(430, 126);
+      this.infoBox.Size = new System.Drawing.Size(430, 146);
       this.infoBox.TabIndex = 1;
       // 
       // rightButton
       // 
       this.rightButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.rightButton.Location = new System.Drawing.Point(389, 145);
+      this.rightButton.Location = new System.Drawing.Point(389, 165);
       this.rightButton.Name = "rightButton";
       this.rightButton.Size = new System.Drawing.Size(91, 28);
       this.rightButton.TabIndex = 2;
@@ -71,7 +71,7 @@ namespace Pirate.PiVote.Gui
       // middleButton
       // 
       this.middleButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.middleButton.Location = new System.Drawing.Point(292, 145);
+      this.middleButton.Location = new System.Drawing.Point(292, 165);
       this.middleButton.Name = "middleButton";
       this.middleButton.Size = new System.Drawing.Size(91, 28);
       this.middleButton.TabIndex = 3;
@@ -82,7 +82,7 @@ namespace Pirate.PiVote.Gui
       // leftbutton
       // 
       this.leftbutton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.leftbutton.Location = new System.Drawing.Point(195, 145);
+      this.leftbutton.Location = new System.Drawing.Point(195, 165);
       this.leftbutton.Name = "leftbutton";
       this.leftbutton.Size = new System.Drawing.Size(91, 28);
       this.leftbutton.TabIndex = 4;
@@ -103,7 +103,7 @@ namespace Pirate.PiVote.Gui
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(492, 186);
+      this.ClientSize = new System.Drawing.Size(492, 205);
       this.ControlBox = false;
       this.Controls.Add(this.iconBox);
       this.Controls.Add(this.leftbutton);

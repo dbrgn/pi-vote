@@ -764,4 +764,10 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="AddOptionOkButton" xml:space="preserve">
     <value>&amp;OK</value>
   </data>
+  <data name="CheckCertificateCrlMissing" xml:space="preserve">
+    <value>There is no valid certificate revocation list.</value>
+  </data>
+  <data name="CreateVotingInvalidAuthorities" xml:space="preserve">
+    <value>The following authorities are not valid on the voting begin date:</value>
+  </data>
 </root>

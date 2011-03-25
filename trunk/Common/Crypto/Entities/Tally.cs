@@ -243,7 +243,7 @@ namespace Pirate.PiVote.Crypto
     {
       PartialDecipherList partialDeciphersList = signedPartialDecipherList.Value;
 
-      if (!(signedPartialDecipherList.Verify(this.certificateStorage, partialDeciphersList.Date) &&
+      if (!(signedPartialDecipherList.Verify(this.certificateStorage, this.parameters.VotingBeginDate) &&
         partialDeciphersList.Date.Date >= this.parameters.VotingEndDate &&
         partialDeciphersList.Date.Date <= DateTime.Now.Date) &&
         signedPartialDecipherList.Certificate is AuthorityCertificate)

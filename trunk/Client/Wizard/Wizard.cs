@@ -58,7 +58,7 @@ namespace Pirate.PiVote.Client
 
       if (!this.status.CertificateStorage.TryLoadRoot())
       {
-        MessageBox.Show(Resources.MessageBoxRootNotFound, GuiResources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageForm.Show(Resources.MessageBoxRootNotFound, GuiResources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         Close();
         return;
       }

@@ -234,38 +234,10 @@ namespace Pirate.PiVote.Crypto
       RevocationList revocationList = signedRevocationList.Value;
       if (revocationList.IssuerId != signedRevocationList.Certificate.Id)
         throw new ArgumentException("Wrong signer of revocation list.");
+      if (signedRevocationList.Certificate is CACertificate)
+        throw new ArgumentException("Certificate is not from proper CA.");
       if (!signedRevocationList.Verify(this))
         throw new ArgumentException("Bad signature on revocation list.");
-
-      MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", DbConnection);
-      command.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
-      command.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom.ToString("yyyy-MM-dd"));
-      command.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil.ToString("yyyy-MM-dd"));
-      MySqlDataReader reader = command.ExecuteReader();
-
-      if (!reader.Read())
-      {
-        reader.Close();
-
-        MySqlCommand insertCommand = new MySqlCommand("INSERT INTO revocationlist (IssuerId, ValidFrom, ValidUntil, Value) VALUES (@IssuerId, @ValidFrom, @ValidUntil, @Value)", DbConnection);
-        insertCommand.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
-        insertCommand.Parameters.AddWithValue("@ValidFrom", revocationList.ValidFrom.ToString("yyyy-MM-dd"));
-        insertCommand.Parameters.AddWithValue("@ValidUntil", revocationList.ValidUntil.ToString("yyyy-MM-dd"));
-        insertCommand.Parameters.AddWithValue("@Value", signedRevocationList.ToBinary());
-        insertCommand.ExecuteNonQuery();
-      }
-      else
-      {
-        reader.Close();
-      }
-    }
-    /// <summary>
-    /// Set a certificate revocation list even if its not valid.
-    /// </summary>
-    /// <param name="signedRevocationList">Signed certificate revocation list.</param>
-    private void ForceAddRevocationList(Signed<RevocationList> signedRevocationList)
-    {
-      RevocationList revocationList = signedRevocationList.Value;
 
       MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND ValidFrom = @ValidFrom AND ValidUntil = @ValidUntil", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", revocationList.IssuerId.ToByteArray());
@@ -296,14 +268,14 @@ namespace Pirate.PiVote.Crypto
     /// <param name="issuerId">Id of the issuer of a signature.</param>
     /// <param name="certificateId">Id of the certificate.</param>
     /// <returns>Is it revoked.</returns>
-    public bool IsRevoked(Guid issuerId, Guid certificateId, DateTime date)
+    public CertificateValidationResult IsRevoked(Guid issuerId, Guid certificateId, DateTime date)
     {
       MySqlCommand command = new MySqlCommand("SELECT Value FROM revocationlist WHERE IssuerId = @IssuerId AND @Date >= ValidFrom AND @Date <= ValidUntil", DbConnection);
       command.Parameters.AddWithValue("@IssuerId", issuerId.ToByteArray());
       command.Parameters.AddWithValue("@Date", date.Date.ToString("yyyy-MM-dd"));
 
       MySqlDataReader reader = command.ExecuteReader();
-      bool isRevoked;
+      CertificateValidationResult result;
 
       if (reader.Read())
       {
@@ -311,16 +283,23 @@ namespace Pirate.PiVote.Crypto
         Signed<RevocationList> signedRevocationList = Serializable.FromBinary<Signed<RevocationList>>(revocationListData);
         RevocationList revocationList = signedRevocationList.Value;
 
-        isRevoked = revocationList.RevokedCertificates.Contains(certificateId);
+        if (revocationList.RevokedCertificates.Contains(certificateId))
+        {
+          return CertificateValidationResult.Revoked;
+        }
+        else
+        {
+          return CertificateValidationResult.Valid;
+        }
       }
       else
       {
-        isRevoked = true;
+        result = CertificateValidationResult.CrlMissing;
       }
 
       reader.Close();
 
-      return isRevoked;
+      return result;
     }
 
     /// <summary>
@@ -332,10 +311,10 @@ namespace Pirate.PiVote.Crypto
     /// <param name="certificateStorage">Certificate storage to add.</param>
     public void Add(ICertificateStorage certificateStorage)
     {
+      certificateStorage.SignedRevocationLists
+        .Foreach(reveocationList => AddRevocationList(reveocationList));
       certificateStorage.Certificates
         .Foreach(certificate => Add(certificate));
-      certificateStorage.SignedRevocationLists
-        .Foreach(reveocationList => ForceAddRevocationList(reveocationList));
     }
 
     /// <summary>

@@ -30,6 +30,7 @@ namespace Pirate.PiVote.Client
     private Exception exception;
     private bool canNext = false;
     private bool dnsError = false;
+    private bool done = false;
 
     public StartItem()
     {
@@ -107,7 +108,7 @@ namespace Pirate.PiVote.Client
 
     public override bool CanCancel
     {
-      get { return true; }
+      get { return this.done; }
     }
 
     public override bool CanNext
@@ -136,6 +137,130 @@ namespace Pirate.PiVote.Client
 
     public override void Begin()
     {
+      CheckCertificates();
+      SetDefaultLanguage();
+
+      OnUpdateWizard();
+
+      if (!Status.VotingClient.Connected)
+      {
+        if (TryConnect() &&
+            TryGetConfig() &&
+            TryGetCertificateStorage())
+        {
+          CheckUpdate();
+          this.canNext = true;
+        }
+      }
+      else
+      {
+        Status.SetMessage(Resources.StartReady, MessageType.Success);
+        CheckUpdate();
+        this.canNext = true;
+      }
+
+      this.done = true;
+
+      OnUpdateWizard();
+    }
+
+    private bool TryGetConfig()
+    {
+      Status.SetProgress(Resources.StartGettingConfig, 0.3d);
+      this.run = true;
+      Status.VotingClient.GetConfig(GetConfigComplete);
+
+      while (this.run)
+      {
+        Status.UpdateProgress();
+        Thread.Sleep(10);
+      }
+
+      if (this.exception == null)
+      {
+        UpdateMessages();
+        return true;
+      }
+      else
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
+        return false;
+      }
+    }
+
+    private bool TryGetCertificateStorage()
+    {
+      Status.SetProgress(Resources.StartGettingCertificates, 0.6d);
+      this.run = true;
+      Status.VotingClient.GetCertificateStorage(Status.CertificateStorage, GetCertificateStorageComplete);
+
+      while (this.run)
+      {
+        Status.UpdateProgress();
+        Thread.Sleep(10);
+      }
+
+      if (this.exception == null)
+      {
+        Status.SetMessage(Resources.StartReady, MessageType.Success);
+        return true;
+      }
+      else if (this.exception is PiException &&
+        ((PiException)this.exception).Code == ExceptionCode.ServerCertificateInvalid)
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
+        return true;
+      }
+      else
+      {
+        Status.SetMessage(this.exception.Message, MessageType.Error);
+        return false;
+      }
+    }
+
+    private bool TryConnect()
+    {
+      IPEndPoint serverEndPoint = Status.ServerEndPoint;
+      IPEndPoint proxyEndPoint = Status.ProxyEndPoint;
+
+      if (serverEndPoint == null)
+      {
+        Status.SetMessage(Resources.StartDnsError, MessageType.Error);
+        this.dnsError = true;
+        return false;
+      }
+
+      Status.SetProgress(Resources.StartConnecting, 0d);
+      this.run = true;
+      Status.VotingClient.Connect(serverEndPoint, proxyEndPoint, ConnectComplete);
+
+      while (this.run)
+      {
+        Status.UpdateProgress();
+        Thread.Sleep(10);
+      }
+
+      if (this.exception == null)
+      {
+        return true;
+      }
+      else
+      {
+        if (this.exception is SocketException)
+        {
+          Status.SetMessage(Resources.StartConnectError, MessageType.Error);
+        }
+        else
+        {
+          Status.SetMessage(this.exception.Message, MessageType.Error);
+        }
+
+        return false;
+      }
+    }
+
+    private void CheckCertificates()
+    {
       DirectoryInfo directory = new DirectoryInfo(Status.DataPath);
       IEnumerable<FileInfo> certificateFiles = directory.GetFiles("*.pi-cert");
 
@@ -148,7 +273,10 @@ namespace Pirate.PiVote.Client
       {
         this.votingRadio.Checked = true;
       }
-      
+    }
+
+    private void SetDefaultLanguage()
+    {
       if (!this.englishRadio.Checked &&
           !this.germanRadio.Checked &&
           !this.frenchRadio.Checked)
@@ -168,92 +296,6 @@ namespace Pirate.PiVote.Client
       }
 
       this.versionLabel.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
-      OnUpdateWizard();
-
-      if (!Status.VotingClient.Connected)
-      {
-        IPEndPoint serverEndPoint = Status.ServerEndPoint;
-        IPEndPoint proxyEndPoint = Status.ProxyEndPoint;
-
-        if (serverEndPoint == null)
-        {
-          Status.SetMessage(Resources.StartDnsError, MessageType.Error);
-          this.dnsError = true;
-          return;
-        }
-
-        Status.SetProgress(Resources.StartConnecting, 0d);
-        this.run = true;
-        Status.VotingClient.Connect(serverEndPoint, proxyEndPoint, ConnectComplete);
-
-        while (this.run)
-        {
-          Status.UpdateProgress();
-          Thread.Sleep(10);
-        }
-
-        if (this.exception != null)
-        {
-          if (this.exception is SocketException)
-          {
-            Status.SetMessage(Resources.StartConnectError, MessageType.Error);
-          }
-          else
-          {
-            Status.SetMessage(this.exception.Message, MessageType.Error);
-          }
-          return;
-        }
-
-        Status.SetProgress(Resources.StartGettingConfig, 0.3d);
-        this.run = true;
-        Status.VotingClient.GetConfig(GetConfigComplete);
-
-        while (this.run)
-        {
-          Status.UpdateProgress();
-          Thread.Sleep(10);
-        }
-
-        if (this.exception == null)
-        {
-          UpdateMessages();
-
-          Status.SetProgress(Resources.StartGettingCertificates, 0.6d);
-          this.run = true;
-          Status.VotingClient.GetCertificateStorage(Status.CertificateStorage, GetCertificateStorageComplete);
-
-          while (this.run)
-          {
-            Status.UpdateProgress();
-            Thread.Sleep(10);
-          }
-
-          if (this.exception == null)
-          {
-            Status.SetMessage(Resources.StartReady, MessageType.Success);
-            CheckUpdate();
-            this.canNext = true;
-          }
-          else
-          {
-            Status.SetMessage(this.exception.Message, MessageType.Error);
-          }
-        }
-        else
-        {
-          Status.SetMessage(this.exception.Message, MessageType.Error);
-        }
-      }
-      else
-      {
-        Status.SetMessage(Resources.StartReady, MessageType.Success);
-        CheckUpdate();
-        this.canNext = true;
-      }
-
-      OnUpdateWizard();
     }
 
     private void GetConfigComplete(IRemoteConfig config, IEnumerable<Group> groups, Exception exception)

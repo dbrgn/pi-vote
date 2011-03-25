@@ -14,6 +14,7 @@
 	cp ../client/bin/release/Emil.GMP.dll $tmp/
 	cp ../client/bin/release/MySql.Data.dll $tmp/
 	cp ../client/bin/release/Pirate.PiVote.Client.exe $tmp/
+	cp ../client/bin/release/Pirate.PiVote.Gui.dll $tmp/
 	cp ../client/bin/release/Pirate.PiVote.dll $tmp/
 	cp -r ./files-linux/* $tmp/
 	$name = "PiVote_Client_Linux_x86_" + $version + ".zip"
@@ -32,6 +33,7 @@
 	cp ../client/bin/release/Emil.GMP.dll $tmp/
 	cp ../client/bin/release/MySql.Data.dll $tmp/
 	cp ../client/bin/release/Pirate.PiVote.Client.exe $tmp/
+	cp ../client/bin/release/Pirate.PiVote.Gui.dll $tmp/
 	cp ../client/bin/release/Pirate.PiVote.dll $tmp/
 	cp -r ./files-windows/* $tmp/
 	cp -r ./files-linux/* $tmp/

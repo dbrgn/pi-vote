@@ -442,7 +442,7 @@ namespace Pirate.PiVote.Crypto
 
       Certificate certificate = GetAuthority(sharePart.AuthorityIndex);
 
-      if (!signedSharePart.Verify(this.certificateStorage))
+      if (!signedSharePart.Verify(this.certificateStorage, Parameters.VotingBeginDate))
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Bad signature.");
       if (!signedSharePart.Certificate.IsIdentic(certificate))
         throw new PiSecurityException(ExceptionCode.NoAuthorizedAuthority, "Not signed by proper authority.");
@@ -534,7 +534,7 @@ namespace Pirate.PiVote.Crypto
 
       Certificate certificate = GetAuthority(shareResponse.AuthorityIndex);
 
-      if (!signedShareResponse.Verify(this.certificateStorage))
+      if (!signedShareResponse.Verify(this.certificateStorage, Parameters.VotingBeginDate))
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Bad signature.");
       if (!signedShareResponse.Certificate.IsIdentic(certificate))
         throw new PiSecurityException(ExceptionCode.NoAuthorizedAuthority, "Not signed by proper authority.");
@@ -702,7 +702,7 @@ namespace Pirate.PiVote.Crypto
 
       Certificate certificate = GetAuthority(partialDecipherList.AuthorityIndex);
 
-      if (!signedPartialDecipherList.Verify(this.certificateStorage))
+      if (!signedPartialDecipherList.Verify(this.certificateStorage, Parameters.VotingBeginDate))
         throw new PiArgumentException(ExceptionCode.InvalidSignature, "Bad signature.");
       if (!signedPartialDecipherList.Certificate.IsIdentic(certificate))
         throw new PiArgumentException(ExceptionCode.AuthorityInvalid, "Not signed by proper authority.");
