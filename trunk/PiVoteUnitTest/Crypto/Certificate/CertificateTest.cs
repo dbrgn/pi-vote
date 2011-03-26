@@ -188,12 +188,12 @@ namespace Pirate.PiVote.UnitTest
       Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(7)));
       Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(8)));
       Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(9)));
-      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(10)));
-      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(11)));
-      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(12)));
-      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddDays(30)));
-      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddYears(1)));
-      Assert.AreEqual(CertificateValidationResult.Revoked, test.Validate(storage, DateTime.Now.AddYears(5)));
+      Assert.AreEqual(CertificateValidationResult.CrlMissing, test.Validate(storage, DateTime.Now.AddDays(10)));
+      Assert.AreEqual(CertificateValidationResult.CrlMissing, test.Validate(storage, DateTime.Now.AddDays(11)));
+      Assert.AreEqual(CertificateValidationResult.CrlMissing, test.Validate(storage, DateTime.Now.AddDays(12)));
+      Assert.AreEqual(CertificateValidationResult.CrlMissing, test.Validate(storage, DateTime.Now.AddDays(30)));
+      Assert.AreEqual(CertificateValidationResult.CrlMissing, test.Validate(storage, DateTime.Now.AddYears(1)));
+      Assert.AreEqual(CertificateValidationResult.CrlMissing, test.Validate(storage, DateTime.Now.AddYears(5)));
     }
 
     [TestMethod]

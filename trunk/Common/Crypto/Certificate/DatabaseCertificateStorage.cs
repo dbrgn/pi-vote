@@ -285,11 +285,11 @@ namespace Pirate.PiVote.Crypto
 
         if (revocationList.RevokedCertificates.Contains(certificateId))
         {
-          return CertificateValidationResult.Revoked;
+          result = CertificateValidationResult.Revoked;
         }
         else
         {
-          return CertificateValidationResult.Valid;
+          result = CertificateValidationResult.Valid;
         }
       }
       else
