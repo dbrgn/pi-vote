@@ -217,6 +217,7 @@ namespace Pirate.PiVote.Client
       this.exception = exception;
       this.response = response;
       this.responseStatus = status;
+      this.run = false;
     }
 
     private void CheckValidityOfOther()

@@ -244,7 +244,7 @@
     <value>No signature request on server.</value>
   </data>
   <data name="ClientGetSignatureResponse" xml:space="preserve">
-    <value>Set signature response.</value>
+    <value>Fetching response to signature request.</value>
   </data>
   <data name="ClientGetVotingList" xml:space="preserve">
     <value>Getting voting list.</value>

@@ -244,7 +244,7 @@
     <value>Keine Zertifizierungsanfragen auf dem Server.</value>
   </data>
   <data name="ClientGetSignatureResponse" xml:space="preserve">
-    <value>Lade Antworten auf Zertifizierungsanfragen hinauf.</value>
+    <value>Lade Antwort auf Zertifizierungsanfragen herunter.</value>
   </data>
   <data name="ClientGetVotingList" xml:space="preserve">
     <value>Lade Liste der Abstimmungen herunter.</value>

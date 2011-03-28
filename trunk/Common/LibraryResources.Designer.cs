@@ -700,7 +700,7 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set signature response..
+        ///   Looks up a localized string similar to Fetching response to signature request..
         /// </summary>
         public static string ClientGetSignatureResponse {
             get {

@@ -46,6 +46,26 @@
 	mv -force $tmp\$name $output\
 	rmif $tmp
 
+	$tmp = "./admin-package"
+	rmif $tmp
+	mkif $tmp
+	cp -r ../cagui/bin/release/de-DE $tmp/
+	cp -r ../cagui/bin/release/fr-FR $tmp/
+	cp ../cagui/bin/release/Emil.GMP.dll $tmp/
+	cp ../cagui/bin/release/MySql.Data.dll $tmp/
+	cp ../cagui/bin/release/CaGui.exe $tmp/
+	cp ../cagui/bin/release/Pirate.PiVote.Gui.dll $tmp/
+	cp ../cagui/bin/release/Pirate.PiVote.dll $tmp/
+	cp -r ./files-windows/* $tmp/
+	cp -r ./files-linux/* $tmp/
+	$name = "PiVote_Admin_Package_x86_" + $version + ".zip"
+	pushd
+	cd $tmp
+	& $zip a -tzip -r $name *
+	popd
+	mv -force $tmp\$name $output\
+	rmif $tmp
+
 	$name = "PiVote_Client_Windows_x86_" + $version + ".zip"
 	& $zip a -tzip $name ..\PiVoteClientSetup\Release\PiVoteClientSetup.msi
 	mv -force $name $output\
