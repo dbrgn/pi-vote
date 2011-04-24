@@ -186,11 +186,31 @@ namespace Pirate.PiVote.Client
       if (File.Exists(fileNameAuthorities))
       {
         VotingAuthoritiesFile authoritiesFile = Serializable.Load<VotingAuthoritiesFile>(fileNameAuthorities);
-        this.authority0List.SelectedIndex = this.authorityIndices[this.authority0List][authoritiesFile.AuthorityIds.ElementAt(0)];
-        this.authority1List.SelectedIndex = this.authorityIndices[this.authority1List][authoritiesFile.AuthorityIds.ElementAt(1)];
-        this.authority2List.SelectedIndex = this.authorityIndices[this.authority2List][authoritiesFile.AuthorityIds.ElementAt(2)];
-        this.authority3List.SelectedIndex = this.authorityIndices[this.authority3List][authoritiesFile.AuthorityIds.ElementAt(3)];
-        this.authority4List.SelectedIndex = this.authorityIndices[this.authority4List][authoritiesFile.AuthorityIds.ElementAt(4)];
+
+        if (this.authorityIndices[this.authority0List].ContainsKey(authoritiesFile.AuthorityIds.ElementAt(0)))
+        {
+          this.authority0List.SelectedIndex = this.authorityIndices[this.authority0List][authoritiesFile.AuthorityIds.ElementAt(0)];
+        }
+
+        if (this.authorityIndices[this.authority1List].ContainsKey(authoritiesFile.AuthorityIds.ElementAt(1)))
+        {
+          this.authority1List.SelectedIndex = this.authorityIndices[this.authority1List][authoritiesFile.AuthorityIds.ElementAt(1)];
+        }
+
+        if (this.authorityIndices[this.authority2List].ContainsKey(authoritiesFile.AuthorityIds.ElementAt(2)))
+        {
+          this.authority2List.SelectedIndex = this.authorityIndices[this.authority2List][authoritiesFile.AuthorityIds.ElementAt(2)];
+        }
+
+        if (this.authorityIndices[this.authority3List].ContainsKey(authoritiesFile.AuthorityIds.ElementAt(3)))
+        {
+          this.authority3List.SelectedIndex = this.authorityIndices[this.authority3List][authoritiesFile.AuthorityIds.ElementAt(3)];
+        }
+
+        if (this.authorityIndices[this.authority4List].ContainsKey(authoritiesFile.AuthorityIds.ElementAt(4)))
+        {
+          this.authority4List.SelectedIndex = this.authorityIndices[this.authority4List][authoritiesFile.AuthorityIds.ElementAt(4)];
+        }
       }
 
       SetEnable(true);

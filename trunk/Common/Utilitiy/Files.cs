@@ -45,6 +45,9 @@ namespace Pirate.PiVote
     public const string DataFolder = "PiVote";
     public const string PortableDataFolder = "Data";
     public const string BakExtension = ".bak";
+    public const string VoteReceiptExtension = ".pi-receipt";
+    public const string VoteReceiptPattern = "*.pi-receipt";
+    private const string VoteReceiptFileNameBuild = "{0}@{1}.pi-receipt";
 
     public static string TestDataPath
     {
@@ -52,6 +55,11 @@ namespace Pirate.PiVote
       {
         return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), DataFolder);
       }
+    }
+
+    public static string VoteReceiptFileName(Guid voterCertificateId, Guid votingId)
+    {
+      return string.Format(VoteReceiptFileNameBuild, voterCertificateId.ToString(), votingId.ToString());
     }
   }
 }

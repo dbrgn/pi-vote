@@ -7,23 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
-using System.IO;
 using System.Windows.Forms;
-using System.Net;
-using System.Threading;
-using Pirate.PiVote.Rpc;
+using Pirate.PiVote;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Rpc;
 
-namespace Pirate.PiVote.Circle
+namespace Pirate.PiVote.Circle.Vote
 {
   public partial class QuestionControl : UserControl
   {
-    private Dictionary<OptionDescriptor, VoteOptionControl> optionControls;
-
-    public QuestionDescriptor Question { get; set; }
+    private const int Space = 16;
+    private Dictionary<int, RadioButton> singleOptionControls;
+    private Dictionary<int, CheckBox> multiOptionControls;
+    private QuestionDescriptor question;
 
     public event EventHandler ValidChanged;
 
@@ -32,71 +33,90 @@ namespace Pirate.PiVote.Circle
       InitializeComponent();
     }
 
-    public void Display(bool enable)
+    public void Display(QuestionDescriptor question)
     {
-      if (Question == null)
-        throw new InvalidOperationException("Question must not be null.");
+      this.question = question;
 
-      this.questionLabel.Text = Question.Text.Text;
-      this.descriptionButton.Text = Resources.VoteDescriptionButton;
+      this.textControl.Title = question.Text.Text;
+      this.textControl.Description = question.Description.Text;
+      this.textControl.Url = question.Url.Text;
+      this.textControl.FixLayout();
+      this.textControl.BeginInfo();
 
-      if (Question.MaxOptions > 1)
+      if (question.MaxOptions == 1)
       {
-        this.maxOptionsLabel.Text = string.Format(Resources.VoteMaxOptions, Question.MaxOptions);
+        this.maxOptionLabel.Text = "You must select one option.";
+        this.singleOptionControls = new Dictionary<int, RadioButton>();
+        int index = 0;
+        int top = Space;
+
+        foreach (OptionDescriptor option in question.Options)
+        {
+          InfoControl optionInfo = new InfoControl();
+          optionInfo.Title = string.Empty;
+          optionInfo.Description = option.Description.Text;
+          optionInfo.Url = option.Url.Text;
+          optionInfo.Left = Space;
+          optionInfo.Top = top;
+          optionInfo.Width = this.optionsPanel.Width - (2 * Space);
+          optionInfo.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+          this.optionsPanel.Controls.Add(optionInfo);
+          optionInfo.BeginInfo();
+
+          RadioButton optionControl = new RadioButton();
+          optionControl.Text = option.Text.Text;
+          optionControl.Left = Space;
+          optionControl.Top = top;
+          this.optionsPanel.Controls.Add(optionControl);
+          optionControl.BringToFront();
+          optionControl.CheckedChanged += new EventHandler(OptionControl_CheckedChanged);
+          this.singleOptionControls.Add(index, optionControl);
+
+          top += optionControl.Height + Space;
+          index++;
+        }
       }
       else
       {
-        this.maxOptionsLabel.Text = Resources.VoteSingleOption;
-      }
+        this.maxOptionLabel.Text = string.Format("You can select up to {0} options", question.MaxOptions);
+        this.multiOptionControls = new Dictionary<int, CheckBox>();
+        int index = 0;
+        int top = Space;
 
-      int space = 2;
-      int top = this.maxOptionsLabel.Top + this.maxOptionsLabel.Height + space;
-      this.optionControls = new Dictionary<OptionDescriptor, VoteOptionControl>();
-
-      foreach (OptionDescriptor option in Question.Options)
-      {
-        if (option.Text.Text == Resources.OptionAbstainSpecial)
+        foreach (OptionDescriptor option in question.Options)
         {
-          this.optionControls.Add(option, null);
-        }
-        else
-        {
-          VoteOptionControl optionControl = new VoteOptionControl();
-          optionControl.Option = option;
-          optionControl.MultiOption = Question.MaxOptions > 1;
-          optionControl.Top = top;
-          optionControl.Width = Width;
-          optionControl.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-          optionControl.CheckedChanged += OptionControl_CheckedChanged;
-          optionControl.Display(enable);
-          Controls.Add(optionControl);
-          this.optionControls.Add(option, optionControl);
+          if (option.Text.Text != Resources.OptionAbstainSpecial)
+          {
+            InfoControl optionInfo = new InfoControl();
+            optionInfo.Title = string.Empty;
+            optionInfo.Description = option.Description.Text;
+            optionInfo.Url = option.Url.Text;
+            optionInfo.Left = Space;
+            optionInfo.Top = top;
+            optionInfo.Width = this.optionsPanel.Width - (2 * Space);
+            optionInfo.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+            this.optionsPanel.Controls.Add(optionInfo);
+            optionInfo.BeginInfo();
 
-          top += optionControl.Height + space;
+            CheckBox optionControl = new CheckBox();
+            optionControl.Text = option.Text.Text;
+            optionControl.Left = Space;
+            optionControl.Top = top;
+            this.optionsPanel.Controls.Add(optionControl);
+            optionControl.BringToFront();
+            optionControl.CheckedChanged += new EventHandler(OptionControl_CheckedChanged);
+            this.multiOptionControls.Add(index, optionControl);
+
+            top += optionControl.Height + Space;
+          }
+
+          index++;
         }
       }
-
-      this.Height = top + this.optionControls.Values.First().Height;
     }
 
     private void OptionControl_CheckedChanged(object sender, EventArgs e)
     {
-      if (Question.MaxOptions < 2)
-      {
-        VoteOptionControl activeControl = (VoteOptionControl)sender;
-
-        if (activeControl.Checked)
-        {
-          foreach (VoteOptionControl optionControl in this.optionControls.Values)
-          {
-            if (optionControl != activeControl)
-            {
-              optionControl.Checked = false;
-            }
-          }
-        }
-      }
-
       OnValidChanged();
     }
 
@@ -108,56 +128,77 @@ namespace Pirate.PiVote.Circle
       }
     }
 
-    public bool Valid
-    {
-      get
-      {
-        if (Question == null)
-        {
-          return false;
-        }
-        else if (Question.MaxOptions > 1)
-        {
-          return this.optionControls.Values.Count(optionControl => optionControl != null && optionControl.Checked) <= Question.MaxOptions;
-        }
-        else 
-        {
-          return this.optionControls.Values.Count(optionControl => optionControl != null && optionControl.Checked) == Question.MaxOptions;
-        }
-      }
-    }
-
     public IEnumerable<bool> Vota
     {
       get
       {
-        List<bool> vota = new List<bool>();
-        int abstainCount = Question.MaxOptions - this.optionControls.Values.Count(optionControl => optionControl != null && optionControl.Checked);
+        bool[] vota = new bool[this.question.Options.Count()];
+        int index = 0;
+        int selectedOptionCount = 0;
 
-        foreach (OptionDescriptor option in Question.Options)
+        foreach (OptionDescriptor option in this.question.Options)
         {
-          if (this.optionControls[option] != null)
+          if (this.singleOptionControls != null)
           {
-            vota.Add(this.optionControls[option].Checked);
+            if (this.singleOptionControls.ContainsKey(index))
+            {
+              vota[index] = this.singleOptionControls[index].Checked;
+              selectedOptionCount += vota[index] ? 1 : 0;
+            }
           }
-          else if (abstainCount > 0)
+          else if (this.multiOptionControls != null)
           {
-            abstainCount--;
-            vota.Add(true);
+            if (this.multiOptionControls.ContainsKey(index))
+            {
+              vota[index] = this.multiOptionControls[index].Checked;
+              selectedOptionCount += vota[index] ? 1 : 0;
+            }
           }
           else
           {
-            vota.Add(false);
+            throw new InvalidOperationException("Not ready.");
           }
+
+          index++;
         }
 
-        return vota.ToArray();
+        index = 0;
+
+        foreach (OptionDescriptor option in this.question.Options)
+        {
+          if (selectedOptionCount < this.question.MaxOptions &&
+              option.Text.Text == Resources.OptionAbstainSpecial)
+          {
+            vota[index] = true;
+            selectedOptionCount++;
+          }
+
+          index++;
+        }
+
+        return vota;
       }
     }
 
-    private void DescriptionButton_Click(object sender, EventArgs e)
+    public bool Valid
     {
-      VoteDescriptionForm.ShowDescription(Question.Text.Text, Question.Description.Text, Question.Url.Text);
+      get
+      {
+        if (this.singleOptionControls != null)
+        {
+          int selectedOptionCount = this.singleOptionControls.Values.Sum(optionControl => optionControl.Checked ? 1 : 0);
+          return selectedOptionCount == 1;
+        }
+        else if (this.multiOptionControls != null)
+        {
+          int selectedOptionCount = this.multiOptionControls.Values.Sum(optionControl => optionControl.Checked ? 1 : 0);
+          return selectedOptionCount <= this.question.MaxOptions;
+        }
+        else
+        {
+          return false;
+        }
+      }
     }
   }
 }

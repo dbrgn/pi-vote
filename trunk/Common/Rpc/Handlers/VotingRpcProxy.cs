@@ -167,6 +167,19 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Fetches the voting material.
+    /// </summary>
+    /// <param name="votingIds">Ids of the votings.</param>
+    /// <returns>Complete voting material.</returns>
+    public IEnumerable<VotingContainer> FetchVotings(IEnumerable<Guid> votingIds)
+    {
+      var request = new FetchVotingRequest(Guid.NewGuid(), votingIds);
+      var response = Execute<FetchVotingResponse>(request);
+
+      return response.Votings;
+    }
+
+    /// <summary>
     /// Fetches a signature responses or at least it's status.
     /// </summary>
     /// <param name="certificateId">Id of the certificate.</param>

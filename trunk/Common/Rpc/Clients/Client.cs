@@ -261,6 +261,19 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Gets the voting material.
+    /// </summary>
+    /// <param name="votingid">Id of the voting.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void GetVotings(List<Guid> votingIds, GetVotingsCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new GetVotingsOperation(votingIds, callBack));
+      }
+    }
+
+    /// <summary>
     /// Download the whole voting from the server and
     /// store it in files.
     /// </summary>

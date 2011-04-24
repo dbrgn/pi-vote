@@ -47,11 +47,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircleController.cs" />
-    <Compile Include="Create\SimpleCreateCertificateControl.cs">
+    <Compile Include="Create\CreateCertificateControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Create\SimpleCreateCertificateControl.designer.cs">
-      <DependentUpon>SimpleCreateCertificateControl.cs</DependentUpon>
+    <Compile Include="Create\CreateCertificateControl.Designer.cs">
+      <DependentUpon>CreateCertificateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Create\CreateCertificateDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Create\CreateCertificateDialog.Designer.cs">
+      <DependentUpon>CreateCertificateDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Create\CreateDialogStatus.cs" />
+    <Compile Include="Create\EnterAuthorityCertificateDataControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Create\EnterAuthorityCertificateDataControl.Designer.cs">
+      <DependentUpon>EnterAuthorityCertificateDataControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Create\EnterVoterCertificateDataControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Create\EnterVoterCertificateDataControl.Designer.cs">
+      <DependentUpon>EnterVoterCertificateDataControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Create\PrintAndUploadCertificateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Create\PrintAndUploadCertificateControl.Designer.cs">
+      <DependentUpon>PrintAndUploadCertificateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Create\SelectCertificateTypeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Create\SelectCertificateTypeControl.Designer.cs">
+      <DependentUpon>SelectCertificateTypeControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Master.cs">
       <SubType>Form</SubType>
@@ -66,35 +97,41 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Status\TextStatusDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Status\TextStatusDialog.Designer.cs">
+      <DependentUpon>TextStatusDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vote\InfoControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Vote\InfoControl.Designer.cs">
+      <DependentUpon>InfoControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vote\InfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vote\InfoForm.Designer.cs">
+      <DependentUpon>InfoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vote\QuestionControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Vote\QuestionControl.Designer.cs">
       <DependentUpon>QuestionControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vote\VoteCastControl.cs">
+    <Compile Include="Vote\VotingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Vote\VoteCastControl.Designer.cs">
-      <DependentUpon>VoteCastControl.cs</DependentUpon>
+    <Compile Include="Vote\VotingControl.Designer.cs">
+      <DependentUpon>VotingControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Vote\VoteControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Vote\VoteControl.Designer.cs">
-      <DependentUpon>VoteControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Vote\VoteDescriptionForm.cs">
+    <Compile Include="Vote\VotingDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Vote\VoteDescriptionForm.Designer.cs">
-      <DependentUpon>VoteDescriptionForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Vote\VoteOptionControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Vote\VoteOptionControl.Designer.cs">
-      <DependentUpon>VoteOptionControl.cs</DependentUpon>
+    <Compile Include="Vote\VotingDialog.Designer.cs">
+      <DependentUpon>VotingDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="VotingList\VotingControl.cs">
       <SubType>UserControl</SubType>
@@ -115,8 +152,20 @@
     <Compile Include="VotingList\VotingListsControl.Designer.cs">
       <DependentUpon>VotingListsControl.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Create\SimpleCreateCertificateControl.resx">
-      <DependentUpon>SimpleCreateCertificateControl.cs</DependentUpon>
+    <EmbeddedResource Include="Create\CreateCertificateDialog.resx">
+      <DependentUpon>CreateCertificateDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Create\EnterAuthorityCertificateDataControl.resx">
+      <DependentUpon>EnterAuthorityCertificateDataControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Create\EnterVoterCertificateDataControl.resx">
+      <DependentUpon>EnterVoterCertificateDataControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Create\PrintAndUploadCertificateControl.resx">
+      <DependentUpon>PrintAndUploadCertificateControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Create\SelectCertificateTypeControl.resx">
+      <DependentUpon>SelectCertificateTypeControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Master.resx">
       <DependentUpon>Master.cs</DependentUpon>
@@ -136,20 +185,23 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Status\TextStatusDialog.resx">
+      <DependentUpon>TextStatusDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vote\InfoControl.resx">
+      <DependentUpon>InfoControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vote\InfoForm.resx">
+      <DependentUpon>InfoForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Vote\QuestionControl.resx">
       <DependentUpon>QuestionControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vote\VoteCastControl.resx">
-      <DependentUpon>VoteCastControl.cs</DependentUpon>
+    <EmbeddedResource Include="Vote\VotingControl.resx">
+      <DependentUpon>VotingControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Vote\VoteControl.resx">
-      <DependentUpon>VoteControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Vote\VoteDescriptionForm.resx">
-      <DependentUpon>VoteDescriptionForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Vote\VoteOptionControl.resx">
-      <DependentUpon>VoteOptionControl.cs</DependentUpon>
+    <EmbeddedResource Include="Vote\VotingDialog.resx">
+      <DependentUpon>VotingDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VotingList\VotingControl.resx">
       <DependentUpon>VotingControl.cs</DependentUpon>

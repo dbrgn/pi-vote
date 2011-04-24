@@ -43,8 +43,8 @@ namespace Pirate.PiVote.Client
     private void InitializeComponent()
     {
       this.resultList = new System.Windows.Forms.ListView();
-      this.propertyColumnHeader = new System.Windows.Forms.ColumnHeader();
-      this.valueColumnHeader = new System.Windows.Forms.ColumnHeader();
+      this.propertyColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.valueColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.SuspendLayout();
       // 
       // resultList
@@ -57,11 +57,11 @@ namespace Pirate.PiVote.Client
             this.valueColumnHeader});
       this.resultList.FullRowSelect = true;
       this.resultList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-      this.resultList.Location = new System.Drawing.Point(2, 3);
-      this.resultList.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+      this.resultList.Location = new System.Drawing.Point(1, 2);
+      this.resultList.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
       this.resultList.MultiSelect = false;
       this.resultList.Name = "resultList";
-      this.resultList.Size = new System.Drawing.Size(696, 532);
+      this.resultList.Size = new System.Drawing.Size(465, 356);
       this.resultList.TabIndex = 6;
       this.resultList.UseCompatibleStateImageBehavior = false;
       this.resultList.View = System.Windows.Forms.View.Details;
@@ -78,13 +78,13 @@ namespace Pirate.PiVote.Client
       // 
       // TallyItem
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(144F, 144F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
       this.Controls.Add(this.resultList);
       this.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+      this.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
       this.Name = "TallyItem";
-      this.Size = new System.Drawing.Size(700, 538);
+      this.Size = new System.Drawing.Size(467, 359);
       this.ResumeLayout(false);
 
     }

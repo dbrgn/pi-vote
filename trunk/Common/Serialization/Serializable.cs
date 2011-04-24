@@ -95,9 +95,9 @@ namespace Pirate.PiVote.Serialization
 
         return obj;
       }
-      catch
+      catch (Exception exception)
       {
-        throw new PiFormatException(ExceptionCode.BadSerializableFormat, "Bad serializable format.");
+        throw new PiFormatException(ExceptionCode.BadSerializableFormat, "Bad serializable format:" + exception.ToString());
       }
     }
 
@@ -118,9 +118,9 @@ namespace Pirate.PiVote.Serialization
 
         return new Tuple<TValue1, TValue2>(obj1, obj2);
       }
-      catch
+      catch (Exception exception)
       {
-        throw new PiFormatException(ExceptionCode.BadSerializableFormat, "Bad serializable format.");
+        throw new PiFormatException(ExceptionCode.BadSerializableFormat, "Bad serializable format:" + exception.ToString());
       }
     }
     
@@ -143,9 +143,9 @@ namespace Pirate.PiVote.Serialization
 
         return new Tuple<TValue1, TValue2, TValue3>(obj1, obj2, obj3);
       }
-      catch
+      catch (Exception exception)
       {
-        throw new PiFormatException(ExceptionCode.BadSerializableFormat, "Bad serializable format.");
+        throw new PiFormatException(ExceptionCode.BadSerializableFormat, "Bad serializable format:" + exception.ToString());
       }
     }
 

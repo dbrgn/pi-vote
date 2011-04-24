@@ -19,11 +19,11 @@ using Pirate.PiVote.Rpc;
 
 namespace Pirate.PiVote.Circle
 {
-  public delegate void VotingActionHandler(VotingDescriptor voting);
+  public delegate void VotingActionHandler(VotingDescriptor2 voting);
 
   public partial class VotingControl : UserControl
   {
-    private VotingDescriptor voting;
+    private VotingDescriptor2 voting;
 
     [Browsable(true)]
     public event VotingActionHandler VotingAction;
@@ -33,7 +33,9 @@ namespace Pirate.PiVote.Circle
       InitializeComponent();
     }
 
-    public VotingDescriptor Voting
+    public CircleController Controller { get; set; }
+    
+    public VotingDescriptor2 Voting
     {
       get
       {
@@ -41,38 +43,84 @@ namespace Pirate.PiVote.Circle
       }
       set
       {
+        if (Controller == null)
+        {
+          throw new InvalidOperationException("Controller must be set.");
+        }
+
+        if (value == null)
+        {
+          throw new ArgumentNullException("value");
+        }
+
         this.voting = value;
 
-        if (this.voting != null)
+        UpdateDisplay();
+      }
+    }
+
+    private void UpdateDisplay()
+    {
+      if (this.voting != null)
+      {
+        bool isAuthority = Controller.GetAuthorityCertificates().Count() > 0;
+        bool isAuthorityForVoting = Controller.GetAuthorityCertificate(this.voting) != null;
+        bool hasVoterCertificate = Controller.GetVoterCertificate(this.voting) != null;
+        bool hasVoterCertificateThatCanVote = Controller.GetVoterCertificateThatCanVote(this.voting) != null;
+
+        this.titleLabel.Text = this.voting.Title.Text;
+        this.descriptionLabel.Text = this.voting.Description.Text;
+
+        switch (this.voting.Status)
         {
-          this.titleLabel.Text = this.voting.Title.Text;
-          this.descriptionLabel.Text = this.voting.Description.Text;
-
-          switch (this.voting.Status)
-          {
-            case VotingStatus.Voting:
-              this.actionButton.Text = "&Vote";
-              this.actionButton.Visible = true;
-              break;
-            case VotingStatus.New:
-              this.actionButton.Text = "&Create shares";
-              this.actionButton.Visible = true;
-              break;
-            case VotingStatus.Sharing:
-              this.actionButton.Text = "&Verify shares";
-              this.actionButton.Visible = true;
-
-              break;
-            case VotingStatus.Deciphering:
-              this.actionButton.Text = "&Decipher";
-              this.actionButton.Visible = true;
-
-              break;
-            default:
-              this.actionButton.Text = string.Empty;
-              this.actionButton.Visible = false;
-              break;
-          }
+          case VotingStatus.Voting:
+            this.statusLabel.Text = string.Format("Open for voting, {0} votes cast", this.voting.EnvelopeCount);
+            this.actionButton.Text = "&Vote";
+            this.actionButton.Visible = true;
+            this.actionButton.Enabled = !hasVoterCertificate || hasVoterCertificateThatCanVote;
+            break;
+          case VotingStatus.New:
+            this.statusLabel.Text = "Preparing, waiting for authorities to set up";
+            this.actionButton.Text = "&Create shares";
+            this.actionButton.Visible = isAuthority;
+            this.actionButton.Enabled = isAuthorityForVoting;
+            break;
+          case VotingStatus.Sharing:
+            this.statusLabel.Text = "Preparing, waiting for authorities to verify";
+            this.actionButton.Text = "&Verify shares";
+            this.actionButton.Visible = isAuthority;
+            this.actionButton.Enabled = isAuthorityForVoting;
+            break;
+          case VotingStatus.Deciphering:
+            this.statusLabel.Text = "Voting finished, waiting for authorities to decipher";
+            this.actionButton.Text = "&Decipher";
+            this.actionButton.Visible = isAuthority;
+            this.actionButton.Enabled = isAuthorityForVoting;
+            break;
+          case VotingStatus.Finished:
+            this.statusLabel.Text = "Finished, can be tallied";
+            this.actionButton.Text = "&Tally";
+            this.actionButton.Visible = true;
+            break;
+          case VotingStatus.Aborted:
+            this.statusLabel.Text = "Aborted";
+            this.actionButton.Text = string.Empty;
+            this.actionButton.Visible = false;
+            break;
+          case VotingStatus.Offline:
+            this.statusLabel.Text = "Finished and stored offline";
+            this.actionButton.Text = string.Empty;
+            this.actionButton.Visible = false;
+            break;
+          case VotingStatus.Ready:
+            this.statusLabel.Text = "Ready and waiting for starting date";
+            this.actionButton.Text = string.Empty;
+            this.actionButton.Visible = false;
+            break;
+          default:
+            this.actionButton.Text = string.Empty;
+            this.actionButton.Visible = false;
+            break;
         }
       }
     }
@@ -82,6 +130,7 @@ namespace Pirate.PiVote.Circle
       if (VotingAction != null)
       {
         VotingAction(Voting);
+        UpdateDisplay();
       }
     }
 

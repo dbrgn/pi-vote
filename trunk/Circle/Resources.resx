@@ -120,6 +120,9 @@
   <data name="AskToSignSignatureRequestWithParent" xml:space="preserve">
     <value>You have a valid certificate with which you can sign your new certificate request. If you do so you not need to print out your request and get signatures from authorities but the new certificate will only be valid as long as the one you already have, that is {0:d}. Do you want to sign your signing request with your existing certificate?</value>
   </data>
+  <data name="AuthorityCreateSharesUnlockAction" xml:space="preserve">
+    <value>Sign newly created key shares</value>
+  </data>
   <data name="CreateCertificateDone" xml:space="preserve">
     <value>Your request has been submitted to the server. You must now wait for the certificate authority to process it.</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="CreateCertificateTypeVoter" xml:space="preserve">
     <value>Voter</value>
+  </data>
+  <data name="MessageBoxTitle" xml:space="preserve">
+    <value>Circle Pi-Vote</value>
   </data>
   <data name="OptionAbstainSpecial" xml:space="preserve">
     <value>Abstain_@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</value>

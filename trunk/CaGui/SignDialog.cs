@@ -74,13 +74,16 @@ namespace Pirate.PiVote.CaGui
         SignatureRequest2 request2 = (SignatureRequest2)this.request;
         ListEntry signingListEntry = allListEntries.Where(le => le.Certificate.IsIdentic(request2.SigningCertificate)).FirstOrDefault();
         requestValid &= signingListEntry != null;
-        requestValid &= signingListEntry.Certificate.Fingerprint == request2.SigningCertificate.Fingerprint;
 
         this.signedByIdTextBox.Text = request2.SigningCertificate.Id.ToString();
+        this.signedByTypeTextBox.Text = request2.SigningCertificate.TypeText;
+        this.signedByCantonTextBox.Text = request2.SigningCertificate is VoterCertificate ? GroupList.GetGroupName(((VoterCertificate)request2.SigningCertificate).GroupId) : "N/A";
         this.signedByFingerprintTextBox.Text = request2.SigningCertificate.Fingerprint;
 
         if (signingListEntry != null)
         {
+          requestValid &= signingListEntry.Certificate.Fingerprint == request2.SigningCertificate.Fingerprint;
+
           this.signedByNameTextBox.Text = signingListEntry.Request.FullName;
           this.signedByEmailAddressTextBox.Text = signingListEntry.Request.EmailAddress;
 
@@ -117,6 +120,8 @@ namespace Pirate.PiVote.CaGui
         this.signedByEmailAddressTextBox.Text = "N/A";
         this.signedByStatusTextBox.Text = "N/A";
         this.signedBySignatureTextBox.Text = "N/A";
+        this.signedByCantonLabel.Text = "N/A";
+        this.signedByTypeLabel.Text = "N/A";
         this.expiryDateEnable = true;
         this.printButton.Enabled = false;
         this.needsToPrint = false;

@@ -88,8 +88,7 @@ namespace Pirate.PiVote.Client
         {
           this.voteReceipt.Save(
             Path.Combine(Status.DataPath,
-            string.Format("{0}@{1}.pi-receipt",
-            Status.Certificate.Id.ToString(), VotingDescriptor.Id.ToString())));
+            Files.VoteReceiptFileName(Status.Certificate.Id, VotingDescriptor.Id)));
 
           Status.SetMessage(Resources.VoteCast, MessageType.Success);
         }

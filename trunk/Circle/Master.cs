@@ -16,13 +16,12 @@ using System.Windows.Forms;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Serialization;
+using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.Circle
 {
   public partial class Master : Form
   {
-    private Timer timer;
-
     private CircleController Controller { get; set; }
 
     public Master()
@@ -32,93 +31,239 @@ namespace Pirate.PiVote.Circle
 
     private void Master_Load(object sender, EventArgs e)
     {
-      this.voteCastControl.Visible = false;
-      this.simpleCreateCertificateControl.Visible = false;
-
       CenterToScreen();
       Show();
 
       Controller = new CircleController();
 
-      this.timer = new Timer();
-      this.timer.Tick += new EventHandler(Timer_Tick);
-      this.timer.Interval = 100;
-      this.timer.Start();
+      Status.TextStatusDialog.ShowInfo(Controller);
 
-      Controller.LoadCertificates();
-      Controller.Prepare();
-
-      var votings = Controller.GetVotingList();
-
-      if (votings != null)
+      try
       {
-        this.votingListsControl.Set(votings);
-      }
-    }
+        Controller.Prepare();
+        Controller.LoadCertificates();
 
-    private void Timer_Tick(object sender, EventArgs e)
-    {
-      this.statusLabel.Text = Controller.Text;
-      this.progressBar.Value = Convert.ToInt32(Controller.Progress * 100d);
-      this.subProgressBar.Value = Convert.ToInt32(Controller.SubProgress * 100d);
+        var votings = Controller.GetVotingList();
+        this.votingListsControl.Set(Controller, votings);
+      }
+      catch (Exception exception)
+      {
+        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Close();
+      }
+
+      Status.TextStatusDialog.HideInfo();
     }
 
     private void Master_FormClosing(object sender, FormClosingEventArgs e)
     {
-      this.timer.Stop();
       Controller.Disconnect();
     }
 
-    private void VotingListsControl_VotingAction(VotingDescriptor voting)
+    private void VotingListsControl_VotingAction(VotingDescriptor2 voting)
     {
       switch (voting.Status)
       {
         case VotingStatus.New:
+          GoShare(voting);
           break;
         case VotingStatus.Sharing:
+          GoCheck(voting);
           break;
         case VotingStatus.Voting:
           GoVote(voting);
           break;
         case VotingStatus.Deciphering:
+          GoDecipher(voting);
           break;
         case VotingStatus.Finished:
+          GoTally(voting);
           break;
       }
     }
 
-    private void GoVote(VotingDescriptor voting)
+    private void GoTally(VotingDescriptor2 voting)
     {
-      var certificate = Controller.GetVoterCertificate(voting.GroupId);
+      Status.TextStatusDialog.ShowInfo(Controller);
+
+      try
+      {
+        IDictionary<Guid, VoteReceiptStatus> voteReceiptStatus;
+        VotingResult result = Controller.Tally(voting, out voteReceiptStatus);
+      }
+      catch (Exception exception)
+      {
+        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+
+      Status.TextStatusDialog.HideInfo();
+    }
+
+    private void GoDecipher(VotingDescriptor2 voting)
+    {
+      var certificate = Controller.GetAuthorityCertificate(voting);
 
       if (certificate != null)
       {
-        switch (certificate.Validate(Controller.Status.CertificateStorage))
+        Status.TextStatusDialog.ShowInfo(Controller);
+
+        try
         {
-          case CertificateValidationResult.Valid:
-            this.votingListsControl.Visible = false;
-            this.voteCastControl.Visible = true;
-            this.voteCastControl.Set(Controller, certificate, voting);
-            break;
-          case CertificateValidationResult.NotYetValid:
-            var status = Controller.GetSignatureResponse(certificate);
-            break;
-          default:
-            break;
+          Controller.Decipher(certificate, voting);
+          var votings = Controller.GetVotingList();
+          this.votingListsControl.Set(Controller, votings);
         }
-      }
-      else
-      {
-        this.votingListsControl.Visible = false;
-        this.simpleCreateCertificateControl.Visible = true;
-        this.simpleCreateCertificateControl.Set(Controller, null, voting.GroupId);
+        catch (Exception exception)
+        {
+          MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        Status.TextStatusDialog.HideInfo();
       }
     }
 
-    private void simpleCreateCertificateControl_ReturnFromControl(object sender, EventArgs e)
+    private void GoShare(VotingDescriptor2 voting)
     {
-      this.votingListsControl.Visible = true;
-      this.simpleCreateCertificateControl.Visible = false;
+      var certificate = Controller.GetAuthorityCertificate(voting);
+
+      if (certificate != null)
+      {
+        Status.TextStatusDialog.ShowInfo(Controller);
+
+        try
+        {
+          Controller.CreateShares(certificate, voting);
+          var votings = Controller.GetVotingList();
+          this.votingListsControl.Set(Controller, votings);
+        }
+        catch (Exception exception)
+        {
+          MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        Status.TextStatusDialog.HideInfo();
+      }
+    }
+
+    private void GoCheck(VotingDescriptor2 voting)
+    {
+      var certificate = Controller.GetAuthorityCertificate(voting);
+
+      if (certificate != null)
+      {
+        Status.TextStatusDialog.ShowInfo(Controller);
+
+        try
+        {
+          Controller.CheckShares(certificate, voting);
+          var votings = Controller.GetVotingList();
+          this.votingListsControl.Set(Controller, votings);
+        }
+        catch (Exception exception)
+        {
+          MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        Status.TextStatusDialog.HideInfo();
+      }
+    }
+
+    private void GoVote(VotingDescriptor2 voting)
+    {
+      var certificate = Controller.GetVoterCertificateThatCanVote(voting);
+
+      if (certificate == null)
+      {
+        Create.CreateCertificateDialog.ShowCreateNewVoterCertificate(Controller);
+      }
+      else
+      {
+        switch (certificate.Validate(Controller.Status.CertificateStorage))
+        {
+          case CertificateValidationResult.NoSignature:
+            Create.CreateCertificateDialog.TryFixVoterCertificate(Controller, certificate);
+            certificate = null;
+            break;
+          case CertificateValidationResult.NotYetValid:
+            MessageForm.Show(
+              string.Format("Your certificate id {0} of type {1} is not yet valid.", certificate.Id.ToString(), certificate.TypeText),
+              Resources.MessageBoxTitle,
+              MessageBoxButtons.OK,
+              MessageBoxIcon.Information);
+            certificate = null;
+            break;
+          case CertificateValidationResult.Outdated:
+            Controller.DeactiveCertificate(certificate);
+            MessageForm.Show(
+              string.Format("Your certificate id {0} of type {1} was outdated and therefore deactivated. You must create a new certificate.", certificate.Id.ToString(), certificate.TypeText),
+              Resources.MessageBoxTitle,
+              MessageBoxButtons.OK,
+              MessageBoxIcon.Information);
+            Create.CreateCertificateDialog.ShowCreateNewVoterCertificate(Controller);
+            certificate = null;
+            break;
+          case CertificateValidationResult.Revoked:
+            Controller.DeactiveCertificate(certificate);
+            MessageForm.Show(
+              string.Format("Your certificate id {0} of type {1} was revoked and therefore deactivated. You must create a new certificate.", certificate.Id.ToString(), certificate.TypeText),
+              Resources.MessageBoxTitle,
+              MessageBoxButtons.OK,
+              MessageBoxIcon.Information);
+            Create.CreateCertificateDialog.ShowCreateNewVoterCertificate(Controller);
+            certificate = null;
+            break;
+          case CertificateValidationResult.Valid:
+            break;
+          default:
+            MessageForm.Show(
+              string.Format("Your certificate id {0} of type {1} is invalid. It's status is {2}", certificate.Id.ToString(), certificate.TypeText, certificate.Validate(Controller.Status.CertificateStorage).ToString()),
+              Resources.MessageBoxTitle,
+              MessageBoxButtons.OK,
+              MessageBoxIcon.Information);
+            certificate = null;
+            break;
+        }
+      }
+
+      if (certificate != null)
+      {
+        Vote.VotingDialog.ShowVoting(Controller, certificate, voting);
+      }
+    }
+
+    private void createNewToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      Create.CreateCertificateDialog.ShowCreateNewCertificate(Controller);
+    }
+
+    private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      RefreshVotings();
+    }
+
+    private void RefreshVotings()
+    {
+      Status.TextStatusDialog.ShowInfo(Controller);
+
+      try
+      {
+        var votings = Controller.GetVotingList();
+        this.votingListsControl.Set(Controller, votings);
+      }
+      catch (Exception exception)
+      {
+        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+
+      Status.TextStatusDialog.HideInfo();
+    }
+
+    private void Master_KeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.KeyCode == Keys.F5)
+      {
+        RefreshVotings();
+      }
     }
   }
 }

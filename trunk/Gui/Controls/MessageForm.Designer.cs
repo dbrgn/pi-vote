@@ -117,6 +117,7 @@ namespace Pirate.PiVote.Gui
       this.MinimumSize = new System.Drawing.Size(500, 213);
       this.Name = "MessageForm";
       this.Text = "MessageForm";
+      this.TopMost = true;
       this.Load += new System.EventHandler(this.MessageForm_Load);
       ((System.ComponentModel.ISupportInitialize)(this.iconBox)).EndInit();
       this.ResumeLayout(false);

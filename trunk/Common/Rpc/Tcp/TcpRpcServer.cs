@@ -255,7 +255,7 @@ namespace Pirate.PiVote.Rpc
           }
           catch (Exception exception)
           {
-            Logger.Log(LogLevel.Warning, "Connection from {0} faild and was therefore dropped. Exception: {1}", connection.RemoteEndPointText, exception.ToString());
+            Logger.Log(LogLevel.Warning, "Connection from {0} failed and was therefore dropped. Exception: {1}", connection.RemoteEndPointText, exception.ToString());
             connection.Close();
           }
         }

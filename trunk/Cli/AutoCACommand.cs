@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using Pirate.PiVote.Rpc;
+using System.Threading;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Serialization;
-using System.IO;
 
 namespace Pirate.PiVote.Cli
 {
@@ -74,11 +75,13 @@ namespace Pirate.PiVote.Cli
 
       while (true)
       {
-        if (DateTime.Now.Subtract(lastWork).TotalSeconds > 5d)
+        if (DateTime.Now.Subtract(lastWork).TotalSeconds > 15d)
         {
           Approve();
           lastWork = DateTime.Now;
         }
+
+        Thread.Sleep(1000);
       }
     }
 

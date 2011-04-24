@@ -5,7 +5,7 @@
  * Licensed under the New BSD License as seen in License.txt
  */
 
-namespace Pirate.PiVote.Circle
+namespace Pirate.PiVote.Circle.Vote
 {
   partial class QuestionControl
   {
@@ -35,61 +35,69 @@ namespace Pirate.PiVote.Circle
     /// </summary>
     private void InitializeComponent()
     {
-      this.questionLabel = new System.Windows.Forms.Label();
-      this.descriptionButton = new System.Windows.Forms.Button();
-      this.maxOptionsLabel = new System.Windows.Forms.Label();
+      this.optionsPanel = new System.Windows.Forms.Panel();
+      this.maxOptionLabel = new System.Windows.Forms.Label();
+      this.textControl = new Pirate.PiVote.Circle.Vote.InfoControl();
       this.SuspendLayout();
       // 
-      // questionLabel
+      // optionsPanel
       // 
-      this.questionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+      this.optionsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.questionLabel.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.questionLabel.Location = new System.Drawing.Point(3, 7);
-      this.questionLabel.Name = "questionLabel";
-      this.questionLabel.Size = new System.Drawing.Size(458, 26);
-      this.questionLabel.TabIndex = 6;
-      this.questionLabel.Text = "Question";
+      this.optionsPanel.AutoScroll = true;
+      this.optionsPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+      this.optionsPanel.Location = new System.Drawing.Point(3, 35);
+      this.optionsPanel.Name = "optionsPanel";
+      this.optionsPanel.Size = new System.Drawing.Size(658, 403);
+      this.optionsPanel.TabIndex = 6;
       // 
-      // descriptionButton
+      // maxOptionLabel
       // 
-      this.descriptionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.descriptionButton.Location = new System.Drawing.Point(467, 3);
-      this.descriptionButton.Name = "descriptionButton";
-      this.descriptionButton.Size = new System.Drawing.Size(111, 26);
-      this.descriptionButton.TabIndex = 5;
-      this.descriptionButton.Text = "&Description";
-      this.descriptionButton.UseVisualStyleBackColor = true;
-      this.descriptionButton.Click += new System.EventHandler(this.DescriptionButton_Click);
+      this.maxOptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.maxOptionLabel.AutoSize = true;
+      this.maxOptionLabel.Location = new System.Drawing.Point(3, 441);
+      this.maxOptionLabel.Name = "maxOptionLabel";
+      this.maxOptionLabel.Size = new System.Drawing.Size(83, 13);
+      this.maxOptionLabel.TabIndex = 8;
+      this.maxOptionLabel.Text = "maxOptionLabel";
       // 
-      // maxOptionsLabel
+      // textControl
       // 
-      this.maxOptionsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+      this.textControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.maxOptionsLabel.Location = new System.Drawing.Point(3, 33);
-      this.maxOptionsLabel.Name = "maxOptionsLabel";
-      this.maxOptionsLabel.Size = new System.Drawing.Size(458, 14);
-      this.maxOptionsLabel.TabIndex = 7;
-      this.maxOptionsLabel.Text = "max options";
+      this.textControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.textControl.Description = null;
+      this.textControl.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textControl.InfoFont = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textControl.Location = new System.Drawing.Point(3, 3);
+      this.textControl.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+      this.textControl.MaximumSize = new System.Drawing.Size(3000, 32);
+      this.textControl.MinimumSize = new System.Drawing.Size(100, 26);
+      this.textControl.Name = "textControl";
+      this.textControl.Size = new System.Drawing.Size(658, 26);
+      this.textControl.TabIndex = 7;
+      this.textControl.Title = "";
+      this.textControl.Url = null;
       // 
       // QuestionControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.maxOptionsLabel);
-      this.Controls.Add(this.questionLabel);
-      this.Controls.Add(this.descriptionButton);
-      this.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.Controls.Add(this.maxOptionLabel);
+      this.Controls.Add(this.textControl);
+      this.Controls.Add(this.optionsPanel);
       this.Name = "QuestionControl";
-      this.Size = new System.Drawing.Size(581, 194);
+      this.Size = new System.Drawing.Size(664, 461);
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
     #endregion
 
-    private System.Windows.Forms.Label questionLabel;
-    private System.Windows.Forms.Button descriptionButton;
-    private System.Windows.Forms.Label maxOptionsLabel;
+    private System.Windows.Forms.Panel optionsPanel;
+    private InfoControl textControl;
+    private System.Windows.Forms.Label maxOptionLabel;
   }
 }

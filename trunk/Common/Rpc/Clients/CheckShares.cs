@@ -110,9 +110,9 @@ namespace Pirate.PiVote.Rpc
           Progress = 0.8d;
           
           var material = client.proxy.FetchVotingMaterial(this.votingId);
-          List<Guid> authoritieDone;
-          VotingStatus status = client.proxy.FetchVotingStatus(this.votingId, out authoritieDone);
-          var votingDescriptor = new VotingDescriptor(material.Parameters.Value, status, authoritieDone, material.CastEnvelopeCount);
+          List<Guid> authoritiesDone;
+          VotingStatus status = client.proxy.FetchVotingStatus(this.votingId, out authoritiesDone);
+          var votingDescriptor = new VotingDescriptor(material.Parameters.Value, status, authoritiesDone, material.CastEnvelopeCount);
 
           Progress = 1d;
 

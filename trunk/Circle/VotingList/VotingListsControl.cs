@@ -29,9 +29,9 @@ namespace Pirate.PiVote.Circle
       InitializeComponent();
     }
 
-    public void Set(IEnumerable<VotingDescriptor> votings)
+    public void Set(CircleController controller, IEnumerable<VotingDescriptor2> votings)
     {
-      this.currentVotingListControl.Set(
+      this.currentVotingListControl.Set(controller,
         votings.Where(voting => 
           voting.Status == VotingStatus.Voting || 
           voting.Status == VotingStatus.Ready ||
@@ -39,12 +39,12 @@ namespace Pirate.PiVote.Circle
           (voting.Status == VotingStatus.Finished && 
           DateTime.Now.Subtract(voting.VoteUntil).Days <= 7d)));
 
-      this.scheduledVotingListControl.Set(
+      this.scheduledVotingListControl.Set(controller,
         votings.Where(voting => 
           voting.Status == VotingStatus.New || 
           voting.Status == VotingStatus.Sharing));
 
-      this.pastVotingListControl.Set(
+      this.pastVotingListControl.Set(controller,
         votings.Where(voting =>
           voting.Status == VotingStatus.Aborted ||
           voting.Status == VotingStatus.Offline ||
@@ -52,7 +52,7 @@ namespace Pirate.PiVote.Circle
           DateTime.Now.Subtract(voting.VoteUntil).Days > 7d)));
     }
 
-    private void OnVotingAction(VotingDescriptor voting)
+    private void OnVotingAction(VotingDescriptor2 voting)
     {
       if (VotingAction != null)
       {
@@ -60,17 +60,17 @@ namespace Pirate.PiVote.Circle
       }
     }
 
-    private void CurrentVotingListControl_VotingAction(VotingDescriptor voting)
+    private void CurrentVotingListControl_VotingAction(VotingDescriptor2 voting)
     {
       OnVotingAction(voting);
     }
 
-    private void ScheduledVotingListControl_VotingAction(VotingDescriptor voting)
+    private void ScheduledVotingListControl_VotingAction(VotingDescriptor2 voting)
     {
       OnVotingAction(voting);
     }
 
-    private void PastVotingListControl_VotingAction(VotingDescriptor voting)
+    private void PastVotingListControl_VotingAction(VotingDescriptor2 voting)
     {
       OnVotingAction(voting);
     }

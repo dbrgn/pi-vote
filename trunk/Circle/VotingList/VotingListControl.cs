@@ -21,21 +21,24 @@ namespace Pirate.PiVote.Circle
 {
   public partial class VotingListControl : UserControl
   {
-    private List<VotingDescriptor> votings;
+    private const int VerticalSpace = 4;
+    private const int HorizontalSpace = 4;
+
+    private List<VotingDescriptor2> votings;
     
     private List<VotingControl> controls;
 
     [Browsable(true)]
     public event VotingActionHandler VotingAction;
-
+    
     public VotingListControl()
     {
       InitializeComponent();
     }
 
-    public void Set(IEnumerable<VotingDescriptor> votings)
+    public void Set(CircleController controller, IEnumerable<VotingDescriptor2> votings)
     {
-      this.votings = new List<VotingDescriptor>(votings);
+      this.votings = new List<VotingDescriptor2>(votings);
       this.controls = new List<VotingControl>();
       Controls.Clear();
 
@@ -44,25 +47,31 @@ namespace Pirate.PiVote.Circle
       foreach (var voting in this.votings)
       {
         VotingControl control = new VotingControl();
+        control.Controller = controller;
         control.Voting = voting;
         control.Left = 0;
         control.Top = top;
-        control.Width = Width;
+        control.Width = ClientSize.Width - HorizontalSpace;
         control.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
         control.VotingAction += new VotingActionHandler(Control_VotingAction);
         this.controls.Add(control);
         Controls.Add(control);
 
-        top += control.Height;
+        top += control.Height + VerticalSpace;
+      }
+
+      foreach (var control in this.controls)
+      {
+        control.Width = ClientSize.Width - HorizontalSpace;
       }
     }
 
-    private void Control_VotingAction(VotingDescriptor voting)
+    private void Control_VotingAction(VotingDescriptor2 voting)
     {
       OnVotingAction(voting);
     }
 
-    private void OnVotingAction(VotingDescriptor voting)
+    private void OnVotingAction(VotingDescriptor2 voting)
     {
       if (VotingAction != null)
       {

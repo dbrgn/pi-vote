@@ -234,7 +234,7 @@ namespace Pirate.PiVote.Crypto
       RevocationList revocationList = signedRevocationList.Value;
       if (revocationList.IssuerId != signedRevocationList.Certificate.Id)
         throw new ArgumentException("Wrong signer of revocation list.");
-      if (signedRevocationList.Certificate is CACertificate)
+      if (!(signedRevocationList.Certificate is CACertificate))
         throw new ArgumentException("Certificate is not from proper CA.");
       if (!signedRevocationList.Verify(this))
         throw new ArgumentException("Bad signature on revocation list.");
