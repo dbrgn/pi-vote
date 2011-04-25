@@ -14,7 +14,7 @@ namespace Pirate.PiVote.Circle.Result
 {
   public partial class ResultDisplayDialog : Form
   {
-    private const int Space = 16;
+    private const int Space = 20;
 
     public ResultDisplayDialog()
     {

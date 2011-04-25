@@ -35,6 +35,7 @@ namespace Pirate.PiVote.Circle.Status
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextStatusDialog));
       this.progressBar = new System.Windows.Forms.ProgressBar();
       this.infoLabel = new System.Windows.Forms.Label();
       this.subInfoLabel = new System.Windows.Forms.Label();
@@ -80,6 +81,7 @@ namespace Pirate.PiVote.Circle.Status
       this.Controls.Add(this.infoLabel);
       this.Controls.Add(this.progressBar);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "TextStatusDialog";

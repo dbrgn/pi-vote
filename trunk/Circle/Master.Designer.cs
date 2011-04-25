@@ -35,11 +35,13 @@ namespace Pirate.PiVote.Circle
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Master));
       this.mainMenu = new System.Windows.Forms.MenuStrip();
       this.votingsMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.refreshVotingsMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.certificatesMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.createCertificateMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.resumeCreationMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.reloadCertificateMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.languageMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.englishMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,7 +49,6 @@ namespace Pirate.PiVote.Circle
       this.frenchMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.mainPanel = new System.Windows.Forms.Panel();
       this.votingListsControl = new Pirate.PiVote.Circle.VotingListsControl();
-      this.resumeCreationMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.mainMenu.SuspendLayout();
       this.mainPanel.SuspendLayout();
       this.SuspendLayout();
@@ -96,6 +97,13 @@ namespace Pirate.PiVote.Circle
       this.createCertificateMenu.Size = new System.Drawing.Size(154, 22);
       this.createCertificateMenu.Text = "&Create New";
       this.createCertificateMenu.Click += new System.EventHandler(this.CreateCertificateMenu_Click);
+      // 
+      // resumeCreationMenu
+      // 
+      this.resumeCreationMenu.Name = "resumeCreationMenu";
+      this.resumeCreationMenu.Size = new System.Drawing.Size(154, 22);
+      this.resumeCreationMenu.Text = "&Resume creation";
+      this.resumeCreationMenu.Click += new System.EventHandler(this.resumeCreationMenu_Click);
       // 
       // reloadCertificateMenu
       // 
@@ -155,13 +163,6 @@ namespace Pirate.PiVote.Circle
       this.votingListsControl.TabIndex = 0;
       this.votingListsControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.VotingListsControl_VotingAction);
       // 
-      // resumeCreationMenu
-      // 
-      this.resumeCreationMenu.Name = "resumeCreationMenu";
-      this.resumeCreationMenu.Size = new System.Drawing.Size(154, 22);
-      this.resumeCreationMenu.Text = "&Resume creation";
-      this.resumeCreationMenu.Click += new System.EventHandler(this.resumeCreationMenu_Click);
-      // 
       // Master
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -170,6 +171,7 @@ namespace Pirate.PiVote.Circle
       this.Controls.Add(this.mainPanel);
       this.Controls.Add(this.mainMenu);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.KeyPreview = true;
       this.MainMenuStrip = this.mainMenu;
       this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
