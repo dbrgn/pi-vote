@@ -51,13 +51,13 @@ namespace Pirate.PiVote.Circle.Vote
       this.votingControl.Location = new System.Drawing.Point(0, 0);
       this.votingControl.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.votingControl.Name = "votingControl";
-      this.votingControl.Size = new System.Drawing.Size(817, 630);
+      this.votingControl.Size = new System.Drawing.Size(792, 528);
       this.votingControl.TabIndex = 0;
       // 
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(686, 636);
+      this.cancelButton.Location = new System.Drawing.Point(661, 534);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(119, 30);
       this.cancelButton.TabIndex = 1;
@@ -68,7 +68,7 @@ namespace Pirate.PiVote.Circle.Vote
       // voteButton
       // 
       this.voteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.voteButton.Location = new System.Drawing.Point(561, 636);
+      this.voteButton.Location = new System.Drawing.Point(536, 534);
       this.voteButton.Name = "voteButton";
       this.voteButton.Size = new System.Drawing.Size(119, 30);
       this.voteButton.TabIndex = 2;
@@ -79,7 +79,7 @@ namespace Pirate.PiVote.Circle.Vote
       // nextButton
       // 
       this.nextButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.nextButton.Location = new System.Drawing.Point(436, 636);
+      this.nextButton.Location = new System.Drawing.Point(411, 534);
       this.nextButton.Name = "nextButton";
       this.nextButton.Size = new System.Drawing.Size(119, 30);
       this.nextButton.TabIndex = 3;
@@ -90,7 +90,7 @@ namespace Pirate.PiVote.Circle.Vote
       // previousButton
       // 
       this.previousButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.previousButton.Location = new System.Drawing.Point(311, 636);
+      this.previousButton.Location = new System.Drawing.Point(286, 534);
       this.previousButton.Name = "previousButton";
       this.previousButton.Size = new System.Drawing.Size(119, 30);
       this.previousButton.TabIndex = 4;
@@ -102,12 +102,13 @@ namespace Pirate.PiVote.Circle.Vote
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(817, 675);
+      this.ClientSize = new System.Drawing.Size(792, 573);
       this.Controls.Add(this.previousButton);
       this.Controls.Add(this.nextButton);
       this.Controls.Add(this.voteButton);
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.votingControl);
+      this.MinimumSize = new System.Drawing.Size(300, 300);
       this.Name = "VotingDialog";
       this.Text = "VotingDialog";
       this.Load += new System.EventHandler(this.VotingDialog_Load);

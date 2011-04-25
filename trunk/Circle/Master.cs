@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Crypto;
-using Pirate.PiVote.Serialization;
 using Pirate.PiVote.Gui;
+using Pirate.PiVote.Rpc;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Circle
 {
@@ -31,18 +32,30 @@ namespace Pirate.PiVote.Circle
 
     private void Master_Load(object sender, EventArgs e)
     {
+      var screenBounds = Screen.PrimaryScreen.Bounds;
+
+      if (screenBounds.Width < Width)
+      {
+        Width = screenBounds.Width;
+      }
+
+      if (screenBounds.Height < Height)
+      {
+        Height = screenBounds.Height;
+      }
+
       CenterToScreen();
+      SetDefaultLanguage();
       Show();
 
       Controller = new CircleController();
 
-      Status.TextStatusDialog.ShowInfo(Controller);
+      Status.TextStatusDialog.ShowInfo(Controller, this);
 
       try
       {
         Controller.Prepare();
         Controller.LoadCertificates();
-
         var votings = Controller.GetVotingList();
         this.votingListsControl.Set(Controller, votings);
       }
@@ -84,12 +97,13 @@ namespace Pirate.PiVote.Circle
 
     private void GoTally(VotingDescriptor2 voting)
     {
-      Status.TextStatusDialog.ShowInfo(Controller);
-
+      Status.TextStatusDialog.ShowInfo(Controller, this);
+      
       try
       {
         IDictionary<Guid, VoteReceiptStatus> voteReceiptStatus;
-        VotingResult result = Controller.Tally(voting, out voteReceiptStatus);
+        var votingResult = Controller.Tally(voting, out voteReceiptStatus);
+        Result.ResultDisplayDialog.ShowResult(votingResult, voteReceiptStatus);
       }
       catch (Exception exception)
       {
@@ -105,7 +119,7 @@ namespace Pirate.PiVote.Circle
 
       if (certificate != null)
       {
-        Status.TextStatusDialog.ShowInfo(Controller);
+        Status.TextStatusDialog.ShowInfo(Controller, this);
 
         try
         {
@@ -122,13 +136,17 @@ namespace Pirate.PiVote.Circle
       }
     }
 
+    private void Decipher(VotingDescriptor2 voting, AuthorityCertificate certificate)
+    {
+    }
+
     private void GoShare(VotingDescriptor2 voting)
     {
       var certificate = Controller.GetAuthorityCertificate(voting);
 
       if (certificate != null)
       {
-        Status.TextStatusDialog.ShowInfo(Controller);
+        Status.TextStatusDialog.ShowInfo(Controller, this);
 
         try
         {
@@ -151,7 +169,7 @@ namespace Pirate.PiVote.Circle
 
       if (certificate != null)
       {
-        Status.TextStatusDialog.ShowInfo(Controller);
+        Status.TextStatusDialog.ShowInfo(Controller, this);
 
         try
         {
@@ -228,34 +246,37 @@ namespace Pirate.PiVote.Circle
       if (certificate != null)
       {
         Vote.VotingDialog.ShowVoting(Controller, certificate, voting);
+
+        Status.TextStatusDialog.ShowInfo(Controller, this);
+        var votings = Controller.GetVotingList();
+        this.votingListsControl.Set(Controller, votings);
+        Status.TextStatusDialog.HideInfo();
       }
     }
 
-    private void createNewToolStripMenuItem_Click(object sender, EventArgs e)
+    private void CreateCertificateMenu_Click(object sender, EventArgs e)
     {
       Create.CreateCertificateDialog.ShowCreateNewCertificate(Controller);
     }
 
-    private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+    private void RefreshVotingsMenu_Click(object sender, EventArgs e)
     {
       RefreshVotings();
     }
 
     private void RefreshVotings()
     {
-      Status.TextStatusDialog.ShowInfo(Controller);
-
       try
       {
+        Status.TextStatusDialog.ShowInfo(Controller, this);
         var votings = Controller.GetVotingList();
         this.votingListsControl.Set(Controller, votings);
+        Status.TextStatusDialog.HideInfo();
       }
       catch (Exception exception)
       {
         MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
-
-      Status.TextStatusDialog.HideInfo();
     }
 
     private void Master_KeyDown(object sender, KeyEventArgs e)
@@ -263,6 +284,99 @@ namespace Pirate.PiVote.Circle
       if (e.KeyCode == Keys.F5)
       {
         RefreshVotings();
+      }
+    }
+
+    private void ReloadCertificateMenu_Click(object sender, EventArgs e)
+    {
+      Status.TextStatusDialog.ShowInfo(Controller, this);
+
+      try
+      {
+        Controller.LoadCertificates();
+      }
+      catch (Exception exception)
+      {
+        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Close();
+      }
+
+      Status.TextStatusDialog.HideInfo();
+    }
+
+    private void EnglishMenu_Click(object sender, EventArgs e)
+    {
+      SetLanguage(Language.English);
+    }
+
+    private void GermanMenu_Click(object sender, EventArgs e)
+    {
+      SetLanguage(Language.German);
+    }
+
+    private void FrenchMenu_Click(object sender, EventArgs e)
+    {
+      SetLanguage(Language.French);
+    }
+
+    private void SetLanguage(Language language)
+    {
+      this.englishMenu.Checked = language == Language.English;
+      this.germanMenu.Checked = language == Language.German;
+      this.frenchMenu.Checked = language == Language.French;
+
+      Resources.Culture = language.ToCulture();
+      LibraryResources.Culture = language.ToCulture();
+      GuiResources.Culture = language.ToCulture();
+      UpdateLanguage();
+    }
+
+    private void SetDefaultLanguage()
+    {
+      if (CultureInfo.CurrentCulture.Name.StartsWith("de"))
+      {
+        SetLanguage(Language.German);
+      }
+      else if (CultureInfo.CurrentCulture.Name.StartsWith("fr"))
+      {
+        SetLanguage(Language.French);
+      }
+      else
+      {
+        SetLanguage(Language.English);
+      }
+    }
+
+    private void UpdateLanguage()
+    {
+      Text = Resources.MessageBoxTitle;
+
+      this.votingsMenu.Text = Resources.MenuVotings;
+      this.refreshVotingsMenu.Text = Resources.MenuVotingsRefresh;
+
+      this.certificatesMenu.Text = Resources.MenuCertificates;
+      this.createCertificateMenu.Text = Resources.MenuCertificatesCreateNew;
+      this.resumeCreationMenu.Text = Resources.MenuCertificateResumeCreation;
+      this.reloadCertificateMenu.Text = Resources.MenuCertificatesReload;
+
+      this.languageMenu.Text = Resources.MenuLanguage;
+
+      this.votingListsControl.UpdateLanguage();
+    }
+
+    private void resumeCreationMenu_Click(object sender, EventArgs e)
+    {
+      var certificates = Controller.GetVoterCertificates();
+      var resumeCertificate = certificates
+        .Where(certificate => certificate.Validate(Controller.Status.CertificateStorage) == CertificateValidationResult.NoSignature).FirstOrDefault();
+
+      if (resumeCertificate != null)
+      {
+        Create.CreateCertificateDialog.TryFixVoterCertificate(Controller, resumeCertificate);
+      }
+      else
+      {
+        MessageForm.Show(Resources.MenuCertificateResumeCreationNothing, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
     }
   }

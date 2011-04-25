@@ -33,8 +33,8 @@ namespace Pirate.PiVote.Gui
       this.certificateTypeLabel.Text = GuiResources.EncryptPrivateKeyCertificateType;
       this.actionLabel.Text = GuiResources.EncryptPrivateKeyUnlockAction;
       this.passphraseLabel.Text = GuiResources.EncryptPrivateKeyPassphrase;
-      this.okButton.Text = GuiResources.OkButton;
-      this.cancelButton.Text = GuiResources.CancelButton;
+      this.okButton.Text = GuiResources.ButtonOk;
+      this.cancelButton.Text = GuiResources.ButtonCancel;
 
       this.okButton.Enabled = Valid;
     }

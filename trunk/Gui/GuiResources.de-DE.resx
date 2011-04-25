@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CancelButton" xml:space="preserve">
+  <data name="ButtonCancel" xml:space="preserve">
     <value>&amp;Abbrechen</value>
   </data>
-  <data name="OkButton" xml:space="preserve">
+  <data name="ButtonOk" xml:space="preserve">
     <value>&amp;OK</value>
   </data>
   <data name="EncryptPrivateKeyCertificateId" xml:space="preserve">
@@ -168,22 +168,52 @@
   <data name="EncryptPrivateKeyWrongPassphrase" xml:space="preserve">
     <value>Passphrase falsch.</value>
   </data>
-  <data name="AbortButton" xml:space="preserve">
+  <data name="ButtonAbort" xml:space="preserve">
     <value>&amp;Abbrechen</value>
   </data>
-  <data name="IgnoreButton" xml:space="preserve">
+  <data name="ButtonIgnore" xml:space="preserve">
     <value>&amp;Ignorieren</value>
   </data>
-  <data name="NoButton" xml:space="preserve">
+  <data name="ButtonNo" xml:space="preserve">
     <value>&amp;Nein</value>
   </data>
-  <data name="RetryButton" xml:space="preserve">
+  <data name="ButtonRetry" xml:space="preserve">
     <value>&amp;Wiederholen</value>
   </data>
-  <data name="YesButton" xml:space="preserve">
+  <data name="ButtonYes" xml:space="preserve">
     <value>&amp;Ja</value>
   </data>
   <data name="PiVoteClient" xml:space="preserve">
     <value>Pi-Vote Client</value>
+  </data>
+  <data name="UnlockActionAuthorityCheckShares" xml:space="preserve">
+    <value>Schlüsselteile entschlüsseln und Antwort signieren.</value>
+  </data>
+  <data name="UnlockActionAuthorityCreateShares" xml:space="preserve">
+    <value>Neu erstellte Schlüsselteile signieren</value>
+  </data>
+  <data name="UnlockActionAuthorityDecipher" xml:space="preserve">
+    <value>Partielle Entschlüsselungen signieren.</value>
+  </data>
+  <data name="UnlockActionCreateVoting" xml:space="preserve">
+    <value>Abstimmungsparameter signieren</value>
+  </data>
+  <data name="UnlockActionSignRequest" xml:space="preserve">
+    <value>Deine Zertifikatsanfrage signieren.</value>
+  </data>
+  <data name="UnlockActionVote" xml:space="preserve">
+    <value>Stimme signieren</value>
+  </data>
+  <data name="AskForPartiallyDecipher" xml:space="preserve">
+    <value>Es sind {0} gültige Stimmen vorhanden. Wenn diese Zahl zu klein erscheint, könnte ein Sicherheitsproblem bestehen. Wenn das der Fall ist, musst du das Resultat nicht Entschlüsseln, sondern die anderen Autoritäten und Administratoren verständigen. Mit Entschlüsseln weiterfahren?</value>
+  </data>
+  <data name="ButtonDone" xml:space="preserve">
+    <value>&amp;Fertig</value>
+  </data>
+  <data name="ButtonNext" xml:space="preserve">
+    <value>&amp;Weiter</value>
+  </data>
+  <data name="ButtonPrevious" xml:space="preserve">
+    <value>&amp;Zurück</value>
   </data>
 </root>

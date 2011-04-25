@@ -34,35 +34,84 @@ namespace Pirate.PiVote.Circle
     public VotingListControl()
     {
       InitializeComponent();
+
+      this.votings = new List<VotingDescriptor2>();
+      this.controls = new List<VotingControl>();
     }
 
-    public void Set(CircleController controller, IEnumerable<VotingDescriptor2> votings)
+    public void Set(CircleController controller, IEnumerable<VotingDescriptor2> newVotings)
     {
-      this.votings = new List<VotingDescriptor2>(votings);
-      this.controls = new List<VotingControl>();
-      Controls.Clear();
+      var oldQueue = new Queue<VotingDescriptor2>(this.votings);
+      var newQueue = new Queue<VotingDescriptor2>(newVotings);
+      var oldControlQueue = new Queue<VotingControl>(this.controls);
+      var newControlQueue = new Queue<VotingControl>();
+      this.votings = new List<VotingDescriptor2>();
+      int top = -VerticalScroll.Value;
 
-      int top = 0;
-
-      foreach (var voting in this.votings)
+      while (oldQueue.Count > 0 ||
+             newQueue.Count > 0)
       {
-        VotingControl control = new VotingControl();
-        control.Controller = controller;
-        control.Voting = voting;
-        control.Left = 0;
-        control.Top = top;
-        control.Width = ClientSize.Width - HorizontalSpace;
-        control.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-        control.VotingAction += new VotingActionHandler(Control_VotingAction);
-        this.controls.Add(control);
-        Controls.Add(control);
+        if (oldQueue.Count > 0 &&
+            newQueue.Count > 0 &&
+            oldQueue.Peek().Id.Equals(newQueue.Peek().Id))
+        {
+          oldQueue.Dequeue();
+          var newVoting = newQueue.Dequeue();
+          this.votings.Add(newVoting);
 
-        top += control.Height + VerticalSpace;
+          VotingControl control = oldControlQueue.Dequeue();
+          control.Voting = newVoting;
+          control.Left = 0;
+          control.Top = top;
+          control.UpdateDisplay();
+          newControlQueue.Enqueue(control);
+
+          top += control.Height + VerticalSpace;
+         }
+        else if (oldQueue.Count > 0 &&
+                 newQueue.Count > 0)
+        {
+          oldQueue.Dequeue();
+          Controls.Remove(oldControlQueue.Dequeue());
+        }
+        else if (oldQueue.Count > 0)
+        {
+          oldQueue.Dequeue();
+          Controls.Remove(oldControlQueue.Dequeue());
+        }
+        else if (newQueue.Count > 0)
+        {
+          var newVoting = newQueue.Dequeue();
+          this.votings.Add(newVoting);
+
+          VotingControl control = new VotingControl();
+          control.Controller = controller;
+          control.Voting = newVoting;
+          control.Left = 0;
+          control.Top = top;
+          control.Width = ClientSize.Width - HorizontalSpace;
+          control.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+          control.VotingAction += new VotingActionHandler(Control_VotingAction);
+          newControlQueue.Enqueue(control);
+          Controls.Add(control);
+
+          top += control.Height + VerticalSpace;
+        }
       }
+
+      this.controls = new List<VotingControl>(newControlQueue);
 
       foreach (var control in this.controls)
       {
         control.Width = ClientSize.Width - HorizontalSpace;
+      }
+    }
+
+    public void UpdateLanguage()
+    {
+      foreach (var control in this.controls)
+      {
+        control.UpdateDisplay();
       }
     }
 

@@ -74,5 +74,16 @@ namespace Pirate.PiVote.Circle
     {
       OnVotingAction(voting);
     }
+
+    public void UpdateLanguage()
+    {
+      this.currentTabPage.Text = Resources.VotingListCurrent;
+      this.scheduledTabPage.Text = Resources.VotingListScheduled;
+      this.pastTabPage.Text = Resources.VotingListPast;
+
+      this.currentVotingListControl.UpdateLanguage();
+      this.scheduledVotingListControl.UpdateLanguage();
+      this.pastVotingListControl.UpdateLanguage();
+    }
   }
 }

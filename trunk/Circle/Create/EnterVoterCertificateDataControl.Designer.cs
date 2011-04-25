@@ -37,7 +37,6 @@ namespace Pirate.PiVote.Circle.Create
     {
       this.emailNotificationCheckBox = new System.Windows.Forms.CheckBox();
       this.firstNameLabel = new System.Windows.Forms.Label();
-      this.groupLabel = new System.Windows.Forms.Label();
       this.firstNameTextBox = new System.Windows.Forms.TextBox();
       this.groupComboBox = new Pirate.PiVote.Gui.GroupComboBox();
       this.familyNameLabel = new System.Windows.Forms.Label();
@@ -46,6 +45,7 @@ namespace Pirate.PiVote.Circle.Create
       this.emailAddressTextBox = new System.Windows.Forms.TextBox();
       this.cancelButton = new System.Windows.Forms.Button();
       this.nextButton = new System.Windows.Forms.Button();
+      this.groupLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // emailNotificationCheckBox
@@ -69,16 +69,6 @@ namespace Pirate.PiVote.Circle.Create
       this.firstNameLabel.Size = new System.Drawing.Size(58, 13);
       this.firstNameLabel.TabIndex = 40;
       this.firstNameLabel.Text = "First name:";
-      // 
-      // groupLabel
-      // 
-      this.groupLabel.AutoSize = true;
-      this.groupLabel.Location = new System.Drawing.Point(4, 126);
-      this.groupLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-      this.groupLabel.Name = "groupLabel";
-      this.groupLabel.Size = new System.Drawing.Size(39, 13);
-      this.groupLabel.TabIndex = 44;
-      this.groupLabel.Text = "Group:";
       // 
       // firstNameTextBox
       // 
@@ -170,6 +160,16 @@ namespace Pirate.PiVote.Circle.Create
       this.nextButton.UseVisualStyleBackColor = true;
       this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
       // 
+      // groupLabel
+      // 
+      this.groupLabel.AutoSize = true;
+      this.groupLabel.Location = new System.Drawing.Point(4, 126);
+      this.groupLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+      this.groupLabel.Name = "groupLabel";
+      this.groupLabel.Size = new System.Drawing.Size(39, 13);
+      this.groupLabel.TabIndex = 44;
+      this.groupLabel.Text = "Group:";
+      // 
       // EnterVoterCertificateDataControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -197,7 +197,6 @@ namespace Pirate.PiVote.Circle.Create
 
     private System.Windows.Forms.CheckBox emailNotificationCheckBox;
     private System.Windows.Forms.Label firstNameLabel;
-    private System.Windows.Forms.Label groupLabel;
     private System.Windows.Forms.TextBox firstNameTextBox;
     private Gui.GroupComboBox groupComboBox;
     private System.Windows.Forms.Label familyNameLabel;
@@ -206,5 +205,6 @@ namespace Pirate.PiVote.Circle.Create
     private System.Windows.Forms.TextBox emailAddressTextBox;
     private System.Windows.Forms.Button cancelButton;
     private System.Windows.Forms.Button nextButton;
+    private System.Windows.Forms.Label groupLabel;
   }
 }

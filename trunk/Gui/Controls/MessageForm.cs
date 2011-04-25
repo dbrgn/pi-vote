@@ -95,11 +95,11 @@ namespace Pirate.PiVote.Gui
       {
         case MessageBoxButtons.AbortRetryIgnore:
           form.leftbutton.DialogResult = DialogResult.Abort;
-          form.leftbutton.Text = GuiResources.AbortButton;
+          form.leftbutton.Text = GuiResources.ButtonAbort;
           form.middleButton.DialogResult = DialogResult.Retry;
-          form.middleButton.Text = GuiResources.RetryButton;
+          form.middleButton.Text = GuiResources.ButtonRetry;
           form.rightButton.DialogResult = DialogResult.Ignore;
-          form.rightButton.Text = GuiResources.IgnoreButton;
+          form.rightButton.Text = GuiResources.ButtonIgnore;
 
           switch (defaultResult)
           {
@@ -120,16 +120,16 @@ namespace Pirate.PiVote.Gui
           form.leftbutton.Visible = false;
           form.middleButton.Visible = false;
           form.rightButton.DialogResult = DialogResult.OK;
-          form.rightButton.Text = GuiResources.OkButton;
+          form.rightButton.Text = GuiResources.ButtonOk;
           form.rightButton.Select();
           break;
 
         case MessageBoxButtons.OKCancel:
           form.leftbutton.Visible = false;
           form.middleButton.DialogResult = DialogResult.OK;
-          form.middleButton.Text = GuiResources.OkButton;
+          form.middleButton.Text = GuiResources.ButtonOk;
           form.rightButton.DialogResult = DialogResult.Cancel;
-          form.rightButton.Text = GuiResources.CancelButton;
+          form.rightButton.Text = GuiResources.ButtonCancel;
 
           switch (defaultResult)
           {
@@ -146,9 +146,9 @@ namespace Pirate.PiVote.Gui
         case MessageBoxButtons.RetryCancel:
           form.leftbutton.Visible = false;
           form.middleButton.DialogResult = DialogResult.Retry;
-          form.middleButton.Text = GuiResources.RetryButton;
+          form.middleButton.Text = GuiResources.ButtonRetry;
           form.rightButton.DialogResult = DialogResult.Cancel;
-          form.rightButton.Text = GuiResources.CancelButton;
+          form.rightButton.Text = GuiResources.ButtonCancel;
 
           switch (defaultResult)
           {
@@ -165,9 +165,9 @@ namespace Pirate.PiVote.Gui
         case MessageBoxButtons.YesNo:
           form.leftbutton.Visible = false;
           form.middleButton.DialogResult = DialogResult.Yes;
-          form.middleButton.Text = GuiResources.YesButton;
+          form.middleButton.Text = GuiResources.ButtonYes;
           form.rightButton.DialogResult = DialogResult.No;
-          form.rightButton.Text = GuiResources.NoButton;
+          form.rightButton.Text = GuiResources.ButtonNo;
 
           switch (defaultResult)
           {
@@ -183,11 +183,11 @@ namespace Pirate.PiVote.Gui
 
         case MessageBoxButtons.YesNoCancel:
           form.leftbutton.DialogResult = DialogResult.Yes;
-          form.leftbutton.Text = GuiResources.YesButton;
+          form.leftbutton.Text = GuiResources.ButtonYes;
           form.middleButton.DialogResult = DialogResult.No;
-          form.middleButton.Text = GuiResources.NoButton;
+          form.middleButton.Text = GuiResources.ButtonNo;
           form.rightButton.DialogResult = DialogResult.Cancel;
-          form.rightButton.Text = GuiResources.CancelButton;
+          form.rightButton.Text = GuiResources.ButtonCancel;
 
           switch (defaultResult)
           {
@@ -208,7 +208,7 @@ namespace Pirate.PiVote.Gui
           form.leftbutton.Visible = false;
           form.middleButton.Visible = false;
           form.rightButton.DialogResult = DialogResult.OK;
-          form.rightButton.Text = GuiResources.OkButton;
+          form.rightButton.Text = GuiResources.ButtonOk;
           form.rightButton.Select();
           break;
       }

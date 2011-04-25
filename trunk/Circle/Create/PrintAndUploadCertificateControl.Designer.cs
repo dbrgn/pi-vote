@@ -46,6 +46,7 @@ namespace Pirate.PiVote.Circle.Create
       this.doneButton = new System.Windows.Forms.Button();
       this.uploadButton = new System.Windows.Forms.Button();
       this.printButton = new System.Windows.Forms.Button();
+      this.infoLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // typeLabel
@@ -166,10 +167,22 @@ namespace Pirate.PiVote.Circle.Create
       this.printButton.UseVisualStyleBackColor = true;
       this.printButton.Click += new System.EventHandler(this.printButton_Click);
       // 
+      // infoLabel
+      // 
+      this.infoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.infoLabel.Location = new System.Drawing.Point(3, 102);
+      this.infoLabel.Name = "infoLabel";
+      this.infoLabel.Size = new System.Drawing.Size(453, 80);
+      this.infoLabel.TabIndex = 52;
+      this.infoLabel.Text = "Info";
+      // 
       // PrintAndUploadCertificateControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.infoLabel);
       this.Controls.Add(this.printButton);
       this.Controls.Add(this.uploadButton);
       this.Controls.Add(this.doneButton);
@@ -202,6 +215,7 @@ namespace Pirate.PiVote.Circle.Create
     private System.Windows.Forms.Button doneButton;
     private System.Windows.Forms.Button uploadButton;
     private System.Windows.Forms.Button printButton;
+    private System.Windows.Forms.Label infoLabel;
 
   }
 }

@@ -61,160 +61,340 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have a valid certificate with which you can sign your new certificate request. If you do so you not need to print out your request and get signatures from authorities but the new certificate will only be valid as long as the one you already have, that is {0:d}. Do you want to sign your signing request with your existing certificate?.
+        ///   Looks up a localized string similar to Some shares were invalid. The voting will be aborted..
         /// </summary>
-        internal static string AskToSignSignatureRequestWithParent {
+        internal static string ControllerCheckSharesFailed {
             get {
-                return ResourceManager.GetString("AskToSignSignatureRequestWithParent", resourceCulture);
+                return ResourceManager.GetString("ControllerCheckSharesFailed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign newly created key shares.
+        ///   Looks up a localized string similar to All shares were accepted. The voting may continue..
         /// </summary>
-        internal static string AuthorityCreateSharesUnlockAction {
+        internal static string ControllerCheckSharesOk {
             get {
-                return ResourceManager.GetString("AuthorityCreateSharesUnlockAction", resourceCulture);
+                return ResourceManager.GetString("ControllerCheckSharesOk", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your request has been submitted to the server. You must now wait for the certificate authority to process it..
+        ///   Looks up a localized string similar to Your signature request for certificate {0} of type {1} was accepted. You may now use your certificate..
         /// </summary>
-        internal static string CreateCertificateDone {
+        internal static string ControllerLoadCertificatesAccepted {
             get {
-                return ResourceManager.GetString("CreateCertificateDone", resourceCulture);
+                return ResourceManager.GetString("ControllerLoadCertificatesAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your signature request for certificate {0} of type {1} was declined for the following reason: {2}.
+        /// </summary>
+        internal static string ControllerLoadCertificatesDeclined {
+            get {
+                return ResourceManager.GetString("ControllerLoadCertificatesDeclined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your request is stored on the server..
+        /// </summary>
+        internal static string ControllerSetSignatureRequestOk {
+            get {
+                return ResourceManager.GetString("ControllerSetSignatureRequestOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Working....
+        /// </summary>
+        internal static string ControllerStatusWorking {
+            get {
+                return ResourceManager.GetString("ControllerStatusWorking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your vote is cast..
+        /// </summary>
+        internal static string ControllerVoteCast {
+            get {
+                return ResourceManager.GetString("ControllerVoteCast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Base certificate:.
+        /// </summary>
+        internal static string CreateCertificateDataBaseCertificate {
+            get {
+                return ResourceManager.GetString("CreateCertificateDataBaseCertificate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Email address:.
         /// </summary>
-        internal static string CreateCertificateEmailAddress {
+        internal static string CreateCertificateDataEmailAddress {
             get {
-                return ResourceManager.GetString("CreateCertificateEmailAddress", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateDataEmailAddress", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Notify me by email, when an answer to my certificate signing request is available. This requires your email address to be stored on the PiVote server..
+        ///   Looks up a localized string similar to Surname:.
         /// </summary>
-        internal static string CreateCertificateEmailNotification {
+        internal static string CreateCertificateDataFamilyName {
             get {
-                return ResourceManager.GetString("CreateCertificateEmailNotification", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateDataFamilyName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Firstname.
+        ///   Looks up a localized string similar to Given name:.
         /// </summary>
-        internal static string CreateCertificateFirstname {
+        internal static string CreateCertificateDataFirstName {
             get {
-                return ResourceManager.GetString("CreateCertificateFirstname", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateDataFirstName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Party function.
+        ///   Looks up a localized string similar to Party function:.
         /// </summary>
-        internal static string CreateCertificateFunction {
+        internal static string CreateCertificateDataFunction {
             get {
-                return ResourceManager.GetString("CreateCertificateFunction", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateDataFunction", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Group:.
         /// </summary>
-        internal static string CreateCertificateGroup {
+        internal static string CreateCertificateDataGroup {
             get {
-                return ResourceManager.GetString("CreateCertificateGroup", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateDataGroup", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Id.
+        ///   Looks up a localized string similar to Notify me by email, when an answer to my certificate signing request is available. This requires your email address to be stored on the PiVote server..
         /// </summary>
-        internal static string CreateCertificateId {
+        internal static string CreateCertificateDataNotify {
             get {
-                return ResourceManager.GetString("CreateCertificateId", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateDataNotify", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Print and Save.
+        ///   Looks up a localized string similar to Valid until:.
         /// </summary>
-        internal static string CreateCertificatePrintAndSend {
+        internal static string CreateCertificateDataValidUntil {
             get {
-                return ResourceManager.GetString("CreateCertificatePrintAndSend", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateDataValidUntil", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Save....
+        ///   Looks up a localized string similar to Circle - Create Certificate.
         /// </summary>
-        internal static string CreateCertificateSaveButton {
+        internal static string CreateCertificateDialogTitle {
             get {
-                return ResourceManager.GetString("CreateCertificateSaveButton", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateDialogTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save Certificate.
+        ///   Looks up a localized string similar to Email address:.
         /// </summary>
-        internal static string CreateCertificateSaveDialog {
+        internal static string CreateCertificateFinishEmailAddress {
             get {
-                return ResourceManager.GetString("CreateCertificateSaveDialog", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateFinishEmailAddress", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Surname.
+        ///   Looks up a localized string similar to Certificate id:.
         /// </summary>
-        internal static string CreateCertificateSurname {
+        internal static string CreateCertificateFinishId {
             get {
-                return ResourceManager.GetString("CreateCertificateSurname", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateFinishId", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Certificate type.
+        ///   Looks up a localized string similar to You need to print out your signing request and upload it to the server. Then you need to collect 3 signatures from elected voting authorities on your printout and send it to the certificate authority. Once the certificate authority has accepted your request you may use your certificate to vote..
         /// </summary>
-        internal static string CreateCertificateType {
+        internal static string CreateCertificateFinishInfo {
             get {
-                return ResourceManager.GetString("CreateCertificateType", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateFinishInfo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Administrator.
+        ///   Looks up a localized string similar to Full name:.
         /// </summary>
-        internal static string CreateCertificateTypeAdmin {
+        internal static string CreateCertificateFinishName {
             get {
-                return ResourceManager.GetString("CreateCertificateTypeAdmin", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateFinishName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Voting Authority.
+        ///   Looks up a localized string similar to &amp;Print.
         /// </summary>
-        internal static string CreateCertificateTypeAuthority {
+        internal static string CreateCertificateFinishPrint {
             get {
-                return ResourceManager.GetString("CreateCertificateTypeAuthority", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateFinishPrint", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Voter.
+        ///   Looks up a localized string similar to Certificate type:.
         /// </summary>
-        internal static string CreateCertificateTypeVoter {
+        internal static string CreateCertificateFinishType {
             get {
-                return ResourceManager.GetString("CreateCertificateTypeVoter", resourceCulture);
+                return ResourceManager.GetString("CreateCertificateFinishType", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Circle Pi-Vote.
+        ///   Looks up a localized string similar to &amp;Upload.
+        /// </summary>
+        internal static string CreateCertificateFinishUpload {
+            get {
+                return ResourceManager.GetString("CreateCertificateFinishUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Voting Authority.
+        /// </summary>
+        internal static string CreateCertificateSelectAuthority {
+            get {
+                return ResourceManager.GetString("CreateCertificateSelectAuthority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new certificate for a voting authority. Choose this if you have been elected to be a voting authority..
+        /// </summary>
+        internal static string CreateCertificateSelectAuthorityInfo {
+            get {
+                return ResourceManager.GetString("CreateCertificateSelectAuthorityInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Voter.
+        /// </summary>
+        internal static string CreateCertificateSelectVoter {
+            get {
+                return ResourceManager.GetString("CreateCertificateSelectVoter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new voter certificate from scratch. Choose this if you are new to Pi-Vote or your old certificate has run out..
+        /// </summary>
+        internal static string CreateCertificateSelectVoterInfo {
+            get {
+                return ResourceManager.GetString("CreateCertificateSelectVoterInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voter for &amp;Subgroup.
+        /// </summary>
+        internal static string CreateCertificateSelectVoterSubgroup {
+            get {
+                return ResourceManager.GetString("CreateCertificateSelectVoterSubgroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a voter certificate for a subgroup based on a certificate you already have. Choose this if you want to create a certificate for regional or local voting..
+        /// </summary>
+        internal static string CreateCertificateSelectVoterSubgroupInfo {
+            get {
+                return ResourceManager.GetString("CreateCertificateSelectVoterSubgroupInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Resume Creation....
+        /// </summary>
+        internal static string MenuCertificateResumeCreation {
+            get {
+                return ResourceManager.GetString("MenuCertificateResumeCreation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no certificate creation that can be resumed..
+        /// </summary>
+        internal static string MenuCertificateResumeCreationNothing {
+            get {
+                return ResourceManager.GetString("MenuCertificateResumeCreationNothing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Certificates.
+        /// </summary>
+        internal static string MenuCertificates {
+            get {
+                return ResourceManager.GetString("MenuCertificates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Create....
+        /// </summary>
+        internal static string MenuCertificatesCreateNew {
+            get {
+                return ResourceManager.GetString("MenuCertificatesCreateNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Reload.
+        /// </summary>
+        internal static string MenuCertificatesReload {
+            get {
+                return ResourceManager.GetString("MenuCertificatesReload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Language.
+        /// </summary>
+        internal static string MenuLanguage {
+            get {
+                return ResourceManager.GetString("MenuLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Votings.
+        /// </summary>
+        internal static string MenuVotings {
+            get {
+                return ResourceManager.GetString("MenuVotings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Refresh.
+        /// </summary>
+        internal static string MenuVotingsRefresh {
+            get {
+                return ResourceManager.GetString("MenuVotingsRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circle.
         /// </summary>
         internal static string MessageBoxTitle {
             get {
@@ -232,168 +412,281 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recover your certificate request..
+        ///   Looks up a localized string similar to Abstention.
         /// </summary>
-        internal static string SignRequestUnlockAction {
+        internal static string ResultDialogAbstain {
             get {
-                return ResourceManager.GetString("SignRequestUnlockAction", resourceCulture);
+                return ResourceManager.GetString("ResultDialogAbstain", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show me more options.
+        ///   Looks up a localized string similar to Manipulated.
         /// </summary>
-        internal static string SimpleChooseCertificateAdvancedOption {
+        internal static string ResultDialogFoundBad {
             get {
-                return ResourceManager.GetString("SimpleChooseCertificateAdvancedOption", resourceCulture);
+                return ResourceManager.GetString("ResultDialogFoundBad", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Create.
+        ///   Looks up a localized string similar to Counted.
         /// </summary>
-        internal static string SimpleChooseCertificateCreateButton {
+        internal static string ResultDialogFoundOk {
             get {
-                return ResourceManager.GetString("SimpleChooseCertificateCreateButton", resourceCulture);
+                return ResourceManager.GetString("ResultDialogFoundOk", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To get a certificate signed by the certificate authority you first need to create your certificate. 
-        ///
-        ///Then you must fill in your personal data which is then included in your request for certificate signing. This request will be printed out and you need to meet three voting authorities which will check your identity, sign your paper request and forward it to the certificate authority.
-        ///
-        ///Finally you need to upload your request for certificate signing to the server to facilitate the signing process. You wil [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Invalid ballots.
         /// </summary>
-        internal static string SimpleChooseCertificateCreateExplain {
+        internal static string ResultDialogInvalidBallots {
             get {
-                return ResourceManager.GetString("SimpleChooseCertificateCreateExplain", resourceCulture);
+                return ResourceManager.GetString("ResultDialogInvalidBallots", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I need a new certificate.
+        ///   Looks up a localized string similar to Not counted.
         /// </summary>
-        internal static string SimpleChooseCertificateCreateOption {
+        internal static string ResultDialogNotFound {
             get {
-                return ResourceManager.GetString("SimpleChooseCertificateCreateOption", resourceCulture);
+                return ResourceManager.GetString("ResultDialogNotFound", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In order to vote you need a certificate proofing your identitiy..
+        ///   Looks up a localized string similar to Circle - Voting results.
         /// </summary>
-        internal static string SimpleChooseCertificateHeader {
+        internal static string ResultDialogTitle {
             get {
-                return ResourceManager.GetString("SimpleChooseCertificateHeader", resourceCulture);
+                return ResourceManager.GetString("ResultDialogTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Import.
+        ///   Looks up a localized string similar to Total ballots.
         /// </summary>
-        internal static string SimpleChooseCertificateImportButton {
+        internal static string ResultDialogTotalBallots {
             get {
-                return ResourceManager.GetString("SimpleChooseCertificateImportButton", resourceCulture);
+                return ResourceManager.GetString("ResultDialogTotalBallots", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Certificate import successful..
+        ///   Looks up a localized string similar to Valid ballots.
         /// </summary>
-        internal static string SimpleChooseCertificateImportDone {
+        internal static string ResultDialogValidBallots {
             get {
-                return ResourceManager.GetString("SimpleChooseCertificateImportDone", resourceCulture);
+                return ResourceManager.GetString("ResultDialogValidBallots", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I already have a certificate.
+        ///   Looks up a localized string similar to Your vote.
         /// </summary>
-        internal static string SimpleChooseCertificateImportOption {
+        internal static string ResultDialogYourVote {
             get {
-                return ResourceManager.GetString("SimpleChooseCertificateImportOption", resourceCulture);
+                return ResourceManager.GetString("ResultDialogYourVote", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Print.
+        ///   Looks up a localized string similar to Circle Status.
         /// </summary>
-        internal static string SimpleChooseCertificatePrintButton {
+        internal static string StatusDialogTitle {
             get {
-                return ResourceManager.GetString("SimpleChooseCertificatePrintButton", resourceCulture);
+                return ResourceManager.GetString("StatusDialogTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Upload.
+        ///   Looks up a localized string similar to &amp;Verify Shares.
         /// </summary>
-        internal static string SimpleChooseCertificateUploadButton {
+        internal static string VotingActionCheck {
             get {
-                return ResourceManager.GetString("SimpleChooseCertificateUploadButton", resourceCulture);
+                return ResourceManager.GetString("VotingActionCheck", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The recovery file for your certificate request is missing. You must create a new request..
+        ///   Looks up a localized string similar to &amp;Decipher.
         /// </summary>
-        internal static string SimpleCreateCertificateFileMissing {
+        internal static string VotingActionDecipher {
             get {
-                return ResourceManager.GetString("SimpleCreateCertificateFileMissing", resourceCulture);
+                return ResourceManager.GetString("VotingActionDecipher", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You canceled the signing of your certificate request..
+        ///   Looks up a localized string similar to &amp;Create Shares.
         /// </summary>
-        internal static string SimpleCreateCertificateSigningCanceled {
+        internal static string VotingActionShare {
             get {
-                return ResourceManager.GetString("SimpleCreateCertificateSigningCanceled", resourceCulture);
+                return ResourceManager.GetString("VotingActionShare", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Description....
+        ///   Looks up a localized string similar to &amp;Tally.
         /// </summary>
-        internal static string VoteDescriptionButton {
+        internal static string VotingActionTally {
             get {
-                return ResourceManager.GetString("VoteDescriptionButton", resourceCulture);
+                return ResourceManager.GetString("VotingActionTally", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Close.
+        ///   Looks up a localized string similar to &amp;Vote.
         /// </summary>
-        internal static string VoteDescriptionCloseButton {
+        internal static string VotingActionVote {
             get {
-                return ResourceManager.GetString("VoteDescriptionCloseButton", resourceCulture);
+                return ResourceManager.GetString("VotingActionVote", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description.
+        ///   Looks up a localized string similar to You can select up to {0} options..
         /// </summary>
-        internal static string VoteDescriptionTitle {
+        internal static string VotingDialogMaxOptionMulti {
             get {
-                return ResourceManager.GetString("VoteDescriptionTitle", resourceCulture);
+                return ResourceManager.GetString("VotingDialogMaxOptionMulti", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can vote for up to {0} options. If you don&apos;t spend them all, the remaining ones will be counted as absteentions..
+        ///   Looks up a localized string similar to You must select one option..
         /// </summary>
-        internal static string VoteMaxOptions {
+        internal static string VotingDialogMaxOptionSingle {
             get {
-                return ResourceManager.GetString("VoteMaxOptions", resourceCulture);
+                return ResourceManager.GetString("VotingDialogMaxOptionSingle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must select one option to vote for..
+        ///   Looks up a localized string similar to Question #{0}.
         /// </summary>
-        internal static string VoteSingleOption {
+        internal static string VotingDialogQuestion {
             get {
-                return ResourceManager.GetString("VoteSingleOption", resourceCulture);
+                return ResourceManager.GetString("VotingDialogQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circle - Cast vote.
+        /// </summary>
+        internal static string VotingDialogTile {
+            get {
+                return ResourceManager.GetString("VotingDialogTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Vote.
+        /// </summary>
+        internal static string VotingDialogVote {
+            get {
+                return ResourceManager.GetString("VotingDialogVote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current.
+        /// </summary>
+        internal static string VotingListCurrent {
+            get {
+                return ResourceManager.GetString("VotingListCurrent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Past.
+        /// </summary>
+        internal static string VotingListPast {
+            get {
+                return ResourceManager.GetString("VotingListPast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scheduled.
+        /// </summary>
+        internal static string VotingListScheduled {
+            get {
+                return ResourceManager.GetString("VotingListScheduled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aborted.
+        /// </summary>
+        internal static string VotingStatusAborted {
+            get {
+                return ResourceManager.GetString("VotingStatusAborted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparing, waiting for {0} of {1} authorities to verify shares.
+        /// </summary>
+        internal static string VotingStatusCheck {
+            get {
+                return ResourceManager.GetString("VotingStatusCheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Voting finished, waiting for {0} of {1} authorities to decipher.
+        /// </summary>
+        internal static string VotingStatusDecipher {
+            get {
+                return ResourceManager.GetString("VotingStatusDecipher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finished and stored offline.
+        /// </summary>
+        internal static string VotingStatusOffline {
+            get {
+                return ResourceManager.GetString("VotingStatusOffline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ready, voting begins on {0}.
+        /// </summary>
+        internal static string VotingStatusReady {
+            get {
+                return ResourceManager.GetString("VotingStatusReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preparing, waiting for {0} of {1} authorities to create shares.
+        /// </summary>
+        internal static string VotingStatusShare {
+            get {
+                return ResourceManager.GetString("VotingStatusShare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finished, {0} votes can be tallied.
+        /// </summary>
+        internal static string VotingStatusTally {
+            get {
+                return ResourceManager.GetString("VotingStatusTally", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open for voting, {0} votes cast.
+        /// </summary>
+        internal static string VotingStatusVote {
+            get {
+                return ResourceManager.GetString("VotingStatusVote", resourceCulture);
             }
         }
     }

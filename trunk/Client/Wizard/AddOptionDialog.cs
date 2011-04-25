@@ -26,8 +26,8 @@ namespace Pirate.PiVote.Client
     {
       InitializeComponent();
 
-      this.okButton.Text = GuiResources.OkButton;
-      this.cancelButton.Text = GuiResources.CancelButton;
+      this.okButton.Text = GuiResources.ButtonOk;
+      this.cancelButton.Text = GuiResources.ButtonCancel;
       this.textLabel.Text = Resources.AddOptionText;
       this.descriptionLabel.Text = Resources.AddOptionDescription;
       this.urlLabel.Text = Resources.AddOptionUrl;

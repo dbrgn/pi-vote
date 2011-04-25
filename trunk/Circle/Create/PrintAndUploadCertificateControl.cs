@@ -24,6 +24,15 @@ namespace Pirate.PiVote.Circle.Create
     public PrintAndUploadCertificateControl()
     {
       InitializeComponent();
+
+      this.typeLabel.Text = Resources.CreateCertificateFinishType;
+      this.idLabel.Text = Resources.CreateCertificateFinishId;
+      this.nameLabel.Text = Resources.CreateCertificateFinishName;
+      this.emailLabel.Text = Resources.CreateCertificateFinishEmailAddress;
+      this.printButton.Text = Resources.CreateCertificateFinishPrint;
+      this.uploadButton.Text = Resources.CreateCertificateFinishUpload;
+      this.infoLabel.Text = Resources.CreateCertificateFinishInfo;
+      this.doneButton.Text = GuiResources.ButtonDone;
     }
 
     private void PrintAndUploadCertificateControl_Load(object sender, EventArgs e)
@@ -49,18 +58,26 @@ namespace Pirate.PiVote.Circle.Create
 
     private void uploadButton_Click(object sender, EventArgs e)
     {
-      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.SignRequestUnlockAction))
+      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionSignRequest))
       {
-        Pirate.PiVote.Circle.Status.TextStatusDialog.ShowInfo(Status.Controller);
+        try
+        {
+          Pirate.PiVote.Circle.Status.TextStatusDialog.ShowInfo(Status.Controller, FindForm());
 
-        var secureSignatureRequest = new Secure<SignatureRequest>(Status.SignatureRequest, Status.Controller.Status.CaCertificate, Status.Certificate);
-        var secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(Status.SignatureRequestInfo, Status.Controller.Status.ServerCertificate, Status.Certificate);
+          var secureSignatureRequest = new Secure<SignatureRequest>(Status.SignatureRequest, Status.Controller.Status.CaCertificate, Status.Certificate);
+          var secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(Status.SignatureRequestInfo, Status.Controller.Status.ServerCertificate, Status.Certificate);
 
-        Status.Controller.SetSignatureRequest(secureSignatureRequest, secureSignatureRequestInfo);
-
-        Status.Certificate.Lock();
-
-        Pirate.PiVote.Circle.Status.TextStatusDialog.HideInfo();
+          Status.Controller.SetSignatureRequest(secureSignatureRequest, secureSignatureRequestInfo);
+        }
+        catch (Exception exception)
+        {
+          MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        finally
+        {
+          Status.Certificate.Lock();
+          Pirate.PiVote.Circle.Status.TextStatusDialog.HideInfo();
+        }
       }
     }
 

@@ -76,6 +76,8 @@ namespace Pirate.PiVote.Rpc
             Progress = 0.5d;
             SubText = string.Format(LibraryResources.ClientGetSignatureRequestsGetRequest, done, max);
             SubProgress = (double)done / (double)max;
+            HasSingleProgress = true;
+            SingleProgress = SubProgress;
 
             foreach (Guid id in signatureRequestList)
             {
@@ -86,10 +88,12 @@ namespace Pirate.PiVote.Rpc
               done++;
               SubText = string.Format(LibraryResources.ClientGetSignatureRequestsGetRequest, done, max);
               SubProgress = (double)done / (double)max;
+              SingleProgress = SubProgress;
             }
 
             Progress = 1d;
             SubProgress = 1d;
+            HasSingleProgress = false;
           }
           else
           {

@@ -32,8 +32,8 @@ namespace Pirate.PiVote.Gui
       this.encryptCheckBox.Text = GuiResources.EncryptPrivateKeyChoose;
       this.passphraseLabel.Text = GuiResources.EncryptPrivateKeyPassphrase;
       this.repeatLabel.Text = GuiResources.EncryptPrivateKeyRepeat;
-      this.okButton.Text = GuiResources.OkButton;
-      this.cancelButton.Text = GuiResources.CancelButton;
+      this.okButton.Text = GuiResources.ButtonOk;
+      this.cancelButton.Text = GuiResources.ButtonCancel;
 
       this.okButton.Enabled = Valid;
       this.passphraseTextBox.Enabled = this.encryptCheckBox.Checked;

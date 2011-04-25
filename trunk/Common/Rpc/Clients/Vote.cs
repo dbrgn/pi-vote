@@ -98,9 +98,11 @@ namespace Pirate.PiVote.Rpc
           Progress = 0.3d;
           SubText = LibraryResources.ClientVoteCalcVote;
           SubProgress = 0d;
+          HasSingleProgress = true;
 
           var envelope = client.voterEntity.Vote(this.votingMaterial, this.voterCertificate, vota, VoteProgressHandler);
 
+          HasSingleProgress = false;
           Progress = 0.7d;
           SubText = LibraryResources.ClientVotePushVote;
           SubProgress = 0d;
@@ -130,6 +132,7 @@ namespace Pirate.PiVote.Rpc
       private void VoteProgressHandler(double value)
       {
         SubProgress = value;
+        SingleProgress = value;
       }
     }
   }

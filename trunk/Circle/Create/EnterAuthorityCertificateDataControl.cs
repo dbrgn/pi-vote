@@ -24,6 +24,15 @@ namespace Pirate.PiVote.Circle.Create
     public EnterAuthorityCertificateDataControl()
     {
       InitializeComponent();
+
+      this.firstNameLabel.Text = Resources.CreateCertificateDataFirstName;
+      this.familyNameLabel.Text = Resources.CreateCertificateDataFamilyName;
+      this.functionNameLabel.Text = Resources.CreateCertificateDataFunction;
+      this.emailAddressLabel.Text = Resources.CreateCertificateDataEmailAddress;
+      this.nextButton.Text = GuiResources.ButtonNext;
+      this.cancelButton.Text = GuiResources.ButtonCancel;
+
+      CheckValid();
     }
 
     private void nextButton_Click(object sender, EventArgs e)

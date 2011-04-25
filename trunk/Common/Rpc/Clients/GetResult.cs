@@ -187,6 +187,7 @@ namespace Pirate.PiVote.Rpc
 
           client.voterEntity.TallyBegin(material);
 
+          HasSingleProgress = true;
           this.client = client;
           this.envelopeQueue = new Queue<Tuple<int, Signed<Envelope>>>();
           this.workerRun = true;
@@ -207,6 +208,7 @@ namespace Pirate.PiVote.Rpc
               SubText = string.Format(LibraryResources.ClientGetResultFetchEnvelopesOf, this.verifiedEnvelopes, this.envelopeCount);
               SubProgress = 0.2d / (double)this.envelopeCount * (double)this.fetchedEnvelopes +
                             0.8d / (double)this.envelopeCount * ((double)this.verifiedEnvelopes + this.threadProgress.Values.Sum());
+              SingleProgress = SubProgress;
             }
 
             Thread.Sleep(100);
@@ -250,11 +252,13 @@ namespace Pirate.PiVote.Rpc
 
             SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, authorityIndex, parameters.AuthorityCount);
             SubProgress = 1d / (double)parameters.AuthorityCount * (double)(authorityIndex);
+            SingleProgress = SubProgress;
           }
 
           Progress = 0.9d;
           Text = LibraryResources.ClientGetResultDecipherResult;
           SubProgress = 0d;
+          HasSingleProgress = false;
 
           var result = client.voterEntity.TallyResult;
 

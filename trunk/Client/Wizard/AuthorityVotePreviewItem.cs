@@ -59,7 +59,7 @@ namespace Pirate.PiVote.Client
         this.run = true;
         OnUpdateWizard();
 
-        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.AuthorityCheckSharesUnlockAction))
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionAuthorityCheckShares))
         {
           Status.VotingClient.CheckShares(VotingDescriptor.Id, (AuthorityCertificate)Status.Certificate, filePath, CheckSharesCompleteCallBack);
 

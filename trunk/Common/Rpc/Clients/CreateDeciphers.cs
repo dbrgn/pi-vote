@@ -156,6 +156,7 @@ namespace Pirate.PiVote.Rpc
           workers.ForEach(worker => worker.Priority = ThreadPriority.Lowest);
           workers.ForEach(worker => this.threadProgress.Add(worker.ManagedThreadId, 0d));
           workers.ForEach(worker => worker.Start());
+          HasSingleProgress = true;
 
           while (this.verifiedEnvelopes < this.envelopeCount)
           {
@@ -164,6 +165,7 @@ namespace Pirate.PiVote.Rpc
               SubText = string.Format(LibraryResources.ClientGetResultFetchEnvelopesOf, this.verifiedEnvelopes, this.envelopeCount);
               SubProgress = 0.2d / (double)this.envelopeCount * (double)this.fetchedEnvelopes +
                             0.8d / (double)this.envelopeCount * ((double)this.verifiedEnvelopes + this.threadProgress.Values.Sum());
+              SingleProgress = SubProgress;
             }
 
             Thread.Sleep(100);
@@ -171,6 +173,8 @@ namespace Pirate.PiVote.Rpc
 
           this.workerRun = false;
           workers.ForEach(worker => worker.Join());
+          HasSingleProgress = false;
+          SubText = string.Empty;
 
           Text = LibraryResources.ClientCreateDeciphersCreatePartialDecipher;
           Progress = 0.7d;

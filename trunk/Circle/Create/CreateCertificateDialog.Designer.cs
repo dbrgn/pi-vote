@@ -41,11 +41,13 @@ namespace Pirate.PiVote.Circle.Create
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(557, 291);
+      this.ClientSize = new System.Drawing.Size(594, 275);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.MaximizeBox = false;
+      this.MaximumSize = new System.Drawing.Size(800, 400);
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(600, 300);
       this.Name = "CreateCertificateDialog";
       this.Text = "Circle - Create Certificate";
       this.Load += new System.EventHandler(this.CreateCertificateDialog_Load);

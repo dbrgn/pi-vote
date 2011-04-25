@@ -32,6 +32,12 @@ namespace Pirate.PiVote.Circle.Vote
     {
       InitializeComponent();
 
+      Text = Resources.VotingDialogTile;
+      this.voteButton.Text = Resources.VotingDialogVote;
+      this.nextButton.Text = GuiResources.ButtonNext;
+      this.previousButton.Text = GuiResources.ButtonPrevious;
+      this.cancelButton.Text = GuiResources.ButtonCancel;
+
       this.votingControl.VotingChanged += new EventHandler(VotingControl_VotingChanged);
     }
 
@@ -44,6 +50,18 @@ namespace Pirate.PiVote.Circle.Vote
 
     private void VotingDialog_Load(object sender, EventArgs e)
     {
+      var screenBounds = Screen.PrimaryScreen.Bounds;
+
+      if (screenBounds.Width < Width)
+      {
+        Width = screenBounds.Width;
+      }
+
+      if (screenBounds.Height < Height)
+      {
+        Height = screenBounds.Height;
+      } 
+      
       CenterToScreen();
     }
 
@@ -68,15 +86,20 @@ namespace Pirate.PiVote.Circle.Vote
 
     private void voteButton_Click(object sender, EventArgs e)
     {
-      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(this.voterCertificate, "Sign your vote."))
+      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(this.voterCertificate, GuiResources.UnlockActionVote))
       {
-        Status.TextStatusDialog.ShowInfo(this.controller);
+        Status.TextStatusDialog.ShowInfo(controller, this);
 
-        this.controller.Vote(this.voterCertificate, this.voting, this.votingControl.Vota);
+        try
+        {
+          this.controller.Vote(this.voterCertificate, this.voting, this.votingControl.Vota);
+        }
+        finally
+        {
+          this.voterCertificate.Lock();
+        }
 
         Status.TextStatusDialog.HideInfo();
-
-        this.voterCertificate.Lock();
       }
 
       Close();

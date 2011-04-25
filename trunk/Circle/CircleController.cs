@@ -41,24 +41,27 @@ namespace Pirate.PiVote.Circle
 
     public CircleStatus Status { get; private set; }
 
+    public void UpdateStatus()
+    {
+      var operation = Status.VotingClient.CurrentOperation;
+
+      if (operation != null)
+      {
+        this.currentOperation = operation;
+      }
+    }
+
     public string SubText
     {
       get
       {
-        var operation = Status.VotingClient.CurrentOperation;
-
-        if (operation != null)
-        {
-          this.currentOperation = operation;
-        }
-
         if (this.currentOperation != null)
         {
           return this.currentOperation.SubText;
         }
         else
         {
-          return "Working";
+          return string.Empty;
         }
       }
     }
@@ -67,20 +70,13 @@ namespace Pirate.PiVote.Circle
     {
       get
       {
-        var operation = Status.VotingClient.CurrentOperation;
-
-        if (operation != null)
-        {
-          this.currentOperation = operation;
-        }
-
         if (this.currentOperation != null)
         {
           return this.currentOperation.Text;
         }
         else
         {
-          return "Working";
+          return Resources.ControllerStatusWorking;
         }
       }
     }
@@ -89,56 +85,28 @@ namespace Pirate.PiVote.Circle
     {
       get
       {
-        var operation = Status.VotingClient.CurrentOperation;
-
-        if (operation != null)
+        if (this.currentOperation != null)
         {
-          this.currentOperation = operation;
-        }
-
-        if (this.exception != null)
-        {
-          return 0d;
+          return this.currentOperation.SingleProgress;
         }
         else
         {
-          if (this.currentOperation != null)
-          {
-            return this.currentOperation.Progress;
-          }
-          else
-          {
-            return 0d;
-          }
+          return 0d;
         }
       }
     }
 
-    public double SubProgress
+    public bool HasProgress
     {
       get
       {
-        var operation = Status.VotingClient.CurrentOperation;
-
-        if (operation != null)
+        if (this.currentOperation != null)
         {
-          this.currentOperation = operation;
-        }
-
-        if (this.exception != null)
-        {
-          return 0d;
+          return this.currentOperation.HasSingleProgress;
         }
         else
         {
-          if (this.currentOperation != null)
-          {
-            return this.currentOperation.SubProgress;
-          }
-          else
-          {
-            return 0d;
-          }
+          return false;
         }
       }
     }
@@ -292,6 +260,21 @@ namespace Pirate.PiVote.Circle
           .Select(certificate => certificate as VoterCertificate);
     }
 
+    public IEnumerable<VoterCertificate> GetVoterCertificates()
+    {
+      return this.certificates.Keys
+        .Where(certificate => certificate is VoterCertificate)
+          .Select(certificate => certificate as VoterCertificate);
+    }
+
+    public IEnumerable<VoterCertificate> GetValidVoterCertificates()
+    {
+      return this.certificates.Keys
+        .Where(certificate => certificate is VoterCertificate &&
+                              certificate.Validate(Status.CertificateStorage) == CertificateValidationResult.Valid)
+          .Select(certificate => certificate as VoterCertificate);
+    }
+
     public VoterCertificate GetVoterCertificate(VotingDescriptor2 voting)
     {
       return this.certificates.Keys
@@ -338,13 +321,13 @@ namespace Pirate.PiVote.Circle
             {
               case SignatureResponseStatus.Accepted:
                 string acceptedMessage = string.Format(
-                  "Your signature request for certificate {0} of type {1} was accepted.",
+                  Resources.ControllerLoadCertificatesAccepted,
                   certificate.Id.ToString(), certificate.TypeText);
                 MessageForm.Show(acceptedMessage, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 break;
               case SignatureResponseStatus.Declined:
                 string declinedMessage = string.Format(
-                  "Your signature request for certificate {0} of type {1} was declined for the following reason: {2}",
+                  Resources.ControllerLoadCertificatesDeclined,
                   certificate.Id.ToString(), certificate.TypeText, response.Second);
                 MessageForm.Show(declinedMessage, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 break;
@@ -486,7 +469,7 @@ namespace Pirate.PiVote.Circle
       string fileName = string.Format("{0}@{1}.pi-auth", certificate.Id.ToString(), voting.Id.ToString());
       string filePath = Path.Combine(Status.DataPath, fileName);
 
-      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, Resources.AuthorityCreateSharesUnlockAction))
+      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, GuiResources.UnlockActionAuthorityCreateShares))
       {
         Begin();
         Status.VotingClient.CreateSharePart(voting.Id, (AuthorityCertificate)certificate, filePath, CreateSharesCompleteCallBack);
@@ -518,7 +501,7 @@ namespace Pirate.PiVote.Circle
       string fileName = string.Format("{0}@{1}.pi-auth", certificate.Id.ToString(), voting.Id.ToString());
       string filePath = Path.Combine(Status.DataPath, fileName);
 
-      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, Resources.AuthorityCreateSharesUnlockAction))
+      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, GuiResources.UnlockActionAuthorityCheckShares))
       {
         Begin();
         Status.VotingClient.CheckShares(voting.Id, (AuthorityCertificate)certificate, filePath, CheckSharesComplete);
@@ -527,11 +510,11 @@ namespace Pirate.PiVote.Circle
         {
           if (this.acceptShares)
           {
-            MessageForm.Show("All shares where accepted.", Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageForm.Show(Resources.ControllerCheckSharesOk, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
           }
           else
           {
-            MessageForm.Show("Some shares were not accepted.", Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageForm.Show(Resources.ControllerCheckSharesFailed, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
           }
         }
         else
@@ -563,7 +546,7 @@ namespace Pirate.PiVote.Circle
       string fileName = string.Format("{0}@{1}.pi-auth", certificate.Id.ToString(), voting.Id.ToString());
       string filePath = Path.Combine(Status.DataPath, fileName);
 
-      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, Resources.AuthorityCreateSharesUnlockAction))
+      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, GuiResources.UnlockActionAuthorityDecipher))
       {
         this.userCanceled = false;
         Begin();
@@ -587,7 +570,7 @@ namespace Pirate.PiVote.Circle
     private bool AskForPartiallyDecipher(int validEnvelopeCount)
     {
       this.userCanceled = MessageForm.Show(
-        string.Format("Valid envelope count {0}. Continue?", validEnvelopeCount),
+        string.Format(GuiResources.AskForPartiallyDecipher, validEnvelopeCount),
         Resources.MessageBoxTitle,
         MessageBoxButtons.YesNo,
         MessageBoxIcon.Question)
@@ -648,7 +631,7 @@ namespace Pirate.PiVote.Circle
 
       if (WaitForCompletion())
       {
-        MessageForm.Show("Your request is stored on the server.", Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageForm.Show(Resources.ControllerSetSignatureRequestOk, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
       else
       {
@@ -673,7 +656,7 @@ namespace Pirate.PiVote.Circle
         this.voteReceipt.Save(
           Path.Combine(Status.DataPath,
           Files.VoteReceiptFileName(voterCertificate.Id, voting.Id)));
-        MessageForm.Show("Your vote is cast.", Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageForm.Show(Resources.ControllerVoteCast, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
       else
       {

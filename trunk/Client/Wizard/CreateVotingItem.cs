@@ -349,7 +349,7 @@ namespace Pirate.PiVote.Client
 
       if (this.votingParameters.Valid)
       {
-        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.CreateVotingUnlockAction))
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionCreateVoting))
         {
           Signed<VotingParameters> signedVotingParameters = new Signed<VotingParameters>(votingParameters, Status.Certificate);
 

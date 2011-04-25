@@ -109,7 +109,7 @@ namespace Pirate.PiVote.Circle.Vote
       foreach (var question in voting.Questions)
       {
         TabPage tabPage = new TabPage();
-        tabPage.Text = string.Format("Question #{0}", number);
+        tabPage.Text = string.Format(Resources.VotingDialogQuestion, number);
         this.questionTabs.TabPages.Add(tabPage);
 
         QuestionControl questionControl = new QuestionControl();

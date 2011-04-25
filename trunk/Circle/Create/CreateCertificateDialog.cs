@@ -27,6 +27,8 @@ namespace Pirate.PiVote.Circle.Create
     private void CreateCertificateDialog_Load(object sender, EventArgs e)
     {
       CenterToScreen();
+
+      Text = Resources.CreateCertificateDialogTitle;
     }
 
     private void CreateNewCertificate(CircleController controller)
@@ -36,6 +38,7 @@ namespace Pirate.PiVote.Circle.Create
       control.Dock = DockStyle.Fill;
       control.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
       control.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
+      control.Prepare();
       Controls.Add(control);
     }
 
@@ -46,6 +49,7 @@ namespace Pirate.PiVote.Circle.Create
       control.Dock = DockStyle.Fill;
       control.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
       control.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
+      control.Prepare();
       Controls.Add(control);
     }
 
@@ -56,6 +60,7 @@ namespace Pirate.PiVote.Circle.Create
       control.Dock = DockStyle.Fill;
       control.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
       control.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
+      control.Prepare();
       Controls.Add(control);
     }
 
@@ -72,6 +77,7 @@ namespace Pirate.PiVote.Circle.Create
         control.Dock = DockStyle.Fill;
         control.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
         control.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
+        control.Prepare();
         Controls.Add(control);
         return true;
       }
@@ -92,6 +98,7 @@ namespace Pirate.PiVote.Circle.Create
       nextControl.Dock = DockStyle.Fill;
       nextControl.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
       nextControl.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
+      nextControl.Prepare();
       Controls.Add(nextControl);
     }
 

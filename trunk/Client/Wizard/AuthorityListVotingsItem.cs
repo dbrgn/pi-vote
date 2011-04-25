@@ -206,7 +206,7 @@ namespace Pirate.PiVote.Client
         this.run = true;
         OnUpdateWizard();
 
-        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.AuthorityCreateSharesUnlockAction))
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionAuthorityCreateShares))
         {
           Status.VotingClient.CreateSharePart(voting.Id, (AuthorityCertificate)Status.Certificate, filePath, CreateSharesCompleteCallBack);
 
@@ -326,7 +326,7 @@ namespace Pirate.PiVote.Client
           this.run = true;
           OnUpdateWizard();
 
-          if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.AuthorityDecipherUnlockAction))
+          if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionAuthorityDecipher))
           {
             this.askForPartiallyDecipherCallBackState = AskForPartiallyDecipherCallBackState.Before;
 
@@ -338,7 +338,7 @@ namespace Pirate.PiVote.Client
               {
                 this.askForPartiallyDecipherCallBackResult =
                   MessageForm.Show(
-                  string.Format(Resources.AskForPartiallyDecipher, this.askForPartiallyDecipherValidBallots),
+                  string.Format(GuiResources.AskForPartiallyDecipher, this.askForPartiallyDecipherValidBallots),
                   GuiResources.MessageBoxTitle,
                   MessageBoxButtons.YesNo,
                   MessageBoxIcon.Question,

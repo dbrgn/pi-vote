@@ -33,6 +33,10 @@ namespace Pirate.PiVote.Circle.Create
       InitializeComponent();
     }
 
+    public virtual void Prepare()
+    { 
+    }
+
     protected void OnShowNextControl(CreateCertificateControl nextControl)
     {
       if (ShowNextControl != null)

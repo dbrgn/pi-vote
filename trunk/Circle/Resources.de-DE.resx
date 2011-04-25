@@ -117,116 +117,92 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ControllerCheckSharesFailed" xml:space="preserve">
-    <value>Some shares were invalid. The voting will be aborted.</value>
-  </data>
-  <data name="ControllerCheckSharesOk" xml:space="preserve">
-    <value>All shares were accepted. The voting may continue.</value>
-  </data>
   <data name="ControllerLoadCertificatesAccepted" xml:space="preserve">
-    <value>Your signature request for certificate {0} of type {1} was accepted. You may now use your certificate.</value>
+    <value>Deine Zertifizierungsanfrage für das Zertifikat {0} von Type {1} wurde akzeptiert. Du kannst dein Zertifikat jetzt gebrauchen.</value>
   </data>
   <data name="ControllerLoadCertificatesDeclined" xml:space="preserve">
-    <value>Your signature request for certificate {0} of type {1} was declined for the following reason: {2}</value>
+    <value>Deine Zertifizierungsanfrage für das Zertifikat {0} von Type {1} wurde mit folgender Begründung abgelehnt: {2}</value>
   </data>
   <data name="ControllerSetSignatureRequestOk" xml:space="preserve">
-    <value>Your request is stored on the server.</value>
+    <value>Deine Zertifizierungsanfrage wurde auf dem Server gespeichert.</value>
   </data>
   <data name="ControllerStatusWorking" xml:space="preserve">
-    <value>Working...</value>
+    <value>Arbeite...</value>
   </data>
   <data name="ControllerVoteCast" xml:space="preserve">
-    <value>Your vote is cast.</value>
+    <value>Deine Stimme ist abgegeben.</value>
   </data>
   <data name="CreateCertificateDataBaseCertificate" xml:space="preserve">
-    <value>Base certificate:</value>
+    <value>Basiszertifikat:</value>
   </data>
   <data name="CreateCertificateDataEmailAddress" xml:space="preserve">
-    <value>Email address:</value>
+    <value>Emailadresse:</value>
   </data>
   <data name="CreateCertificateDataFamilyName" xml:space="preserve">
-    <value>Surname:</value>
+    <value>Nachname:</value>
   </data>
   <data name="CreateCertificateDataFirstName" xml:space="preserve">
-    <value>Given name:</value>
+    <value>Vorname:</value>
   </data>
   <data name="CreateCertificateDataFunction" xml:space="preserve">
-    <value>Party function:</value>
+    <value>Parteifunktion:</value>
   </data>
   <data name="CreateCertificateDataGroup" xml:space="preserve">
-    <value>Group:</value>
+    <value>Gruppe:</value>
   </data>
   <data name="CreateCertificateDataNotify" xml:space="preserve">
-    <value>Notify me by email, when an answer to my certificate signing request is available. This requires your email address to be stored on the PiVote server.</value>
+    <value>Ich möchte via Email benachrichtigt werden, wenn meine Zertifizierungsanfrage beantwortet wurde. Dafür muss die Email-Adresse auf dem PiVote server gespeichert werden.</value>
   </data>
   <data name="CreateCertificateDataValidUntil" xml:space="preserve">
-    <value>Valid until:</value>
+    <value>Gültig bis:</value>
   </data>
   <data name="CreateCertificateDialogTitle" xml:space="preserve">
-    <value>Circle - Create Certificate</value>
-  </data>
-  <data name="CreateCertificateFinishEmailAddress" xml:space="preserve">
-    <value>Email address:</value>
-  </data>
-  <data name="CreateCertificateFinishId" xml:space="preserve">
-    <value>Certificate id:</value>
+    <value>Circle - Zertifikat erstellen</value>
   </data>
   <data name="CreateCertificateFinishInfo" xml:space="preserve">
-    <value>You need to print out your signing request and upload it to the server. Then you need to collect 3 signatures from elected voting authorities on your printout and send it to the certificate authority. Once the certificate authority has accepted your request you may use your certificate to vote.</value>
-  </data>
-  <data name="CreateCertificateFinishName" xml:space="preserve">
-    <value>Full name:</value>
-  </data>
-  <data name="CreateCertificateFinishPrint" xml:space="preserve">
-    <value>&amp;Print</value>
-  </data>
-  <data name="CreateCertificateFinishType" xml:space="preserve">
-    <value>Certificate type:</value>
-  </data>
-  <data name="CreateCertificateFinishUpload" xml:space="preserve">
-    <value>&amp;Upload</value>
+    <value>Du musst deine Zertifizierungsanfrage auf den Server hochlanden und ausdrucken. Dann musst du auf dem Ausdruck die Unterschrift von 3 gewählten Abstimmungsautoritäten sammeln und den Ausdruck der Zertifizierungsstelle schicken. Wenn die Zertifizerungsstelle deinen Antrag gutgeheissen hat, kannst du dein Zertifikat gebrauche, um abzustimmen.</value>
   </data>
   <data name="CreateCertificateSelectAuthority" xml:space="preserve">
-    <value>&amp;Voting Authority</value>
+    <value>&amp;Abstimmungsautorität</value>
   </data>
   <data name="CreateCertificateSelectAuthorityInfo" xml:space="preserve">
-    <value>Create a new certificate for a voting authority. Choose this if you have been elected to be a voting authority.</value>
+    <value>Ein Zertifikat für eine Abstimmungsautorität erstellen. Wähle diese Option, wenn du zur Abstimmungsautorität gewählt wurdest.</value>
   </data>
   <data name="CreateCertificateSelectVoter" xml:space="preserve">
-    <value>&amp;Voter</value>
+    <value>&amp;Wähler</value>
   </data>
   <data name="CreateCertificateSelectVoterInfo" xml:space="preserve">
-    <value>Create a new voter certificate from scratch. Choose this if you are new to Pi-Vote or your old certificate has run out.</value>
+    <value>Ein völlig neues Wählerzertifikat erstellen. Wähle diese Option, wenn du Pi-Vote zum ersten Mal verwendest, oder wenn dein bisheriges Zertifikat ausgelaufen ist.</value>
   </data>
   <data name="CreateCertificateSelectVoterSubgroup" xml:space="preserve">
-    <value>Voter for &amp;Subgroup</value>
+    <value>Wähler für &amp;Untergruppe</value>
   </data>
   <data name="CreateCertificateSelectVoterSubgroupInfo" xml:space="preserve">
-    <value>Create a voter certificate for a subgroup based on a certificate you already have. Choose this if you want to create a certificate for regional or local voting.</value>
+    <value>Ein Zertifikat für eine Untergruppe basierende auf einem bereits Vorhandenen Zertifikat erstellen. Wähle diese Option, wenn du regional oder lokal Abstimmen möchtest und bereits ein gültiges Zertifikat hast.</value>
   </data>
   <data name="MenuCertificateResumeCreation" xml:space="preserve">
-    <value>&amp;Resume Creation...</value>
+    <value>Erstellung &amp;fortsetzen</value>
   </data>
   <data name="MenuCertificateResumeCreationNothing" xml:space="preserve">
-    <value>There is no certificate creation that can be resumed.</value>
+    <value>Es konnte keine Erstellungsprozess gefunden werden, der fortgesetzt werden könnte.</value>
   </data>
   <data name="MenuCertificates" xml:space="preserve">
-    <value>&amp;Certificates</value>
+    <value>&amp;Zertifikate</value>
   </data>
   <data name="MenuCertificatesCreateNew" xml:space="preserve">
-    <value>&amp;Create...</value>
+    <value>&amp;Erstellen...</value>
   </data>
   <data name="MenuCertificatesReload" xml:space="preserve">
-    <value>&amp;Reload</value>
+    <value>Neu &amp;Laden</value>
   </data>
   <data name="MenuLanguage" xml:space="preserve">
-    <value>&amp;Language</value>
+    <value>&amp;Sprache</value>
   </data>
   <data name="MenuVotings" xml:space="preserve">
-    <value>&amp;Votings</value>
+    <value>&amp;Abstimmungen</value>
   </data>
   <data name="MenuVotingsRefresh" xml:space="preserve">
-    <value>&amp;Refresh</value>
+    <value>&amp;Aktualisieren</value>
   </data>
   <data name="MessageBoxTitle" xml:space="preserve">
     <value>Circle</value>
@@ -235,96 +211,96 @@
     <value>Abstain_@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</value>
   </data>
   <data name="ResultDialogAbstain" xml:space="preserve">
-    <value>Abstention</value>
+    <value>Enthaltung</value>
   </data>
   <data name="ResultDialogFoundBad" xml:space="preserve">
-    <value>Manipulated</value>
+    <value>Manipuliert</value>
   </data>
   <data name="ResultDialogFoundOk" xml:space="preserve">
-    <value>Counted</value>
+    <value>Gezählt</value>
   </data>
   <data name="ResultDialogInvalidBallots" xml:space="preserve">
-    <value>Invalid ballots</value>
+    <value>Ungültige Stimmen</value>
   </data>
   <data name="ResultDialogNotFound" xml:space="preserve">
-    <value>Not counted</value>
+    <value>Nicht gezählt</value>
   </data>
   <data name="ResultDialogTitle" xml:space="preserve">
-    <value>Circle - Voting results</value>
+    <value>Circle - Abstimmungsresultate</value>
   </data>
   <data name="ResultDialogTotalBallots" xml:space="preserve">
-    <value>Total ballots</value>
+    <value>Total Stimmen</value>
   </data>
   <data name="ResultDialogValidBallots" xml:space="preserve">
-    <value>Valid ballots</value>
+    <value>Gültige Stimmen</value>
   </data>
   <data name="ResultDialogYourVote" xml:space="preserve">
-    <value>Your vote</value>
+    <value>Deine Stimme</value>
   </data>
   <data name="StatusDialogTitle" xml:space="preserve">
     <value>Circle Status</value>
   </data>
   <data name="VotingActionCheck" xml:space="preserve">
-    <value>&amp;Verify Shares</value>
+    <value>Teile &amp;verifizieren</value>
   </data>
   <data name="VotingActionDecipher" xml:space="preserve">
-    <value>&amp;Decipher</value>
+    <value>&amp;Entschlüsseln</value>
   </data>
   <data name="VotingActionShare" xml:space="preserve">
-    <value>&amp;Create Shares</value>
+    <value>Teile &amp;erstellen</value>
   </data>
   <data name="VotingActionTally" xml:space="preserve">
-    <value>&amp;Tally</value>
+    <value>Aus&amp;zählen</value>
   </data>
   <data name="VotingActionVote" xml:space="preserve">
-    <value>&amp;Vote</value>
+    <value>&amp;Abstimmen</value>
   </data>
   <data name="VotingDialogMaxOptionMulti" xml:space="preserve">
-    <value>You can select up to {0} options.</value>
+    <value>Du kannst bis zu {0} Optionen auswählen.</value>
   </data>
   <data name="VotingDialogMaxOptionSingle" xml:space="preserve">
-    <value>You must select one option.</value>
+    <value>Du must genau eine Option auswählen.</value>
   </data>
   <data name="VotingDialogQuestion" xml:space="preserve">
-    <value>Question #{0}</value>
+    <value>Frage #{0}</value>
   </data>
   <data name="VotingDialogTile" xml:space="preserve">
-    <value>Circle - Cast vote</value>
+    <value>Circle - Stimme abgeben</value>
   </data>
   <data name="VotingDialogVote" xml:space="preserve">
-    <value>&amp;Vote</value>
+    <value>&amp;Abstimmen</value>
   </data>
   <data name="VotingListCurrent" xml:space="preserve">
-    <value>Current</value>
+    <value>Aktuell</value>
   </data>
   <data name="VotingListPast" xml:space="preserve">
-    <value>Past</value>
+    <value>Vergangen</value>
   </data>
   <data name="VotingListScheduled" xml:space="preserve">
-    <value>Scheduled</value>
+    <value>Geplant</value>
   </data>
   <data name="VotingStatusAborted" xml:space="preserve">
-    <value>Aborted</value>
+    <value>Abgebrochen</value>
   </data>
   <data name="VotingStatusCheck" xml:space="preserve">
-    <value>Preparing, waiting for {0} of {1} authorities to verify shares</value>
+    <value>Wird vorbereitet, auf {0} von {1} Autoritäten fürs Verifizieren der Teilen warten</value>
   </data>
   <data name="VotingStatusDecipher" xml:space="preserve">
-    <value>Voting finished, waiting for {0} of {1} authorities to decipher</value>
+    <value>Abgeschlossen, auf {0} von {1} Autoritäten fürs Entschlüsseln warten</value>
   </data>
   <data name="VotingStatusOffline" xml:space="preserve">
-    <value>Finished and stored offline</value>
+    <value>Abgeschlossen und offline gespeichert</value>
   </data>
   <data name="VotingStatusReady" xml:space="preserve">
-    <value>Ready, voting begins on {0}</value>
+    <value>Bereit, Abstimmung beginnt am {0}</value>
   </data>
   <data name="VotingStatusShare" xml:space="preserve">
-    <value>Preparing, waiting for {0} of {1} authorities to create shares</value>
+    <value>Wird vorbereitet, auf {0} von {1} Autoritäten fürs Erstellen von Teilen warten</value>
   </data>
   <data name="VotingStatusTally" xml:space="preserve">
-    <value>Finished, {0} votes can be tallied</value>
+    <value>Abgeschlossen, {0} Stimmen können ausgezählt werden</value>
   </data>
   <data name="VotingStatusVote" xml:space="preserve">
-    <value>Open for voting, {0} votes cast</value>
+    <value>Abstimmung offen, {0} Stimmen abgegeben</value>
   </data>
 </root>

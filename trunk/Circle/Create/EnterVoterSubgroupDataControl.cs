@@ -19,12 +19,16 @@ using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.Circle.Create
 {
-  public partial class EnterVoterCertificateDataControl : CreateCertificateControl
+  public partial class EnterVoterSubgroupDataControl : CreateCertificateControl
   {
-    public EnterVoterCertificateDataControl()
+    private List<VoterCertificate> baseCertificates;
+
+    public EnterVoterSubgroupDataControl()
     {
       InitializeComponent();
 
+      this.baseCertificateLabel.Text = Resources.CreateCertificateDataBaseCertificate;
+      this.baseValidUntilLabel.Text = Resources.CreateCertificateDataValidUntil;
       this.firstNameLabel.Text = Resources.CreateCertificateDataFirstName;
       this.familyNameLabel.Text = Resources.CreateCertificateDataFamilyName;
       this.emailAddressLabel.Text = Resources.CreateCertificateDataEmailAddress;
@@ -57,6 +61,8 @@ namespace Pirate.PiVote.Circle.Create
         this.firstNameTextBox.Text,
         this.familyNameTextBox.Text);
 
+      VoterCertificate baseCertificate = this.baseCertificates[this.baseCertificateComboBox.SelectedIndex];
+
       var encryptResult = EncryptPrivateKeyDialog.ShowSetPassphrase();
 
       if (encryptResult.First == DialogResult.OK)
@@ -67,20 +73,27 @@ namespace Pirate.PiVote.Circle.Create
 
         Status.Certificate.CreateSelfSignature();
 
-        Status.Controller.AddAndSaveCertificate(Status.Certificate); 
-        Status.SignatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
-        Status.SignatureRequestInfo = new SignatureRequestInfo(this.emailAddressTextBox.Text);
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(baseCertificate, GuiResources.UnlockActionSignRequest))
+        {
+          Status.Controller.AddAndSaveCertificate(Status.Certificate);
+          Status.SignatureRequest =
+            new SignatureRequest2(
+              this.firstNameTextBox.Text,
+              this.familyNameTextBox.Text,
+              this.emailAddressTextBox.Text,
+              baseCertificate);
+          Status.SignatureRequestInfo = new SignatureRequestInfo(this.emailAddressTextBox.Text);
 
-        Status.SignatureRequestFileName = Path.Combine(Status.Controller.Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestDataExtension);
-        Status.SignatureRequest.Save(Status.SignatureRequestFileName);
+          Status.SignatureRequestFileName = Path.Combine(Status.Controller.Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestDataExtension);
+          Status.SignatureRequest.Save(Status.SignatureRequestFileName);
 
-        Status.SignatureRequestInfoFileName = Path.Combine(Status.Controller.Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestInfoExtension);
-        Status.SignatureRequestInfo.Save(Status.SignatureRequestInfoFileName);
+          Status.SignatureRequestInfoFileName = Path.Combine(Status.Controller.Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestInfoExtension);
+          Status.SignatureRequestInfo.Save(Status.SignatureRequestInfoFileName);
 
-
-        var nextControl = new PrintAndUploadCertificateControl();
-        nextControl.Status = Status;
-        OnShowNextControl(nextControl);
+          var nextControl = new PrintAndUploadCertificateControl();
+          nextControl.Status = Status;
+          OnShowNextControl(nextControl);
+        }
       }
     }
 
@@ -95,7 +108,9 @@ namespace Pirate.PiVote.Circle.Create
         !this.firstNameTextBox.Text.IsNullOrEmpty() &&
         !this.familyNameTextBox.Text.IsNullOrEmpty() &&
         Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text) &&
-        this.groupComboBox.Value != null;
+        this.baseCertificateComboBox.SelectedIndex >= 0 &&
+        this.groupComboBox.Value != null &&
+        this.groupComboBox.Value.Id != this.baseCertificates[this.baseCertificateComboBox.SelectedIndex].GroupId;
     }
 
     private void EnterVoterCertificateDataControl_Load(object sender, EventArgs e)
@@ -113,6 +128,27 @@ namespace Pirate.PiVote.Circle.Create
 
     private void groupComboBox_SelectedIndexChanged(object sender, EventArgs e)
     {
+      CheckValid();
+    }
+
+    public override void Prepare()
+    {
+      var certificates = Status.Controller.GetValidVoterCertificates();
+      this.baseCertificates = new List<VoterCertificate>(
+        certificates.Where(certificate => certificate.GroupId == 0));
+      this.baseCertificates.ForEach(certificate => this.baseCertificateComboBox.Items.Add(certificate.Id.ToString()));
+
+      if (this.baseCertificateComboBox.Items.Count > 0)
+      {
+        this.baseCertificateComboBox.SelectedIndex = 0;
+      }
+    }
+
+    private void baseCertificateComboBox_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      this.baseValidUnitlTextBox.Text = 
+        this.baseCertificates[this.baseCertificateComboBox.SelectedIndex]
+        .ExpectedValidUntil(Status.Controller.Status.CertificateStorage, DateTime.Now).ToShortDateString();
       CheckValid();
     }
   }

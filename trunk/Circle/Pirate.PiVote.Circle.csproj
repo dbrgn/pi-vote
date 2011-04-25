@@ -47,6 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CircleController.cs" />
+    <Compile Include="Create\EnterVoterSubgroupDataControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Create\EnterVoterSubgroupDataControl.Designer.cs">
+      <DependentUpon>EnterVoterSubgroupDataControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Create\CreateCertificateControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -84,6 +90,11 @@
     <Compile Include="Create\SelectCertificateTypeControl.Designer.cs">
       <DependentUpon>SelectCertificateTypeControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Resources.de-DE.Designer.cs">
+      <DependentUpon>Resources.de-DE.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Master.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +107,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Result\ResultDisplayDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Result\ResultDisplayDialog.Designer.cs">
+      <DependentUpon>ResultDisplayDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Status\TextStatusDialog.cs">
       <SubType>Form</SubType>
@@ -152,6 +169,9 @@
     <Compile Include="VotingList\VotingListsControl.Designer.cs">
       <DependentUpon>VotingListsControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Create\EnterVoterSubgroupDataControl.resx">
+      <DependentUpon>EnterVoterSubgroupDataControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Create\CreateCertificateDialog.resx">
       <DependentUpon>CreateCertificateDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,6 +186,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Create\SelectCertificateTypeControl.resx">
       <DependentUpon>SelectCertificateTypeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.de-DE.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.de-DE.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Master.resx">
       <DependentUpon>Master.cs</DependentUpon>
@@ -184,6 +209,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Result\ResultDisplayDialog.resx">
+      <DependentUpon>ResultDisplayDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Status\TextStatusDialog.resx">
       <DependentUpon>TextStatusDialog.cs</DependentUpon>

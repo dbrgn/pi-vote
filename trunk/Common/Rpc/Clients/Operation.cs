@@ -41,6 +41,16 @@ namespace Pirate.PiVote.Rpc
       public double Progress { get; protected set; }
 
       /// <summary>
+      /// Progress of a long running suboperation. May reset to zero multiple times during an operation.
+      /// </summary>
+      public double SingleProgress { get; protected set; }
+
+      /// <summary>
+      /// Has the current operation currently a meaningful single progress value?
+      /// </summary>
+      public bool HasSingleProgress { get; protected set; }
+
+      /// <summary>
       /// Text of the operation.
       /// </summary>
       public string Text { get; protected set; }

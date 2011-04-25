@@ -115,16 +115,20 @@ namespace Pirate.PiVote.Rpc
           fetcher.Priority = ThreadPriority.Lowest;
           fetcher.Start();
 
+          HasSingleProgress = true;
+
           while (this.fetchedEnvelopes < this.envelopeCount)
           {
             SubText = string.Format(LibraryResources.ClientDownloadVotingFetchEnvelopesOf, this.fetchedEnvelopes, this.envelopeCount);
             SubProgress = 1d / (double)this.envelopeCount * (double)this.fetchedEnvelopes;
+            SingleProgress = SubProgress;
 
             Thread.Sleep(100);
           }
 
           fetcher.Join();
 
+          HasSingleProgress = false;
           Progress = 0.8d;
           Text = LibraryResources.ClientGetResultFetchPartialDeciphers;
           SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, 0, parameters.AuthorityCount);

@@ -595,32 +595,17 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="CreateCertificateEmailNotification" xml:space="preserve">
     <value>Ich möchte via Email benachrichtigt werden, wenn meine Zertifizierungsanfrage beantwortet wurde. Dafür muss die Email-Adresse auf dem PiVote server gespeichert werden.</value>
   </data>
-  <data name="AuthorityCheckSharesUnlockAction" xml:space="preserve">
-    <value>Schlüsselteile entschlüsseln und Antwort signieren.</value>
-  </data>
   <data name="AuthorityCreateSharesCanceled" xml:space="preserve">
     <value>Die Erstellung von Schlüsselteilen wurde abgebrochen.</value>
-  </data>
-  <data name="AuthorityCreateSharesUnlockAction" xml:space="preserve">
-    <value>Neu erstellte Schlüsselteile signieren</value>
   </data>
   <data name="AuthorityDecipherCanceled" xml:space="preserve">
     <value>Die Partielle Entschlüsselung wurde abgebrochen.</value>
   </data>
-  <data name="AuthorityDecipherUnlockAction" xml:space="preserve">
-    <value>Partielle Entschlüsselungen signieren.</value>
-  </data>
   <data name="CreateVotingCanceled" xml:space="preserve">
     <value>Die Erstellung einer Abstimmung wurde abgebrochen.</value>
   </data>
-  <data name="CreateVotingUnlockAction" xml:space="preserve">
-    <value>Abstimmungsparameter signieren</value>
-  </data>
   <data name="VoteCanceled" xml:space="preserve">
     <value>Die Stimmabgabe wurde abgebrochen.</value>
-  </data>
-  <data name="VoteUnlockAction" xml:space="preserve">
-    <value>Stimme signieren</value>
   </data>
   <data name="MessageBoxRootNotFound" xml:space="preserve">
     <value>Kann die Root-Zertifikatsdatei nicht finden.</value>
@@ -721,9 +706,6 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="AdminDeleteVotingWarning" xml:space="preserve">
     <value>Willst du wirklich die Abstimmung Id {0} Titel {1} löschen?</value>
   </data>
-  <data name="AskForPartiallyDecipher" xml:space="preserve">
-    <value>Es sind {0} gültige Stimmen vorhandel. Wenn diese Zahl zu klein erscheint, könnte ein Sicherheitsproblem bestehen. Wenn das der Fall ist, musst du das Resultat nicht Entschlüsseln, sondern die anderen Autoritäten und Administratoren verständigen. Mit Entschlüsseln weiterfahren?</value>
-  </data>
   <data name="IgnoreButton" xml:space="preserve">
     <value>&amp;Ignorieren</value>
   </data>
@@ -735,9 +717,6 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="CheckCertificateNotYetValid" xml:space="preserve">
     <value>Dein Zertifikat is noch nicht gültig. Es wird vom {0:d} an gültig.</value>
-  </data>
-  <data name="SignRequestUnlockAction" xml:space="preserve">
-    <value>Deine Zertifikatsanfrage signieren.</value>
   </data>
   <data name="SimpleCreateCertificateSigningCanceled" xml:space="preserve">
     <value>Du hast das Signieren deiner Zertifikatsanfrage abgebrochen.</value>

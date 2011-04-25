@@ -96,7 +96,7 @@ namespace Pirate.PiVote.Client
 
         if (File.Exists(signatureRequestDataFileName))
         {
-          if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.SignRequestUnlockAction))
+          if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionSignRequest))
           {
             this.signatureRequest = Serializable.Load<SignatureRequest>(signatureRequestDataFileName);
             this.signatureRequestInfo = new SignatureRequestInfo(this.signatureRequest.EmailAddress);

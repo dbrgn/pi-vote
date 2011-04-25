@@ -71,7 +71,7 @@ namespace Pirate.PiVote.Client
       this.run = true;
       OnUpdateWizard();
 
-      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, Resources.VoteUnlockAction))
+      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionVote))
       {
         Status.VotingClient.ActivateVoter();
         Status.VotingClient.Vote(VotingMaterial, (VoterCertificate)Status.Certificate, Vota, VoteCompleted);

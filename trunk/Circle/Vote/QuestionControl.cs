@@ -45,7 +45,7 @@ namespace Pirate.PiVote.Circle.Vote
 
       if (question.MaxOptions == 1)
       {
-        this.maxOptionLabel.Text = "You must select one option.";
+        this.maxOptionLabel.Text = Resources.VotingDialogMaxOptionSingle;
         this.singleOptionControls = new Dictionary<int, RadioButton>();
         int index = 0;
         int top = Space;
@@ -78,7 +78,7 @@ namespace Pirate.PiVote.Circle.Vote
       }
       else
       {
-        this.maxOptionLabel.Text = string.Format("You can select up to {0} options", question.MaxOptions);
+        this.maxOptionLabel.Text = string.Format(Resources.VotingDialogMaxOptionMulti, question.MaxOptions);
         this.multiOptionControls = new Dictionary<int, CheckBox>();
         int index = 0;
         int top = Space;

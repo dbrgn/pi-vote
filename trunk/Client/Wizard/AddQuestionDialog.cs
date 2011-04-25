@@ -35,8 +35,8 @@ namespace Pirate.PiVote.Client
       this.optionNumberLabel.Text = Resources.CreateVotingAnswersPerVoter;
       this.textColumnHeader.Text = Resources.CreateVotingOptionText;
       this.descriptionColumnHeader.Text = Resources.CreateVotingOptionDescription;
-      this.okButton.Text = GuiResources.OkButton;
-      this.cancelButton.Text = GuiResources.CancelButton;
+      this.okButton.Text = GuiResources.ButtonOk;
+      this.cancelButton.Text = GuiResources.ButtonCancel;
       this.abstentionLabel.Text = Resources.CreateQuestionAbstentionAuto;
 
       this.textTextBox.TextChanged += new EventHandler(textTextBox_TextChanged);

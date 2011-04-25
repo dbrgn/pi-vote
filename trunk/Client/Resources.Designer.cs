@@ -178,15 +178,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are {0} valid ballots. If this number seems too low, there could be a security problem. Do not decipher the result and contact the other authorities and administrators in this case. Proceed with deciphering?.
-        /// </summary>
-        internal static string AskForPartiallyDecipher {
-            get {
-                return ResourceManager.GetString("AskForPartiallyDecipher", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to You have a valid certificate with which you can sign your new certificate request. If you do so you not need to print out your request and get signatures from authorities but the new certificate will only be valid as long as the one you already have, that is {0:d}. Do you want to sign your signing request with your existing certificate?.
         /// </summary>
         internal static string AskToSignSignatureRequestWithParent {
@@ -223,15 +214,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Decrypt key shares and sign share response.
-        /// </summary>
-        internal static string AuthorityCheckSharesUnlockAction {
-            get {
-                return ResourceManager.GetString("AuthorityCheckSharesUnlockAction", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &amp;Create Shares.
         /// </summary>
         internal static string AuthorityCreateShares {
@@ -259,15 +241,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign newly created key shares.
-        /// </summary>
-        internal static string AuthorityCreateSharesUnlockAction {
-            get {
-                return ResourceManager.GetString("AuthorityCreateSharesUnlockAction", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &amp;Decipher.
         /// </summary>
         internal static string AuthorityDecipher {
@@ -291,15 +264,6 @@ namespace Pirate.PiVote.Client {
         internal static string AuthorityDecipherDone {
             get {
                 return ResourceManager.GetString("AuthorityDecipherDone", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sign partial deciphers..
-        /// </summary>
-        internal static string AuthorityDecipherUnlockAction {
-            get {
-                return ResourceManager.GetString("AuthorityDecipherUnlockAction", resourceCulture);
             }
         }
         
@@ -1301,15 +1265,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sign voting parameters.
-        /// </summary>
-        internal static string CreateVotingUnlockAction {
-            get {
-                return ResourceManager.GetString("CreateVotingUnlockAction", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Url:.
         /// </summary>
         internal static string CreateVotingUrl {
@@ -1491,15 +1446,6 @@ namespace Pirate.PiVote.Client {
         internal static string SignatureResponseUploaded {
             get {
                 return ResourceManager.GetString("SignatureResponseUploaded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Recover your certificate request..
-        /// </summary>
-        internal static string SignRequestUnlockAction {
-            get {
-                return ResourceManager.GetString("SignRequestUnlockAction", resourceCulture);
             }
         }
         
@@ -1878,15 +1824,6 @@ namespace Pirate.PiVote.Client {
         internal static string VoteSingleOption {
             get {
                 return ResourceManager.GetString("VoteSingleOption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sign vote.
-        /// </summary>
-        internal static string VoteUnlockAction {
-            get {
-                return ResourceManager.GetString("VoteUnlockAction", resourceCulture);
             }
         }
         
