@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirate.PiVote.Circle", "Cir
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirate.PiVote.Gui", "Gui\Pirate.PiVote.Gui.csproj", "{327B55CF-5800-47A5-AA53-8309508BFC6A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pirate.PiVote.Prover", "Prover\Pirate.PiVote.Prover.csproj", "{9C416C90-204F-47EC-B526-30B57F689F7A}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = PiVote.vsmdi
@@ -275,6 +277,21 @@ Global
 		{327B55CF-5800-47A5-AA53-8309508BFC6A}.Release|Mixed Platforms.Build.0 = Release|x86
 		{327B55CF-5800-47A5-AA53-8309508BFC6A}.Release|x86.ActiveCfg = Release|x86
 		{327B55CF-5800-47A5-AA53-8309508BFC6A}.Release|x86.Build.0 = Release|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Debug|x86.ActiveCfg = Debug|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Debug|x86.Build.0 = Debug|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Local Debug|Any CPU.ActiveCfg = Debug|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Local Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Local Debug|Mixed Platforms.Build.0 = Debug|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Local Debug|x86.ActiveCfg = Debug|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Local Debug|x86.Build.0 = Debug|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Release|Any CPU.ActiveCfg = Release|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Release|x86.ActiveCfg = Release|x86
+		{9C416C90-204F-47EC-B526-30B57F689F7A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

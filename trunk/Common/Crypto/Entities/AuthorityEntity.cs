@@ -297,12 +297,13 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("votingMaterial");
 
       BigInt publicKey = new BigInt(1);
+      var baseParameters = votingMaterial.Parameters.Value;
 
       foreach (Signed<ShareResponse> signedShareResponse in votingMaterial.PublicKeyParts)
       {
         ShareResponse shareResponse = signedShareResponse.Value;
 
-        if (!signedShareResponse.Verify(this.certificateStorage))
+        if (!signedShareResponse.Verify(this.certificateStorage, baseParameters.VotingBeginDate))
           throw new PiSecurityException(ExceptionCode.ShareResponseBadSignature, "Share response has bad signature.");
         if (!signedShareResponse.Certificate.IsIdentic(this.authorities[shareResponse.AuthorityIndex]))
           throw new PiSecurityException(ExceptionCode.ShareResponseWrongAuthority, "Share response is from wrong authority.");

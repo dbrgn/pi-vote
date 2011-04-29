@@ -358,11 +358,12 @@ namespace Pirate.PiVote.Circle
       Status.VotingClient.Connect(serverEndPoint);
 
       Begin();
-      Status.VotingClient.GetCertificateStorage(Status.CertificateStorage, OnGetCertificateStorageComplete);
+      Status.VotingClient.GetCertificateStorage(Status.CertificateStorage, GetCertificateStorageComplete);
 
       if (WaitForCompletion())
       {
-        Status.VotingClient.GetConfig(OnGetConfigComplete);
+        Begin();
+        Status.VotingClient.GetConfig(GetConfigComplete);
 
         if (!WaitForCompletion())
         {
@@ -387,6 +388,11 @@ namespace Pirate.PiVote.Circle
       this.votingMaterial = votingMaterial;
       this.exception = exception;
       this.run = false;
+    }
+
+    public void CheckUpdate()
+    {
+      UpdateChecker.CheckUpdate(Status.RemoteConfig, Resources.UpdateDialogTitle, Resources.UpdateDialogText);
     }
 
     public void Disconnect()
@@ -431,33 +437,38 @@ namespace Pirate.PiVote.Circle
 
     private void OnGetVotingsComplete(IEnumerable<VotingContainer> votingList, Exception exception)
     {
-      foreach (var voting in votingList)
+      if (exception == null)
       {
-        var id = voting.Material.Parameters.Value.VotingId;
+        foreach (var voting in votingList)
+        {
+          var id = voting.Material.Parameters.Value.VotingId;
 
-        if (this.votings.ContainsKey(id))
-        {
-          this.votings[id] = voting;
+          if (this.votings.ContainsKey(id))
+          {
+            this.votings[id] = voting;
+          }
+          else
+          {
+            this.votings.Add(id, voting);
+          }
         }
-        else
-        {
-          this.votings.Add(id, voting);
-        }
+
+        this.votingList = votingList.Select(voting => new VotingDescriptor2(voting));
       }
 
-      this.votingList = votingList.Select(voting => new VotingDescriptor2(voting));
       this.exception = exception;
       this.run = false;
     }
 
-    private void OnGetConfigComplete(IRemoteConfig remoteConfig, IEnumerable<Group> groups, Exception exception)
+    private void GetConfigComplete(IRemoteConfig remoteConfig, IEnumerable<Group> groups, Exception exception)
     {
       Status.RemoteConfig = remoteConfig;
       Status.Groups = groups;
       this.exception = exception;
+      this.run = false;
     }
 
-    private void OnGetCertificateStorageComplete(Certificate serverCertificate, Exception exception)
+    private void GetCertificateStorageComplete(Certificate serverCertificate, Exception exception)
     {
       Status.ServerCertificate = serverCertificate;
       this.exception = exception;

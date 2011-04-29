@@ -502,6 +502,24 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is a newer version of Circle available. Dou you wish to update from your version {0} to version {1}? If so the program will close and your browser will be directed to the update site..
+        /// </summary>
+        internal static string UpdateDialogText {
+            get {
+                return ResourceManager.GetString("UpdateDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circle Update.
+        /// </summary>
+        internal static string UpdateDialogTitle {
+            get {
+                return ResourceManager.GetString("UpdateDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Verify Shares.
         /// </summary>
         internal static string VotingActionCheck {

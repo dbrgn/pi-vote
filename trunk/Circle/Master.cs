@@ -55,13 +55,14 @@ namespace Pirate.PiVote.Circle
       try
       {
         Controller.Prepare();
+        Controller.CheckUpdate();
         Controller.LoadCertificates();
         var votings = Controller.GetVotingList();
         this.votingListsControl.Set(Controller, votings);
       }
       catch (Exception exception)
       {
-        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageForm.Show(exception.ToString(), Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         Close();
       }
 

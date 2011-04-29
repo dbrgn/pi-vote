@@ -240,6 +240,12 @@
   <data name="StatusDialogTitle" xml:space="preserve">
     <value>Circle Status</value>
   </data>
+  <data name="UpdateDialogText" xml:space="preserve">
+    <value>Eine neue Version von Circle ist verfügbar. Willst du von deiner Version {0} auf Version {1} updaten? Wenn ja, wird das Programm geschlossen und dein Browser auf die Update-Seite gelenkt.</value>
+  </data>
+  <data name="UpdateDialogTitle" xml:space="preserve">
+    <value>Circle Update</value>
+  </data>
   <data name="VotingActionCheck" xml:space="preserve">
     <value>Teile &amp;verifizieren</value>
   </data>

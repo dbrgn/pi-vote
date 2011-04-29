@@ -304,7 +304,8 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("signature");
 
       var rsaProvider = GetRsaProvider(false);
-      return rsaProvider.VerifyData(data, "SHA256", signature);
+      return rsaProvider.VerifyData(data, "SHA256", signature) && 
+        SelfSignatureValid;
     }
     
     /// <summary>
