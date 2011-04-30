@@ -252,9 +252,6 @@
   <data name="ChooseCertificateLoadDialog" xml:space="preserve">
     <value>Zertifikat Laden</value>
   </data>
-  <data name="ChooseCertificateNotAvailable" xml:space="preserve">
-    <value>N/V</value>
-  </data>
   <data name="ChooseCertificateType" xml:space="preserve">
     <value>Typ</value>
   </data>
@@ -550,9 +547,6 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="SimpleChooseCertificateImportDone" xml:space="preserve">
     <value>Zertifikat erfolgreich importiert.</value>
   </data>
-  <data name="OkButton" xml:space="preserve">
-    <value>&amp;OK</value>
-  </data>
   <data name="SaveSignatureRequestButton" xml:space="preserve">
     <value>&amp;Speichern...</value>
   </data>
@@ -609,9 +603,6 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="MessageBoxRootNotFound" xml:space="preserve">
     <value>Kann die Root-Zertifikatsdatei nicht finden.</value>
-  </data>
-  <data name="MessageBoxTitle" xml:space="preserve">
-    <value>Pi-Vote</value>
   </data>
   <data name="AuthorityVotePreviewVerify" xml:space="preserve">
     <value>&amp;Prüfen</value>
@@ -705,12 +696,6 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="AdminDeleteVotingWarning" xml:space="preserve">
     <value>Willst du wirklich die Abstimmung Id {0} Titel {1} löschen?</value>
-  </data>
-  <data name="IgnoreButton" xml:space="preserve">
-    <value>&amp;Ignorieren</value>
-  </data>
-  <data name="NoButton" xml:space="preserve">
-    <value>&amp;Nein</value>
   </data>
   <data name="AskToSignSignatureRequestWithParent" xml:space="preserve">
     <value>Du hast ein gültiges Zertifikat, mit dem du deine Zertifizierungsanfrage signieren kannst. Wenn du das tust, musst du die Zertifizierungsanfrage nicht ausdrucken und keine Unterschriften von Autoritäten einholen, aber das neue Zertifikat wird nur so lange gültig sein, wie das existierende, also bis zum {0:d}. Möchtest du deine Zertifizierungsanfrage mit deinem existierenden Zertifikat signieren?</value>

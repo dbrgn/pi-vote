@@ -117,6 +117,57 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CertificateManagerBackup" xml:space="preserve">
+    <value>&amp;Backup erstellen...</value>
+  </data>
+  <data name="CertificateManagerClose" xml:space="preserve">
+    <value>&amp;Schliessen</value>
+  </data>
+  <data name="CertificateManagerColumnGroupName" xml:space="preserve">
+    <value>Gruppe/Name</value>
+  </data>
+  <data name="CertificateManagerColumnId" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="CertificateManagerColumnStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CertificateManagerColumnType" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+  <data name="CertificateManagerColumnValidFrom" xml:space="preserve">
+    <value>Gültig von</value>
+  </data>
+  <data name="CertificateManagerColumnValidUntil" xml:space="preserve">
+    <value>Gültig bis</value>
+  </data>
+  <data name="CertificateManagerCreateNew" xml:space="preserve">
+    <value>&amp;Neues erstellen...</value>
+  </data>
+  <data name="CertificateManagerExport" xml:space="preserve">
+    <value>&amp;Exportieren...</value>
+  </data>
+  <data name="CertificateManagerImport" xml:space="preserve">
+    <value>&amp;Importieren...</value>
+  </data>
+  <data name="CertificateManagerRefresh" xml:space="preserve">
+    <value>&amp;Aktualisieren</value>
+  </data>
+  <data name="CertificateManagerRemove" xml:space="preserve">
+    <value>&amp;Entfernen</value>
+  </data>
+  <data name="CertificateManagerRestore" xml:space="preserve">
+    <value>&amp;Wiederherstellen...</value>
+  </data>
+  <data name="CertificateManagerSetPassword" xml:space="preserve">
+    <value>&amp;Passwort setzen...</value>
+  </data>
+  <data name="CertificateManagerTitle" xml:space="preserve">
+    <value>Circle - Zertifiktasmanager</value>
+  </data>
+  <data name="CertificateManagerValidIndefinite" xml:space="preserve">
+    <value>Beliebig</value>
+  </data>
   <data name="ControllerLoadCertificatesAccepted" xml:space="preserve">
     <value>Deine Zertifizierungsanfrage für das Zertifikat {0} von Type {1} wurde akzeptiert. Du kannst dein Zertifikat jetzt gebrauchen.</value>
   </data>
@@ -197,6 +248,9 @@
   </data>
   <data name="MenuLanguage" xml:space="preserve">
     <value>&amp;Sprache</value>
+  </data>
+  <data name="MenuManage" xml:space="preserve">
+    <value>&amp;Managen...</value>
   </data>
   <data name="MenuVotings" xml:space="preserve">
     <value>&amp;Abstimmungen</value>

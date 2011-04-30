@@ -392,6 +392,10 @@ namespace Pirate.PiVote.Crypto
         {
           return DateTime.MaxValue;
         }
+        else if (this.signatures.Count < 1)
+        {
+          return DateTime.MinValue;
+        }
         else
         {
           return this.signatures.Max(signature => signature.ExpectedValidUntil(GetSignatureContent(), certificateStorage, date));
@@ -415,6 +419,10 @@ namespace Pirate.PiVote.Crypto
         if (certificateStorage.IsRootCertificate(this))
         {
           return DateTime.MinValue;
+        }
+        else if (this.signatures.Count < 1)
+        {
+          return DateTime.MaxValue;
         }
         else
         {

@@ -359,6 +359,7 @@ namespace Pirate.PiVote.Circle
       this.createCertificateMenu.Text = Resources.MenuCertificatesCreateNew;
       this.resumeCreationMenu.Text = Resources.MenuCertificateResumeCreation;
       this.reloadCertificateMenu.Text = Resources.MenuCertificatesReload;
+      this.manageToolStripMenuItem.Text = Resources.MenuManage;
 
       this.languageMenu.Text = Resources.MenuLanguage;
 
@@ -379,6 +380,11 @@ namespace Pirate.PiVote.Circle
       {
         MessageForm.Show(Resources.MenuCertificateResumeCreationNothing, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
+    }
+
+    private void manageToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      Certificates.CertificateManagerDialog.ShowCertificates(Controller);
     }
   }
 }

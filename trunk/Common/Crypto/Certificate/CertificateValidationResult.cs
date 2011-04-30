@@ -28,4 +28,36 @@ namespace Pirate.PiVote.Crypto
     UnknownSigner,
     SignatureDataInvalid
   }
+
+  public static class CertificateValidationResultExtensions
+  {
+    public static string Text(this CertificateValidationResult result)
+    {
+      switch (result)
+      {
+        case  CertificateValidationResult.CrlMissing:
+          return LibraryResources.CertificateStatusCrlMissing;
+        case CertificateValidationResult.NoSignature:
+          return LibraryResources.CertificateStatusNoSignature;
+        case CertificateValidationResult.NotYetValid:
+          return LibraryResources.CertificateStatusNotYetValid;
+        case CertificateValidationResult.Outdated:
+          return LibraryResources.CertificateStatusOutdated;
+        case CertificateValidationResult.Revoked:
+          return LibraryResources.CertificateStatusRevoked;
+        case CertificateValidationResult.SelfsignatureInvalid:
+          return LibraryResources.CertificateStatusSelfSignatureInvalid;
+        case CertificateValidationResult.SignatureDataInvalid:
+          return LibraryResources.CertificateStatusSignatureDataInvalid;
+        case CertificateValidationResult.SignerInvalid:
+          return LibraryResources.CertificateStatusSignerInvalid;
+        case CertificateValidationResult.UnknownSigner:
+          return LibraryResources.CertificateStatusUnknownSigner;
+        case CertificateValidationResult.Valid:
+          return LibraryResources.CertificateStatusValid;
+        default:
+          return LibraryResources.CertificateStatusUnknown;
+      }
+    }
+  }
 }

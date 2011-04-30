@@ -49,6 +49,7 @@ namespace Pirate.PiVote.Circle
       this.frenchMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.mainPanel = new System.Windows.Forms.Panel();
       this.votingListsControl = new Pirate.PiVote.Circle.VotingListsControl();
+      this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.mainMenu.SuspendLayout();
       this.mainPanel.SuspendLayout();
       this.SuspendLayout();
@@ -86,7 +87,8 @@ namespace Pirate.PiVote.Circle
       this.certificatesMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createCertificateMenu,
             this.resumeCreationMenu,
-            this.reloadCertificateMenu});
+            this.reloadCertificateMenu,
+            this.manageToolStripMenuItem});
       this.certificatesMenu.Name = "certificatesMenu";
       this.certificatesMenu.Size = new System.Drawing.Size(74, 20);
       this.certificatesMenu.Text = "&Certificates";
@@ -163,6 +165,13 @@ namespace Pirate.PiVote.Circle
       this.votingListsControl.TabIndex = 0;
       this.votingListsControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.VotingListsControl_VotingAction);
       // 
+      // manageToolStripMenuItem
+      // 
+      this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
+      this.manageToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+      this.manageToolStripMenuItem.Text = "&Manage...";
+      this.manageToolStripMenuItem.Click += new System.EventHandler(this.manageToolStripMenuItem_Click);
+      // 
       // Master
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -204,6 +213,7 @@ namespace Pirate.PiVote.Circle
     private System.Windows.Forms.ToolStripMenuItem germanMenu;
     private System.Windows.Forms.ToolStripMenuItem frenchMenu;
     private System.Windows.Forms.ToolStripMenuItem resumeCreationMenu;
+    private System.Windows.Forms.ToolStripMenuItem manageToolStripMenuItem;
   }
 }
 

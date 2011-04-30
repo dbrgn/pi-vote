@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Certificates\CertificateManagerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Certificates\CertificateManagerDialog.Designer.cs">
+      <DependentUpon>CertificateManagerDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="CircleController.cs" />
     <Compile Include="Create\EnterVoterSubgroupDataControl.cs">
       <SubType>UserControl</SubType>
@@ -172,6 +178,9 @@
     <Compile Include="VotingList\VotingListsControl.Designer.cs">
       <DependentUpon>VotingListsControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Certificates\CertificateManagerDialog.resx">
+      <DependentUpon>CertificateManagerDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Create\EnterVoterSubgroupDataControl.resx">
       <DependentUpon>EnterVoterSubgroupDataControl.cs</DependentUpon>
     </EmbeddedResource>

@@ -37,19 +37,22 @@ namespace Pirate.PiVote.Circle
           voting.Status == VotingStatus.Ready ||
           voting.Status == VotingStatus.Deciphering || 
           (voting.Status == VotingStatus.Finished && 
-          DateTime.Now.Subtract(voting.VoteUntil).Days <= 7d)));
+          DateTime.Now.Subtract(voting.VoteUntil).Days <= 7d))
+          .OrderByDescending(voting => voting.VoteFrom));
 
       this.scheduledVotingListControl.Set(controller,
         votings.Where(voting => 
           voting.Status == VotingStatus.New || 
-          voting.Status == VotingStatus.Sharing));
+          voting.Status == VotingStatus.Sharing)
+          .OrderByDescending(voting => voting.VoteFrom));
 
       this.pastVotingListControl.Set(controller,
         votings.Where(voting =>
           voting.Status == VotingStatus.Aborted ||
           voting.Status == VotingStatus.Offline ||
           (voting.Status == VotingStatus.Finished &&
-          DateTime.Now.Subtract(voting.VoteUntil).Days > 7d)));
+          DateTime.Now.Subtract(voting.VoteUntil).Days > 7d))
+          .OrderByDescending(voting => voting.VoteFrom));
     }
 
     private void OnVotingAction(VotingDescriptor2 voting)

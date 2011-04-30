@@ -444,87 +444,6 @@
   <data name="LanguageGerman" xml:space="preserve">
     <value>German</value>
   </data>
-  <data name="cantonAG" xml:space="preserve">
-    <value>Cantonal Party Aargau</value>
-  </data>
-  <data name="cantonAI" xml:space="preserve">
-    <value>Cantonal Party Appenzell Innerrhoden</value>
-  </data>
-  <data name="cantonAR" xml:space="preserve">
-    <value>Cantonal Party Appenzell Ausserrhoden</value>
-  </data>
-  <data name="cantonBE" xml:space="preserve">
-    <value>Cantonal Party Bern</value>
-  </data>
-  <data name="cantonBL" xml:space="preserve">
-    <value>Cantonal Party Basel-Landschaft</value>
-  </data>
-  <data name="cantonBS" xml:space="preserve">
-    <value>Cantonal Party Basel-Stadt</value>
-  </data>
-  <data name="cantonFR" xml:space="preserve">
-    <value>Cantonal Party Freiburg</value>
-  </data>
-  <data name="cantonGE" xml:space="preserve">
-    <value>Cantonal Party Genf</value>
-  </data>
-  <data name="cantonGL" xml:space="preserve">
-    <value>Cantonal Party Glarus</value>
-  </data>
-  <data name="cantonGR" xml:space="preserve">
-    <value>Cantonal Party Graubünden</value>
-  </data>
-  <data name="cantonJU" xml:space="preserve">
-    <value>Cantonal Party Jura</value>
-  </data>
-  <data name="cantonLU" xml:space="preserve">
-    <value>Cantonal Party Luzern</value>
-  </data>
-  <data name="cantonNE" xml:space="preserve">
-    <value>Cantonal Party Neuenburg</value>
-  </data>
-  <data name="cantonNone" xml:space="preserve">
-    <value>Only National Party</value>
-  </data>
-  <data name="cantonNW" xml:space="preserve">
-    <value>Cantonal Party Nidwalden</value>
-  </data>
-  <data name="cantonOW" xml:space="preserve">
-    <value>Cantonal Party Obwalden</value>
-  </data>
-  <data name="cantonSG" xml:space="preserve">
-    <value>Cantonal Party St. Gallen</value>
-  </data>
-  <data name="cantonSH" xml:space="preserve">
-    <value>Cantonal Party Schaffhausen</value>
-  </data>
-  <data name="cantonSO" xml:space="preserve">
-    <value>Cantonal Party Solothurn</value>
-  </data>
-  <data name="cantonSZ" xml:space="preserve">
-    <value>Cantonal Party Schwyz</value>
-  </data>
-  <data name="cantonTG" xml:space="preserve">
-    <value>Cantonal Party Thurgau</value>
-  </data>
-  <data name="cantonTI" xml:space="preserve">
-    <value>Cantonal Party Tessin</value>
-  </data>
-  <data name="cantonUR" xml:space="preserve">
-    <value>Cantonal Party Uri</value>
-  </data>
-  <data name="cantonVD" xml:space="preserve">
-    <value>Cantonal Party Waadt</value>
-  </data>
-  <data name="cantonVS" xml:space="preserve">
-    <value>Cantonal Party Wallis</value>
-  </data>
-  <data name="cantonZG" xml:space="preserve">
-    <value>Cantonal Party Zug</value>
-  </data>
-  <data name="cantonZH" xml:space="preserve">
-    <value>Cantonal Party Zürich</value>
-  </data>
   <data name="ExceptionBadGroupIdInCertificate" xml:space="preserve">
     <value>You ar not allowed to vote in the group of this voting.</value>
   </data>
@@ -674,5 +593,38 @@
   </data>
   <data name="SigningRequestDocumentSignThirdAuthority" xml:space="preserve">
     <value>Third Authority</value>
+  </data>
+  <data name="CertificateStatusCrlMissing" xml:space="preserve">
+    <value>Revocation list missing</value>
+  </data>
+  <data name="CertificateStatusNoSignature" xml:space="preserve">
+    <value>No Signature</value>
+  </data>
+  <data name="CertificateStatusNotYetValid" xml:space="preserve">
+    <value>Not yet valid</value>
+  </data>
+  <data name="CertificateStatusOutdated" xml:space="preserve">
+    <value>Outdated</value>
+  </data>
+  <data name="CertificateStatusRevoked" xml:space="preserve">
+    <value>Revoked</value>
+  </data>
+  <data name="CertificateStatusSelfSignatureInvalid" xml:space="preserve">
+    <value>Corrupt</value>
+  </data>
+  <data name="CertificateStatusSignatureDataInvalid" xml:space="preserve">
+    <value>Signature Invalid</value>
+  </data>
+  <data name="CertificateStatusSignerInvalid" xml:space="preserve">
+    <value>Certificate Authority invalid</value>
+  </data>
+  <data name="CertificateStatusUnknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CertificateStatusUnknownSigner" xml:space="preserve">
+    <value>Certificate Authority unknown</value>
+  </data>
+  <data name="CertificateStatusValid" xml:space="preserve">
+    <value>Valid</value>
   </data>
 </root>

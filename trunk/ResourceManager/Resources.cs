@@ -101,12 +101,12 @@ namespace Pirate.PiVote.ResourceManager
         builder.AppendLine();
       }
 
-      File.WriteAllText(fileName, builder.ToString());
+      File.WriteAllText(fileName, builder.ToString(), Encoding.UTF8);
     }
 
     public void ImportCsv(string fileName)
     {
-      string[] lines = File.ReadAllLines(fileName);
+      string[] lines = File.ReadAllLines(fileName, Encoding.UTF8);
       List<string> changedLines = new List<string>();
       string changedLine = null;
 

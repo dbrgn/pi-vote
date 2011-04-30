@@ -214,6 +214,26 @@ namespace Pirate.PiVote.Circle
       this.certificates.Remove(certificate);
     }
 
+    public IEnumerable<Certificate> Certificates
+    {
+      get
+      {
+        return this.certificates.Keys;
+      }
+    }
+
+    public void SaveCertificate(Certificate certificate)
+    {
+      if (this.certificates.ContainsKey(certificate))
+      {
+        certificate.Save(this.certificates[certificate]);
+      }
+      else
+      {
+        AddAndSaveCertificate(certificate);
+      }
+    }
+
     public void AddAndSaveCertificate(Certificate certificate)
     {
       string certificateFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + Files.CertificateExtension);

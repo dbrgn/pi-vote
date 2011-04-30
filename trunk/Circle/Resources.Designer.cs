@@ -61,6 +61,159 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Backup....
+        /// </summary>
+        internal static string CertificateManagerBackup {
+            get {
+                return ResourceManager.GetString("CertificateManagerBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Close.
+        /// </summary>
+        internal static string CertificateManagerClose {
+            get {
+                return ResourceManager.GetString("CertificateManagerClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group/Name.
+        /// </summary>
+        internal static string CertificateManagerColumnGroupName {
+            get {
+                return ResourceManager.GetString("CertificateManagerColumnGroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        internal static string CertificateManagerColumnId {
+            get {
+                return ResourceManager.GetString("CertificateManagerColumnId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        internal static string CertificateManagerColumnStatus {
+            get {
+                return ResourceManager.GetString("CertificateManagerColumnStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        internal static string CertificateManagerColumnType {
+            get {
+                return ResourceManager.GetString("CertificateManagerColumnType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid from.
+        /// </summary>
+        internal static string CertificateManagerColumnValidFrom {
+            get {
+                return ResourceManager.GetString("CertificateManagerColumnValidFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid until.
+        /// </summary>
+        internal static string CertificateManagerColumnValidUntil {
+            get {
+                return ResourceManager.GetString("CertificateManagerColumnValidUntil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Create New....
+        /// </summary>
+        internal static string CertificateManagerCreateNew {
+            get {
+                return ResourceManager.GetString("CertificateManagerCreateNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Export....
+        /// </summary>
+        internal static string CertificateManagerExport {
+            get {
+                return ResourceManager.GetString("CertificateManagerExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Import....
+        /// </summary>
+        internal static string CertificateManagerImport {
+            get {
+                return ResourceManager.GetString("CertificateManagerImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Refresh.
+        /// </summary>
+        internal static string CertificateManagerRefresh {
+            get {
+                return ResourceManager.GetString("CertificateManagerRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Remove.
+        /// </summary>
+        internal static string CertificateManagerRemove {
+            get {
+                return ResourceManager.GetString("CertificateManagerRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Restore....
+        /// </summary>
+        internal static string CertificateManagerRestore {
+            get {
+                return ResourceManager.GetString("CertificateManagerRestore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set &amp;Password....
+        /// </summary>
+        internal static string CertificateManagerSetPassword {
+            get {
+                return ResourceManager.GetString("CertificateManagerSetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circle - Certificate Manager.
+        /// </summary>
+        internal static string CertificateManagerTitle {
+            get {
+                return ResourceManager.GetString("CertificateManagerTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indefinite.
+        /// </summary>
+        internal static string CertificateManagerValidIndefinite {
+            get {
+                return ResourceManager.GetString("CertificateManagerValidIndefinite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Some shares were invalid. The voting will be aborted..
         /// </summary>
         internal static string ControllerCheckSharesFailed {
@@ -372,6 +525,15 @@ namespace Pirate.PiVote.Circle {
         internal static string MenuLanguage {
             get {
                 return ResourceManager.GetString("MenuLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Manage....
+        /// </summary>
+        internal static string MenuManage {
+            get {
+                return ResourceManager.GetString("MenuManage", resourceCulture);
             }
         }
         
