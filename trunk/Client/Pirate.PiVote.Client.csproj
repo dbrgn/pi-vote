@@ -10,8 +10,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SourceAnalysisOverrideSettingsFile>C:\Users\apophis\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>ballot.ico</ApplicationIcon>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
     <WarningLevel>4</WarningLevel>
@@ -484,5 +483,8 @@
       <Project>{327B55CF-5800-47A5-AA53-8309508BFC6A}</Project>
       <Name>Pirate.PiVote.Gui</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ballot.ico" />
   </ItemGroup>
 </Project>
