@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Gui;
 using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.CaGui
@@ -306,19 +307,19 @@ namespace Pirate.PiVote.CaGui
               CertificateStorage.Get(CaCertificate.Id).AddSignature(response.Signature);
               CaCertificate.Save(DataPath(CaCertFileName));
               CertificateStorage.Save(DataPath(StorageFileName));
-              MessageBox.Show("Signature added to CA certificate.", "Signature response", MessageBoxButtons.OK, MessageBoxIcon.Information);
+              MessageForm.Show("Signature added to CA certificate.", "Signature response", MessageBoxButtons.OK, MessageBoxIcon.Information);
               break;
             case SignatureResponseStatus.Declined:
-              MessageBox.Show("Signature response was declined. Rease: \n" + response.Reason, "Signature response", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+              MessageForm.Show("Signature response was declined. Rease: \n" + response.Reason, "Signature response", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
               break;
             default:
-              MessageBox.Show("Signature response status not valid", "Signature response", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+              MessageForm.Show("Signature response status not valid", "Signature response", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
               break;
           }
         }
         else
         {
-          MessageBox.Show("Signature on signature response not valid", "Signature response", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+          MessageForm.Show("Signature on signature response not valid", "Signature response", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
       }
     }
@@ -349,7 +350,7 @@ namespace Pirate.PiVote.CaGui
         CertificateStorage certificateStorage = Serializable.Load<CertificateStorage>(dialog.FileName);
         CertificateStorage.Add(certificateStorage);
 
-        MessageBox.Show("Certificate storage import completed.", "Import Certificate Storage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageForm.Show("Certificate storage import completed.", "Import Certificate Storage", MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
     }
 
@@ -399,7 +400,7 @@ namespace Pirate.PiVote.CaGui
           StringBuilder message = new StringBuilder();
           message.AppendLine("The following request are not valid:");
           invalidList.ForEach(invalidRequest => message.AppendLine(invalidRequest));
-          MessageBox.Show(message.ToString(), "Pi-Vote CA GUI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+          MessageForm.Show(message.ToString(), "Pi-Vote CA GUI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         if (alreadyAddedList.Count > 0)
@@ -407,7 +408,7 @@ namespace Pirate.PiVote.CaGui
           StringBuilder message = new StringBuilder();
           message.AppendLine("The following request are already in your list:");
           alreadyAddedList.ForEach(invalidRequest => message.AppendLine(invalidRequest));
-          MessageBox.Show(message.ToString(), "Pi-Vote CA GUI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+          MessageForm.Show(message.ToString(), "Pi-Vote CA GUI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
       }
     }

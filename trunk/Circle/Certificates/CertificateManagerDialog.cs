@@ -333,7 +333,7 @@ namespace Pirate.PiVote.Circle.Certificates
       SaveFileDialog dialog = new SaveFileDialog();
       dialog.Filter = Files.BackupFileFilter;
       dialog.CheckPathExists = true;
-      dialog.Title = "Create Backup";
+      dialog.Title = Resources.SaveBackupDialogTitle;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -348,7 +348,7 @@ namespace Pirate.PiVote.Circle.Certificates
             Thread.Sleep(1);
           }
 
-          MessageForm.Show("Backup saved.", Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+          MessageForm.Show(Resources.SaveBackupDone, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         catch (Exception exception)
         {
@@ -368,7 +368,7 @@ namespace Pirate.PiVote.Circle.Certificates
       dialog.Filter = Files.BackupFileFilter;
       dialog.CheckFileExists = true;
       dialog.Multiselect = false;
-      dialog.Title = "Restore Backup";
+      dialog.Title = Resources.RestoreBackupDialogTitle;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -388,7 +388,7 @@ namespace Pirate.PiVote.Circle.Certificates
           Status.TextStatusDialog.HideInfo();
           LoadCertificates();
 
-          MessageForm.Show("Backup restored.", Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+          MessageForm.Show(Resources.RestoreBackupDone, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         catch (Exception exception)
         {

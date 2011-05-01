@@ -214,6 +214,42 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your certificate id {0} of type {1} is invalid. It&apos;s status is {2}.
+        /// </summary>
+        internal static string CertificateStatusMessageInvalid {
+            get {
+                return ResourceManager.GetString("CertificateStatusMessageInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your certificate id {0} of type {1} is not yet valid..
+        /// </summary>
+        internal static string CertificateStatusMessageNotYetValid {
+            get {
+                return ResourceManager.GetString("CertificateStatusMessageNotYetValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your certificate id {0} of type {1} was outdated and therefore deactivated. You must create a new certificate..
+        /// </summary>
+        internal static string CertificateStatusMessageOutdate {
+            get {
+                return ResourceManager.GetString("CertificateStatusMessageOutdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your certificate id {0} of type {1} was revoked and therefore deactivated. You must create a new certificate..
+        /// </summary>
+        internal static string CertificateStatusMessageRevoked {
+            get {
+                return ResourceManager.GetString("CertificateStatusMessageRevoked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Some shares were invalid. The voting will be aborted..
         /// </summary>
         internal static string ControllerCheckSharesFailed {
@@ -417,6 +453,15 @@ namespace Pirate.PiVote.Circle {
         internal static string CreateCertificateFinishUpload {
             get {
                 return ResourceManager.GetString("CreateCertificateFinishUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Signature request data for your certificate {0} of type {1} count not be found. You must create a new certificate..
+        /// </summary>
+        internal static string CreateCertificateResumeFail {
+            get {
+                return ResourceManager.GetString("CreateCertificateResumeFail", resourceCulture);
             }
         }
         
@@ -925,6 +970,24 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open backup.
+        /// </summary>
+        internal static string RestoreBackupDialogTitle {
+            get {
+                return ResourceManager.GetString("RestoreBackupDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The backup is restored..
+        /// </summary>
+        internal static string RestoreBackupDone {
+            get {
+                return ResourceManager.GetString("RestoreBackupDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abstention.
         /// </summary>
         internal static string ResultDialogAbstain {
@@ -1002,6 +1065,24 @@ namespace Pirate.PiVote.Circle {
         internal static string ResultDialogYourVote {
             get {
                 return ResourceManager.GetString("ResultDialogYourVote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save backup.
+        /// </summary>
+        internal static string SaveBackupDialogTitle {
+            get {
+                return ResourceManager.GetString("SaveBackupDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The backup is saved..
+        /// </summary>
+        internal static string SaveBackupDone {
+            get {
+                return ResourceManager.GetString("SaveBackupDone", resourceCulture);
             }
         }
         

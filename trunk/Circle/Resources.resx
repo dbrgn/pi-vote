@@ -528,4 +528,31 @@
   <data name="UploadSignatureResponsesOpenDialogTitle" xml:space="preserve">
     <value>Select signature responses</value>
   </data>
+  <data name="CertificateStatusMessageInvalid" xml:space="preserve">
+    <value>Your certificate id {0} of type {1} is invalid. It's status is {2}</value>
+  </data>
+  <data name="CertificateStatusMessageNotYetValid" xml:space="preserve">
+    <value>Your certificate id {0} of type {1} is not yet valid.</value>
+  </data>
+  <data name="CertificateStatusMessageOutdate" xml:space="preserve">
+    <value>Your certificate id {0} of type {1} was outdated and therefore deactivated. You must create a new certificate.</value>
+  </data>
+  <data name="CertificateStatusMessageRevoked" xml:space="preserve">
+    <value>Your certificate id {0} of type {1} was revoked and therefore deactivated. You must create a new certificate.</value>
+  </data>
+  <data name="CreateCertificateResumeFail" xml:space="preserve">
+    <value>Signature request data for your certificate {0} of type {1} count not be found. You must create a new certificate.</value>
+  </data>
+  <data name="RestoreBackupDialogTitle" xml:space="preserve">
+    <value>Open backup</value>
+  </data>
+  <data name="RestoreBackupDone" xml:space="preserve">
+    <value>The backup is restored.</value>
+  </data>
+  <data name="SaveBackupDialogTitle" xml:space="preserve">
+    <value>Save backup</value>
+  </data>
+  <data name="SaveBackupDone" xml:space="preserve">
+    <value>The backup is saved.</value>
+  </data>
 </root>

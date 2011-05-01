@@ -290,7 +290,7 @@ namespace Pirate.PiVote.Circle
             break;
           case CertificateValidationResult.NotYetValid:
             MessageForm.Show(
-              string.Format("Your certificate id {0} of type {1} is not yet valid.", certificate.Id.ToString(), certificate.TypeText),
+              string.Format(Resources.CertificateStatusMessageNotYetValid, certificate.Id.ToString(), certificate.TypeText),
               Resources.MessageBoxTitle,
               MessageBoxButtons.OK,
               MessageBoxIcon.Information);
@@ -299,7 +299,7 @@ namespace Pirate.PiVote.Circle
           case CertificateValidationResult.Outdated:
             Controller.DeactiveCertificate(certificate);
             MessageForm.Show(
-              string.Format("Your certificate id {0} of type {1} was outdated and therefore deactivated. You must create a new certificate.", certificate.Id.ToString(), certificate.TypeText),
+              string.Format(Resources.CertificateStatusMessageOutdate, certificate.Id.ToString(), certificate.TypeText),
               Resources.MessageBoxTitle,
               MessageBoxButtons.OK,
               MessageBoxIcon.Information);
@@ -309,7 +309,7 @@ namespace Pirate.PiVote.Circle
           case CertificateValidationResult.Revoked:
             Controller.DeactiveCertificate(certificate);
             MessageForm.Show(
-              string.Format("Your certificate id {0} of type {1} was revoked and therefore deactivated. You must create a new certificate.", certificate.Id.ToString(), certificate.TypeText),
+              string.Format(Resources.CertificateStatusMessageRevoked, certificate.Id.ToString(), certificate.TypeText),
               Resources.MessageBoxTitle,
               MessageBoxButtons.OK,
               MessageBoxIcon.Information);
@@ -320,7 +320,7 @@ namespace Pirate.PiVote.Circle
             break;
           default:
             MessageForm.Show(
-              string.Format("Your certificate id {0} of type {1} is invalid. It's status is {2}", certificate.Id.ToString(), certificate.TypeText, certificate.Validate(Controller.Status.CertificateStorage).ToString()),
+              string.Format(Resources.CertificateStatusMessageInvalid, certificate.Id.ToString(), certificate.TypeText, certificate.Validate(Controller.Status.CertificateStorage).Text()),
               Resources.MessageBoxTitle,
               MessageBoxButtons.OK,
               MessageBoxIcon.Information);

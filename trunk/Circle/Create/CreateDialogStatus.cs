@@ -52,7 +52,7 @@ namespace Pirate.PiVote.Circle.Create
       {
         Controller.DeactiveCertificate(Certificate);
         MessageForm.Show(
-          string.Format("Signature request data for your certificate {0} of type {1} count not be found. You must create a new certificate.", Certificate.Id.ToString(), Certificate.TypeText),
+          string.Format(Resources.CreateCertificateResumeFail, Certificate.Id.ToString(), Certificate.TypeText),
           Resources.MessageBoxTitle,
           MessageBoxButtons.OK,
           MessageBoxIcon.Information);
