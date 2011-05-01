@@ -39,17 +39,21 @@ namespace Pirate.PiVote.Circle
       this.mainMenu = new System.Windows.Forms.MenuStrip();
       this.votingsMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.refreshVotingsMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.createVotingMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.certificatesMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.createCertificateMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.resumeCreationMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.reloadCertificateMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.downloadSignatureRequestsMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.uploadSignatureResponsesMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.uploadCertificateStorageMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.languageMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.englishMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.germanMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.frenchMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.mainPanel = new System.Windows.Forms.Panel();
       this.votingListsControl = new Pirate.PiVote.Circle.VotingListsControl();
-      this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.mainMenu.SuspendLayout();
       this.mainPanel.SuspendLayout();
       this.SuspendLayout();
@@ -69,7 +73,8 @@ namespace Pirate.PiVote.Circle
       // votingsMenu
       // 
       this.votingsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.refreshVotingsMenu});
+            this.refreshVotingsMenu,
+            this.createVotingMenu});
       this.votingsMenu.Name = "votingsMenu";
       this.votingsMenu.Size = new System.Drawing.Size(54, 20);
       this.votingsMenu.Text = "&Votings";
@@ -82,13 +87,23 @@ namespace Pirate.PiVote.Circle
       this.refreshVotingsMenu.Text = "&Refresh";
       this.refreshVotingsMenu.Click += new System.EventHandler(this.RefreshVotingsMenu_Click);
       // 
+      // createVotingMenu
+      // 
+      this.createVotingMenu.Name = "createVotingMenu";
+      this.createVotingMenu.Size = new System.Drawing.Size(131, 22);
+      this.createVotingMenu.Text = "&Create";
+      this.createVotingMenu.Click += new System.EventHandler(this.createVotingMenu_Click);
+      // 
       // certificatesMenu
       // 
       this.certificatesMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createCertificateMenu,
             this.resumeCreationMenu,
             this.reloadCertificateMenu,
-            this.manageToolStripMenuItem});
+            this.manageToolStripMenuItem,
+            this.downloadSignatureRequestsMenu,
+            this.uploadSignatureResponsesMenu,
+            this.uploadCertificateStorageMenu});
       this.certificatesMenu.Name = "certificatesMenu";
       this.certificatesMenu.Size = new System.Drawing.Size(74, 20);
       this.certificatesMenu.Text = "&Certificates";
@@ -96,23 +111,51 @@ namespace Pirate.PiVote.Circle
       // createCertificateMenu
       // 
       this.createCertificateMenu.Name = "createCertificateMenu";
-      this.createCertificateMenu.Size = new System.Drawing.Size(154, 22);
+      this.createCertificateMenu.Size = new System.Drawing.Size(214, 22);
       this.createCertificateMenu.Text = "&Create New";
       this.createCertificateMenu.Click += new System.EventHandler(this.CreateCertificateMenu_Click);
       // 
       // resumeCreationMenu
       // 
       this.resumeCreationMenu.Name = "resumeCreationMenu";
-      this.resumeCreationMenu.Size = new System.Drawing.Size(154, 22);
+      this.resumeCreationMenu.Size = new System.Drawing.Size(214, 22);
       this.resumeCreationMenu.Text = "&Resume creation";
       this.resumeCreationMenu.Click += new System.EventHandler(this.resumeCreationMenu_Click);
       // 
       // reloadCertificateMenu
       // 
       this.reloadCertificateMenu.Name = "reloadCertificateMenu";
-      this.reloadCertificateMenu.Size = new System.Drawing.Size(154, 22);
+      this.reloadCertificateMenu.Size = new System.Drawing.Size(214, 22);
       this.reloadCertificateMenu.Text = "&Reload All";
       this.reloadCertificateMenu.Click += new System.EventHandler(this.ReloadCertificateMenu_Click);
+      // 
+      // manageToolStripMenuItem
+      // 
+      this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
+      this.manageToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+      this.manageToolStripMenuItem.Text = "&Manage...";
+      this.manageToolStripMenuItem.Click += new System.EventHandler(this.manageToolStripMenuItem_Click);
+      // 
+      // downloadSignatureRequestsMenu
+      // 
+      this.downloadSignatureRequestsMenu.Name = "downloadSignatureRequestsMenu";
+      this.downloadSignatureRequestsMenu.Size = new System.Drawing.Size(214, 22);
+      this.downloadSignatureRequestsMenu.Text = "Download signature requests";
+      this.downloadSignatureRequestsMenu.Click += new System.EventHandler(this.downloadSignatureRequestsMenu_Click);
+      // 
+      // uploadSignatureResponsesMenu
+      // 
+      this.uploadSignatureResponsesMenu.Name = "uploadSignatureResponsesMenu";
+      this.uploadSignatureResponsesMenu.Size = new System.Drawing.Size(214, 22);
+      this.uploadSignatureResponsesMenu.Text = "Upload signature responses";
+      this.uploadSignatureResponsesMenu.Click += new System.EventHandler(this.uploadSignatureResponsesMenu_Click);
+      // 
+      // uploadCertificateStorageMenu
+      // 
+      this.uploadCertificateStorageMenu.Name = "uploadCertificateStorageMenu";
+      this.uploadCertificateStorageMenu.Size = new System.Drawing.Size(214, 22);
+      this.uploadCertificateStorageMenu.Text = "Upload certificate storage";
+      this.uploadCertificateStorageMenu.Click += new System.EventHandler(this.uploadCertificateStorageMenu_Click);
       // 
       // languageMenu
       // 
@@ -165,13 +208,6 @@ namespace Pirate.PiVote.Circle
       this.votingListsControl.TabIndex = 0;
       this.votingListsControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.VotingListsControl_VotingAction);
       // 
-      // manageToolStripMenuItem
-      // 
-      this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
-      this.manageToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-      this.manageToolStripMenuItem.Text = "&Manage...";
-      this.manageToolStripMenuItem.Click += new System.EventHandler(this.manageToolStripMenuItem_Click);
-      // 
       // Master
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -214,6 +250,10 @@ namespace Pirate.PiVote.Circle
     private System.Windows.Forms.ToolStripMenuItem frenchMenu;
     private System.Windows.Forms.ToolStripMenuItem resumeCreationMenu;
     private System.Windows.Forms.ToolStripMenuItem manageToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem createVotingMenu;
+    private System.Windows.Forms.ToolStripMenuItem downloadSignatureRequestsMenu;
+    private System.Windows.Forms.ToolStripMenuItem uploadSignatureResponsesMenu;
+    private System.Windows.Forms.ToolStripMenuItem uploadCertificateStorageMenu;
   }
 }
 

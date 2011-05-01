@@ -47,18 +47,18 @@ namespace Pirate.PiVote.Circle.Vote
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.optionsPanel.AutoScroll = true;
       this.optionsPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-      this.optionsPanel.Location = new System.Drawing.Point(3, 35);
+      this.optionsPanel.Location = new System.Drawing.Point(3, 38);
       this.optionsPanel.Name = "optionsPanel";
-      this.optionsPanel.Size = new System.Drawing.Size(658, 403);
+      this.optionsPanel.Size = new System.Drawing.Size(658, 434);
       this.optionsPanel.TabIndex = 6;
       // 
       // maxOptionLabel
       // 
       this.maxOptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.maxOptionLabel.AutoSize = true;
-      this.maxOptionLabel.Location = new System.Drawing.Point(3, 441);
+      this.maxOptionLabel.Location = new System.Drawing.Point(3, 475);
       this.maxOptionLabel.Name = "maxOptionLabel";
-      this.maxOptionLabel.Size = new System.Drawing.Size(83, 13);
+      this.maxOptionLabel.Size = new System.Drawing.Size(84, 14);
       this.maxOptionLabel.TabIndex = 8;
       this.maxOptionLabel.Text = "maxOptionLabel";
       // 
@@ -72,23 +72,24 @@ namespace Pirate.PiVote.Circle.Vote
       this.textControl.InfoFont = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textControl.Location = new System.Drawing.Point(3, 3);
       this.textControl.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-      this.textControl.MaximumSize = new System.Drawing.Size(3000, 32);
-      this.textControl.MinimumSize = new System.Drawing.Size(100, 26);
+      this.textControl.MaximumSize = new System.Drawing.Size(3000, 34);
+      this.textControl.MinimumSize = new System.Drawing.Size(100, 28);
       this.textControl.Name = "textControl";
-      this.textControl.Size = new System.Drawing.Size(658, 26);
+      this.textControl.Size = new System.Drawing.Size(658, 28);
       this.textControl.TabIndex = 7;
       this.textControl.Title = "";
       this.textControl.Url = null;
       // 
       // QuestionControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.maxOptionLabel);
       this.Controls.Add(this.textControl);
       this.Controls.Add(this.optionsPanel);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "QuestionControl";
-      this.Size = new System.Drawing.Size(664, 461);
+      this.Size = new System.Drawing.Size(664, 496);
       this.ResumeLayout(false);
       this.PerformLayout();
 

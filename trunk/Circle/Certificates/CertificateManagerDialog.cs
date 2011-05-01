@@ -287,7 +287,7 @@ namespace Pirate.PiVote.Circle.Certificates
         }
         catch (Exception exception)
         {
-          MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+          Error.ErrorDialog.ShowError(exception);
         }
       }
     }
@@ -317,7 +317,7 @@ namespace Pirate.PiVote.Circle.Certificates
           }
           catch (Exception exception)
           {
-            MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Error.ErrorDialog.ShowError(exception);
           }
         }
       }
@@ -352,7 +352,7 @@ namespace Pirate.PiVote.Circle.Certificates
         }
         catch (Exception exception)
         {
-          MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+          Error.ErrorDialog.ShowError(exception);
         }
       }
     }
@@ -392,7 +392,7 @@ namespace Pirate.PiVote.Circle.Certificates
         }
         catch (Exception exception)
         {
-          MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+          Error.ErrorDialog.ShowError(exception);
         }
       }
     }

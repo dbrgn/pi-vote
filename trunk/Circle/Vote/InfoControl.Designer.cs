@@ -61,7 +61,7 @@ namespace Pirate.PiVote.Circle.Vote
       this.titleBox.Location = new System.Drawing.Point(2, 3);
       this.titleBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.titleBox.Name = "titleBox";
-      this.titleBox.Size = new System.Drawing.Size(357, 24);
+      this.titleBox.Size = new System.Drawing.Size(428, 22);
       this.titleBox.TabIndex = 1;
       // 
       // webBox
@@ -69,7 +69,7 @@ namespace Pirate.PiVote.Circle.Vote
       this.webBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.webBox.AutoSize = true;
       this.webBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.webBox.Location = new System.Drawing.Point(363, 3);
+      this.webBox.Location = new System.Drawing.Point(436, 3);
       this.webBox.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.webBox.Name = "webBox";
       this.webBox.Size = new System.Drawing.Size(37, 20);
@@ -80,16 +80,16 @@ namespace Pirate.PiVote.Circle.Vote
       // 
       // InfoControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.webBox);
       this.Controls.Add(this.titleBox);
-      this.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-      this.MaximumSize = new System.Drawing.Size(2500, 37);
-      this.MinimumSize = new System.Drawing.Size(83, 30);
+      this.MaximumSize = new System.Drawing.Size(3000, 35);
+      this.MinimumSize = new System.Drawing.Size(100, 28);
       this.Name = "InfoControl";
-      this.Size = new System.Drawing.Size(417, 30);
+      this.Size = new System.Drawing.Size(500, 28);
       this.ResumeLayout(false);
       this.PerformLayout();
 

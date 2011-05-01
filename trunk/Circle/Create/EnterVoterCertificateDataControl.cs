@@ -77,7 +77,6 @@ namespace Pirate.PiVote.Circle.Create
         Status.SignatureRequestInfoFileName = Path.Combine(Status.Controller.Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestInfoExtension);
         Status.SignatureRequestInfo.Save(Status.SignatureRequestInfoFileName);
 
-
         var nextControl = new PrintAndUploadCertificateControl();
         nextControl.Status = Status;
         OnShowNextControl(nextControl);

@@ -201,6 +201,19 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Counts the stored safe primes.
+    /// </summary>
+    /// <param name="dataPath">Path where application data is stored.</param>
+    /// <returns>Number of stored save primes.</returns>
+    public static int CountPregeneratedSafePrimes(string dataPath)
+    {
+      var dataDirectory = new DirectoryInfo(dataPath);
+      var files = dataDirectory.GetFiles(Files.SafePrimePattern);
+
+      return files.Count();
+    }
+
+    /// <summary>
     /// Tries to load a pregenerated safe prime.
     /// </summary>
     /// <param name="dataPath">Path where application data is stored.</param>
@@ -253,7 +266,6 @@ namespace Pirate.PiVote.Crypto
     /// <param name="dataPath">Path where application data is stored.</param>
     public static void GenerateAndStoreSafePrime(string dataPath)
     {
-
       BigInt prime = null;
       BigInt safePrime = null;
 

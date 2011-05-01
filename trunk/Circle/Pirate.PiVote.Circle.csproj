@@ -38,6 +38,10 @@
     <ApplicationIcon>ballot.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Emil.GMP, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\GMP\Emil.GMP.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,6 +60,50 @@
       <DependentUpon>CertificateManagerDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="CircleController.cs" />
+    <Compile Include="CreateVoting\AddOptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateVoting\AddOptionDialog.Designer.cs">
+      <DependentUpon>AddOptionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateVoting\AddQuestionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateVoting\AddQuestionDialog.Designer.cs">
+      <DependentUpon>AddQuestionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateVoting\CreateDialogStatus.cs" />
+    <Compile Include="CreateVoting\CreateVotingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateVoting\CreateVotingDialog.Designer.cs">
+      <DependentUpon>CreateVotingDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateVoting\CreateVotingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CreateVoting\CreateVotingControl.Designer.cs">
+      <DependentUpon>CreateVotingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateVoting\DateGroupAuthoritiesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CreateVoting\DateGroupAuthoritiesControl.Designer.cs">
+      <DependentUpon>DateGroupAuthoritiesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateVoting\EnterDataControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CreateVoting\EnterDataControl.Designer.cs">
+      <DependentUpon>EnterDataControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateVoting\PrimeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CreateVoting\PrimeControl.Designer.cs">
+      <DependentUpon>PrimeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateVoting\VotingData.cs" />
     <Compile Include="Create\EnterVoterSubgroupDataControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,6 +146,12 @@
     </Compile>
     <Compile Include="Create\SelectCertificateTypeControl.Designer.cs">
       <DependentUpon>SelectCertificateTypeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Error\ErrorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Error\ErrorDialog.Designer.cs">
+      <DependentUpon>ErrorDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources.de-DE.Designer.cs">
       <DependentUpon>Resources.de-DE.resx</DependentUpon>
@@ -181,6 +235,30 @@
     <EmbeddedResource Include="Certificates\CertificateManagerDialog.resx">
       <DependentUpon>CertificateManagerDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CreateVoting\AddOptionDialog.resx">
+      <DependentUpon>AddOptionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateVoting\AddQuestionDialog.resx">
+      <DependentUpon>AddQuestionDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateVoting\CreateVotingControl.resx">
+      <DependentUpon>CreateVotingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateVoting\CreateVotingDialog.resx">
+      <DependentUpon>CreateVotingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateVoting\DateGroupAuthoritiesControl.resx">
+      <DependentUpon>DateGroupAuthoritiesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateVoting\EnterDataControl.resx">
+      <DependentUpon>EnterDataControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateVoting\PrimeControl.resx">
+      <DependentUpon>PrimeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Create\CreateCertificateControl.resx">
+      <DependentUpon>CreateCertificateControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Create\EnterVoterSubgroupDataControl.resx">
       <DependentUpon>EnterVoterSubgroupDataControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -198,6 +276,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Create\SelectCertificateTypeControl.resx">
       <DependentUpon>SelectCertificateTypeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Error\ErrorDialog.resx">
+      <DependentUpon>ErrorDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.de-DE.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

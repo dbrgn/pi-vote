@@ -576,9 +576,9 @@ namespace Pirate.PiVote.Client
 
     private void questionContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {
-      this.addToolStripMenuItem.Text = Resources.ContextMenuAdd;
-      this.removeToolStripMenuItem.Text = Resources.ContextMenuRemove;
-      this.editToolStripMenuItem.Text = Resources.ContextMenuEdit;
+      this.addToolStripMenuItem.Text = GuiResources.ContextMenuAdd;
+      this.removeToolStripMenuItem.Text = GuiResources.ContextMenuRemove;
+      this.editToolStripMenuItem.Text = GuiResources.ContextMenuEdit;
 
       this.removeToolStripMenuItem.Enabled = this.questionListView.SelectedItems.Count > 0;
       this.editToolStripMenuItem.Enabled = this.questionListView.SelectedItems.Count > 0;

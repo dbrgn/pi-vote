@@ -45,18 +45,18 @@ namespace Pirate.PiVote.Circle.Vote
       this.descriptionLabel.Location = new System.Drawing.Point(0, 0);
       this.descriptionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.descriptionLabel.Name = "descriptionLabel";
-      this.descriptionLabel.Size = new System.Drawing.Size(243, 315);
+      this.descriptionLabel.Size = new System.Drawing.Size(292, 294);
       this.descriptionLabel.TabIndex = 0;
       this.descriptionLabel.Text = "label1";
       // 
       // InfoForm
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 15F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(243, 315);
+      this.ClientSize = new System.Drawing.Size(292, 294);
       this.ControlBox = false;
       this.Controls.Add(this.descriptionLabel);
-      this.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.MaximizeBox = false;

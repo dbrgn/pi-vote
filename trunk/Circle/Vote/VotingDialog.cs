@@ -94,6 +94,10 @@ namespace Pirate.PiVote.Circle.Vote
         {
           this.controller.Vote(this.voterCertificate, this.voting, this.votingControl.Vota);
         }
+        catch (Exception exception)
+        {
+          Error.ErrorDialog.ShowError(exception);
+        }
         finally
         {
           this.voterCertificate.Lock();

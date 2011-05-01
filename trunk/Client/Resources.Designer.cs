@@ -896,33 +896,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Add.
-        /// </summary>
-        internal static string ContextMenuAdd {
-            get {
-                return ResourceManager.GetString("ContextMenuAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Edit.
-        /// </summary>
-        internal static string ContextMenuEdit {
-            get {
-                return ResourceManager.GetString("ContextMenuEdit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Remove.
-        /// </summary>
-        internal static string ContextMenuRemove {
-            get {
-                return ResourceManager.GetString("ContextMenuRemove", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Your request has been submitted to the server. You must now wait for the certificate authority to process it..
         /// </summary>
         internal static string CreateCertificateDone {

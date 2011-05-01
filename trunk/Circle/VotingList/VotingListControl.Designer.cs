@@ -43,19 +43,20 @@ namespace Pirate.PiVote.Circle
       this.emptyLabel.Dock = System.Windows.Forms.DockStyle.Fill;
       this.emptyLabel.Location = new System.Drawing.Point(0, 0);
       this.emptyLabel.Name = "emptyLabel";
-      this.emptyLabel.Size = new System.Drawing.Size(939, 485);
+      this.emptyLabel.Size = new System.Drawing.Size(939, 522);
       this.emptyLabel.TabIndex = 0;
       this.emptyLabel.Text = "Empty";
       this.emptyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // VotingListControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
       this.Controls.Add(this.emptyLabel);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "VotingListControl";
-      this.Size = new System.Drawing.Size(939, 485);
+      this.Size = new System.Drawing.Size(939, 522);
       this.ResumeLayout(false);
 
     }

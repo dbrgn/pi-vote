@@ -75,7 +75,7 @@
       this.certificateList.Location = new System.Drawing.Point(12, 12);
       this.certificateList.MultiSelect = false;
       this.certificateList.Name = "certificateList";
-      this.certificateList.Size = new System.Drawing.Size(768, 491);
+      this.certificateList.Size = new System.Drawing.Size(768, 529);
       this.certificateList.TabIndex = 0;
       this.certificateList.UseCompatibleStateImageBehavior = false;
       this.certificateList.View = System.Windows.Forms.View.Details;
@@ -184,9 +184,9 @@
       // closeButton
       // 
       this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.closeButton.Location = new System.Drawing.Point(672, 538);
+      this.closeButton.Location = new System.Drawing.Point(672, 579);
       this.closeButton.Name = "closeButton";
-      this.closeButton.Size = new System.Drawing.Size(106, 23);
+      this.closeButton.Size = new System.Drawing.Size(106, 25);
       this.closeButton.TabIndex = 1;
       this.closeButton.Text = "&Close";
       this.closeButton.UseVisualStyleBackColor = true;
@@ -195,9 +195,9 @@
       // restoreButton
       // 
       this.restoreButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.restoreButton.Location = new System.Drawing.Point(448, 538);
+      this.restoreButton.Location = new System.Drawing.Point(448, 579);
       this.restoreButton.Name = "restoreButton";
-      this.restoreButton.Size = new System.Drawing.Size(106, 23);
+      this.restoreButton.Size = new System.Drawing.Size(106, 25);
       this.restoreButton.TabIndex = 2;
       this.restoreButton.Text = "&Restore...";
       this.restoreButton.UseVisualStyleBackColor = true;
@@ -206,9 +206,9 @@
       // backupButton
       // 
       this.backupButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.backupButton.Location = new System.Drawing.Point(336, 538);
+      this.backupButton.Location = new System.Drawing.Point(336, 579);
       this.backupButton.Name = "backupButton";
-      this.backupButton.Size = new System.Drawing.Size(106, 23);
+      this.backupButton.Size = new System.Drawing.Size(106, 25);
       this.backupButton.TabIndex = 3;
       this.backupButton.Text = "&Backup...";
       this.backupButton.UseVisualStyleBackColor = true;
@@ -217,9 +217,9 @@
       // exportButton
       // 
       this.exportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.exportButton.Location = new System.Drawing.Point(672, 509);
+      this.exportButton.Location = new System.Drawing.Point(672, 548);
       this.exportButton.Name = "exportButton";
-      this.exportButton.Size = new System.Drawing.Size(106, 23);
+      this.exportButton.Size = new System.Drawing.Size(106, 25);
       this.exportButton.TabIndex = 4;
       this.exportButton.Text = "&Export...";
       this.exportButton.UseVisualStyleBackColor = true;
@@ -228,9 +228,9 @@
       // importButton
       // 
       this.importButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.importButton.Location = new System.Drawing.Point(560, 509);
+      this.importButton.Location = new System.Drawing.Point(560, 548);
       this.importButton.Name = "importButton";
-      this.importButton.Size = new System.Drawing.Size(106, 23);
+      this.importButton.Size = new System.Drawing.Size(106, 25);
       this.importButton.TabIndex = 5;
       this.importButton.Text = "&Import...";
       this.importButton.UseVisualStyleBackColor = true;
@@ -239,9 +239,9 @@
       // removeButton
       // 
       this.removeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.removeButton.Location = new System.Drawing.Point(448, 509);
+      this.removeButton.Location = new System.Drawing.Point(448, 548);
       this.removeButton.Name = "removeButton";
-      this.removeButton.Size = new System.Drawing.Size(106, 23);
+      this.removeButton.Size = new System.Drawing.Size(106, 25);
       this.removeButton.TabIndex = 6;
       this.removeButton.Text = "&Remove";
       this.removeButton.UseVisualStyleBackColor = true;
@@ -250,9 +250,9 @@
       // createNewButton
       // 
       this.createNewButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.createNewButton.Location = new System.Drawing.Point(336, 509);
+      this.createNewButton.Location = new System.Drawing.Point(336, 548);
       this.createNewButton.Name = "createNewButton";
-      this.createNewButton.Size = new System.Drawing.Size(106, 23);
+      this.createNewButton.Size = new System.Drawing.Size(106, 25);
       this.createNewButton.TabIndex = 7;
       this.createNewButton.Text = "&Create New...";
       this.createNewButton.UseVisualStyleBackColor = true;
@@ -261,9 +261,9 @@
       // setPasswordButton
       // 
       this.setPasswordButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.setPasswordButton.Location = new System.Drawing.Point(560, 538);
+      this.setPasswordButton.Location = new System.Drawing.Point(560, 579);
       this.setPasswordButton.Name = "setPasswordButton";
-      this.setPasswordButton.Size = new System.Drawing.Size(106, 23);
+      this.setPasswordButton.Size = new System.Drawing.Size(106, 25);
       this.setPasswordButton.TabIndex = 8;
       this.setPasswordButton.Text = "Set &Password...";
       this.setPasswordButton.UseVisualStyleBackColor = true;
@@ -272,9 +272,9 @@
       // refreshButton
       // 
       this.refreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.refreshButton.Location = new System.Drawing.Point(224, 509);
+      this.refreshButton.Location = new System.Drawing.Point(224, 548);
       this.refreshButton.Name = "refreshButton";
-      this.refreshButton.Size = new System.Drawing.Size(106, 23);
+      this.refreshButton.Size = new System.Drawing.Size(106, 25);
       this.refreshButton.TabIndex = 9;
       this.refreshButton.Text = "&Refresh";
       this.refreshButton.UseVisualStyleBackColor = true;
@@ -282,9 +282,9 @@
       // 
       // CertificateManagerDialog
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(792, 573);
+      this.ClientSize = new System.Drawing.Size(792, 617);
       this.Controls.Add(this.refreshButton);
       this.Controls.Add(this.setPasswordButton);
       this.Controls.Add(this.createNewButton);
@@ -295,8 +295,9 @@
       this.Controls.Add(this.restoreButton);
       this.Controls.Add(this.closeButton);
       this.Controls.Add(this.certificateList);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.KeyPreview = true;
-      this.MinimumSize = new System.Drawing.Size(600, 400);
+      this.MinimumSize = new System.Drawing.Size(600, 429);
       this.Name = "CertificateManagerDialog";
       this.Text = "CertificateManagerDialog";
       this.Load += new System.EventHandler(this.CertificateManagerDialog_Load);

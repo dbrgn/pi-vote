@@ -38,6 +38,7 @@ namespace Pirate.PiVote.Circle
     private IDictionary<Guid, VoteReceiptStatus> voteReceiptsStatus;
     private Dictionary<Guid, VotingContainer> votings;
     private bool userCanceled;
+    private IEnumerable<AuthorityCertificate> authorityCertificates;
 
     public CircleStatus Status { get; private set; }
 
@@ -244,6 +245,28 @@ namespace Pirate.PiVote.Circle
     public string GetFileName(Certificate certificate)
     {
       return this.certificates[certificate];
+    }
+
+    public IEnumerable<AuthorityCertificate> GetAuthorities()
+    {
+      Begin();
+      Status.VotingClient.GetAuthorityCertificates(GetAuthorityCertificatesComplete);
+
+      if (WaitForCompletion())
+      {
+        return authorityCertificates;
+      }
+      else
+      {
+        throw this.exception;
+      }
+    }
+
+    private void GetAuthorityCertificatesComplete(IEnumerable<AuthorityCertificate> authorityCertificates, Exception exception)
+    {
+      this.authorityCertificates = authorityCertificates;
+      this.exception = exception;
+      this.run = false;
     }
 
     public AuthorityCertificate GetAuthorityCertificate(VotingDescriptor2 voting)
@@ -517,6 +540,23 @@ namespace Pirate.PiVote.Circle
       this.run = false;
     }
 
+    public void CreateVoting(Signed<VotingParameters> votingParameters, IEnumerable<AuthorityCertificate> authorities)
+    {
+      Begin();
+      Status.VotingClient.CreateVoting(votingParameters, authorities, CreateVotingCompleted);
+
+      if (!WaitForCompletion())
+      {
+        throw this.exception;
+      }
+    }
+
+    private void CreateVotingCompleted(Exception exception)
+    {
+      this.exception = exception;
+      this.run = false;
+    }
+
     public VotingDescriptor CreateShares(Certificate certificate, VotingDescriptor2 voting)
     {
       string fileName = string.Format("{0}@{1}.pi-auth", certificate.Id.ToString(), voting.Id.ToString());
@@ -524,15 +564,20 @@ namespace Pirate.PiVote.Circle
 
       if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, GuiResources.UnlockActionAuthorityCreateShares))
       {
-        Begin();
-        Status.VotingClient.CreateSharePart(voting.Id, (AuthorityCertificate)certificate, filePath, CreateSharesCompleteCallBack);
-
-        if (!WaitForCompletion())
+        try
         {
-          MessageForm.Show(this.exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+          Begin();
+          Status.VotingClient.CreateSharePart(voting.Id, (AuthorityCertificate)certificate, filePath, CreateSharesCompleteCallBack);
 
-        certificate.Lock();
+          if (!WaitForCompletion())
+          {
+            throw this.exception;
+          }
+        }
+        finally
+        {
+          certificate.Lock();
+        }
 
         return this.votingDescriptor;
       }
@@ -556,26 +601,31 @@ namespace Pirate.PiVote.Circle
 
       if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, GuiResources.UnlockActionAuthorityCheckShares))
       {
-        Begin();
-        Status.VotingClient.CheckShares(voting.Id, (AuthorityCertificate)certificate, filePath, CheckSharesComplete);
-
-        if (WaitForCompletion())
+        try
         {
-          if (this.acceptShares)
+          Begin();
+          Status.VotingClient.CheckShares(voting.Id, (AuthorityCertificate)certificate, filePath, CheckSharesComplete);
+
+          if (WaitForCompletion())
           {
-            MessageForm.Show(Resources.ControllerCheckSharesOk, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (this.acceptShares)
+            {
+              MessageForm.Show(Resources.ControllerCheckSharesOk, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+              MessageForm.Show(Resources.ControllerCheckSharesFailed, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
           }
           else
           {
-            MessageForm.Show(Resources.ControllerCheckSharesFailed, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            throw this.exception;
           }
         }
-        else
+        finally
         {
-          MessageForm.Show(this.exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+          certificate.Lock();
         }
-
-        certificate.Lock();
 
         return this.votingDescriptor;
       }
@@ -601,16 +651,21 @@ namespace Pirate.PiVote.Circle
 
       if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, GuiResources.UnlockActionAuthorityDecipher))
       {
-        this.userCanceled = false;
-        Begin();
-        Status.VotingClient.CreateDeciphers(voting.Id, (AuthorityCertificate)certificate, filePath, AskForPartiallyDecipher, CreateDeciphersComplete);
-
-        if (!WaitForCompletion() && !this.userCanceled)
+        try
         {
-          MessageForm.Show(this.exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+          this.userCanceled = false;
+          Begin();
+          Status.VotingClient.CreateDeciphers(voting.Id, (AuthorityCertificate)certificate, filePath, AskForPartiallyDecipher, CreateDeciphersComplete);
 
-        certificate.Lock();
+          if (!WaitForCompletion() && !this.userCanceled)
+          {
+            throw this.exception;
+          }
+        }
+        finally
+        {
+          certificate.Lock();
+        }
 
         return this.votingDescriptor;
       }
@@ -648,7 +703,7 @@ namespace Pirate.PiVote.Circle
 
       if (!WaitForCompletion())
       {
-        MessageForm.Show(this.exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        throw this.exception;
       }
     }
 
@@ -666,7 +721,7 @@ namespace Pirate.PiVote.Circle
 
       if (!WaitForCompletion())
       {
-        MessageForm.Show(this.exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        throw this.exception;
       }
     }
 
@@ -684,7 +739,7 @@ namespace Pirate.PiVote.Circle
 
       if (!WaitForCompletion())
       {
-        MessageForm.Show(this.exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        throw this.exception;
       }
 
       voteReceiptsStatus = this.voteReceiptsStatus;
@@ -726,7 +781,7 @@ namespace Pirate.PiVote.Circle
       }
       else
       {
-        MessageForm.Show(this.exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        throw this.exception;
       }
     }
 
@@ -751,8 +806,60 @@ namespace Pirate.PiVote.Circle
       }
       else
       {
-        MessageForm.Show(this.exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        throw this.exception;
       }
+    }
+
+    public void DownloadSignatureRequests(string savePath)
+    {
+      Begin();
+      Status.VotingClient.GetSignatureRequests(savePath, GetSignatureRequestsComplete);
+
+      if (!WaitForCompletion())
+      {
+        throw this.exception;
+      }
+    }
+
+    private void GetSignatureRequestsComplete(Exception exception)
+    {
+      this.exception = exception;
+      this.run = false;
+    }
+
+    public void UploadSignatureResponses(IEnumerable<string> fileNames)
+    {
+      Begin();
+      Status.VotingClient.SetSignatureResponses(fileNames, SetSignatureResponsesComplete);
+
+      if (!WaitForCompletion())
+      {
+        throw this.exception;
+      }
+    }
+
+    private void SetSignatureResponsesComplete(Exception exception)
+    {
+      this.exception = exception;
+      this.run = false;
+    }
+
+    public void UploadCertificateStorage(string fileName)
+    {
+      CertificateStorage certificateStorage = Serializable.Load<CertificateStorage>(fileName);
+      Begin();
+      Status.VotingClient.SetCertificateStorage(certificateStorage, SetCertificateStorageComplete);
+
+      if (!WaitForCompletion())
+      {
+        throw this.exception;
+      }
+    }
+
+    private void SetCertificateStorageComplete(Exception exception)
+    {
+      this.exception = exception;
+      this.run = false;
     }
   }
 }

@@ -216,4 +216,19 @@
   <data name="ButtonPrevious" xml:space="preserve">
     <value>&amp;Previous</value>
   </data>
+  <data name="ContextMenuAdd" xml:space="preserve">
+    <value>&amp;Add...</value>
+  </data>
+  <data name="ContextMenuEdit" xml:space="preserve">
+    <value>&amp;Edit...</value>
+  </data>
+  <data name="ContextMenuRemove" xml:space="preserve">
+    <value>&amp;Remove</value>
+  </data>
+  <data name="ButtonClose" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <data name="UnlockActionDelete" xml:space="preserve">
+    <value>Sign command to delete voting</value>
+  </data>
 </root>

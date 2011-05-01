@@ -18,7 +18,7 @@ namespace Pirate.PiVote.Rpc
   /// RPC request creates a new voting.
   /// </summary>
   [SerializeObject("RPC request creates a new voting.")]
-  public class DeleteVotingRequest : RpcRequest<VotingRpcServer, CreateVotingResponse>
+  public class DeleteVotingRequest : RpcRequest<VotingRpcServer, DeleteVotingResponse>
   {
     /// <summary>
     /// Command to delete a voting.
@@ -104,7 +104,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override CreateVotingResponse Execute(VotingRpcServer server)
+    protected override DeleteVotingResponse Execute(VotingRpcServer server)
     {
       bool valid = true;
 
@@ -115,7 +115,7 @@ namespace Pirate.PiVote.Rpc
       {
         server.DeleteVoting(this.command.Value.VotingId);
 
-        return new CreateVotingResponse(RequestId);
+        return new DeleteVotingResponse(RequestId);
       }
       else
       {

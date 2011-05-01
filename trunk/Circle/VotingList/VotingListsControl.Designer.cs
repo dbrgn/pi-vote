@@ -61,16 +61,16 @@ namespace Pirate.PiVote.Circle
       this.votingTabPage.Location = new System.Drawing.Point(0, 0);
       this.votingTabPage.Name = "votingTabPage";
       this.votingTabPage.SelectedIndex = 0;
-      this.votingTabPage.Size = new System.Drawing.Size(928, 607);
+      this.votingTabPage.Size = new System.Drawing.Size(928, 654);
       this.votingTabPage.TabIndex = 0;
       // 
       // currentTabPage
       // 
       this.currentTabPage.Controls.Add(this.currentVotingListControl);
-      this.currentTabPage.Location = new System.Drawing.Point(4, 22);
+      this.currentTabPage.Location = new System.Drawing.Point(4, 23);
       this.currentTabPage.Name = "currentTabPage";
       this.currentTabPage.Padding = new System.Windows.Forms.Padding(3);
-      this.currentTabPage.Size = new System.Drawing.Size(920, 581);
+      this.currentTabPage.Size = new System.Drawing.Size(920, 627);
       this.currentTabPage.TabIndex = 0;
       this.currentTabPage.Text = "Current";
       this.currentTabPage.UseVisualStyleBackColor = true;
@@ -81,7 +81,7 @@ namespace Pirate.PiVote.Circle
       this.currentVotingListControl.Dock = System.Windows.Forms.DockStyle.Fill;
       this.currentVotingListControl.Location = new System.Drawing.Point(3, 3);
       this.currentVotingListControl.Name = "currentVotingListControl";
-      this.currentVotingListControl.Size = new System.Drawing.Size(914, 575);
+      this.currentVotingListControl.Size = new System.Drawing.Size(914, 621);
       this.currentVotingListControl.TabIndex = 0;
       this.currentVotingListControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.CurrentVotingListControl_VotingAction);
       // 
@@ -91,7 +91,7 @@ namespace Pirate.PiVote.Circle
       this.scheduledTabPage.Location = new System.Drawing.Point(4, 22);
       this.scheduledTabPage.Name = "scheduledTabPage";
       this.scheduledTabPage.Padding = new System.Windows.Forms.Padding(3);
-      this.scheduledTabPage.Size = new System.Drawing.Size(920, 581);
+      this.scheduledTabPage.Size = new System.Drawing.Size(920, 628);
       this.scheduledTabPage.TabIndex = 1;
       this.scheduledTabPage.Text = "Scheduled";
       this.scheduledTabPage.UseVisualStyleBackColor = true;
@@ -102,7 +102,7 @@ namespace Pirate.PiVote.Circle
       this.scheduledVotingListControl.Dock = System.Windows.Forms.DockStyle.Fill;
       this.scheduledVotingListControl.Location = new System.Drawing.Point(3, 3);
       this.scheduledVotingListControl.Name = "scheduledVotingListControl";
-      this.scheduledVotingListControl.Size = new System.Drawing.Size(914, 575);
+      this.scheduledVotingListControl.Size = new System.Drawing.Size(914, 622);
       this.scheduledVotingListControl.TabIndex = 1;
       this.scheduledVotingListControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.ScheduledVotingListControl_VotingAction);
       // 
@@ -112,7 +112,7 @@ namespace Pirate.PiVote.Circle
       this.pastTabPage.Location = new System.Drawing.Point(4, 22);
       this.pastTabPage.Name = "pastTabPage";
       this.pastTabPage.Padding = new System.Windows.Forms.Padding(3);
-      this.pastTabPage.Size = new System.Drawing.Size(920, 581);
+      this.pastTabPage.Size = new System.Drawing.Size(920, 628);
       this.pastTabPage.TabIndex = 2;
       this.pastTabPage.Text = "Past";
       this.pastTabPage.UseVisualStyleBackColor = true;
@@ -123,7 +123,7 @@ namespace Pirate.PiVote.Circle
       this.pastVotingListControl.Dock = System.Windows.Forms.DockStyle.Fill;
       this.pastVotingListControl.Location = new System.Drawing.Point(3, 3);
       this.pastVotingListControl.Name = "pastVotingListControl";
-      this.pastVotingListControl.Size = new System.Drawing.Size(914, 575);
+      this.pastVotingListControl.Size = new System.Drawing.Size(914, 622);
       this.pastVotingListControl.TabIndex = 2;
       this.pastVotingListControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.PastVotingListControl_VotingAction);
       // 
@@ -132,7 +132,7 @@ namespace Pirate.PiVote.Circle
       this.storedTabPage.Controls.Add(this.storedVotingListControl);
       this.storedTabPage.Location = new System.Drawing.Point(4, 22);
       this.storedTabPage.Name = "storedTabPage";
-      this.storedTabPage.Size = new System.Drawing.Size(920, 581);
+      this.storedTabPage.Size = new System.Drawing.Size(920, 628);
       this.storedTabPage.TabIndex = 3;
       this.storedTabPage.Text = "Stored";
       this.storedTabPage.UseVisualStyleBackColor = true;
@@ -143,17 +143,18 @@ namespace Pirate.PiVote.Circle
       this.storedVotingListControl.Dock = System.Windows.Forms.DockStyle.Fill;
       this.storedVotingListControl.Location = new System.Drawing.Point(0, 0);
       this.storedVotingListControl.Name = "storedVotingListControl";
-      this.storedVotingListControl.Size = new System.Drawing.Size(920, 581);
+      this.storedVotingListControl.Size = new System.Drawing.Size(920, 628);
       this.storedVotingListControl.TabIndex = 3;
       this.storedVotingListControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.storedVotingListControl_VotingAction);
       // 
       // VotingListsControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.votingTabPage);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "VotingListsControl";
-      this.Size = new System.Drawing.Size(928, 607);
+      this.Size = new System.Drawing.Size(928, 654);
       this.votingTabPage.ResumeLayout(false);
       this.currentTabPage.ResumeLayout(false);
       this.scheduledTabPage.ResumeLayout(false);

@@ -231,6 +231,81 @@
   <data name="CreateCertificateSelectVoterSubgroupInfo" xml:space="preserve">
     <value>Ein Zertifikat für eine Untergruppe basierende auf einem bereits Vorhandenen Zertifikat erstellen. Wähle diese Option, wenn du regional oder lokal Abstimmen möchtest und bereits ein gültiges Zertifikat hast.</value>
   </data>
+  <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
+    <value>Enthaltung wird automatisch hinzugefügt.</value>
+  </data>
+  <data name="CreateVotingAnswers" xml:space="preserve">
+    <value>Antworten:</value>
+  </data>
+  <data name="CreateVotingAnswersPerVoter" xml:space="preserve">
+    <value>Antworten / Wähler:</value>
+  </data>
+  <data name="CreateVotingAuthFileMissing" xml:space="preserve">
+    <value>Datei der Autorität fehlt.</value>
+  </data>
+  <data name="CreateVotingAuthorities" xml:space="preserve">
+    <value>Autoritäten:</value>
+  </data>
+  <data name="CreateVotingButton" xml:space="preserve">
+    <value>&amp;Erstellen</value>
+  </data>
+  <data name="CreateVotingCanceled" xml:space="preserve">
+    <value>Die Erstellung einer Abstimmung wurde abgebrochen.</value>
+  </data>
+  <data name="CreateVotingClearButton" xml:space="preserve">
+    <value>&amp;Zurücksetzen</value>
+  </data>
+  <data name="CreateVotingCreated" xml:space="preserve">
+    <value>Abstimmungsprozedur auf dem Server erstellt.</value>
+  </data>
+  <data name="CreateVotingCreating" xml:space="preserve">
+    <value>Erstelle Abstimmungsprozedur auf dem Server.</value>
+  </data>
+  <data name="CreateVotingDescription" xml:space="preserve">
+    <value>Beschreibung:</value>
+  </data>
+  <data name="CreateVotingGroup" xml:space="preserve">
+    <value>Gruppe:</value>
+  </data>
+  <data name="CreateVotingInvalidAuthorities" xml:space="preserve">
+    <value>Die folgenden Autoritäten sind am ersten Abstimmungstag nicht gültig:</value>
+  </data>
+  <data name="CreateVotingOpenFrom" xml:space="preserve">
+    <value>Offen von:</value>
+  </data>
+  <data name="CreateVotingOpenUntil" xml:space="preserve">
+    <value>Offen bis:</value>
+  </data>
+  <data name="CreateVotingOptionDescription" xml:space="preserve">
+    <value>Beschreibung:</value>
+  </data>
+  <data name="CreateVotingOptionText" xml:space="preserve">
+    <value>Text:</value>
+  </data>
+  <data name="CreateVotingOptionTitle" xml:space="preserve">
+    <value>Circle - Abstimmung erstellen - Option</value>
+  </data>
+  <data name="CreateVotingQuestion" xml:space="preserve">
+    <value>Circle - Abstimmung erstellen - Frage</value>
+  </data>
+  <data name="CreateVotingQuestionDescription" xml:space="preserve">
+    <value>Beschreibung:</value>
+  </data>
+  <data name="CreateVotingQuestions" xml:space="preserve">
+    <value>Fragen:</value>
+  </data>
+  <data name="CreateVotingQuestionText" xml:space="preserve">
+    <value>Text:</value>
+  </data>
+  <data name="CreateVotingSearchPrime" xml:space="preserve">
+    <value>Generiere sichere Primzahl für Crypto.</value>
+  </data>
+  <data name="CreateVotingTitle" xml:space="preserve">
+    <value>Titel:</value>
+  </data>
+  <data name="CreateVotingUrl" xml:space="preserve">
+    <value>Url::</value>
+  </data>
   <data name="MenuCertificateResumeCreation" xml:space="preserve">
     <value>Erstellung &amp;fortsetzen</value>
   </data>
@@ -374,5 +449,62 @@
   </data>
   <data name="VotingStatusVote" xml:space="preserve">
     <value>Abstimmung offen, {0} Stimmen abgegeben</value>
+  </data>
+  <data name="CreateVotingDialogTitle" xml:space="preserve">
+    <value>Circle - Abstimmung erstellen</value>
+  </data>
+  <data name="CreateVotingGeneratePrime" xml:space="preserve">
+    <value>Sichere Primzahl &amp;generieren</value>
+  </data>
+  <data name="CreateVotingGeneratingSafePrime" xml:space="preserve">
+    <value>Generiere sichere Primzahl...</value>
+  </data>
+  <data name="CreateVotingNotReady" xml:space="preserve">
+    <value>Benötige sichere Primzahle zum Erstellen der Abstimmung.</value>
+  </data>
+  <data name="CreateVotingReady" xml:space="preserve">
+    <value>Sichere Primzahle zum Erstellen der Abstimmung bereit.</value>
+  </data>
+  <data name="CreateVotingStored" xml:space="preserve">
+    <value>{0} sichere Primzahlen sind gespeichert.</value>
+  </data>
+  <data name="CreateVotingTakePrime" xml:space="preserve">
+    <value>Sichere Primzahl auswählen und prüfen</value>
+  </data>
+  <data name="CreateVotingVerifyingSafePrime" xml:space="preserve">
+    <value>Verifiziere sichere Primzahl...</value>
+  </data>
+  <data name="ErrorDialogInfo" xml:space="preserve">
+    <value>Ein Fehler ist im Programm aufgetreten. Wir entschuldigen uns für die Unannehmlichkeiten. Bitte melde den Fehler, damit wir in behenben können. Bitte sende uns die Daten im unteren Textfeld.</value>
+  </data>
+  <data name="ErrorDialogReport" xml:space="preserve">
+    <value>&amp;Melden</value>
+  </data>
+  <data name="ErrorDialogTitle" xml:space="preserve">
+    <value>Circle - Fehler</value>
+  </data>
+  <data name="MenuCreateVoting" xml:space="preserve">
+    <value>&amp;Erstellen...</value>
+  </data>
+  <data name="DownloadSignatureRequestsDone" xml:space="preserve">
+    <value>Die Zertifizierungsanfragen wurden erfolgreich heruntergeladen.</value>
+  </data>
+  <data name="DownloadSignatureRequestsFileName" xml:space="preserve">
+    <value>kommt nicht drauf an</value>
+  </data>
+  <data name="DownloadSignatureRequestsSaveDialogTitle" xml:space="preserve">
+    <value>Zertifizierungsanfragen speichern</value>
+  </data>
+  <data name="UploadCertificateStorageDone" xml:space="preserve">
+    <value>Der Zertifikatsspeicher wurde erfolgreich heraufgeladen</value>
+  </data>
+  <data name="UploadCertificateStorageOpenDialogTitle" xml:space="preserve">
+    <value>Zertifikatsspeicher auswählen</value>
+  </data>
+  <data name="UploadSignatureResponsesDone" xml:space="preserve">
+    <value>Die Zertifizierungsantworten wurden erfolgreich heraufgeladen</value>
+  </data>
+  <data name="UploadSignatureResponsesOpenDialogTitle" xml:space="preserve">
+    <value>Zertifizierungsantworten auswählen</value>
   </data>
 </root>

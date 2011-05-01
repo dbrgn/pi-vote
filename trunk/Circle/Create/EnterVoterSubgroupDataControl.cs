@@ -75,20 +75,27 @@ namespace Pirate.PiVote.Circle.Create
 
         if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(baseCertificate, GuiResources.UnlockActionSignRequest))
         {
-          Status.Controller.AddAndSaveCertificate(Status.Certificate);
-          Status.SignatureRequest =
-            new SignatureRequest2(
-              this.firstNameTextBox.Text,
-              this.familyNameTextBox.Text,
-              this.emailAddressTextBox.Text,
-              baseCertificate);
-          Status.SignatureRequestInfo = new SignatureRequestInfo(this.emailAddressTextBox.Text);
+          try
+          {
+            Status.Controller.AddAndSaveCertificate(Status.Certificate);
+            Status.SignatureRequest =
+              new SignatureRequest2(
+                this.firstNameTextBox.Text,
+                this.familyNameTextBox.Text,
+                this.emailAddressTextBox.Text,
+                baseCertificate);
+            Status.SignatureRequestInfo = new SignatureRequestInfo(this.emailAddressTextBox.Text);
 
-          Status.SignatureRequestFileName = Path.Combine(Status.Controller.Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestDataExtension);
-          Status.SignatureRequest.Save(Status.SignatureRequestFileName);
+            Status.SignatureRequestFileName = Path.Combine(Status.Controller.Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestDataExtension);
+            Status.SignatureRequest.Save(Status.SignatureRequestFileName);
 
-          Status.SignatureRequestInfoFileName = Path.Combine(Status.Controller.Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestInfoExtension);
-          Status.SignatureRequestInfo.Save(Status.SignatureRequestInfoFileName);
+            Status.SignatureRequestInfoFileName = Path.Combine(Status.Controller.Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestInfoExtension);
+            Status.SignatureRequestInfo.Save(Status.SignatureRequestInfoFileName);
+          }
+          finally
+          {
+            baseCertificate.Lock();
+          }
 
           var nextControl = new PrintAndUploadCertificateControl();
           nextControl.Status = Status;

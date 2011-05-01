@@ -46,9 +46,9 @@ namespace Pirate.PiVote.Circle.Vote
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(661, 534);
+      this.cancelButton.Location = new System.Drawing.Point(661, 575);
       this.cancelButton.Name = "cancelButton";
-      this.cancelButton.Size = new System.Drawing.Size(119, 30);
+      this.cancelButton.Size = new System.Drawing.Size(119, 32);
       this.cancelButton.TabIndex = 1;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
@@ -57,9 +57,9 @@ namespace Pirate.PiVote.Circle.Vote
       // voteButton
       // 
       this.voteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.voteButton.Location = new System.Drawing.Point(536, 534);
+      this.voteButton.Location = new System.Drawing.Point(536, 575);
       this.voteButton.Name = "voteButton";
-      this.voteButton.Size = new System.Drawing.Size(119, 30);
+      this.voteButton.Size = new System.Drawing.Size(119, 32);
       this.voteButton.TabIndex = 2;
       this.voteButton.Text = "&Vote";
       this.voteButton.UseVisualStyleBackColor = true;
@@ -68,9 +68,9 @@ namespace Pirate.PiVote.Circle.Vote
       // nextButton
       // 
       this.nextButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.nextButton.Location = new System.Drawing.Point(411, 534);
+      this.nextButton.Location = new System.Drawing.Point(411, 575);
       this.nextButton.Name = "nextButton";
-      this.nextButton.Size = new System.Drawing.Size(119, 30);
+      this.nextButton.Size = new System.Drawing.Size(119, 32);
       this.nextButton.TabIndex = 3;
       this.nextButton.Text = "&Next";
       this.nextButton.UseVisualStyleBackColor = true;
@@ -79,9 +79,9 @@ namespace Pirate.PiVote.Circle.Vote
       // previousButton
       // 
       this.previousButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.previousButton.Location = new System.Drawing.Point(286, 534);
+      this.previousButton.Location = new System.Drawing.Point(286, 575);
       this.previousButton.Name = "previousButton";
-      this.previousButton.Size = new System.Drawing.Size(119, 30);
+      this.previousButton.Size = new System.Drawing.Size(119, 32);
       this.previousButton.TabIndex = 4;
       this.previousButton.Text = "&Previouse";
       this.previousButton.UseVisualStyleBackColor = true;
@@ -96,21 +96,22 @@ namespace Pirate.PiVote.Circle.Vote
       this.votingControl.Location = new System.Drawing.Point(0, 0);
       this.votingControl.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.votingControl.Name = "votingControl";
-      this.votingControl.Size = new System.Drawing.Size(792, 528);
+      this.votingControl.Size = new System.Drawing.Size(792, 569);
       this.votingControl.TabIndex = 0;
       // 
       // VotingDialog
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(792, 573);
+      this.ClientSize = new System.Drawing.Size(792, 617);
       this.Controls.Add(this.previousButton);
       this.Controls.Add(this.nextButton);
       this.Controls.Add(this.voteButton);
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.votingControl);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-      this.MinimumSize = new System.Drawing.Size(300, 300);
+      this.MinimumSize = new System.Drawing.Size(300, 321);
       this.Name = "VotingDialog";
       this.Text = "VotingDialog";
       this.Load += new System.EventHandler(this.VotingDialog_Load);

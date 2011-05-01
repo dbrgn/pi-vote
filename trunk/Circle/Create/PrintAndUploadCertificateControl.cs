@@ -71,7 +71,7 @@ namespace Pirate.PiVote.Circle.Create
         }
         catch (Exception exception)
         {
-          MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+          Error.ErrorDialog.ShowError(exception);
         }
         finally
         {

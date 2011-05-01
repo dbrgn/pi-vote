@@ -475,6 +475,348 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abstention will be added automatically..
+        /// </summary>
+        internal static string CreateQuestionAbstentionAuto {
+            get {
+                return ResourceManager.GetString("CreateQuestionAbstentionAuto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Answers:.
+        /// </summary>
+        internal static string CreateVotingAnswers {
+            get {
+                return ResourceManager.GetString("CreateVotingAnswers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Answers / Voter:.
+        /// </summary>
+        internal static string CreateVotingAnswersPerVoter {
+            get {
+                return ResourceManager.GetString("CreateVotingAnswersPerVoter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authority voting file missing..
+        /// </summary>
+        internal static string CreateVotingAuthFileMissing {
+            get {
+                return ResourceManager.GetString("CreateVotingAuthFileMissing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Authorities:.
+        /// </summary>
+        internal static string CreateVotingAuthorities {
+            get {
+                return ResourceManager.GetString("CreateVotingAuthorities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Create.
+        /// </summary>
+        internal static string CreateVotingButton {
+            get {
+                return ResourceManager.GetString("CreateVotingButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The creation of a voting was canceled..
+        /// </summary>
+        internal static string CreateVotingCanceled {
+            get {
+                return ResourceManager.GetString("CreateVotingCanceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Clear.
+        /// </summary>
+        internal static string CreateVotingClearButton {
+            get {
+                return ResourceManager.GetString("CreateVotingClearButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created voting on server..
+        /// </summary>
+        internal static string CreateVotingCreated {
+            get {
+                return ResourceManager.GetString("CreateVotingCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating voting on server..
+        /// </summary>
+        internal static string CreateVotingCreating {
+            get {
+                return ResourceManager.GetString("CreateVotingCreating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        internal static string CreateVotingDescription {
+            get {
+                return ResourceManager.GetString("CreateVotingDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circle - Create Voting.
+        /// </summary>
+        internal static string CreateVotingDialogTitle {
+            get {
+                return ResourceManager.GetString("CreateVotingDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Generate safe prime.
+        /// </summary>
+        internal static string CreateVotingGeneratePrime {
+            get {
+                return ResourceManager.GetString("CreateVotingGeneratePrime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generating safe prime....
+        /// </summary>
+        internal static string CreateVotingGeneratingSafePrime {
+            get {
+                return ResourceManager.GetString("CreateVotingGeneratingSafePrime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group:.
+        /// </summary>
+        internal static string CreateVotingGroup {
+            get {
+                return ResourceManager.GetString("CreateVotingGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following authorities are not valid on the voting begin date:.
+        /// </summary>
+        internal static string CreateVotingInvalidAuthorities {
+            get {
+                return ResourceManager.GetString("CreateVotingInvalidAuthorities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Need a safe prime to create voting..
+        /// </summary>
+        internal static string CreateVotingNotReady {
+            get {
+                return ResourceManager.GetString("CreateVotingNotReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open from:.
+        /// </summary>
+        internal static string CreateVotingOpenFrom {
+            get {
+                return ResourceManager.GetString("CreateVotingOpenFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open until:.
+        /// </summary>
+        internal static string CreateVotingOpenUntil {
+            get {
+                return ResourceManager.GetString("CreateVotingOpenUntil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        internal static string CreateVotingOptionDescription {
+            get {
+                return ResourceManager.GetString("CreateVotingOptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text:.
+        /// </summary>
+        internal static string CreateVotingOptionText {
+            get {
+                return ResourceManager.GetString("CreateVotingOptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circle - Create Voting - Option.
+        /// </summary>
+        internal static string CreateVotingOptionTitle {
+            get {
+                return ResourceManager.GetString("CreateVotingOptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circle - Create Voting - Question.
+        /// </summary>
+        internal static string CreateVotingQuestion {
+            get {
+                return ResourceManager.GetString("CreateVotingQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        internal static string CreateVotingQuestionDescription {
+            get {
+                return ResourceManager.GetString("CreateVotingQuestionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Questions:.
+        /// </summary>
+        internal static string CreateVotingQuestions {
+            get {
+                return ResourceManager.GetString("CreateVotingQuestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text:.
+        /// </summary>
+        internal static string CreateVotingQuestionText {
+            get {
+                return ResourceManager.GetString("CreateVotingQuestionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Safe prime ready to create voting..
+        /// </summary>
+        internal static string CreateVotingReady {
+            get {
+                return ResourceManager.GetString("CreateVotingReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching safe prime number for crypto..
+        /// </summary>
+        internal static string CreateVotingSearchPrime {
+            get {
+                return ResourceManager.GetString("CreateVotingSearchPrime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are {0} safe primes in store..
+        /// </summary>
+        internal static string CreateVotingStored {
+            get {
+                return ResourceManager.GetString("CreateVotingStored", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Take and verify safe prime.
+        /// </summary>
+        internal static string CreateVotingTakePrime {
+            get {
+                return ResourceManager.GetString("CreateVotingTakePrime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title:.
+        /// </summary>
+        internal static string CreateVotingTitle {
+            get {
+                return ResourceManager.GetString("CreateVotingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Url:.
+        /// </summary>
+        internal static string CreateVotingUrl {
+            get {
+                return ResourceManager.GetString("CreateVotingUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verifying safe prime....
+        /// </summary>
+        internal static string CreateVotingVerifyingSafePrime {
+            get {
+                return ResourceManager.GetString("CreateVotingVerifyingSafePrime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The signature requests have been downloaded successfully..
+        /// </summary>
+        internal static string DownloadSignatureRequestsDone {
+            get {
+                return ResourceManager.GetString("DownloadSignatureRequestsDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to does not matter.
+        /// </summary>
+        internal static string DownloadSignatureRequestsFileName {
+            get {
+                return ResourceManager.GetString("DownloadSignatureRequestsFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save signature requests.
+        /// </summary>
+        internal static string DownloadSignatureRequestsSaveDialogTitle {
+            get {
+                return ResourceManager.GetString("DownloadSignatureRequestsSaveDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred in the program. We apologize for the inconvinience. Please help us fix it by reporting it. Please send us the data in the lower text field..
+        /// </summary>
+        internal static string ErrorDialogInfo {
+            get {
+                return ResourceManager.GetString("ErrorDialogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circle - Error.
+        /// </summary>
+        internal static string ErrorDialogTitle {
+            get {
+                return ResourceManager.GetString("ErrorDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Resume Creation....
         /// </summary>
         internal static string MenuCertificateResumeCreation {
@@ -516,6 +858,15 @@ namespace Pirate.PiVote.Circle {
         internal static string MenuCertificatesReload {
             get {
                 return ResourceManager.GetString("MenuCertificatesReload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Create....
+        /// </summary>
+        internal static string MenuCreateVoting {
+            get {
+                return ResourceManager.GetString("MenuCreateVoting", resourceCulture);
             }
         }
         
@@ -678,6 +1029,42 @@ namespace Pirate.PiVote.Circle {
         internal static string UpdateDialogTitle {
             get {
                 return ResourceManager.GetString("UpdateDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The certificate storage has been uploaded sucessfully..
+        /// </summary>
+        internal static string UploadCertificateStorageDone {
+            get {
+                return ResourceManager.GetString("UploadCertificateStorageDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select certificate storage.
+        /// </summary>
+        internal static string UploadCertificateStorageOpenDialogTitle {
+            get {
+                return ResourceManager.GetString("UploadCertificateStorageOpenDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The signature responses have been uploaded sucessfully..
+        /// </summary>
+        internal static string UploadSignatureResponsesDone {
+            get {
+                return ResourceManager.GetString("UploadSignatureResponsesDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select signature responses.
+        /// </summary>
+        internal static string UploadSignatureResponsesOpenDialogTitle {
+            get {
+                return ResourceManager.GetString("UploadSignatureResponsesOpenDialogTitle", resourceCulture);
             }
         }
         

@@ -312,12 +312,6 @@
   <data name="CreateVotingOpenUntil" xml:space="preserve">
     <value>until</value>
   </data>
-  <data name="ContextMenuAdd" xml:space="preserve">
-    <value>&amp;Add</value>
-  </data>
-  <data name="ContextMenuRemove" xml:space="preserve">
-    <value>&amp;Remove</value>
-  </data>
   <data name="CreateVotingQuestion" xml:space="preserve">
     <value>Question</value>
   </data>
@@ -338,9 +332,6 @@
   </data>
   <data name="SaveSignatureRequestButton" xml:space="preserve">
     <value>&amp;Save...</value>
-  </data>
-  <data name="SaveSignatureRequestDialog" xml:space="preserve">
-    <value>Save Signature Requests</value>
   </data>
   <data name="SignatureResponseUploaded" xml:space="preserve">
     <value>Signature responses were uploaded to the server.</value>
@@ -444,9 +435,6 @@
   <data name="VoteDescriptionTitle" xml:space="preserve">
     <value>Description</value>
   </data>
-  <data name="ContextMenuEdit" xml:space="preserve">
-    <value>&amp;Edit</value>
-  </data>
   <data name="CreateVotingQuestionDescription" xml:space="preserve">
     <value>Descrption</value>
   </data>
@@ -531,9 +519,6 @@ Finally you need to upload your request for certificate signing to the server to
   </data>
   <data name="StartAdvancedOptions" xml:space="preserve">
     <value>&amp;Advanced Options</value>
-  </data>
-  <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
-    <value>Abstention will be added automatically.</value>
   </data>
   <data name="OptionAbstain" xml:space="preserve">
     <value>Abstention</value>
@@ -748,5 +733,11 @@ Finally you need to upload your request for certificate signing to the server to
   </data>
   <data name="CreateVotingInvalidAuthorities" xml:space="preserve">
     <value>The following authorities are not valid on the voting begin date:</value>
+  </data>
+  <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
+    <value>Abstention will be added automatically.</value>
+  </data>
+  <data name="SaveSignatureRequestDialog" xml:space="preserve">
+    <value>Save Signature Requests</value>
   </data>
 </root>

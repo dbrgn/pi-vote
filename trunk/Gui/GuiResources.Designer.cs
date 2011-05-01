@@ -88,6 +88,15 @@ namespace Pirate.PiVote.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Close.
+        /// </summary>
+        public static string ButtonClose {
+            get {
+                return ResourceManager.GetString("ButtonClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Done.
         /// </summary>
         public static string ButtonDone {
@@ -192,6 +201,33 @@ namespace Pirate.PiVote.Gui {
         public static string ChangePassphraseOldPassphrase {
             get {
                 return ResourceManager.GetString("ChangePassphraseOldPassphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Add....
+        /// </summary>
+        public static string ContextMenuAdd {
+            get {
+                return ResourceManager.GetString("ContextMenuAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Edit....
+        /// </summary>
+        public static string ContextMenuEdit {
+            get {
+                return ResourceManager.GetString("ContextMenuEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Remove.
+        /// </summary>
+        public static string ContextMenuRemove {
+            get {
+                return ResourceManager.GetString("ContextMenuRemove", resourceCulture);
             }
         }
         
@@ -336,6 +372,15 @@ namespace Pirate.PiVote.Gui {
         public static string UnlockActionCreateVoting {
             get {
                 return ResourceManager.GetString("UnlockActionCreateVoting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign command to delete voting.
+        /// </summary>
+        public static string UnlockActionDelete {
+            get {
+                return ResourceManager.GetString("UnlockActionDelete", resourceCulture);
             }
         }
         

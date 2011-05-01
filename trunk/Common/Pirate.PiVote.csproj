@@ -308,6 +308,7 @@
     <Compile Include="Serialization\Serializable.cs" />
     <Compile Include="Serialization\SerializeFieldAttribute.cs" />
     <Compile Include="Serialization\SerializeContext.cs" />
+    <Compile Include="Utilitiy\StringBuilderExtensions.cs" />
     <Compile Include="Utilitiy\SystemExtensions.cs" />
     <Compile Include="Utilitiy\Tools.cs" />
     <Compile Include="Utilitiy\Tuple.cs" />

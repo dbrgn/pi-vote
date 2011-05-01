@@ -55,7 +55,7 @@ namespace Pirate.PiVote.Circle.Create
       this.typeLabel.Location = new System.Drawing.Point(3, 5);
       this.typeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.typeLabel.Name = "typeLabel";
-      this.typeLabel.Size = new System.Drawing.Size(80, 13);
+      this.typeLabel.Size = new System.Drawing.Size(83, 14);
       this.typeLabel.TabIndex = 42;
       this.typeLabel.Text = "Certificate type:";
       // 
@@ -74,7 +74,7 @@ namespace Pirate.PiVote.Circle.Create
       // 
       this.idTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.idTextBox.Location = new System.Drawing.Point(117, 26);
+      this.idTextBox.Location = new System.Drawing.Point(119, 26);
       this.idTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.idTextBox.Name = "idTextBox";
       this.idTextBox.ReadOnly = true;
@@ -98,7 +98,7 @@ namespace Pirate.PiVote.Circle.Create
       this.idLabel.Location = new System.Drawing.Point(3, 29);
       this.idLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.idLabel.Name = "idLabel";
-      this.idLabel.Size = new System.Drawing.Size(68, 13);
+      this.idLabel.Size = new System.Drawing.Size(70, 14);
       this.idLabel.TabIndex = 45;
       this.idLabel.Text = "Certificate id:";
       // 
@@ -108,7 +108,7 @@ namespace Pirate.PiVote.Circle.Create
       this.nameLabel.Location = new System.Drawing.Point(3, 53);
       this.nameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.nameLabel.Name = "nameLabel";
-      this.nameLabel.Size = new System.Drawing.Size(38, 13);
+      this.nameLabel.Size = new System.Drawing.Size(37, 14);
       this.nameLabel.TabIndex = 46;
       this.nameLabel.Text = "Name:";
       // 
@@ -130,16 +130,16 @@ namespace Pirate.PiVote.Circle.Create
       this.emailLabel.Location = new System.Drawing.Point(3, 77);
       this.emailLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.emailLabel.Name = "emailLabel";
-      this.emailLabel.Size = new System.Drawing.Size(75, 13);
+      this.emailLabel.Size = new System.Drawing.Size(77, 14);
       this.emailLabel.TabIndex = 48;
       this.emailLabel.Text = "Email address:";
       // 
       // doneButton
       // 
       this.doneButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.doneButton.Location = new System.Drawing.Point(328, 188);
+      this.doneButton.Location = new System.Drawing.Point(328, 202);
       this.doneButton.Name = "doneButton";
-      this.doneButton.Size = new System.Drawing.Size(128, 28);
+      this.doneButton.Size = new System.Drawing.Size(128, 30);
       this.doneButton.TabIndex = 49;
       this.doneButton.Text = "&Done";
       this.doneButton.UseVisualStyleBackColor = true;
@@ -148,9 +148,9 @@ namespace Pirate.PiVote.Circle.Create
       // uploadButton
       // 
       this.uploadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.uploadButton.Location = new System.Drawing.Point(194, 188);
+      this.uploadButton.Location = new System.Drawing.Point(194, 202);
       this.uploadButton.Name = "uploadButton";
-      this.uploadButton.Size = new System.Drawing.Size(128, 28);
+      this.uploadButton.Size = new System.Drawing.Size(128, 30);
       this.uploadButton.TabIndex = 50;
       this.uploadButton.Text = "&Upload";
       this.uploadButton.UseVisualStyleBackColor = true;
@@ -159,9 +159,9 @@ namespace Pirate.PiVote.Circle.Create
       // printButton
       // 
       this.printButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.printButton.Location = new System.Drawing.Point(60, 188);
+      this.printButton.Location = new System.Drawing.Point(60, 202);
       this.printButton.Name = "printButton";
-      this.printButton.Size = new System.Drawing.Size(128, 28);
+      this.printButton.Size = new System.Drawing.Size(128, 30);
       this.printButton.TabIndex = 51;
       this.printButton.Text = "&Print";
       this.printButton.UseVisualStyleBackColor = true;
@@ -172,15 +172,15 @@ namespace Pirate.PiVote.Circle.Create
       this.infoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.infoLabel.Location = new System.Drawing.Point(3, 102);
+      this.infoLabel.Location = new System.Drawing.Point(3, 96);
       this.infoLabel.Name = "infoLabel";
-      this.infoLabel.Size = new System.Drawing.Size(453, 80);
+      this.infoLabel.Size = new System.Drawing.Size(453, 100);
       this.infoLabel.TabIndex = 52;
       this.infoLabel.Text = "Info";
       // 
       // PrintAndUploadCertificateControl
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.infoLabel);
       this.Controls.Add(this.printButton);
@@ -194,8 +194,9 @@ namespace Pirate.PiVote.Circle.Create
       this.Controls.Add(this.idTextBox);
       this.Controls.Add(this.typeLabel);
       this.Controls.Add(this.typeTextBox);
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "PrintAndUploadCertificateControl";
-      this.Size = new System.Drawing.Size(459, 219);
+      this.Size = new System.Drawing.Size(459, 236);
       this.Load += new System.EventHandler(this.PrintAndUploadCertificateControl_Load);
       this.ResumeLayout(false);
       this.PerformLayout();

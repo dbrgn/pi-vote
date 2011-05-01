@@ -25,6 +25,11 @@ namespace Pirate.PiVote
     public ExceptionCode Code { get; private set; }
 
     /// <summary>
+    /// Message from the server.
+    /// </summary>
+    public string ServerMessage { get; private set; }
+
+    /// <summary>
     /// Creates an exception from a code and message.
     /// </summary>
     /// <param name="code">Identifiing code of exception.</param>
@@ -80,6 +85,7 @@ namespace Pirate.PiVote
 
       Type type = Type.GetType(typeName);
       PiException exception = (PiException)Activator.CreateInstance(type, new object[] { code, code.Text() });
+      exception.ServerMessage = message;
 
       context.Close();
       stream.Close();

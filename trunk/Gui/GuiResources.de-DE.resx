@@ -216,4 +216,19 @@
   <data name="ButtonPrevious" xml:space="preserve">
     <value>&amp;Zurück</value>
   </data>
+  <data name="ContextMenuAdd" xml:space="preserve">
+    <value>&amp;Hinzufügen...</value>
+  </data>
+  <data name="ContextMenuEdit" xml:space="preserve">
+    <value>&amp;Bearbeiten...</value>
+  </data>
+  <data name="ContextMenuRemove" xml:space="preserve">
+    <value>&amp;Entfernen</value>
+  </data>
+  <data name="ButtonClose" xml:space="preserve">
+    <value>&amp;Schliessen</value>
+  </data>
+  <data name="UnlockActionDelete" xml:space="preserve">
+    <value>Kommando zum Löschen der Abstimmung signieren</value>
+  </data>
 </root>

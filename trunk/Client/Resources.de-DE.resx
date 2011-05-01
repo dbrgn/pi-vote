@@ -315,12 +315,6 @@
   <data name="CreateVotingOpenUntil" xml:space="preserve">
     <value>bis</value>
   </data>
-  <data name="ContextMenuAdd" xml:space="preserve">
-    <value>&amp;Hinzufügen</value>
-  </data>
-  <data name="ContextMenuRemove" xml:space="preserve">
-    <value>&amp;Entfernen</value>
-  </data>
   <data name="CreateVotingQuestion" xml:space="preserve">
     <value>Frage</value>
   </data>
@@ -435,9 +429,6 @@
   <data name="VoteDescriptionButton" xml:space="preserve">
     <value>&amp;Beschreibung...</value>
   </data>
-  <data name="ContextMenuEdit" xml:space="preserve">
-    <value>&amp;Bearbeiten</value>
-  </data>
   <data name="CreateVotingQuestionDescription" xml:space="preserve">
     <value>Beschreibung</value>
   </data>
@@ -522,9 +513,6 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="StartAdvancedOptions" xml:space="preserve">
     <value>&amp;Erweiterte Optionen</value>
-  </data>
-  <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
-    <value>Enthaltung wird automatisch hinzugefügt.</value>
   </data>
   <data name="OptionAbstain" xml:space="preserve">
     <value>Enthaltung</value>
@@ -720,5 +708,8 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   </data>
   <data name="CreateVotingInvalidAuthorities" xml:space="preserve">
     <value>Die folgenden Autoritäten sind am ersten Abstimmungstag nicht gültig:</value>
+  </data>
+  <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
+    <value>Enthaltung wird automatisch hinzugefügt.</value>
   </data>
 </root>

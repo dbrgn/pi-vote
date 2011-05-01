@@ -82,8 +82,8 @@ namespace Pirate.PiVote.Client
 
     private void optionListContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {
-      this.addToolStripMenuItem.Text = Resources.ContextMenuAdd;
-      this.removeToolStripMenuItem.Text = Resources.ContextMenuRemove;
+      this.addToolStripMenuItem.Text = GuiResources.ContextMenuAdd;
+      this.removeToolStripMenuItem.Text = GuiResources.ContextMenuRemove;
       this.removeToolStripMenuItem.Enabled = this.optionListView.SelectedIndices.Count > 0;
     }
 

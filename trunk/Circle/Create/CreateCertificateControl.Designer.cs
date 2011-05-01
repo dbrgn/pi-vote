@@ -35,8 +35,17 @@ namespace Pirate.PiVote.Circle.Create
     /// </summary>
     private void InitializeComponent()
     {
-      components = new System.ComponentModel.Container();
+      this.SuspendLayout();
+      // 
+      // CreateCertificateControl
+      // 
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.Name = "CreateCertificateControl";
+      this.Size = new System.Drawing.Size(150, 162);
+      this.ResumeLayout(false);
+
     }
 
     #endregion

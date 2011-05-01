@@ -58,12 +58,11 @@ namespace Pirate.PiVote.Circle
         Controller.Prepare();
         Controller.CheckUpdate();
         Controller.LoadCertificates();
-        var votings = Controller.GetVotingList();
-        this.votingListsControl.Set(Controller, votings);
+        RefreshInternal();
       }
       catch (Exception exception)
       {
-        MessageForm.Show(exception.ToString(), Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Error.ErrorDialog.ShowError(exception);
         Close();
       }
 
@@ -132,7 +131,7 @@ namespace Pirate.PiVote.Circle
       }
       catch (Exception exception)
       {
-        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Error.ErrorDialog.ShowError(exception);
       }
 
       Status.TextStatusDialog.HideInfo();
@@ -142,34 +141,47 @@ namespace Pirate.PiVote.Circle
     {
       Status.TextStatusDialog.ShowInfo(Controller, this);
 
-      try
+      var adminCertificate = Controller.GetAdminCertificate();
+
+      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(adminCertificate, GuiResources.UnlockActionDelete))
       {
-        var adminCertificate = Controller.GetAdminCertificate();
-
-        if (adminCertificate != null)
+        try
         {
-          Controller.Delete(voting, adminCertificate);
+          if (adminCertificate != null)
+          {
+            Controller.Delete(voting, adminCertificate);
 
-          var votings = Controller.GetVotingList();
-          this.votingListsControl.Set(Controller, votings);
+            var votings = Controller.GetVotingList();
+            this.votingListsControl.Set(Controller, votings);
+          }
+        }
+        catch (Exception exception)
+        {
+          Error.ErrorDialog.ShowError(exception);
+        }
+        finally
+        {
+          adminCertificate.Lock();
+          Status.TextStatusDialog.HideInfo();
         }
       }
-      catch (Exception exception)
-      {
-        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-      }
-
-      Status.TextStatusDialog.HideInfo();
     }
 
     private void GoDeleteStored(VotingDescriptor2 voting)
     {
-      if (!voting.OfflinePath.IsNullOrEmpty() &&
-          Directory.Exists(voting.OfflinePath))
+      try
       {
-        Directory.Delete(voting.OfflinePath, true);
+        if (!voting.OfflinePath.IsNullOrEmpty() &&
+            Directory.Exists(voting.OfflinePath))
+        {
+          Directory.Delete(voting.OfflinePath, true);
 
-        RefreshVotings();
+          RefreshVotings();
+        }
+      }
+      catch (Exception exception)
+      {
+        Error.ErrorDialog.ShowError(exception);
       }
     }
 
@@ -185,7 +197,7 @@ namespace Pirate.PiVote.Circle
       }
       catch (Exception exception)
       {
-        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Error.ErrorDialog.ShowError(exception);
       }
 
       Status.TextStatusDialog.HideInfo();
@@ -207,15 +219,11 @@ namespace Pirate.PiVote.Circle
         }
         catch (Exception exception)
         {
-          MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+          Error.ErrorDialog.ShowError(exception);
         }
 
         Status.TextStatusDialog.HideInfo();
       }
-    }
-
-    private void Decipher(VotingDescriptor2 voting, AuthorityCertificate certificate)
-    {
     }
 
     private void GoShare(VotingDescriptor2 voting)
@@ -234,7 +242,7 @@ namespace Pirate.PiVote.Circle
         }
         catch (Exception exception)
         {
-          MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+          Error.ErrorDialog.ShowError(exception);
         }
 
         Status.TextStatusDialog.HideInfo();
@@ -257,7 +265,7 @@ namespace Pirate.PiVote.Circle
         }
         catch (Exception exception)
         {
-          MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+          Error.ErrorDialog.ShowError(exception);
         }
 
         Status.TextStatusDialog.HideInfo();
@@ -325,10 +333,7 @@ namespace Pirate.PiVote.Circle
       {
         Vote.VotingDialog.ShowVoting(Controller, certificate, voting);
 
-        Status.TextStatusDialog.ShowInfo(Controller, this);
-        var votings = Controller.GetVotingList();
-        this.votingListsControl.Set(Controller, votings);
-        Status.TextStatusDialog.HideInfo();
+        RefreshVotings();
       }
     }
 
@@ -347,14 +352,29 @@ namespace Pirate.PiVote.Circle
       try
       {
         Status.TextStatusDialog.ShowInfo(Controller, this);
-        var votings = Controller.GetVotingList();
-        this.votingListsControl.Set(Controller, votings);
-        Status.TextStatusDialog.HideInfo();
+
+        RefreshInternal();
       }
       catch (Exception exception)
       {
-        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Error.ErrorDialog.ShowError(exception);
       }
+      finally
+      {
+        Status.TextStatusDialog.HideInfo();
+      }
+    }
+
+    private void RefreshInternal()
+    {
+      bool isAdmin = Controller.GetAdminCertificate() != null;
+      this.createVotingMenu.Visible = isAdmin;
+      this.downloadSignatureRequestsMenu.Visible = isAdmin;
+      this.uploadSignatureResponsesMenu.Visible = isAdmin;
+      this.uploadSignatureResponsesMenu.Visible = isAdmin;
+
+      var votings = Controller.GetVotingList();
+      this.votingListsControl.Set(Controller, votings);
     }
 
     private void Master_KeyDown(object sender, KeyEventArgs e)
@@ -372,10 +392,12 @@ namespace Pirate.PiVote.Circle
       try
       {
         Controller.LoadCertificates();
+
+        RefreshInternal();
       }
       catch (Exception exception)
       {
-        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Error.ErrorDialog.ShowError(exception);
         Close();
       }
 
@@ -431,6 +453,7 @@ namespace Pirate.PiVote.Circle
 
       this.votingsMenu.Text = Resources.MenuVotings;
       this.refreshVotingsMenu.Text = Resources.MenuVotingsRefresh;
+      this.createVotingMenu.Text = Resources.MenuCreateVoting;
 
       this.certificatesMenu.Text = Resources.MenuCertificates;
       this.createCertificateMenu.Text = Resources.MenuCertificatesCreateNew;
@@ -462,6 +485,96 @@ namespace Pirate.PiVote.Circle
     private void manageToolStripMenuItem_Click(object sender, EventArgs e)
     {
       Certificates.CertificateManagerDialog.ShowCertificates(Controller);
+
+      RefreshVotings();
+    }
+
+    private void createVotingMenu_Click(object sender, EventArgs e)
+    {
+      CreateVoting.CreateVotingDialog.ShowCreateVoting(Controller);
+
+      RefreshVotings();
+    }
+
+    private void downloadSignatureRequestsMenu_Click(object sender, EventArgs e)
+    {
+      SaveFileDialog dialog = new SaveFileDialog();
+      dialog.Title = Resources.DownloadSignatureRequestsSaveDialogTitle;
+      dialog.CheckPathExists = true;
+      dialog.Filter = Files.SignatureRequestFileFilter;
+      dialog.FileName = Resources.DownloadSignatureRequestsFileName;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        string savePath = Path.GetDirectoryName(dialog.FileName);
+        Status.TextStatusDialog.ShowInfo(Controller, this);
+
+        try
+        {
+          Controller.DownloadSignatureRequests(savePath);
+          MessageForm.Show(Resources.DownloadSignatureRequestsDone, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (Exception exception)
+        {
+          Error.ErrorDialog.ShowError(exception);
+        }
+
+        Status.TextStatusDialog.HideInfo();
+      }
+    }
+
+    private void uploadSignatureResponsesMenu_Click(object sender, EventArgs e)
+    {
+      OpenFileDialog dialog = new OpenFileDialog();
+      dialog.Title = Resources.UploadSignatureResponsesOpenDialogTitle;
+      dialog.CheckPathExists = true;
+      dialog.CheckFileExists = true;
+      dialog.Multiselect = true;
+      dialog.Filter = Files.SignatureResponseFileFilter;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        Status.TextStatusDialog.ShowInfo(Controller, this);
+
+        try
+        {
+          Controller.UploadSignatureResponses(dialog.FileNames);
+          MessageForm.Show(Resources.UploadSignatureResponsesDone, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (Exception exception)
+        {
+          Error.ErrorDialog.ShowError(exception);
+        }
+
+        Status.TextStatusDialog.HideInfo();
+      }
+    }
+
+    private void uploadCertificateStorageMenu_Click(object sender, EventArgs e)
+    {
+      OpenFileDialog dialog = new OpenFileDialog();
+      dialog.Title = Resources.UploadCertificateStorageOpenDialogTitle;
+      dialog.CheckPathExists = true;
+      dialog.CheckFileExists = true;
+      dialog.Multiselect = false;
+      dialog.Filter = Files.CertificateStorageFileFilter;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        Status.TextStatusDialog.ShowInfo(Controller, this);
+
+        try
+        {
+          Controller.UploadCertificateStorage(dialog.FileName);
+          MessageForm.Show(Resources.UploadCertificateStorageDone, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (Exception exception)
+        {
+          Error.ErrorDialog.ShowError(exception);
+        }
+
+        Status.TextStatusDialog.HideInfo();
+      }
     }
   }
 }

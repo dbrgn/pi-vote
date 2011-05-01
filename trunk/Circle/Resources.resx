@@ -255,6 +255,81 @@
   <data name="CreateCertificateSelectVoterSubgroupInfo" xml:space="preserve">
     <value>Create a voter certificate for a subgroup based on a certificate you already have. Choose this if you want to create a certificate for regional or local voting.</value>
   </data>
+  <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
+    <value>Abstention will be added automatically.</value>
+  </data>
+  <data name="CreateVotingAnswers" xml:space="preserve">
+    <value>Answers:</value>
+  </data>
+  <data name="CreateVotingAnswersPerVoter" xml:space="preserve">
+    <value>Answers / Voter:</value>
+  </data>
+  <data name="CreateVotingAuthFileMissing" xml:space="preserve">
+    <value>Authority voting file missing.</value>
+  </data>
+  <data name="CreateVotingAuthorities" xml:space="preserve">
+    <value>Authorities:</value>
+  </data>
+  <data name="CreateVotingButton" xml:space="preserve">
+    <value>&amp;Create</value>
+  </data>
+  <data name="CreateVotingCanceled" xml:space="preserve">
+    <value>The creation of a voting was canceled.</value>
+  </data>
+  <data name="CreateVotingClearButton" xml:space="preserve">
+    <value>&amp;Clear</value>
+  </data>
+  <data name="CreateVotingCreated" xml:space="preserve">
+    <value>Created voting on server.</value>
+  </data>
+  <data name="CreateVotingCreating" xml:space="preserve">
+    <value>Creating voting on server.</value>
+  </data>
+  <data name="CreateVotingDescription" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="CreateVotingGroup" xml:space="preserve">
+    <value>Group:</value>
+  </data>
+  <data name="CreateVotingInvalidAuthorities" xml:space="preserve">
+    <value>The following authorities are not valid on the voting begin date:</value>
+  </data>
+  <data name="CreateVotingOpenFrom" xml:space="preserve">
+    <value>Open from:</value>
+  </data>
+  <data name="CreateVotingOpenUntil" xml:space="preserve">
+    <value>Open until:</value>
+  </data>
+  <data name="CreateVotingOptionDescription" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="CreateVotingOptionText" xml:space="preserve">
+    <value>Text:</value>
+  </data>
+  <data name="CreateVotingOptionTitle" xml:space="preserve">
+    <value>Circle - Create Voting - Option</value>
+  </data>
+  <data name="CreateVotingQuestion" xml:space="preserve">
+    <value>Circle - Create Voting - Question</value>
+  </data>
+  <data name="CreateVotingQuestionDescription" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="CreateVotingQuestions" xml:space="preserve">
+    <value>Questions:</value>
+  </data>
+  <data name="CreateVotingQuestionText" xml:space="preserve">
+    <value>Text:</value>
+  </data>
+  <data name="CreateVotingSearchPrime" xml:space="preserve">
+    <value>Searching safe prime number for crypto.</value>
+  </data>
+  <data name="CreateVotingTitle" xml:space="preserve">
+    <value>Title:</value>
+  </data>
+  <data name="CreateVotingUrl" xml:space="preserve">
+    <value>Url:</value>
+  </data>
   <data name="MenuCertificateResumeCreation" xml:space="preserve">
     <value>&amp;Resume Creation...</value>
   </data>
@@ -398,5 +473,59 @@
   </data>
   <data name="VotingStatusVote" xml:space="preserve">
     <value>Open for voting, {0} votes cast</value>
+  </data>
+  <data name="CreateVotingDialogTitle" xml:space="preserve">
+    <value>Circle - Create Voting</value>
+  </data>
+  <data name="CreateVotingGeneratePrime" xml:space="preserve">
+    <value>&amp;Generate safe prime</value>
+  </data>
+  <data name="CreateVotingGeneratingSafePrime" xml:space="preserve">
+    <value>Generating safe prime...</value>
+  </data>
+  <data name="CreateVotingNotReady" xml:space="preserve">
+    <value>Need a safe prime to create voting.</value>
+  </data>
+  <data name="CreateVotingReady" xml:space="preserve">
+    <value>Safe prime ready to create voting.</value>
+  </data>
+  <data name="CreateVotingStored" xml:space="preserve">
+    <value>There are {0} safe primes in store.</value>
+  </data>
+  <data name="CreateVotingTakePrime" xml:space="preserve">
+    <value>&amp;Take and verify safe prime</value>
+  </data>
+  <data name="CreateVotingVerifyingSafePrime" xml:space="preserve">
+    <value>Verifying safe prime...</value>
+  </data>
+  <data name="ErrorDialogInfo" xml:space="preserve">
+    <value>An error occurred in the program. We apologize for the inconvinience. Please help us fix it by reporting it. Please send us the data in the lower text field.</value>
+  </data>
+  <data name="ErrorDialogTitle" xml:space="preserve">
+    <value>Circle - Error</value>
+  </data>
+  <data name="MenuCreateVoting" xml:space="preserve">
+    <value>&amp;Create...</value>
+  </data>
+  <data name="DownloadSignatureRequestsDone" xml:space="preserve">
+    <value>The signature requests have been downloaded successfully.</value>
+  </data>
+  <data name="DownloadSignatureRequestsFileName" xml:space="preserve">
+    <value>does not matter</value>
+  </data>
+  <data name="DownloadSignatureRequestsSaveDialogTitle" xml:space="preserve">
+    <value>Save signature requests</value>
+  </data>
+  <data name="UploadCertificateStorageDone" xml:space="preserve">
+    <value>The certificate storage has been uploaded sucessfully.</value>
+  </data>
+  <data name="UploadCertificateStorageOpenDialogTitle" xml:space="preserve">
+    <value>Select certificate storage</value>
+  </data>
+  <data name="UploadSignatureResponsesDone" xml:space="preserve">
+    <value>The signature responses have been uploaded sucessfully.</value>
+  </data>
+  <data name="UploadSignatureResponsesOpenDialogTitle" xml:space="preserve">
+    <value>Select signature responses</value>
   </data>
 </root>
