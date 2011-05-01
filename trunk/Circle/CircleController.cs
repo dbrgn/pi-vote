@@ -255,6 +255,16 @@ namespace Pirate.PiVote.Circle
                           .FirstOrDefault();
     }
 
+    public AdminCertificate GetAdminCertificate()
+    {
+      return
+        this.certificates.Keys
+        .Where(certificate => certificate is AdminCertificate &&
+          certificate.Validate(Status.CertificateStorage) == CertificateValidationResult.Valid)
+        .Select(certificate => certificate as AdminCertificate)
+        .FirstOrDefault();
+    }
+
     public IEnumerable<AuthorityCertificate> GetAuthorityCertificates()
     {
       return
@@ -447,7 +457,19 @@ namespace Pirate.PiVote.Circle
 
       if (WaitForCompletion())
       {
-        return this.votingList;
+        List<VotingDescriptor2> votings = new List<VotingDescriptor2>(this.votingList);
+
+        DirectoryInfo appDataDirectory = new DirectoryInfo(Status.DataPath);
+
+        foreach (DirectoryInfo offlineDirectory in appDataDirectory.GetDirectories())
+        {
+          if (File.Exists(Path.Combine(offlineDirectory.FullName, Files.VotingMaterialFileName)))
+          {
+            votings.Add(new VotingDescriptor2(offlineDirectory.FullName));
+          }
+        }
+
+        return votings;
       }
       else
       {
@@ -613,6 +635,44 @@ namespace Pirate.PiVote.Circle
     {
       this.exception = exception;
       this.votingDescriptor = votingDescriptor;
+      this.run = false;
+    }
+
+    public void Delete(VotingDescriptor2 voting, AdminCertificate adminCertificate)
+    {
+      var command = new DeleteVotingRequest.Command(voting.Id);
+      var signedCommand = new Signed<DeleteVotingRequest.Command>(command, adminCertificate);
+
+      Begin();
+      Status.VotingClient.DeleteVoting(signedCommand, DeleteVotingComplete);
+
+      if (!WaitForCompletion())
+      {
+        MessageForm.Show(this.exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+    }
+
+    private void DeleteVotingComplete(Exception exception)
+    {
+      this.exception = exception;
+      this.run = false;
+    }
+
+    public void Download(VotingDescriptor2 voting)
+    {
+      Begin();
+      Status.VotingClient.ActivateVoter();
+      Status.VotingClient.DownloadVoting(voting.Id, Status.DataPath, DownloadVotingComplete);
+
+      if (!WaitForCompletion())
+      {
+        MessageForm.Show(this.exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+    }
+
+    private void DownloadVotingComplete(Exception exception)
+    {
+      this.exception = exception;
       this.run = false;
     }
 

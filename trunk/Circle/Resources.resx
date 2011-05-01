@@ -330,6 +330,12 @@
   <data name="VotingActionDecipher" xml:space="preserve">
     <value>&amp;Decipher</value>
   </data>
+  <data name="VotingActionDelete" xml:space="preserve">
+    <value>&amp;Delete</value>
+  </data>
+  <data name="VotingActionDownload" xml:space="preserve">
+    <value>&amp;Download</value>
+  </data>
   <data name="VotingActionShare" xml:space="preserve">
     <value>&amp;Create Shares</value>
   </data>
@@ -357,11 +363,17 @@
   <data name="VotingListCurrent" xml:space="preserve">
     <value>Current</value>
   </data>
+  <data name="VotingListEmpty" xml:space="preserve">
+    <value>There are now votings to display.</value>
+  </data>
   <data name="VotingListPast" xml:space="preserve">
     <value>Past</value>
   </data>
   <data name="VotingListScheduled" xml:space="preserve">
     <value>Scheduled</value>
+  </data>
+  <data name="VotingListStored" xml:space="preserve">
+    <value>Stored</value>
   </data>
   <data name="VotingStatusAborted" xml:space="preserve">
     <value>Aborted</value>

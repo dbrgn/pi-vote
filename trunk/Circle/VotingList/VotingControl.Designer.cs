@@ -39,6 +39,7 @@ namespace Pirate.PiVote.Circle
       this.descriptionLabel = new System.Windows.Forms.Label();
       this.actionButton = new System.Windows.Forms.Button();
       this.statusLabel = new System.Windows.Forms.Label();
+      this.action2Button = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // titleLabel
@@ -81,15 +82,27 @@ namespace Pirate.PiVote.Circle
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.statusLabel.Location = new System.Drawing.Point(3, 94);
       this.statusLabel.Name = "statusLabel";
-      this.statusLabel.Size = new System.Drawing.Size(375, 17);
+      this.statusLabel.Size = new System.Drawing.Size(258, 17);
       this.statusLabel.TabIndex = 3;
       this.statusLabel.Text = "Status";
+      // 
+      // action2Button
+      // 
+      this.action2Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.action2Button.Location = new System.Drawing.Point(267, 86);
+      this.action2Button.Name = "action2Button";
+      this.action2Button.Size = new System.Drawing.Size(111, 25);
+      this.action2Button.TabIndex = 4;
+      this.action2Button.Text = "&Action2";
+      this.action2Button.UseVisualStyleBackColor = true;
+      this.action2Button.Click += new System.EventHandler(this.action2Button_Click);
       // 
       // VotingControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.Controls.Add(this.action2Button);
       this.Controls.Add(this.statusLabel);
       this.Controls.Add(this.actionButton);
       this.Controls.Add(this.descriptionLabel);
@@ -107,5 +120,6 @@ namespace Pirate.PiVote.Circle
     private System.Windows.Forms.Label descriptionLabel;
     private System.Windows.Forms.Button actionButton;
     private System.Windows.Forms.Label statusLabel;
+    private System.Windows.Forms.Button action2Button;
   }
 }

@@ -48,6 +48,8 @@ namespace Pirate.PiVote.Circle
       this.votings = new List<VotingDescriptor2>();
       int top = -VerticalScroll.Value;
 
+      this.emptyLabel.Visible = newVotings.Count() == 0;
+
       while (oldQueue.Count > 0 ||
              newQueue.Count > 0)
       {
@@ -109,22 +111,24 @@ namespace Pirate.PiVote.Circle
 
     public void UpdateLanguage()
     {
+      this.emptyLabel.Text = Resources.VotingListEmpty;
+
       foreach (var control in this.controls)
       {
         control.UpdateDisplay();
       }
     }
 
-    private void Control_VotingAction(VotingDescriptor2 voting)
+    private void Control_VotingAction(VotingActionType type, VotingDescriptor2 voting)
     {
-      OnVotingAction(voting);
+      OnVotingAction(type, voting);
     }
 
-    private void OnVotingAction(VotingDescriptor2 voting)
+    private void OnVotingAction(VotingActionType type, VotingDescriptor2 voting)
     {
       if (VotingAction != null)
       {
-        VotingAction(voting);
+        VotingAction(type, voting);
       }
     }
   }

@@ -35,13 +35,25 @@ namespace Pirate.PiVote.Circle
     /// </summary>
     private void InitializeComponent()
     {
+      this.emptyLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
+      // 
+      // emptyLabel
+      // 
+      this.emptyLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.emptyLabel.Location = new System.Drawing.Point(0, 0);
+      this.emptyLabel.Name = "emptyLabel";
+      this.emptyLabel.Size = new System.Drawing.Size(939, 485);
+      this.emptyLabel.TabIndex = 0;
+      this.emptyLabel.Text = "Empty";
+      this.emptyLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // VotingListControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
+      this.Controls.Add(this.emptyLabel);
       this.Name = "VotingListControl";
       this.Size = new System.Drawing.Size(939, 485);
       this.ResumeLayout(false);
@@ -49,5 +61,7 @@ namespace Pirate.PiVote.Circle
     }
 
     #endregion
+
+    private System.Windows.Forms.Label emptyLabel;
   }
 }

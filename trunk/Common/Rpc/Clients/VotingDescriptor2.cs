@@ -37,7 +37,7 @@ namespace Pirate.PiVote.Rpc
     public VotingDescriptor2(string offlinePath)
       : base(offlinePath)
     {
-      this.authorities = null;
+      this.authorities = new List<Certificate>();
     }
 
     /// <summary>

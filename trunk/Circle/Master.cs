@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -74,25 +75,101 @@ namespace Pirate.PiVote.Circle
       Controller.Disconnect();
     }
 
-    private void VotingListsControl_VotingAction(VotingDescriptor2 voting)
+    private void VotingListsControl_VotingAction(VotingActionType type, VotingDescriptor2 voting)
     {
-      switch (voting.Status)
+      switch (type)
       {
-        case VotingStatus.New:
-          GoShare(voting);
+        case VotingActionType.Type1:
+          switch (voting.Status)
+          {
+            case VotingStatus.New:
+              GoShare(voting);
+              break;
+            case VotingStatus.Sharing:
+              GoCheck(voting);
+              break;
+            case VotingStatus.Voting:
+              GoVote(voting);
+              break;
+            case VotingStatus.Deciphering:
+              GoDecipher(voting);
+              break;
+            case VotingStatus.Finished:
+            case VotingStatus.Offline:
+              GoTally(voting);
+              break;
+          }
           break;
-        case VotingStatus.Sharing:
-          GoCheck(voting);
+        case VotingActionType.Type2:
+          switch (voting.Status)
+          {
+            case VotingStatus.New:
+            case VotingStatus.Sharing:
+            case VotingStatus.Ready:
+              GoDelete(voting);
+              break;
+            case VotingStatus.Offline:
+              GoDeleteStored(voting);
+              break;
+            case VotingStatus.Finished:
+              GoDownload(voting);
+              break;
+          }
           break;
-        case VotingStatus.Voting:
-          GoVote(voting);
-          break;
-        case VotingStatus.Deciphering:
-          GoDecipher(voting);
-          break;
-        case VotingStatus.Finished:
-          GoTally(voting);
-          break;
+      }
+    }
+
+    private void GoDownload(VotingDescriptor2 voting)
+    {
+      Status.TextStatusDialog.ShowInfo(Controller, this);
+
+      try
+      {
+        Controller.Download(voting);
+
+        var votings = Controller.GetVotingList();
+        this.votingListsControl.Set(Controller, votings);
+      }
+      catch (Exception exception)
+      {
+        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+
+      Status.TextStatusDialog.HideInfo();
+    }
+
+    private void GoDelete(VotingDescriptor2 voting)
+    {
+      Status.TextStatusDialog.ShowInfo(Controller, this);
+
+      try
+      {
+        var adminCertificate = Controller.GetAdminCertificate();
+
+        if (adminCertificate != null)
+        {
+          Controller.Delete(voting, adminCertificate);
+
+          var votings = Controller.GetVotingList();
+          this.votingListsControl.Set(Controller, votings);
+        }
+      }
+      catch (Exception exception)
+      {
+        MessageForm.Show(exception.Message, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+
+      Status.TextStatusDialog.HideInfo();
+    }
+
+    private void GoDeleteStored(VotingDescriptor2 voting)
+    {
+      if (!voting.OfflinePath.IsNullOrEmpty() &&
+          Directory.Exists(voting.OfflinePath))
+      {
+        Directory.Delete(voting.OfflinePath, true);
+
+        RefreshVotings();
       }
     }
 

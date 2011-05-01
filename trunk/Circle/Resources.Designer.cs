@@ -700,6 +700,24 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Delete.
+        /// </summary>
+        internal static string VotingActionDelete {
+            get {
+                return ResourceManager.GetString("VotingActionDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Download.
+        /// </summary>
+        internal static string VotingActionDownload {
+            get {
+                return ResourceManager.GetString("VotingActionDownload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Create Shares.
         /// </summary>
         internal static string VotingActionShare {
@@ -781,6 +799,15 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There are now votings to display..
+        /// </summary>
+        internal static string VotingListEmpty {
+            get {
+                return ResourceManager.GetString("VotingListEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Past.
         /// </summary>
         internal static string VotingListPast {
@@ -795,6 +822,15 @@ namespace Pirate.PiVote.Circle {
         internal static string VotingListScheduled {
             get {
                 return ResourceManager.GetString("VotingListScheduled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stored.
+        /// </summary>
+        internal static string VotingListStored {
+            get {
+                return ResourceManager.GetString("VotingListStored", resourceCulture);
             }
         }
         

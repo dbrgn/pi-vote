@@ -35,30 +35,34 @@ namespace Pirate.PiVote.Circle
     /// </summary>
     private void InitializeComponent()
     {
-      this.votingTabControl = new System.Windows.Forms.TabControl();
+      this.votingTabPage = new System.Windows.Forms.TabControl();
       this.currentTabPage = new System.Windows.Forms.TabPage();
       this.currentVotingListControl = new Pirate.PiVote.Circle.VotingListControl();
       this.scheduledTabPage = new System.Windows.Forms.TabPage();
       this.scheduledVotingListControl = new Pirate.PiVote.Circle.VotingListControl();
       this.pastTabPage = new System.Windows.Forms.TabPage();
       this.pastVotingListControl = new Pirate.PiVote.Circle.VotingListControl();
-      this.votingTabControl.SuspendLayout();
+      this.storedTabPage = new System.Windows.Forms.TabPage();
+      this.storedVotingListControl = new Pirate.PiVote.Circle.VotingListControl();
+      this.votingTabPage.SuspendLayout();
       this.currentTabPage.SuspendLayout();
       this.scheduledTabPage.SuspendLayout();
       this.pastTabPage.SuspendLayout();
+      this.storedTabPage.SuspendLayout();
       this.SuspendLayout();
       // 
-      // votingTabControl
+      // votingTabPage
       // 
-      this.votingTabControl.Controls.Add(this.currentTabPage);
-      this.votingTabControl.Controls.Add(this.scheduledTabPage);
-      this.votingTabControl.Controls.Add(this.pastTabPage);
-      this.votingTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.votingTabControl.Location = new System.Drawing.Point(0, 0);
-      this.votingTabControl.Name = "votingTabControl";
-      this.votingTabControl.SelectedIndex = 0;
-      this.votingTabControl.Size = new System.Drawing.Size(928, 607);
-      this.votingTabControl.TabIndex = 0;
+      this.votingTabPage.Controls.Add(this.currentTabPage);
+      this.votingTabPage.Controls.Add(this.scheduledTabPage);
+      this.votingTabPage.Controls.Add(this.pastTabPage);
+      this.votingTabPage.Controls.Add(this.storedTabPage);
+      this.votingTabPage.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.votingTabPage.Location = new System.Drawing.Point(0, 0);
+      this.votingTabPage.Name = "votingTabPage";
+      this.votingTabPage.SelectedIndex = 0;
+      this.votingTabPage.Size = new System.Drawing.Size(928, 607);
+      this.votingTabPage.TabIndex = 0;
       // 
       // currentTabPage
       // 
@@ -123,29 +127,52 @@ namespace Pirate.PiVote.Circle
       this.pastVotingListControl.TabIndex = 2;
       this.pastVotingListControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.PastVotingListControl_VotingAction);
       // 
+      // storedTabPage
+      // 
+      this.storedTabPage.Controls.Add(this.storedVotingListControl);
+      this.storedTabPage.Location = new System.Drawing.Point(4, 22);
+      this.storedTabPage.Name = "storedTabPage";
+      this.storedTabPage.Size = new System.Drawing.Size(920, 581);
+      this.storedTabPage.TabIndex = 3;
+      this.storedTabPage.Text = "Stored";
+      this.storedTabPage.UseVisualStyleBackColor = true;
+      // 
+      // storedVotingListControl
+      // 
+      this.storedVotingListControl.AutoScroll = true;
+      this.storedVotingListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.storedVotingListControl.Location = new System.Drawing.Point(0, 0);
+      this.storedVotingListControl.Name = "storedVotingListControl";
+      this.storedVotingListControl.Size = new System.Drawing.Size(920, 581);
+      this.storedVotingListControl.TabIndex = 3;
+      this.storedVotingListControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.storedVotingListControl_VotingAction);
+      // 
       // VotingListsControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.votingTabControl);
+      this.Controls.Add(this.votingTabPage);
       this.Name = "VotingListsControl";
       this.Size = new System.Drawing.Size(928, 607);
-      this.votingTabControl.ResumeLayout(false);
+      this.votingTabPage.ResumeLayout(false);
       this.currentTabPage.ResumeLayout(false);
       this.scheduledTabPage.ResumeLayout(false);
       this.pastTabPage.ResumeLayout(false);
+      this.storedTabPage.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
 
     #endregion
 
-    private System.Windows.Forms.TabControl votingTabControl;
+    private System.Windows.Forms.TabControl votingTabPage;
     private System.Windows.Forms.TabPage currentTabPage;
     private System.Windows.Forms.TabPage scheduledTabPage;
     private VotingListControl currentVotingListControl;
     private VotingListControl scheduledVotingListControl;
     private System.Windows.Forms.TabPage pastTabPage;
     private VotingListControl pastVotingListControl;
+    private System.Windows.Forms.TabPage storedTabPage;
+    private VotingListControl storedVotingListControl;
   }
 }
