@@ -50,7 +50,6 @@ namespace Pirate.PiVote.Circle.Create
       }
       else
       {
-        Controller.DeactiveCertificate(Certificate);
         MessageForm.Show(
           string.Format(Resources.CreateCertificateResumeFail, Certificate.Id.ToString(), Certificate.TypeText),
           Resources.MessageBoxTitle,

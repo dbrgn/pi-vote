@@ -50,6 +50,8 @@ namespace Pirate.PiVote.Circle.CreateVoting
             Status.FromDate,
             Status.UntilDate,
             Status.VotingGroup.Id);
+          Status.Data.Questions.ForEach(question => parameters.AddQuestion(question));
+          parameters.SetNumbers(Status.Prime, Status.SafePrime);
           var signedParameters = new Signed<VotingParameters>(parameters, certificate);
 
           Pirate.PiVote.Circle.Status.TextStatusDialog.ShowInfo(Status.Controller, FindForm());

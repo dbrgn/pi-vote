@@ -230,12 +230,16 @@ namespace Pirate.PiVote.Rpc
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "F cannot be null.");
       if (votingParameters.G == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "G cannot be null.");
-      //if (!Prime.IsPrime(votingParameters.P))
-      //  throw new PiArgumentException(ExceptionCode.PIsNoPrime, "P is not prime.");
-      //if (!Prime.IsPrime((votingParameters.P - 1) / 2))
-      //  throw new PiArgumentException(ExceptionCode.PIsNoSafePrime, "P is no safe prime.");
-      //if (!Prime.IsPrime(votingParameters.Q))
-      //  throw new PiArgumentException(ExceptionCode.QIsNoPrime, "Q is not prime.");
+      if (!Prime.HasSufficientLength(votingParameters.P, BaseParameters.PrimeBits))
+        throw new PiException(ExceptionCode.ArgumentNull, "P is not long enough");
+      if (!Prime.HasSufficientLength(votingParameters.Q, BaseParameters.PrimeBits))
+        throw new PiException(ExceptionCode.ArgumentNull, "Q is not long enough");
+      if (!Prime.IsPrimeUnsure(votingParameters.P))
+        throw new PiArgumentException(ExceptionCode.PIsNoPrime, "P is not prime.");
+      if (!Prime.IsPrimeUnsure((votingParameters.P - 1) / 2))
+        throw new PiArgumentException(ExceptionCode.PIsNoSafePrime, "P is no safe prime.");
+      if (!Prime.IsPrimeUnsure(votingParameters.Q))
+        throw new PiArgumentException(ExceptionCode.QIsNoPrime, "Q is not prime.");
 
       if (!votingParameters.AuthorityCount.InRange(3, 23))
         throw new PiArgumentException(ExceptionCode.AuthorityCountOutOfRange, "Authority count out of range.");

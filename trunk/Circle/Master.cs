@@ -276,59 +276,6 @@ namespace Pirate.PiVote.Circle
     {
       var certificate = Controller.GetVoterCertificateThatCanVote(voting);
 
-      if (certificate == null)
-      {
-        Create.CreateCertificateDialog.ShowCreateNewVoterCertificate(Controller);
-      }
-      else
-      {
-        switch (certificate.Validate(Controller.Status.CertificateStorage))
-        {
-          case CertificateValidationResult.NoSignature:
-            Create.CreateCertificateDialog.TryFixVoterCertificate(Controller, certificate);
-            certificate = null;
-            break;
-          case CertificateValidationResult.NotYetValid:
-            MessageForm.Show(
-              string.Format(Resources.CertificateStatusMessageNotYetValid, certificate.Id.ToString(), certificate.TypeText),
-              Resources.MessageBoxTitle,
-              MessageBoxButtons.OK,
-              MessageBoxIcon.Information);
-            certificate = null;
-            break;
-          case CertificateValidationResult.Outdated:
-            Controller.DeactiveCertificate(certificate);
-            MessageForm.Show(
-              string.Format(Resources.CertificateStatusMessageOutdate, certificate.Id.ToString(), certificate.TypeText),
-              Resources.MessageBoxTitle,
-              MessageBoxButtons.OK,
-              MessageBoxIcon.Information);
-            Create.CreateCertificateDialog.ShowCreateNewVoterCertificate(Controller);
-            certificate = null;
-            break;
-          case CertificateValidationResult.Revoked:
-            Controller.DeactiveCertificate(certificate);
-            MessageForm.Show(
-              string.Format(Resources.CertificateStatusMessageRevoked, certificate.Id.ToString(), certificate.TypeText),
-              Resources.MessageBoxTitle,
-              MessageBoxButtons.OK,
-              MessageBoxIcon.Information);
-            Create.CreateCertificateDialog.ShowCreateNewVoterCertificate(Controller);
-            certificate = null;
-            break;
-          case CertificateValidationResult.Valid:
-            break;
-          default:
-            MessageForm.Show(
-              string.Format(Resources.CertificateStatusMessageInvalid, certificate.Id.ToString(), certificate.TypeText, certificate.Validate(Controller.Status.CertificateStorage).Text()),
-              Resources.MessageBoxTitle,
-              MessageBoxButtons.OK,
-              MessageBoxIcon.Information);
-            certificate = null;
-            break;
-        }
-      }
-
       if (certificate != null)
       {
         Vote.VotingDialog.ShowVoting(Controller, certificate, voting);
@@ -340,6 +287,8 @@ namespace Pirate.PiVote.Circle
     private void CreateCertificateMenu_Click(object sender, EventArgs e)
     {
       Create.CreateCertificateDialog.ShowCreateNewCertificate(Controller);
+      Controller.LoadCertificates();
+      RefreshInternal();
     }
 
     private void RefreshVotingsMenu_Click(object sender, EventArgs e)
@@ -371,7 +320,7 @@ namespace Pirate.PiVote.Circle
       this.createVotingMenu.Visible = isAdmin;
       this.downloadSignatureRequestsMenu.Visible = isAdmin;
       this.uploadSignatureResponsesMenu.Visible = isAdmin;
-      this.uploadSignatureResponsesMenu.Visible = isAdmin;
+      this.uploadCertificateStorageMenu.Visible = isAdmin;
 
       var votings = Controller.GetVotingList();
       this.votingListsControl.Set(Controller, votings);
@@ -575,6 +524,24 @@ namespace Pirate.PiVote.Circle
 
         Status.TextStatusDialog.HideInfo();
       }
+    }
+
+    private void VotingListsControl_CreateCertificate(object sender, EventArgs e)
+    {
+      Create.CreateCertificateDialog.ShowCreateNewVoterCertificate(Controller);
+      Controller.LoadCertificates();
+      RefreshInternal();
+    }
+
+    private void VotingListsControl_ResumeCertificate(object sender, EventArgs e)
+    {
+      var lastCertificate = Controller
+        .GetVoterCertificates(0)
+        .OrderByDescending(certificate => certificate.CreationDate)
+        .FirstOrDefault();
+      Create.CreateCertificateDialog.TryFixVoterCertificate(Controller, lastCertificate);
+      Controller.LoadCertificates();
+      RefreshInternal();
     }
   }
 }

@@ -507,18 +507,6 @@
   <data name="UploadSignatureResponsesOpenDialogTitle" xml:space="preserve">
     <value>Zertifizierungsantworten auswählen</value>
   </data>
-  <data name="CertificateStatusMessageInvalid" xml:space="preserve">
-    <value>Dein Zertifikat mit der Id {0} von Typ {1} ist korrupt. Sein Status ist: {2}</value>
-  </data>
-  <data name="CertificateStatusMessageNotYetValid" xml:space="preserve">
-    <value>Dein Zertifikat mit der Id {0} von Typ {1} ist noch nicht gültig.</value>
-  </data>
-  <data name="CertificateStatusMessageOutdate" xml:space="preserve">
-    <value>Dein Zertifikat mit der Id {0} von Typ {1} ist abgelaufen und wurde deshalb deaktiviert. Du musst ein neues Zertifikat erstellen.</value>
-  </data>
-  <data name="CertificateStatusMessageRevoked" xml:space="preserve">
-    <value>Dein Zertifikat mit der Id {0} von Typ {1} wurde wiederrufen und wurde deshalb deaktiviert. Du musst ein neues Zertifikat erstellen.</value>
-  </data>
   <data name="CreateCertificateResumeFail" xml:space="preserve">
     <value>Die Zertifikatsanfragedaten für dein Zertifikat mit Id {0} von Typ {1} konnten nicht gefunden werden. Du musst ein neues Zertifikat erstellen.</value>
   </data>
@@ -533,5 +521,35 @@
   </data>
   <data name="SaveBackupDone" xml:space="preserve">
     <value>Das Backup wurde gespeichert.</value>
+  </data>
+  <data name="CertificateStatusCorrupt" xml:space="preserve">
+    <value>Dein Zertifikat ist korrupt. Sein Status ist {0}.</value>
+  </data>
+  <data name="CertificateStatusCreateAction" xml:space="preserve">
+    <value>Zertifikat &amp;erstellen</value>
+  </data>
+  <data name="CertificateStatusCrlMissing" xml:space="preserve">
+    <value>Die Zertifikatswiederrufsliste fehlt.</value>
+  </data>
+  <data name="CertificateStatusNoCertificate" xml:space="preserve">
+    <value>Du hast noch kein Zertifikat.</value>
+  </data>
+  <data name="CertificateStatusNoSignature" xml:space="preserve">
+    <value>Deine Zertifizierungsanfrage ist noch hängig.</value>
+  </data>
+  <data name="CertificateStatusNotYetValid" xml:space="preserve">
+    <value>Dein Zertifikat ist erst ab dem {0} gültig.</value>
+  </data>
+  <data name="CertificateStatusOutdated" xml:space="preserve">
+    <value>Dein Zertifikat ist abgelaufen.</value>
+  </data>
+  <data name="CertificateStatusResumeAction" xml:space="preserve">
+    <value>Zertifikatserstellung &amp;fortsetzen</value>
+  </data>
+  <data name="CertificateStatusRevoked" xml:space="preserve">
+    <value>Dein Zertifikat wurde wiederrufen.</value>
+  </data>
+  <data name="CertificateStatusValid" xml:space="preserve">
+    <value>Dein Zertifikat ist gültig bis am {0}.</value>
   </data>
 </root>

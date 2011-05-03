@@ -528,18 +528,6 @@
   <data name="UploadSignatureResponsesOpenDialogTitle" xml:space="preserve">
     <value>Select signature responses</value>
   </data>
-  <data name="CertificateStatusMessageInvalid" xml:space="preserve">
-    <value>Your certificate id {0} of type {1} is invalid. It's status is {2}</value>
-  </data>
-  <data name="CertificateStatusMessageNotYetValid" xml:space="preserve">
-    <value>Your certificate id {0} of type {1} is not yet valid.</value>
-  </data>
-  <data name="CertificateStatusMessageOutdate" xml:space="preserve">
-    <value>Your certificate id {0} of type {1} was outdated and therefore deactivated. You must create a new certificate.</value>
-  </data>
-  <data name="CertificateStatusMessageRevoked" xml:space="preserve">
-    <value>Your certificate id {0} of type {1} was revoked and therefore deactivated. You must create a new certificate.</value>
-  </data>
   <data name="CreateCertificateResumeFail" xml:space="preserve">
     <value>Signature request data for your certificate {0} of type {1} count not be found. You must create a new certificate.</value>
   </data>
@@ -554,5 +542,41 @@
   </data>
   <data name="SaveBackupDone" xml:space="preserve">
     <value>The backup is saved.</value>
+  </data>
+  <data name="CertificateStatusCorrupt" xml:space="preserve">
+    <value>Your certificate is corrupt. It's status is {0}.</value>
+  </data>
+  <data name="CertificateStatusCreateAction" xml:space="preserve">
+    <value>&amp;Create Certificate</value>
+  </data>
+  <data name="CertificateStatusCrlMissing" xml:space="preserve">
+    <value>The certificate revocation list is missing.</value>
+  </data>
+  <data name="CertificateStatusNoCertificate" xml:space="preserve">
+    <value>You do not have a certificate yet.</value>
+  </data>
+  <data name="CertificateStatusNoSignature" xml:space="preserve">
+    <value>Your signature request is still pending.</value>
+  </data>
+  <data name="CertificateStatusNotYetValid" xml:space="preserve">
+    <value>Your certificate will become valid at {0}.</value>
+  </data>
+  <data name="CertificateStatusOutdated" xml:space="preserve">
+    <value>Your certificate has expired.</value>
+  </data>
+  <data name="CertificateStatusResumeAction" xml:space="preserve">
+    <value>&amp;Resume Certificate Creation</value>
+  </data>
+  <data name="CertificateStatusRevoked" xml:space="preserve">
+    <value>Your certificate has been revoked by the certificate authority.</value>
+  </data>
+  <data name="CertificateStatusValid" xml:space="preserve">
+    <value>You have certificate which is valid until {0}.</value>
+  </data>
+  <data name="CertificateManagerExportDialogTitle" xml:space="preserve">
+    <value>Export Certificate</value>
+  </data>
+  <data name="CertificateManagerImportDialogTitle" xml:space="preserve">
+    <value>Import Certificate</value>
   </data>
 </root>

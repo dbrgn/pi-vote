@@ -259,7 +259,6 @@ namespace Pirate.PiVote.Circle.Certificates
       {
         ListViewItem item = this.certificateList.SelectedItems[0];
         Certificate certificate = (Certificate)item.Tag;
-        controller.DeactiveCertificate(certificate);
         item.Remove();
       }
     }
@@ -275,7 +274,7 @@ namespace Pirate.PiVote.Circle.Certificates
       dialog.Filter = Files.CertificateFileFilter;
       dialog.CheckFileExists = true;
       dialog.Multiselect = false;
-      dialog.Title = "Import Certificate";
+      dialog.Title = Resources.CertificateManagerImportDialogTitle;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
@@ -307,7 +306,7 @@ namespace Pirate.PiVote.Circle.Certificates
         SaveFileDialog dialog = new SaveFileDialog();
         dialog.Filter = Files.CertificateFileFilter;
         dialog.CheckPathExists = true;
-        dialog.Title = "Export Certificate";
+        dialog.Title = Resources.CertificateManagerExportDialogTitle;
 
         if (dialog.ShowDialog() == DialogResult.OK)
         {

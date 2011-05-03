@@ -71,7 +71,6 @@ namespace Pirate.PiVote.Circle
       {
         bool isAuthority = Controller.GetAuthorityCertificates().Count() > 0;
         bool isAuthorityForVoting = Controller.GetAuthorityCertificate(this.voting) != null;
-        bool hasVoterCertificate = Controller.GetVoterCertificate(this.voting) != null;
         bool hasVoterCertificateThatCanVote = Controller.GetVoterCertificateThatCanVote(this.voting) != null;
         bool isAdmin = Controller.GetAdminCertificate() != null;
 
@@ -84,7 +83,7 @@ namespace Pirate.PiVote.Circle
             this.statusLabel.Text = string.Format(Resources.VotingStatusVote, this.voting.EnvelopeCount);
             this.actionButton.Text = Resources.VotingActionVote;
             this.actionButton.Visible = true;
-            this.actionButton.Enabled = !hasVoterCertificate || hasVoterCertificateThatCanVote;
+            this.actionButton.Enabled = hasVoterCertificateThatCanVote;
             this.action2Button.Visible = false;
             break;
           case VotingStatus.New:

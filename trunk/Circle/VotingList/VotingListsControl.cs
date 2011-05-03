@@ -24,6 +24,12 @@ namespace Pirate.PiVote.Circle
     [Browsable(true)]
     public event VotingActionHandler VotingAction;
 
+    [Browsable(true)]
+    public event EventHandler CreateCertificate;
+
+    [Browsable(true)]
+    public event EventHandler ResumeCertificate;
+
     public VotingListsControl()
     {
       InitializeComponent();
@@ -33,30 +39,25 @@ namespace Pirate.PiVote.Circle
     {
       this.currentVotingListControl.Set(controller,
         votings.Where(voting =>
-          voting.Status == VotingStatus.Voting ||
+          voting.Status == VotingStatus.New ||
+          voting.Status == VotingStatus.Sharing ||
           voting.Status == VotingStatus.Ready ||
+          voting.Status == VotingStatus.Voting ||
           voting.Status == VotingStatus.Deciphering ||
           (voting.Status == VotingStatus.Finished &&
-          DateTime.Now.Subtract(voting.VoteUntil).Days <= 7d))
-          .OrderByDescending(voting => voting.VoteFrom));
-
-      this.scheduledVotingListControl.Set(controller,
-        votings.Where(voting =>
-          voting.Status == VotingStatus.New ||
-          voting.Status == VotingStatus.Sharing)
+          DateTime.Now.Subtract(voting.VoteUntil).Days <= 14d))
           .OrderByDescending(voting => voting.VoteFrom));
 
       this.pastVotingListControl.Set(controller,
         votings.Where(voting =>
           voting.Status == VotingStatus.Aborted ||
+          voting.Status == VotingStatus.Offline ||
           (voting.Status == VotingStatus.Finished &&
-          DateTime.Now.Subtract(voting.VoteUntil).Days > 7d))
+          DateTime.Now.Subtract(voting.VoteUntil).Days > 14d))
           .OrderByDescending(voting => voting.VoteFrom));
 
-      this.storedVotingListControl.Set(controller,
-        votings.Where(voting =>
-          voting.Status == VotingStatus.Offline)
-          .OrderByDescending(voting => voting.VoteFrom));
+      this.certificateStatus.Controller = controller;
+      this.certificateStatus.UpdateDisplay();
     }
 
     private void OnVotingAction(VotingActionType type, VotingDescriptor2 voting)
@@ -90,14 +91,37 @@ namespace Pirate.PiVote.Circle
     public void UpdateLanguage()
     {
       this.currentTabPage.Text = Resources.VotingListCurrent;
-      this.scheduledTabPage.Text = Resources.VotingListScheduled;
       this.pastTabPage.Text = Resources.VotingListPast;
-      this.storedTabPage.Text = Resources.VotingListStored;
 
       this.currentVotingListControl.UpdateLanguage();
-      this.scheduledVotingListControl.UpdateLanguage();
       this.pastVotingListControl.UpdateLanguage();
-      this.storedVotingListControl.UpdateLanguage();
+      this.certificateStatus.UpdateDisplay();
+    }
+
+    private void OnCreateCertificate()
+    {
+      if (CreateCertificate != null)
+      {
+        CreateCertificate(this, new EventArgs());
+      }
+    }
+
+    private void OnResumeCertificate()
+    {
+      if (ResumeCertificate != null)
+      {
+        ResumeCertificate(this, new EventArgs());
+      }
+    }
+
+    private void CertificateStatus_CreateCertificate(object sender, EventArgs e)
+    {
+      OnCreateCertificate();
+    }
+
+    private void CertificateStatus_ResumeCertificate(object sender, EventArgs e)
+    {
+      OnResumeCertificate();
     }
   }
 }

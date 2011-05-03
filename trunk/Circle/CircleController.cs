@@ -320,6 +320,14 @@ namespace Pirate.PiVote.Circle
           .Select(certificate => certificate as VoterCertificate);
     }
 
+    public IEnumerable<VoterCertificate> GetVoterCertificates(int groupId)
+    {
+      return this.certificates.Keys
+        .Where(certificate => certificate is VoterCertificate &&
+          ((VoterCertificate)certificate).GroupId == groupId)
+          .Select(certificate => certificate as VoterCertificate);
+    }
+
     public IEnumerable<VoterCertificate> GetValidVoterCertificates()
     {
       return this.certificates.Keys
@@ -342,6 +350,7 @@ namespace Pirate.PiVote.Circle
 
       return this.certificates.Keys
         .Where(certificate => certificate is VoterCertificate &&
+          certificate.Validate(Status.CertificateStorage) == CertificateValidationResult.Valid &&
           ((VoterCertificate)certificate).GroupId == voting.GroupId &&
           !receipts.Any(receipt => receipt.Value.VoterId.Equals(certificate.Id)))
           .FirstOrDefault() as VoterCertificate;

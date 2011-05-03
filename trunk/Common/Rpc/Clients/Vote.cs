@@ -93,6 +93,9 @@ namespace Pirate.PiVote.Rpc
             throw new InvalidOperationException(LibraryResources.ClientVoteMaterialInvalid);
           var parameters = votingMaterial.Parameters.Value;
 
+          if (!parameters.Valid)
+            throw new InvalidOperationException(LibraryResources.ClientVoteMaterialInvalid);
+
           IEnumerable<IEnumerable<int>> vota = this.vota.Select(questionVota => questionVota.Select(votum => votum ? 1 : 0));
 
           Progress = 0.3d;

@@ -201,12 +201,15 @@ namespace Pirate.PiVote.Circle
       // votingListsControl
       // 
       this.votingListsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.votingListsControl.Font = new System.Drawing.Font("Arial", 8.25F);
       this.votingListsControl.Location = new System.Drawing.Point(0, 0);
       this.votingListsControl.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.votingListsControl.Name = "votingListsControl";
       this.votingListsControl.Size = new System.Drawing.Size(1016, 549);
       this.votingListsControl.TabIndex = 0;
       this.votingListsControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.VotingListsControl_VotingAction);
+      this.votingListsControl.CreateCertificate += new System.EventHandler(this.VotingListsControl_CreateCertificate);
+      this.votingListsControl.ResumeCertificate += new System.EventHandler(this.VotingListsControl_ResumeCertificate);
       // 
       // Master
       // 

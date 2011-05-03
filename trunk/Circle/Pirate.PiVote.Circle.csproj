@@ -213,6 +213,12 @@
     <Compile Include="Vote\VotingDialog.Designer.cs">
       <DependentUpon>VotingDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="VotingList\CertificateStatusControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="VotingList\CertificateStatusControl.Designer.cs">
+      <DependentUpon>CertificateStatusControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="VotingList\VotingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -323,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Vote\VotingDialog.resx">
       <DependentUpon>VotingDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VotingList\CertificateStatusControl.resx">
+      <DependentUpon>CertificateStatusControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VotingList\VotingControl.resx">
       <DependentUpon>VotingControl.cs</DependentUpon>

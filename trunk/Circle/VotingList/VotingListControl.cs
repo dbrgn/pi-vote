@@ -30,7 +30,7 @@ namespace Pirate.PiVote.Circle
 
     [Browsable(true)]
     public event VotingActionHandler VotingAction;
-    
+
     public VotingListControl()
     {
       InitializeComponent();

@@ -31,6 +31,11 @@ namespace Pirate.PiVote.Crypto
     private const int LowRabinMillerCount = 2;
 
     /// <summary>
+    /// Medium number of rabin-miller tests to perform.
+    /// </summary>
+    private const int MediumRabinMillerCount = 8;
+    
+    /// <summary>
     /// High number of rabin-miller test to perform.
     /// </summary>
     private const int HighRabinMillerCount = 128;
@@ -187,6 +192,16 @@ namespace Pirate.PiVote.Crypto
     public static bool IsPrime(BigInt number)
     {
       return number.IsProbablyPrimeRabinMiller(HighRabinMillerCount);
+    }
+
+    /// <summary>
+    /// Is the number a prime?
+    /// </summary>
+    /// <param name="value">Number to test.</param>
+    /// <returns>Is it a prime?</returns>
+    public static bool IsPrimeUnsure(BigInt number)
+    {
+      return number.IsProbablyPrimeRabinMiller(MediumRabinMillerCount);
     }
 
     /// <summary>

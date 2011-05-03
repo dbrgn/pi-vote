@@ -151,11 +151,29 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export Certificate.
+        /// </summary>
+        internal static string CertificateManagerExportDialogTitle {
+            get {
+                return ResourceManager.GetString("CertificateManagerExportDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Import....
         /// </summary>
         internal static string CertificateManagerImport {
             get {
                 return ResourceManager.GetString("CertificateManagerImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Certificate.
+        /// </summary>
+        internal static string CertificateManagerImportDialogTitle {
+            get {
+                return ResourceManager.GetString("CertificateManagerImportDialogTitle", resourceCulture);
             }
         }
         
@@ -214,38 +232,92 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your certificate id {0} of type {1} is invalid. It&apos;s status is {2}.
+        ///   Looks up a localized string similar to Your certificate is corrupt. It&apos;s status is {0}..
         /// </summary>
-        internal static string CertificateStatusMessageInvalid {
+        internal static string CertificateStatusCorrupt {
             get {
-                return ResourceManager.GetString("CertificateStatusMessageInvalid", resourceCulture);
+                return ResourceManager.GetString("CertificateStatusCorrupt", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your certificate id {0} of type {1} is not yet valid..
+        ///   Looks up a localized string similar to &amp;Create Certificate.
         /// </summary>
-        internal static string CertificateStatusMessageNotYetValid {
+        internal static string CertificateStatusCreateAction {
             get {
-                return ResourceManager.GetString("CertificateStatusMessageNotYetValid", resourceCulture);
+                return ResourceManager.GetString("CertificateStatusCreateAction", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your certificate id {0} of type {1} was outdated and therefore deactivated. You must create a new certificate..
+        ///   Looks up a localized string similar to The certificate revocation list is missing..
         /// </summary>
-        internal static string CertificateStatusMessageOutdate {
+        internal static string CertificateStatusCrlMissing {
             get {
-                return ResourceManager.GetString("CertificateStatusMessageOutdate", resourceCulture);
+                return ResourceManager.GetString("CertificateStatusCrlMissing", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your certificate id {0} of type {1} was revoked and therefore deactivated. You must create a new certificate..
+        ///   Looks up a localized string similar to You do not have a certificate yet..
         /// </summary>
-        internal static string CertificateStatusMessageRevoked {
+        internal static string CertificateStatusNoCertificate {
             get {
-                return ResourceManager.GetString("CertificateStatusMessageRevoked", resourceCulture);
+                return ResourceManager.GetString("CertificateStatusNoCertificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your signature request is still pending..
+        /// </summary>
+        internal static string CertificateStatusNoSignature {
+            get {
+                return ResourceManager.GetString("CertificateStatusNoSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your certificate will become valid at {0}..
+        /// </summary>
+        internal static string CertificateStatusNotYetValid {
+            get {
+                return ResourceManager.GetString("CertificateStatusNotYetValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your certificate has expired..
+        /// </summary>
+        internal static string CertificateStatusOutdated {
+            get {
+                return ResourceManager.GetString("CertificateStatusOutdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Resume Certificate Creation.
+        /// </summary>
+        internal static string CertificateStatusResumeAction {
+            get {
+                return ResourceManager.GetString("CertificateStatusResumeAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your certificate has been revoked by the certificate authority..
+        /// </summary>
+        internal static string CertificateStatusRevoked {
+            get {
+                return ResourceManager.GetString("CertificateStatusRevoked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have certificate which is valid until {0}..
+        /// </summary>
+        internal static string CertificateStatusValid {
+            get {
+                return ResourceManager.GetString("CertificateStatusValid", resourceCulture);
             }
         }
         
