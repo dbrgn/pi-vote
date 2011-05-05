@@ -47,7 +47,7 @@ namespace Pirate.PiVote.Circle.Status
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.progressBar.Location = new System.Drawing.Point(12, 59);
       this.progressBar.Name = "progressBar";
-      this.progressBar.Size = new System.Drawing.Size(607, 19);
+      this.progressBar.Size = new System.Drawing.Size(570, 19);
       this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
       this.progressBar.TabIndex = 0;
       // 
@@ -57,7 +57,7 @@ namespace Pirate.PiVote.Circle.Status
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.infoLabel.Location = new System.Drawing.Point(12, 10);
       this.infoLabel.Name = "infoLabel";
-      this.infoLabel.Size = new System.Drawing.Size(610, 22);
+      this.infoLabel.Size = new System.Drawing.Size(573, 22);
       this.infoLabel.TabIndex = 1;
       this.infoLabel.Text = "Text";
       // 
@@ -67,7 +67,7 @@ namespace Pirate.PiVote.Circle.Status
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.subInfoLabel.Location = new System.Drawing.Point(12, 31);
       this.subInfoLabel.Name = "subInfoLabel";
-      this.subInfoLabel.Size = new System.Drawing.Size(610, 25);
+      this.subInfoLabel.Size = new System.Drawing.Size(573, 25);
       this.subInfoLabel.TabIndex = 2;
       this.subInfoLabel.Text = "Text";
       // 
@@ -75,7 +75,7 @@ namespace Pirate.PiVote.Circle.Status
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(631, 90);
+      this.ClientSize = new System.Drawing.Size(594, 90);
       this.ControlBox = false;
       this.Controls.Add(this.subInfoLabel);
       this.Controls.Add(this.infoLabel);

@@ -418,7 +418,7 @@
     <value>Keine Abstimmungen anzuzeigen.</value>
   </data>
   <data name="VotingListPast" xml:space="preserve">
-    <value>Vergangen</value>
+    <value>Archiv</value>
   </data>
   <data name="VotingListScheduled" xml:space="preserve">
     <value>Geplant</value>
@@ -551,5 +551,8 @@
   </data>
   <data name="CertificateStatusValid" xml:space="preserve">
     <value>Dein Zertifikat ist gültig bis am {0}.</value>
+  </data>
+  <data name="CannotConnectMessage" xml:space="preserve">
+    <value>Kann nicht mit Server verbinden.</value>
   </data>
 </root>

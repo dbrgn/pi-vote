@@ -58,7 +58,7 @@ namespace Pirate.PiVote.Circle.Error
       }
 
       builder.AppendLine();
-      builder.AppendLine(exception.StackTrace);
+      builder.AppendLine(exception.ToString());
 
       dialog.detailBox.Text = builder.ToString();
 

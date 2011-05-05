@@ -37,9 +37,9 @@ namespace Pirate.PiVote.Circle
     {
       this.votingTabPage = new System.Windows.Forms.TabControl();
       this.currentTabPage = new System.Windows.Forms.TabPage();
+      this.pastTabPage = new System.Windows.Forms.TabPage();
       this.certificateStatus = new Pirate.PiVote.Circle.VotingList.CertificateStatusControl();
       this.currentVotingListControl = new Pirate.PiVote.Circle.VotingListControl();
-      this.pastTabPage = new System.Windows.Forms.TabPage();
       this.pastVotingListControl = new Pirate.PiVote.Circle.VotingListControl();
       this.votingTabPage.SuspendLayout();
       this.currentTabPage.SuspendLayout();
@@ -69,6 +69,17 @@ namespace Pirate.PiVote.Circle
       this.currentTabPage.Text = "Current";
       this.currentTabPage.UseVisualStyleBackColor = true;
       // 
+      // pastTabPage
+      // 
+      this.pastTabPage.Controls.Add(this.pastVotingListControl);
+      this.pastTabPage.Location = new System.Drawing.Point(4, 23);
+      this.pastTabPage.Name = "pastTabPage";
+      this.pastTabPage.Padding = new System.Windows.Forms.Padding(3);
+      this.pastTabPage.Size = new System.Drawing.Size(920, 627);
+      this.pastTabPage.TabIndex = 2;
+      this.pastTabPage.Text = "Past";
+      this.pastTabPage.UseVisualStyleBackColor = true;
+      // 
       // certificateStatus
       // 
       this.certificateStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -95,17 +106,6 @@ namespace Pirate.PiVote.Circle
       this.currentVotingListControl.TabIndex = 0;
       this.currentVotingListControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.CurrentVotingListControl_VotingAction);
       // 
-      // pastTabPage
-      // 
-      this.pastTabPage.Controls.Add(this.pastVotingListControl);
-      this.pastTabPage.Location = new System.Drawing.Point(4, 23);
-      this.pastTabPage.Name = "pastTabPage";
-      this.pastTabPage.Padding = new System.Windows.Forms.Padding(3);
-      this.pastTabPage.Size = new System.Drawing.Size(920, 627);
-      this.pastTabPage.TabIndex = 2;
-      this.pastTabPage.Text = "Past";
-      this.pastTabPage.UseVisualStyleBackColor = true;
-      // 
       // pastVotingListControl
       // 
       this.pastVotingListControl.AutoScroll = true;
@@ -113,7 +113,7 @@ namespace Pirate.PiVote.Circle
       this.pastVotingListControl.Font = new System.Drawing.Font("Arial", 8.25F);
       this.pastVotingListControl.Location = new System.Drawing.Point(3, 3);
       this.pastVotingListControl.Name = "pastVotingListControl";
-      this.pastVotingListControl.Size = new System.Drawing.Size(914, 622);
+      this.pastVotingListControl.Size = new System.Drawing.Size(914, 621);
       this.pastVotingListControl.TabIndex = 2;
       this.pastVotingListControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.PastVotingListControl_VotingAction);
       // 
@@ -121,6 +121,7 @@ namespace Pirate.PiVote.Circle
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.BackColor = System.Drawing.Color.White;
       this.Controls.Add(this.votingTabPage);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "VotingListsControl";

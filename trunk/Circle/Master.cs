@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
@@ -47,15 +48,35 @@ namespace Pirate.PiVote.Circle
 
       CenterToScreen();
       SetDefaultLanguage();
-      Show();
-
       Controller = new CircleController();
 
-      Status.TextStatusDialog.ShowInfo(Controller, this);
+      Status.InitScreen.ShowInfo(Controller, this);
 
       try
       {
         Controller.Prepare();
+      }
+      catch (InvalidOperationException)
+      {
+        MessageForm.Show(Resources.CannotConnectMessage,  Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        Close();
+        return;
+      }
+      catch (SocketException)
+      {
+        MessageForm.Show(Resources.CannotConnectMessage,  Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        Close();
+        return;
+      }
+      catch (Exception exception)
+      {
+        Error.ErrorDialog.ShowError(exception);
+        Close();
+        return;
+      }
+
+      try
+      {
         Controller.CheckUpdate();
         Controller.LoadCertificates();
         RefreshInternal();
@@ -64,9 +85,12 @@ namespace Pirate.PiVote.Circle
       {
         Error.ErrorDialog.ShowError(exception);
         Close();
+        return;
       }
 
-      Status.TextStatusDialog.HideInfo();
+      Status.InitScreen.HideInfo();
+
+      Show();
     }
 
     private void Master_FormClosing(object sender, FormClosingEventArgs e)

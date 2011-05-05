@@ -177,6 +177,12 @@
     <Compile Include="Result\ResultDisplayDialog.Designer.cs">
       <DependentUpon>ResultDisplayDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Status\InitScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Status\InitScreen.Designer.cs">
+      <DependentUpon>InitScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Status\TextStatusDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -311,6 +317,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Result\ResultDisplayDialog.resx">
       <DependentUpon>ResultDisplayDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Status\InitScreen.resx">
+      <DependentUpon>InitScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Status\TextStatusDialog.resx">
       <DependentUpon>TextStatusDialog.cs</DependentUpon>

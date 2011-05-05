@@ -442,7 +442,7 @@
     <value>There are now votings to display.</value>
   </data>
   <data name="VotingListPast" xml:space="preserve">
-    <value>Past</value>
+    <value>Archive</value>
   </data>
   <data name="VotingListScheduled" xml:space="preserve">
     <value>Scheduled</value>
@@ -578,5 +578,8 @@
   </data>
   <data name="CertificateManagerImportDialogTitle" xml:space="preserve">
     <value>Import Certificate</value>
+  </data>
+  <data name="CannotConnectMessage" xml:space="preserve">
+    <value>Could not connect to the server.</value>
   </data>
 </root>

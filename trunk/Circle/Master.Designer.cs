@@ -68,7 +68,7 @@ namespace Pirate.PiVote.Circle
       this.mainMenu.Name = "mainMenu";
       this.mainMenu.Size = new System.Drawing.Size(1016, 24);
       this.mainMenu.TabIndex = 0;
-      this.mainMenu.Text = "menuStrip1";
+      this.mainMenu.Text = "mainMenu";
       // 
       // votingsMenu
       // 
@@ -200,6 +200,7 @@ namespace Pirate.PiVote.Circle
       // 
       // votingListsControl
       // 
+      this.votingListsControl.BackColor = System.Drawing.Color.White;
       this.votingListsControl.Dock = System.Windows.Forms.DockStyle.Fill;
       this.votingListsControl.Font = new System.Drawing.Font("Arial", 8.25F);
       this.votingListsControl.Location = new System.Drawing.Point(0, 0);
@@ -215,6 +216,7 @@ namespace Pirate.PiVote.Circle
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.BackColor = System.Drawing.Color.White;
       this.ClientSize = new System.Drawing.Size(1016, 573);
       this.Controls.Add(this.mainPanel);
       this.Controls.Add(this.mainMenu);

@@ -61,6 +61,15 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not connect to the server..
+        /// </summary>
+        internal static string CannotConnectMessage {
+            get {
+                return ResourceManager.GetString("CannotConnectMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Backup....
         /// </summary>
         internal static string CertificateManagerBackup {
@@ -1348,7 +1357,7 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Past.
+        ///   Looks up a localized string similar to Archive.
         /// </summary>
         internal static string VotingListPast {
             get {
