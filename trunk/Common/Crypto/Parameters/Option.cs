@@ -90,5 +90,34 @@ namespace Pirate.PiVote.Crypto
       Description = context.ReadMultiLanguageString();
       Url = context.ReadMultiLanguageString();
     }
+
+    public static Option CreateAbstention()
+    { 
+      MultiLanguageString text = new MultiLanguageString();
+      text.Set(Language.English, LibraryResources.OptionAbstainEnglish);
+      text.Set(Language.German, LibraryResources.OptionAbstainGerman);
+      text.Set(Language.French, LibraryResources.OptionAbstainFrench);
+
+      return new Option(
+        text,
+        MultiLanguageString.AllEmpty, 
+        MultiLanguageString.AllEmpty);
+    }
+
+    public static Option CreateAbstentionSpecial()
+    {
+      return new Option(
+        MultiLanguageString.AllSame(LibraryResources.OptionAbstainSpecial),
+        MultiLanguageString.AllEmpty,
+        MultiLanguageString.AllEmpty);
+    }
+
+    public bool IsAbstentionSpecial
+    { 
+      get
+      {
+        return Text.Get(Language.English) == LibraryResources.OptionAbstainSpecial;
+      }
+    }
   }
 }

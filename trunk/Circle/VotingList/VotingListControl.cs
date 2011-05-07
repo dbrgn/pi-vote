@@ -46,7 +46,7 @@ namespace Pirate.PiVote.Circle
       var oldControlQueue = new Queue<VotingControl>(this.controls);
       var newControlQueue = new Queue<VotingControl>();
       this.votings = new List<VotingDescriptor2>();
-      int top = -VerticalScroll.Value;
+      int top = 0;
 
       this.emptyLabel.Visible = newVotings.Count() == 0;
 

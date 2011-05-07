@@ -1042,15 +1042,6 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Abstain_@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.
-        /// </summary>
-        internal static string OptionAbstainSpecial {
-            get {
-                return ResourceManager.GetString("OptionAbstainSpecial", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Open backup.
         /// </summary>
         internal static string RestoreBackupDialogTitle {

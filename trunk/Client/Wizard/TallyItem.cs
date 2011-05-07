@@ -126,7 +126,7 @@ namespace Pirate.PiVote.Client
 
             foreach (OptionResult option in question.Options)
             {
-              if (option.Text.Text == Resources.OptionAbstainSpecial)
+              if (option.IsAbstentionSpecial)
               {
                 hasAbstain = true;
                 abstainCount += option.Result;

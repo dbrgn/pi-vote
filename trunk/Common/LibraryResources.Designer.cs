@@ -1177,6 +1177,42 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abstention.
+        /// </summary>
+        public static string OptionAbstainEnglish {
+            get {
+                return ResourceManager.GetString("OptionAbstainEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abstention.
+        /// </summary>
+        public static string OptionAbstainFrench {
+            get {
+                return ResourceManager.GetString("OptionAbstainFrench", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enthaltung.
+        /// </summary>
+        public static string OptionAbstainGerman {
+            get {
+                return ResourceManager.GetString("OptionAbstainGerman", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abstain_@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.
+        /// </summary>
+        public static string OptionAbstainSpecial {
+            get {
+                return ResourceManager.GetString("OptionAbstainSpecial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fingerprint does not match..
         /// </summary>
         public static string RefusedFingerprintNoMatch {

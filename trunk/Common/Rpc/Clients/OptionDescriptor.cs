@@ -53,5 +53,13 @@ namespace Pirate.PiVote.Rpc
       this.description = option.Description;
       this.url = option.Url;
     }
+
+    public bool IsAbstentionSpecial
+    {
+      get
+      {
+        return Text.Get(Language.English) == LibraryResources.OptionAbstainSpecial;
+      }
+    }
   }
 }

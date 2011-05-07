@@ -627,4 +627,16 @@
   <data name="CertificateStatusValid" xml:space="preserve">
     <value>Valid</value>
   </data>
+  <data name="OptionAbstainEnglish" xml:space="preserve">
+    <value>Abstention</value>
+  </data>
+  <data name="OptionAbstainFrench" xml:space="preserve">
+    <value>Abstention</value>
+  </data>
+  <data name="OptionAbstainGerman" xml:space="preserve">
+    <value>Enthaltung</value>
+  </data>
+  <data name="OptionAbstainSpecial" xml:space="preserve">
+    <value>Abstain_@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</value>
+  </data>
 </root>

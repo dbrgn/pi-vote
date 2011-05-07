@@ -17,7 +17,7 @@ namespace Pirate.PiVote.Circle.CreateVoting
   {
     private bool run;
     private Thread worker;
-    private bool havePrimes;
+    private bool havePrimes = false;
 
     public PrimeControl()
     {
@@ -27,45 +27,88 @@ namespace Pirate.PiVote.Circle.CreateVoting
     public override void Prepare()
     {
       this.generateButton.Text = Resources.CreateVotingGeneratePrime;
-      this.takeButton.Text = Resources.CreateVotingTakePrime;
       int primesStored = Prime.CountPregeneratedSafePrimes(Status.Controller.Status.DataPath);
       this.storedPrimesLabel.Text = string.Format(Resources.CreateVotingStored, primesStored);
-      this.readyPrimeLabel.Text = Resources.CreateVotingNotReady;
       this.doneButton.Text = GuiResources.ButtonDone;
       this.cancelButton.Text = GuiResources.ButtonCancel;
+      this.doneButton.Enabled = primesStored > 0;
     }
 
     private void doneButton_Click(object sender, EventArgs e)
     {
-      var certificate = Status.Controller.GetAdminCertificate();
+      FindForm().Enabled = false;
 
-      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, GuiResources.UnlockActionCreateVoting))
+      this.progressLabel.Text = Resources.CreateVotingVerifyingSafePrime;
+      this.progressBar.Style = ProgressBarStyle.Marquee;
+
+      this.run = true;
+      this.worker = new Thread(TakePrime);
+      this.worker.Start();
+
+      while (this.run)
       {
-        try
-        {
-          var parameters = new VotingParameters(
-            Status.Data.Title,
-            Status.Data.Descrption,
-            Status.Data.Url,
-            Status.FromDate,
-            Status.UntilDate,
-            Status.VotingGroup.Id);
-          Status.Data.Questions.ForEach(question => parameters.AddQuestion(question));
-          parameters.SetNumbers(Status.Prime, Status.SafePrime);
-          var signedParameters = new Signed<VotingParameters>(parameters, certificate);
+        Application.DoEvents();
+        Thread.Sleep(1);
+      }
 
-          Pirate.PiVote.Circle.Status.TextStatusDialog.ShowInfo(Status.Controller, FindForm());
-          Status.Controller.CreateVoting(signedParameters, Status.Authorites);
-        }
-        catch (Exception exception)
+      this.progressLabel.Text = string.Empty;
+      this.progressBar.Style = ProgressBarStyle.Blocks;
+
+      int primesStored = Prime.CountPregeneratedSafePrimes(Status.Controller.Status.DataPath);
+      this.storedPrimesLabel.Text = string.Format(Resources.CreateVotingStored, primesStored);
+      this.doneButton.Enabled = primesStored > 0;
+
+      FindForm().Enabled = true;
+
+      if (this.havePrimes)
+      {
+        var certificate = Status.Controller.GetAdminCertificate();
+
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, GuiResources.UnlockActionCreateVoting))
         {
-          Error.ErrorDialog.ShowError(exception);
-        }
-        finally
-        {
-          certificate.Lock();
-          Pirate.PiVote.Circle.Status.TextStatusDialog.HideInfo();
-          OnCloseCreateDialog();
+          try
+          {
+            var parameters = new VotingParameters(
+              Status.Data.Title,
+              Status.Data.Descrption,
+              Status.Data.Url,
+              Status.FromDate,
+              Status.UntilDate,
+              Status.VotingGroup.Id);
+
+            foreach (var question in Status.Data.Questions)
+            {
+              if (question.MaxVota > 1)
+              {
+                for (int index = 0; index < question.MaxVota; index++)
+                {
+                  question.AddOption(Option.CreateAbstentionSpecial());
+                }
+              }
+              else
+              {
+                question.AddOption(Option.CreateAbstention());
+              }
+
+              parameters.AddQuestion(question);
+            }
+
+            parameters.SetNumbers(Status.Prime, Status.SafePrime);
+            var signedParameters = new Signed<VotingParameters>(parameters, certificate);
+
+            Pirate.PiVote.Circle.Status.TextStatusDialog.ShowInfo(Status.Controller, FindForm());
+            Status.Controller.CreateVoting(signedParameters, Status.Authorites);
+          }
+          catch (Exception exception)
+          {
+            Error.ErrorDialog.ShowError(exception);
+          }
+          finally
+          {
+            certificate.Lock();
+            Pirate.PiVote.Circle.Status.TextStatusDialog.HideInfo();
+            OnCloseCreateDialog();
+          }
         }
       }
     }
@@ -110,48 +153,6 @@ namespace Pirate.PiVote.Circle.CreateVoting
       Status.SafePrime = safePrime;
       Status.Prime = prime;
       this.run = false;
-    }
-
-    private void takeButton_Click(object sender, EventArgs e)
-    {
-      FindForm().Enabled = false;
-
-      this.progressLabel.Text = Resources.CreateVotingVerifyingSafePrime;
-      this.progressBar.Style = ProgressBarStyle.Marquee;
-
-      this.run = true;
-      this.worker = new Thread(TakePrime);
-      this.worker.Start();
-
-      while (this.run)
-      {
-        Application.DoEvents();
-        Thread.Sleep(1);
-      }
-
-      this.progressLabel.Text = string.Empty;
-      this.progressBar.Style = ProgressBarStyle.Blocks;
-
-      int primesStored = Prime.CountPregeneratedSafePrimes(Status.Controller.Status.DataPath);
-      this.storedPrimesLabel.Text = string.Format(Resources.CreateVotingStored, primesStored);
-
-      FindForm().Enabled = true;
-
-      if (this.havePrimes)
-      {
-        this.readyPrimeLabel.Text = Resources.CreateVotingReady;
-        this.doneButton.Enabled = true;
-        this.cancelButton.Enabled = true;
-        this.generateButton.Enabled = true;
-        this.takeButton.Enabled = false;
-      }
-      else
-      {
-        this.cancelButton.Enabled = true;
-        this.generateButton.Enabled = true;
-        this.doneButton.Enabled = false;
-        this.takeButton.Enabled = true;
-      }
     }
 
     private void cancelButton_Click(object sender, EventArgs e)

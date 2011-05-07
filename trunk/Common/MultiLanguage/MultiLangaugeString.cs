@@ -41,6 +41,26 @@ namespace Pirate.PiVote
       this.content.Add(Language.English, englishString);
     }
 
+    public static MultiLanguageString AllSame(string text)
+    {
+      MultiLanguageString result = new MultiLanguageString();
+
+      foreach (Language language in Enum.GetValues(typeof(Language)))
+      {
+        result.Set(language, text);
+      }
+
+      return result;      
+    }
+
+    public static MultiLanguageString AllEmpty
+    {
+      get
+      {
+        return AllSame(string.Empty);
+      }
+    }
+
     /// <summary>
     /// Gets a string in a specific language.
     /// </summary>

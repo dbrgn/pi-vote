@@ -172,8 +172,8 @@ namespace Pirate.PiVote.Client
         {
           Question newQuestion = new Question(question.Text, question.Description, question.Url, question.MaxVota);
           question.Options
-            .Where(option => option.Text.Get(Language.English) != Resources.OptionAbstainEnglish &&
-                             option.Text.Get(Language.English) != Resources.OptionAbstainSpecial)
+            .Where(option => option.Text.Get(Language.English) != LibraryResources.OptionAbstainEnglish &&
+                             option.Text.Get(Language.English) != LibraryResources.OptionAbstainSpecial)
             .Foreach(option => newQuestion.AddOption(option));
 
           ListViewItem item = new ListViewItem(question.Text.AllLanguages);
@@ -277,45 +277,13 @@ namespace Pirate.PiVote.Client
 
         if (question.MaxVota == 1)
         {
-          MultiLanguageString abstainString = new MultiLanguageString();
-          abstainString.Set(Language.English, Resources.OptionAbstainEnglish);
-          abstainString.Set(Language.German, Resources.OptionAbstainGerman);
-          abstainString.Set(Language.French, Resources.OptionAbstainFrench);
-
-          MultiLanguageString descriptionString = new MultiLanguageString();
-          descriptionString.Set(Language.English, string.Empty);
-          descriptionString.Set(Language.German, string.Empty);
-          descriptionString.Set(Language.French, string.Empty);
-
-          MultiLanguageString urlString = new MultiLanguageString();
-          urlString.Set(Language.English, string.Empty);
-          urlString.Set(Language.German, string.Empty);
-          urlString.Set(Language.French, string.Empty);
-
-          Option abstain = new Option(abstainString, descriptionString, urlString);
-          question.AddOption(abstain);
+          question.AddOption(Option.CreateAbstention());
         }
         else
         {
           for (int index = 0; index < question.MaxVota; index++)
           {
-            MultiLanguageString abstainString = new MultiLanguageString();
-            abstainString.Set(Language.English, Resources.OptionAbstainSpecial);
-            abstainString.Set(Language.German, Resources.OptionAbstainSpecial);
-            abstainString.Set(Language.French, Resources.OptionAbstainSpecial);
-
-            MultiLanguageString descriptionString = new MultiLanguageString();
-            descriptionString.Set(Language.English, string.Empty);
-            descriptionString.Set(Language.German, string.Empty);
-            descriptionString.Set(Language.French, string.Empty);
-
-            MultiLanguageString urlString = new MultiLanguageString();
-            urlString.Set(Language.English, string.Empty);
-            urlString.Set(Language.German, string.Empty);
-            urlString.Set(Language.French, string.Empty);
-
-            Option abstain = new Option(abstainString, descriptionString, urlString);
-            question.AddOption(abstain);
+            question.AddOption(Option.CreateAbstentionSpecial());
           }
         }
 

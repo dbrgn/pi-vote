@@ -55,7 +55,7 @@ namespace Pirate.PiVote.Client
 
       foreach (OptionDescriptor option in Question.Options)
       {
-        if (option.Text.Text == Resources.OptionAbstainSpecial)
+        if (option.IsAbstentionSpecial)
         {
           this.optionControls.Add(option, null);
         }

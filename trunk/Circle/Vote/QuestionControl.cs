@@ -85,7 +85,7 @@ namespace Pirate.PiVote.Circle.Vote
 
         foreach (OptionDescriptor option in question.Options)
         {
-          if (option.Text.Text != Resources.OptionAbstainSpecial)
+          if (!option.IsAbstentionSpecial)
           {
             InfoControl optionInfo = new InfoControl();
             optionInfo.Title = string.Empty;
@@ -167,7 +167,7 @@ namespace Pirate.PiVote.Circle.Vote
         foreach (OptionDescriptor option in this.question.Options)
         {
           if (selectedOptionCount < this.question.MaxOptions &&
-              option.Text.Text == Resources.OptionAbstainSpecial)
+              option.IsAbstentionSpecial)
           {
             vota[index] = true;
             selectedOptionCount++;

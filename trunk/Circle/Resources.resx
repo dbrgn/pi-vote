@@ -360,9 +360,6 @@
   <data name="MessageBoxTitle" xml:space="preserve">
     <value>Circle</value>
   </data>
-  <data name="OptionAbstainSpecial" xml:space="preserve">
-    <value>Abstain_@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</value>
-  </data>
   <data name="ResultDialogAbstain" xml:space="preserve">
     <value>Abstention</value>
   </data>

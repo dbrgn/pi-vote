@@ -29,9 +29,7 @@
     private void InitializeComponent()
     {
       this.storedPrimesLabel = new System.Windows.Forms.Label();
-      this.readyPrimeLabel = new System.Windows.Forms.Label();
       this.generateButton = new System.Windows.Forms.Button();
-      this.takeButton = new System.Windows.Forms.Button();
       this.cancelButton = new System.Windows.Forms.Button();
       this.doneButton = new System.Windows.Forms.Button();
       this.progressBar = new System.Windows.Forms.ProgressBar();
@@ -47,15 +45,6 @@
       this.storedPrimesLabel.TabIndex = 0;
       this.storedPrimesLabel.Text = "Stored Primes";
       // 
-      // readyPrimeLabel
-      // 
-      this.readyPrimeLabel.AutoSize = true;
-      this.readyPrimeLabel.Location = new System.Drawing.Point(3, 40);
-      this.readyPrimeLabel.Name = "readyPrimeLabel";
-      this.readyPrimeLabel.Size = new System.Drawing.Size(67, 14);
-      this.readyPrimeLabel.TabIndex = 1;
-      this.readyPrimeLabel.Text = "Ready Prime";
-      // 
       // generateButton
       // 
       this.generateButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -66,17 +55,6 @@
       this.generateButton.Text = "&Generate New";
       this.generateButton.UseVisualStyleBackColor = true;
       this.generateButton.Click += new System.EventHandler(this.generateButton_Click);
-      // 
-      // takeButton
-      // 
-      this.takeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.takeButton.Location = new System.Drawing.Point(387, 34);
-      this.takeButton.Name = "takeButton";
-      this.takeButton.Size = new System.Drawing.Size(262, 25);
-      this.takeButton.TabIndex = 3;
-      this.takeButton.Text = "Take &Verify";
-      this.takeButton.UseVisualStyleBackColor = true;
-      this.takeButton.Click += new System.EventHandler(this.takeButton_Click);
       // 
       // cancelButton
       // 
@@ -126,11 +104,8 @@
       this.Controls.Add(this.progressBar);
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.doneButton);
-      this.Controls.Add(this.takeButton);
       this.Controls.Add(this.generateButton);
-      this.Controls.Add(this.readyPrimeLabel);
       this.Controls.Add(this.storedPrimesLabel);
-      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "PrimeControl";
       this.Size = new System.Drawing.Size(652, 323);
       this.ResumeLayout(false);
@@ -141,9 +116,7 @@
     #endregion
 
     private System.Windows.Forms.Label storedPrimesLabel;
-    private System.Windows.Forms.Label readyPrimeLabel;
     private System.Windows.Forms.Button generateButton;
-    private System.Windows.Forms.Button takeButton;
     private System.Windows.Forms.Button cancelButton;
     private System.Windows.Forms.Button doneButton;
     private System.Windows.Forms.ProgressBar progressBar;

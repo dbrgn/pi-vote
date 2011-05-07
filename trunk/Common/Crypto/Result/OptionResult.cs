@@ -62,5 +62,13 @@ namespace Pirate.PiVote.Crypto
       this.description = description;
       this.result = result;
     }
+
+    public bool IsAbstentionSpecial
+    {
+      get
+      {
+        return Text.Get(Language.English) == LibraryResources.OptionAbstainSpecial;
+      }
+    }
   }
 }

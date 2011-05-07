@@ -53,7 +53,7 @@ namespace Pirate.PiVote.Circle.Result
 
         foreach (var option in question.Options)
         {
-          if (option.Text.Text == Resources.OptionAbstainSpecial)
+          if (option.IsAbstentionSpecial)
           {
             abstentions += option.Result;
           }

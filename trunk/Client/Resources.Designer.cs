@@ -1351,42 +1351,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Abstention.
-        /// </summary>
-        internal static string OptionAbstainEnglish {
-            get {
-                return ResourceManager.GetString("OptionAbstainEnglish", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Abstention.
-        /// </summary>
-        internal static string OptionAbstainFrench {
-            get {
-                return ResourceManager.GetString("OptionAbstainFrench", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enthaltung.
-        /// </summary>
-        internal static string OptionAbstainGerman {
-            get {
-                return ResourceManager.GetString("OptionAbstainGerman", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Abstain_@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.
-        /// </summary>
-        internal static string OptionAbstainSpecial {
-            get {
-                return ResourceManager.GetString("OptionAbstainSpecial", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Pi-Vote Client.
         /// </summary>
         internal static string PiVoteClient {
