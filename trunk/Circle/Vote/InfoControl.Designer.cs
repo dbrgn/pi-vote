@@ -57,25 +57,28 @@ namespace Pirate.PiVote.Circle.Vote
       this.titleBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.titleBox.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.titleBox.Location = new System.Drawing.Point(2, 3);
+      this.titleBox.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.titleBox.Location = new System.Drawing.Point(2, 0);
       this.titleBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.titleBox.Name = "titleBox";
-      this.titleBox.Size = new System.Drawing.Size(428, 22);
+      this.titleBox.Size = new System.Drawing.Size(427, 28);
       this.titleBox.TabIndex = 1;
+      this.titleBox.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.titleBox.Click += new System.EventHandler(this.titleBox_Click);
       // 
       // webBox
       // 
-      this.webBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.webBox.AutoSize = true;
-      this.webBox.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.webBox.Location = new System.Drawing.Point(436, 3);
+      this.webBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.webBox.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.webBox.Location = new System.Drawing.Point(433, 0);
       this.webBox.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.webBox.Name = "webBox";
-      this.webBox.Size = new System.Drawing.Size(37, 20);
+      this.webBox.Size = new System.Drawing.Size(67, 29);
       this.webBox.TabIndex = 2;
       this.webBox.TabStop = true;
       this.webBox.Text = "Web";
+      this.webBox.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.webBox.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.webBox_LinkClicked);
       // 
       // InfoControl
@@ -91,7 +94,6 @@ namespace Pirate.PiVote.Circle.Vote
       this.Name = "InfoControl";
       this.Size = new System.Drawing.Size(500, 28);
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 

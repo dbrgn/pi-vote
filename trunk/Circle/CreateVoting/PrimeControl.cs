@@ -18,6 +18,8 @@ namespace Pirate.PiVote.Circle.CreateVoting
     private bool run;
     private Thread worker;
     private bool havePrimes = false;
+    private int numberCount;
+    private int primeCount;
 
     public PrimeControl()
     {
@@ -47,6 +49,7 @@ namespace Pirate.PiVote.Circle.CreateVoting
 
       while (this.run)
       {
+        this.progressLabel.Text = Resources.CreateVotingVerifyingSafePrime;
         Application.DoEvents();
         Thread.Sleep(1);
       }
@@ -113,11 +116,18 @@ namespace Pirate.PiVote.Circle.CreateVoting
       }
     }
 
+    private void Feedback(int numberCount, int primeCount)
+    {
+      this.numberCount = numberCount;
+      this.primeCount = primeCount;
+    }
+
     private void generateButton_Click(object sender, EventArgs e)
     {
       FindForm().Enabled = false;
 
-      this.progressLabel.Text = Resources.CreateVotingGeneratingSafePrime;
+      this.progressLabel.Text = string.Format(Resources.CreateVotingGeneratingSafePrime, 0, 0);
+      Application.DoEvents();
       this.progressBar.Style = ProgressBarStyle.Marquee;
 
       this.run = true;
@@ -126,6 +136,7 @@ namespace Pirate.PiVote.Circle.CreateVoting
 
       while (this.run)
       {
+        this.progressLabel.Text = string.Format(Resources.CreateVotingGeneratingSafePrime, this.numberCount, this.primeCount);
         Application.DoEvents();
         Thread.Sleep(1);
       }
@@ -141,7 +152,7 @@ namespace Pirate.PiVote.Circle.CreateVoting
 
     private void GeneratePrime()
     {
-      Prime.GenerateAndStoreSafePrime(Status.Controller.Status.DataPath);
+      Prime.GenerateAndStoreSafePrime(Status.Controller.Status.DataPath, Feedback);
       this.run = false;
     }
 

@@ -200,7 +200,7 @@ namespace Pirate.PiVote.Crypto
 
       if (!Prime.TryLoadPregeneratedSafePrime(dataPath, primeBits, out prime, out safePrime))
       {
-        Prime.FindPrimeAndSafePrimeThreaded(primeBits, out prime, out safePrime);
+        Prime.FindPrimeAndSafePrimeThreaded(primeBits, out prime, out safePrime, null);
       }
 
       SetNumbers(prime, safePrime);

@@ -16,6 +16,8 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
+  public delegate void PrimeGenerationFeedBack(int numberCount, int primeCount);
+
   /// <summary>
   /// Finds prime numbers.
   /// </summary>
@@ -98,9 +100,10 @@ namespace Pirate.PiVote.Crypto
     /// <param name="bitLength">Length in bits of the prime.</param>
     /// <param name="prime">Random prime number.</param>
     /// <param name="safePrime">Random safe prime number.</param>
-    public static void FindPrimeAndSafePrimeThreaded(int bitLength, out BigInt prime, out BigInt safePrime)
+    /// <param name="feedback">Feedback delegate or null.</param>
+    public static void FindPrimeAndSafePrimeThreaded(int bitLength, out BigInt prime, out BigInt safePrime, PrimeGenerationFeedBack feedback)
     {
-      ThreadedPrimeGenerator generator = new ThreadedPrimeGenerator();
+      ThreadedPrimeGenerator generator = new ThreadedPrimeGenerator(feedback);
       generator.FindPrimeAndSafePrime(bitLength, out prime, out safePrime);
     }
 
@@ -279,12 +282,13 @@ namespace Pirate.PiVote.Crypto
     /// Generates and stores prime and safe prime.
     /// </summary>
     /// <param name="dataPath">Path where application data is stored.</param>
-    public static void GenerateAndStoreSafePrime(string dataPath)
+    /// <param name="feedback">Feedback delegate or null.</param>
+    public static void GenerateAndStoreSafePrime(string dataPath, PrimeGenerationFeedBack feedback)
     {
       BigInt prime = null;
       BigInt safePrime = null;
 
-      Prime.FindPrimeAndSafePrimeThreaded(4096, out prime, out safePrime);
+      Prime.FindPrimeAndSafePrimeThreaded(4096, out prime, out safePrime, feedback);
 
       string fileName = Path.Combine(dataPath, string.Format(Files.SafePrimeFileString, DateTime.Now.Ticks));
       FileStream file = new FileStream(fileName, FileMode.Create, FileAccess.Write);

@@ -68,7 +68,7 @@ namespace Pirate.PiVote.Circle.Vote
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.textControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.textControl.Description = null;
-      this.textControl.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textControl.Font = new System.Drawing.Font("Arial", 8.25F);
       this.textControl.InfoFont = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textControl.Location = new System.Drawing.Point(3, 3);
       this.textControl.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);

@@ -94,6 +94,17 @@ namespace Pirate.PiVote.Circle.Vote
         {
           this.controller.Vote(this.voterCertificate, this.voting, this.votingControl.Vota);
         }
+        catch (PiArgumentException exception)
+        {
+          if (exception.Code == ExceptionCode.AlreadyVoted)
+          {
+            MessageForm.Show(Resources.VoteAlreadyVote, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+          }
+          else
+          {
+            Error.ErrorDialog.ShowError(exception);
+          }
+        }
         catch (Exception exception)
         {
           Error.ErrorDialog.ShowError(exception);

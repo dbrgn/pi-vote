@@ -47,6 +47,30 @@ namespace Pirate.PiVote.Crypto
     private BigInt safePrime;
 
     /// <summary>
+    /// Feedback delegate or null.
+    /// </summary>
+    private PrimeGenerationFeedBack feedBack;
+
+    /// <summary>
+    /// Number of numbers tested for prime.
+    /// </summary>
+    private int numberCount;
+
+    /// <summary>
+    /// Number of primes tested for save prime.
+    /// </summary>
+    private int primeCount;
+
+    /// <summary>
+    /// Creates a new generator.
+    /// </summary>
+    /// <param name="feedback">Feedback delegate or null.</param>
+    public ThreadedPrimeGenerator(PrimeGenerationFeedBack feedBack)
+    {
+      this.feedBack = feedBack;
+    }
+
+    /// <summary>
     /// Runs an infinite find test to determine time to result.
     /// </summary>
     public void FindTest()
@@ -62,7 +86,7 @@ namespace Pirate.PiVote.Crypto
         DateTime start0 = DateTime.Now;
         Emil.GMP.BigInt p0 = null;
         Emil.GMP.BigInt sp0 = null;
-        ThreadedPrimeGenerator g0 = new ThreadedPrimeGenerator();
+        ThreadedPrimeGenerator g0 = new ThreadedPrimeGenerator(null);
         g0.FindPrimeAndSafePrime(4096, out p0, out sp0);
         time0 = time0.Add(DateTime.Now.Subtract(start0));
         counter++;
@@ -82,19 +106,41 @@ namespace Pirate.PiVote.Crypto
       DateTime start = DateTime.Now;
 
       this.bitLength = bitLength;
+      this.numberCount = 0;
+      this.primeCount = 0;
 
       List<Thread> threads = new List<Thread>();
       Environment.ProcessorCount.Times(() => threads.Add(new Thread(FindPrime)));
       threads.ForEach(thread => thread.Priority = ThreadPriority.Lowest);
       threads.ForEach(thread => thread.Start());
-      while (this.prime == null) { Thread.Sleep(100); }
+
+      while (this.prime == null)
+      {
+        if (this.feedBack != null)
+        {
+          this.feedBack(this.numberCount, this.primeCount);
+        }
+
+        Thread.Sleep(100);
+      }
+
       threads.ForEach(thread => thread.Join());
 
       threads = new List<Thread>();
       Environment.ProcessorCount.Times(() => threads.Add(new Thread(FindSafePrime)));
       threads.ForEach(thread => thread.Priority = ThreadPriority.Lowest); 
       threads.ForEach(thread => thread.Start());
-      while (this.safePrime == null) { Thread.Sleep(100); }
+
+      while (this.safePrime == null)
+      {
+        if (this.feedBack != null)
+        {
+          this.feedBack(this.numberCount, this.primeCount);
+        }
+
+        Thread.Sleep(100);
+      }
+
       threads.ForEach(thread => thread.Join());
 
       prime = this.prime;
@@ -1167,6 +1213,8 @@ namespace Pirate.PiVote.Crypto
             this.prime = number;
           }
         }
+
+        this.numberCount++;
       }
     }
 
@@ -1198,8 +1246,12 @@ namespace Pirate.PiVote.Crypto
                 }
               }
             }
+
+            this.primeCount++;
           }
         }
+
+        this.numberCount++;
       }
     }
 

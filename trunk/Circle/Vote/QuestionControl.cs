@@ -22,6 +22,9 @@ namespace Pirate.PiVote.Circle.Vote
   public partial class QuestionControl : UserControl
   {
     private const int Space = 16;
+    private const int BoxWidth = 16;
+    private const int BoxTop = 2;
+    private Dictionary<InfoControl, int> optionControls;
     private Dictionary<int, RadioButton> singleOptionControls;
     private Dictionary<int, CheckBox> multiOptionControls;
     private QuestionDescriptor question;
@@ -40,8 +43,8 @@ namespace Pirate.PiVote.Circle.Vote
       this.textControl.Title = question.Text.Text;
       this.textControl.Description = question.Description.Text;
       this.textControl.Url = question.Url.Text;
-      this.textControl.FixLayout();
       this.textControl.BeginInfo();
+      this.optionControls = new Dictionary<InfoControl, int>();
 
       if (question.MaxOptions == 1)
       {
@@ -52,21 +55,13 @@ namespace Pirate.PiVote.Circle.Vote
 
         foreach (OptionDescriptor option in question.Options)
         {
-          InfoControl optionInfo = new InfoControl();
-          optionInfo.Title = string.Empty;
-          optionInfo.Description = option.Description.Text;
-          optionInfo.Url = option.Url.Text;
-          optionInfo.Left = Space;
-          optionInfo.Top = top;
-          optionInfo.Width = this.optionsPanel.Width - (2 * Space);
-          optionInfo.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-          this.optionsPanel.Controls.Add(optionInfo);
-          optionInfo.BeginInfo();
+          AddOptionInfo(index, top, option);
 
           RadioButton optionControl = new RadioButton();
-          optionControl.Text = option.Text.Text;
+          optionControl.Text = string.Empty;
           optionControl.Left = Space;
-          optionControl.Top = top;
+          optionControl.Top = top + BoxTop;
+          optionControl.Width = BoxWidth;
           this.optionsPanel.Controls.Add(optionControl);
           optionControl.BringToFront();
           optionControl.CheckedChanged += new EventHandler(OptionControl_CheckedChanged);
@@ -87,21 +82,12 @@ namespace Pirate.PiVote.Circle.Vote
         {
           if (!option.IsAbstentionSpecial)
           {
-            InfoControl optionInfo = new InfoControl();
-            optionInfo.Title = string.Empty;
-            optionInfo.Description = option.Description.Text;
-            optionInfo.Url = option.Url.Text;
-            optionInfo.Left = Space;
-            optionInfo.Top = top;
-            optionInfo.Width = this.optionsPanel.Width - (2 * Space);
-            optionInfo.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-            this.optionsPanel.Controls.Add(optionInfo);
-            optionInfo.BeginInfo();
+            AddOptionInfo(index, top, option);
 
             CheckBox optionControl = new CheckBox();
-            optionControl.Text = option.Text.Text;
-            optionControl.Left = Space;
-            optionControl.Top = top;
+            optionControl.Text = string.Empty;
+            optionControl.Top = top + BoxTop;
+            optionControl.Width = BoxWidth;
             this.optionsPanel.Controls.Add(optionControl);
             optionControl.BringToFront();
             optionControl.CheckedChanged += new EventHandler(OptionControl_CheckedChanged);
@@ -112,6 +98,35 @@ namespace Pirate.PiVote.Circle.Vote
 
           index++;
         }
+      }
+    }
+
+    private void AddOptionInfo(int index, int top, OptionDescriptor option)
+    {
+      InfoControl optionInfo = new InfoControl();
+      optionInfo.Title = option.Text.Text;
+      optionInfo.Description = option.Description.Text;
+      optionInfo.Url = option.Url.Text;
+      optionInfo.Left = Space + BoxWidth;
+      optionInfo.Top = top;
+      optionInfo.Width = this.optionsPanel.Width - (2 * Space);
+      optionInfo.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+      optionInfo.Click += new EventHandler(optionInfo_Click);
+      optionInfo.InfoFont = Font;
+      this.optionsPanel.Controls.Add(optionInfo);
+      this.optionControls.Add(optionInfo, index);
+      optionInfo.BeginInfo();
+    }
+
+    private void optionInfo_Click(object sender, EventArgs e)
+    {
+      if (this.singleOptionControls != null)
+      {
+        this.singleOptionControls[this.optionControls[(InfoControl)sender]].Checked = true;
+      }
+      else if (this.multiOptionControls != null)
+      {
+        this.multiOptionControls[this.optionControls[(InfoControl)sender]].Checked = true;
       }
     }
 

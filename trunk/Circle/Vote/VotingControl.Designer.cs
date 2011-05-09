@@ -53,7 +53,7 @@ namespace Pirate.PiVote.Circle.Vote
       this.questionTabs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
       this.questionTabs.Name = "questionTabs";
       this.questionTabs.SelectedIndex = 0;
-      this.questionTabs.Size = new System.Drawing.Size(709, 499);
+      this.questionTabs.Size = new System.Drawing.Size(793, 499);
       this.questionTabs.TabIndex = 0;
       // 
       // tabPage1
@@ -62,18 +62,18 @@ namespace Pirate.PiVote.Circle.Vote
       this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
       this.tabPage1.Name = "tabPage1";
       this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-      this.tabPage1.Size = new System.Drawing.Size(701, 472);
+      this.tabPage1.Size = new System.Drawing.Size(785, 472);
       this.tabPage1.TabIndex = 0;
       this.tabPage1.Text = "tabPage1";
       this.tabPage1.UseVisualStyleBackColor = true;
       // 
       // tabPage2
       // 
-      this.tabPage2.Location = new System.Drawing.Point(4, 24);
+      this.tabPage2.Location = new System.Drawing.Point(4, 23);
       this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
       this.tabPage2.Name = "tabPage2";
       this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-      this.tabPage2.Size = new System.Drawing.Size(701, 471);
+      this.tabPage2.Size = new System.Drawing.Size(785, 472);
       this.tabPage2.TabIndex = 1;
       this.tabPage2.Text = "tabPage2";
       this.tabPage2.UseVisualStyleBackColor = true;
@@ -83,14 +83,14 @@ namespace Pirate.PiVote.Circle.Vote
       this.titleControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.titleControl.Description = null;
-      this.titleControl.Font = new System.Drawing.Font("Arial Narrow", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.titleControl.InfoFont = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.titleControl.Location = new System.Drawing.Point(4, 3);
+      this.titleControl.Font = new System.Drawing.Font("Arial", 8.25F);
+      this.titleControl.InfoFont = new System.Drawing.Font("Arial", 8.25F);
+      this.titleControl.Location = new System.Drawing.Point(0, 0);
       this.titleControl.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.titleControl.MaximumSize = new System.Drawing.Size(3000, 35);
       this.titleControl.MinimumSize = new System.Drawing.Size(100, 28);
       this.titleControl.Name = "titleControl";
-      this.titleControl.Size = new System.Drawing.Size(704, 28);
+      this.titleControl.Size = new System.Drawing.Size(800, 28);
       this.titleControl.TabIndex = 1;
       this.titleControl.Title = "";
       this.titleControl.Url = null;
@@ -104,7 +104,7 @@ namespace Pirate.PiVote.Circle.Vote
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.Name = "VotingControl";
-      this.Size = new System.Drawing.Size(716, 539);
+      this.Size = new System.Drawing.Size(800, 539);
       this.questionTabs.ResumeLayout(false);
       this.ResumeLayout(false);
 

@@ -99,6 +99,7 @@ namespace Pirate.PiVote.Circle.Vote
     {
       this.questionControls = new List<QuestionControl>();
       this.titleControl.Title = voting.Title.Text;
+      this.titleControl.InfoFont = new Font("Arial", 12, FontStyle.Bold);
       this.titleControl.Description = voting.Description.Text;
       this.titleControl.Url = voting.Url.Text;
       this.titleControl.BeginInfo();

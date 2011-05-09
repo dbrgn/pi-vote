@@ -55,7 +55,7 @@ namespace Pirate.PiVote.SafePrimeFinder
       {
         Console.Write("Searching safe prime...");
 
-        Prime.GenerateAndStoreSafePrime(dataPath);
+        Prime.GenerateAndStoreSafePrime(dataPath, null);
 
         Console.WriteLine("Found");
       }

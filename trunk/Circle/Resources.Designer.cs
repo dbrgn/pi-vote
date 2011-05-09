@@ -718,7 +718,7 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generating safe prime....
+        ///   Looks up a localized string similar to Generating safe prime... (Tested {0} numbers and {1} primes).
         /// </summary>
         internal static string CreateVotingGeneratingSafePrime {
             get {
@@ -997,6 +997,15 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download signature requests....
+        /// </summary>
+        internal static string MenuDownloadSignatureRequests {
+            get {
+                return ResourceManager.GetString("MenuDownloadSignatureRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Language.
         /// </summary>
         internal static string MenuLanguage {
@@ -1011,6 +1020,24 @@ namespace Pirate.PiVote.Circle {
         internal static string MenuManage {
             get {
                 return ResourceManager.GetString("MenuManage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload certificate storage....
+        /// </summary>
+        internal static string MenuUploadCertificateStorage {
+            get {
+                return ResourceManager.GetString("MenuUploadCertificateStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload signature responses....
+        /// </summary>
+        internal static string MenuUploadSignatureResponses {
+            get {
+                return ResourceManager.GetString("MenuUploadSignatureResponses", resourceCulture);
             }
         }
         
@@ -1218,6 +1245,15 @@ namespace Pirate.PiVote.Circle {
         internal static string UploadSignatureResponsesOpenDialogTitle {
             get {
                 return ResourceManager.GetString("UploadSignatureResponsesOpenDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have already voted..
+        /// </summary>
+        internal static string VoteAlreadyVote {
+            get {
+                return ResourceManager.GetString("VoteAlreadyVote", resourceCulture);
             }
         }
         

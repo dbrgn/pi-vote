@@ -478,7 +478,7 @@
     <value>&amp;Generate safe prime</value>
   </data>
   <data name="CreateVotingGeneratingSafePrime" xml:space="preserve">
-    <value>Generating safe prime...</value>
+    <value>Generating safe prime... (Tested {0} numbers and {1} primes)</value>
   </data>
   <data name="CreateVotingNotReady" xml:space="preserve">
     <value>Need a safe prime to create voting.</value>
@@ -578,5 +578,17 @@
   </data>
   <data name="CannotConnectMessage" xml:space="preserve">
     <value>Could not connect to the server.</value>
+  </data>
+  <data name="MenuDownloadSignatureRequests" xml:space="preserve">
+    <value>Download signature requests...</value>
+  </data>
+  <data name="MenuUploadCertificateStorage" xml:space="preserve">
+    <value>Upload certificate storage...</value>
+  </data>
+  <data name="MenuUploadSignatureResponses" xml:space="preserve">
+    <value>Upload signature responses...</value>
+  </data>
+  <data name="VoteAlreadyVote" xml:space="preserve">
+    <value>You have already voted.</value>
   </data>
 </root>

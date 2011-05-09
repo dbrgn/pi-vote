@@ -457,7 +457,7 @@
     <value>Sichere Primzahl &amp;generieren</value>
   </data>
   <data name="CreateVotingGeneratingSafePrime" xml:space="preserve">
-    <value>Generiere sichere Primzahl...</value>
+    <value>Generiere sichere Primzahl... ({0} Zahlen und {1} Primzahlen getestet)</value>
   </data>
   <data name="CreateVotingNotReady" xml:space="preserve">
     <value>Benötige sichere Primzahle zum Erstellen der Abstimmung.</value>
@@ -554,5 +554,17 @@
   </data>
   <data name="CannotConnectMessage" xml:space="preserve">
     <value>Kann nicht mit Server verbinden.</value>
+  </data>
+  <data name="MenuDownloadSignatureRequests" xml:space="preserve">
+    <value>Zertifizierungsanfragen herunterladen...</value>
+  </data>
+  <data name="MenuUploadCertificateStorage" xml:space="preserve">
+    <value>Zertifikatsspeicher hochladen...</value>
+  </data>
+  <data name="MenuUploadSignatureResponses" xml:space="preserve">
+    <value>Zertifizierungsantworten hochladen...</value>
+  </data>
+  <data name="VoteAlreadyVote" xml:space="preserve">
+    <value>Du hast bereits abgestimmt.</value>
   </data>
 </root>

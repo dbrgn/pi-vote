@@ -102,14 +102,19 @@ namespace Pirate.PiVote.Circle.Vote
     {
       if (!this.url.IsNullOrEmpty())
       {
-        System.Diagnostics.Process.Start(this.url);
+        try
+        {
+          System.Diagnostics.Process.Start(this.url);
+        }
+        catch
+        { 
+        }
       }
     }
 
-    public void FixLayout()
+    private void titleBox_Click(object sender, EventArgs e)
     {
-      this.titleBox.Width -= 100;
-      this.webBox.Left -= 100;
+      OnClick(e);
     }
   }
 }

@@ -433,6 +433,9 @@ namespace Pirate.PiVote.Circle
       this.resumeCreationMenu.Text = Resources.MenuCertificateResumeCreation;
       this.reloadCertificateMenu.Text = Resources.MenuCertificatesReload;
       this.manageToolStripMenuItem.Text = Resources.MenuManage;
+      this.downloadSignatureRequestsMenu.Text = Resources.MenuDownloadSignatureRequests;
+      this.uploadSignatureResponsesMenu.Text = Resources.MenuUploadSignatureResponses;
+      this.uploadCertificateStorageMenu.Text = Resources.MenuUploadCertificateStorage;
 
       this.languageMenu.Text = Resources.MenuLanguage;
 
