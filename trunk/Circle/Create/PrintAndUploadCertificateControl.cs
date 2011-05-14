@@ -58,26 +58,33 @@ namespace Pirate.PiVote.Circle.Create
 
     private void uploadButton_Click(object sender, EventArgs e)
     {
-      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionSignRequest))
+      if (Status.Controller.Status.ServerCertificate != null)
       {
-        try
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionSignRequest))
         {
-          Pirate.PiVote.Circle.Status.TextStatusDialog.ShowInfo(Status.Controller, FindForm());
+          try
+          {
+            Pirate.PiVote.Circle.Status.TextStatusDialog.ShowInfo(Status.Controller, FindForm());
 
-          var secureSignatureRequest = new Secure<SignatureRequest>(Status.SignatureRequest, Status.Controller.Status.CaCertificate, Status.Certificate);
-          var secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(Status.SignatureRequestInfo, Status.Controller.Status.ServerCertificate, Status.Certificate);
+            var secureSignatureRequest = new Secure<SignatureRequest>(Status.SignatureRequest, Status.Controller.Status.CaCertificate, Status.Certificate);
+            var secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(Status.SignatureRequestInfo, Status.Controller.Status.ServerCertificate, Status.Certificate);
 
-          Status.Controller.SetSignatureRequest(secureSignatureRequest, secureSignatureRequestInfo);
+            Status.Controller.SetSignatureRequest(secureSignatureRequest, secureSignatureRequestInfo);
+          }
+          catch (Exception exception)
+          {
+            Error.ErrorDialog.ShowError(exception);
+          }
+          finally
+          {
+            Status.Certificate.Lock();
+            Pirate.PiVote.Circle.Status.TextStatusDialog.HideInfo();
+          }
         }
-        catch (Exception exception)
-        {
-          Error.ErrorDialog.ShowError(exception);
-        }
-        finally
-        {
-          Status.Certificate.Lock();
-          Pirate.PiVote.Circle.Status.TextStatusDialog.HideInfo();
-        }
+      }
+      else
+      {
+        MessageForm.Show(Resources.CreateCertificateServerCertificateInvalidMessage, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
     }
 

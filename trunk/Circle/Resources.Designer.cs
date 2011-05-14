@@ -601,6 +601,15 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The server certificate is invalid. You have to wait for the Certificate Authority to fix this problem before you can upload your request..
+        /// </summary>
+        internal static string CreateCertificateServerCertificateInvalidMessage {
+            get {
+                return ResourceManager.GetString("CreateCertificateServerCertificateInvalidMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Abstention will be added automatically..
         /// </summary>
         internal static string CreateQuestionAbstentionAuto {

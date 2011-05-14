@@ -422,7 +422,9 @@ namespace Pirate.PiVote.Circle
       Begin();
       Status.VotingClient.GetCertificateStorage(Status.CertificateStorage, GetCertificateStorageComplete);
 
-      if (WaitForCompletion())
+      if (WaitForCompletion() ||
+         ((this.exception is PiException) &&
+         ((PiException)this.exception).Code == ExceptionCode.ServerCertificateInvalid))
       {
         Begin();
         Status.VotingClient.GetConfig(GetConfigComplete);

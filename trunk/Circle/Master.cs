@@ -58,13 +58,13 @@ namespace Pirate.PiVote.Circle
       }
       catch (InvalidOperationException)
       {
-        MessageForm.Show(Resources.CannotConnectMessage,  Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageForm.Show(Resources.CannotConnectMessage, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
         Close();
         return;
       }
       catch (SocketException)
       {
-        MessageForm.Show(Resources.CannotConnectMessage,  Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageForm.Show(Resources.CannotConnectMessage, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
         Close();
         return;
       }

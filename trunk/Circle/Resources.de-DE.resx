@@ -567,4 +567,7 @@
   <data name="VoteAlreadyVote" xml:space="preserve">
     <value>Du hast bereits abgestimmt.</value>
   </data>
+  <data name="CreateCertificateServerCertificateInvalidMessage" xml:space="preserve">
+    <value>Das Serverzertifikat ist ungültig. Du musst warten, bis die Zertifizierungstelle das Problem behoben hat, bevor du deine Zertifizierungsanfrage hochladen kannst.</value>
+  </data>
 </root>
