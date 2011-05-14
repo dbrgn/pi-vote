@@ -75,7 +75,7 @@
       this.certificateList.Location = new System.Drawing.Point(12, 12);
       this.certificateList.MultiSelect = false;
       this.certificateList.Name = "certificateList";
-      this.certificateList.Size = new System.Drawing.Size(768, 529);
+      this.certificateList.Size = new System.Drawing.Size(768, 485);
       this.certificateList.TabIndex = 0;
       this.certificateList.UseCompatibleStateImageBehavior = false;
       this.certificateList.View = System.Windows.Forms.View.Details;
@@ -184,7 +184,7 @@
       // closeButton
       // 
       this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.closeButton.Location = new System.Drawing.Point(672, 579);
+      this.closeButton.Location = new System.Drawing.Point(672, 535);
       this.closeButton.Name = "closeButton";
       this.closeButton.Size = new System.Drawing.Size(106, 25);
       this.closeButton.TabIndex = 1;
@@ -195,7 +195,7 @@
       // restoreButton
       // 
       this.restoreButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.restoreButton.Location = new System.Drawing.Point(448, 579);
+      this.restoreButton.Location = new System.Drawing.Point(448, 535);
       this.restoreButton.Name = "restoreButton";
       this.restoreButton.Size = new System.Drawing.Size(106, 25);
       this.restoreButton.TabIndex = 2;
@@ -206,7 +206,7 @@
       // backupButton
       // 
       this.backupButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.backupButton.Location = new System.Drawing.Point(336, 579);
+      this.backupButton.Location = new System.Drawing.Point(336, 535);
       this.backupButton.Name = "backupButton";
       this.backupButton.Size = new System.Drawing.Size(106, 25);
       this.backupButton.TabIndex = 3;
@@ -217,7 +217,7 @@
       // exportButton
       // 
       this.exportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.exportButton.Location = new System.Drawing.Point(672, 548);
+      this.exportButton.Location = new System.Drawing.Point(672, 504);
       this.exportButton.Name = "exportButton";
       this.exportButton.Size = new System.Drawing.Size(106, 25);
       this.exportButton.TabIndex = 4;
@@ -228,7 +228,7 @@
       // importButton
       // 
       this.importButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.importButton.Location = new System.Drawing.Point(560, 548);
+      this.importButton.Location = new System.Drawing.Point(560, 504);
       this.importButton.Name = "importButton";
       this.importButton.Size = new System.Drawing.Size(106, 25);
       this.importButton.TabIndex = 5;
@@ -239,7 +239,7 @@
       // removeButton
       // 
       this.removeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.removeButton.Location = new System.Drawing.Point(448, 548);
+      this.removeButton.Location = new System.Drawing.Point(448, 504);
       this.removeButton.Name = "removeButton";
       this.removeButton.Size = new System.Drawing.Size(106, 25);
       this.removeButton.TabIndex = 6;
@@ -250,7 +250,7 @@
       // createNewButton
       // 
       this.createNewButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.createNewButton.Location = new System.Drawing.Point(336, 548);
+      this.createNewButton.Location = new System.Drawing.Point(336, 504);
       this.createNewButton.Name = "createNewButton";
       this.createNewButton.Size = new System.Drawing.Size(106, 25);
       this.createNewButton.TabIndex = 7;
@@ -261,7 +261,7 @@
       // setPasswordButton
       // 
       this.setPasswordButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.setPasswordButton.Location = new System.Drawing.Point(560, 579);
+      this.setPasswordButton.Location = new System.Drawing.Point(560, 535);
       this.setPasswordButton.Name = "setPasswordButton";
       this.setPasswordButton.Size = new System.Drawing.Size(106, 25);
       this.setPasswordButton.TabIndex = 8;
@@ -272,7 +272,7 @@
       // refreshButton
       // 
       this.refreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.refreshButton.Location = new System.Drawing.Point(224, 548);
+      this.refreshButton.Location = new System.Drawing.Point(224, 504);
       this.refreshButton.Name = "refreshButton";
       this.refreshButton.Size = new System.Drawing.Size(106, 25);
       this.refreshButton.TabIndex = 9;
@@ -284,7 +284,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(792, 617);
+      this.ClientSize = new System.Drawing.Size(792, 573);
       this.Controls.Add(this.refreshButton);
       this.Controls.Add(this.setPasswordButton);
       this.Controls.Add(this.createNewButton);
@@ -297,7 +297,7 @@
       this.Controls.Add(this.certificateList);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.KeyPreview = true;
-      this.MinimumSize = new System.Drawing.Size(600, 429);
+      this.MinimumSize = new System.Drawing.Size(600, 400);
       this.Name = "CertificateManagerDialog";
       this.Text = "CertificateManagerDialog";
       this.Load += new System.EventHandler(this.CertificateManagerDialog_Load);

@@ -69,8 +69,9 @@ namespace Pirate.PiVote.Client
     {
       get
       {
-        return Status.Certificate != null && 
-          !(Status.Certificate is CACertificate);
+        return Status.Certificate != null &&
+          !(Status.Certificate is CACertificate) &&
+          (!(Status.Certificate is VoterCertificate) || Status.ServerCertificate != null);
       }
     }
 
@@ -94,6 +95,11 @@ namespace Pirate.PiVote.Client
       this.nextIsCreate = false;
       Status.Certificate = null;
       Status.CertificateFileName = null;
+
+      if (Status.ServerCertificate == null)
+      {
+        this.createMenu.Enabled = false;
+      }
 
       DirectoryInfo directory = new DirectoryInfo(Status.DataPath);
       this.certificateList.Items.Clear();
@@ -189,6 +195,9 @@ namespace Pirate.PiVote.Client
 
       this.backupMenu.Text = Resources.ChooseCertificateBackupButton;
       this.restoreMenu.Text = Resources.ChooseCertificateRestoreButton;
+
+      this.encryptMenu.Text = Resources.ChooseCertificateEncrytButton;
+      this.changePassphraseMenu.Text = Resources.ChooseCertificateChangePassphraseButton;
 
       this.verifyShareproofMenu.Text = Resources.ChooseCertificateVerifyBadShareProof;
 

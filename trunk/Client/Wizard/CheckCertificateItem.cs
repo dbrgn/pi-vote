@@ -47,31 +47,31 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      switch (this.continueTo)
+      if (Status.Certificate is AuthorityCertificate)
       {
-        case ContinueTo.NextScreen:
-          if (Status.Certificate is AuthorityCertificate)
-          {
-            return new AuthorityListVotingsItem();
-          }
-          else if (Status.Certificate is AdminCertificate)
-          {
-            return new AdminChooseItem();
-          }
-          else if (Status.Certificate is VoterCertificate)
-          {
+        return new AuthorityListVotingsItem();
+      }
+      else if (Status.Certificate is AdminCertificate)
+      {
+        return new AdminChooseItem();
+      }
+      else if (Status.Certificate is VoterCertificate)
+      {
+        switch (this.continueTo)
+        {
+          case ContinueTo.NextScreen:
             return new ListVotingsItem();
-          }
-          else
-          {
+          case ContinueTo.ChooseCertificate:
+            return new ChooseCertificateItem();
+          case ContinueTo.CreateCertificate:
+            return new SimpleCreateCertificateItem();
+          default:
             return null;
-          }
-        case ContinueTo.ChooseCertificate:
-          return new ChooseCertificateItem();
-        case ContinueTo.CreateCertificate:
-          return new SimpleCreateCertificateItem();
-        default:
-          return null;
+        }
+      }
+      else
+      {
+        return null;
       }
     }
 

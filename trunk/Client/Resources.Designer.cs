@@ -734,6 +734,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Change password....
+        /// </summary>
+        internal static string ChooseCertificateChangePassphraseButton {
+            get {
+                return ResourceManager.GetString("ChooseCertificateChangePassphraseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Create....
         /// </summary>
         internal static string ChooseCertificateCreateButton {
@@ -748,6 +757,15 @@ namespace Pirate.PiVote.Client {
         internal static string ChooseCertificateDeleteButton {
             get {
                 return ResourceManager.GetString("ChooseCertificateDeleteButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Encrypt....
+        /// </summary>
+        internal static string ChooseCertificateEncrytButton {
+            get {
+                return ResourceManager.GetString("ChooseCertificateEncrytButton", resourceCulture);
             }
         }
         

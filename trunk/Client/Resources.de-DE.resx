@@ -712,4 +712,10 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
     <value>Enthaltung wird automatisch hinzugefügt.</value>
   </data>
+  <data name="ChooseCertificateChangePassphraseButton" xml:space="preserve">
+    <value>&amp;Passwort ändern...</value>
+  </data>
+  <data name="ChooseCertificateEncrytButton" xml:space="preserve">
+    <value>&amp;Verschlüsseln...</value>
+  </data>
 </root>
