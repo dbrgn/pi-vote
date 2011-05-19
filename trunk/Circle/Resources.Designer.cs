@@ -322,7 +322,7 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have certificate which is valid until {0}..
+        ///   Looks up a localized string similar to You have a certificate which is valid until {0}..
         /// </summary>
         internal static string CertificateStatusValid {
             get {
@@ -961,7 +961,7 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is no certificate creation that can be resumed..
+        ///   Looks up a localized string similar to There is no certificate creations that can be resumed..
         /// </summary>
         internal static string MenuCertificateResumeCreationNothing {
             get {
@@ -1384,7 +1384,7 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are now votings to display..
+        ///   Looks up a localized string similar to There are no votings to display..
         /// </summary>
         internal static string VotingListEmpty {
             get {

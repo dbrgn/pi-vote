@@ -5,7 +5,7 @@
  * Licensed under the New BSD License as seen in License.txt
  */
 
-namespace Pirate.PiVote.Client
+namespace Pirate.PiVote.Gui
 {
   partial class CertificateControl
   {

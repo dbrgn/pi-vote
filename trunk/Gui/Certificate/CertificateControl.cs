@@ -15,7 +15,7 @@ using System.Text;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
 
-namespace Pirate.PiVote.Client
+namespace Pirate.PiVote.Gui
 {
   public partial class CertificateControl : UserControl
   {
@@ -60,7 +60,7 @@ namespace Pirate.PiVote.Client
           else
           {
             item = new ListViewItem(string.Empty);
-            item.SubItems.Add(Resources.CertificateSignatureUnknown);
+            item.SubItems.Add(GuiResources.CertificateSignatureUnknown);
           }
 
           item.SubItems.Add(signature.ValidFrom.ToString());
@@ -68,11 +68,11 @@ namespace Pirate.PiVote.Client
 
           if (signature.Verify(this.certificate.GetSignatureContent(), CertificateStorage, ValidationDate) == CertificateValidationResult.Valid)
           {
-            item.SubItems.Add(Resources.CertificateSignatureValid);
+            item.SubItems.Add(GuiResources.CertificateSignatureValid);
           }
           else
           {
-            item.SubItems.Add(Resources.CertificateSignatureInvalid);
+            item.SubItems.Add(GuiResources.CertificateSignatureInvalid);
           }
 
           item.Tag = signature;
@@ -84,16 +84,16 @@ namespace Pirate.PiVote.Client
 
     public void SetLanguage()
     {
-      this.typeLabel.Text = Resources.CertificateType;
-      this.idLabel.Text = Resources.CertificateId;
-      this.nameLabel.Text = Resources.CertificateName;
-      this.creationDateLabel.Text = Resources.CertificateCreationDate;
-      this.signaturesLabel.Text = Resources.CertificateSignatures;
-      this.idColumnHeader.Text = Resources.CertificateSignatureId;
-      this.nameColumnHeader.Text = Resources.CertificateSignatureName;
-      this.validFromColumnHeader.Text = Resources.CertificateSignatureValidFrom;
-      this.validUntilColumnHeader.Text = Resources.CertificateSignatureValidUntil;
-      this.statusColumnHeader.Text = Resources.CertificateSignatureStatus;
+      this.typeLabel.Text = GuiResources.CertificateType;
+      this.idLabel.Text = GuiResources.CertificateId;
+      this.nameLabel.Text = GuiResources.CertificateName;
+      this.creationDateLabel.Text = GuiResources.CertificateCreationDate;
+      this.signaturesLabel.Text = GuiResources.CertificateSignatures;
+      this.idColumnHeader.Text = GuiResources.CertificateSignatureId;
+      this.nameColumnHeader.Text = GuiResources.CertificateSignatureName;
+      this.validFromColumnHeader.Text = GuiResources.CertificateSignatureValidFrom;
+      this.validUntilColumnHeader.Text = GuiResources.CertificateSignatureValidUntil;
+      this.statusColumnHeader.Text = GuiResources.CertificateSignatureStatus;
 
       Certificate = Certificate;
     }

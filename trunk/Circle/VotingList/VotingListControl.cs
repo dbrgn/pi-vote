@@ -91,7 +91,7 @@ namespace Pirate.PiVote.Circle
           control.Voting = newVoting;
           control.Left = 0;
           control.Top = top;
-          control.Width = ClientSize.Width - HorizontalSpace;
+          control.Width = Width - (VerticalScroll.Visible ? 16 : 0) - HorizontalSpace;
           control.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
           control.VotingAction += new VotingActionHandler(Control_VotingAction);
           newControlQueue.Enqueue(control);
@@ -105,7 +105,20 @@ namespace Pirate.PiVote.Circle
 
       foreach (var control in this.controls)
       {
-        control.Width = ClientSize.Width - HorizontalSpace;
+        control.Width = Width - (VerticalScroll.Visible ? 16 : 0) - HorizontalSpace;
+      }
+    }
+
+    protected override void OnResize(EventArgs e)
+    {
+      base.OnResize(e);
+
+      if (this.controls != null)
+      {
+        foreach (var control in this.controls)
+        {
+          control.Width = Width - (VerticalScroll.Visible ? 16 : 0) - HorizontalSpace;
+        }
       }
     }
 

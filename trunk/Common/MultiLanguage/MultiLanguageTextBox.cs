@@ -4,7 +4,6 @@
  * 
  * Licensed under the New BSD License as seen in License.txt
  */
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +12,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Pirate.PiVote
 {
@@ -33,6 +33,7 @@ namespace Pirate.PiVote
         Controls.Add(textBox);
         textBox.TextChanged += new EventHandler(TextBox_TextChanged);
         textBox.Enter += new EventHandler(TextBox_Enter);
+        textBox.KeyDown += new KeyEventHandler(TextBox_KeyDown);
       }
 
       langaugeDisplay = new Dictionary<TextBox, bool>();
@@ -48,6 +49,32 @@ namespace Pirate.PiVote
       OnResize(new EventArgs());
 
       InitializeComponent();
+    }
+
+    private void TextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+      if (e.KeyCode == Keys.F12)
+      {
+        if (Environment.OSVersion.Platform == PlatformID.Unix)
+        {
+          ProcessStartInfo startInfo = new ProcessStartInfo("xclip", "-o");
+          startInfo.RedirectStandardOutput = true;
+          startInfo.UseShellExecute = false;
+
+          Process process = Process.Start(startInfo);
+          string text = process.StandardOutput.ReadToEnd();
+
+          TextBox textBox = (TextBox)sender;
+          int select = textBox.SelectionStart;
+          textBox.Text =
+            textBox.Text.Substring(0, textBox.SelectionStart) +
+            text +
+            textBox.Text.Substring(textBox.SelectionStart + textBox.SelectionLength);
+
+          textBox.SelectionLength = 0;
+          textBox.SelectionStart = select;
+        }
+      }
     }
 
     private void TextBox_Enter(object sender, EventArgs e)

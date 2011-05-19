@@ -15,7 +15,7 @@ using System.Text;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
 
-namespace Pirate.PiVote.Client
+namespace Pirate.PiVote.Gui
 {
   public partial class SmallCertificateControl : UserControl
   {
@@ -55,8 +55,8 @@ namespace Pirate.PiVote.Client
 
     public void SetLanguage()
     {
-      this.nameLabel.Text = Resources.CertificateName;
-      this.detailButton.Text = Resources.CertificateDetail;
+      this.nameLabel.Text = GuiResources.CertificateName;
+      this.detailButton.Text = GuiResources.CertificateDetail;
 
       Certificate = Certificate;
     }

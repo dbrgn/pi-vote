@@ -231,4 +231,58 @@
   <data name="UnlockActionDelete" xml:space="preserve">
     <value>Sign command to delete voting</value>
   </data>
+  <data name="CertificateFormCloseButton" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <data name="CertificateFormTitle" xml:space="preserve">
+    <value>View Certificate</value>
+  </data>
+  <data name="CertificateId" xml:space="preserve">
+    <value>Id:</value>
+  </data>
+  <data name="CertificateInvalid" xml:space="preserve">
+    <value>Invalid</value>
+  </data>
+  <data name="CertificateName" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="CertificateSignatureId" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="CertificateSignatureInvalid" xml:space="preserve">
+    <value>Invalid</value>
+  </data>
+  <data name="CertificateSignatureName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="CertificateSignatures" xml:space="preserve">
+    <value>Signatures:</value>
+  </data>
+  <data name="CertificateSignatureStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CertificateSignatureUnknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="CertificateSignatureValid" xml:space="preserve">
+    <value>Valid</value>
+  </data>
+  <data name="CertificateSignatureValidFrom" xml:space="preserve">
+    <value>Valid From</value>
+  </data>
+  <data name="CertificateSignatureValidUntil" xml:space="preserve">
+    <value>Valid Until</value>
+  </data>
+  <data name="CertificateType" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+  <data name="CertificateValid" xml:space="preserve">
+    <value>Valid</value>
+  </data>
+  <data name="CertificateCreationDate" xml:space="preserve">
+    <value>Creation Date:</value>
+  </data>
+  <data name="CertificateDetail" xml:space="preserve">
+    <value>&amp;Details...</value>
+  </data>
 </root>

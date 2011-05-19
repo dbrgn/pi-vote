@@ -358,60 +358,6 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Creation Date:.
-        /// </summary>
-        internal static string CertificateCreationDate {
-            get {
-                return ResourceManager.GetString("CertificateCreationDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Details....
-        /// </summary>
-        internal static string CertificateDetail {
-            get {
-                return ResourceManager.GetString("CertificateDetail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Close.
-        /// </summary>
-        internal static string CertificateFormCloseButton {
-            get {
-                return ResourceManager.GetString("CertificateFormCloseButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to View Certificate.
-        /// </summary>
-        internal static string CertificateFormTitle {
-            get {
-                return ResourceManager.GetString("CertificateFormTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Id:.
-        /// </summary>
-        internal static string CertificateId {
-            get {
-                return ResourceManager.GetString("CertificateId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid.
-        /// </summary>
-        internal static string CertificateInvalid {
-            get {
-                return ResourceManager.GetString("CertificateInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The certificate file is not valid..
         /// </summary>
         internal static string CertificateLoadInvalid {
@@ -421,119 +367,11 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name:.
-        /// </summary>
-        internal static string CertificateName {
-            get {
-                return ResourceManager.GetString("CertificateName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Id.
-        /// </summary>
-        internal static string CertificateSignatureId {
-            get {
-                return ResourceManager.GetString("CertificateSignatureId", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid.
-        /// </summary>
-        internal static string CertificateSignatureInvalid {
-            get {
-                return ResourceManager.GetString("CertificateSignatureInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        internal static string CertificateSignatureName {
-            get {
-                return ResourceManager.GetString("CertificateSignatureName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Signatures:.
-        /// </summary>
-        internal static string CertificateSignatures {
-            get {
-                return ResourceManager.GetString("CertificateSignatures", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Status.
-        /// </summary>
-        internal static string CertificateSignatureStatus {
-            get {
-                return ResourceManager.GetString("CertificateSignatureStatus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unknown.
-        /// </summary>
-        internal static string CertificateSignatureUnknown {
-            get {
-                return ResourceManager.GetString("CertificateSignatureUnknown", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Valid.
-        /// </summary>
-        internal static string CertificateSignatureValid {
-            get {
-                return ResourceManager.GetString("CertificateSignatureValid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Valid From.
-        /// </summary>
-        internal static string CertificateSignatureValidFrom {
-            get {
-                return ResourceManager.GetString("CertificateSignatureValidFrom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Valid Until.
-        /// </summary>
-        internal static string CertificateSignatureValidUntil {
-            get {
-                return ResourceManager.GetString("CertificateSignatureValidUntil", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Certificate storage upload complete.
         /// </summary>
         internal static string CertificateStorageUploaded {
             get {
                 return ResourceManager.GetString("CertificateStorageUploaded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type:.
-        /// </summary>
-        internal static string CertificateType {
-            get {
-                return ResourceManager.GetString("CertificateType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Valid.
-        /// </summary>
-        internal static string CertificateValid {
-            get {
-                return ResourceManager.GetString("CertificateValid", resourceCulture);
             }
         }
         

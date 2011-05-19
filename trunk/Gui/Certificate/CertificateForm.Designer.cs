@@ -5,7 +5,7 @@
  * Licensed under the New BSD License as seen in License.txt
  */
 
-namespace Pirate.PiVote.Client
+namespace Pirate.PiVote.Gui
 {
   partial class CertificateForm
   {
@@ -35,7 +35,7 @@ namespace Pirate.PiVote.Client
     /// </summary>
     private void InitializeComponent()
     {
-      this.certificateControl = new Pirate.PiVote.Client.CertificateControl();
+      this.certificateControl = new CertificateControl();
       this.closeButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 

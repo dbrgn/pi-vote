@@ -144,11 +144,11 @@ namespace Pirate.PiVote.Crypto
                G.BitLength >= 128 &&
                F.BitLength >= 128;
 #else
-      return Prime.HasSufficientLength(votingParameters.P, BaseParameters.PrimeBits) &&
-             Prime.HasSufficientLength(votingParameters.Q, BaseParameters.PrimeBits) &&
-             Prime.IsPrimeUnsure(votingParameters.P)) &&
-             Prime.IsPrimeUnsure((votingParameters.P - 1) / 2)) &&
-             Prime.IsPrimeUnsure(votingParameters.Q));
+      return Prime.HasSufficientLength(P, BaseParameters.PrimeBits) &&
+             Prime.HasSufficientLength(Q, BaseParameters.PrimeBits) &&
+             Prime.IsPrimeUnsure(P) &&
+             Prime.IsPrimeUnsure((P - 1) / 2) &&
+             Prime.IsPrimeUnsure(Q);
 #endif
       }
     }

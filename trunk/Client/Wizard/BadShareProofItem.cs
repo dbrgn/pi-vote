@@ -16,6 +16,7 @@ using System.Net;
 using System.Threading;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.Client
 {
@@ -79,12 +80,12 @@ namespace Pirate.PiVote.Client
 
       if (SignedBadShareProof.Verify(proof.CertificateStorage, proof.Parameters.VotingBeginDate))
       {
-        this.reportingSignatureBox.Text = Resources.CertificateValid;
+        this.reportingSignatureBox.Text = GuiResources.CertificateValid;
         this.reportingSignatureBox.BackColor = Color.Green;
       }
       else
       {
-        this.reportingSignatureBox.Text = Resources.CertificateInvalid;
+        this.reportingSignatureBox.Text = GuiResources.CertificateInvalid;
         this.reportingSignatureBox.BackColor = Color.Red;
       }
 
@@ -94,12 +95,12 @@ namespace Pirate.PiVote.Client
 
       if (proof.SignedParameters.Verify(proof.CertificateStorage, proof.Parameters.VotingBeginDate))
       {
-        this.organizingSignatureBox.Text = Resources.CertificateValid;
+        this.organizingSignatureBox.Text = GuiResources.CertificateValid;
         this.organizingSignatureBox.BackColor = Color.Green;
       }
       else
       {
-        this.organizingSignatureBox.Text = Resources.CertificateInvalid;
+        this.organizingSignatureBox.Text = GuiResources.CertificateInvalid;
         this.organizingSignatureBox.BackColor = Color.Red;
       }
         

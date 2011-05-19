@@ -55,6 +55,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Certificate\CertificateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Certificate\CertificateControl.Designer.cs">
+      <DependentUpon>CertificateControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Certificate\CertificateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Certificate\CertificateForm.Designer.cs">
+      <DependentUpon>CertificateForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Certificate\SmallCertificateControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Certificate\SmallCertificateControl.Designer.cs">
+      <DependentUpon>SmallCertificateControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\GroupComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -96,6 +114,15 @@
     <Compile Include="Update\UpdateChecker.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Certificate\CertificateControl.resx">
+      <DependentUpon>CertificateControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Certificate\CertificateForm.resx">
+      <DependentUpon>CertificateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Certificate\SmallCertificateControl.resx">
+      <DependentUpon>SmallCertificateControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MessageForm.resx">
       <DependentUpon>MessageForm.cs</DependentUpon>
     </EmbeddedResource>

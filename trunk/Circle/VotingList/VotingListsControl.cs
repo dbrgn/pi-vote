@@ -37,6 +37,9 @@ namespace Pirate.PiVote.Circle
 
     public void Set(CircleController controller, IEnumerable<VotingDescriptor2> votings)
     {
+      this.currentVotingListControl.Height = this.currentTabPage.ClientRectangle.Height - this.currentVotingListControl.Top;
+      this.pastVotingListControl.Height = this.pastTabPage.ClientRectangle.Height - this.pastVotingListControl.Top;
+
       this.currentVotingListControl.Set(controller,
         votings.Where(voting =>
           voting.Status == VotingStatus.New ||

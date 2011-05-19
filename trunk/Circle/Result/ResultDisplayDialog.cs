@@ -37,6 +37,11 @@ namespace Pirate.PiVote.Circle.Result
 
     public void Set(VotingResult result, IDictionary<Guid, VoteReceiptStatus> voteReceiptStatus)
     {
+      SetResultList(result, voteReceiptStatus);
+    }
+
+    private void SetResultList(VotingResult result, IDictionary<Guid, VoteReceiptStatus> voteReceiptStatus)
+    {
       this.keyColumn.Width = (this.resultList.Width - Space) / 5 * 4;
       this.valueColumn.Width = (this.resultList.Width - Space) / 5;
 

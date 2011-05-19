@@ -134,6 +134,7 @@ namespace Pirate.PiVote.Circle
             this.actionButton.Visible = false;
             this.actionButton.Text = Resources.VotingActionDelete;
             this.actionButton.Visible = isAdmin;
+            this.action2Button.Visible = false;
             break;
           default:
             this.actionButton.Visible = false;

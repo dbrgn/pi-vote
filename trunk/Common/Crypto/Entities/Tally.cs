@@ -148,7 +148,6 @@ namespace Pirate.PiVote.Crypto
       acceptVote &= envelope.Date.Date >= this.parameters.VotingBeginDate;
       acceptVote &= envelope.Date.Date <= this.parameters.VotingEndDate;
 
-
       //Ballot must verify (prooves).
       for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
       {
@@ -157,6 +156,7 @@ namespace Pirate.PiVote.Crypto
 
         progress.Down(1d / (double)this.parameters.Questions.Count());
         acceptVote &= ballot.Verify(this.publicKey, this.parameters, question, progress);
+
         progress.Up();
       }
 

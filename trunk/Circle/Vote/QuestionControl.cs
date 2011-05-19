@@ -44,6 +44,13 @@ namespace Pirate.PiVote.Circle.Vote
       this.textControl.Description = question.Description.Text;
       this.textControl.Url = question.Url.Text;
       this.textControl.BeginInfo();
+
+      int upperSpace = this.optionsPanel.Top - this.textControl.Top - this.textControl.Height;
+      int lowerSpace = Height - this.optionsPanel.Top - this.optionsPanel.Height;
+      this.textControl.Height = this.textControl.RequiredHeight;
+      this.optionsPanel.Top = this.textControl.Top + this.textControl.Height + upperSpace;
+      this.optionsPanel.Height = Height - this.optionsPanel.Top - lowerSpace;
+
       this.optionControls = new Dictionary<InfoControl, int>();
 
       if (question.MaxOptions == 1)

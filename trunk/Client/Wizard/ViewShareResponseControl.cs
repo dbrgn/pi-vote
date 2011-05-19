@@ -8,12 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.Client
 {
@@ -47,12 +48,12 @@ namespace Pirate.PiVote.Client
         if (SignedShareReponse.Verify(CertificateStorage, ValidationDate) &&
           SignedShareReponse.Certificate is AuthorityCertificate)
         {
-          this.dataTextBox.Text = Resources.CertificateValid;
+          this.dataTextBox.Text = GuiResources.CertificateValid;
           this.dataTextBox.BackColor = Color.Green;
         }
         else
         {
-          this.dataTextBox.Text = Resources.CertificateInvalid;
+          this.dataTextBox.Text = GuiResources.CertificateInvalid;
           this.dataTextBox.BackColor = Color.Red;
         }
       }

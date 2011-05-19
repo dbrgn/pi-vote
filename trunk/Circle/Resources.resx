@@ -334,7 +334,7 @@
     <value>&amp;Resume Creation...</value>
   </data>
   <data name="MenuCertificateResumeCreationNothing" xml:space="preserve">
-    <value>There is no certificate creation that can be resumed.</value>
+    <value>There is no certificate creations that can be resumed.</value>
   </data>
   <data name="MenuCertificates" xml:space="preserve">
     <value>&amp;Certificates</value>
@@ -436,7 +436,7 @@
     <value>Current</value>
   </data>
   <data name="VotingListEmpty" xml:space="preserve">
-    <value>There are now votings to display.</value>
+    <value>There are no votings to display.</value>
   </data>
   <data name="VotingListPast" xml:space="preserve">
     <value>Archive</value>
@@ -568,7 +568,7 @@
     <value>Your certificate has been revoked by the certificate authority.</value>
   </data>
   <data name="CertificateStatusValid" xml:space="preserve">
-    <value>You have certificate which is valid until {0}.</value>
+    <value>You have a certificate which is valid until {0}.</value>
   </data>
   <data name="CertificateManagerExportDialogTitle" xml:space="preserve">
     <value>Export Certificate</value>

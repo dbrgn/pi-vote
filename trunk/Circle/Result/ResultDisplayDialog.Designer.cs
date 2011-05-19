@@ -38,10 +38,10 @@
       // okButton
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.okButton.Location = new System.Drawing.Point(630, 429);
+      this.okButton.Location = new System.Drawing.Point(631, 439);
       this.okButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.okButton.Name = "okButton";
-      this.okButton.Size = new System.Drawing.Size(100, 31);
+      this.okButton.Size = new System.Drawing.Size(100, 27);
       this.okButton.TabIndex = 1;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
@@ -49,20 +49,17 @@
       // 
       // resultList
       // 
-      this.resultList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                  | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
       this.resultList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.keyColumn,
             this.valueColumn});
       this.resultList.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.resultList.FullRowSelect = true;
       this.resultList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-      this.resultList.Location = new System.Drawing.Point(12, 13);
+      this.resultList.Location = new System.Drawing.Point(11, 12);
       this.resultList.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.resultList.Name = "resultList";
-      this.resultList.Size = new System.Drawing.Size(718, 410);
-      this.resultList.TabIndex = 2;
+      this.resultList.Size = new System.Drawing.Size(720, 421);
+      this.resultList.TabIndex = 3;
       this.resultList.UseCompatibleStateImageBehavior = false;
       this.resultList.View = System.Windows.Forms.View.Details;
       // 

@@ -8,14 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Windows.Forms;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
-using Pirate.PiVote.Rpc;
+using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Gui;
+using Pirate.PiVote.Rpc;
 
 namespace Pirate.PiVote.Client
 {
@@ -98,12 +99,12 @@ namespace Pirate.PiVote.Client
         if (this.votingMaterial.Parameters.Verify(Status.CertificateStorage, parameters.VotingBeginDate) &&
             this.votingMaterial.Parameters.Certificate is AdminCertificate)
         {
-          this.organizingSignatureBox.Text = Resources.CertificateValid;
+          this.organizingSignatureBox.Text = GuiResources.CertificateValid;
           this.organizingSignatureBox.BackColor = Color.Green;
         }
         else
         {
-          this.organizingSignatureBox.Text = Resources.CertificateInvalid;
+          this.organizingSignatureBox.Text = GuiResources.CertificateInvalid;
           this.organizingSignatureBox.BackColor = Color.Red;
         }
 

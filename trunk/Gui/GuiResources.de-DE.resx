@@ -231,4 +231,58 @@
   <data name="UnlockActionDelete" xml:space="preserve">
     <value>Kommando zum Löschen der Abstimmung signieren</value>
   </data>
+  <data name="CertificateFormCloseButton" xml:space="preserve">
+    <value>S&amp;chliessen</value>
+  </data>
+  <data name="CertificateFormTitle" xml:space="preserve">
+    <value>Zertifikatsansicht</value>
+  </data>
+  <data name="CertificateId" xml:space="preserve">
+    <value>Id:</value>
+  </data>
+  <data name="CertificateInvalid" xml:space="preserve">
+    <value>Ungültig</value>
+  </data>
+  <data name="CertificateName" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="CertificateSignatureId" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="CertificateSignatureInvalid" xml:space="preserve">
+    <value>Ungültig</value>
+  </data>
+  <data name="CertificateSignatureName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="CertificateSignatures" xml:space="preserve">
+    <value>Signaturen:</value>
+  </data>
+  <data name="CertificateSignatureStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CertificateSignatureUnknown" xml:space="preserve">
+    <value>Unbekannt</value>
+  </data>
+  <data name="CertificateSignatureValid" xml:space="preserve">
+    <value>Gültig</value>
+  </data>
+  <data name="CertificateSignatureValidFrom" xml:space="preserve">
+    <value>Gültig von</value>
+  </data>
+  <data name="CertificateSignatureValidUntil" xml:space="preserve">
+    <value>Gültig bis</value>
+  </data>
+  <data name="CertificateType" xml:space="preserve">
+    <value>Typ:</value>
+  </data>
+  <data name="CertificateValid" xml:space="preserve">
+    <value>Gültig</value>
+  </data>
+  <data name="CertificateCreationDate" xml:space="preserve">
+    <value>Erstellungdatum:</value>
+  </data>
+  <data name="CertificateDetail" xml:space="preserve">
+    <value>&amp;Details...</value>
+  </data>
 </root>

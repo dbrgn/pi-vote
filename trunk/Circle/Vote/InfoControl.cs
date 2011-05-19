@@ -59,6 +59,20 @@ namespace Pirate.PiVote.Circle.Vote
       }
     }
 
+    public int RequiredHeight
+    {
+      get
+      {
+        var image = new Bitmap(100, 100);
+        var graphics = Graphics.FromImage(image);
+        var result = graphics.MeasureString(this.titleBox.Text, this.titleBox.Font, Width).Height + 8;
+        graphics.Dispose();
+        image.Dispose();
+
+        return Convert.ToInt32(result);
+      }
+    }
+
     public void BeginInfo()
     {
       this.infoForm = new InfoForm();

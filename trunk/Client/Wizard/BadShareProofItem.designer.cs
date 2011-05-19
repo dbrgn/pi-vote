@@ -43,7 +43,7 @@ namespace Pirate.PiVote.Client
     private void InitializeComponent()
     {
       this.share0 = new Pirate.PiVote.Client.ViewShareControl();
-      this.organizingCertificate = new Pirate.PiVote.Client.SmallCertificateControl();
+      this.organizingCertificate = new Pirate.PiVote.Gui.SmallCertificateControl();
       this.share1 = new Pirate.PiVote.Client.ViewShareControl();
       this.share2 = new Pirate.PiVote.Client.ViewShareControl();
       this.share3 = new Pirate.PiVote.Client.ViewShareControl();
@@ -52,7 +52,7 @@ namespace Pirate.PiVote.Client
       this.organizingSignatureLabel = new System.Windows.Forms.Label();
       this.reportingSignatureBox = new System.Windows.Forms.TextBox();
       this.reportingSignatureLabel = new System.Windows.Forms.Label();
-      this.reportingCertificate = new Pirate.PiVote.Client.SmallCertificateControl();
+      this.reportingCertificate = new Pirate.PiVote.Gui.SmallCertificateControl();
       this.reportingLabel = new System.Windows.Forms.Label();
       this.organizingLabel = new System.Windows.Forms.Label();
       this.controlingAuthoritiesLabel = new System.Windows.Forms.Label();
@@ -313,7 +313,7 @@ namespace Pirate.PiVote.Client
     #endregion
 
     private ViewShareControl share0;
-    private SmallCertificateControl organizingCertificate;
+    private Pirate.PiVote.Gui.SmallCertificateControl organizingCertificate;
     private ViewShareControl share1;
     private ViewShareControl share2;
     private ViewShareControl share3;
@@ -322,7 +322,7 @@ namespace Pirate.PiVote.Client
     private Label organizingSignatureLabel;
     private TextBox reportingSignatureBox;
     private Label reportingSignatureLabel;
-    private SmallCertificateControl reportingCertificate;
+    private Pirate.PiVote.Gui.SmallCertificateControl reportingCertificate;
     private Label reportingLabel;
     private Label organizingLabel;
     private Label controlingAuthoritiesLabel;

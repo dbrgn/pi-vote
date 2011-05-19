@@ -37,7 +37,7 @@ namespace Pirate.PiVote.Client
     {
       this.dataTextBox = new System.Windows.Forms.TextBox();
       this.dataLabel = new System.Windows.Forms.Label();
-      this.certificateControl = new Pirate.PiVote.Client.SmallCertificateControl();
+      this.certificateControl = new Pirate.PiVote.Gui.SmallCertificateControl();
       this.SuspendLayout();
       // 
       // dataTextBox
@@ -89,7 +89,7 @@ namespace Pirate.PiVote.Client
 
     #endregion
 
-    private SmallCertificateControl certificateControl;
+    private Pirate.PiVote.Gui.SmallCertificateControl certificateControl;
     private System.Windows.Forms.TextBox dataTextBox;
     private System.Windows.Forms.Label dataLabel;
 

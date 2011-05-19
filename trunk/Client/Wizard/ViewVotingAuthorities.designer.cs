@@ -43,7 +43,7 @@ namespace Pirate.PiVote.Client
     private void InitializeComponent()
     {
       this.response0 = new Pirate.PiVote.Client.ViewShareResponseControl();
-      this.organizingCertificate = new Pirate.PiVote.Client.SmallCertificateControl();
+      this.organizingCertificate = new Pirate.PiVote.Gui.SmallCertificateControl();
       this.response1 = new Pirate.PiVote.Client.ViewShareResponseControl();
       this.response2 = new Pirate.PiVote.Client.ViewShareResponseControl();
       this.response3 = new Pirate.PiVote.Client.ViewShareResponseControl();
@@ -263,7 +263,7 @@ namespace Pirate.PiVote.Client
     #endregion
 
     private ViewShareResponseControl response0;
-    private SmallCertificateControl organizingCertificate;
+    private Pirate.PiVote.Gui.SmallCertificateControl organizingCertificate;
     private ViewShareResponseControl response1;
     private ViewShareResponseControl response2;
     private ViewShareResponseControl response3;

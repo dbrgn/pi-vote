@@ -89,7 +89,7 @@ namespace Pirate.PiVote.Circle.Vote
       this.Controls.Add(this.titleBox);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-      this.MaximumSize = new System.Drawing.Size(3000, 35);
+      this.MaximumSize = new System.Drawing.Size(3000, 1000);
       this.MinimumSize = new System.Drawing.Size(100, 28);
       this.Name = "InfoControl";
       this.Size = new System.Drawing.Size(500, 28);
