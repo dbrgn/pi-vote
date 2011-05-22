@@ -131,6 +131,8 @@ namespace Pirate.PiVote.Circle
       }
 
       Config = new ClientConfig(Path.Combine(Application.StartupPath, ClientConfigFileName));
+
+      CryptoLog.Open(DataPath);
     }
 
     public string GetGroupName(int groupId)

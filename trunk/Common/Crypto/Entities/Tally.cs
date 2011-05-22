@@ -113,6 +113,17 @@ namespace Pirate.PiVote.Crypto
       EnvelopeHash = new byte[] { };
       EnvelopeCount = 0;
       ValidEnvelopeCount = 0;
+
+      CryptoLog.Begin(CryptoLogLevel.Summary, "Begin tallying");
+      CryptoLog.Add(CryptoLogLevel.Summary, "Voting id", parameters.VotingId);
+      CryptoLog.Add(CryptoLogLevel.Summary, "Voting title", parameters.Title.Text);
+      CryptoLog.Add(CryptoLogLevel.Detailed, "ProofCount", parameters.ProofCount);
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Thereshold", parameters.Thereshold);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "P", parameters.P);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "G", parameters.G);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "F", parameters.F);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Q", parameters.Q);
+      CryptoLog.EndWrite();
     }
 
     /// <summary>
@@ -131,6 +142,17 @@ namespace Pirate.PiVote.Crypto
       if (voteSums == null)
         throw new InvalidOperationException("Must call TallyBegin first.");
 
+      CryptoLog.Begin(CryptoLogLevel.Detailed, "Tallying envelope");
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Envelope index", envelopeIndex);
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Certificate id", signedEnvelope.Certificate.Id);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Certificate fingerprint", signedEnvelope.Certificate.Fingerprint);
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Certificate type", signedEnvelope.Certificate.TypeText);
+
+      if (signedEnvelope.Certificate is VoterCertificate)
+      {
+        CryptoLog.Add(CryptoLogLevel.Detailed, "Certificate group id", ((VoterCertificate)signedEnvelope.Certificate).GroupId);
+      }
+
       bool acceptVote = true;
       Envelope envelope = signedEnvelope.Value;
 
@@ -141,12 +163,19 @@ namespace Pirate.PiVote.Crypto
       //Signature must be valid.
       acceptVote &= signedEnvelope.Verify(this.certificateStorage, envelope.Date);
 
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Certificate status", signedEnvelope.Certificate.Validate(this.certificateStorage, envelope.Date).Text());
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Envelope signature", signedEnvelope.Verify(this.certificateStorage, envelope.Date));
+
       //Voter's vote must not have been counted.
       acceptVote &= !this.countedVoters.Contains(signedEnvelope.Certificate.Id);
+
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Already voted", this.countedVoters.Contains(signedEnvelope.Certificate.Id));
 
       //Date must be in voting period.
       acceptVote &= envelope.Date.Date >= this.parameters.VotingBeginDate;
       acceptVote &= envelope.Date.Date <= this.parameters.VotingEndDate;
+
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Envelope date", envelope.Date);
 
       //Ballot must verify (prooves).
       for (int questionIndex = 0; questionIndex < this.parameters.Questions.Count(); questionIndex++)
@@ -159,6 +188,9 @@ namespace Pirate.PiVote.Crypto
 
         progress.Up();
       }
+
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Envelope accepted", acceptVote);
+      CryptoLog.EndWrite();
 
       lock (this.envelopeSequencerList)
       {
@@ -189,15 +221,19 @@ namespace Pirate.PiVote.Crypto
 
         if (envelopeEntry != null)
         {
-          
-          
           Signed<Envelope> signedEnvelope = envelopeEntry.First;
           Envelope envelope = signedEnvelope.Value;
           bool acceptVote = envelopeEntry.Second;
 
+          CryptoLog.Begin(CryptoLogLevel.Detailed, "Adding envelope");
+          CryptoLog.Add(CryptoLogLevel.Detailed, "Certificate id", signedEnvelope.Certificate.Id);
+
           SHA256Managed sha256 = new SHA256Managed();
           EnvelopeHash = sha256.ComputeHash(EnvelopeHash.Concat(signedEnvelope.ToBinary()));
           EnvelopeCount++;
+
+          CryptoLog.Add(CryptoLogLevel.Numeric, "Envelope hash", EnvelopeHash);
+          CryptoLog.Add(CryptoLogLevel.Detailed, "Envelope accepted", acceptVote);
 
           if (acceptVote)
           {
@@ -210,10 +246,20 @@ namespace Pirate.PiVote.Crypto
 
               for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
               {
+                CryptoLog.Begin(CryptoLogLevel.Numeric, "Adding vote");
+                CryptoLog.Add(CryptoLogLevel.Numeric, "Question", question.Text.Text);
+                CryptoLog.Add(CryptoLogLevel.Numeric, "Option", question.Options.ElementAt(optionIndex).Text.Text);
+
                 this.voteSums[questionIndex][optionIndex] =
                   this.voteSums[questionIndex][optionIndex] == null ?
                   ballot.Votes[optionIndex] :
                   this.voteSums[questionIndex][optionIndex] + ballot.Votes[optionIndex];
+
+                CryptoLog.Add(CryptoLogLevel.Numeric, "Vote ciphertext", ballot.Votes[optionIndex].Ciphertext);
+                CryptoLog.Add(CryptoLogLevel.Numeric, "Vote halfkey", ballot.Votes[optionIndex].HalfKey);
+                CryptoLog.Add(CryptoLogLevel.Numeric, "Vote sum ciphertext", this.voteSums[questionIndex][optionIndex].Ciphertext);
+                CryptoLog.Add(CryptoLogLevel.Numeric, "Vote sum halfkey", this.voteSums[questionIndex][optionIndex].HalfKey);
+                CryptoLog.End(CryptoLogLevel.Numeric);
               }
             }
 
@@ -223,6 +269,8 @@ namespace Pirate.PiVote.Crypto
           this.result.Voters.Add(new EnvelopeResult(envelope.VoterId, acceptVote));
 
           this.nextEnvelopeIndex++;
+
+          CryptoLog.EndWrite();
         }
       }
     }
@@ -243,18 +291,39 @@ namespace Pirate.PiVote.Crypto
     {
       PartialDecipherList partialDeciphersList = signedPartialDecipherList.Value;
 
+      CryptoLog.Begin(CryptoLogLevel.Detailed, "Adding partial decipher");
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Partial dipher date", partialDeciphersList.Date.Date);
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Certificate id", signedPartialDecipherList.Certificate.Id);
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Certificate type", signedPartialDecipherList.Certificate.TypeText);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Certificate fingerprint", signedPartialDecipherList.Certificate.Fingerprint);
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Certificate full name", signedPartialDecipherList.Certificate.FullName);
+
       if (!(signedPartialDecipherList.Verify(this.certificateStorage, this.parameters.VotingBeginDate) &&
         partialDeciphersList.Date.Date >= this.parameters.VotingEndDate &&
         partialDeciphersList.Date.Date <= DateTime.Now.Date) &&
         signedPartialDecipherList.Certificate is AuthorityCertificate)
         throw new PiSecurityException(ExceptionCode.PartialDecipherBadSignature, "Partial decipher has bad signature.");
 
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Certificate status", signedPartialDecipherList.Certificate.Validate(this.certificateStorage, this.parameters.VotingBeginDate));
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Partial dipher valid", signedPartialDecipherList.Verify(this.certificateStorage, this.parameters.VotingBeginDate));
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Envelope count", partialDeciphersList.EnvelopeCount);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Envelope hash", partialDeciphersList.EnvelopeHash);
+
       if (partialDeciphersList.EnvelopeCount != EnvelopeCount)
+      {
+        CryptoLog.EndWrite();
         throw new PiSecurityException(ExceptionCode.PartialDecipherBadEnvelopeCount, "The number of envelopes does not match the partial decipher.");
+      }
+
       if (!partialDeciphersList.EnvelopeHash.Equal(EnvelopeHash))
+      {
+        CryptoLog.EndWrite();
         throw new PiSecurityException(ExceptionCode.PartialDecipherBadEnvelopeHash, "The hash over all envelopes does not match the partail decipher.");
+      }
 
       partialDeciphers.AddRange(partialDeciphersList.PartialDeciphers);
+
+      CryptoLog.EndWrite();
     }
 
     /// <summary>
@@ -266,24 +335,39 @@ namespace Pirate.PiVote.Crypto
       {
         List<int> results = new List<int>();
 
+        CryptoLog.Begin(CryptoLogLevel.Summary, "Calculating voting result");
+
         for (int questionIndex = 0; questionIndex < parameters.Questions.Count(); questionIndex++)
         {
           Question question = this.parameters.Questions.ElementAt(questionIndex);
           QuestionResult questionResult = new QuestionResult(question);
 
+          CryptoLog.Begin(CryptoLogLevel.Summary, "Calculating question result");
+          CryptoLog.Add(CryptoLogLevel.Summary, "Question", question.Text.Text);
+
           for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
           {
+            CryptoLog.Begin(CryptoLogLevel.Summary, "Calculating option result");
+            CryptoLog.Add(CryptoLogLevel.Summary, "Option", question.Options.ElementAt(optionIndex).Text.Text);
+
             List<int> optionResults = new List<int>();
 
             for (int groupIndex = 1; groupIndex <= this.parameters.AuthorityCount; groupIndex++)
             {
+              CryptoLog.Begin(CryptoLogLevel.Numeric, string.Format("Authority group {0}", groupIndex));
+
               IEnumerable<BigInt> partialDeciphersByOptionAndGroup = this.partialDeciphers
                 .Where(partialDecipher => partialDecipher.GroupIndex == groupIndex && 
                                           partialDecipher.QuestionIndex == questionIndex &&
                                           partialDecipher.OptionIndex == optionIndex)
                 .Select(partialDecipher => partialDecipher.Value);
               if (partialDeciphersByOptionAndGroup.Count() == this.parameters.Thereshold + 1)
-                optionResults.Add(this.voteSums[questionIndex][optionIndex].Decrypt(partialDeciphersByOptionAndGroup, parameters));
+              {
+                int authorityGroupResult = this.voteSums[questionIndex][optionIndex].Decrypt(partialDeciphersByOptionAndGroup, parameters);
+                optionResults.Add(authorityGroupResult);
+              }
+
+              CryptoLog.End(CryptoLogLevel.Numeric);
             }
 
             Option option = question.Options.ElementAt(optionIndex);
@@ -294,21 +378,30 @@ namespace Pirate.PiVote.Crypto
 
               if (optionResults.All(optionResult => optionResult == firstOptionResult))
               {
+                CryptoLog.Add(CryptoLogLevel.Summary, "Result", firstOptionResult);
                 questionResult.Options.Add(new OptionResult(option.Text, option.Description, firstOptionResult));
               }
               else
               {
+                CryptoLog.Add(CryptoLogLevel.Summary, "Result", "Not unanimous");
                 questionResult.Options.Add(new OptionResult(option.Text, option.Description, -1));
               }
             }
             else
             {
+              CryptoLog.Add(CryptoLogLevel.Summary, "Result", "Not available");
               questionResult.Options.Add(new OptionResult(option.Text, option.Description, -1));
             }
+
+            CryptoLog.End(CryptoLogLevel.Summary);
           }
+
+          CryptoLog.End(CryptoLogLevel.Summary);
 
           this.result.Questions.Add(questionResult);
         }
+
+        CryptoLog.EndWrite();
 
         return this.result;
       }

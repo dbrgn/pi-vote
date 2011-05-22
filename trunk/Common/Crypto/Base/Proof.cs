@@ -161,8 +161,17 @@ namespace Pirate.PiVote.Crypto
       if (parameters == null)
         throw new ArgumentNullException("parameters");
 
+      CryptoLog.Begin(CryptoLogLevel.Detailed, "Verifying sum proof");
+      CryptoLog.Add(CryptoLogLevel.Numeric, "C", C0);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "T", T0);
+
+
       if (!C0.InRange(0, 0xffff))
+      {
+        CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", false);
+        CryptoLog.End(CryptoLogLevel.Detailed);
         return false;
+      }
 
       MemoryStream serializeStream = new MemoryStream();
       SerializeContext serializer = new SerializeContext(serializeStream);
@@ -175,13 +184,26 @@ namespace Pirate.PiVote.Crypto
 
       SHA512Managed sha512 = new SHA512Managed();
       byte[] hash = sha512.ComputeHash(serializeStream.ToArray());
+
+      CryptoLog.Add(CryptoLogLevel.Numeric, "SHA 512", hash);
+
       if (C0 != (hash[0] | (hash[1] << 8)))
+      {
+        CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", false);
+        CryptoLog.End(CryptoLogLevel.Detailed);
         return false;
+      }
 
       if (publicKey.PowerMod(S0, parameters.P) !=
         (T0 * voteSum.Ciphertext.DivideMod(parameters.F.PowerMod(questionParameters.MaxVota, parameters.P), parameters.P).PowerMod(C0, parameters.P)).Mod(parameters.P))
+      {
+        CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", false);
+        CryptoLog.End(CryptoLogLevel.Detailed);
         return false;
+      }
 
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", true);
+      CryptoLog.End(CryptoLogLevel.Detailed);
       return true;
     }
 

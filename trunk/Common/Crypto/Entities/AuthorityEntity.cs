@@ -341,6 +341,11 @@ namespace Pirate.PiVote.Crypto
       if (this.tally == null)
         throw new InvalidOperationException("Tally not yet begun.");
 
+      CryptoLog.Begin(CryptoLogLevel.Detailed, "Partially deciphering voting");
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Voting id", this.parameters.VotingId);
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Authority index", this.authority.Index);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Envelope hash", this.tally.EnvelopeHash);
+
       PartialDecipherList partialDecipherList = new PartialDecipherList(this.parameters.VotingId, this.authority.Index, this.tally.EnvelopeCount, this.tally.EnvelopeHash);
 
 #if DEBUG
@@ -353,12 +358,24 @@ namespace Pirate.PiVote.Crypto
         {
           Question question = this.parameters.Questions.ElementAt(questionIndex);
 
+          CryptoLog.Begin(CryptoLogLevel.Detailed, "Partially deciphering question");
+          CryptoLog.Add(CryptoLogLevel.Detailed, "Question", question.Text.Text);
+
           for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)
           {
+            CryptoLog.Begin(CryptoLogLevel.Detailed, "Partially deciphering option");
+            CryptoLog.Add(CryptoLogLevel.Detailed, "Option", question.Options.ElementAt(optionIndex).Text.Text);
+
             partialDecipherList.PartialDeciphers.AddRange(this.authority.PartialDeciphers(this.authority.Index, this.tally.VoteSums[questionIndex][optionIndex], questionIndex, optionIndex));
+
+            CryptoLog.End(CryptoLogLevel.Detailed);
           }
+
+          CryptoLog.End(CryptoLogLevel.Detailed);
         }
       }
+
+      CryptoLog.EndWrite();
 
       return new Signed<PartialDecipherList>(partialDecipherList, this.certificate);
     }

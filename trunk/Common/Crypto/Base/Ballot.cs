@@ -155,6 +155,7 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     /// <param name="publicKey">Public key of the authorities.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
+    /// <param name="questionParameters">Parameters of the question.</param>
     /// <param name="progress">Reports on the progress.</param>
     /// <returns>Result of the verification.</returns>
     public bool Verify(BigInt publicKey, BaseParameters parameters, Question questionParameters, Progress progress)
@@ -163,9 +164,14 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("publicKey");
       if (parameters == null)
         throw new ArgumentNullException("parameters");
+      if (questionParameters == null)
+        throw new ArgumentNullException("questionParameters");
 
       bool verifies = true;
       Vote voteSum = null;
+
+      CryptoLog.Begin(CryptoLogLevel.Detailed, "Verifying ballot");
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Question", questionParameters.Text.Text);
 
       foreach (Vote vote in Votes)
       {
@@ -176,6 +182,12 @@ namespace Pirate.PiVote.Crypto
 
       verifies &= SumProves.Count == parameters.ProofCount;
       verifies &= SumProves.All(sumProof => sumProof.Verify(voteSum, publicKey, parameters, questionParameters));
+
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Public key", publicKey);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Vote sum ciphertext", voteSum.Ciphertext);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Vote sum halfkey", voteSum.HalfKey);
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", verifies);
+      CryptoLog.End(CryptoLogLevel.Detailed);
 
       return verifies;
     }

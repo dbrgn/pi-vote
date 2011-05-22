@@ -189,10 +189,26 @@ namespace Pirate.PiVote.Crypto
       if (partialDeciphers.Count() != parameters.Thereshold + 1)
         throw new ArgumentException("Wrong number of partial deciphers.");
 
+      CryptoLog.Begin(CryptoLogLevel.Numeric, "Calculating authority group result");
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Ciphertext", Ciphertext);
+      int index = 0;
+
+      foreach (var partialDecipher in partialDeciphers)
+      {
+        CryptoLog.Add(CryptoLogLevel.Numeric, string.Format("Partial decipher {0}", index) , partialDecipher);
+        index++;
+      }
+
       BigInt votePower = Ciphertext;
       partialDeciphers.Foreach(partialDecipher => votePower = votePower.DivideMod(partialDecipher, P));
 
-      return Result(votePower, parameters);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Vote power", votePower);
+
+      int result = Result(votePower, parameters);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Authority group result", result);
+      CryptoLog.End(CryptoLogLevel.Numeric);
+
+      return result;
     }
 
     /// <summary>
@@ -243,8 +259,14 @@ namespace Pirate.PiVote.Crypto
 
       bool verifies = true;
 
+      CryptoLog.Begin(CryptoLogLevel.Detailed, "Verifying option");
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Ciphertext", Ciphertext);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Halfkey", HalfKey);
+
       verifies &= RangeProves.Count == parameters.ProofCount;
       verifies &= RangeProves.All(proof => proof.Verify(this, publicKey, parameters));
+
+      CryptoLog.End(CryptoLogLevel.Detailed);
 
       return verifies;
     }

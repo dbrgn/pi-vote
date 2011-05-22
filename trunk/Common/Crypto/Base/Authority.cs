@@ -245,9 +245,20 @@ namespace Pirate.PiVote.Crypto
       if (divide == 0)
         throw new ArgumentException("Divide cannot be 0.");
 
+      CryptoLog.Begin(CryptoLogLevel.Numeric, "Creating partial decipher");
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Vote halfkey", vote.HalfKey);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Multiply", multiply);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Divide", divide);
+      CryptoLog.Add(CryptoLogLevel.Secret, "Secret key part", this.secretKeyPart);
+
       //The 12 magic number is inserted to avoid division remainders when
       //dividing partial deciphers for linear combinations by 2, 3 and 4.
-      return vote.HalfKey.PowerMod(this.secretKeyPart * 12 * multiply / divide, this.parameters.P);
+      var value = vote.HalfKey.PowerMod(this.secretKeyPart * 12 * multiply / divide, this.parameters.P);
+
+      CryptoLog.Add(CryptoLogLevel.Numeric, "Value", value);
+      CryptoLog.End(CryptoLogLevel.Numeric);
+
+      return value;
     }
 
     /// <summary>

@@ -284,8 +284,19 @@ namespace Pirate.PiVote.Crypto
       if (parameters == null)
         throw new ArgumentNullException("parameters");
 
+      CryptoLog.Begin(CryptoLogLevel.Detailed, "Verifying range proof");
+      CryptoLog.Add(CryptoLogLevel.Numeric, "C", C);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "C0", C0);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "C1", C1);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "T0", T0);
+      CryptoLog.Add(CryptoLogLevel.Numeric, "T1", T1);
+
       if (!C.InRange(0, 0xffff))
+      {
+        CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", false);
+        CryptoLog.End(CryptoLogLevel.Detailed);
         return false;
+      }
 
       MemoryStream serializeStream = new MemoryStream();
       SerializeContext serializer = new SerializeContext(serializeStream);
@@ -299,20 +310,40 @@ namespace Pirate.PiVote.Crypto
 
       SHA512Managed sha512 = new SHA512Managed();
       byte[] hash = sha512.ComputeHash(serializeStream.ToArray());
+      CryptoLog.Add(CryptoLogLevel.Numeric, "SHA512", hash);
+
       if (C != (hash[0] | (hash[1] << 8)))
+      {
+        CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", false);
+        CryptoLog.End(CryptoLogLevel.Detailed);
         return false;
+      }
 
       if (((C0 + C1) % 0xffff) != C)
+      {
+        CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", false);
+        CryptoLog.End(CryptoLogLevel.Detailed);
         return false;
+      }
 
       if (publicKey.PowerMod(S0, parameters.P) !=
         (T0 * vote.Ciphertext.DivideMod(parameters.F.PowerMod(0, parameters.P), parameters.P).PowerMod(C0, parameters.P)).Mod(parameters.P))
+      {
+        CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", false);
+        CryptoLog.End(CryptoLogLevel.Detailed);
         return false;
+      }
 
       if (publicKey.PowerMod(S1, parameters.P) !=
         (T1 * vote.Ciphertext.DivideMod(parameters.F.PowerMod(1, parameters.P), parameters.P).PowerMod(C1, parameters.P)).Mod(parameters.P))
+      {
+        CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", false);
+        CryptoLog.End(CryptoLogLevel.Detailed);
         return false;
+      }
 
+      CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", true);
+      CryptoLog.End(CryptoLogLevel.Detailed);
       return true;
     }
 
