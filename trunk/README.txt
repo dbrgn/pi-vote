@@ -18,3 +18,5 @@ You can find the other files needed in the build
 folder. They include the root certificate, the config
 file and the Emil.GMP.dll.config as wells as the
 desktop icon for debian/linux.
+
+Test
