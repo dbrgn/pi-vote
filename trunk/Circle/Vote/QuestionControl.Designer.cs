@@ -47,9 +47,9 @@ namespace Pirate.PiVote.Circle.Vote
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.optionsPanel.AutoScroll = true;
       this.optionsPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-      this.optionsPanel.Location = new System.Drawing.Point(3, 57);
+      this.optionsPanel.Location = new System.Drawing.Point(3, 44);
       this.optionsPanel.Name = "optionsPanel";
-      this.optionsPanel.Size = new System.Drawing.Size(658, 415);
+      this.optionsPanel.Size = new System.Drawing.Size(658, 428);
       this.optionsPanel.TabIndex = 6;
       // 
       // maxOptionLabel
@@ -68,14 +68,13 @@ namespace Pirate.PiVote.Circle.Vote
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.textControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.textControl.Description = null;
-      this.textControl.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.textControl.InfoFont = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textControl.InfoFont = new System.Drawing.Font("Arial", 8.25F);
       this.textControl.Location = new System.Drawing.Point(3, 3);
       this.textControl.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.textControl.MaximumSize = new System.Drawing.Size(3000, 500);
       this.textControl.MinimumSize = new System.Drawing.Size(100, 28);
       this.textControl.Name = "textControl";
-      this.textControl.Size = new System.Drawing.Size(658, 48);
+      this.textControl.Size = new System.Drawing.Size(658, 35);
       this.textControl.TabIndex = 7;
       this.textControl.Title = "";
       this.textControl.Url = null;

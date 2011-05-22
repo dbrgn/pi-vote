@@ -21,6 +21,7 @@ namespace Pirate.PiVote.Circle.Vote
 {
   public partial class QuestionControl : UserControl
   {
+    private const int VerticalSpace = 8;
     private const int Space = 16;
     private const int BoxWidth = 16;
     private const int BoxTop = 2;
@@ -38,77 +39,91 @@ namespace Pirate.PiVote.Circle.Vote
 
     public void Display(QuestionDescriptor question)
     {
-      this.question = question;
+      if (question != null)
+      {
+        this.question = question;
 
-      this.textControl.Title = question.Text.Text;
-      this.textControl.Description = question.Description.Text;
-      this.textControl.Url = question.Url.Text;
-      this.textControl.BeginInfo();
+        this.textControl.Title = question.Text.Text;
+        this.textControl.Description = question.Description.Text;
+        this.textControl.Url = question.Url.Text;
+        this.textControl.BeginInfo();
+        this.textControl.InfoFont = new Font("Arial", 12);
+        RecalculateLayout();
 
+        this.optionControls = new Dictionary<InfoControl, int>();
+        this.optionsPanel.Controls.Clear();
+
+        if (question.MaxOptions == 1)
+        {
+          this.maxOptionLabel.Text = Resources.VotingDialogMaxOptionSingle;
+          this.singleOptionControls = new Dictionary<int, RadioButton>();
+          int index = 0;
+          int top = Space;
+
+          foreach (OptionDescriptor option in question.Options)
+          {
+            var optionInfo = AddOptionInfo(index, top, option);
+
+            RadioButton optionControl = new RadioButton();
+            optionControl.Text = string.Empty;
+            optionControl.Left = Space;
+            optionControl.Top = top + BoxTop;
+            optionControl.Height = optionInfo.Height;
+            optionControl.TextAlign = ContentAlignment.MiddleRight;
+            optionControl.Width = BoxWidth;
+            this.optionsPanel.Controls.Add(optionControl);
+            optionControl.BringToFront();
+            optionControl.CheckedChanged += new EventHandler(OptionControl_CheckedChanged);
+            this.singleOptionControls.Add(index, optionControl);
+
+            top += optionControl.Height + VerticalSpace;
+            index++;
+          }
+        }
+        else
+        {
+          this.maxOptionLabel.Text = string.Format(Resources.VotingDialogMaxOptionMulti, question.MaxOptions);
+          this.multiOptionControls = new Dictionary<int, CheckBox>();
+          int index = 0;
+          int top = Space;
+
+          foreach (OptionDescriptor option in question.Options)
+          {
+            if (!option.IsAbstentionSpecial)
+            {
+              var optionInfo = AddOptionInfo(index, top, option);
+
+              CheckBox optionControl = new CheckBox();
+              optionControl.Text = string.Empty;
+              optionControl.Top = top + BoxTop;
+              optionControl.Width = BoxWidth;
+              optionControl.Height = optionInfo.Height;
+              optionControl.TextAlign = ContentAlignment.MiddleRight;
+              this.optionsPanel.Controls.Add(optionControl);
+              optionControl.BringToFront();
+              optionControl.CheckedChanged += new EventHandler(OptionControl_CheckedChanged);
+              this.multiOptionControls.Add(index, optionControl);
+
+              top += optionControl.Height + VerticalSpace;
+            }
+
+            index++;
+          }
+        }
+      }
+    }
+
+    private void RecalculateLayout()
+    {
+      this.textControl.Width = this.optionsPanel.Width;
       int upperSpace = this.optionsPanel.Top - this.textControl.Top - this.textControl.Height;
       int lowerSpace = Height - this.optionsPanel.Top - this.optionsPanel.Height;
       this.textControl.Height = this.textControl.RequiredHeight;
       this.optionsPanel.Top = this.textControl.Top + this.textControl.Height + upperSpace;
       this.optionsPanel.Height = Height - this.optionsPanel.Top - lowerSpace;
-
-      this.optionControls = new Dictionary<InfoControl, int>();
-
-      if (question.MaxOptions == 1)
-      {
-        this.maxOptionLabel.Text = Resources.VotingDialogMaxOptionSingle;
-        this.singleOptionControls = new Dictionary<int, RadioButton>();
-        int index = 0;
-        int top = Space;
-
-        foreach (OptionDescriptor option in question.Options)
-        {
-          AddOptionInfo(index, top, option);
-
-          RadioButton optionControl = new RadioButton();
-          optionControl.Text = string.Empty;
-          optionControl.Left = Space;
-          optionControl.Top = top + BoxTop;
-          optionControl.Width = BoxWidth;
-          this.optionsPanel.Controls.Add(optionControl);
-          optionControl.BringToFront();
-          optionControl.CheckedChanged += new EventHandler(OptionControl_CheckedChanged);
-          this.singleOptionControls.Add(index, optionControl);
-
-          top += optionControl.Height + Space;
-          index++;
-        }
-      }
-      else
-      {
-        this.maxOptionLabel.Text = string.Format(Resources.VotingDialogMaxOptionMulti, question.MaxOptions);
-        this.multiOptionControls = new Dictionary<int, CheckBox>();
-        int index = 0;
-        int top = Space;
-
-        foreach (OptionDescriptor option in question.Options)
-        {
-          if (!option.IsAbstentionSpecial)
-          {
-            AddOptionInfo(index, top, option);
-
-            CheckBox optionControl = new CheckBox();
-            optionControl.Text = string.Empty;
-            optionControl.Top = top + BoxTop;
-            optionControl.Width = BoxWidth;
-            this.optionsPanel.Controls.Add(optionControl);
-            optionControl.BringToFront();
-            optionControl.CheckedChanged += new EventHandler(OptionControl_CheckedChanged);
-            this.multiOptionControls.Add(index, optionControl);
-
-            top += optionControl.Height + Space;
-          }
-
-          index++;
-        }
-      }
     }
 
-    private void AddOptionInfo(int index, int top, OptionDescriptor option)
+    private InfoControl AddOptionInfo(int index, int top, OptionDescriptor option)
     {
       InfoControl optionInfo = new InfoControl();
       optionInfo.Title = option.Text.Text;
@@ -117,12 +132,14 @@ namespace Pirate.PiVote.Circle.Vote
       optionInfo.Left = Space + BoxWidth;
       optionInfo.Top = top;
       optionInfo.Width = this.optionsPanel.Width - (2 * Space);
+      optionInfo.Height = optionInfo.RequiredHeight;
       optionInfo.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
       optionInfo.Click += new EventHandler(optionInfo_Click);
       optionInfo.InfoFont = Font;
       this.optionsPanel.Controls.Add(optionInfo);
       this.optionControls.Add(optionInfo, index);
       optionInfo.BeginInfo();
+      return optionInfo;
     }
 
     private void optionInfo_Click(object sender, EventArgs e)
@@ -221,6 +238,12 @@ namespace Pirate.PiVote.Circle.Vote
           return false;
         }
       }
+    }
+
+    protected override void OnResize(EventArgs e)
+    {
+      base.OnResize(e);
+      Display(this.question);
     }
   }
 }

@@ -65,7 +65,7 @@ namespace Pirate.PiVote.Circle.Vote
       {
         var image = new Bitmap(100, 100);
         var graphics = Graphics.FromImage(image);
-        var result = graphics.MeasureString(this.titleBox.Text, this.titleBox.Font, Width).Height + 8;
+        var result = graphics.MeasureString(this.titleBox.Text, this.titleBox.Font, this.titleBox.Width).Height + 8;
         graphics.Dispose();
         image.Dispose();
 
@@ -89,9 +89,11 @@ namespace Pirate.PiVote.Circle.Vote
     {
       Point zero = PointToScreen(new Point(0, 0));
       Rectangle desktopBounds = new Rectangle(zero, new Size(Width, Height));
+      var form = FindForm();
 
       if (Visible &&
-        FindForm().ContainsFocus &&
+        form != null &&
+        form.ContainsFocus &&
         desktopBounds.Contains(Cursor.Position) &&
         !this.infoForm.Description.IsNullOrEmpty())
       {

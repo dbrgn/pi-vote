@@ -104,6 +104,7 @@ namespace Pirate.PiVote.Circle.Vote
       this.titleControl.Url = voting.Url.Text;
       this.titleControl.BeginInfo();
 
+      RecalculateLayout();
       this.questionTabs.TabPages.Clear();
       int number = 1;
 
@@ -135,6 +136,19 @@ namespace Pirate.PiVote.Circle.Vote
       {
         VotingChanged(this, new EventArgs());
       }
+    }
+
+    protected override void OnResize(EventArgs e)
+    {
+      base.OnResize(e);
+      RecalculateLayout();
+    }
+
+    private void RecalculateLayout()
+    {
+      this.titleControl.Height = this.titleControl.RequiredHeight;
+      this.questionTabs.Top = this.titleControl.Top + this.titleControl.Height;
+      this.questionTabs.Height = ClientSize.Height - this.titleControl.Height;
     }
   }
 }

@@ -83,11 +83,10 @@ namespace Pirate.PiVote.Circle.Vote
       this.titleControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.titleControl.Description = null;
-      this.titleControl.Font = new System.Drawing.Font("Arial", 8.25F);
       this.titleControl.InfoFont = new System.Drawing.Font("Arial", 8.25F);
       this.titleControl.Location = new System.Drawing.Point(0, 0);
       this.titleControl.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-      this.titleControl.MaximumSize = new System.Drawing.Size(3000, 35);
+      this.titleControl.MaximumSize = new System.Drawing.Size(3000, 1000);
       this.titleControl.MinimumSize = new System.Drawing.Size(100, 28);
       this.titleControl.Name = "titleControl";
       this.titleControl.Size = new System.Drawing.Size(800, 28);
