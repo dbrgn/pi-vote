@@ -40,6 +40,8 @@ namespace Pirate.PiVote.Circle
     private bool userCanceled;
     private IEnumerable<AuthorityCertificate> authorityCertificates;
 
+    public UserConfig Config { get; private set; }
+
     public CircleStatus Status { get; private set; }
 
     public void UpdateStatus()
@@ -116,6 +118,7 @@ namespace Pirate.PiVote.Circle
     {
       this.votings = new Dictionary<Guid, VotingContainer>();
       Status = new CircleStatus();
+      Config = new UserConfig(Path.Combine(Status.DataPath, Files.CircleUserConfigFileName));
     }
 
     private void Begin()
@@ -746,7 +749,7 @@ namespace Pirate.PiVote.Circle
     {
       Begin();
       Status.VotingClient.ActivateVoter();
-      Status.VotingClient.GetResult(voting.Id, LoadVoteReceipts(voting.Id), GetResultComplete);
+      Status.VotingClient.GetResult(voting.Id, LoadVoteReceipts(voting.Id), Config.InitialCheckProofCount, GetResultComplete);
 
       if (!WaitForCompletion())
       {

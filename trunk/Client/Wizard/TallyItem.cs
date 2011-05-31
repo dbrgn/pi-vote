@@ -75,11 +75,11 @@ namespace Pirate.PiVote.Client
 
       if (VotingDescriptor.OfflinePath.IsNullOrEmpty())
       {
-        Status.VotingClient.GetResult(VotingDescriptor.Id, VoteReceipts, GetResultComplete);
+        Status.VotingClient.GetResult(VotingDescriptor.Id, VoteReceipts, BaseParameters.StandardProofCount, GetResultComplete);
       }
       else
       {
-        Status.VotingClient.GetResult(VotingDescriptor.OfflinePath, VoteReceipts, GetResultComplete);
+        Status.VotingClient.GetResult(VotingDescriptor.OfflinePath, VoteReceipts, BaseParameters.StandardProofCount, GetResultComplete);
       }
 
       while (this.run)

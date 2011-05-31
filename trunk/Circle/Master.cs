@@ -439,6 +439,9 @@ namespace Pirate.PiVote.Circle
 
       this.languageMenu.Text = Resources.MenuLanguage;
 
+      this.extrasMenu.Text = Resources.MenuExtras;
+      this.configMenu.Text = Resources.MenuConfig;
+
       this.votingListsControl.UpdateLanguage();
     }
 
@@ -569,6 +572,13 @@ namespace Pirate.PiVote.Circle
       Create.CreateCertificateDialog.TryFixVoterCertificate(Controller, lastCertificate);
       Controller.LoadCertificates();
       RefreshInternal();
+    }
+
+    private void configMenu_Click(object sender, EventArgs e)
+    {
+      Config.ConfigDialog dialog = new Config.ConfigDialog();
+      dialog.Config = Controller.Config;
+      dialog.ShowDialog();
     }
   }
 }

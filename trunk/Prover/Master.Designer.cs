@@ -36,13 +36,21 @@
       this.createProofTextTextBox = new System.Windows.Forms.TextBox();
       this.createCertificateIdLabel = new System.Windows.Forms.Label();
       this.verifyProofBox = new System.Windows.Forms.GroupBox();
+      this.verifyCertificateFingerprintLabel = new System.Windows.Forms.Label();
+      this.verifyCertificateFingerprintTextBox = new System.Windows.Forms.TextBox();
       this.verifyLoadProofButton = new System.Windows.Forms.Button();
       this.verifyProofTextLabel = new System.Windows.Forms.Label();
       this.verifyProofTextTextBox = new System.Windows.Forms.TextBox();
       this.verifiyCertificateIdLabel = new System.Windows.Forms.Label();
       this.verifyCertificateIdTextBox = new System.Windows.Forms.TextBox();
-      this.verifyCertificateFingerprintTextBox = new System.Windows.Forms.TextBox();
-      this.verifyCertificateFingerprintLabel = new System.Windows.Forms.Label();
+      this.issuerFingerPrintLabel = new System.Windows.Forms.Label();
+      this.issuerFingerPrintTextBox = new System.Windows.Forms.TextBox();
+      this.issuerValidLabel = new System.Windows.Forms.Label();
+      this.issuerCertificateIdLabel = new System.Windows.Forms.Label();
+      this.issuerCertificateIdTextBox = new System.Windows.Forms.TextBox();
+      this.issuerValidTextBox = new System.Windows.Forms.TextBox();
+      this.issuerFullNameTextBox = new System.Windows.Forms.TextBox();
+      this.issuerFullNameLabel = new System.Windows.Forms.Label();
       this.createProofBox.SuspendLayout();
       this.verifyProofBox.SuspendLayout();
       this.SuspendLayout();
@@ -126,6 +134,14 @@
       // 
       // verifyProofBox
       // 
+      this.verifyProofBox.Controls.Add(this.issuerFullNameLabel);
+      this.verifyProofBox.Controls.Add(this.issuerFullNameTextBox);
+      this.verifyProofBox.Controls.Add(this.issuerValidTextBox);
+      this.verifyProofBox.Controls.Add(this.issuerFingerPrintLabel);
+      this.verifyProofBox.Controls.Add(this.issuerFingerPrintTextBox);
+      this.verifyProofBox.Controls.Add(this.issuerValidLabel);
+      this.verifyProofBox.Controls.Add(this.issuerCertificateIdLabel);
+      this.verifyProofBox.Controls.Add(this.issuerCertificateIdTextBox);
       this.verifyProofBox.Controls.Add(this.verifyCertificateFingerprintLabel);
       this.verifyProofBox.Controls.Add(this.verifyCertificateFingerprintTextBox);
       this.verifyProofBox.Controls.Add(this.verifyLoadProofButton);
@@ -135,10 +151,30 @@
       this.verifyProofBox.Controls.Add(this.verifyCertificateIdTextBox);
       this.verifyProofBox.Location = new System.Drawing.Point(12, 181);
       this.verifyProofBox.Name = "verifyProofBox";
-      this.verifyProofBox.Size = new System.Drawing.Size(672, 212);
+      this.verifyProofBox.Size = new System.Drawing.Size(672, 354);
       this.verifyProofBox.TabIndex = 4;
       this.verifyProofBox.TabStop = false;
       this.verifyProofBox.Text = "Verify Proof";
+      // 
+      // verifyCertificateFingerprintLabel
+      // 
+      this.verifyCertificateFingerprintLabel.AutoSize = true;
+      this.verifyCertificateFingerprintLabel.Location = new System.Drawing.Point(6, 80);
+      this.verifyCertificateFingerprintLabel.Name = "verifyCertificateFingerprintLabel";
+      this.verifyCertificateFingerprintLabel.Size = new System.Drawing.Size(106, 13);
+      this.verifyCertificateFingerprintLabel.TabIndex = 7;
+      this.verifyCertificateFingerprintLabel.Text = "Certificate fingerprint:";
+      // 
+      // verifyCertificateFingerprintTextBox
+      // 
+      this.verifyCertificateFingerprintTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.verifyCertificateFingerprintTextBox.Location = new System.Drawing.Point(121, 77);
+      this.verifyCertificateFingerprintTextBox.Multiline = true;
+      this.verifyCertificateFingerprintTextBox.Name = "verifyCertificateFingerprintTextBox";
+      this.verifyCertificateFingerprintTextBox.ReadOnly = true;
+      this.verifyCertificateFingerprintTextBox.Size = new System.Drawing.Size(545, 37);
+      this.verifyCertificateFingerprintTextBox.TabIndex = 6;
       // 
       // verifyLoadProofButton
       // 
@@ -190,35 +226,93 @@
       this.verifyCertificateIdTextBox.Size = new System.Drawing.Size(545, 20);
       this.verifyCertificateIdTextBox.TabIndex = 1;
       // 
-      // verifyCertificateFingerprintTextBox
+      // issuerFingerPrintLabel
       // 
-      this.verifyCertificateFingerprintTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+      this.issuerFingerPrintLabel.AutoSize = true;
+      this.issuerFingerPrintLabel.Location = new System.Drawing.Point(6, 278);
+      this.issuerFingerPrintLabel.Name = "issuerFingerPrintLabel";
+      this.issuerFingerPrintLabel.Size = new System.Drawing.Size(106, 13);
+      this.issuerFingerPrintLabel.TabIndex = 13;
+      this.issuerFingerPrintLabel.Text = "Certificate fingerprint:";
+      // 
+      // issuerFingerPrintTextBox
+      // 
+      this.issuerFingerPrintTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.verifyCertificateFingerprintTextBox.Location = new System.Drawing.Point(121, 77);
-      this.verifyCertificateFingerprintTextBox.Multiline = true;
-      this.verifyCertificateFingerprintTextBox.Name = "verifyCertificateFingerprintTextBox";
-      this.verifyCertificateFingerprintTextBox.ReadOnly = true;
-      this.verifyCertificateFingerprintTextBox.Size = new System.Drawing.Size(545, 37);
-      this.verifyCertificateFingerprintTextBox.TabIndex = 6;
+      this.issuerFingerPrintTextBox.Location = new System.Drawing.Point(121, 275);
+      this.issuerFingerPrintTextBox.Multiline = true;
+      this.issuerFingerPrintTextBox.Name = "issuerFingerPrintTextBox";
+      this.issuerFingerPrintTextBox.ReadOnly = true;
+      this.issuerFingerPrintTextBox.Size = new System.Drawing.Size(545, 37);
+      this.issuerFingerPrintTextBox.TabIndex = 12;
       // 
-      // verifyCertificateFingerprintLabel
+      // issuerValidLabel
       // 
-      this.verifyCertificateFingerprintLabel.AutoSize = true;
-      this.verifyCertificateFingerprintLabel.Location = new System.Drawing.Point(6, 80);
-      this.verifyCertificateFingerprintLabel.Name = "verifyCertificateFingerprintLabel";
-      this.verifyCertificateFingerprintLabel.Size = new System.Drawing.Size(106, 13);
-      this.verifyCertificateFingerprintLabel.TabIndex = 7;
-      this.verifyCertificateFingerprintLabel.Text = "Certificate fingerprint:";
+      this.issuerValidLabel.AutoSize = true;
+      this.issuerValidLabel.Location = new System.Drawing.Point(6, 321);
+      this.issuerValidLabel.Name = "issuerValidLabel";
+      this.issuerValidLabel.Size = new System.Drawing.Size(33, 13);
+      this.issuerValidLabel.TabIndex = 11;
+      this.issuerValidLabel.Text = "Valid:";
+      // 
+      // issuerCertificateIdLabel
+      // 
+      this.issuerCertificateIdLabel.AutoSize = true;
+      this.issuerCertificateIdLabel.Location = new System.Drawing.Point(6, 226);
+      this.issuerCertificateIdLabel.Name = "issuerCertificateIdLabel";
+      this.issuerCertificateIdLabel.Size = new System.Drawing.Size(68, 13);
+      this.issuerCertificateIdLabel.TabIndex = 9;
+      this.issuerCertificateIdLabel.Text = "Certificate id:";
+      // 
+      // issuerCertificateIdTextBox
+      // 
+      this.issuerCertificateIdTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.issuerCertificateIdTextBox.Location = new System.Drawing.Point(121, 223);
+      this.issuerCertificateIdTextBox.Name = "issuerCertificateIdTextBox";
+      this.issuerCertificateIdTextBox.ReadOnly = true;
+      this.issuerCertificateIdTextBox.Size = new System.Drawing.Size(545, 20);
+      this.issuerCertificateIdTextBox.TabIndex = 8;
+      // 
+      // issuerValidTextBox
+      // 
+      this.issuerValidTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.issuerValidTextBox.Location = new System.Drawing.Point(121, 318);
+      this.issuerValidTextBox.Name = "issuerValidTextBox";
+      this.issuerValidTextBox.ReadOnly = true;
+      this.issuerValidTextBox.Size = new System.Drawing.Size(545, 20);
+      this.issuerValidTextBox.TabIndex = 14;
+      // 
+      // issuerFullNameTextBox
+      // 
+      this.issuerFullNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.issuerFullNameTextBox.Location = new System.Drawing.Point(121, 249);
+      this.issuerFullNameTextBox.Name = "issuerFullNameTextBox";
+      this.issuerFullNameTextBox.ReadOnly = true;
+      this.issuerFullNameTextBox.Size = new System.Drawing.Size(545, 20);
+      this.issuerFullNameTextBox.TabIndex = 15;
+      // 
+      // issuerFullNameLabel
+      // 
+      this.issuerFullNameLabel.AutoSize = true;
+      this.issuerFullNameLabel.Location = new System.Drawing.Point(6, 252);
+      this.issuerFullNameLabel.Name = "issuerFullNameLabel";
+      this.issuerFullNameLabel.Size = new System.Drawing.Size(55, 13);
+      this.issuerFullNameLabel.TabIndex = 16;
+      this.issuerFullNameLabel.Text = "Full name:";
       // 
       // Master
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(696, 402);
+      this.ClientSize = new System.Drawing.Size(696, 546);
       this.Controls.Add(this.verifyProofBox);
       this.Controls.Add(this.createProofBox);
       this.Name = "Master";
       this.Text = "Certificate Proover";
+      this.Load += new System.EventHandler(this.Master_Load);
       this.createProofBox.ResumeLayout(false);
       this.createProofBox.PerformLayout();
       this.verifyProofBox.ResumeLayout(false);
@@ -244,6 +338,14 @@
     private System.Windows.Forms.TextBox verifyCertificateIdTextBox;
     private System.Windows.Forms.Label verifyCertificateFingerprintLabel;
     private System.Windows.Forms.TextBox verifyCertificateFingerprintTextBox;
+    private System.Windows.Forms.TextBox issuerValidTextBox;
+    private System.Windows.Forms.Label issuerFingerPrintLabel;
+    private System.Windows.Forms.TextBox issuerFingerPrintTextBox;
+    private System.Windows.Forms.Label issuerValidLabel;
+    private System.Windows.Forms.Label issuerCertificateIdLabel;
+    private System.Windows.Forms.TextBox issuerCertificateIdTextBox;
+    private System.Windows.Forms.Label issuerFullNameLabel;
+    private System.Windows.Forms.TextBox issuerFullNameTextBox;
   }
 }
 

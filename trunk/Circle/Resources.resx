@@ -594,4 +594,28 @@
   <data name="CreateCertificateServerCertificateInvalidMessage" xml:space="preserve">
     <value>The server certificate is invalid. You have to wait for the Certificate Authority to fix this problem before you can upload your request.</value>
   </data>
+  <data name="ConfigProofCountExplain" xml:space="preserve">
+    <value>Please choose how thorough you want the votes checked.</value>
+  </data>
+  <data name="ConfigProofCountFast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
+  <data name="ConfigProofCountInfo" xml:space="preserve">
+    <value>Checking {0} proofs means not detecting an neferious ballot with a probability of 1 in {1}.</value>
+  </data>
+  <data name="ConfigProofCountSecure" xml:space="preserve">
+    <value>Secure</value>
+  </data>
+  <data name="ConfigTabProofCount" xml:space="preserve">
+    <value>Proofs</value>
+  </data>
+  <data name="ConfigTitle" xml:space="preserve">
+    <value>Circle - Configuration</value>
+  </data>
+  <data name="MenuConfig" xml:space="preserve">
+    <value>&amp;Config</value>
+  </data>
+  <data name="MenuExtras" xml:space="preserve">
+    <value>E&amp;xtras</value>
+  </data>
 </root>

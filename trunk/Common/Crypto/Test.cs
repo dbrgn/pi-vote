@@ -205,7 +205,7 @@ namespace Pirate.PiVote.Crypto
       vs.DepositPartialDecipher(pd4);
       vs.DepositPartialDecipher(pd5);
 
-      v1.TallyBegin(vs.GetVotingMaterial());
+      v1.TallyBegin(vs.GetVotingMaterial(), BaseParameters.StandardProofCount);
 
       for (int envelopeIndex = 0; envelopeIndex < vs.GetEnvelopeCount(); envelopeIndex++)
       {
@@ -287,7 +287,7 @@ namespace Pirate.PiVote.Crypto
       ballots.Add(new Ballot(new int[] { 1, 0 }, parameters, question, publicKey, null));
       ballots.Add(new Ballot(new int[] { 0, 1 }, parameters, question, publicKey, null));
 
-      if (!ballots.All(ballot => ballot.Verify(publicKey, parameters, question, new Progress(null))))
+      if (!ballots.All(ballot => ballot.Verify(publicKey, parameters, question, RandomNumberGenerator.Create(), BaseParameters.StandardProofCount, new Progress(null))))
         throw new Exception("Bad proof.");
 
       for (int optionIndex = 0; optionIndex < question.Options.Count(); optionIndex++)

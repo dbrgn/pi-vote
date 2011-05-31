@@ -6,13 +6,14 @@
  */
 
 using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using Emil.GMP;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pirate.PiVote;
 using Pirate.PiVote.Crypto;
-using Emil.GMP;
 
 namespace Pirate.PiVote.UnitTest
 {
@@ -46,7 +47,7 @@ namespace Pirate.PiVote.UnitTest
 
         Vote vote = new Vote(0, this.parameters.Random(), this.parameters, this.publicKey, new Progress(null));
 
-        Assert.IsTrue(vote.Verify(this.publicKey, this.parameters));
+        Assert.IsTrue(vote.Verify(this.publicKey, this.parameters, RandomNumberGenerator.Create(), BaseParameters.StandardProofCount));
       }
     }
 
@@ -58,13 +59,13 @@ namespace Pirate.PiVote.UnitTest
         this.publicKey = parameters.Random();
 
         Vote vote0 = new Vote(2, this.parameters.Random(), this.parameters, this.publicKey, FakeType.BadDisjunction);
-        Assert.IsFalse(vote0.Verify(this.publicKey, this.parameters));
+        Assert.IsFalse(vote0.Verify(this.publicKey, this.parameters, RandomNumberGenerator.Create(), BaseParameters.StandardProofCount));
 
         Vote vote1 = new Vote(2, this.parameters.Random(), this.parameters, this.publicKey, FakeType.BadFiatShamir);
-        Assert.IsFalse(vote1.Verify(this.publicKey, this.parameters));
+        Assert.IsFalse(vote1.Verify(this.publicKey, this.parameters, RandomNumberGenerator.Create(), BaseParameters.StandardProofCount));
 
         Vote vote2 = new Vote(2, this.parameters.Random(), this.parameters, this.publicKey, FakeType.BadPowerMod);
-        Assert.IsFalse(vote2.Verify(this.publicKey, this.parameters));
+        Assert.IsFalse(vote2.Verify(this.publicKey, this.parameters, RandomNumberGenerator.Create(), BaseParameters.StandardProofCount));
       }
     }
   }

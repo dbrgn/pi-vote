@@ -570,4 +570,28 @@
   <data name="CreateCertificateServerCertificateInvalidMessage" xml:space="preserve">
     <value>Das Serverzertifikat ist ungültig. Du musst warten, bis die Zertifizierungstelle das Problem behoben hat, bevor du deine Zertifizierungsanfrage hochladen kannst.</value>
   </data>
+  <data name="ConfigProofCountExplain" xml:space="preserve">
+    <value>Bitte wähle aus, wie gründlich die Stimmen geprüft werden sollen.</value>
+  </data>
+  <data name="ConfigProofCountFast" xml:space="preserve">
+    <value>Schnell</value>
+  </data>
+  <data name="ConfigProofCountInfo" xml:space="preserve">
+    <value>{0} Beweise zu prüfen, heisst eine ungültige Stimme mit einer Wahrscheinlichkeit von 1 zu {1} zu übersehen.</value>
+  </data>
+  <data name="ConfigProofCountSecure" xml:space="preserve">
+    <value>Sicher</value>
+  </data>
+  <data name="ConfigTabProofCount" xml:space="preserve">
+    <value>Beweise</value>
+  </data>
+  <data name="ConfigTitle" xml:space="preserve">
+    <value>Circle - Konfiguration</value>
+  </data>
+  <data name="MenuConfig" xml:space="preserve">
+    <value>&amp;Konfigurieren</value>
+  </data>
+  <data name="MenuExtras" xml:space="preserve">
+    <value>E&amp;xtras</value>
+  </data>
 </root>

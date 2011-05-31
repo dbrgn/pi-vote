@@ -111,7 +111,9 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Begin summation of votes.
     /// </summary>
-    public void TallyBegin(VotingMaterial votingMaterial)
+    public void TallyBegin(
+      VotingMaterial votingMaterial,
+      int checkProofCount)
     {
       if (votingMaterial == null)
         throw new ArgumentNullException("votingMaterial");
@@ -119,7 +121,7 @@ namespace Pirate.PiVote.Crypto
       if (!SetVotingMaterial(votingMaterial))
         throw new PiArgumentException(ExceptionCode.BadVotingMaterial, "Bad voting material");
 
-      this.tally = new Tally(this.parameters, CertificateStorage, this.publicKey);
+      this.tally = new Tally(this.parameters, CertificateStorage, this.publicKey, checkProofCount);
     }
 
     private bool SetVotingMaterial(VotingMaterial votingMaterial)

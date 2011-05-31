@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using Pirate.PiVote.Crypto;
+using ThoughtWorks.QRCode.Codec;
 
 namespace Pirate.PiVote.Printing
 {
@@ -52,19 +53,19 @@ namespace Pirate.PiVote.Printing
       this.top = e.MarginBounds.Top;
 
       PrintHeader(Snippet(e.MarginBounds, 50f));
-      PrintData(Snippet(e.MarginBounds, 300f));
+      PrintData(Snippet(e.MarginBounds, 360f));
 
       if (this.signatureRequest is SignatureRequest2)
       {
-        PrintParentData(Snippet(e.MarginBounds, 220f));
+        PrintParentData(Snippet(e.MarginBounds, 200f));
       }
       else
       {
-        PrintRequest(Snippet(e.MarginBounds, 220f));
+        PrintRequest(Snippet(e.MarginBounds, 200f));
       }
 
-      PrintResponse(Snippet(e.MarginBounds, 220f));
-      PrintRevoke(Snippet(e.MarginBounds, 220f));
+      PrintResponse(Snippet(e.MarginBounds, 200f));
+      PrintRevoke(Snippet(e.MarginBounds, 200f));
       PrintFooter(Snippet(e.MarginBounds, 10f));
 
       e.HasMorePages = false;
@@ -93,25 +94,45 @@ namespace Pirate.PiVote.Printing
 
     private void PrintData(RectangleF bounds)
     {
+      QRCodeEncoder qrEncoder = new QRCodeEncoder();
+      qrEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
+      qrEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.H;
+      qrEncoder.QRCodeVersion = 12;
+      qrEncoder.QRCodeScale = 3;
+      string url = string.Format(
+        "https://admin.piratenpartei.ch/command.cgi?id={0}&fp={1}",
+        this.certificate.Id.ToString(),
+        this.certificate.Fingerprint.Replace(" ", string.Empty));
+      var image = qrEncoder.Encode(url);
+
+      this.graphics.DrawImage(image, bounds.Right - image.Width, bounds.Top);
+
       Table table = new Table(new Font(FontFace, BaseFontSize));
-      table.AddColumn(200f);
-      table.AddColumn(bounds.Width - 200f);
+      table.AddColumn(150f);
+      table.AddColumn(bounds.Width - 150f);
 
       table.AddRow(LibraryResources.SigningRequestDocumentRequest, 2, FontStyle.Bold);
+
       table.AddRow(" ", 2);
+
       table.AddRow(LibraryResources.SigningRequestDocumentFamilyName, this.signatureRequest.FamilyName);
       table.AddRow(LibraryResources.SigningRequestDocumentFirstName, this.signatureRequest.FirstName);
       table.AddRow(LibraryResources.SigningRequestDocumentEmailAddress, this.signatureRequest.EmailAddress);
       if (this.certificate is VoterCertificate)
         table.AddRow(LibraryResources.SigningRequestDocumentGroup, this.getGroupName(((VoterCertificate)this.certificate).GroupId));
       table.AddRow(LibraryResources.SigningRequestDocumentCertificateType, this.certificate.TypeText);
-      table.AddRow(LibraryResources.SigningRequestDocumentCertificateId, this.certificate.Id.ToString());
 
-      string fingerprint = this.certificate.Fingerprint;
-      string fingerprintLine1 = ReworkFingerprintLine(fingerprint.Substring(0, fingerprint.Length / 2));
-      string fingerprintLine2 = ReworkFingerprintLine(fingerprint.Substring(fingerprint.Length / 2 + 1));
-      table.AddRow(LibraryResources.SigningRequestDocumentCertificateFingerprint, fingerprintLine1);
-      table.AddRow(string.Empty, fingerprintLine2);
+      string certificateId = this.certificate.Id.ToString();
+      int idLength = certificateId.Length / 2;
+      table.AddRow(LibraryResources.SigningRequestDocumentCertificateId, certificateId.Substring(0, idLength));
+      table.AddRow(string.Empty, certificateId.Substring(idLength));
+
+      string fingerprint = this.certificate.Fingerprint.Replace(" ", string.Empty);
+      int fingerprintLength = fingerprint.Length / 4;
+      table.AddRow(LibraryResources.SigningRequestDocumentCertificateFingerprint, FourBlocks(fingerprint.Substring(0, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 2, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 3, fingerprintLength)));
 
       table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
     }
@@ -130,12 +151,18 @@ namespace Pirate.PiVote.Printing
 
       table.AddRow(LibraryResources.SigningRequestDocumentParent, 2, FontStyle.Bold);
       table.AddRow(" ", 2);
-      table.AddRow(LibraryResources.SigningRequestDocumentCertificateId, signingCertificate.Id.ToString());
-      string fingerprint = signingCertificate.Fingerprint;
-      string fingerprintLine1 = ReworkFingerprintLine(fingerprint.Substring(0, fingerprint.Length / 2));
-      string fingerprintLine2 = ReworkFingerprintLine(fingerprint.Substring(fingerprint.Length / 2 + 1));
-      table.AddRow(LibraryResources.SigningRequestDocumentCertificateFingerprint, fingerprintLine1);
-      table.AddRow(string.Empty, fingerprintLine2);
+
+      string certificateId = signingCertificate.Id.ToString();
+      int idLength = certificateId.Length / 2;
+      table.AddRow(LibraryResources.SigningRequestDocumentCertificateId, certificateId.Substring(0, idLength));
+      table.AddRow(string.Empty, certificateId.Substring(idLength));
+
+      string fingerprint = signingCertificate.Fingerprint.Replace(" ", string.Empty);
+      int fingerprintLength = fingerprint.Length / 4;
+      table.AddRow(LibraryResources.SigningRequestDocumentCertificateFingerprint, FourBlocks(fingerprint.Substring(0, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 2, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 3, fingerprintLength)));
 
       table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
     }
@@ -162,14 +189,18 @@ namespace Pirate.PiVote.Printing
       thirdAuthoritySign.Draw();
     }
 
-    private string ReworkFingerprintLine(string line)
+    private string FourBlocks(string line)
     {
-      string[] parts = line.Split(new string[] { " " }, StringSplitOptions.None);
       string newLine = string.Empty;
 
-      for (int index = 0; index < parts.Length; index++)
+      for (int index = 0; index < line.Length; index++)
       {
-        newLine += parts[index] + ((index % 2) == 1 ? " " : string.Empty);
+        newLine += line.Substring(index, 1);
+
+        if (index % 4 == 3)
+        {
+          newLine += " ";
+        }
       }
 
       return newLine;

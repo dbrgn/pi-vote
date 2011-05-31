@@ -86,6 +86,9 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="ThoughtWorks.QRCode">
+      <HintPath>..\..\..\..\Downloads\QRCode\QRCodeSampleApp\bin\Debug\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -310,6 +313,7 @@
     <Compile Include="Serialization\Serializable.cs" />
     <Compile Include="Serialization\SerializeFieldAttribute.cs" />
     <Compile Include="Serialization\SerializeContext.cs" />
+    <Compile Include="Utilitiy\RandomNumberGeneratorExtensions.cs" />
     <Compile Include="Utilitiy\StringBuilderExtensions.cs" />
     <Compile Include="Utilitiy\SystemExtensions.cs" />
     <Compile Include="Utilitiy\Tools.cs" />

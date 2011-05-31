@@ -6,13 +6,14 @@
  */
 
 using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using Emil.GMP;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pirate.PiVote;
 using Pirate.PiVote.Crypto;
-using Emil.GMP;
 
 namespace Pirate.PiVote.UnitTest
 {
@@ -45,7 +46,7 @@ namespace Pirate.PiVote.UnitTest
         this.publicKey = this.parameters.Random();
 
         Ballot ballot = new Ballot(new int[] { 0, 1, 0, 1 }, this.parameters, this.parameters.Questions.ElementAt(0), this.publicKey, new Progress(null));
-        Assert.IsTrue(ballot.Verify(this.publicKey, this.parameters, this.parameters.Questions.ElementAt(0), new Progress(null)));
+        Assert.IsTrue(ballot.Verify(this.publicKey, this.parameters, this.parameters.Questions.ElementAt(0), RandomNumberGenerator.Create(), BaseParameters.StandardProofCount, new Progress(null)));
       }
     }
 
@@ -57,10 +58,10 @@ namespace Pirate.PiVote.UnitTest
         this.publicKey = this.parameters.Random();
 
         Ballot ballot0 = new Ballot(new int[] { 0, 1, 0, 1 }, this.parameters, this.parameters.Questions.ElementAt(0), this.publicKey, FakeType.BadFiatShamir);
-        Assert.IsFalse(ballot0.Verify(this.publicKey, this.parameters, this.parameters.Questions.ElementAt(0), new Progress(null)));
+        Assert.IsFalse(ballot0.Verify(this.publicKey, this.parameters, this.parameters.Questions.ElementAt(0), RandomNumberGenerator.Create(), BaseParameters.StandardProofCount, new Progress(null)));
 
         Ballot ballot1 = new Ballot(new int[] { 0, 1, 0, 1 }, this.parameters, this.parameters.Questions.ElementAt(0), this.publicKey, FakeType.BadPowerMod);
-        Assert.IsFalse(ballot1.Verify(this.publicKey, this.parameters, this.parameters.Questions.ElementAt(0), new Progress(null)));
+        Assert.IsFalse(ballot1.Verify(this.publicKey, this.parameters, this.parameters.Questions.ElementAt(0), RandomNumberGenerator.Create(), BaseParameters.StandardProofCount, new Progress(null)));
       }
     }
   }

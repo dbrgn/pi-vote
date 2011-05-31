@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using Emil.GMP;
 using Pirate.PiVote.Serialization;
@@ -249,8 +250,10 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="publicKey">Public key to verify against.</param>
     /// <param name="parameters">Cryptographic Parameters.</param>
+    /// <param name="rng">Random number generator.</param>
+    /// <param name="proofCheckCount">Number of proofs to check.</param>
     /// <returns>All proves are valid.</returns>
-    public bool Verify(BigInt publicKey, BaseParameters parameters)
+    public bool Verify(BigInt publicKey, BaseParameters parameters, RandomNumberGenerator rng, int proofCheckCount)
     {
       if (publicKey == null)
         throw new ArgumentNullException("publicKey");
@@ -264,8 +267,10 @@ namespace Pirate.PiVote.Crypto
       CryptoLog.Add(CryptoLogLevel.Numeric, "Halfkey", HalfKey);
 
       verifies &= RangeProves.Count == parameters.ProofCount;
-      verifies &= RangeProves.All(proof => proof.Verify(this, publicKey, parameters));
-
+      verifies &= RangeProves
+        .SelectRandom(rng, proofCheckCount)
+        .All(proof => proof.Verify(this, publicKey, parameters));
+       
       CryptoLog.End(CryptoLogLevel.Detailed);
 
       return verifies;

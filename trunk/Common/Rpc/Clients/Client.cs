@@ -293,12 +293,13 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="votingId">Id of the voting.</param>
     /// <param name="signedVoteReceipts">Vote receipts signed by the server to check.</param>
+    /// <param name="intitalCheckProofCount">Number of proofs to check initially.</param>
     /// <param name="callBack">Callback upon completion.</param>
-    public void GetResult(Guid votingId, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, GetResultCallBack callBack)
+    public void GetResult(Guid votingId, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, int intitalCheckProofCount, GetResultCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new GetResultOperation(votingId, signedVoteReceipts, callBack));
+        this.operations.Enqueue(new GetResultOperation(votingId, signedVoteReceipts, intitalCheckProofCount, callBack));
       }
     }
 
@@ -307,12 +308,13 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="offlinePath">Path to the offline voting files.</param>
     /// <param name="signedVoteReceipts">Vote receipts signed by the server to check.</param>
+    /// <param name="intitalCheckProofCount">Number of proofs to check initially.</param>
     /// <param name="callBack">Callback upon completion.</param>
-    public void GetResult(string offlinePath, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, GetResultCallBack callBack)
+    public void GetResult(string offlinePath, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, int intitalCheckProofCount, GetResultCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new GetResultOperation(offlinePath, signedVoteReceipts, callBack));
+        this.operations.Enqueue(new GetResultOperation(offlinePath, signedVoteReceipts, intitalCheckProofCount, callBack));
       }
     }
 

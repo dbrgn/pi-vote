@@ -331,6 +331,60 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please choose how thorough you want the votes checked..
+        /// </summary>
+        internal static string ConfigProofCountExplain {
+            get {
+                return ResourceManager.GetString("ConfigProofCountExplain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fast.
+        /// </summary>
+        internal static string ConfigProofCountFast {
+            get {
+                return ResourceManager.GetString("ConfigProofCountFast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking {0} proofs means not detecting an neferious ballot with a probability of 1 in {1}..
+        /// </summary>
+        internal static string ConfigProofCountInfo {
+            get {
+                return ResourceManager.GetString("ConfigProofCountInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secure.
+        /// </summary>
+        internal static string ConfigProofCountSecure {
+            get {
+                return ResourceManager.GetString("ConfigProofCountSecure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proofs.
+        /// </summary>
+        internal static string ConfigTabProofCount {
+            get {
+                return ResourceManager.GetString("ConfigTabProofCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Circle - Configuration.
+        /// </summary>
+        internal static string ConfigTitle {
+            get {
+                return ResourceManager.GetString("ConfigTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Some shares were invalid. The voting will be aborted..
         /// </summary>
         internal static string ControllerCheckSharesFailed {
@@ -997,6 +1051,15 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Config.
+        /// </summary>
+        internal static string MenuConfig {
+            get {
+                return ResourceManager.GetString("MenuConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Create....
         /// </summary>
         internal static string MenuCreateVoting {
@@ -1011,6 +1074,15 @@ namespace Pirate.PiVote.Circle {
         internal static string MenuDownloadSignatureRequests {
             get {
                 return ResourceManager.GetString("MenuDownloadSignatureRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E&amp;xtras.
+        /// </summary>
+        internal static string MenuExtras {
+            get {
+                return ResourceManager.GetString("MenuExtras", resourceCulture);
             }
         }
         

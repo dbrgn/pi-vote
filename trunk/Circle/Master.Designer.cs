@@ -54,6 +54,8 @@ namespace Pirate.PiVote.Circle
       this.frenchMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.mainPanel = new System.Windows.Forms.Panel();
       this.votingListsControl = new Pirate.PiVote.Circle.VotingListsControl();
+      this.extrasMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.configMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.mainMenu.SuspendLayout();
       this.mainPanel.SuspendLayout();
       this.SuspendLayout();
@@ -63,7 +65,8 @@ namespace Pirate.PiVote.Circle
       this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.votingsMenu,
             this.certificatesMenu,
-            this.languageMenu});
+            this.languageMenu,
+            this.extrasMenu});
       this.mainMenu.Location = new System.Drawing.Point(0, 0);
       this.mainMenu.Name = "mainMenu";
       this.mainMenu.Size = new System.Drawing.Size(1016, 24);
@@ -83,14 +86,14 @@ namespace Pirate.PiVote.Circle
       // 
       this.refreshVotingsMenu.Name = "refreshVotingsMenu";
       this.refreshVotingsMenu.ShortcutKeyDisplayString = "F5";
-      this.refreshVotingsMenu.Size = new System.Drawing.Size(131, 22);
+      this.refreshVotingsMenu.Size = new System.Drawing.Size(152, 22);
       this.refreshVotingsMenu.Text = "&Refresh";
       this.refreshVotingsMenu.Click += new System.EventHandler(this.RefreshVotingsMenu_Click);
       // 
       // createVotingMenu
       // 
       this.createVotingMenu.Name = "createVotingMenu";
-      this.createVotingMenu.Size = new System.Drawing.Size(131, 22);
+      this.createVotingMenu.Size = new System.Drawing.Size(152, 22);
       this.createVotingMenu.Text = "&Create";
       this.createVotingMenu.Click += new System.EventHandler(this.createVotingMenu_Click);
       // 
@@ -170,21 +173,21 @@ namespace Pirate.PiVote.Circle
       // englishMenu
       // 
       this.englishMenu.Name = "englishMenu";
-      this.englishMenu.Size = new System.Drawing.Size(114, 22);
+      this.englishMenu.Size = new System.Drawing.Size(152, 22);
       this.englishMenu.Text = "&English";
       this.englishMenu.Click += new System.EventHandler(this.EnglishMenu_Click);
       // 
       // germanMenu
       // 
       this.germanMenu.Name = "germanMenu";
-      this.germanMenu.Size = new System.Drawing.Size(114, 22);
+      this.germanMenu.Size = new System.Drawing.Size(152, 22);
       this.germanMenu.Text = "&Deutsch";
       this.germanMenu.Click += new System.EventHandler(this.GermanMenu_Click);
       // 
       // frenchMenu
       // 
       this.frenchMenu.Name = "frenchMenu";
-      this.frenchMenu.Size = new System.Drawing.Size(114, 22);
+      this.frenchMenu.Size = new System.Drawing.Size(152, 22);
       this.frenchMenu.Text = "&Français";
       this.frenchMenu.Click += new System.EventHandler(this.FrenchMenu_Click);
       // 
@@ -211,6 +214,21 @@ namespace Pirate.PiVote.Circle
       this.votingListsControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.VotingListsControl_VotingAction);
       this.votingListsControl.CreateCertificate += new System.EventHandler(this.VotingListsControl_CreateCertificate);
       this.votingListsControl.ResumeCertificate += new System.EventHandler(this.VotingListsControl_ResumeCertificate);
+      // 
+      // extrasMenu
+      // 
+      this.extrasMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.configMenu});
+      this.extrasMenu.Name = "extrasMenu";
+      this.extrasMenu.Size = new System.Drawing.Size(50, 20);
+      this.extrasMenu.Text = "E&xtras";
+      // 
+      // configMenu
+      // 
+      this.configMenu.Name = "configMenu";
+      this.configMenu.Size = new System.Drawing.Size(152, 22);
+      this.configMenu.Text = "&Config";
+      this.configMenu.Click += new System.EventHandler(this.configMenu_Click);
       // 
       // Master
       // 
@@ -259,6 +277,8 @@ namespace Pirate.PiVote.Circle
     private System.Windows.Forms.ToolStripMenuItem downloadSignatureRequestsMenu;
     private System.Windows.Forms.ToolStripMenuItem uploadSignatureResponsesMenu;
     private System.Windows.Forms.ToolStripMenuItem uploadCertificateStorageMenu;
+    private System.Windows.Forms.ToolStripMenuItem extrasMenu;
+    private System.Windows.Forms.ToolStripMenuItem configMenu;
   }
 }
 

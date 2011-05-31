@@ -18,5 +18,13 @@ namespace System
     {
       return value >= min && value <= max;
     }
+
+    public static IEnumerable<int> OneToN(this int to)
+    {
+      for (int number = 1; number <= to; number++)
+      {
+        yield return number;
+      }
+    }
   }
 }

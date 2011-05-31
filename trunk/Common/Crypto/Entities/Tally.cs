@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Security.Cryptography;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using Emil.GMP;
 
@@ -68,6 +69,16 @@ namespace Pirate.PiVote.Crypto
     private Dictionary<int, Tuple<Signed<Envelope>, bool>> envelopeSequencerList;
 
     /// <summary>
+    /// Random number generator.
+    /// </summary>
+    private RandomNumberGenerator rng;
+
+    /// <summary>
+    /// Number of proofs to check.
+    /// </summary>
+    private int proofCheckCount;
+
+    /// <summary>
     /// Total number of envelopes.
     /// </summary>
     public int EnvelopeCount { get; private set; }
@@ -91,9 +102,12 @@ namespace Pirate.PiVote.Crypto
     public Tally(
       VotingParameters parameters,
       CertificateStorage certificateStorage, 
-      BigInt publicKey)
+      BigInt publicKey,
+      int checkProofCount)
     {
+      this.rng = RandomNumberGenerator.Create();
       this.parameters = parameters;
+      this.proofCheckCount = Math.Min(parameters.ProofCount, checkProofCount);
       this.certificateStorage = certificateStorage;
       this.publicKey = publicKey;
 
@@ -184,7 +198,7 @@ namespace Pirate.PiVote.Crypto
         Ballot ballot = envelope.Ballots.ElementAt(questionIndex);
 
         progress.Down(1d / (double)this.parameters.Questions.Count());
-        acceptVote &= ballot.Verify(this.publicKey, this.parameters, question, progress);
+        acceptVote &= ballot.Verify(this.publicKey, this.parameters, question, this.rng, this.proofCheckCount, progress);
 
         progress.Up();
       }

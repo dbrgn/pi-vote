@@ -106,13 +106,20 @@ namespace Pirate.PiVote.Rpc
       private Dictionary<int, double> threadProgress;
 
       /// <summary>
+      /// Number of proofs to check.
+      /// </summary>
+      private int checkProofCount;
+
+      /// <summary>
       /// Create a new result get operation.
       /// </summary>
       /// <param name="votingId">Id of the voting.</param>
+      /// <param name="checkProofCount">Number of proofs to check.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public GetResultOperation(Guid votingId, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, GetResultCallBack callBack)
+      public GetResultOperation(Guid votingId, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, int checkProofCount, GetResultCallBack callBack)
       {
         this.votingId = votingId;
+        this.checkProofCount = checkProofCount;
         this.callBack = callBack;
 
         this.voteReceipts = new Dictionary<Guid, Signed<VoteReceipt>>();
@@ -126,10 +133,12 @@ namespace Pirate.PiVote.Rpc
       /// Create a new result get operation.
       /// </summary>
       /// <param name="offlinePath">Path for offline checking files.</param>
+      /// <param name="checkProofCount">Number of proofs to check.</param>
       /// <param name="callBack">Callback upon completion.</param>
-      public GetResultOperation(string offlinePath, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, GetResultCallBack callBack)
+      public GetResultOperation(string offlinePath, IEnumerable<Signed<VoteReceipt>> signedVoteReceipts, int checkProofCount, GetResultCallBack callBack)
       {
         this.offlinePath = offlinePath;
+        this.checkProofCount = checkProofCount;
         this.callBack = callBack;
 
         this.voteReceipts = new Dictionary<Guid, Signed<VoteReceipt>>();
@@ -180,92 +189,111 @@ namespace Pirate.PiVote.Rpc
             this.envelopeCount = directory.GetFiles(Files.EnvelopeFilePattern).Count();
           }
 
-          Progress = 0.2d;
-          Text = LibraryResources.ClientGetResultFetchEnvelopes;
-          SubText = string.Format(LibraryResources.ClientGetResultFetchEnvelopesOf, 0, this.envelopeCount);
-          SubProgress = 0d;
-
-          client.voterEntity.TallyBegin(material);
-
-          HasSingleProgress = true;
-          this.client = client;
-          this.envelopeQueue = new Queue<Tuple<int, Signed<Envelope>>>();
-          this.workerRun = true;
-          Thread fetcher = new Thread(FetchWorker);
-          fetcher.Priority = ThreadPriority.Lowest;
-          fetcher.Start();
-          List<Thread> workers = new List<Thread>();
-          Environment.ProcessorCount.Times(() => workers.Add(new Thread(TallyAddWorker)));
-          this.threadProgress = new Dictionary<int, double>();
-          workers.ForEach(worker => worker.Priority = ThreadPriority.Lowest);
-          workers.ForEach(worker => this.threadProgress.Add(worker.ManagedThreadId, 0d));
-          workers.ForEach(worker => worker.Start());
-
-          while (this.verifiedEnvelopes < this.envelopeCount)
+          while (true)
           {
-            lock (this.threadProgress)
+            try
             {
-              SubText = string.Format(LibraryResources.ClientGetResultFetchEnvelopesOf, this.verifiedEnvelopes, this.envelopeCount);
-              SubProgress = 0.2d / (double)this.envelopeCount * (double)this.fetchedEnvelopes +
-                            0.8d / (double)this.envelopeCount * ((double)this.verifiedEnvelopes + this.threadProgress.Values.Sum());
-              SingleProgress = SubProgress;
-            }
+              Progress = 0.2d;
+              Text = LibraryResources.ClientGetResultFetchEnvelopes;
+              SubText = string.Format(LibraryResources.ClientGetResultFetchEnvelopesOf, 0, this.envelopeCount);
+              SubProgress = 0d;
 
-            Thread.Sleep(100);
-          }
+              client.voterEntity.TallyBegin(material, this.checkProofCount);
 
-          fetcher.Join();
-          this.workerRun = false;
-          workers.ForEach(worker => worker.Join());
+              HasSingleProgress = true;
+              this.client = client;
+              this.envelopeQueue = new Queue<Tuple<int, Signed<Envelope>>>();
+              this.workerRun = true;
+              Thread fetcher = new Thread(FetchWorker);
+              fetcher.Priority = ThreadPriority.Lowest;
+              fetcher.Start();
+              List<Thread> workers = new List<Thread>();
+              Environment.ProcessorCount.Times(() => workers.Add(new Thread(TallyAddWorker)));
+              this.threadProgress = new Dictionary<int, double>();
+              workers.ForEach(worker => worker.Priority = ThreadPriority.Lowest);
+              workers.ForEach(worker => this.threadProgress.Add(worker.ManagedThreadId, 0d));
+              workers.ForEach(worker => worker.Start());
 
-          Progress = 0.8d;
-          Text = LibraryResources.ClientGetResultFetchPartialDeciphers;
-          SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, 0, parameters.AuthorityCount);
-          SubProgress = 0d;
-
-          fetcher.Join();
-          this.workerRun = false;
-          workers.ForEach(worker => worker.Join());
-
-          for (int authorityIndex = 1; authorityIndex < parameters.AuthorityCount + 1; authorityIndex++)
-          {
-            Signed<PartialDecipherList> partialDecipher = null;
-
-            if (this.offlinePath.IsNullOrEmpty())
-            {
-              partialDecipher = client.proxy.FetchPartialDecipher(votingId, authorityIndex);
-            }
-            else
-            {
-              string partialDecipherFileName = Path.Combine(this.offlinePath, string.Format(Files.PartialDecipherFileString, authorityIndex));
-
-              if (File.Exists(partialDecipherFileName))
+              while (this.verifiedEnvelopes < this.envelopeCount)
               {
-                partialDecipher = Serializable.Load<Signed<PartialDecipherList>>(partialDecipherFileName);
+                lock (this.threadProgress)
+                {
+                  SubText = string.Format(LibraryResources.ClientGetResultFetchEnvelopesOf, this.verifiedEnvelopes, this.envelopeCount);
+                  SubProgress = 0.2d / (double)this.envelopeCount * (double)this.fetchedEnvelopes +
+                                0.8d / (double)this.envelopeCount * ((double)this.verifiedEnvelopes + this.threadProgress.Values.Sum());
+                  SingleProgress = SubProgress;
+                }
+
+                Thread.Sleep(100);
+              }
+
+              fetcher.Join();
+              this.workerRun = false;
+              workers.ForEach(worker => worker.Join());
+
+              Progress = 0.8d;
+              Text = LibraryResources.ClientGetResultFetchPartialDeciphers;
+              SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, 0, parameters.AuthorityCount);
+              SubProgress = 0d;
+
+              fetcher.Join();
+              this.workerRun = false;
+              workers.ForEach(worker => worker.Join());
+
+              for (int authorityIndex = 1; authorityIndex < parameters.AuthorityCount + 1; authorityIndex++)
+              {
+                Signed<PartialDecipherList> partialDecipher = null;
+
+                if (this.offlinePath.IsNullOrEmpty())
+                {
+                  partialDecipher = client.proxy.FetchPartialDecipher(votingId, authorityIndex);
+                }
+                else
+                {
+                  string partialDecipherFileName = Path.Combine(this.offlinePath, string.Format(Files.PartialDecipherFileString, authorityIndex));
+
+                  if (File.Exists(partialDecipherFileName))
+                  {
+                    partialDecipher = Serializable.Load<Signed<PartialDecipherList>>(partialDecipherFileName);
+                  }
+                }
+
+                if (partialDecipher != null)
+                {
+                  client.voterEntity.TallyAddPartialDecipher(partialDecipher);
+                }
+
+                SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, authorityIndex, parameters.AuthorityCount);
+                SubProgress = 1d / (double)parameters.AuthorityCount * (double)(authorityIndex);
+                SingleProgress = SubProgress;
+              }
+
+              Progress = 0.9d;
+              Text = LibraryResources.ClientGetResultDecipherResult;
+              SubProgress = 0d;
+              HasSingleProgress = false;
+
+              var result = client.voterEntity.TallyResult;
+
+              SubProgress = 1d;
+              Progress = 1d;
+
+              this.callBack(result, this.voteReceiptsStatus, null);
+              return;
+            }
+            catch (PiSecurityException exception)
+            {
+              if (exception.Code == ExceptionCode.PartialDecipherBadEnvelopeHash &&
+                 this.checkProofCount < parameters.ProofCount)
+              {
+                this.checkProofCount = Math.Min(parameters.ProofCount, this.checkProofCount + 1);
+              }
+              else
+              {
+                throw;
               }
             }
-
-            if (partialDecipher != null)
-            {
-              client.voterEntity.TallyAddPartialDecipher(partialDecipher);
-            }
-
-            SubText = string.Format(LibraryResources.ClientGetResultFetchPartialDeciphersOf, authorityIndex, parameters.AuthorityCount);
-            SubProgress = 1d / (double)parameters.AuthorityCount * (double)(authorityIndex);
-            SingleProgress = SubProgress;
           }
-
-          Progress = 0.9d;
-          Text = LibraryResources.ClientGetResultDecipherResult;
-          SubProgress = 0d;
-          HasSingleProgress = false;
-
-          var result = client.voterEntity.TallyResult;
-
-          SubProgress = 1d;
-          Progress = 1d;
-
-          this.callBack(result, this.voteReceiptsStatus, null);
         }
         catch (Exception exception)
         {

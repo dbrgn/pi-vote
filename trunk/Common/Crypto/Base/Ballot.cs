@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using Emil.GMP;
 using Pirate.PiVote.Serialization;
@@ -156,9 +157,11 @@ namespace Pirate.PiVote.Crypto
     /// <param name="publicKey">Public key of the authorities.</param>
     /// <param name="parameters">Cryptographic parameters.</param>
     /// <param name="questionParameters">Parameters of the question.</param>
+    /// <param name="rng">Random number generator.</param>
+    /// <param name="proofCheckCount">Number of proofs to check.</param>
     /// <param name="progress">Reports on the progress.</param>
     /// <returns>Result of the verification.</returns>
-    public bool Verify(BigInt publicKey, BaseParameters parameters, Question questionParameters, Progress progress)
+    public bool Verify(BigInt publicKey, BaseParameters parameters, Question questionParameters, RandomNumberGenerator rng, int proofCheckCount, Progress progress)
     {
       if (publicKey == null)
         throw new ArgumentNullException("publicKey");
@@ -175,13 +178,15 @@ namespace Pirate.PiVote.Crypto
 
       foreach (Vote vote in Votes)
       {
-        verifies &= vote.Verify(publicKey, parameters);
+        verifies &= vote.Verify(publicKey, parameters, rng, proofCheckCount);
         voteSum = voteSum == null ? vote : voteSum + vote;
         progress.Add(1d / (double)Votes.Count);
       }
 
       verifies &= SumProves.Count == parameters.ProofCount;
-      verifies &= SumProves.All(sumProof => sumProof.Verify(voteSum, publicKey, parameters, questionParameters));
+      verifies &= SumProves
+        .SelectRandom(rng, proofCheckCount)
+        .All(sumProof => sumProof.Verify(voteSum, publicKey, parameters, questionParameters));
 
       CryptoLog.Add(CryptoLogLevel.Numeric, "Public key", publicKey);
       CryptoLog.Add(CryptoLogLevel.Numeric, "Vote sum ciphertext", voteSum.Ciphertext);

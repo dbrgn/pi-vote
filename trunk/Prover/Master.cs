@@ -16,6 +16,8 @@ namespace Pirate.PiVote.Prover
   {
     private const string ProofFileFilter = "Pi-Vote Certificate Proof|*.pi-cert-proof";
 
+    private CertificateStorage certificateStorage;
+
     private Certificate certificate;
 
     public Master()
@@ -58,6 +60,17 @@ namespace Pirate.PiVote.Prover
           this.verifyCertificateIdTextBox.Text = signedProof.Certificate.Id.ToString();
           this.verifyCertificateFingerprintTextBox.Text = signedProof.Certificate.Fingerprint;
           this.verifyProofTextTextBox.Text = proof.Text;
+          this.issuerValidTextBox.Text = signedProof.Certificate.Validate(this.certificateStorage, DateTime.Now).Text();
+
+          if (signedProof.Certificate.Signatures.Count() > 0)
+          {
+            var signature = signedProof.Certificate.Signatures.ElementAt(0);
+            var issuer = this.certificateStorage.Certificates.Where(cert => cert.Id.Equals(signature.SignerId)).First();
+
+            this.issuerCertificateIdTextBox.Text = issuer.Id.ToString();
+            this.issuerFullNameTextBox.Text = issuer.FullName;
+            this.issuerFingerPrintTextBox.Text = issuer.Fingerprint;
+          }
         }
         else
         { 
@@ -88,6 +101,18 @@ namespace Pirate.PiVote.Prover
         {
           signedProof.Save(dialog.FileName);
         }
+      }
+    }
+
+    private void Master_Load(object sender, EventArgs e)
+    {
+      CenterToScreen();
+
+      this.certificateStorage = new CertificateStorage();
+
+      if (!this.certificateStorage.TryLoadRoot())
+      {
+        MessageForm.Show("Root certificate not found.", "Certificate Prover", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
     }
   }

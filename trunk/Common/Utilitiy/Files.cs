@@ -48,6 +48,7 @@ namespace Pirate.PiVote
     public const string VoteReceiptExtension = ".pi-receipt";
     public const string VoteReceiptPattern = "*.pi-receipt";
     private const string VoteReceiptFileNameBuild = "{0}@{1}.pi-receipt";
+    public const string CircleUserConfigFileName = "circle.user.cfg";
 
     public static string TestDataPath
     {

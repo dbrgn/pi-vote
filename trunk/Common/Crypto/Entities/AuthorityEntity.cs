@@ -265,7 +265,7 @@ namespace Pirate.PiVote.Crypto
 
       BigInt publicKey = CalculatePublicKey(votingMaterial);
 
-      this.tally = new Tally(this.parameters, this.certificateStorage, publicKey);
+      this.tally = new Tally(this.parameters, this.certificateStorage, publicKey, BaseParameters.StandardProofCount);
     }
 
     /// <summary>
