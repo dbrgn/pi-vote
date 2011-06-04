@@ -19,20 +19,10 @@ namespace MySql.Data.MySqlClient
   {
     public static byte[] GetBlob(this MySqlDataReader reader, int i)
     {
-      MemoryStream stream = new MemoryStream();
-      byte[] buffer = new byte[1024];
-      long count = buffer.Length;
-      long position = 0;
-
-      while (count >= buffer.Length)
-      {
-        count = reader.GetBytes(i, position, buffer, 0, buffer.Length);
-        stream.Write(buffer, 0, (int)count);
-        position += count;
-      }
-
-      stream.Close();
-      return stream.ToArray();
+      int count = (int)reader.GetBytes(i, 0, null, 0, int.MaxValue);
+      byte[] buffer = new byte[count];
+      reader.GetBytes(i, 0, buffer, 0, count);
+      return buffer;
     }
 
     public static Guid GetGuid(this MySqlDataReader reader, int i)
