@@ -70,6 +70,10 @@
       <Project>{3A570D23-A292-4B5C-A62E-C7295888EAA0}</Project>
       <Name>Pirate.PiVote</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gui\Pirate.PiVote.Gui.csproj">
+      <Project>{327B55CF-5800-47A5-AA53-8309508BFC6A}</Project>
+      <Name>Pirate.PiVote.Gui</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

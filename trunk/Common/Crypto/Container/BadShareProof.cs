@@ -86,9 +86,9 @@ namespace Pirate.PiVote.Crypto
       context.WriteDictionary(Authorities);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       ComplainingAuthorityIndex = context.ReadInt32();
       CertificateStorage = context.ReadObject<CertificateStorage>();
       SignedParameters = context.ReadObject<Signed<VotingParameters>>();
@@ -97,8 +97,8 @@ namespace Pirate.PiVote.Crypto
       Authorities = context.ReadObjectDictionary<Certificate>();
     }
 
-    public BadShareProof(DeserializeContext context)
-      : base(context)
+    public BadShareProof(DeserializeContext context, byte version)
+      : base(context, version)
     { }
   }
 }

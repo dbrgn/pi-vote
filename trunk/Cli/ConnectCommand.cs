@@ -8,9 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
-using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Rpc;
 
 namespace Pirate.PiVote.Cli
 {
@@ -32,8 +33,12 @@ namespace Pirate.PiVote.Cli
         Status.Client.GetCertificateStorage(Status.CertificateStorage, GetCertificateStorageCompleted);
         WaitForCompletion();
 
+        var assembly = Assembly.GetExecutingAssembly();
+        var clientName = assembly.GetName().Name;
+        var clientVersion = assembly.GetName().Version.ToString();
+
         Begin("Fetching configuration...");
-        Status.Client.GetConfig(GetConfigComplete);
+        Status.Client.GetConfig(clientName, clientVersion, GetConfigComplete);
         WaitForCompletion();
       }
       catch (Exception exception)

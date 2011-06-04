@@ -17,24 +17,44 @@ namespace Pirate.PiVote.Serialization
 {
   [SerializeObject("Base object of all serializable objects.")]
   [SerializeAdditionalField(typeof(string), "FullName", 0, "Full name of the object type.")]
-  public class Serializable
+  public abstract class Serializable
   {
     public Serializable()
     { 
     }
 
-    public Serializable(DeserializeContext context)
+    public Serializable(DeserializeContext context, byte version)
     {
-      Deserialize(context);
+      Deserialize(context, version);
+    }
+
+    /// <summary>
+    /// Version of the serialized data.
+    /// </summary>
+    /// <remarks>
+    /// Version 0 means not using versionning.
+    /// </remarks>
+    public virtual byte Version
+    {
+      get { return 0; }
     }
 
     public virtual void Serialize(SerializeContext context)
     {
       string fullName = Regex.Replace(GetType().FullName, @"(\[[^,]*?,\s*[^,]*?)(,[^\]]*?)(\])", "$1$3");
-      context.Write(fullName);
+
+      if (Version == 0)
+      {
+        context.Write(fullName);
+      }
+      else
+      {
+        string versionString = string.Format("@{0:x2}", Version);
+        context.Write(versionString + fullName);
+      }
     }
 
-    protected virtual void Deserialize(DeserializeContext context)
+    protected virtual void Deserialize(DeserializeContext context, byte version)
     { 
     }
 

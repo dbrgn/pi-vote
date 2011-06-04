@@ -8,15 +8,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using Emil.GMP;
+using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Serialization;
-using System.Security.Cryptography;
 
 namespace Pirate.PiVote.Crypto
 {
   public class Test
   {
+    private class DummyConnection : IRpcConnection
+    {
+      public ulong Id
+      {
+        get { return 0; }
+      }
+    }
+
     /// <summary>
     /// Voting entity test.
     /// </summary>
@@ -25,6 +35,8 @@ namespace Pirate.PiVote.Crypto
     /// </remarks>
     public void EntityTest()
     {
+      IRpcConnection connection = new DummyConnection();
+
       DateTime validUntil = DateTime.Now.AddDays(1);
       var root = new CACertificate(null, "Root");
       root.CreateSelfSignature();
@@ -96,11 +108,11 @@ namespace Pirate.PiVote.Crypto
       var a4 = new AuthorityEntity(serverCertStorage, a4c);
       var a5 = new AuthorityEntity(serverCertStorage, a5c);
 
-      vs.AddAuthority(a1.Certificate);
-      vs.AddAuthority(a2.Certificate);
-      vs.AddAuthority(a3.Certificate);
-      vs.AddAuthority(a4.Certificate);
-      vs.AddAuthority(a5.Certificate);
+      vs.AddAuthority(connection, a1.Certificate);
+      vs.AddAuthority(connection, a2.Certificate);
+      vs.AddAuthority(connection, a3.Certificate);
+      vs.AddAuthority(connection, a4.Certificate);
+      vs.AddAuthority(connection, a5.Certificate);
 
       a1.Prepare(1, vs.SignedParameters);
       a2.Prepare(2, vs.SignedParameters);
@@ -114,11 +126,11 @@ namespace Pirate.PiVote.Crypto
       a4.SetAuthorities(vs.AuthorityList);
       a5.SetAuthorities(vs.AuthorityList);
 
-      vs.DepositShares(a1.GetShares());
-      vs.DepositShares(a2.GetShares());
-      vs.DepositShares(a3.GetShares());
-      vs.DepositShares(a4.GetShares());
-      vs.DepositShares(a5.GetShares());
+      vs.DepositShares(connection, a1.GetShares());
+      vs.DepositShares(connection, a2.GetShares());
+      vs.DepositShares(connection, a3.GetShares());
+      vs.DepositShares(connection, a4.GetShares());
+      vs.DepositShares(connection, a5.GetShares());
 
       var r1 = a1.VerifyShares(vs.GetAllShares());
       var r2 = a2.VerifyShares(vs.GetAllShares());
@@ -126,11 +138,11 @@ namespace Pirate.PiVote.Crypto
       var r4 = a4.VerifyShares(vs.GetAllShares());
       var r5 = a5.VerifyShares(vs.GetAllShares());
 
-      vs.DepositShareResponse(r1);
-      vs.DepositShareResponse(r2);
-      vs.DepositShareResponse(r3);
-      vs.DepositShareResponse(r4);
-      vs.DepositShareResponse(r5);
+      vs.DepositShareResponse(connection, r1);
+      vs.DepositShareResponse(connection, r2);
+      vs.DepositShareResponse(connection, r3);
+      vs.DepositShareResponse(connection, r4);
+      vs.DepositShareResponse(connection, r5);
 
       var v1c = new VoterCertificate(Language.English, null, 0);
       v1c.CreateSelfSignature();
@@ -144,7 +156,7 @@ namespace Pirate.PiVote.Crypto
 
       var vote1 = v1.Vote(vs.GetVotingMaterial(), v1c, new IEnumerable<int>[] { questionVota }, null);
 
-      vs.Vote(vote1);
+      vs.Vote(connection, vote1);
 
       int voters = 10;
 
@@ -159,7 +171,7 @@ namespace Pirate.PiVote.Crypto
         IEnumerable<int> questionVota2 = new int[] { 0, 1 };
         var votex = vx.Vote(vs.GetVotingMaterial(), vc, new IEnumerable<int>[] { questionVota2 }, null);
 
-        vs.Vote(votex);
+        vs.Vote(connection, votex);
       }
 
       for (int i = 2000; i < 2000 + voters; i++)
@@ -173,7 +185,7 @@ namespace Pirate.PiVote.Crypto
         IEnumerable<int> questionVota3 = new int[] { 1, 0 };
         var votex = vx.Vote(vs.GetVotingMaterial(), vc, new IEnumerable<int>[] { questionVota3 }, null);
 
-        vs.Vote(votex);
+        vs.Vote(connection, votex);
       }
 
       vs.EndVote();
@@ -199,11 +211,11 @@ namespace Pirate.PiVote.Crypto
       var pd4 = a4.PartiallyDecipher();
       var pd5 = a5.PartiallyDecipher();
 
-      vs.DepositPartialDecipher(pd1);
-      vs.DepositPartialDecipher(pd2);
-      vs.DepositPartialDecipher(pd3);
-      vs.DepositPartialDecipher(pd4);
-      vs.DepositPartialDecipher(pd5);
+      vs.DepositPartialDecipher(connection, pd1);
+      vs.DepositPartialDecipher(connection, pd2);
+      vs.DepositPartialDecipher(connection, pd3);
+      vs.DepositPartialDecipher(connection, pd4);
+      vs.DepositPartialDecipher(connection, pd5);
 
       v1.TallyBegin(vs.GetVotingMaterial(), BaseParameters.StandardProofCount);
 

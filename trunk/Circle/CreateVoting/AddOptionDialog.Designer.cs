@@ -8,14 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Windows.Forms;
+using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
-using Pirate.PiVote.Rpc;
+using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Gui;
+using Pirate.PiVote.Rpc;
 
 namespace Pirate.PiVote.Circle.CreateVoting
 {
@@ -48,12 +49,12 @@ namespace Pirate.PiVote.Circle.CreateVoting
     private void InitializeComponent()
     {
       this.textLabel = new System.Windows.Forms.Label();
-      this.textTextBox = new Pirate.PiVote.MultiLanguageTextBox();
-      this.descriptionTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.textTextBox = new MultiLanguageTextBox();
+      this.descriptionTextBox = new MultiLanguageTextBox();
       this.descriptionLabel = new System.Windows.Forms.Label();
       this.cancelButton = new System.Windows.Forms.Button();
       this.okButton = new System.Windows.Forms.Button();
-      this.urlTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.urlTextBox = new MultiLanguageTextBox();
       this.urlLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 

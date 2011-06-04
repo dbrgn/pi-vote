@@ -35,8 +35,9 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Excecutes a RPC request.
     /// </summary>
+    /// <param name="connection">Connection that made the request.</param>
     /// <param name="requestData">Serialized request data.</param>
     /// <returns>Serialized response data</returns>
-    public abstract byte[] Execute(byte[] requestData);
+    public abstract byte[] Execute(TcpRpcConnection connection, byte[] requestData);
   }
 }

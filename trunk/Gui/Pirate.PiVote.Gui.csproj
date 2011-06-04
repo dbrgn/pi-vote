@@ -53,6 +53,10 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="ThoughtWorks.QRCode, Version=1.0.4168.36386, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Certificate\CertificateControl.cs">
@@ -82,6 +86,12 @@
     <Compile Include="Controls\MessageForm.Designer.cs">
       <DependentUpon>MessageForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MultiLanguageTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MultiLanguageTextBox.Designer.cs">
+      <DependentUpon>MultiLanguageTextBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Phassphrase\ChangePassphraseDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +110,17 @@
     <Compile Include="Phassphrase\EncryptPrivateKeyDialog.Designer.cs">
       <DependentUpon>EncryptPrivateKeyDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Printing\DocumentTest.cs" />
+    <Compile Include="Printing\DrawObject.cs" />
+    <Compile Include="Printing\SignatureRequestDocument.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Printing\SignObject.cs" />
+    <Compile Include="Printing\StringObject.cs" />
+    <Compile Include="Printing\Table.cs" />
+    <Compile Include="Printing\TableCell.cs" />
+    <Compile Include="Printing\TableColumn.cs" />
+    <Compile Include="Printing\TableRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GuiResources.Designer.cs">
       <DependentUpon>GuiResources.resx</DependentUpon>
@@ -125,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MessageForm.resx">
       <DependentUpon>MessageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MultiLanguageTextBox.resx">
+      <DependentUpon>MultiLanguageTextBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Phassphrase\ChangePassphraseDialog.resx">
       <DependentUpon>ChangePassphraseDialog.cs</DependentUpon>

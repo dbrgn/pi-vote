@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Pirate.PiVote.Crypto;
-using Pirate.PiVote.Printing;
+using Pirate.PiVote.Gui.Printing;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Serialization;
 

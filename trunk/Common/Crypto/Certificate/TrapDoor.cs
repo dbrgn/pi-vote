@@ -51,8 +51,8 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="value">Serializable object.</param>
     /// <param name="certificate">Certificate of the signer.</param>
-    public TrapDoor(DeserializeContext context)
-      : base(context)
+    public TrapDoor(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -70,9 +70,9 @@ namespace Pirate.PiVote.Crypto
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       IssuerId = context.ReadGuid();
       SymmetricKey = context.ReadBytes();
     }

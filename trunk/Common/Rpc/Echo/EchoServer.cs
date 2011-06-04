@@ -54,12 +54,13 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Excecutes a RPC request.
     /// </summary>
+    /// <param name="connection">Connection that made the request.</param>
     /// <param name="requestData">Serialized request data.</param>
     /// <returns>Serialized response data</returns>
-    public override byte[] Execute(byte[] requestData)
+    public override byte[] Execute(TcpRpcConnection connection, byte[] requestData)
     {
       var request = Serializable.FromBinary<RpcRequest<EchoServer>>(requestData);
-      var response = request.TryExecute(this);
+      var response = request.TryExecute(connection, this);
 
       byte[] responseData = response.ToBinary();
 

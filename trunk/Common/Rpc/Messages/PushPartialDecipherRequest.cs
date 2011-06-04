@@ -46,8 +46,8 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public PushPartialDecipherRequest(DeserializeContext context)
-      : base(context)
+    public PushPartialDecipherRequest(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -66,9 +66,9 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="context">Context for deserialization</param>
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       this.votingId = context.ReadGuid();
       this.signedPartialDecipherList = context.ReadObject<Signed<PartialDecipherList>>();
     }
@@ -78,10 +78,10 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override PushPartialDecipherResponse Execute(VotingRpcServer server)
+    protected override PushPartialDecipherResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
-      voting.DepositPartialDecipher(this.signedPartialDecipherList);
+      voting.DepositPartialDecipher(connection, this.signedPartialDecipherList);
 
       return new PushPartialDecipherResponse(RequestId);
     }

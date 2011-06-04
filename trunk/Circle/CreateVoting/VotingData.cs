@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * Copyright (c) 2009, Pirate Party Switzerland
+ * All rights reserved.
+ * 
+ * Licensed under the New BSD License as seen in License.txt
+ */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,8 +35,8 @@ namespace Pirate.PiVote.Circle.CreateVoting
       Questions = new List<Question>();
     }
 
-    public VotingData(DeserializeContext context)
-      : base(context)
+    public VotingData(DeserializeContext context, byte version)
+      : base(context, version)
     { 
     }
 
@@ -42,9 +49,9 @@ namespace Pirate.PiVote.Circle.CreateVoting
       context.WriteList(Questions);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       Title = context.ReadMultiLanguageString();
       Descrption = context.ReadMultiLanguageString();
       Url = context.ReadMultiLanguageString();

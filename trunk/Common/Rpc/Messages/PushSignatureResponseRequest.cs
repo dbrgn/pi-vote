@@ -38,8 +38,8 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public PushSignatureResponseRequest(DeserializeContext context)
-      : base(context)
+    public PushSignatureResponseRequest(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -56,20 +56,21 @@ namespace Pirate.PiVote.Rpc
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       this.signatureResponse = context.ReadObject<Signed<SignatureResponse>>();
     }
 
     /// <summary>
     /// Executes a RPC request.
     /// </summary>
+    /// <param name="connection">Connection that made the request.</param>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override PushSignatureResponseResponse Execute(VotingRpcServer server)
+    protected override PushSignatureResponseResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
-      server.SetSignatureResponse(this.signatureResponse);
+      server.SetSignatureResponse(connection, this.signatureResponse);
 
       return new PushSignatureResponseResponse(RequestId);
     }

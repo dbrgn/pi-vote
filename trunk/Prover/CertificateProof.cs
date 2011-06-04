@@ -19,8 +19,8 @@ namespace Pirate.PiVote.Prover
       Text = text;
     }
 
-    public CertificateProof(DeserializeContext context)
-      : base(context)
+    public CertificateProof(DeserializeContext context, byte version)
+      : base(context, version)
     { 
     }
 
@@ -31,9 +31,9 @@ namespace Pirate.PiVote.Prover
       context.Write(Text);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       CreatedDate = context.ReadDateTime();
       Text = context.ReadString();
     }

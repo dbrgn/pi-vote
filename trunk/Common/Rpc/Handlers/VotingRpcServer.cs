@@ -167,17 +167,18 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Excecutes a RPC request.
     /// </summary>
+    /// <param name="connection">Connection that made the request.</param>
     /// <param name="requestData">Serialized request data.</param>
     /// <returns>Serialized response data</returns>
-    public override byte[] Execute(byte[] requestData)
+    public override byte[] Execute(TcpRpcConnection connection, byte[] requestData)
     {
-      Logger.Log(LogLevel.Debug, "Receiving request of {0} bytes.", requestData.Length);
+      Logger.Log(LogLevel.Debug, "Connection {0}: Receiving request of {1} bytes.", connection.Id, requestData.Length);
 
       var request = Serializable.FromBinary<RpcRequest<VotingRpcServer>>(requestData);
-      var response = request.TryExecute(this);
+      var response = request.TryExecute(connection, this);
 
       byte[] responseData = response.ToBinary();
-      Logger.Log(LogLevel.Debug, "Sending response of {0} bytes.", responseData.Length);
+      Logger.Log(LogLevel.Debug, "Connection {0}: Sending response of {1} bytes.", connection.Id, responseData.Length);
 
       return responseData;
     }
@@ -186,7 +187,7 @@ namespace Pirate.PiVote.Rpc
     /// Delete a voting.
     /// </summary>
     /// <param name="votingId">Id of voting to delete.</param>
-    public void DeleteVoting(Guid votingId)
+    public void DeleteVoting(IRpcConnection connection, Guid votingId)
     {
       VotingServerEntity voting = GetVoting(votingId);
 
@@ -196,6 +197,7 @@ namespace Pirate.PiVote.Rpc
         case VotingStatus.Sharing:
         case VotingStatus.Ready:
           voting.Delete();
+          Logger.Log(LogLevel.Info, "Connection {0}: Voting id {1} title {2} is deleted.", connection.Id, voting.Parameters.VotingId.ToString(), voting.Parameters.Title.Text);
           this.votings.Remove(votingId);
           break;
         default:
@@ -208,7 +210,10 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="votingParameters">Parameters for the voting.</param>
     /// <param name="authorities">List of authorities to oversee the voting.</param>
-    public void CreateVoting(Signed<VotingParameters> signedVotingParameters, IEnumerable<AuthorityCertificate> authorities)
+    public void CreateVoting(
+      IRpcConnection connection, 
+      Signed<VotingParameters> signedVotingParameters, 
+      IEnumerable<AuthorityCertificate> authorities)
     {
       if (signedVotingParameters == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "Voting parameters cannot be null.");
@@ -265,8 +270,10 @@ namespace Pirate.PiVote.Rpc
       insertCommand.Parameters.AddWithValue("@Status", (int)VotingStatus.New);
       insertCommand.ExecuteNonQuery();
 
+      Logger.Log(LogLevel.Info, "Connection {0}: Voting id {1} title {2} is created.", connection.Id, votingParameters.VotingId.ToString(), votingParameters.Title.Text);
+
       VotingServerEntity voting = new VotingServerEntity(this, signedVotingParameters, CertificateStorage, this.serverCertificate);
-      authorities.Foreach(authority => voting.AddAuthority(authority));
+      authorities.Foreach(authority => voting.AddAuthority(connection, authority));
       this.votings.Add(voting.Id, voting);
       voting.SendAuthorityActionRequiredMail();
     }
@@ -300,7 +307,10 @@ namespace Pirate.PiVote.Rpc
     /// Add or replaces a signature request.
     /// </remarks>
     /// <param name="signatureRequest">Signed signature request.</param>
-    public void SetSignatureRequest(Secure<SignatureRequest> signatureRequest, Secure<SignatureRequestInfo> signatureRequestInfo)
+    public void SetSignatureRequest(
+      IRpcConnection connection, 
+      Secure<SignatureRequest> signatureRequest, 
+      Secure<SignatureRequestInfo> signatureRequestInfo)
     {
       Guid id = signatureRequest.Certificate.Id;
 
@@ -320,6 +330,8 @@ namespace Pirate.PiVote.Rpc
       replaceCommand.Parameters.AddWithValue("@Value", signatureRequest.ToBinary());
       replaceCommand.Parameters.AddWithValue("@Info", signatureRequestInfo.ToBinary());
       replaceCommand.ExecuteNonQuery();
+
+      Logger.Log(LogLevel.Info, "Connection {0}: Signature request for certificate id {1} stored.", connection.Id, signatureRequest.Certificate.Id.ToString());
 
       MySqlCommand deleteCommand = new MySqlCommand("DELETE FROM signatureresponse WHERE Id = @Id", DbConnection);
       deleteCommand.Parameters.AddWithValue("@Id", id.ToByteArray());
@@ -494,7 +506,9 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="signatureRequestId">Id of the corresponding request.</param>
     /// <param name="signedSignatureResponse">Signed signature response.</param>
-    public void SetSignatureResponse(Signed<SignatureResponse> signedSignatureResponse)
+    public void SetSignatureResponse(
+      IRpcConnection connection,
+      Signed<SignatureResponse> signedSignatureResponse)
     {
       if (!signedSignatureResponse.Verify(CertificateStorage))
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature response has invalid signature.");
@@ -507,6 +521,8 @@ namespace Pirate.PiVote.Rpc
       replaceCommand.Parameters.AddWithValue("@Id", signatureResponse.SubjectId.ToByteArray());
       replaceCommand.Parameters.AddWithValue("@Value", signedSignatureResponse.ToBinary());
       replaceCommand.ExecuteNonQuery();
+
+      Logger.Log(LogLevel.Info, "Connection {0}: Signature response for certificate id {1} stored on behalf of id {2}.", connection.Id, signatureResponse.SubjectId.ToString(), signedSignatureResponse.Certificate.Id.ToString());
 
       if (signatureResponse.Status == SignatureResponseStatus.Accepted)
       {
@@ -632,6 +648,58 @@ namespace Pirate.PiVote.Rpc
       reader.Close();
 
       return groupList;
+    }
+
+    /// <summary>
+    /// Add a sign check.
+    /// </summary>
+    /// <param name="signedSignCheck">Signed sign check.</param>
+    public void AddSignatureRequestSignCheck(
+      IRpcConnection connection,
+      Signed<SignatureRequestSignCheck> signedSignCheck)
+    {
+      if (!signedSignCheck.Verify(CertificateStorage))
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature on sign check invalid.");
+      if (!(signedSignCheck.Certificate is ServerCertificate))
+        throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Signature on sign check not from server.");
+
+      var signCheck = signedSignCheck.Value;
+      Signed<SignatureResponse> signatureResponse = null;
+      var status = GetSignatureResponseStatus(signCheck.Certificate.Id, out signatureResponse);
+
+      if (status != SignatureResponseStatus.Pending)
+        throw new PiException(ExceptionCode.InvalidCertificate, "Signature response status mismatch.");
+
+      MySqlCommand insertCommand = new MySqlCommand("INSERT INTO signcheck (CertificateId, Value) VALUES (@CertificateId, @Value)", DbConnection);
+      insertCommand.Parameters.AddWithValue("@CertificateId", signedSignCheck.Value.Certificate.Id.ToByteArray());
+      insertCommand.Parameters.AddWithValue("@Value", signedSignCheck.ToBinary());
+      insertCommand.ExecuteNonQuery();
+
+      Logger.Log(LogLevel.Info, "Connection {0}: Authority {1} has signed signature request {1}", connection.Id, signCheck.Signer.Subject, signCheck.Certificate.Id.ToString());
+    }
+
+    /// <summary>
+    /// List all sign checks.
+    /// </summary>
+    /// <param name="certificateId">Id of certificate in question.</param>
+    /// <returns>List of sign checks.</returns>
+    public IEnumerable<Signed<SignatureRequestSignCheck>> GetSignatureRequestSignChecks(Guid certificateId)
+    {
+      List<Signed<SignatureRequestSignCheck>> signChecks = new List<Signed<SignatureRequestSignCheck>>();
+
+      MySqlDataReader reader = DbConnection.ExecuteReader(
+        "SELECT Value FROM signcheck WHERE CertificateId = @CertificateId",
+        "@CertificateId", certificateId.ToByteArray());
+
+      while (reader.Read())
+      {
+        byte[] signCheckData = reader.GetBlob(0);
+        signChecks.Add(Serializable.FromBinary<Signed<SignatureRequestSignCheck>>(signCheckData));
+      }
+
+      reader.Close();
+
+      return signChecks;
     }
   }
 }

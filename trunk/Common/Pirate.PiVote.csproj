@@ -86,9 +86,6 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="ThoughtWorks.QRCode">
-      <HintPath>..\..\..\..\Downloads\QRCode\QRCodeSampleApp\bin\Debug\ThoughtWorks.QRCode.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -113,6 +110,7 @@
     <Compile Include="Crypto\Certificate\PrivateKeyStatus.cs" />
     <Compile Include="Crypto\Certificate\SignatureRequestInfo.cs" />
     <Compile Include="Crypto\Certificate\Secure.cs" />
+    <Compile Include="Crypto\Certificate\SignatureRequestSignCheck.cs" />
     <Compile Include="Crypto\Log\CryptoLog.cs" />
     <Compile Include="Crypto\Log\CryptoLogLevel.cs" />
     <Compile Include="Crypto\Parameters\BaseParameters.cs" />
@@ -174,23 +172,6 @@
     </Compile>
     <Compile Include="MultiLanguage\MultiLangaugeString.cs" />
     <Compile Include="MultiLanguage\Language.cs" />
-    <Compile Include="MultiLanguage\MultiLanguageTextBox.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MultiLanguage\MultiLanguageTextBox.Designer.cs">
-      <DependentUpon>MultiLanguageTextBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Printing\DocumentTest.cs" />
-    <Compile Include="Printing\DrawObject.cs" />
-    <Compile Include="Printing\SignatureRequestDocument.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Printing\SignObject.cs" />
-    <Compile Include="Printing\StringObject.cs" />
-    <Compile Include="Printing\Table.cs" />
-    <Compile Include="Printing\TableCell.cs" />
-    <Compile Include="Printing\TableColumn.cs" />
-    <Compile Include="Printing\TableRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exception\PiException.cs" />
     <Compile Include="Rpc\Clients\CheckShares.cs" />
@@ -227,6 +208,10 @@
     <Compile Include="Rpc\Generic\RpcRequest.cs" />
     <Compile Include="Rpc\Generic\RpcMessage.cs" />
     <Compile Include="Rpc\Handlers\IBinaryRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\PushSignCheckRequest.cs" />
+    <Compile Include="Rpc\Messages\PushSignCheckResponse.cs" />
+    <Compile Include="Rpc\Messages\FetchSignCheckListRequest.cs" />
+    <Compile Include="Rpc\Messages\FetchSignCheckListResponse.cs" />
     <Compile Include="Rpc\Messages\FetchVotingRequest.cs" />
     <Compile Include="Rpc\Messages\FetchVotingResponse.cs" />
     <Compile Include="Rpc\Messages\DeleteVotingRequest.cs" />
@@ -287,6 +272,7 @@
     <Compile Include="Rpc\Messages\CreateVotingResponse.cs" />
     <Compile Include="Rpc\Messages\CreateVotingRequest.cs" />
     <Compile Include="Rpc\Handlers\VotingRpcServer.cs" />
+    <Compile Include="Rpc\Tcp\IRpcConnection.cs" />
     <Compile Include="Serialization\GenericArgumentAttribute.cs" />
     <Compile Include="Serialization\SerializeEnumAttribute.cs" />
     <Compile Include="Serialization\SerializeAdditionalFieldAttribute.cs" />
@@ -328,9 +314,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LibraryResources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MultiLanguage\MultiLanguageTextBox.resx">
-      <DependentUpon>MultiLanguageTextBox.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

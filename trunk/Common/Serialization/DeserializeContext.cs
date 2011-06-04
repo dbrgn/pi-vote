@@ -31,6 +31,11 @@ namespace Pirate.PiVote.Serialization
       return this.reader.ReadInt32();
     }
 
+    public byte ReadByte()
+    {
+      return this.reader.ReadByte();
+    }
+
     public uint ReadUInt32()
     {
       return this.reader.ReadUInt32();
@@ -104,6 +109,14 @@ namespace Pirate.PiVote.Serialization
       }
       else
       {
+        byte version = 0;
+
+        if (typeName.StartsWith("@"))
+        {
+          version = Convert.ToByte(typeName.Substring(1,2), 16);
+          typeName = typeName.Substring(3);
+        }
+
         lock (Types)
         {
           if (Types.ContainsKey(typeName))
@@ -126,7 +139,7 @@ namespace Pirate.PiVote.Serialization
           }
         }
 
-        return (TValue)Activator.CreateInstance(type, new object[] { this }, new object[] { });
+        return (TValue)Activator.CreateInstance(type, new object[] { this, version }, new object[] { });
       }
     }
 

@@ -37,8 +37,8 @@ namespace Pirate.PiVote
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public RemoteConfig(DeserializeContext context)
-      : base(context)
+    public RemoteConfig(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -60,9 +60,9 @@ namespace Pirate.PiVote
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       SystemName = context.ReadMultiLanguageString();
       WelcomeMessage = context.ReadMultiLanguageString();
       Image = context.ReadBytes();

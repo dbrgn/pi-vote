@@ -1,4 +1,11 @@
-﻿namespace Pirate.PiVote.Circle.Error
+﻿/*
+ * Copyright (c) 2009, Pirate Party Switzerland
+ * All rights reserved.
+ * 
+ * Licensed under the New BSD License as seen in License.txt
+ */
+
+namespace Pirate.PiVote.Circle.Error
 {
   partial class ErrorDialog
   {

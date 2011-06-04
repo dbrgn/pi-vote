@@ -220,9 +220,11 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Pushes a remote request to the server.
     /// </summary>
-    public Tuple<IRemoteConfig, IEnumerable<Group>> FetchConfig()
+    /// <param name="clientName">Name of the client.</param>
+    /// <param name="clientVersion">Version of the client.</param>
+    public Tuple<IRemoteConfig, IEnumerable<Group>> FetchConfig(string clientName, string clientVersion)
     {
-      var request = new FetchConfigRequest(Guid.NewGuid());
+      var request = new FetchConfigRequest(Guid.NewGuid(), clientName, clientVersion);
       var response = Execute<FetchConfigResponse>(request);
 
       return new Tuple<IRemoteConfig, IEnumerable<Group>>(response.Config, response.Groups);

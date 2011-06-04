@@ -31,8 +31,8 @@ namespace Pirate.PiVote.Kiosk
       SecureRequestInfo = secureRequestInfo;
     }
 
-    public RequestContainer(DeserializeContext context)
-      : base(context)
+    public RequestContainer(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     public override void Serialize(SerializeContext context)
@@ -43,9 +43,9 @@ namespace Pirate.PiVote.Kiosk
       context.Write(SecureRequestInfo);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       Request = context.ReadObject<SignatureRequest>();
       SecureRequest = context.ReadObject<Secure<SignatureRequest>>();
       SecureRequestInfo = context.ReadObject<Secure<SignatureRequestInfo>>();

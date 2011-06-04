@@ -174,7 +174,11 @@ namespace Pirate.PiVote.Client
     {
       Status.SetProgress(Resources.StartGettingConfig, 0.3d);
       this.run = true;
-      Status.VotingClient.GetConfig(GetConfigComplete);
+      var assembly = Assembly.GetExecutingAssembly();
+      var clientName = assembly.GetName().Name;
+      var clientVersion = assembly.GetName().Version.ToString();
+
+      Status.VotingClient.GetConfig(clientName, clientVersion, GetConfigComplete);
 
       while (this.run)
       {

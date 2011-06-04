@@ -35,8 +35,8 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("receiverCertificate");
     }
 
-    public Secure(DeserializeContext context)
-      : base(context)
+    public Secure(DeserializeContext context, byte version)
+      : base(context, version)
     { }
   }
 }

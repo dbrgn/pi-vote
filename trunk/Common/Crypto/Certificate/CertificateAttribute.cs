@@ -41,8 +41,8 @@ namespace Pirate.PiVote.Crypto
       Name = name;
     }
 
-    public CertificateAttribute(DeserializeContext context)
-      : base(context)
+    public CertificateAttribute(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     public override void Serialize(SerializeContext context)
@@ -51,9 +51,9 @@ namespace Pirate.PiVote.Crypto
       context.Write((int)Name);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       Name = (CertificateAttributeName)context.ReadInt32();
     }
 
@@ -82,8 +82,8 @@ namespace Pirate.PiVote.Crypto
       Value = value;
     }
 
-    public CertificateAttribute(DeserializeContext context)
-      : base(context)
+    public CertificateAttribute(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     public override void Serialize(SerializeContext context)
@@ -91,9 +91,9 @@ namespace Pirate.PiVote.Crypto
       base.Serialize(context);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
     }
   }
 
@@ -108,8 +108,8 @@ namespace Pirate.PiVote.Crypto
       : base(name, value)
     { }
 
-    public Int32CertificateAttribute(DeserializeContext context)
-      : base(context)
+    public Int32CertificateAttribute(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     public override void Serialize(SerializeContext context)
@@ -118,9 +118,9 @@ namespace Pirate.PiVote.Crypto
       context.Write(Value);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       Value = context.ReadInt32();
     }
 
@@ -141,8 +141,8 @@ namespace Pirate.PiVote.Crypto
       : base(name, value)
     { }
 
-    public BooleanCertificateAttribute(DeserializeContext context)
-      : base(context)
+    public BooleanCertificateAttribute(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     public override void Serialize(SerializeContext context)
@@ -151,9 +151,9 @@ namespace Pirate.PiVote.Crypto
       context.Write(Value);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       Value = context.ReadBoolean();
     }
 
@@ -174,8 +174,8 @@ namespace Pirate.PiVote.Crypto
       : base(name, value)
     { }
 
-    public StringCertificateAttribute(DeserializeContext context)
-      : base(context)
+    public StringCertificateAttribute(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     public override void Serialize(SerializeContext context)
@@ -184,9 +184,9 @@ namespace Pirate.PiVote.Crypto
       context.Write(Value);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       Value = context.ReadString();
     }
 

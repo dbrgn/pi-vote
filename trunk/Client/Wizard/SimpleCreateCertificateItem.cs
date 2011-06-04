@@ -14,7 +14,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Gui;
-using Pirate.PiVote.Printing;
+using Pirate.PiVote.Gui.Printing;
 using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Client

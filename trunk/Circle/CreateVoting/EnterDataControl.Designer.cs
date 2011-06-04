@@ -1,4 +1,13 @@
-﻿namespace Pirate.PiVote.Circle.CreateVoting
+﻿/*
+ * Copyright (c) 2009, Pirate Party Switzerland
+ * All rights reserved.
+ * 
+ * Licensed under the New BSD License as seen in License.txt
+ */
+
+using Pirate.PiVote.Gui;
+
+namespace Pirate.PiVote.Circle.CreateVoting
 {
   partial class EnterDataControl
   {
@@ -29,7 +38,7 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      this.urlTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.urlTextBox = new MultiLanguageTextBox();
       this.questionLabel = new System.Windows.Forms.Label();
       this.questionListView = new System.Windows.Forms.ListView();
       this.textColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -38,9 +47,9 @@
       this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.descriptionBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.descriptionBox = new MultiLanguageTextBox();
       this.descriptionLabel = new System.Windows.Forms.Label();
-      this.titleBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.titleBox = new MultiLanguageTextBox();
       this.titleLabel = new System.Windows.Forms.Label();
       this.horizontalSplit = new System.Windows.Forms.SplitContainer();
       this.urlLabel = new System.Windows.Forms.Label();

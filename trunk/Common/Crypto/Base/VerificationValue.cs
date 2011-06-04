@@ -43,8 +43,8 @@ namespace Pirate.PiVote.Crypto
       SourceAuthorityIndex = sourceAuthorityIndex;
     }
 
-    public VerificationValue(DeserializeContext context)
-      : base(context)
+    public VerificationValue(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     public override void Serialize(SerializeContext context)
@@ -54,9 +54,9 @@ namespace Pirate.PiVote.Crypto
       context.Write(Value);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       SourceAuthorityIndex = context.ReadInt32();
       Value = context.ReadBigInt();
     }

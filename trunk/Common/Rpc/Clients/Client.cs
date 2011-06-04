@@ -347,12 +347,14 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Get remote client config from server.
     /// </summary>
+    /// <param name="clientName">Name of the client.</param>
+    /// <param name="clientVersion">Version of the client.</param>
     /// <param name="callBack">Callback upon completion.</param>
-    public void GetConfig(GetConfigCallBack callBack)
+    public void GetConfig(string clientName, string clientVersion, GetConfigCallBack callBack)
     {
       lock (this.operations)
       {
-        this.operations.Enqueue(new GetConfigOperation(callBack));
+        this.operations.Enqueue(new GetConfigOperation(clientName, clientVersion, callBack));
       }
     }
 

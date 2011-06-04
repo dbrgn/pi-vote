@@ -52,8 +52,8 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public CreateVotingRequest(DeserializeContext context)
-      : base(context)
+    public CreateVotingRequest(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -72,9 +72,9 @@ namespace Pirate.PiVote.Rpc
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
 
       this.votingParameters = context.ReadObject<Signed<VotingParameters>>();
       this.authorities = context.ReadObjectList<AuthorityCertificate>();
@@ -85,9 +85,9 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override CreateVotingResponse Execute(VotingRpcServer server)
+    protected override CreateVotingResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
-      server.CreateVoting(this.votingParameters, this.authorities);
+      server.CreateVoting(connection, this.votingParameters, this.authorities);
 
       return new CreateVotingResponse(RequestId);
     }

@@ -197,8 +197,8 @@ namespace Pirate.PiVote.Crypto
       return verifies;
     }
 
-    public Ballot(DeserializeContext context)
-      : base(context)
+    public Ballot(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     public override void Serialize(SerializeContext context)
@@ -208,9 +208,9 @@ namespace Pirate.PiVote.Crypto
       context.WriteList(SumProves);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       Votes = context.ReadObjectList<Vote>();
       SumProves = context.ReadObjectList<Proof>();
     }

@@ -21,7 +21,7 @@ namespace Pirate.PiVote.Rpc
   /// <summary>
   /// TCP RPC connection on the server side.
   /// </summary>
-  public class TcpRpcConnection
+  public class TcpRpcConnection : IRpcConnection
   {
     /// <summary>
     /// TCP client.
@@ -74,12 +74,18 @@ namespace Pirate.PiVote.Rpc
     public string RemoteEndPointText { get; private set; }
 
     /// <summary>
+    /// Connection id.
+    /// </summary>
+    public ulong Id { get; private set; }
+
+    /// <summary>
     /// Creates a new TCP RPC server connection.
     /// </summary>
     /// <param name="client">TCP client.</param>
+    /// <param name="id">Connection id.</param>
     /// <param name="rpcServer">Voting RPC server.</param>
     /// <param name="clientTimeOut">Time until idle client is disconnected in seconds.</param>
-    public TcpRpcConnection(TcpClient client, RpcServer rpcServer, double clientTimeOut)
+    public TcpRpcConnection(TcpClient client, RpcServer rpcServer, ulong id, double clientTimeOut)
     {
       this.clientTimeOut = clientTimeOut;
       this.lastActivity = DateTime.Now;
@@ -90,6 +96,7 @@ namespace Pirate.PiVote.Rpc
       this.rpcServer = rpcServer;
       this.inBuffer = new MemoryBuffer(32768);
       this.outBuffer = new MemoryBuffer(32768);
+      Id = id;
 
       if (this.client.Client.RemoteEndPoint is IPEndPoint)
       {
@@ -139,7 +146,7 @@ namespace Pirate.PiVote.Rpc
 
         lock (this.rpcServer)
         {
-          responseData = this.rpcServer.Execute(requestPacket);
+          responseData = this.rpcServer.Execute(this, requestPacket);
         }
 
         this.outBuffer.Write(responseData.Length);

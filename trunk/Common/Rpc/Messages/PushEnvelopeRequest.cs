@@ -46,8 +46,8 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public PushEnvelopeRequest(DeserializeContext context)
-      : base(context)
+    public PushEnvelopeRequest(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -65,9 +65,9 @@ namespace Pirate.PiVote.Rpc
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       this.votingId = context.ReadGuid();
       this.signedEnvelope = context.ReadObject<Signed<Envelope>>();
     }
@@ -77,10 +77,10 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override PushEnvelopeResponse Execute(VotingRpcServer server)
+    protected override PushEnvelopeResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
-      var voteReceipt = voting.Vote(this.signedEnvelope);
+      var voteReceipt = voting.Vote(connection, this.signedEnvelope);
 
       return new PushEnvelopeResponse(RequestId, voteReceipt);
     }

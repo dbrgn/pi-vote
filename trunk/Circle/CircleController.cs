@@ -10,13 +10,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Gui;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Serialization;
-using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.Circle
 {
@@ -281,6 +282,15 @@ namespace Pirate.PiVote.Circle
                           .FirstOrDefault();
     }
 
+    public AdminCertificate GetAdminCertificateEvenInvalid()
+    {
+      return
+        this.certificates.Keys
+        .Where(certificate => certificate is AdminCertificate)
+        .Select(certificate => certificate as AdminCertificate)
+        .FirstOrDefault();
+    }
+
     public AdminCertificate GetAdminCertificate()
     {
       return
@@ -430,7 +440,12 @@ namespace Pirate.PiVote.Circle
          ((PiException)this.exception).Code == ExceptionCode.ServerCertificateInvalid))
       {
         Begin();
-        Status.VotingClient.GetConfig(GetConfigComplete);
+
+        var assembly = Assembly.GetExecutingAssembly();
+        var clientName = assembly.GetName().Name;
+        var clientVersion = assembly.GetName().Version.ToString(); 
+        
+        Status.VotingClient.GetConfig(clientName, clientVersion, GetConfigComplete);
 
         if (!WaitForCompletion())
         {

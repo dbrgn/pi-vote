@@ -340,7 +340,7 @@ namespace Pirate.PiVote.Circle
 
     private void RefreshInternal()
     {
-      bool isAdmin = Controller.GetAdminCertificate() != null;
+      bool isAdmin = Controller.GetAdminCertificateEvenInvalid() != null;
       this.createVotingMenu.Visible = isAdmin;
       this.downloadSignatureRequestsMenu.Visible = isAdmin;
       this.uploadSignatureResponsesMenu.Visible = isAdmin;

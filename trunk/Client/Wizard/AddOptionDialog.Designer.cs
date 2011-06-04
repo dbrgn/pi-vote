@@ -16,6 +16,7 @@ using System.Net;
 using System.Threading;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.Client
 {
@@ -48,12 +49,12 @@ namespace Pirate.PiVote.Client
     private void InitializeComponent()
     {
       this.textLabel = new System.Windows.Forms.Label();
-      this.textTextBox = new Pirate.PiVote.MultiLanguageTextBox();
-      this.descriptionTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.textTextBox = new MultiLanguageTextBox();
+      this.descriptionTextBox = new MultiLanguageTextBox();
       this.descriptionLabel = new System.Windows.Forms.Label();
       this.cancelButton = new System.Windows.Forms.Button();
       this.okButton = new System.Windows.Forms.Button();
-      this.urlTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.urlTextBox = new MultiLanguageTextBox();
       this.urlLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 

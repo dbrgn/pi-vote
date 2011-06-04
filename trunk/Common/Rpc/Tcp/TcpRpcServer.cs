@@ -93,6 +93,11 @@ namespace Pirate.PiVote.Rpc
     private DateTime lastProcessDone;
 
     /// <summary>
+    /// Id for the next connection.
+    /// </summary>
+    private ulong nextConnectionId;
+
+    /// <summary>
     /// Create a new TCP RPC server.
     /// </summary>
     /// <param name="rpcServer">Voting RPC server.</param>
@@ -110,6 +115,7 @@ namespace Pirate.PiVote.Rpc
       this.listener = new TcpListener(new IPEndPoint(IPAddress.Any, this.port));
       this.connections = new Queue<TcpRpcConnection>();
       this.rpcServer = rpcServer;
+      this.nextConnectionId = 0;
     }
 
     /// <summary>
@@ -242,7 +248,7 @@ namespace Pirate.PiVote.Rpc
 
             if (connection.Overdue)
             {
-              Logger.Log(LogLevel.Info, "Connection from {0} was overdue and therefore dropped.", connection.RemoteEndPointText);
+              Logger.Log(LogLevel.Info, "Connection {0} was overdue and therefore dropped.", connection.Id);
               connection.Close();
             }
             else
@@ -255,7 +261,7 @@ namespace Pirate.PiVote.Rpc
           }
           catch (Exception exception)
           {
-            Logger.Log(LogLevel.Warning, "Connection from {0} failed and was therefore dropped. Exception: {1}", connection.RemoteEndPointText, exception.ToString());
+            Logger.Log(LogLevel.Warning, "Connection {0} failed and was therefore dropped. Exception: {1}", connection.Id, exception.ToString());
             connection.Close();
           }
         }
@@ -275,14 +281,22 @@ namespace Pirate.PiVote.Rpc
         while (this.listener.Pending())
         {
           TcpClient client = this.listener.AcceptTcpClient();
-          TcpRpcConnection connection = new TcpRpcConnection(client, rpcServer, this.clientTimeOut);
+          ulong connectionId = 0;
+
+          lock (this.connections)
+          {
+            connectionId = this.nextConnectionId;
+            this.nextConnectionId++;
+          }
+
+          TcpRpcConnection connection = new TcpRpcConnection(client, rpcServer, connectionId, this.clientTimeOut);
 
           lock (this.connections)
           {
             this.connections.Enqueue(connection);
           }
 
-          Logger.Log(LogLevel.Info, "New connection from {0}.", connection.RemoteEndPointText);
+          Logger.Log(LogLevel.Info, "New connection {0}.", connection.Id);
 
           Thread.Sleep(1);
         }

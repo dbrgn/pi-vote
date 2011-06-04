@@ -33,6 +33,11 @@ namespace Pirate.PiVote.Serialization
       this.writer.Write(value);
     }
 
+    public void Write(byte value)
+    {
+      this.writer.Write(value);
+    }
+
     public void Write(long value)
     {
       this.writer.Write(value);

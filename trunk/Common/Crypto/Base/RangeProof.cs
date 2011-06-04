@@ -347,8 +347,8 @@ namespace Pirate.PiVote.Crypto
       return true;
     }
 
-    public RangeProof(DeserializeContext context)
-      : base(context)
+    public RangeProof(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     public override void Serialize(SerializeContext context)
@@ -363,9 +363,9 @@ namespace Pirate.PiVote.Crypto
       context.Write(S1);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       T0 = context.ReadBigInt();
       T1 = context.ReadBigInt();
       C = context.ReadInt32();

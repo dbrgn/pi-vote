@@ -35,8 +35,8 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public RpcRequest(DeserializeContext context)
-      : base(context)
+    public RpcRequest(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -52,9 +52,9 @@ namespace Pirate.PiVote.Rpc
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
     }
 
     /// <summary>
@@ -63,10 +63,10 @@ namespace Pirate.PiVote.Rpc
     /// <remarks>
     /// May return a request containing an exception rather than a result.
     /// </remarks>
+    /// <param name="connection">Conenction that made the request.</param>
     /// <param name="server">Server to execute the request on.</param>
-    /// <param name="signer">Signer of the RPC request.</param>
     /// <returns>Response to the request.</returns>
-    public abstract RpcResponse TryExecute(TRpcServer server);
+    public abstract RpcResponse TryExecute(IRpcConnection connection, TRpcServer server);
   }
 
   /// <summary>
@@ -93,8 +93,8 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public RpcRequest(DeserializeContext context)
-      : base(context)
+    public RpcRequest(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -110,9 +110,9 @@ namespace Pirate.PiVote.Rpc
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
     }
 
     /// <summary>
@@ -121,30 +121,30 @@ namespace Pirate.PiVote.Rpc
     /// <remarks>
     /// May return a request containing an exception rather than a result.
     /// </remarks>
+    /// <param name="connection">Connection that made the request.</param>
     /// <param name="server">Server to execute the request on.</param>
-    /// <param name="signer">Signer of the RPC request.</param>
     /// <returns>Response to the request.</returns>
-    public override RpcResponse TryExecute(TRpcServer server)
+    public override RpcResponse TryExecute(IRpcConnection connection, TRpcServer server)
     {
       try
       {
-        server.Logger.Log(LogLevel.Debug, "Executing request of type {0}.", GetType().FullName); 
+        server.Logger.Log(LogLevel.Debug, "Connection {0}: Executing request of type {1}.", connection.Id, GetType().FullName); 
         
-        RpcResponse response = Execute(server);
+        RpcResponse response = Execute(connection, server);
 
-        server.Logger.Log(LogLevel.Debug, "Request of type {0} executed sucessfully.", GetType().FullName); 
+        server.Logger.Log(LogLevel.Debug, "Connection {0}: Request of type {1} executed sucessfully.", connection.Id, GetType().FullName); 
 
         return response;
       }
       catch (PiException exception)
       {
-        server.Logger.Log(LogLevel.Info, "Executing request of type {0} resulted in PiException with message {1}.", GetType().FullName, exception.Message);
+        server.Logger.Log(LogLevel.Info, "Connection {0}: Executing request of type {1} resulted in PiException with message {2}.", connection.Id, GetType().FullName, exception.Message);
         
         return (TResponse)Activator.CreateInstance(typeof(TResponse), new object[] { RequestId, exception });
       }
       catch (Exception exception)
       {
-        server.Logger.Log(LogLevel.Error, "Executing request of type {0} resulted in Exception with message {1} and trace {2}.", GetType().FullName, exception.Message, exception.StackTrace);
+        server.Logger.Log(LogLevel.Error, "Connection {0}: Executing request of type {1} resulted in Exception with message {2} and trace {3}.", connection.Id, GetType().FullName, exception.Message, exception.StackTrace);
 
         return (TResponse)Activator.CreateInstance(typeof(TResponse), new object[] { RequestId, new PiException(exception) });
       }
@@ -153,9 +153,9 @@ namespace Pirate.PiVote.Rpc
     /// <summary>
     /// Executes a RPC request.
     /// </summary>
+    /// <param name="connection">Connection that made the request.</param>
     /// <param name="server">Server to execute the request on.</param>
-    /// <param name="signer">Signer of the RPC request.</param>
     /// <returns>Response to the request.</returns>
-    protected abstract TResponse Execute(TRpcServer server);
+    protected abstract TResponse Execute(IRpcConnection connection, TRpcServer server);
   }
 }

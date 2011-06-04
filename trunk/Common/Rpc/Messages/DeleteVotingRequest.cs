@@ -34,8 +34,8 @@ namespace Pirate.PiVote.Rpc
         VotingId = votingId;
       }
 
-      public Command(DeserializeContext context)
-        : base(context)
+      public Command(DeserializeContext context, byte version)
+        : base(context, version)
       { }
 
       public override void Serialize(SerializeContext context)
@@ -44,9 +44,9 @@ namespace Pirate.PiVote.Rpc
         context.Write(VotingId);
       }
 
-      protected override void Deserialize(DeserializeContext context)
+      protected override void Deserialize(DeserializeContext context, byte version)
       {
-        base.Deserialize(context);
+        base.Deserialize(context, version);
         VotingId = context.ReadGuid();
       }
     }
@@ -75,8 +75,8 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public DeleteVotingRequest(DeserializeContext context)
-      : base(context)
+    public DeleteVotingRequest(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -93,9 +93,9 @@ namespace Pirate.PiVote.Rpc
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       this.command = context.ReadObject<Signed<Command>>();
     }
 
@@ -104,7 +104,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override DeleteVotingResponse Execute(VotingRpcServer server)
+    protected override DeleteVotingResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
       bool valid = true;
 
@@ -113,7 +113,7 @@ namespace Pirate.PiVote.Rpc
 
       if (valid)
       {
-        server.DeleteVoting(this.command.Value.VotingId);
+        server.DeleteVoting(connection, this.command.Value.VotingId);
 
         return new DeleteVotingResponse(RequestId);
       }

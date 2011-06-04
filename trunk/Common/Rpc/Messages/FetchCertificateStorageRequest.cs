@@ -30,8 +30,8 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public FetchCertificateStorageRequest(DeserializeContext context)
-      : base(context)
+    public FetchCertificateStorageRequest(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -47,9 +47,9 @@ namespace Pirate.PiVote.Rpc
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override FetchCertificateStorageResponse Execute(VotingRpcServer server)
+    protected override FetchCertificateStorageResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
       return new FetchCertificateStorageResponse(RequestId, server.CertificateStorage.CloneOnlyCA(), server.ServerCertificate);
     }

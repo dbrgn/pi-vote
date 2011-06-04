@@ -46,8 +46,8 @@ namespace Pirate.PiVote.Rpc
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public PushSharesRequest(DeserializeContext context)
-      : base(context)
+    public PushSharesRequest(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -65,9 +65,9 @@ namespace Pirate.PiVote.Rpc
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       this.votingId = context.ReadGuid();
       this.signedSharePart = context.ReadObject<Signed<SharePart>>();
     }
@@ -77,10 +77,10 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     /// <param name="server">Server to execute the request on.</param>
     /// <returns>Response to the request.</returns>
-    protected override PushSharesResponse Execute(VotingRpcServer server)
+    protected override PushSharesResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
       var voting = server.GetVoting(this.votingId);
-      voting.DepositShares(this.signedSharePart);
+      voting.DepositShares(connection, this.signedSharePart);
 
       return new PushSharesResponse(RequestId);
     }

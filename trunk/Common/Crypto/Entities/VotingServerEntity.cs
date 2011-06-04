@@ -329,7 +329,9 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="certificate">Authority to be added.</param>
     /// <returns>Index of the authority.</returns>
-    public int AddAuthority(Certificate certificate)
+    public int AddAuthority(
+      IRpcConnection connection,
+      Certificate certificate)
     {
       if (certificate == null)
         throw new ArgumentNullException("certificate");
@@ -362,6 +364,8 @@ namespace Pirate.PiVote.Crypto
       insertCommand.Parameters.AddWithValue("@AuthorityId", certificate.Id.ToByteArray());
       insertCommand.Parameters.AddWithValue("@Certificate", certificate.ToBinary());
       insertCommand.ExecuteNonQuery();
+
+      Logger.Log(LogLevel.Info, "Connection {0}: Authority id {1} added to voting id {2}", connection.Id, certificate.Id.ToString(), Id.ToString());
 
       transaction.Commit();
 
@@ -431,7 +435,9 @@ namespace Pirate.PiVote.Crypto
     /// Deposit a share part from authorities.
     /// </summary>
     /// <param name="signedSharePart">Share part.</param>
-    public void DepositShares(Signed<SharePart> signedSharePart)
+    public void DepositShares(
+      IRpcConnection connection,
+      Signed<SharePart> signedSharePart)
     {
       if (signedSharePart == null)
         throw new ArgumentNullException("shares");
@@ -459,6 +465,8 @@ namespace Pirate.PiVote.Crypto
       insertCommand.Add("@AuthorityIndex", sharePart.AuthorityIndex);
       insertCommand.Add("@Value", signedSharePart.ToBinary());
       insertCommand.ExecuteNonQuery();
+
+      Logger.Log(LogLevel.Info, "Connection {0}: Shares for certificate id {1} on voting id {2} stored.", connection.Id, signedSharePart.Certificate.Id.ToString(), Id.ToString()); 
 
       long depositedSharePartCount = (long)DbConnection.ExecuteScalar(
         "SELECT count(*) FROM sharepart WHERE VotingId = @VotingId",
@@ -523,7 +531,9 @@ namespace Pirate.PiVote.Crypto
     /// Deposit share responses from authorities.
     /// </summary>
     /// <param name="signedShareResponse">Signed share response.</param>
-    public void DepositShareResponse(Signed<ShareResponse> signedShareResponse)
+    public void DepositShareResponse(
+      IRpcConnection connection,
+      Signed<ShareResponse> signedShareResponse)
     {
       if (signedShareResponse == null)
         throw new ArgumentNullException("shares");
@@ -551,6 +561,8 @@ namespace Pirate.PiVote.Crypto
       insertCommand.Add("@AuthorityIndex", shareResponse.AuthorityIndex);
       insertCommand.Add("@Value", signedShareResponse.ToBinary());
       insertCommand.ExecuteNonQuery();
+
+      Logger.Log(LogLevel.Info, "Connection {0}: Share response for certificate id {1} on voting id {2} stored.", connection.Id, signedShareResponse.Certificate.Id.ToString(), Id.ToString()); 
 
       long depositedShareResponseCount = (long)DbConnection.ExecuteScalar(
         "SELECT count(*) FROM shareresponse WHERE VotingId = @VotingId",
@@ -605,7 +617,9 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     /// <param name="ballot">Ballot in signed envleope.</param>
     /// <returns>Vote receipt signed by the server.</returns>
-    public Signed<VoteReceipt> Vote(Signed<Envelope> signedEnvelope)
+    public Signed<VoteReceipt> Vote(
+      IRpcConnection connection,
+      Signed<Envelope> signedEnvelope)
     {
       if (signedEnvelope == null)
         throw new ArgumentNullException("ballot");
@@ -641,7 +655,6 @@ namespace Pirate.PiVote.Crypto
           throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadProofCount, "Invalid envelope. Number of range prooves does not match.");
       }
 
-
       bool hasVoted = DbConnection.ExecuteHasRows(
         "SELECT count(*) FROM envelope WHERE VotingId = @VotingId AND VoterId = @VoterId",
         "@VotingId", Id.ToByteArray(),
@@ -671,6 +684,8 @@ namespace Pirate.PiVote.Crypto
 
       transaction.Commit();
 
+      Logger.Log(LogLevel.Info, "Connection {0}: Envelope for certificate id {1} on voting id {2} stored.", connection.Id, signedEnvelope.Certificate.Id.ToString(), Id.ToString()); 
+      
       VoteReceipt voteReceipt = new VoteReceipt(Parameters, signedEnvelope);
 
       return new Signed<VoteReceipt>(voteReceipt, this.serverCertificate);
@@ -691,7 +706,9 @@ namespace Pirate.PiVote.Crypto
     /// Deposit partial deciphers from an authority.
     /// </summary>
     /// <param name="signedPartialDecipherList">Partial decipher list.</param>
-    public void DepositPartialDecipher(Signed<PartialDecipherList> signedPartialDecipherList)
+    public void DepositPartialDecipher(
+      IRpcConnection connection,
+      Signed<PartialDecipherList> signedPartialDecipherList)
     {
       if (signedPartialDecipherList == null)
         throw new ArgumentNullException("partialDecipherContainer");
@@ -721,6 +738,8 @@ namespace Pirate.PiVote.Crypto
       insertCommand.Add("@AuthorityIndex", partialDecipherList.AuthorityIndex);
       insertCommand.Add("@Value", signedPartialDecipherList.ToBinary());
       insertCommand.ExecuteNonQuery();
+
+      Logger.Log(LogLevel.Info, "Connection {0}: Partical deciphers for certificate id {1} on voting id {2} stored.", connection.Id, signedPartialDecipherList.Certificate.Id.ToString(), Id.ToString()); 
 
       long depositedShareResponseCount = (long)DbConnection.ExecuteScalar(
         "SELECT count(*) FROM deciphers WHERE VotingId = @VotingId",

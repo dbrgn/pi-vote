@@ -32,8 +32,8 @@ namespace Pirate.PiVote.Client
         AuthorityIds = new List<Guid>(authorityCertificates.Select(certificate => certificate.Id));
       }
 
-      public VotingAuthoritiesFile(DeserializeContext context)
-        : base(context)
+      public VotingAuthoritiesFile(DeserializeContext context, byte version)
+        : base(context, version)
       {
       }
 
@@ -43,9 +43,9 @@ namespace Pirate.PiVote.Client
         context.WriteList(AuthorityIds);
       }
 
-      protected override void Deserialize(DeserializeContext context)
+      protected override void Deserialize(DeserializeContext context, byte version)
       {
-        base.Deserialize(context);
+        base.Deserialize(context, version);
         AuthorityIds = context.ReadGuidList();
       }
     }

@@ -73,8 +73,8 @@ namespace Pirate.PiVote.Crypto
       Value = value;
     }
 
-    public PartialDecipher(DeserializeContext context)
-      : base(context)
+    public PartialDecipher(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     public override void Serialize(SerializeContext context)
@@ -87,9 +87,9 @@ namespace Pirate.PiVote.Crypto
       context.Write(Value);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       QuestionIndex = context.ReadInt32();
       OptionIndex = context.ReadInt32();
       AuthorityIndex = context.ReadInt32();

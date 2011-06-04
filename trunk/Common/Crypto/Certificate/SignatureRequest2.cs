@@ -50,8 +50,8 @@ namespace Pirate.PiVote.Crypto
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public SignatureRequest2(DeserializeContext context)
-      : base(context)
+    public SignatureRequest2(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -69,9 +69,9 @@ namespace Pirate.PiVote.Crypto
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       Signature = context.ReadBytes();
       SigningCertificate = context.ReadObject<Certificate>();
     }

@@ -41,8 +41,8 @@ namespace Pirate.PiVote.Crypto
     /// Creates an object by deserializing from binary data.
     /// </summary>
     /// <param name="context">Context for deserialization.</param>
-    public Encrypted(DeserializeContext context)
-      : base(context)
+    public Encrypted(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>
@@ -60,9 +60,9 @@ namespace Pirate.PiVote.Crypto
     /// Deserializes binary data to object.
     /// </summary>
     /// <param name="context">Context for deserialization</param>
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       ReceiverId = context.ReadGuid();
       Data = context.ReadBytes();
     }
@@ -92,8 +92,8 @@ namespace Pirate.PiVote.Crypto
       Data = receiverCertificate.Encrypt(value.ToBinary());
     }
 
-    public Encrypted(DeserializeContext context)
-      : base(context)
+    public Encrypted(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     /// <summary>

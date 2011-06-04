@@ -34,8 +34,8 @@ namespace Pirate.PiVote.Crypto
       this.coefficients = new List<BigInt>();
     }
 
-    public Polynomial(DeserializeContext context)
-      : base(context)
+    public Polynomial(DeserializeContext context, byte version)
+      : base(context, version)
     { }
 
     public override void Serialize(SerializeContext context)
@@ -44,9 +44,9 @@ namespace Pirate.PiVote.Crypto
       context.WriteList(this.coefficients);
     }
 
-    protected override void Deserialize(DeserializeContext context)
+    protected override void Deserialize(DeserializeContext context, byte version)
     {
-      base.Deserialize(context);
+      base.Deserialize(context, version);
       this.coefficients = context.ReadBigIntList();
     }
 

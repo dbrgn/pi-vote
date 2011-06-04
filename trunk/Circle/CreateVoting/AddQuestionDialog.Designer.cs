@@ -5,6 +5,8 @@
  * Licensed under the New BSD License as seen in License.txt
  */
 
+using Pirate.PiVote.Gui;
+
 namespace Pirate.PiVote.Circle.CreateVoting
 {
   partial class AddQuestionDialog
@@ -43,16 +45,16 @@ namespace Pirate.PiVote.Circle.CreateVoting
       this.optionListContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.textTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.textTextBox = new MultiLanguageTextBox();
       this.textLabel = new System.Windows.Forms.Label();
       this.optionNumberLabel = new System.Windows.Forms.Label();
       this.optionNumberUpDown = new System.Windows.Forms.NumericUpDown();
-      this.descriptionTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.descriptionTextBox = new MultiLanguageTextBox();
       this.descriptionLabel = new System.Windows.Forms.Label();
       this.cancelButton = new System.Windows.Forms.Button();
       this.okButton = new System.Windows.Forms.Button();
       this.abstentionLabel = new System.Windows.Forms.Label();
-      this.urlTextBox = new Pirate.PiVote.MultiLanguageTextBox();
+      this.urlTextBox = new MultiLanguageTextBox();
       this.urlLabel = new System.Windows.Forms.Label();
       this.optionListContextMenu.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.optionNumberUpDown)).BeginInit();

@@ -15,7 +15,7 @@ using System.Text;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Gui;
-using Pirate.PiVote.Printing;
+using Pirate.PiVote.Gui.Printing;
 
 namespace Pirate.PiVote.Circle.Create
 {

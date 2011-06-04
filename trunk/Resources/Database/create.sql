@@ -142,6 +142,17 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
+-- -----------------------------------------------------
+-- Table `pivote`.`signcheck`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `pivote`.`signcheck` (
+  `Id` INT(11) NOT NULL AUTO_INCREMENT,
+  `CertificateId` VARBINARY(16) NOT NULL ,
+  `Value` LONGBLOB NOT NULL ,
+  PRIMARY KEY (`Id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

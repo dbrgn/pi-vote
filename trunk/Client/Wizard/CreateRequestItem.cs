@@ -16,7 +16,7 @@ using System.Net;
 using System.Threading;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Crypto;
-using Pirate.PiVote.Printing;
+using Pirate.PiVote.Gui.Printing;
 
 namespace Pirate.PiVote.Client
 {
