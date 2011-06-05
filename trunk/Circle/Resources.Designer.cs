@@ -1149,6 +1149,13 @@ namespace Pirate.PiVote.Circle {
             }
         }
         
+        internal static System.Drawing.Bitmap PpsLogo {
+            get {
+                object obj = ResourceManager.GetObject("PpsLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Open backup.
         /// </summary>

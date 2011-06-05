@@ -39,12 +39,12 @@ namespace Pirate.PiVote.Circle.Status
       this.infoLabel = new System.Windows.Forms.Label();
       this.progressBar = new System.Windows.Forms.ProgressBar();
       this.pivoteLogo = new System.Windows.Forms.PictureBox();
-      this.ppsLog = new System.Windows.Forms.PictureBox();
+      this.ppsLogo = new System.Windows.Forms.PictureBox();
       this.circleLabel = new System.Windows.Forms.Label();
       this.pivoteLabel = new System.Windows.Forms.Label();
       this.versionLabel = new System.Windows.Forms.Label();
       ((System.ComponentModel.ISupportInitialize)(this.pivoteLogo)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.ppsLog)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.ppsLogo)).BeginInit();
       this.SuspendLayout();
       // 
       // infoLabel
@@ -78,16 +78,16 @@ namespace Pirate.PiVote.Circle.Status
       this.pivoteLogo.TabIndex = 6;
       this.pivoteLogo.TabStop = false;
       // 
-      // ppsLog
+      // ppsLogo
       // 
-      this.ppsLog.Image = ((System.Drawing.Image)(resources.GetObject("ppsLog.Image")));
-      this.ppsLog.InitialImage = null;
-      this.ppsLog.Location = new System.Drawing.Point(2, 221);
-      this.ppsLog.Name = "ppsLog";
-      this.ppsLog.Size = new System.Drawing.Size(601, 110);
-      this.ppsLog.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-      this.ppsLog.TabIndex = 7;
-      this.ppsLog.TabStop = false;
+      this.ppsLogo.Image = ((System.Drawing.Image)(resources.GetObject("ppsLogo.Image")));
+      this.ppsLogo.InitialImage = null;
+      this.ppsLogo.Location = new System.Drawing.Point(2, 221);
+      this.ppsLogo.Name = "ppsLogo";
+      this.ppsLogo.Size = new System.Drawing.Size(600, 110);
+      this.ppsLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+      this.ppsLogo.TabIndex = 7;
+      this.ppsLogo.TabStop = false;
       // 
       // circleLabel
       // 
@@ -129,7 +129,7 @@ namespace Pirate.PiVote.Circle.Status
       this.Controls.Add(this.versionLabel);
       this.Controls.Add(this.pivoteLabel);
       this.Controls.Add(this.circleLabel);
-      this.Controls.Add(this.ppsLog);
+      this.Controls.Add(this.ppsLogo);
       this.Controls.Add(this.pivoteLogo);
       this.Controls.Add(this.infoLabel);
       this.Controls.Add(this.progressBar);
@@ -143,7 +143,7 @@ namespace Pirate.PiVote.Circle.Status
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TextStatusDialog_FormClosing);
       this.Load += new System.EventHandler(this.TextStatusDialog_Load);
       ((System.ComponentModel.ISupportInitialize)(this.pivoteLogo)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.ppsLog)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.ppsLogo)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -154,7 +154,7 @@ namespace Pirate.PiVote.Circle.Status
     private System.Windows.Forms.Label infoLabel;
     private System.Windows.Forms.ProgressBar progressBar;
     private System.Windows.Forms.PictureBox pivoteLogo;
-    private System.Windows.Forms.PictureBox ppsLog;
+    private System.Windows.Forms.PictureBox ppsLogo;
     private System.Windows.Forms.Label circleLabel;
     private System.Windows.Forms.Label pivoteLabel;
     private System.Windows.Forms.Label versionLabel;

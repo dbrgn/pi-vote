@@ -73,6 +73,11 @@
       <DependentUpon>ConfigProofCountControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\UserConfig.cs" />
+    <Compile Include="Resources.fr-FR.Designer.cs">
+      <DependentUpon>Resources.fr-FR.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="CreateVoting\AddOptionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -266,6 +271,11 @@
     <EmbeddedResource Include="Config\ConfigProofCountControl.resx">
       <DependentUpon>ConfigProofCountControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources.fr-FR.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.fr-FR.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateVoting\AddOptionDialog.resx">
       <DependentUpon>AddOptionDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -394,6 +404,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ballot.ico" />
+    <None Include="Resources\ppLogo-ww-en-web.png" />
+    <None Include="Resources\ppLogo-ww-fr-web.png" />
+    <None Include="Resources\ppLogo-ww-de-web.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

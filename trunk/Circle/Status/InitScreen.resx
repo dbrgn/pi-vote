@@ -121,7 +121,7 @@
   <data name="pivoteLogo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAApAAAAJhCAYAAAD2e4DsAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAAZdEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjVJivzg
+        YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAAAAZdEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41LjVJivzg
         AAD/gElEQVR4XuydBfw1R3X+C4QY8eDuxQoU+UOLe4tLgRAKJCEJwRMIUKB4C0VbnKDBLbilOJTi7u4U
         d9f9H3vOeWZ27v3dFwKRd99kP7v33t3Zmdn97fnuc+ac+au/Wv4tPbD0wNIDSw8sPbD0wCY98GDZ6ZGy
         PFWWF8ryWlk+Ics0WDYpb9ln6YGlB5YeWHpg6YGlB06iPfAwaddRsrxIltfJ8hZZ3i/LR2T5QizfkfUP
@@ -4727,10 +4727,10 @@
         S+DWkMD/Hyq7paOHS7W3AAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="ppsLog.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="ppsLogo.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAASwAAABGCAYAAAB2Zan9AAAABHNCSVQICAgIfAhkiAAAAAFzUkdCAK7O
-        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAABowAAAaMAHjRsLcAAAAGXRFWHRTb2Z0d2FyZQB3d3cu
+        HOkAAAAEZ0FNQQAAsY8L/GEFAAAACXBIWXMAABouAAAaLgEO257oAAAAGXRFWHRTb2Z0d2FyZQB3d3cu
         aW5rc2NhcGUub3Jnm+48GgAAKI1JREFUeF7tXQecFEXWb8/weZ4eBtgwMyxBRBARUFERc8ZwKILZ0xPx
         /FQMZwD1FMyICXO6EwTuFFBgWTBjFsWA+QDBnL3PRRTYhRX7+/9rqpuamuo02zO7QPfv96Z7uqsr17/f
         e/XqlWXbtlUqSpWnu4COBZ0Pugk0BvSgPPPaId57AHQt6CxQP1CqVPlM0ildn0jqOqnrKH2gqGAFkFkX

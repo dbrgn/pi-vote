@@ -54,6 +54,7 @@ namespace Pirate.PiVote.Circle.Status
     public InitScreen()
     {
       InitializeComponent();
+      this.ppsLogo.Image = Resources.PpsLogo;
     }
 
     public string Info
