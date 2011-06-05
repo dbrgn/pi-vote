@@ -310,7 +310,7 @@
     <value>Erstellung &amp;fortsetzen</value>
   </data>
   <data name="MenuCertificateResumeCreationNothing" xml:space="preserve">
-    <value>Es konnte keine Erstellungsprozess gefunden werden, der fortgesetzt werden könnte.</value>
+    <value>Es konnte kein Erstellungsprozess gefunden werden, der fortgesetzt werden könnte.</value>
   </data>
   <data name="MenuCertificates" xml:space="preserve">
     <value>&amp;Zertifikate</value>
@@ -594,7 +594,7 @@
   <data name="MenuExtras" xml:space="preserve">
     <value>E&amp;xtras</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="PpsLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ppLogo-ww-de-web.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
