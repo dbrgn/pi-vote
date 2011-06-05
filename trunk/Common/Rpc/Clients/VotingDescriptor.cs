@@ -131,6 +131,19 @@ namespace Pirate.PiVote.Rpc
       this.questions = new List<QuestionDescriptor>();
       this.questions.AddRange(parameters.Questions.Select(question => new QuestionDescriptor(question)));
       this.groupId = parameters.GroupId;
+      this.authoritiesDone = new List<Guid>();
+
+      for (int authorityIndex = 1; authorityIndex < parameters.AuthorityCount + 1; authorityIndex++)
+      {
+        string partialDecipherFileName = Path.Combine(offlinePath, string.Format(Files.PartialDecipherFileString, authorityIndex));
+
+        if (File.Exists(partialDecipherFileName))
+        {
+          var partialDecipher = Serializable.Load<Signed<PartialDecipherList>>(partialDecipherFileName);
+
+          this.authoritiesDone.Add(partialDecipher.Certificate.Id);
+        }
+      }
     }
 
     /// <summary>

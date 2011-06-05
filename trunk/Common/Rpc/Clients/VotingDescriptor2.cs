@@ -55,12 +55,12 @@ namespace Pirate.PiVote.Rpc
       {
         string partialDecipherFileName = Path.Combine(offlinePath, string.Format(Files.PartialDecipherFileString, authorityIndex));
 
-        if (!File.Exists(partialDecipherFileName))
-          throw new ArgumentException("Offline partial decipher file not found.");
+        if (File.Exists(partialDecipherFileName))
+        {
+          var partialDecipher = Serializable.Load<Signed<PartialDecipherList>>(partialDecipherFileName);
 
-        var partialDecipher = Serializable.Load<Signed<PartialDecipherList>>(partialDecipherFileName);
-
-        this.authorities.Add(partialDecipher.Certificate);
+          this.authorities.Add(partialDecipher.Certificate);
+        }
       }
     }
 
