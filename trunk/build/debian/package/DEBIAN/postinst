@@ -1,5 +1,8 @@
 #! /bin/sh
 if test -x /usr/bin/update-menus; then update-menus; fi
 if test -e /opt/pivote/pirate-pivote.desktop; then cp /opt/pivote/pirate-pivote.desktop /home/$SUDO_USER/Desktop/; fi
+if test -e /opt/pivote/pirate-circle.desktop; then cp /opt/pivote/pirate-circle.desktop /home/$SUDO_USER/Desktop/; fi
 if test -e /home/$SUDO_USER/Desktop/pirate-pivote.desktop; then chown $SUDO_USER /home/$SUDO_USER/Desktop/pirate-pivote.desktop; fi
+if test -e /home/$SUDO_USER/Desktop/pirate-circle.desktop; then chown $SUDO_USER /home/$SUDO_USER/Desktop/pirate-circle.desktop; fi
 if test -e /home/$SUDO_USER/Desktop/pirate-pivote.desktop; then chmod u+x /home/$SUDO_USER/Desktop/pirate-pivote.desktop; fi
+if test -e /home/$SUDO_USER/Desktop/pirate-circle.desktop; then chmod u+x /home/$SUDO_USER/Desktop/pirate-circle.desktop; fi

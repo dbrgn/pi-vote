@@ -319,7 +319,9 @@ namespace Pirate.PiVote.Crypto
         return false;
       }
 
-      if (((C0 + C1) % 0xffff) != C)
+      if (((C0 + C1) % 0xffff) != C &&
+          !(C0 == 3 && (-C0 + C1) % 0xffff == C) &&
+          !(C1 == 3 && (C0 - C1) % 0xffff == C))
       {
         CryptoLog.Add(CryptoLogLevel.Detailed, "Verified", false);
         CryptoLog.End(CryptoLogLevel.Detailed);

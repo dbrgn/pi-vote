@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=pivote
+Exec=circle
+Name[en_US]=Circle
+Name=Circle
+Icon=pivote

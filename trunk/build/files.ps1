@@ -11,9 +11,12 @@
 	mkif $tmp
 	cp -r ../client/bin/release/de-DE $tmp/
 	cp -r ../client/bin/release/fr-FR $tmp/
+	cp -r ../circle/bin/release/de-DE $tmp/
+	cp -r ../circle/bin/release/fr-FR $tmp/
 	cp ../client/bin/release/Emil.GMP.dll $tmp/
 	cp ../client/bin/release/MySql.Data.dll $tmp/
 	cp ../client/bin/release/Pirate.PiVote.Client.exe $tmp/
+	cp ../circle/bin/release/Pirate.PiVote.Circle.exe $tmp/
 	cp ../client/bin/release/Pirate.PiVote.Gui.dll $tmp/
 	cp ../client/bin/release/Pirate.PiVote.dll $tmp/
 	cp -r ./files-linux/* $tmp/
@@ -30,9 +33,12 @@
 	mkif $tmp
 	cp -r ../client/bin/release/de-DE $tmp/
 	cp -r ../client/bin/release/fr-FR $tmp/
+	cp -r ../circle/bin/release/de-DE $tmp/
+	cp -r ../circle/bin/release/fr-FR $tmp/
 	cp ../client/bin/release/Emil.GMP.dll $tmp/
 	cp ../client/bin/release/MySql.Data.dll $tmp/
 	cp ../client/bin/release/Pirate.PiVote.Client.exe $tmp/
+	cp ../circle/bin/release/Pirate.PiVote.Circle.exe $tmp/
 	cp ../client/bin/release/Pirate.PiVote.Gui.dll $tmp/
 	cp ../client/bin/release/Pirate.PiVote.dll $tmp/
 	cp -r ./files-windows/* $tmp/
