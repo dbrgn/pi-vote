@@ -53,6 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Certificates\BackupProgressDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Certificates\BackupProgressDialog.Designer.cs">
+      <DependentUpon>BackupProgressDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Certificates\CertificateManagerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -262,6 +268,9 @@
     <Compile Include="VotingList\VotingListsControl.Designer.cs">
       <DependentUpon>VotingListsControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Certificates\BackupProgressDialog.resx">
+      <DependentUpon>BackupProgressDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Certificates\CertificateManagerDialog.resx">
       <DependentUpon>CertificateManagerDialog.cs</DependentUpon>
     </EmbeddedResource>

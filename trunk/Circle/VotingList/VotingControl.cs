@@ -93,6 +93,7 @@ namespace Pirate.PiVote.Circle
             this.actionButton.Enabled = isAuthorityForVoting;
             this.action2Button.Text = Resources.VotingActionDelete;
             this.action2Button.Visible = isAdmin;
+            this.action2Button.Enabled = true;
             break;
           case VotingStatus.Sharing:
             this.statusLabel.Text = string.Format(Resources.VotingStatusCheck, this.voting.AuthorityCount - this.voting.AuthoritiesDone.Count(), this.voting.AuthorityCount);
@@ -101,6 +102,7 @@ namespace Pirate.PiVote.Circle
             this.actionButton.Enabled = isAuthorityForVoting;
             this.action2Button.Text = Resources.VotingActionDelete;
             this.action2Button.Visible = isAdmin;
+            this.action2Button.Enabled = true;
             break;
           case VotingStatus.Deciphering:
             this.statusLabel.Text = string.Format(Resources.VotingStatusDecipher, this.voting.AuthorityCount - this.voting.AuthoritiesDone.Count(), this.voting.AuthorityCount);
@@ -113,8 +115,10 @@ namespace Pirate.PiVote.Circle
             this.statusLabel.Text = string.Format(Resources.VotingStatusTally, this.voting.EnvelopeCount);
             this.actionButton.Text = Resources.VotingActionTally;
             this.actionButton.Visible = true;
+            this.actionButton.Enabled = true;
             this.action2Button.Text = Resources.VotingActionDownload;
             this.action2Button.Visible = true;
+            this.action2Button.Enabled = true;
             break;
           case VotingStatus.Aborted:
             this.statusLabel.Text = Resources.VotingStatusAborted;
@@ -126,14 +130,16 @@ namespace Pirate.PiVote.Circle
             this.statusLabel.Text = Resources.VotingStatusOffline;
             this.actionButton.Text = Resources.VotingActionTally;
             this.actionButton.Visible = true;
+            this.actionButton.Enabled = true;
             this.action2Button.Text = Resources.VotingActionDelete;
             this.action2Button.Visible = true;
+            this.action2Button.Enabled = true;
             break;
           case VotingStatus.Ready:
             this.statusLabel.Text = string.Format(Resources.VotingStatusReady, this.voting.VoteFrom.ToShortDateString());
-            this.actionButton.Visible = false;
             this.actionButton.Text = Resources.VotingActionDelete;
             this.actionButton.Visible = isAdmin;
+            this.actionButton.Enabled = true;
             this.action2Button.Visible = false;
             break;
           default:

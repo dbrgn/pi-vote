@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -23,11 +24,15 @@ namespace Pirate.PiVote.Circle.Result
   {
     private const int Space = 20;
 
+    private StringTable table;
+
     public ResultDisplayDialog()
     {
       InitializeComponent();
 
       Text = Resources.ResultDialogTitle;
+      this.okButton.Text = GuiResources.ButtonOk;
+      this.exportButton.Text = Resources.ExportButton;
     }
 
     private void okButton_Click(object sender, EventArgs e)
@@ -42,8 +47,8 @@ namespace Pirate.PiVote.Circle.Result
 
     private void SetResultList(VotingResult result, IDictionary<Guid, VoteReceiptStatus> voteReceiptStatus)
     {
-      this.keyColumn.Width = (this.resultList.Width - Space) / 5 * 4;
-      this.valueColumn.Width = (this.resultList.Width - Space) / 5;
+      this.table = new StringTable();
+      table.SetColumnCount(2);
 
       Add(result.Title.Text, true);
       Add(Resources.ResultDialogTotalBallots, result.TotalBallots.ToString());
@@ -127,6 +132,8 @@ namespace Pirate.PiVote.Circle.Result
       {
         item.Font = new Font(item.Font, FontStyle.Bold);
       }
+
+      this.table.AddRow(text, value);
     }
 
     public static void ShowResult(VotingResult result, IDictionary<Guid, VoteReceiptStatus> voteReceiptStatus)
@@ -148,8 +155,10 @@ namespace Pirate.PiVote.Circle.Result
       if (screenBounds.Height < Height)
       {
         Height = screenBounds.Height;
-      } 
-      
+      }
+
+      OnResize(new EventArgs());
+
       CenterToScreen();
     }
 
@@ -167,8 +176,22 @@ namespace Pirate.PiVote.Circle.Result
     protected override void OnResize(EventArgs e)
     {
       base.OnResize(e);
-      this.keyColumn.Width = (this.resultList.Width - 10) / 5 * 4;
-      this.valueColumn.Width = (this.resultList.Width - 10) / 5;
+      this.valueColumn.Width = 100;
+      this.keyColumn.Width = this.resultList.Width - this.valueColumn.Width - 20;
+    }
+
+    private void exportButton_Click(object sender, EventArgs e)
+    {
+      SaveFileDialog dialog = new SaveFileDialog();
+      dialog.Title = Resources.ResultDialogTitle;
+      dialog.Filter = Files.TextFileFilter;
+      dialog.CheckPathExists = true;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        File.WriteAllText(dialog.FileName, this.table.Render());
+        MessageForm.Show(Resources.ResultExportMessage, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+      }
     }
   }
 }

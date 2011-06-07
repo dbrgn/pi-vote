@@ -20,6 +20,7 @@ namespace Pirate.PiVote
 {
   public static class Files
   {
+    public const string TextFileFilter = "Text|*.txt";
     public const string RootCertificateFileName = "root.pi-cert";
     public const string CertificateStorageFileFilter = "Pi-Vote Certificate Storage|*.pi-cert-storage";
     public const string CertificateFileFilter = "Pi-Vote Certificate|*.pi-cert";

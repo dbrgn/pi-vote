@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Pirate.PiVote.Cli
+namespace Pirate.PiVote
 {
   public class StringTable
   {

@@ -25,6 +25,7 @@ namespace Pirate.PiVote
     public Exception Exception { get; private set; }
     public bool Complete { get; private set; }
     public double Progress { get; private set; }
+    public string FileName { get; private set; }
 
     public BackupFile(string dataPath, string backupFile)
     {
@@ -72,6 +73,7 @@ namespace Pirate.PiVote
           string fileName = file.FullName.Substring(this.dataPath.Length);
           if (fileName.StartsWith("\\"))
             fileName = fileName.Substring(1);
+          FileName = fileName;
 
           context.Write(fileName);
           context.Write(File.ReadAllBytes(file.FullName));
@@ -109,6 +111,7 @@ namespace Pirate.PiVote
         for (int index = 0; index < fileCount; index++)
         {
           string fileName = context.ReadString();
+          FileName = fileName;
           byte[] data = context.ReadBytes();
           File.WriteAllBytes(Path.Combine(this.dataPath, fileName), data);
           doneSize += data.Length;

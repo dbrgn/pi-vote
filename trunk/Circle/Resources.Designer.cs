@@ -61,6 +61,15 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backing up....
+        /// </summary>
+        internal static string BackupProgressTitle {
+            get {
+                return ResourceManager.GetString("BackupProgressTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not connect to the server..
         /// </summary>
         internal static string CannotConnectMessage {
@@ -1006,6 +1015,15 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Export....
+        /// </summary>
+        internal static string ExportButton {
+            get {
+                return ResourceManager.GetString("ExportButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Resume Creation....
         /// </summary>
         internal static string MenuCertificateResumeCreation {
@@ -1252,6 +1270,24 @@ namespace Pirate.PiVote.Circle {
         internal static string ResultDialogYourVote {
             get {
                 return ResourceManager.GetString("ResultDialogYourVote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export results.
+        /// </summary>
+        internal static string ResultExportDialogTitle {
+            get {
+                return ResourceManager.GetString("ResultExportDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results saved to file..
+        /// </summary>
+        internal static string ResultExportMessage {
+            get {
+                return ResourceManager.GetString("ResultExportMessage", resourceCulture);
             }
         }
         

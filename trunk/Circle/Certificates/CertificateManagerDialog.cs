@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Gui;
@@ -348,11 +349,18 @@ namespace Pirate.PiVote.Circle.Certificates
           BackupFile backup = new BackupFile(this.controller.Status.DataPath, dialog.FileName);
           backup.BeginCreate();
 
+          BackupProgressDialog backupDialog = new BackupProgressDialog();
+          backupDialog.SetProgress(backup.FileName, backup.Progress);
+          backupDialog.Show();
+
           while (!backup.Complete)
           {
+            backupDialog.SetProgress(backup.FileName, backup.Progress);
             Application.DoEvents();
             Thread.Sleep(1);
           }
+
+          backupDialog.Close();
 
           MessageForm.Show(Resources.SaveBackupDone, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -383,11 +391,18 @@ namespace Pirate.PiVote.Circle.Certificates
           BackupFile backup = new BackupFile(this.controller.Status.DataPath, dialog.FileName);
           backup.BeginExtract();
 
+          BackupProgressDialog backupDialog = new BackupProgressDialog();
+          backupDialog.SetProgress(backup.FileName, backup.Progress);
+          backupDialog.Show();
+
           while (!backup.Complete)
           {
+            backupDialog.SetProgress(backup.FileName, backup.Progress);
             Application.DoEvents();
             Thread.Sleep(1);
           }
+
+          backupDialog.Close();
 
           Status.TextStatusDialog.ShowInfo(this.controller, this);
           this.controller.LoadCertificates();

@@ -40,15 +40,16 @@ namespace Pirate.PiVote.Circle.Result
       this.resultList = new System.Windows.Forms.ListView();
       this.keyColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.valueColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.exportButton = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // okButton
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.okButton.Location = new System.Drawing.Point(631, 439);
+      this.okButton.Location = new System.Drawing.Point(611, 439);
       this.okButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
       this.okButton.Name = "okButton";
-      this.okButton.Size = new System.Drawing.Size(100, 27);
+      this.okButton.Size = new System.Drawing.Size(120, 27);
       this.okButton.TabIndex = 1;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
@@ -56,6 +57,9 @@ namespace Pirate.PiVote.Circle.Result
       // 
       // resultList
       // 
+      this.resultList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
       this.resultList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.keyColumn,
             this.valueColumn});
@@ -78,11 +82,24 @@ namespace Pirate.PiVote.Circle.Result
       // 
       this.valueColumn.Text = "Count";
       // 
+      // exportButton
+      // 
+      this.exportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.exportButton.Location = new System.Drawing.Point(487, 439);
+      this.exportButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+      this.exportButton.Name = "exportButton";
+      this.exportButton.Size = new System.Drawing.Size(120, 27);
+      this.exportButton.TabIndex = 4;
+      this.exportButton.Text = "&Export";
+      this.exportButton.UseVisualStyleBackColor = true;
+      this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
+      // 
       // ResultDisplayDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(742, 473);
+      this.Controls.Add(this.exportButton);
       this.Controls.Add(this.resultList);
       this.Controls.Add(this.okButton);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
@@ -104,5 +121,6 @@ namespace Pirate.PiVote.Circle.Result
     private System.Windows.Forms.ListView resultList;
     private System.Windows.Forms.ColumnHeader keyColumn;
     private System.Windows.Forms.ColumnHeader valueColumn;
+    private System.Windows.Forms.Button exportButton;
   }
 }
