@@ -878,6 +878,15 @@ namespace Pirate.PiVote.Client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notary.
+        /// </summary>
+        internal static string CreateCertificateTypeNotary {
+            get {
+                return ResourceManager.GetString("CreateCertificateTypeNotary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Voter.
         /// </summary>
         internal static string CreateCertificateTypeVoter {
@@ -1106,6 +1115,15 @@ namespace Pirate.PiVote.Client {
             get {
                 object obj = ResourceManager.GetObject("Error", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Generate sign check.
+        /// </summary>
+        internal static string GenerateSignCheckMenu {
+            get {
+                return ResourceManager.GetString("GenerateSignCheckMenu", resourceCulture);
             }
         }
         

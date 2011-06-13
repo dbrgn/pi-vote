@@ -664,4 +664,10 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="ChooseCertificateEncrytButton" xml:space="preserve">
     <value>&amp;Verschlüsseln...</value>
   </data>
+  <data name="CreateCertificateTypeNotary" xml:space="preserve">
+    <value>Notar</value>
+  </data>
+  <data name="GenerateSignCheckMenu" xml:space="preserve">
+    <value>Unterschriftenprüfung &amp;generieren</value>
+  </data>
 </root>

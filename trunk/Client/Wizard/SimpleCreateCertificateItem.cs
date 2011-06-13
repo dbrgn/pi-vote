@@ -180,7 +180,7 @@ namespace Pirate.PiVote.Client
       this.typeComboBox.Items.Clear();
       this.typeComboBox.Items.Add(Resources.CreateCertificateTypeVoter);
       this.typeComboBox.Items.Add(Resources.CreateCertificateTypeAuthority);
-      this.typeComboBox.Items.Add(Resources.CreateCertificateTypeAdmin);
+      this.typeComboBox.Items.Add(Resources.CreateCertificateTypeNotary);
 
       this.groupComboBox.Clear();
       this.groupComboBox.Add(Status.Groups);
@@ -269,7 +269,7 @@ namespace Pirate.PiVote.Client
             Status.Certificate = new AuthorityCertificate(Resources.Culture.ToLanguage(), passphrase, fullName);
             break;
           case 2:
-            Status.Certificate = new AdminCertificate(Resources.Culture.ToLanguage(), passphrase, fullName);
+            Status.Certificate = new NotaryCertificate(Resources.Culture.ToLanguage(), passphrase, fullName);
             break;
           default:
             throw new InvalidOperationException("Bad type selection.");

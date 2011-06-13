@@ -37,6 +37,7 @@ namespace Pirate.PiVote.Client
     private AskForPartiallyDecipherCallBackState askForPartiallyDecipherCallBackState;
     private bool askForPartiallyDecipherCallBackResult;
     private int askForPartiallyDecipherValidBallots;
+    private byte[] encryptedCode;
 
     public AuthorityListVotingsItem()
     {
@@ -167,21 +168,36 @@ namespace Pirate.PiVote.Client
 
     private void votingList_SelectedIndexChanged(object sender, EventArgs e)
     {
+      EnableGui();
+    }
+
+    private void EnableGui()
+    {
+      this.generateSignCheckMenu.Enabled = true;
+
       if (this.votingList.SelectedIndices.Count > 0)
       {
         ListViewItem item = this.votingList.SelectedItems[0];
         VotingDescriptor voting = (VotingDescriptor)item.Tag;
 
-        this.createSharesButton.Enabled = 
-          voting.Status == VotingStatus.New && 
+        this.createSharesButton.Enabled =
+          Status.Certificate is AuthorityCertificate &&
+          voting.Status == VotingStatus.New &&
           !voting.AuthoritiesDone.Contains(Status.Certificate.Id);
-        this.checkSharesButton.Enabled = 
-          voting.Status == VotingStatus.Sharing && 
+        this.createSharesMenu.Enabled = this.createSharesButton.Enabled;
+
+        this.checkSharesButton.Enabled =
+          Status.Certificate is AuthorityCertificate &&
+          voting.Status == VotingStatus.Sharing &&
           !voting.AuthoritiesDone.Contains(Status.Certificate.Id);
+        this.checkSharesMenu.Enabled = this.checkSharesButton.Enabled;
+
         this.decipherButton.Enabled =
+          Status.Certificate is AuthorityCertificate &&
           voting.Status == VotingStatus.Deciphering &&
           !voting.AuthoritiesDone.Contains(Status.Certificate.Id) &&
           voting.EnvelopeCount > 0;
+        this.decipherMenu.Enabled = this.decipherButton.Enabled;
       }
       else
       {
@@ -193,8 +209,15 @@ namespace Pirate.PiVote.Client
 
     private void createSharesButton_Click(object sender, EventArgs e)
     {
-      if (this.votingList.SelectedIndices.Count > 0)
+      CreateShares();
+    }
+
+    private void CreateShares()
+    {
+      if (Status.Certificate is AuthorityCertificate &&
+          this.votingList.SelectedIndices.Count > 0)
       {
+        this.run = true;
         SetGuiEnable(false);
 
         ListViewItem item = this.votingList.SelectedItems[0];
@@ -202,9 +225,6 @@ namespace Pirate.PiVote.Client
 
         string fileName = string.Format("{0}@{1}.pi-auth", Status.Certificate.Id.ToString(), voting.Id.ToString());
         string filePath = Path.Combine(Status.DataPath, fileName);
-
-        this.run = true;
-        OnUpdateWizard();
 
         if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionAuthorityCreateShares))
         {
@@ -244,7 +264,6 @@ namespace Pirate.PiVote.Client
           Status.SetMessage(Resources.AuthorityCreateSharesCanceled, MessageType.Info);
         }
 
-        OnUpdateWizard();
         SetGuiEnable(true);
       }
     }
@@ -258,7 +277,13 @@ namespace Pirate.PiVote.Client
 
     private void checkSharesButton_Click(object sender, EventArgs e)
     {
-      if (this.votingList.SelectedIndices.Count > 0)
+      CheckShares();
+    }
+
+    private void CheckShares()
+    {
+      if (Status.Certificate is AuthorityCertificate &&
+          this.votingList.SelectedIndices.Count > 0)
       {
         SetGuiEnable(false);
 
@@ -277,42 +302,31 @@ namespace Pirate.PiVote.Client
     {
       if (enable)
       {
-        if (this.votingList.SelectedIndices.Count > 0)
-        {
-          ListViewItem item = this.votingList.SelectedItems[0];
-          VotingDescriptor voting = (VotingDescriptor)item.Tag;
-
-          this.createSharesButton.Enabled =
-            voting.Status == VotingStatus.New &&
-            !voting.AuthoritiesDone.Contains(Status.Certificate.Id);
-          this.checkSharesButton.Enabled =
-            voting.Status == VotingStatus.Sharing &&
-            !voting.AuthoritiesDone.Contains(Status.Certificate.Id);
-          this.decipherButton.Enabled =
-            voting.Status == VotingStatus.Deciphering &&
-            !voting.AuthoritiesDone.Contains(Status.Certificate.Id);
-        }
-        else
-        {
-          this.createSharesButton.Enabled = false;
-          this.checkSharesButton.Enabled = false;
-          this.decipherButton.Enabled = false;
-        }
+        EnableGui();
       }
       else
       {
+        this.generateSignCheckMenu.Enabled = false;
         this.createSharesButton.Enabled = false;
         this.checkSharesButton.Enabled = false;
         this.decipherButton.Enabled = false;
       }
 
       this.votingList.Enabled = enable;
+
+      OnUpdateWizard();
     }
 
     private void decipherButton_Click(object sender, EventArgs e)
     {
+      Decipher();
+    }
+
+    private void Decipher()
+    {
       if (this.votingList.SelectedIndices.Count > 0)
       {
+        this.run = true;
         SetGuiEnable(false);
 
         ListViewItem item = this.votingList.SelectedItems[0];
@@ -323,7 +337,6 @@ namespace Pirate.PiVote.Client
 
         if (File.Exists(filePath))
         {
-          this.run = true;
           OnUpdateWizard();
 
           if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionAuthorityDecipher))
@@ -379,13 +392,10 @@ namespace Pirate.PiVote.Client
           {
             Status.SetMessage(Resources.AuthorityDecipherCanceled, MessageType.Info);
           }
-
-          OnUpdateWizard();
         }
         else
         {
           Status.SetMessage(Resources.CreateVotingAuthFileMissing, MessageType.Error);
-          OnUpdateWizard();
         }
 
         SetGuiEnable(true);
@@ -427,11 +437,75 @@ namespace Pirate.PiVote.Client
       this.voteUntilColumnHeader.Text = Resources.VotingListVoteUntil;
       this.authorityColumnHeader.Text = Resources.VotingListAuthorities;
       this.envelopesColumnHeader.Text = Resources.VotingListEnvelopes;
+
+      this.generateSignCheckMenu.Text = Resources.GenerateSignCheckMenu;
     }
 
     private void refreshMenu_Click(object sender, EventArgs e)
     {
       RefreshList();
+    }
+
+    private void generateSignCheckMenu_Click(object sender, EventArgs e)
+    {
+      GenerateSignCheck();
+    }
+
+    private void GenerateSignCheck()
+    {
+      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionGenerateSignCheck))
+      {
+        SignCheckCookie cookie = new SignCheckCookie();
+        Signed<SignCheckCookie> signedCookie = new Signed<SignCheckCookie>(cookie, Status.Certificate);
+
+        this.run = true;
+        SetGuiEnable(false);
+
+        Status.VotingClient.GenerateSignCheck(signedCookie, GenerateSignCheckComplete);
+
+        while (this.run)
+        {
+          Status.UpdateProgress();
+          Thread.Sleep(10);
+        }
+
+        Status.UpdateProgress();
+
+        if (this.exception == null)
+        {
+          byte[] code = Status.Certificate.Decrypt(this.encryptedCode);
+          GenerateSignCheckDialog.ShowSignCheck(Status.Certificate.Id, code);
+          RefreshList();
+        }
+        else
+        {
+          Status.SetMessage(this.exception.Message, MessageType.Error);
+        }
+
+        SetGuiEnable(true);
+      }
+    }
+
+    private void GenerateSignCheckComplete(byte[] encryptedCode, Exception exception)
+    {
+      this.encryptedCode = encryptedCode;
+      this.exception = exception;
+      this.run = false;
+    }
+
+    private void createSharesMenu_Click(object sender, EventArgs e)
+    {
+      CreateShares();
+    }
+
+    private void checkSharesMenu_Click(object sender, EventArgs e)
+    {
+      CheckShares();
+    }
+
+    private void decipherMenu_Click(object sender, EventArgs e)
+    {
+      Decipher();
     }
   }
 }

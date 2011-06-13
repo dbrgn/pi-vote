@@ -680,4 +680,10 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="ChooseCertificateEncrytButton" xml:space="preserve">
     <value>&amp;Encrypt...</value>
   </data>
+  <data name="CreateCertificateTypeNotary" xml:space="preserve">
+    <value>Notary</value>
+  </data>
+  <data name="GenerateSignCheckMenu" xml:space="preserve">
+    <value>&amp;Generate sign check</value>
+  </data>
 </root>

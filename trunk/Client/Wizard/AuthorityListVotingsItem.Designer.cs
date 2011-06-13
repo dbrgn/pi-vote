@@ -44,18 +44,22 @@ namespace Pirate.PiVote.Client
     {
       this.components = new System.ComponentModel.Container();
       this.votingList = new System.Windows.Forms.ListView();
+      this.statusColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.titleColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.groupColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.statusColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.voteFromColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.voteUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.authorityColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.envelopesColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.votingListMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.refreshMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.generateSignCheckMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.decipherButton = new System.Windows.Forms.Button();
       this.checkSharesButton = new System.Windows.Forms.Button();
       this.createSharesButton = new System.Windows.Forms.Button();
+      this.createSharesMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.checkSharesMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.decipherMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.votingListMenu.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -86,6 +90,11 @@ namespace Pirate.PiVote.Client
       this.votingList.View = System.Windows.Forms.View.Details;
       this.votingList.SelectedIndexChanged += new System.EventHandler(this.votingList_SelectedIndexChanged);
       // 
+      // statusColumnHeader
+      // 
+      this.statusColumnHeader.Text = "Status";
+      this.statusColumnHeader.Width = 150;
+      // 
       // titleColumnHeader
       // 
       this.titleColumnHeader.Text = "Title";
@@ -95,11 +104,6 @@ namespace Pirate.PiVote.Client
       // 
       this.groupColumnHeader.Text = "Group";
       this.groupColumnHeader.Width = 120;
-      // 
-      // statusColumnHeader
-      // 
-      this.statusColumnHeader.Text = "Status";
-      this.statusColumnHeader.Width = 150;
       // 
       // voteFromColumnHeader
       // 
@@ -124,16 +128,27 @@ namespace Pirate.PiVote.Client
       // votingListMenu
       // 
       this.votingListMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.refreshMenu});
+            this.refreshMenu,
+            this.createSharesMenu,
+            this.checkSharesMenu,
+            this.decipherMenu,
+            this.generateSignCheckMenu});
       this.votingListMenu.Name = "votingListMenu";
-      this.votingListMenu.Size = new System.Drawing.Size(153, 48);
+      this.votingListMenu.Size = new System.Drawing.Size(175, 136);
       // 
       // refreshMenu
       // 
       this.refreshMenu.Name = "refreshMenu";
-      this.refreshMenu.Size = new System.Drawing.Size(152, 22);
+      this.refreshMenu.Size = new System.Drawing.Size(174, 22);
       this.refreshMenu.Text = "&Refresh";
       this.refreshMenu.Click += new System.EventHandler(this.refreshMenu_Click);
+      // 
+      // generateSignCheckMenu
+      // 
+      this.generateSignCheckMenu.Name = "generateSignCheckMenu";
+      this.generateSignCheckMenu.Size = new System.Drawing.Size(174, 22);
+      this.generateSignCheckMenu.Text = "&Generate Sign Check";
+      this.generateSignCheckMenu.Click += new System.EventHandler(this.generateSignCheckMenu_Click);
       // 
       // decipherButton
       // 
@@ -174,6 +189,27 @@ namespace Pirate.PiVote.Client
       this.createSharesButton.UseVisualStyleBackColor = true;
       this.createSharesButton.Click += new System.EventHandler(this.createSharesButton_Click);
       // 
+      // createSharesMenu
+      // 
+      this.createSharesMenu.Name = "createSharesMenu";
+      this.createSharesMenu.Size = new System.Drawing.Size(174, 22);
+      this.createSharesMenu.Text = "Create &Share";
+      this.createSharesMenu.Click += new System.EventHandler(this.createSharesMenu_Click);
+      // 
+      // checkSharesMenu
+      // 
+      this.checkSharesMenu.Name = "checkSharesMenu";
+      this.checkSharesMenu.Size = new System.Drawing.Size(174, 22);
+      this.checkSharesMenu.Text = "&Check Shares";
+      this.checkSharesMenu.Click += new System.EventHandler(this.checkSharesMenu_Click);
+      // 
+      // decipherMenu
+      // 
+      this.decipherMenu.Name = "decipherMenu";
+      this.decipherMenu.Size = new System.Drawing.Size(174, 22);
+      this.decipherMenu.Text = "&Decipher";
+      this.decipherMenu.Click += new System.EventHandler(this.decipherMenu_Click);
+      // 
       // AuthorityListVotingsItem
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -205,6 +241,10 @@ namespace Pirate.PiVote.Client
     private ColumnHeader groupColumnHeader;
     private ContextMenuStrip votingListMenu;
     private ToolStripMenuItem refreshMenu;
+    private ToolStripMenuItem generateSignCheckMenu;
+    private ToolStripMenuItem createSharesMenu;
+    private ToolStripMenuItem checkSharesMenu;
+    private ToolStripMenuItem decipherMenu;
 
 
 
