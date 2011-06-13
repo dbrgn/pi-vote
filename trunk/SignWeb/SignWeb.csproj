@@ -51,6 +51,7 @@
   <ItemGroup>
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="set.aspx" />
     <Content Include="sign.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -72,6 +73,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="set.aspx.cs">
+      <DependentUpon>set.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="set.aspx.designer.cs">
+      <DependentUpon>set.aspx</DependentUpon>
+    </Compile>
     <Compile Include="sign.aspx.cs">
       <DependentUpon>sign.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

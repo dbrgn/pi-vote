@@ -430,6 +430,15 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generating sign check....
+        /// </summary>
+        public static string ClientGenerateSignCheck {
+            get {
+                return ResourceManager.GetString("ClientGenerateSignCheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Getting authority certificates.
         /// </summary>
         public static string ClientGetAuthorityCertificates {

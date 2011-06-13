@@ -29,6 +29,8 @@ namespace Pirate.PiVote.Circle.Create
       this.voterSubgroupLabel.Text = Resources.CreateCertificateSelectVoterSubgroupInfo;
       this.authorityCheckBox.Text = Resources.CreateCertificateSelectAuthority;
       this.authorityLabel.Text = Resources.CreateCertificateSelectAuthorityInfo;
+      this.notaryCheckBox.Text = Resources.CreateCertificateSelectNotary;
+      this.notaryLabel.Text = Resources.CreateCertificateSelectNotaryInfo;
       this.nextButton.Text = GuiResources.ButtonNext;
       this.cancelButton.Text = GuiResources.ButtonCancel;
     }
@@ -38,20 +40,23 @@ namespace Pirate.PiVote.Circle.Create
       this.nextButton.Enabled = false;
     }
 
-    private void voterCheckBox_CheckedChanged(object sender, EventArgs e)
+    private void CheckValid()
     {
       this.nextButton.Enabled =
         this.voterCheckBox.Checked ||
         this.authorityCheckBox.Checked ||
-        this.voterSubGroupCheckBox.Checked;
+        this.voterSubGroupCheckBox.Checked ||
+        this.notaryCheckBox.Checked;
+    }
+
+    private void voterCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      CheckValid();
     }
 
     private void authorityCheckBox_CheckedChanged(object sender, EventArgs e)
     {
-      this.nextButton.Enabled =
-        this.voterCheckBox.Checked ||
-        this.authorityCheckBox.Checked ||
-        this.voterSubGroupCheckBox.Checked;
+      CheckValid();
     }
 
     private void cancelButton_Click(object sender, EventArgs e)
@@ -79,12 +84,29 @@ namespace Pirate.PiVote.Circle.Create
         nextControl.Status = Status;
         OnShowNextControl(nextControl);
       }
+      else if (this.notaryCheckBox.Checked)
+      {
+        var nextControl = new EnterNotaryDataControl();
+        nextControl.Status = Status;
+        OnShowNextControl(nextControl);
+      }
     }
 
     public override void Prepare()
     {
       var certificates = Status.Controller.GetValidVoterCertificates();
       this.voterSubGroupCheckBox.Enabled = certificates.Any(certificate => certificate.GroupId == 0);
+      this.notaryCheckBox.Enabled = certificates.Any(certificate => certificate.GroupId == 0);
+    }
+
+    private void notaryCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      CheckValid();
+    }
+
+    private void voterSubGroupCheckBox_CheckedChanged(object sender, EventArgs e)
+    {
+      CheckValid();
     }
   }
 }

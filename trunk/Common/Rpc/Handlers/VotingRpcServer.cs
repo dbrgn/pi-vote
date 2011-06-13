@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using Pirate.PiVote.Serialization;
-using Pirate.PiVote.Crypto;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
@@ -661,21 +662,51 @@ namespace Pirate.PiVote.Rpc
       if (!signedSignCheck.Verify(CertificateStorage))
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature on sign check invalid.");
       if (!(signedSignCheck.Certificate is ServerCertificate))
-        throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Signature on sign check not from server.");
+        throw new PiSecurityException(ExceptionCode.SignCheckNotFromServer, "Signature on sign check not from server.");
 
       var signCheck = signedSignCheck.Value;
       Signed<SignatureResponse> signatureResponse = null;
       var status = GetSignatureResponseStatus(signCheck.Certificate.Id, out signatureResponse);
 
       if (status != SignatureResponseStatus.Pending)
-        throw new PiException(ExceptionCode.InvalidCertificate, "Signature response status mismatch.");
+        throw new PiException(ExceptionCode.SignCheckResponseStateMismatch, "Signature response status mismatch.");
+
+      if (!signCheck.Cookie.Verify(CertificateStorage))
+        throw new PiSecurityException(ExceptionCode.SignCheckCookieSignatureInvalid, "Signature on sign check cookie invalid.");
+      if (!(signCheck.Cookie.Certificate is AuthorityCertificate ||
+            signCheck.Cookie.Certificate is NotaryCertificate))
+        throw new PiSecurityException(ExceptionCode.SignCheckCookieNotFromNotary, "Signature on sign check cookie not from notary.");
+
+      var reader = this.dbConnection.ExecuteReader(
+        "SELECT Cookie FROM signcheckcookie WHERE NotaryId = @NotaryId",
+        "@NotaryId",
+        signCheck.Cookie.Certificate.Id.ToByteArray());
+
+      Signed<SignCheckCookie> dbCookie = null;
+
+      if (reader.Read())
+      {
+        dbCookie = Serializable.FromBinary<Signed<SignCheckCookie>>(reader.GetBlob(0));
+        reader.Close();
+      }
+      else
+      {
+        reader.Close();
+        throw new PiSecurityException(ExceptionCode.SignCheckCookieNotFound, "Sign check cookie not found.");
+      }
+
+
+      if (dbCookie.Certificate.Fingerprint != signCheck.Cookie.Certificate.Fingerprint)
+        throw new PiSecurityException(ExceptionCode.SignCheckCookieFingerprintMismatch, "Fingerprint on sign check cookie does not match.");
+      if (!dbCookie.Value.Randomness.Equal(signCheck.Cookie.Value.Randomness))
+        throw new PiSecurityException(ExceptionCode.SignCheckCookieRandomnessMismatch, "Randomness of sign check cookie does not match.");
 
       MySqlCommand insertCommand = new MySqlCommand("INSERT INTO signcheck (CertificateId, Value) VALUES (@CertificateId, @Value)", DbConnection);
       insertCommand.Parameters.AddWithValue("@CertificateId", signedSignCheck.Value.Certificate.Id.ToByteArray());
       insertCommand.Parameters.AddWithValue("@Value", signedSignCheck.ToBinary());
       insertCommand.ExecuteNonQuery();
 
-      Logger.Log(LogLevel.Info, "Connection {0}: Authority {1} has signed signature request {1}", connection.Id, signCheck.Signer.Subject, signCheck.Certificate.Id.ToString());
+      Logger.Log(LogLevel.Info, "Connection {0}: Notary {1}, {2} has signed signature request {3}", connection.Id, signCheck.Cookie.Certificate.Id.ToString(), signCheck.Cookie.Certificate.FullName, signCheck.Certificate.Id.ToString());
     }
 
     /// <summary>
@@ -700,6 +731,72 @@ namespace Pirate.PiVote.Rpc
       reader.Close();
 
       return signChecks;
+    }
+
+    public Signed<SignCheckCookie> GetSignCheckCookie(Guid notaryId, byte[] code)
+    {
+      var reader = this.dbConnection.ExecuteReader(
+        "SELECT Cookie, Code, Expires FROM signcheckcookie WHERE NotaryId = @NotaryId",
+        "@NotaryId",
+        notaryId.ToByteArray());
+
+      if (reader.Read())
+      {
+        if (DateTime.Now <= reader.GetDateTime(2))
+        {
+          if (reader.GetBlob(1).Equal(code))
+          {
+            var signedCookie = Serializable.FromBinary<Signed<SignCheckCookie>>(reader.GetBlob(0));
+            reader.Close();
+            return signedCookie;
+          }
+          else
+          {
+            reader.Close();
+            throw new PiSecurityException(ExceptionCode.SignCheckCookieCodeWrong, "Sign check cookie code wrong.");
+          }
+        }
+        else
+        {
+          reader.Close();
+          throw new PiSecurityException(ExceptionCode.SignCheckCookieCodeExpired, "Sign check cookie code has expired.");
+        }
+      }
+      else
+      {
+        throw new PiException(ExceptionCode.SignCheckCookieNotFound, "Sign check cookie not found.");
+      }
+    }
+
+    public byte[] SetSignCheckCookie(Signed<SignCheckCookie> signedCookie)
+    {
+      if (!signedCookie.Verify(CertificateStorage))
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Invalid signature.");
+
+      if (!(signedCookie.Certificate is AuthorityCertificate ||
+            signedCookie.Certificate is NotaryCertificate))
+        throw new PiSecurityException(ExceptionCode.SignCheckCookieNotFromNotary, "Not from proper authority or notary.");
+
+      this.dbConnection.ExecuteNonQuery(
+        "DELETE FROM signcheckcookie WHERE NotaryId = @NotaryId",
+        "@NotaryId", 
+        signedCookie.Certificate.Id.ToByteArray());
+
+      var rng = RandomNumberGenerator.Create();
+      byte[] code = new byte[32];
+      rng.GetBytes(code);
+      byte[] encryptedCode = signedCookie.Certificate.Encrypt(code);
+
+      MySqlCommand insertCommand = new MySqlCommand(
+        "INSERT INTO signcheckcookie (NotaryId, Cookie, Code, Expires) VALUES (@NotaryId, @Cookie, @Code, @Expires)", 
+        this.dbConnection);
+      insertCommand.Parameters.AddWithValue("@NotaryId", signedCookie.Certificate.Id.ToByteArray());
+      insertCommand.Parameters.AddWithValue("@Cookie", signedCookie.ToBinary());
+      insertCommand.Parameters.AddWithValue("@Code", code);
+      insertCommand.Parameters.AddWithValue("@Expires", DateTime.Now.AddMinutes(15).ToString("yyyy-MM-dd HH:mm:ss"));
+      insertCommand.ExecuteNonQuery();
+
+      return encryptedCode;
     }
   }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sign.aspx.cs" Inherits="SignWeb.sign" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="set.aspx.cs" Inherits="SignWeb.set" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,8 +8,12 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <asp:Panel ID="mainPanel" runat="server">
-    </asp:Panel>
+    <div>
+    
+      <asp:Panel ID="mainPanel" runat="server">
+      </asp:Panel>
+    
+    </div>
     </form>
 </body>
 </html>

@@ -346,6 +346,9 @@ namespace Pirate.PiVote.Circle
       this.uploadSignatureResponsesMenu.Visible = isAdmin;
       this.uploadCertificateStorageMenu.Visible = isAdmin;
 
+      bool isNotary = Controller.GetNotaryCertificate() != null;
+      this.generateSignCheckMenu.Visible = isNotary;
+
       var votings = Controller.GetVotingList();
       this.votingListsControl.Set(Controller, votings);
     }
@@ -436,6 +439,7 @@ namespace Pirate.PiVote.Circle
       this.downloadSignatureRequestsMenu.Text = Resources.MenuDownloadSignatureRequests;
       this.uploadSignatureResponsesMenu.Text = Resources.MenuUploadSignatureResponses;
       this.uploadCertificateStorageMenu.Text = Resources.MenuUploadCertificateStorage;
+      this.generateSignCheckMenu.Text = Resources.MenuGenerateSignCheck;
 
       this.languageMenu.Text = Resources.MenuLanguage;
 
@@ -579,6 +583,35 @@ namespace Pirate.PiVote.Circle
       Config.ConfigDialog dialog = new Config.ConfigDialog();
       dialog.Config = Controller.Config;
       dialog.ShowDialog();
+    }
+
+    private void generateSignCheckMenu_Click(object sender, EventArgs e)
+    {
+      var notaryCertificate = Controller.GetNotaryCertificate();
+
+      if (notaryCertificate != null)
+      {
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(notaryCertificate, GuiResources.UnlockActionGenerateSignCheck))
+        {
+          Status.TextStatusDialog.ShowInfo(Controller, this);
+
+          try
+          {
+            byte[] code = Controller.GenerateNotaryCertificate(notaryCertificate);
+            GenerateSignCheckDialog.ShowSignCheck(notaryCertificate.Id, code);
+          }
+          catch (Exception exception)
+          {
+            Error.ErrorDialog.ShowError(exception);
+          }
+          finally
+          {
+            notaryCertificate.Lock();
+          }
+
+          Status.TextStatusDialog.HideInfo();
+        }
+      }
     }
   }
 }

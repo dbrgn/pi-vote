@@ -610,4 +610,13 @@
   <data name="ResultExportMessage" xml:space="preserve">
     <value>Resultate in Datei gespeichert.</value>
   </data>
+  <data name="MenuGenerateSignCheck" xml:space="preserve">
+    <value>Unterschriftenprüfung generieren</value>
+  </data>
+  <data name="CreateCertificateSelectNotary" xml:space="preserve">
+    <value>&amp;Notar</value>
+  </data>
+  <data name="CreateCertificateSelectNotaryInfo" xml:space="preserve">
+    <value>Ein Zertifikat für einen Notar erstellen. Wähle diese Option, wenn du zum Notar gewählt wurdest.</value>
+  </data>
 </root>

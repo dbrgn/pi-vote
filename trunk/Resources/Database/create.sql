@@ -154,6 +154,19 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
+-- -----------------------------------------------------
+-- Table `pivote`.`signcheck`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `pivote`.`signcheckcookie` (
+  `NotaryId` VARBINARY(16) NOT NULL ,
+  `Cookie` LONGBLOB NOT NULL ,
+  `Code` VARBINARY(64) NOT NULL ,
+  `Expires` DATETIME NOT NULL ,
+  PRIMARY KEY (`NotaryId`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

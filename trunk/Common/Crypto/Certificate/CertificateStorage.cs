@@ -312,6 +312,25 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Loads the root certificate from resources.
+    /// </summary>
+    /// <param name="path">Path to look for the root.</param>
+    public bool TryLoadRoot(string path)
+    {
+      string fileName = Path.Combine(path, Files.RootCertificateFileName);
+
+      if (File.Exists(fileName))
+      {
+        AddRoot(Serializable.Load<Certificate>(fileName));
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+
+    /// <summary>
     /// Determines if there is a valid revocation list for a given CA.
     /// </summary>
     /// <param name="issuerId">Id of the issuing CA.</param>

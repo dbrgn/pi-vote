@@ -484,6 +484,34 @@ namespace Pirate.PiVote.Gui {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scan the QR code below with your smartphone to set an authentication cookie for the sign check. You may also clock the link to set an authentication cookie on your computer.
+        ///Every time you generate a new sign check cookie the old will be disabled..
+        /// </summary>
+        public static string GenerateSignCheckDialogInfo {
+            get {
+                return ResourceManager.GetString("GenerateSignCheckDialogInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You must keep this QR code and the link secret..
+        /// </summary>
+        public static string GenerateSignCheckDialogSecret {
+            get {
+                return ResourceManager.GetString("GenerateSignCheckDialogSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Sign Check.
+        /// </summary>
+        public static string GenerateSignCheckDialogTitle {
+            get {
+                return ResourceManager.GetString("GenerateSignCheckDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pi-Vote.
         /// </summary>
         public static string MessageBoxTitle {
@@ -498,6 +526,60 @@ namespace Pirate.PiVote.Gui {
         public static string PiVoteClient {
             get {
                 return ResourceManager.GetString("PiVoteClient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You do not need to send this form to the certificate authority..
+        /// </summary>
+        public static string SigningRequestDocumentDontSend {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentDontSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When you have collected the three signatures from the authorities and signed the form yourself, it must be sent to the certificate authority..
+        /// </summary>
+        public static string SigningRequestDocumentInfo {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The information below this line is for processing by the certificate authority. Please leave it blank..
+        /// </summary>
+        public static string SigningRequestDocumentLeave {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentLeave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Piratenpartei Schweiz.
+        /// </summary>
+        public static string SigningRequestDocumentPpsAddress1 {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentPpsAddress1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CH-1337 Vallorbe.
+        /// </summary>
+        public static string SigningRequestDocumentPpsAddress2 {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentPpsAddress2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send to:.
+        /// </summary>
+        public static string SigningRequestDocumentSendTo {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentSendTo", resourceCulture);
             }
         }
         
@@ -543,6 +625,15 @@ namespace Pirate.PiVote.Gui {
         public static string UnlockActionDelete {
             get {
                 return ResourceManager.GetString("UnlockActionDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate a sign check.
+        /// </summary>
+        public static string UnlockActionGenerateSignCheck {
+            get {
+                return ResourceManager.GetString("UnlockActionGenerateSignCheck", resourceCulture);
             }
         }
         

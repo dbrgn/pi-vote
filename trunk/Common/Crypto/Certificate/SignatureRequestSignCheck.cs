@@ -9,22 +9,17 @@ namespace Pirate.PiVote.Crypto
 {
   public class SignatureRequestSignCheck : Serializable
   {
-    private byte[] signerX509certificate;
+    public Signed<SignCheckCookie> Cookie { get; private set; }
 
     public Certificate Certificate { get; private set; }
     
     public DateTime SignDateTime { get; private set; }
 
-    public X509Certificate2 Signer
-    {
-      get { return new X509Certificate2(this.signerX509certificate); }
-    }
-
     public SignatureRequestSignCheck(
-      X509Certificate2 signer, 
-      Certificate certificate)
+      Certificate certificate,
+      Signed<SignCheckCookie> cookie)
     {
-      this.signerX509certificate = signer.GetRawCertData();
+      Cookie = cookie;
       Certificate = certificate;
       SignDateTime = DateTime.Now;
     }
@@ -37,7 +32,7 @@ namespace Pirate.PiVote.Crypto
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(this.signerX509certificate);
+      context.Write(Cookie);
       context.Write(Certificate);
       context.Write(SignDateTime);
     }
@@ -45,7 +40,7 @@ namespace Pirate.PiVote.Crypto
     protected override void Deserialize(DeserializeContext context, byte version)
     {
       base.Deserialize(context, version);
-      this.signerX509certificate = context.ReadBytes();
+      Cookie = context.ReadObject<Signed<SignCheckCookie>>();
       Certificate = context.ReadObject<Certificate>();
       SignDateTime = context.ReadDateTime();
     }

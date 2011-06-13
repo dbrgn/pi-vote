@@ -7,7 +7,7 @@
 
 namespace Pirate.PiVote.Circle.Create
 {
-  partial class EnterVoterSubgroupDataControl
+  partial class EnterNotaryDataControl
   {
     /// <summary> 
     /// Required designer variable.
@@ -35,8 +35,6 @@ namespace Pirate.PiVote.Circle.Create
     /// </summary>
     private void InitializeComponent()
     {
-      this.groupLabel = new System.Windows.Forms.Label();
-      this.groupComboBox = new Pirate.PiVote.Gui.GroupComboBox();
       this.cancelButton = new System.Windows.Forms.Button();
       this.nextButton = new System.Windows.Forms.Button();
       this.baseCertificateComboBox = new System.Windows.Forms.ComboBox();
@@ -51,30 +49,6 @@ namespace Pirate.PiVote.Circle.Create
       this.emailAddressLabel = new System.Windows.Forms.Label();
       this.emailAddressTextBox = new System.Windows.Forms.TextBox();
       this.SuspendLayout();
-      // 
-      // groupLabel
-      // 
-      this.groupLabel.AutoSize = true;
-      this.groupLabel.Location = new System.Drawing.Point(2, 183);
-      this.groupLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-      this.groupLabel.Name = "groupLabel";
-      this.groupLabel.Size = new System.Drawing.Size(40, 14);
-      this.groupLabel.TabIndex = 44;
-      this.groupLabel.Text = "Group:";
-      // 
-      // groupComboBox
-      // 
-      this.groupComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.groupComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.groupComboBox.FormattingEnabled = true;
-      this.groupComboBox.Location = new System.Drawing.Point(115, 180);
-      this.groupComboBox.Margin = new System.Windows.Forms.Padding(2);
-      this.groupComboBox.Name = "groupComboBox";
-      this.groupComboBox.Size = new System.Drawing.Size(430, 22);
-      this.groupComboBox.TabIndex = 39;
-      this.groupComboBox.Value = null;
-      this.groupComboBox.SelectedIndexChanged += new System.EventHandler(this.groupComboBox_SelectedIndexChanged);
       // 
       // cancelButton
       // 
@@ -217,7 +191,7 @@ namespace Pirate.PiVote.Circle.Create
       this.emailAddressTextBox.TabIndex = 54;
       this.emailAddressTextBox.TextChanged += new System.EventHandler(this.emailAddressTextBox_TextChanged);
       // 
-      // EnterVoterSubgroupDataControl
+      // EnterNotaryDataControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -234,9 +208,7 @@ namespace Pirate.PiVote.Circle.Create
       this.Controls.Add(this.baseCertificateComboBox);
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.nextButton);
-      this.Controls.Add(this.groupLabel);
-      this.Controls.Add(this.groupComboBox);
-      this.Name = "EnterVoterSubgroupDataControl";
+      this.Name = "EnterNotaryDataControl";
       this.Size = new System.Drawing.Size(548, 250);
       this.Load += new System.EventHandler(this.EnterVoterCertificateDataControl_Load);
       this.ResumeLayout(false);
@@ -246,8 +218,6 @@ namespace Pirate.PiVote.Circle.Create
 
     #endregion
 
-    private System.Windows.Forms.Label groupLabel;
-    private Gui.GroupComboBox groupComboBox;
     private System.Windows.Forms.Button cancelButton;
     private System.Windows.Forms.Button nextButton;
     private System.Windows.Forms.ComboBox baseCertificateComboBox;

@@ -38,14 +38,12 @@ namespace Pirate.PiVote.Circle.Create
       this.emailNotificationCheckBox = new System.Windows.Forms.CheckBox();
       this.firstNameLabel = new System.Windows.Forms.Label();
       this.firstNameTextBox = new System.Windows.Forms.TextBox();
-      this.groupComboBox = new Pirate.PiVote.Gui.GroupComboBox();
       this.familyNameLabel = new System.Windows.Forms.Label();
       this.familyNameTextBox = new System.Windows.Forms.TextBox();
       this.emailAddressLabel = new System.Windows.Forms.Label();
       this.emailAddressTextBox = new System.Windows.Forms.TextBox();
       this.cancelButton = new System.Windows.Forms.Button();
       this.nextButton = new System.Windows.Forms.Button();
-      this.groupLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // emailNotificationCheckBox
@@ -80,20 +78,6 @@ namespace Pirate.PiVote.Circle.Create
       this.firstNameTextBox.Size = new System.Drawing.Size(429, 20);
       this.firstNameTextBox.TabIndex = 34;
       this.firstNameTextBox.TextChanged += new System.EventHandler(this.firstNameTextBox_TextChanged);
-      // 
-      // groupComboBox
-      // 
-      this.groupComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.groupComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.groupComboBox.FormattingEnabled = true;
-      this.groupComboBox.Location = new System.Drawing.Point(116, 125);
-      this.groupComboBox.Margin = new System.Windows.Forms.Padding(2);
-      this.groupComboBox.Name = "groupComboBox";
-      this.groupComboBox.Size = new System.Drawing.Size(429, 22);
-      this.groupComboBox.TabIndex = 39;
-      this.groupComboBox.Value = null;
-      this.groupComboBox.SelectedIndexChanged += new System.EventHandler(this.groupComboBox_SelectedIndexChanged);
       // 
       // familyNameLabel
       // 
@@ -160,16 +144,6 @@ namespace Pirate.PiVote.Circle.Create
       this.nextButton.UseVisualStyleBackColor = true;
       this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
       // 
-      // groupLabel
-      // 
-      this.groupLabel.AutoSize = true;
-      this.groupLabel.Location = new System.Drawing.Point(2, 128);
-      this.groupLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-      this.groupLabel.Name = "groupLabel";
-      this.groupLabel.Size = new System.Drawing.Size(40, 14);
-      this.groupLabel.TabIndex = 44;
-      this.groupLabel.Text = "Group:";
-      // 
       // EnterVoterCertificateDataControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -178,14 +152,11 @@ namespace Pirate.PiVote.Circle.Create
       this.Controls.Add(this.nextButton);
       this.Controls.Add(this.emailNotificationCheckBox);
       this.Controls.Add(this.firstNameLabel);
-      this.Controls.Add(this.groupLabel);
       this.Controls.Add(this.firstNameTextBox);
-      this.Controls.Add(this.groupComboBox);
       this.Controls.Add(this.familyNameLabel);
       this.Controls.Add(this.familyNameTextBox);
       this.Controls.Add(this.emailAddressLabel);
       this.Controls.Add(this.emailAddressTextBox);
-      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "EnterVoterCertificateDataControl";
       this.Size = new System.Drawing.Size(548, 212);
       this.Load += new System.EventHandler(this.EnterVoterCertificateDataControl_Load);
@@ -199,13 +170,11 @@ namespace Pirate.PiVote.Circle.Create
     private System.Windows.Forms.CheckBox emailNotificationCheckBox;
     private System.Windows.Forms.Label firstNameLabel;
     private System.Windows.Forms.TextBox firstNameTextBox;
-    private Gui.GroupComboBox groupComboBox;
     private System.Windows.Forms.Label familyNameLabel;
     private System.Windows.Forms.TextBox familyNameTextBox;
     private System.Windows.Forms.Label emailAddressLabel;
     private System.Windows.Forms.TextBox emailAddressTextBox;
     private System.Windows.Forms.Button cancelButton;
     private System.Windows.Forms.Button nextButton;
-    private System.Windows.Forms.Label groupLabel;
   }
 }

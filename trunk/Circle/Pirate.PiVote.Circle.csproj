@@ -79,6 +79,12 @@
       <DependentUpon>ConfigProofCountControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Config\UserConfig.cs" />
+    <Compile Include="Create\EnterNotaryDataControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Create\EnterNotaryDataControl.Designer.cs">
+      <DependentUpon>EnterNotaryDataControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources.fr-FR.Designer.cs">
       <DependentUpon>Resources.fr-FR.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -279,6 +285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Config\ConfigProofCountControl.resx">
       <DependentUpon>ConfigProofCountControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Create\EnterNotaryDataControl.resx">
+      <DependentUpon>EnterNotaryDataControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.fr-FR.resx">
       <Generator>ResXFileCodeGenerator</Generator>

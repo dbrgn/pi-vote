@@ -106,11 +106,13 @@
     <Compile Include="Crypto\Certificate\CertificateAttribute.cs" />
     <Compile Include="Crypto\Certificate\CertificateValidationResult.cs" />
     <Compile Include="Crypto\Certificate\Aes.cs" />
+    <Compile Include="Crypto\Certificate\NotaryCertificate.cs" />
     <Compile Include="Crypto\Certificate\SignatureRequest2.cs" />
     <Compile Include="Crypto\Certificate\PrivateKeyStatus.cs" />
     <Compile Include="Crypto\Certificate\SignatureRequestInfo.cs" />
     <Compile Include="Crypto\Certificate\Secure.cs" />
     <Compile Include="Crypto\Certificate\SignatureRequestSignCheck.cs" />
+    <Compile Include="Crypto\Certificate\SignCheckCookie.cs" />
     <Compile Include="Crypto\Log\CryptoLog.cs" />
     <Compile Include="Crypto\Log\CryptoLogLevel.cs" />
     <Compile Include="Crypto\Parameters\BaseParameters.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exception\PiException.cs" />
     <Compile Include="Rpc\Clients\CheckShares.cs" />
+    <Compile Include="Rpc\Clients\GenerateSignCheck.cs" />
     <Compile Include="Rpc\Clients\VotingDescriptor2.cs" />
     <Compile Include="Rpc\Clients\GetVotings.cs" />
     <Compile Include="Rpc\Clients\DeleteVoting.cs" />
@@ -208,6 +211,10 @@
     <Compile Include="Rpc\Generic\RpcRequest.cs" />
     <Compile Include="Rpc\Generic\RpcMessage.cs" />
     <Compile Include="Rpc\Handlers\IBinaryRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\FetchSignCheckCookieRequest.cs" />
+    <Compile Include="Rpc\Messages\FetchSignCheckCookieResponse.cs" />
+    <Compile Include="Rpc\Messages\PushSignCheckCookieRequest.cs" />
+    <Compile Include="Rpc\Messages\PushSignCheckCookieResponse.cs" />
     <Compile Include="Rpc\Messages\PushSignCheckRequest.cs" />
     <Compile Include="Rpc\Messages\PushSignCheckResponse.cs" />
     <Compile Include="Rpc\Messages\FetchSignCheckListRequest.cs" />

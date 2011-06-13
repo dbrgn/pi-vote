@@ -92,6 +92,12 @@
     <Compile Include="Controls\MultiLanguageTextBox.Designer.cs">
       <DependentUpon>MultiLanguageTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="SignCheck\GenerateSignCheckDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignCheck\GenerateSignCheckDialog.Designer.cs">
+      <DependentUpon>GenerateSignCheckDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Phassphrase\ChangePassphraseDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,6 +174,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>GuiResources.de-DE.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SignCheck\GenerateSignCheckDialog.resx">
+      <DependentUpon>GenerateSignCheckDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

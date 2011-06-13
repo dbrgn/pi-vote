@@ -53,19 +53,23 @@ namespace Pirate.PiVote.Gui.Printing
       this.top = e.MarginBounds.Top;
 
       PrintHeader(Snippet(e.MarginBounds, 50f));
-      PrintData(Snippet(e.MarginBounds, 360f));
+      PrintData(Snippet(e.MarginBounds, 280f));
 
       if (this.signatureRequest is SignatureRequest2)
       {
         PrintParentData(Snippet(e.MarginBounds, 200f));
+
+        PrintDontSend(Snippet(e.MarginBounds, 170f));
       }
       else
       {
-        PrintRequest(Snippet(e.MarginBounds, 200f));
+        PrintRequest(Snippet(e.MarginBounds, 150f));
+
+        PrintInfo(Snippet(e.MarginBounds, 220f));
       }
 
-      PrintResponse(Snippet(e.MarginBounds, 200f));
-      PrintRevoke(Snippet(e.MarginBounds, 200f));
+      PrintResponse(Snippet(e.MarginBounds, 150f));
+      PrintRevoke(Snippet(e.MarginBounds, 150f));
       PrintFooter(Snippet(e.MarginBounds, 10f));
 
       e.HasMorePages = false;
@@ -96,11 +100,11 @@ namespace Pirate.PiVote.Gui.Printing
     {
       QRCodeEncoder qrEncoder = new QRCodeEncoder();
       qrEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
-      qrEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.H;
-      qrEncoder.QRCodeVersion = 12;
-      qrEncoder.QRCodeScale = 3;
+      qrEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.L;
+      qrEncoder.QRCodeVersion = 7;
+      qrEncoder.QRCodeScale = 5;
       string url = string.Format(
-        "https://pivote.piratenpartei.ch/sign.aspx?id={0}&fp={1}",
+        "https://lechuck.piratenpartei.ch/sign.aspx?id={0}&fp={1}",
         this.certificate.Id.ToString(),
         this.certificate.Fingerprint.Replace(" ", string.Empty));
       var image = qrEncoder.Encode(url);
@@ -146,8 +150,8 @@ namespace Pirate.PiVote.Gui.Printing
       Certificate signingCertificate = signatureRequest2.SigningCertificate;
 
       Table table = new Table(new Font(FontFace, BaseFontSize));
-      table.AddColumn(200f);
-      table.AddColumn(bounds.Width - 200f);
+      table.AddColumn(150f);
+      table.AddColumn(bounds.Width - 150f);
 
       table.AddRow(LibraryResources.SigningRequestDocumentParent, 2, FontStyle.Bold);
       table.AddRow(" ", 2);
@@ -204,6 +208,41 @@ namespace Pirate.PiVote.Gui.Printing
       }
 
       return newLine;
+    }
+
+    private void PrintInfo(RectangleF bounds)
+    {
+      Font font = new Font(FontFace, BaseFontSize);
+
+      this.graphics.DrawString(
+        GuiResources.SigningRequestDocumentInfo, 
+        font,
+        Brushes.Black,
+        new RectangleF(bounds.Left, bounds.Top, bounds.Width, 70f));
+
+      Table table = new Table(font);
+      table.AddColumn(150f);
+      table.AddColumn(bounds.Width - 150f);
+      table.AddRow(GuiResources.SigningRequestDocumentSendTo, GuiResources.SigningRequestDocumentPpsAddress1);
+      table.AddRow(string.Empty, GuiResources.SigningRequestDocumentPpsAddress2);
+      table.Draw(new PointF(bounds.Left, bounds.Top + 70f), this.graphics);
+
+      this.graphics.DrawString(
+        GuiResources.SigningRequestDocumentLeave, 
+        font,
+        Brushes.Black,
+        new RectangleF(bounds.Left, bounds.Top + 140f, bounds.Width, 70f));
+    }
+
+    private void PrintDontSend(RectangleF bounds)
+    {
+      Font font = new Font(FontFace, BaseFontSize);
+
+      this.graphics.DrawString(
+        GuiResources.SigningRequestDocumentDontSend,
+        font,
+        Brushes.Black,
+        new RectangleF(bounds.Left, bounds.Top, bounds.Width, 70f));      
     }
 
     private void PrintResponse(RectangleF bounds)

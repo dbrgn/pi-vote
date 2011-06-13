@@ -19,11 +19,11 @@ using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.Circle.Create
 {
-  public partial class EnterVoterSubgroupDataControl : CreateCertificateControl
+  public partial class EnterNotaryDataControl : CreateCertificateControl
   {
     private List<VoterCertificate> baseCertificates;
 
-    public EnterVoterSubgroupDataControl()
+    public EnterNotaryDataControl()
     {
       InitializeComponent();
 
@@ -33,7 +33,6 @@ namespace Pirate.PiVote.Circle.Create
       this.familyNameLabel.Text = Resources.CreateCertificateDataFamilyName;
       this.emailAddressLabel.Text = Resources.CreateCertificateDataEmailAddress;
       this.emailNotificationCheckBox.Text = Resources.CreateCertificateDataNotify;
-      this.groupLabel.Text = Resources.CreateCertificateDataGroup;
       this.nextButton.Text = GuiResources.ButtonNext;
       this.cancelButton.Text = GuiResources.ButtonCancel;
 
@@ -54,7 +53,7 @@ namespace Pirate.PiVote.Circle.Create
       {
         string passphrase = encryptResult.Second;
 
-        Status.Certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, this.groupComboBox.Value.Id);
+        Status.Certificate = new NotaryCertificate(Resources.Culture.ToLanguage(), passphrase, fullName);
 
         Status.Certificate.CreateSelfSignature();
 
@@ -100,22 +99,12 @@ namespace Pirate.PiVote.Circle.Create
         !this.firstNameTextBox.Text.IsNullOrEmpty() &&
         !this.familyNameTextBox.Text.IsNullOrEmpty() &&
         Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text) &&
-        this.baseCertificateComboBox.SelectedIndex >= 0 &&
-        this.groupComboBox.Value != null &&
-        this.groupComboBox.Value.Id != this.baseCertificates[this.baseCertificateComboBox.SelectedIndex].GroupId;
+        this.baseCertificateComboBox.SelectedIndex >= 0;
     }
 
     private void EnterVoterCertificateDataControl_Load(object sender, EventArgs e)
     {
       this.nextButton.Enabled = false;
-
-      this.groupComboBox.Clear();
-      this.groupComboBox.Add(Status.Controller.Status.Groups.Where(group => group.Id > 0));
-
-      if (this.groupComboBox.Items.Count > 0)
-      {
-        this.groupComboBox.SelectedIndex = 0;
-      }
     }
 
     private void groupComboBox_SelectedIndexChanged(object sender, EventArgs e)

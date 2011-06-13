@@ -628,6 +628,24 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Notary.
+        /// </summary>
+        internal static string CreateCertificateSelectNotary {
+            get {
+                return ResourceManager.GetString("CreateCertificateSelectNotary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new certificate for a notary. Choose this if you have been elected to be a notary..
+        /// </summary>
+        internal static string CreateCertificateSelectNotaryInfo {
+            get {
+                return ResourceManager.GetString("CreateCertificateSelectNotaryInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Voter.
         /// </summary>
         internal static string CreateCertificateSelectVoter {
@@ -1101,6 +1119,15 @@ namespace Pirate.PiVote.Circle {
         internal static string MenuExtras {
             get {
                 return ResourceManager.GetString("MenuExtras", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Sign Check.
+        /// </summary>
+        internal static string MenuGenerateSignCheck {
+            get {
+                return ResourceManager.GetString("MenuGenerateSignCheck", resourceCulture);
             }
         }
         

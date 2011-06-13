@@ -43,12 +43,14 @@ namespace Pirate.PiVote.Circle.Create
       this.voterLabel = new System.Windows.Forms.Label();
       this.voterSubgroupLabel = new System.Windows.Forms.Label();
       this.authorityLabel = new System.Windows.Forms.Label();
+      this.notaryCheckBox = new System.Windows.Forms.RadioButton();
+      this.notaryLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // voterCheckBox
       // 
       this.voterCheckBox.AutoSize = true;
-      this.voterCheckBox.Location = new System.Drawing.Point(14, 12);
+      this.voterCheckBox.Location = new System.Drawing.Point(14, 6);
       this.voterCheckBox.Name = "voterCheckBox";
       this.voterCheckBox.Size = new System.Drawing.Size(51, 18);
       this.voterCheckBox.TabIndex = 0;
@@ -60,7 +62,7 @@ namespace Pirate.PiVote.Circle.Create
       // authorityCheckBox
       // 
       this.authorityCheckBox.AutoSize = true;
-      this.authorityCheckBox.Location = new System.Drawing.Point(14, 177);
+      this.authorityCheckBox.Location = new System.Drawing.Point(14, 125);
       this.authorityCheckBox.Name = "authorityCheckBox";
       this.authorityCheckBox.Size = new System.Drawing.Size(101, 18);
       this.authorityCheckBox.TabIndex = 1;
@@ -95,21 +97,22 @@ namespace Pirate.PiVote.Circle.Create
       // voterSubGroupCheckBox
       // 
       this.voterSubGroupCheckBox.AutoSize = true;
-      this.voterSubGroupCheckBox.Location = new System.Drawing.Point(14, 94);
+      this.voterSubGroupCheckBox.Location = new System.Drawing.Point(14, 68);
       this.voterSubGroupCheckBox.Name = "voterSubGroupCheckBox";
       this.voterSubGroupCheckBox.Size = new System.Drawing.Size(117, 18);
       this.voterSubGroupCheckBox.TabIndex = 50;
       this.voterSubGroupCheckBox.TabStop = true;
       this.voterSubGroupCheckBox.Text = "Voter for subgroup";
       this.voterSubGroupCheckBox.UseVisualStyleBackColor = true;
+      this.voterSubGroupCheckBox.CheckedChanged += new System.EventHandler(this.voterSubGroupCheckBox_CheckedChanged);
       // 
       // voterLabel
       // 
       this.voterLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.voterLabel.Location = new System.Drawing.Point(30, 35);
+      this.voterLabel.Location = new System.Drawing.Point(30, 27);
       this.voterLabel.Name = "voterLabel";
-      this.voterLabel.Size = new System.Drawing.Size(442, 56);
+      this.voterLabel.Size = new System.Drawing.Size(442, 38);
       this.voterLabel.TabIndex = 51;
       this.voterLabel.Text = "label1";
       // 
@@ -117,9 +120,9 @@ namespace Pirate.PiVote.Circle.Create
       // 
       this.voterSubgroupLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.voterSubgroupLabel.Location = new System.Drawing.Point(30, 115);
+      this.voterSubgroupLabel.Location = new System.Drawing.Point(30, 89);
       this.voterSubgroupLabel.Name = "voterSubgroupLabel";
-      this.voterSubgroupLabel.Size = new System.Drawing.Size(442, 59);
+      this.voterSubgroupLabel.Size = new System.Drawing.Size(442, 33);
       this.voterSubgroupLabel.TabIndex = 52;
       this.voterSubgroupLabel.Text = "label2";
       // 
@@ -127,16 +130,40 @@ namespace Pirate.PiVote.Circle.Create
       // 
       this.authorityLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.authorityLabel.Location = new System.Drawing.Point(30, 198);
+      this.authorityLabel.Location = new System.Drawing.Point(30, 146);
       this.authorityLabel.Name = "authorityLabel";
-      this.authorityLabel.Size = new System.Drawing.Size(442, 41);
+      this.authorityLabel.Size = new System.Drawing.Size(442, 33);
       this.authorityLabel.TabIndex = 53;
       this.authorityLabel.Text = "label3";
+      // 
+      // notaryCheckBox
+      // 
+      this.notaryCheckBox.AutoSize = true;
+      this.notaryCheckBox.Location = new System.Drawing.Point(14, 182);
+      this.notaryCheckBox.Name = "notaryCheckBox";
+      this.notaryCheckBox.Size = new System.Drawing.Size(101, 18);
+      this.notaryCheckBox.TabIndex = 54;
+      this.notaryCheckBox.TabStop = true;
+      this.notaryCheckBox.Text = "Voting Authority";
+      this.notaryCheckBox.UseVisualStyleBackColor = true;
+      this.notaryCheckBox.CheckedChanged += new System.EventHandler(this.notaryCheckBox_CheckedChanged);
+      // 
+      // notaryLabel
+      // 
+      this.notaryLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.notaryLabel.Location = new System.Drawing.Point(30, 203);
+      this.notaryLabel.Name = "notaryLabel";
+      this.notaryLabel.Size = new System.Drawing.Size(442, 36);
+      this.notaryLabel.TabIndex = 55;
+      this.notaryLabel.Text = "label3";
       // 
       // SelectCertificateTypeControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.notaryLabel);
+      this.Controls.Add(this.notaryCheckBox);
       this.Controls.Add(this.authorityLabel);
       this.Controls.Add(this.voterSubgroupLabel);
       this.Controls.Add(this.voterLabel);
@@ -145,7 +172,6 @@ namespace Pirate.PiVote.Circle.Create
       this.Controls.Add(this.nextButton);
       this.Controls.Add(this.authorityCheckBox);
       this.Controls.Add(this.voterCheckBox);
-      this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.Name = "SelectCertificateTypeControl";
       this.Size = new System.Drawing.Size(475, 273);
       this.Load += new System.EventHandler(this.SelectCertificateTypeControl_Load);
@@ -164,5 +190,7 @@ namespace Pirate.PiVote.Circle.Create
     private System.Windows.Forms.Label voterLabel;
     private System.Windows.Forms.Label voterSubgroupLabel;
     private System.Windows.Forms.Label authorityLabel;
+    private System.Windows.Forms.RadioButton notaryCheckBox;
+    private System.Windows.Forms.Label notaryLabel;
   }
 }

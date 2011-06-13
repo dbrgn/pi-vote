@@ -487,12 +487,25 @@ namespace Pirate.PiVote.Rpc
     /// Set a certificate storage on the server.
     /// </summary>
     /// <param name="comand">Command to delete a voting.</param>
-    /// <param name="callBack">Callback upon completion</param>
+    /// <param name="callBack">Callback upon completion.</param>
     public void DeleteVoting(Signed<DeleteVotingRequest.Command> comand, DeleteVotingCallBack callBack)
     {
       lock (this.operations)
       {
         this.operations.Enqueue(new DeleteVotingOperation(comand, callBack));
+      }
+    }
+
+    /// <summary>
+    /// Generates a sign check.
+    /// </summary>
+    /// <param name="signedCookie">Signed sign check cookie.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void GenerateSignCheck(Signed<SignCheckCookie> signedCookie, GenerateSignCheckCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new GenerateSignCheckOperation(signedCookie, callBack));
       }
     }
   }

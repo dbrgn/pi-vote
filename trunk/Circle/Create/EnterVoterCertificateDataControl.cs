@@ -29,7 +29,6 @@ namespace Pirate.PiVote.Circle.Create
       this.familyNameLabel.Text = Resources.CreateCertificateDataFamilyName;
       this.emailAddressLabel.Text = Resources.CreateCertificateDataEmailAddress;
       this.emailNotificationCheckBox.Text = Resources.CreateCertificateDataNotify;
-      this.groupLabel.Text = Resources.CreateCertificateDataGroup;
       this.nextButton.Text = GuiResources.ButtonNext;
       this.cancelButton.Text = GuiResources.ButtonCancel;
 
@@ -63,7 +62,7 @@ namespace Pirate.PiVote.Circle.Create
       {
         string passphrase = encryptResult.Second;
 
-        Status.Certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, this.groupComboBox.Value.Id);
+        Status.Certificate = new VoterCertificate(Resources.Culture.ToLanguage(), passphrase, 0);
 
         Status.Certificate.CreateSelfSignature();
 
@@ -93,21 +92,12 @@ namespace Pirate.PiVote.Circle.Create
       this.nextButton.Enabled =
         !this.firstNameTextBox.Text.IsNullOrEmpty() &&
         !this.familyNameTextBox.Text.IsNullOrEmpty() &&
-        Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text) &&
-        this.groupComboBox.Value != null;
+        Mailer.IsEmailAddressValid(this.emailAddressTextBox.Text);
     }
 
     private void EnterVoterCertificateDataControl_Load(object sender, EventArgs e)
     {
       this.nextButton.Enabled = false;
-
-      this.groupComboBox.Clear();
-      this.groupComboBox.Add(Status.Controller.Status.Groups);
-
-      if (this.groupComboBox.Items.Count > 0)
-      {
-        this.groupComboBox.SelectedIndex = 0;
-      }
     }
 
     private void groupComboBox_SelectedIndexChanged(object sender, EventArgs e)

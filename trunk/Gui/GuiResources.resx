@@ -285,4 +285,35 @@
   <data name="CertificateDetail" xml:space="preserve">
     <value>&amp;Details...</value>
   </data>
+  <data name="GenerateSignCheckDialogInfo" xml:space="preserve">
+    <value>Scan the QR code below with your smartphone to set an authentication cookie for the sign check. You may also clock the link to set an authentication cookie on your computer.
+Every time you generate a new sign check cookie the old will be disabled.</value>
+  </data>
+  <data name="GenerateSignCheckDialogTitle" xml:space="preserve">
+    <value>Generate Sign Check</value>
+  </data>
+  <data name="SigningRequestDocumentDontSend" xml:space="preserve">
+    <value>You do not need to send this form to the certificate authority.</value>
+  </data>
+  <data name="SigningRequestDocumentInfo" xml:space="preserve">
+    <value>When you have collected the three signatures from the authorities and signed the form yourself, it must be sent to the certificate authority.</value>
+  </data>
+  <data name="SigningRequestDocumentLeave" xml:space="preserve">
+    <value>The information below this line is for processing by the certificate authority. Please leave it blank.</value>
+  </data>
+  <data name="SigningRequestDocumentPpsAddress1" xml:space="preserve">
+    <value>Piratenpartei Schweiz</value>
+  </data>
+  <data name="SigningRequestDocumentPpsAddress2" xml:space="preserve">
+    <value>CH-1337 Vallorbe</value>
+  </data>
+  <data name="SigningRequestDocumentSendTo" xml:space="preserve">
+    <value>Send to:</value>
+  </data>
+  <data name="UnlockActionGenerateSignCheck" xml:space="preserve">
+    <value>Generate a sign check</value>
+  </data>
+  <data name="GenerateSignCheckDialogSecret" xml:space="preserve">
+    <value>You must keep this QR code and the link secret.</value>
+  </data>
 </root>

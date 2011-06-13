@@ -285,4 +285,35 @@
   <data name="CertificateDetail" xml:space="preserve">
     <value>&amp;Details...</value>
   </data>
+  <data name="GenerateSignCheckDialogInfo" xml:space="preserve">
+    <value>Scanne den QR code unten mit deinem Smartphone um das Authentifzierungscookie zu setzen. Du kannst auch den Link clicken um das  Authentifzierungscookie auf deinem Computer zu setzen.
+Jedes mal, wenn du ein neues Authentifzierungscookie generierst, wird das alte deaktiviert.</value>
+  </data>
+  <data name="GenerateSignCheckDialogTitle" xml:space="preserve">
+    <value>Unterschriftsprüfung generieren</value>
+  </data>
+  <data name="SigningRequestDocumentDontSend" xml:space="preserve">
+    <value>Bitte dieses Formular nicht an die Zertifizierungsstelle schicken.</value>
+  </data>
+  <data name="SigningRequestDocumentInfo" xml:space="preserve">
+    <value>Wenn du die drei Unterschriften von Notaren oder Autoritäten gesammelt und selbst unterschrieben hast, muss das Formular an die Zertifizierungstelle gesendet werden.</value>
+  </data>
+  <data name="SigningRequestDocumentLeave" xml:space="preserve">
+    <value>Die Information unterhalb dieser Zeile ist für die Verarbietung durch die Zertifizierungsstelle. Bitte leer lassen.</value>
+  </data>
+  <data name="SigningRequestDocumentPpsAddress1" xml:space="preserve">
+    <value>Piratenpartei Schweiz</value>
+  </data>
+  <data name="SigningRequestDocumentPpsAddress2" xml:space="preserve">
+    <value>CH-1337 Vallorbe</value>
+  </data>
+  <data name="SigningRequestDocumentSendTo" xml:space="preserve">
+    <value>Senden an:</value>
+  </data>
+  <data name="UnlockActionGenerateSignCheck" xml:space="preserve">
+    <value>Unterschriftenprüfung generieren</value>
+  </data>
+  <data name="GenerateSignCheckDialogSecret" xml:space="preserve">
+    <value>Du musst diesen QR code und den Link geheim halten.</value>
+  </data>
 </root>

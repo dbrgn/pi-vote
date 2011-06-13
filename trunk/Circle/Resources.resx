@@ -634,4 +634,13 @@
   <data name="ResultExportMessage" xml:space="preserve">
     <value>Results saved to file.</value>
   </data>
+  <data name="MenuGenerateSignCheck" xml:space="preserve">
+    <value>Generate Sign Check</value>
+  </data>
+  <data name="CreateCertificateSelectNotary" xml:space="preserve">
+    <value>&amp;Notary</value>
+  </data>
+  <data name="CreateCertificateSelectNotaryInfo" xml:space="preserve">
+    <value>Create a new certificate for a notary. Choose this if you have been elected to be a notary.</value>
+  </data>
 </root>

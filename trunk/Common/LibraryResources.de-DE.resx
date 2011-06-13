@@ -630,4 +630,7 @@
   <data name="CertificateStatusValid" xml:space="preserve">
     <value>Gültig</value>
   </data>
+  <data name="ClientGenerateSignCheck" xml:space="preserve">
+    <value>Generiere Unterschriftenprüfung...</value>
+  </data>
 </root>

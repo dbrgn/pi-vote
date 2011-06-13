@@ -639,4 +639,7 @@
   <data name="OptionAbstainSpecial" xml:space="preserve">
     <value>Abstain_@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</value>
   </data>
+  <data name="ClientGenerateSignCheck" xml:space="preserve">
+    <value>Generating sign check...</value>
+  </data>
 </root>

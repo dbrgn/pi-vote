@@ -40,6 +40,7 @@ namespace Pirate.PiVote.Circle
     private Dictionary<Guid, VotingContainer> votings;
     private bool userCanceled;
     private IEnumerable<AuthorityCertificate> authorityCertificates;
+    private byte[] encryptedCode;
 
     public UserConfig Config { get; private set; }
 
@@ -298,6 +299,15 @@ namespace Pirate.PiVote.Circle
         .Where(certificate => certificate is AdminCertificate &&
           certificate.Validate(Status.CertificateStorage) == CertificateValidationResult.Valid)
         .Select(certificate => certificate as AdminCertificate)
+        .FirstOrDefault();
+    }
+
+    public Certificate GetNotaryCertificate()
+    {
+      return
+        this.certificates.Keys
+        .Where(certificate => certificate is NotaryCertificate || certificate is AuthorityCertificate &&
+          certificate.Validate(Status.CertificateStorage) == CertificateValidationResult.Valid)
         .FirstOrDefault();
     }
 
@@ -887,6 +897,31 @@ namespace Pirate.PiVote.Circle
 
     private void SetCertificateStorageComplete(Exception exception)
     {
+      this.exception = exception;
+      this.run = false;
+    }
+
+    public byte[] GenerateNotaryCertificate(Certificate notaryCertificate)
+    {
+      SignCheckCookie cookie = new SignCheckCookie();
+      Signed<SignCheckCookie> signedCookie = new Signed<SignCheckCookie>(cookie, notaryCertificate);
+
+      Begin();
+      Status.VotingClient.GenerateSignCheck(signedCookie, GenerateSignCheckComplete);
+
+      if (!WaitForCompletion())
+      {
+        throw this.exception;
+      }
+
+      byte[] code = notaryCertificate.Decrypt(this.encryptedCode);
+
+      return code;
+    }
+
+    private void GenerateSignCheckComplete(byte[] encryptedCode, Exception exception)
+    {
+      this.encryptedCode = encryptedCode;
       this.exception = exception;
       this.run = false;
     }

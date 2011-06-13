@@ -122,5 +122,19 @@ namespace Pirate.PiVote.Rpc
       var request = new PushSignCheckRequest(Guid.NewGuid(), signedSignCheck);
       var response = Execute<PushSignCheckResponse>(request);
     }
+
+    public byte[] PushSignCheckCookie(Signed<SignCheckCookie> signedCookie)
+    {
+      var request = new PushSignCheckCookieRequest(Guid.NewGuid(), signedCookie);
+      var response = Execute<PushSignCheckCookieResponse>(request);
+      return response.EncryptedCode;
+    }
+
+    public Signed<SignCheckCookie> FetchSignCheckCookie(Guid notaryId, byte[] code)
+    {
+      var request = new FetchSignCheckCookieRequest(Guid.NewGuid(), notaryId, code);
+      var response = Execute<FetchSignCheckCookieResponse>(request);
+      return response.Cookie;
+    }
   }
 }

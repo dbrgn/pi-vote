@@ -35,6 +35,9 @@ namespace SignWeb
     private IEnumerable<Signed<SignatureRequestSignCheck>> signChecks;
     private ServerCertificate serverCertificate;
     private bool authorized;
+    private Signed<SignCheckCookie> cookie;
+    private CertificateStorage certificateStorage;
+    private const string CookieName = "PiVoteSignCheckCookie";
 
     private void ParseId()
     {
@@ -78,6 +81,44 @@ namespace SignWeb
         {
           this.error = exception.Message;
           this.message = "Pi-Vote server connection failed.";
+          this.valid = false;
+        }
+      }
+    }
+
+    private void GetCertificateStorage()
+    {
+      if (this.valid)
+      {
+        try
+        {
+          var result = proxy.FetchCertificateStorage();
+          this.certificateStorage = new CertificateStorage();
+          this.certificateStorage.TryLoadRoot(Request.PhysicalApplicationPath);
+          this.certificateStorage.Add(result.First);
+        }
+        catch (Exception exception)
+        {
+          this.error = exception.Message;
+          this.message = "Cannot download certificate storage.";
+          this.valid = false;
+        }
+      }
+    }
+
+    private void DecodeCookie()
+    {
+      if (this.valid)
+      {
+        try
+        {
+          byte[] cookieData = Convert.FromBase64String(Request.Cookies.Get(CookieName).Value);
+          this.cookie = Serializable.FromBinary<Signed<SignCheckCookie>>(cookieData);
+        }
+        catch (Exception exception)
+        {
+          this.error = exception.Message;
+          this.message = "Cannot decode sign check cookie.";
           this.valid = false;
         }
       }
@@ -191,7 +232,9 @@ namespace SignWeb
       CheckServerCertificate();
       ParseId();
       ParseFingerprint();
+      DecodeCookie();
       ConnectPiVote();
+      GetCertificateStorage();
       CheckRequestStatus();
       CheckRequestFingerprint();
       CheckSignChecks();
@@ -202,31 +245,20 @@ namespace SignWeb
     {
       Table table = new Table();
 
-      table.AddHeaderRow(2, "Authority's SSL Certificate");
-      X509Certificate2 sslCertificate = null;
+      table.AddHeaderRow(2, "Notary's sign check cookie");
 
-      if (Request.ClientCertificate.IsPresent)
+      if (this.cookie != null)
       {
-        sslCertificate = new X509Certificate2(Request.ClientCertificate.Certificate);
-        string name = ConvertString(ExtractCnFromDn(sslCertificate.Subject), Encoding.Unicode, Encoding.GetEncoding(850));
-        table.AddRow("You are:", name);
+        table.AddRow("You are:", this.cookie.Certificate.FullName);
 
-        if (Request.ClientCertificate.IsValid)
+        if (this.cookie.Verify(this.certificateStorage))
         {
-          if (Request.ClientCertificate.ValidFrom <= DateTime.Now &&
-              Request.ClientCertificate.ValidUntil >= DateTime.Now)
-          {
-            this.authorized = true;
-            table.AddRow(string.Empty, "Your certificate is valid.");
-          }
-          else
-          {
-            table.AddRow(string.Empty, "Your certificate is outdated.");
-          }
+          table.AddRow(string.Empty, "Your sign check cookie is valid.");
+          this.authorized = true;
         }
         else
         {
-          table.AddRow(string.Empty, "Your certificate is invalid.");
+          table.AddRow(string.Empty, "Your sign check cookie is invalid.");
         }
       }
       else
@@ -236,7 +268,7 @@ namespace SignWeb
 
       table.AddSpaceRow(2, 32);
 
-      if (valid)
+      if (this.valid)
       {
         table.AddHeaderRow(2, "Pi-Vote Certificate");
 
@@ -253,10 +285,9 @@ namespace SignWeb
         foreach (var signedSignCheck in this.signChecks)
         {
           var signCheck = signedSignCheck.Value;
-          string name = ConvertString(ExtractCnFromDn(signCheck.Signer.Subject), Encoding.Unicode, Encoding.GetEncoding(850));
-          table.AddRow("Signature from:", name + " at " + signCheck.SignDateTime.ToString());
+          table.AddRow("Signature from:", signCheck.Cookie.Certificate.FullName + " at " + signCheck.SignDateTime.ToString());
 
-          if (signCheck.Signer.Subject == sslCertificate.Subject)
+          if (signCheck.Cookie.Certificate.IsIdentic(this.cookie.Certificate))
           {
             alreadySigned = true;
           }
@@ -298,26 +329,6 @@ namespace SignWeb
       mainPanel.Controls.Add(table);
     }
 
-    private string ConvertString(string input, Encoding from, Encoding to)
-    {
-      return to.GetString(from.GetBytes(input));
-    }
-
-    private string ExtractCnFromDn(string dn)
-    {
-      string[] names = dn.Split(new string[] { ", " }, StringSplitOptions.None);
-
-      foreach (var name in names)
-      {
-        if (name.StartsWith("CN="))
-        {
-          return name.Substring(3);
-        }
-      }
-
-      return dn;
-    }
-
     private void signButton_Click(object sender, EventArgs e)
     {
       if (this.valid &&
@@ -326,7 +337,7 @@ namespace SignWeb
         try
         {
           var cert = new X509Certificate2(Request.ClientCertificate.Certificate);
-          SignatureRequestSignCheck signCheck = new SignatureRequestSignCheck(cert, this.certificate);
+          SignatureRequestSignCheck signCheck = new SignatureRequestSignCheck(this.certificate, this.cookie);
           Signed<SignatureRequestSignCheck> signedSignCheck = new Signed<SignatureRequestSignCheck>(signCheck, this.serverCertificate);
 
           this.proxy.PushSignCheck(signedSignCheck);
