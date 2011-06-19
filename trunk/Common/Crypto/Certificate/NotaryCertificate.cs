@@ -136,7 +136,7 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public override string TypeText
     {
-      get { return LibraryResources.CertificateTypeAuthority; }
+      get { return LibraryResources.CertificateTypeNotary; }
     }
   }
 }

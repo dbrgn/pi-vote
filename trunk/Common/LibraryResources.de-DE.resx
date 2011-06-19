@@ -633,4 +633,7 @@
   <data name="ClientGenerateSignCheck" xml:space="preserve">
     <value>Generiere Unterschriftenprüfung...</value>
   </data>
+  <data name="CertificateTypeNotary" xml:space="preserve">
+    <value>Notar</value>
+  </data>
 </root>

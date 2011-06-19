@@ -375,24 +375,28 @@ namespace Pirate.PiVote.Client
       }
     }
 
+    private void SetCulture(CultureInfo culture)
+    {
+      Resources.Culture = culture;
+      GuiResources.Culture = culture;
+      LibraryResources.Culture = culture;
+    }
+
     private void englishRadio_CheckedChanged(object sender, EventArgs e)
     {
-      Resources.Culture = CultureInfo.CreateSpecificCulture("en-US");
-      LibraryResources.Culture = CultureInfo.CreateSpecificCulture("en-US");
+      SetCulture(CultureInfo.CreateSpecificCulture("en-US"));
       OnChangeLanguage();
     }
 
     private void germanRadio_CheckedChanged(object sender, EventArgs e)
     {
-      Resources.Culture = CultureInfo.CreateSpecificCulture("de-DE");
-      LibraryResources.Culture = CultureInfo.CreateSpecificCulture("de-DE");
+      SetCulture(CultureInfo.CreateSpecificCulture("de-DE"));
       OnChangeLanguage();
     }
 
     private void frenchRadio_CheckedChanged(object sender, EventArgs e)
     {
-      Resources.Culture = CultureInfo.CreateSpecificCulture("fr-FR");
-      LibraryResources.Culture = CultureInfo.CreateSpecificCulture("fr-FR");
+      SetCulture(CultureInfo.CreateSpecificCulture("fr-FR"));
       OnChangeLanguage();
     }
 

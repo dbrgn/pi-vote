@@ -30,7 +30,7 @@ namespace Pirate.PiVote.Gui
     public static void ShowSignCheck(Guid notaryId, byte[] code)
     {
       string url = string.Format(
-        "https://lechuck.piratenpartei.ch/set.aspx?id={0}&c={1}",
+        "https://pivote.piratenpartei.ch/set.aspx?id={0}&c={1}",
         notaryId.ToString(),
         code.ToHexString());
 

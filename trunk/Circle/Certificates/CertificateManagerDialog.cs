@@ -119,6 +119,10 @@ namespace Pirate.PiVote.Circle.Certificates
       {
         item.SubItems.Add(((AdminCertificate)certificate).FullName);
       }
+      else if (certificate is NotaryCertificate)
+      {
+        item.SubItems.Add(((NotaryCertificate)certificate).FullName);
+      }
       else
       {
         item.SubItems.Add(string.Empty);

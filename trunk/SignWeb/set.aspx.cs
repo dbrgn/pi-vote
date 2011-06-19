@@ -40,7 +40,7 @@ namespace SignWeb
         try
         {
           this.client = new TcpRpcClient();
-          this.client.Connect(new IPEndPoint(IPAddress.Parse("78.46.176.243"), 4243));
+          this.client.Connect(new IPEndPoint(IPAddress.Loopback, 4242));
           this.proxy = new VotingRpcProxy(client);
         }
         catch (Exception exception)

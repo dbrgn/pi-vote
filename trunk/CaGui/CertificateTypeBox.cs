@@ -25,6 +25,7 @@ namespace Pirate.PiVote.CaGui
       AddItem(CertificateType.Authority);
       AddItem(CertificateType.Voter);
       AddItem(CertificateType.Server);
+      AddItem(CertificateType.Notary);
 
       SelectedIndex = 0;
     }

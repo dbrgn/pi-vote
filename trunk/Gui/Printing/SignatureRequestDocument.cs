@@ -104,7 +104,7 @@ namespace Pirate.PiVote.Gui.Printing
       qrEncoder.QRCodeVersion = 7;
       qrEncoder.QRCodeScale = 5;
       string url = string.Format(
-        "https://lechuck.piratenpartei.ch/sign.aspx?id={0}&fp={1}",
+        "https://pivote.piratenpartei.ch/sign.aspx?id={0}&fp={1}",
         this.certificate.Id.ToString(),
         this.certificate.Fingerprint.Replace(" ", string.Empty));
       var image = qrEncoder.Encode(url);

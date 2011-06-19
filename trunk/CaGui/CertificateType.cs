@@ -23,6 +23,7 @@ namespace Pirate.PiVote.CaGui
     Authority,
     Voter,
     Server,
+    Notary,
     All
   }
 
@@ -62,6 +63,10 @@ namespace Pirate.PiVote.CaGui
       {
         return CertificateType.Server;
       }
+      else if (certificate is NotaryCertificate)
+      {
+        return CertificateType.Notary;
+      }
       else
       {
         return CertificateType.None;
@@ -86,6 +91,8 @@ namespace Pirate.PiVote.CaGui
           return "Voter";
         case CertificateType.Server:
           return "Server";
+        case CertificateType.Notary:
+          return "Notary";
         default:
           return "Unknown";
       }

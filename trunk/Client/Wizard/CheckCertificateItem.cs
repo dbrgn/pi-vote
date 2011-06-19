@@ -47,7 +47,8 @@ namespace Pirate.PiVote.Client
 
     public override WizardItem Next()
     {
-      if (Status.Certificate is AuthorityCertificate)
+      if (Status.Certificate is AuthorityCertificate ||
+          Status.Certificate is NotaryCertificate)
       {
         return new AuthorityListVotingsItem();
       }

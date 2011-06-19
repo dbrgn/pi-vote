@@ -196,6 +196,15 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notary.
+        /// </summary>
+        public static string CertificateTypeNotary {
+            get {
+                return ResourceManager.GetString("CertificateTypeNotary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server.
         /// </summary>
         public static string CertificateTypeServer {
