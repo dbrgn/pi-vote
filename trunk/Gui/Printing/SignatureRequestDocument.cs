@@ -104,9 +104,9 @@ namespace Pirate.PiVote.Gui.Printing
       qrEncoder.QRCodeVersion = 7;
       qrEncoder.QRCodeScale = 5;
       string url = string.Format(
-        "https://pivote.piratenpartei.ch/sign.aspx?id={0}&fp={1}",
+        "https://pivote.piratenpartei.ch/sign.aspx?id={0}&k={1}",
         this.certificate.Id.ToString(),
-        this.certificate.Fingerprint.Replace(" ", string.Empty));
+        this.signatureRequest.Key.ToHexString());
       var image = qrEncoder.Encode(url);
 
       this.graphics.DrawImage(image, bounds.Right - image.Width, bounds.Top);
@@ -131,12 +131,12 @@ namespace Pirate.PiVote.Gui.Printing
       table.AddRow(LibraryResources.SigningRequestDocumentCertificateId, certificateId.Substring(0, idLength));
       table.AddRow(string.Empty, certificateId.Substring(idLength));
 
-      string fingerprint = this.certificate.Fingerprint.Replace(" ", string.Empty);
-      int fingerprintLength = fingerprint.Length / 4;
-      table.AddRow(LibraryResources.SigningRequestDocumentCertificateFingerprint, FourBlocks(fingerprint.Substring(0, fingerprintLength)));
-      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength, fingerprintLength)));
-      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 2, fingerprintLength)));
-      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 3, fingerprintLength)));
+      string requestKey = this.signatureRequest.Key.ToHexString();
+      int requestKeyLength = requestKey.Length / 4;
+      table.AddRow(LibraryResources.SigningRequestDocumentRequestKey, FourBlocks(requestKey.Substring(0, requestKeyLength)));
+      table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength, requestKeyLength)));
+      table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 2, requestKeyLength)));
+      table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 3, requestKeyLength)));
 
       table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
     }
@@ -161,12 +161,12 @@ namespace Pirate.PiVote.Gui.Printing
       table.AddRow(LibraryResources.SigningRequestDocumentCertificateId, certificateId.Substring(0, idLength));
       table.AddRow(string.Empty, certificateId.Substring(idLength));
 
-      string fingerprint = signingCertificate.Fingerprint.Replace(" ", string.Empty);
-      int fingerprintLength = fingerprint.Length / 4;
-      table.AddRow(LibraryResources.SigningRequestDocumentCertificateFingerprint, FourBlocks(fingerprint.Substring(0, fingerprintLength)));
-      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength, fingerprintLength)));
-      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 2, fingerprintLength)));
-      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 3, fingerprintLength)));
+      string requestKey = this.signatureRequest.Key.ToHexString();
+      int requestKeyLength = requestKey.Length / 4;
+      table.AddRow(LibraryResources.SigningRequestDocumentRequestKey, FourBlocks(requestKey.Substring(0, requestKeyLength)));
+      table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength, requestKeyLength)));
+      table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 2, requestKeyLength)));
+      table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 3, requestKeyLength)));
 
       table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
     }

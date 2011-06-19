@@ -619,4 +619,7 @@
   <data name="CreateCertificateSelectNotaryInfo" xml:space="preserve">
     <value>Ein Zertifikat für einen Notar erstellen. Wähle diese Option, wenn du zum Notar gewählt wurdest.</value>
   </data>
+  <data name="CreateCertificateNameAsInPhotoId" xml:space="preserve">
+    <value>Bitte gib deinen vollständigen Namen an, wie er in deinem Ausweisdokument steht.</value>
+  </data>
 </root>

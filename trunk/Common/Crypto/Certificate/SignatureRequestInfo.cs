@@ -26,6 +26,13 @@ namespace Pirate.PiVote.Crypto
     [SerializeField(0, "Email address of requester.")]
     public string EmailAddress { get; private set; }
 
+    public byte[] EncryptedSignatureRequest { get; private set; }
+
+    public override byte Version
+    {
+      get { return 1; }
+    }
+
     /// <summary>
     /// Is this request info valid?
     /// </summary>
@@ -45,9 +52,11 @@ namespace Pirate.PiVote.Crypto
     /// Create a new signature request.
     /// </summary>
     /// <param name="emailAddress">Email address of requester.</param>
-    public SignatureRequestInfo(string emailAddress)
+    /// <param name="fromDataHash">Symmetrically encrypted signature request.</param>
+    public SignatureRequestInfo(string emailAddress, byte[] encryptedSignatureRequest)
     {
       EmailAddress = emailAddress;
+      EncryptedSignatureRequest = encryptedSignatureRequest;
     }
 
     /// <summary>
@@ -66,6 +75,7 @@ namespace Pirate.PiVote.Crypto
     {
       base.Serialize(context);
       context.Write(EmailAddress);
+      context.Write(EncryptedSignatureRequest);
     }
 
     /// <summary>
@@ -76,6 +86,15 @@ namespace Pirate.PiVote.Crypto
     {
       base.Deserialize(context, version);
       EmailAddress = context.ReadString();
+
+      if (Version >= 1)
+      {
+        EncryptedSignatureRequest = context.ReadBytes();
+      }
+      else
+      {
+        EncryptedSignatureRequest = new byte[0];
+      }
     }
   }
 }

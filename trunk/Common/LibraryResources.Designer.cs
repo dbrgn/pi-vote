@@ -1330,15 +1330,6 @@ namespace Pirate.PiVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fingerprint:.
-        /// </summary>
-        public static string SigningRequestDocumentCertificateFingerprint {
-            get {
-                return ResourceManager.GetString("SigningRequestDocumentCertificateFingerprint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Identifier:.
         /// </summary>
         public static string SigningRequestDocumentCertificateId {
@@ -1461,6 +1452,15 @@ namespace Pirate.PiVote {
         public static string SigningRequestDocumentRequest {
             get {
                 return ResourceManager.GetString("SigningRequestDocumentRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request key:.
+        /// </summary>
+        public static string SigningRequestDocumentRequestKey {
+            get {
+                return ResourceManager.GetString("SigningRequestDocumentRequestKey", resourceCulture);
             }
         }
         

@@ -27,7 +27,7 @@ namespace SignWeb
     private string message;
     private string error; 
     private Guid certificateId;
-    private string fingerprint;
+    private byte[] signatureRequestKey;
     private TcpRpcClient client;
     private VotingRpcProxy proxy;
     private SignatureResponseStatus status;
@@ -38,6 +38,7 @@ namespace SignWeb
     private Signed<SignCheckCookie> cookie;
     private CertificateStorage certificateStorage;
     private const string CookieName = "PiVoteSignCheckCookie";
+    private SignatureRequest request;
 
     private void ParseId()
     {
@@ -56,14 +57,34 @@ namespace SignWeb
       }
     }
 
-    private void ParseFingerprint()
+    private void ParseKey()
     {
       if (this.valid)
       {
-        this.fingerprint = Request.Params["fp"]
-          .Replace(" ", string.Empty)
-          .Replace("-", string.Empty)
-          .ToLowerInvariant();
+        try
+        {
+          if (!Request.Params.AllKeys.Contains("k"))
+          {
+            throw new ArgumentException("Request key missing.");
+          }
+
+          string data = Request.Params["k"]
+            .Replace(" ", string.Empty)
+            .Replace("-", string.Empty)
+            .ToLowerInvariant();
+          this.signatureRequestKey = HexToBytes(data);
+
+          if (this.signatureRequestKey.Length != 32)
+          {
+            throw new ArgumentException("Request key length invalid.");
+          }
+        }
+        catch (Exception exception)
+        {
+          this.error = exception.Message;
+          this.message = "Cannot parse request key.";
+          this.valid = false;
+        }
       }
     }
 
@@ -74,7 +95,7 @@ namespace SignWeb
         try
         {
           this.client = new TcpRpcClient();
-          this.client.Connect(new IPEndPoint(IPAddress.Parse("78.46.176.243"), 4243));
+          this.client.Connect(new IPEndPoint(IPAddress.Loopback, 4242));
           this.proxy = new VotingRpcProxy(client);
         }
         catch (Exception exception)
@@ -172,11 +193,6 @@ namespace SignWeb
             this.message = "Certificate id does not match.";
             this.valid = false;
           }
-          else if (this.certificate.Fingerprint.ToLowerInvariant().Replace(" ", string.Empty) != this.fingerprint)
-          {
-            this.message = "Fingerprint does not match.";
-            this.valid = false;
-          }
         }
         catch (Exception exception)
         {
@@ -193,7 +209,15 @@ namespace SignWeb
       {
         try
         {
-          this.signChecks = proxy.FetchSignCheckList(this.certificateId);
+          var result = proxy.FetchSignCheckList(this.certificateId);;
+          this.signChecks = result.First;
+
+          if (result.Second.Length <= 32)
+          {
+            throw new ArgumentException("Encrypted signature request data invalid.");
+          } 
+          
+          this.request = SignatureRequest.Decrypt(result.Second, this.signatureRequestKey);
         }
         catch (Exception exception)
         {
@@ -202,6 +226,21 @@ namespace SignWeb
           this.valid = false;
         }
       }
+    }
+
+    private byte[] HexToBytes(string hexString)
+    {
+      if (hexString.Length % 2 != 0)
+        throw new ArgumentException("Hex string has odd length.");
+
+      List<byte> bytes = new List<byte>();
+
+      for (int i = 0; i < hexString.Length; i += 2)
+      {
+        bytes.Add(Convert.ToByte(hexString.Substring(i, 2), 16));
+      }
+
+      return bytes.ToArray();
     }
 
     private void CheckServerCertificate()
@@ -231,7 +270,7 @@ namespace SignWeb
 
       CheckServerCertificate();
       ParseId();
-      ParseFingerprint();
+      ParseKey();
       DecodeCookie();
       ConnectPiVote();
       GetCertificateStorage();
@@ -251,14 +290,30 @@ namespace SignWeb
       {
         table.AddRow("You are:", this.cookie.Certificate.FullName);
 
-        if (this.cookie.Verify(this.certificateStorage))
+        if (this.valid)
         {
-          table.AddRow(string.Empty, "Your sign check cookie is valid.");
-          this.authorized = true;
+          if (this.cookie.Verify(this.certificateStorage))
+          {
+            table.AddRow(string.Empty, "Your sign check cookie is valid.");
+            this.authorized = true;
+          }
+          else
+          {
+            table.AddRow(string.Empty, "Your sign check cookie is invalid.");
+
+            if (!this.cookie.VerifySimple())
+            {
+              table.AddRow(string.Empty, "The signature on the sign check cookie is invalid.");
+            }
+            else
+            {
+              table.AddRow(string.Empty, this.cookie.Certificate.Validate(this.certificateStorage).Text());
+            }
+          }
         }
         else
         {
-          table.AddRow(string.Empty, "Your sign check cookie is invalid.");
+          table.AddRow(string.Empty, "Your sign check cookie cannot be verified.");
         }
       }
       else
@@ -272,6 +327,9 @@ namespace SignWeb
       {
         table.AddHeaderRow(2, "Pi-Vote Certificate");
 
+        table.AddRow("Firstname:", this.request.FirstName);
+        table.AddRow("Surname:", this.request.FamilyName);
+        table.AddRow("Email:", this.request.EmailAddress);
         table.AddRow("Certificate Id:", this.certificate.Id.ToString());
         table.AddRow("Certificate Fingerprint:", this.certificate.Fingerprint);
         table.AddRow("Status:", this.status.ToString());

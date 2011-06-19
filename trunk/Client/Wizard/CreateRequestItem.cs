@@ -108,9 +108,13 @@ namespace Pirate.PiVote.Client
 
       SignatureRequestInfo signatureRequestInfo
         = new SignatureRequestInfo(
-          this.emailAddressTextBox.Text);
+          this.emailAddressTextBox.Text,
+          signatureRequest.Encrypt());
 
-      SignatureRequestDocument document = new SignatureRequestDocument(signatureRequest, Status.Certificate, Status.GetGroupName);
+      SignatureRequestDocument document = new SignatureRequestDocument(
+        signatureRequest, 
+        Status.Certificate, 
+        Status.GetGroupName);
       PrintDialog printDialog = new PrintDialog();
       printDialog.Document = document;
 

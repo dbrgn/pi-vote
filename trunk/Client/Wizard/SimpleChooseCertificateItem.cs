@@ -268,7 +268,9 @@ namespace Pirate.PiVote.Client
           this.signatureRequest = new SignatureRequest(this.firstNameTextBox.Text, this.familyNameTextBox.Text, this.emailAddressTextBox.Text);
         }
 
-        this.signatureRequestInfo = new SignatureRequestInfo(this.emailNotificationCheckBox.Checked ? this.emailAddressTextBox.Text : string.Empty);
+        this.signatureRequestInfo = new SignatureRequestInfo(
+          this.emailNotificationCheckBox.Checked ? this.emailAddressTextBox.Text : string.Empty,
+          this.signatureRequest.Encrypt());
         this.secureSignatureRequest = new Secure<SignatureRequest>(this.signatureRequest, Status.CaCertificate, Status.Certificate);
         this.secureSignatureRequestInfo = new Secure<SignatureRequestInfo>(this.signatureRequestInfo, Status.ServerCertificate, Status.Certificate);
 
@@ -326,7 +328,10 @@ namespace Pirate.PiVote.Client
       OnUpdateWizard();
       this.printButton.Enabled = false;
 
-      SignatureRequestDocument document = new SignatureRequestDocument(this.signatureRequest, Status.Certificate, Status.GetGroupName);
+      SignatureRequestDocument document = new SignatureRequestDocument(
+        this.signatureRequest,
+        Status.Certificate, 
+        Status.GetGroupName);
       PrintDialog printDialog = new PrintDialog();
       printDialog.Document = document;
 

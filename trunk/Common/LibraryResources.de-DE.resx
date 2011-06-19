@@ -516,9 +516,6 @@
   <data name="SigningRequestDocumentAccepted" xml:space="preserve">
     <value>□ Akzeptiert, gültig bis __________________________</value>
   </data>
-  <data name="SigningRequestDocumentCertificateFingerprint" xml:space="preserve">
-    <value>Fingerprint:</value>
-  </data>
   <data name="SigningRequestDocumentCertificateId" xml:space="preserve">
     <value>Kennung:</value>
   </data>
@@ -635,5 +632,8 @@
   </data>
   <data name="CertificateTypeNotary" xml:space="preserve">
     <value>Notar</value>
+  </data>
+  <data name="SigningRequestDocumentRequestKey" xml:space="preserve">
+    <value>Anfrageschlüssel:</value>
   </data>
 </root>

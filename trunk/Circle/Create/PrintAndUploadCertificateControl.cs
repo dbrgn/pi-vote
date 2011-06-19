@@ -45,7 +45,10 @@ namespace Pirate.PiVote.Circle.Create
 
     private void printButton_Click(object sender, EventArgs e)
     {
-      SignatureRequestDocument document = new SignatureRequestDocument(Status.SignatureRequest, Status.Certificate, Status.Controller.Status.GetGroupName);
+      SignatureRequestDocument document = new SignatureRequestDocument(
+        Status.SignatureRequest, 
+        Status.Certificate, 
+        Status.Controller.Status.GetGroupName);
 
       PrintDialog dialog = new PrintDialog();
       dialog.Document = document;

@@ -17,6 +17,50 @@ namespace Pirate.PiVote.Crypto
 {
   public static class Aes
   {
+    public static byte[] CreateKey()
+    {
+      byte[] key = new byte[32];
+      var rng = RandomNumberGenerator.Create();
+      rng.GetBytes(key);
+
+      return key;
+    }
+
+    public static byte[] Encrypt(byte[] plaintext, byte[] key)
+    {
+      if (plaintext == null)
+        throw new ArgumentNullException("plaintext");
+      if (key == null)
+        throw new ArgumentNullException("key");
+      if (key.Length != 32)
+        throw new ArgumentException("AES key length must be 256 bit.");
+
+      byte[] iv = new byte[16];
+      var rng = RandomNumberGenerator.Create();
+      rng.GetBytes(iv);
+
+      byte[] ciphertext = Encrypt(plaintext, key, iv);
+
+      return iv.Concat(ciphertext);
+    }
+
+    public static byte[] Decrypt(byte[] ciphertext, byte[] key)
+    {
+      if (ciphertext == null)
+        throw new ArgumentNullException("ciphertext");
+      if (key == null)
+        throw new ArgumentNullException("key");
+      if (key.Length != 32)
+        throw new ArgumentException("AES key length must be 256 bit.");
+      if (ciphertext.Length < 16)
+        throw new ArgumentException("AES ciphertext length must be at least 16 bytes.");
+
+      byte[] iv = ciphertext.Part(0, 16);
+      byte[] data = ciphertext.Part(16);
+
+      return Decrypt(data, key, iv);
+    }
+
     public static byte[] Encrypt(byte[] plaintext, byte[] key, byte[] iv)
     {
       if (plaintext == null)

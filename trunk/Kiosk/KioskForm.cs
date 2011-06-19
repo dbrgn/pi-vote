@@ -139,7 +139,7 @@ namespace Pirate.PiVote.Kiosk
       var certificate = new VoterCertificate(Language.German, this.passphraseTextBox.Text, 0);
       certificate.CreateSelfSignature();
       var secureRequest = new Secure<SignatureRequest>(signatureRequest, this.caCertificate, certificate);
-      var requestInfo = new SignatureRequestInfo(string.Empty);
+      var requestInfo = new SignatureRequestInfo(string.Empty, signatureRequest.Encrypt());
       var secureRequestInfo = new Secure<SignatureRequestInfo>(requestInfo, this.controller.ServerCertificate, certificate);
       var requestContainer = new RequestContainer(signatureRequest, secureRequest, secureRequestInfo);
 

@@ -601,6 +601,15 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please state your full name as it is written in your photo id..
+        /// </summary>
+        internal static string CreateCertificateNameAsInPhotoId {
+            get {
+                return ResourceManager.GetString("CreateCertificateNameAsInPhotoId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Signature request data for your certificate {0} of type {1} count not be found. You must create a new certificate..
         /// </summary>
         internal static string CreateCertificateResumeFail {

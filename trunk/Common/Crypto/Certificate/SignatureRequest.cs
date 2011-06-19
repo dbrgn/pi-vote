@@ -7,9 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
@@ -20,6 +21,8 @@ namespace Pirate.PiVote.Crypto
   [SerializeObject("Request for a signature by a CA.")]
   public class SignatureRequest : Serializable
   {
+    private const string KeyHashDelimiter = "$$$";
+
     /// <summary>
     /// First name of requester.
     /// </summary>
@@ -80,6 +83,15 @@ namespace Pirate.PiVote.Crypto
       : base(context, version)
     { }
 
+    public byte[] Key
+    {
+      get 
+      {
+        SHA256Managed sha = new SHA256Managed();
+        return sha.ComputeHash(ToBinary());
+      }
+    }
+
     /// <summary>
     /// Serializes the object to binary.
     /// </summary>
@@ -102,6 +114,16 @@ namespace Pirate.PiVote.Crypto
       FirstName = context.ReadString();
       FamilyName = context.ReadString();
       EmailAddress = context.ReadString();
+    }
+
+    public byte[] Encrypt()
+    { 
+      return Aes.Encrypt(ToBinary(), Key);
+    }
+
+    public static SignatureRequest Decrypt(byte[] encrypted, byte[] key)
+    {
+      return Serializable.FromBinary<SignatureRequest>(Aes.Decrypt(encrypted, key));
     }
   }
 }

@@ -74,7 +74,9 @@ namespace Pirate.PiVote.Cli
             if (UnlockCertificate(certificate))
             {
               var request = Serializable.Load<SignatureRequest>(SignatureRequestDataFileName(certificate));
-              var requestInfo = new SignatureRequestInfo(request.EmailAddress);
+              var requestInfo = new SignatureRequestInfo(
+                request.EmailAddress,
+                request.Encrypt());
               var secureRequest = new Secure<SignatureRequest>(request, caCertificate, certificate);
               var secureRequestInfo = new Secure<SignatureRequestInfo>(requestInfo, Status.ServerCertificate, certificate);
               certificate.Lock();

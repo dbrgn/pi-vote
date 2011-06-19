@@ -452,6 +452,18 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Get an encrypted signature request
+    /// </summary>
+    /// <param name="id">Id of the signature request.</param>
+    /// <returns>Encrypted signature request data.</returns>
+    public byte[] GetEncryptedSignatureRequest(Guid id)
+    {
+      var secureRequest = GetSignatureRequestInfo(id);
+
+      return secureRequest.Value.Decrypt(this.serverCertificate).EncryptedSignatureRequest;
+    }
+
+    /// <summary>
     /// Get a signature request.
     /// </summary>
     /// <param name="id">Id of the signature request.</param>

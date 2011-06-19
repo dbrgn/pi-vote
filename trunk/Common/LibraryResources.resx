@@ -513,8 +513,8 @@
   <data name="SigningRequestDocumentAccepted" xml:space="preserve">
     <value>□ Accepted, valid until __________________________</value>
   </data>
-  <data name="SigningRequestDocumentCertificateFingerprint" xml:space="preserve">
-    <value>Fingerprint:</value>
+  <data name="SigningRequestDocumentRequestKey" xml:space="preserve">
+    <value>Request key:</value>
   </data>
   <data name="SigningRequestDocumentCertificateId" xml:space="preserve">
     <value>Identifier:</value>

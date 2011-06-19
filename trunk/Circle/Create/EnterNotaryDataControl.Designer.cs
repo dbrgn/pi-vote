@@ -48,6 +48,7 @@ namespace Pirate.PiVote.Circle.Create
       this.familyNameTextBox = new System.Windows.Forms.TextBox();
       this.emailAddressLabel = new System.Windows.Forms.Label();
       this.emailAddressTextBox = new System.Windows.Forms.TextBox();
+      this.infoLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // cancelButton
@@ -79,7 +80,7 @@ namespace Pirate.PiVote.Circle.Create
                   | System.Windows.Forms.AnchorStyles.Right)));
       this.baseCertificateComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.baseCertificateComboBox.FormattingEnabled = true;
-      this.baseCertificateComboBox.Location = new System.Drawing.Point(117, 1);
+      this.baseCertificateComboBox.Location = new System.Drawing.Point(117, 42);
       this.baseCertificateComboBox.Name = "baseCertificateComboBox";
       this.baseCertificateComboBox.Size = new System.Drawing.Size(428, 22);
       this.baseCertificateComboBox.TabIndex = 48;
@@ -88,7 +89,7 @@ namespace Pirate.PiVote.Circle.Create
       // baseCertificateLabel
       // 
       this.baseCertificateLabel.AutoSize = true;
-      this.baseCertificateLabel.Location = new System.Drawing.Point(5, 4);
+      this.baseCertificateLabel.Location = new System.Drawing.Point(5, 45);
       this.baseCertificateLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.baseCertificateLabel.Name = "baseCertificateLabel";
       this.baseCertificateLabel.Size = new System.Drawing.Size(86, 14);
@@ -99,7 +100,7 @@ namespace Pirate.PiVote.Circle.Create
       // 
       this.baseValidUnitlTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.baseValidUnitlTextBox.Location = new System.Drawing.Point(115, 26);
+      this.baseValidUnitlTextBox.Location = new System.Drawing.Point(115, 67);
       this.baseValidUnitlTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.baseValidUnitlTextBox.Name = "baseValidUnitlTextBox";
       this.baseValidUnitlTextBox.ReadOnly = true;
@@ -109,7 +110,7 @@ namespace Pirate.PiVote.Circle.Create
       // baseValidUntilLabel
       // 
       this.baseValidUntilLabel.AutoSize = true;
-      this.baseValidUntilLabel.Location = new System.Drawing.Point(5, 29);
+      this.baseValidUntilLabel.Location = new System.Drawing.Point(5, 70);
       this.baseValidUntilLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.baseValidUntilLabel.Name = "baseValidUntilLabel";
       this.baseValidUntilLabel.Size = new System.Drawing.Size(55, 14);
@@ -120,7 +121,7 @@ namespace Pirate.PiVote.Circle.Create
       // 
       this.emailNotificationCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.emailNotificationCheckBox.Location = new System.Drawing.Point(115, 123);
+      this.emailNotificationCheckBox.Location = new System.Drawing.Point(115, 164);
       this.emailNotificationCheckBox.Name = "emailNotificationCheckBox";
       this.emailNotificationCheckBox.Size = new System.Drawing.Size(430, 46);
       this.emailNotificationCheckBox.TabIndex = 55;
@@ -131,7 +132,7 @@ namespace Pirate.PiVote.Circle.Create
       // firstNameLabel
       // 
       this.firstNameLabel.AutoSize = true;
-      this.firstNameLabel.Location = new System.Drawing.Point(4, 53);
+      this.firstNameLabel.Location = new System.Drawing.Point(4, 94);
       this.firstNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.firstNameLabel.Name = "firstNameLabel";
       this.firstNameLabel.Size = new System.Drawing.Size(60, 14);
@@ -142,7 +143,7 @@ namespace Pirate.PiVote.Circle.Create
       // 
       this.firstNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.firstNameTextBox.Location = new System.Drawing.Point(115, 50);
+      this.firstNameTextBox.Location = new System.Drawing.Point(115, 91);
       this.firstNameTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.firstNameTextBox.Name = "firstNameTextBox";
       this.firstNameTextBox.Size = new System.Drawing.Size(430, 20);
@@ -152,7 +153,7 @@ namespace Pirate.PiVote.Circle.Create
       // familyNameLabel
       // 
       this.familyNameLabel.AutoSize = true;
-      this.familyNameLabel.Location = new System.Drawing.Point(2, 77);
+      this.familyNameLabel.Location = new System.Drawing.Point(2, 118);
       this.familyNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.familyNameLabel.Name = "familyNameLabel";
       this.familyNameLabel.Size = new System.Drawing.Size(69, 14);
@@ -163,7 +164,7 @@ namespace Pirate.PiVote.Circle.Create
       // 
       this.familyNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.familyNameTextBox.Location = new System.Drawing.Point(115, 74);
+      this.familyNameTextBox.Location = new System.Drawing.Point(115, 115);
       this.familyNameTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.familyNameTextBox.Name = "familyNameTextBox";
       this.familyNameTextBox.Size = new System.Drawing.Size(430, 20);
@@ -173,7 +174,7 @@ namespace Pirate.PiVote.Circle.Create
       // emailAddressLabel
       // 
       this.emailAddressLabel.AutoSize = true;
-      this.emailAddressLabel.Location = new System.Drawing.Point(4, 101);
+      this.emailAddressLabel.Location = new System.Drawing.Point(4, 142);
       this.emailAddressLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.emailAddressLabel.Name = "emailAddressLabel";
       this.emailAddressLabel.Size = new System.Drawing.Size(77, 14);
@@ -184,17 +185,29 @@ namespace Pirate.PiVote.Circle.Create
       // 
       this.emailAddressTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.emailAddressTextBox.Location = new System.Drawing.Point(115, 98);
+      this.emailAddressTextBox.Location = new System.Drawing.Point(115, 139);
       this.emailAddressTextBox.Margin = new System.Windows.Forms.Padding(2);
       this.emailAddressTextBox.Name = "emailAddressTextBox";
       this.emailAddressTextBox.Size = new System.Drawing.Size(430, 20);
       this.emailAddressTextBox.TabIndex = 54;
       this.emailAddressTextBox.TextChanged += new System.EventHandler(this.emailAddressTextBox_TextChanged);
       // 
+      // infoLabel
+      // 
+      this.infoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.infoLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.infoLabel.Location = new System.Drawing.Point(6, 6);
+      this.infoLabel.Name = "infoLabel";
+      this.infoLabel.Size = new System.Drawing.Size(539, 33);
+      this.infoLabel.TabIndex = 59;
+      this.infoLabel.Text = "label1";
+      // 
       // EnterNotaryDataControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.infoLabel);
       this.Controls.Add(this.emailNotificationCheckBox);
       this.Controls.Add(this.firstNameLabel);
       this.Controls.Add(this.firstNameTextBox);
@@ -231,5 +244,6 @@ namespace Pirate.PiVote.Circle.Create
     private System.Windows.Forms.TextBox familyNameTextBox;
     private System.Windows.Forms.Label emailAddressLabel;
     private System.Windows.Forms.TextBox emailAddressTextBox;
+    private System.Windows.Forms.Label infoLabel;
   }
 }

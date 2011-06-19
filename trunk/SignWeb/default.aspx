@@ -28,10 +28,10 @@
       </tr>
       <tr>
         <td>
-          <asp:Label ID="fingerprintLabel" runat="server" Text="Certificate Fingerprint:"></asp:Label>
+          <asp:Label ID="fingerprintLabel" runat="server" Text="Request Key:"></asp:Label>
         </td>
         <td>
-          <asp:TextBox ID="fingerprintTextBox" runat="server" Width="500px"></asp:TextBox>
+          <asp:TextBox ID="requestKeyTextBox" runat="server" Width="500px"></asp:TextBox>
         </td>
       </tr>
       <tr>

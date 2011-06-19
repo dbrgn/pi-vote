@@ -23,7 +23,7 @@ namespace SignWeb
 
     protected void reportSignatureButton_Click(object sender, EventArgs e)
     {
-      Response.Redirect(string.Format("./sign.aspx?id={0}&fp={1}", this.idTextBox.Text, this.fingerprintTextBox.Text));
+      Response.Redirect(string.Format("./sign.aspx?id={0}&k={1}", this.idTextBox.Text, this.requestKeyTextBox.Text));
     }
   }
 }

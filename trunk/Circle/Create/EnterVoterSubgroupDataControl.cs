@@ -36,6 +36,7 @@ namespace Pirate.PiVote.Circle.Create
       this.groupLabel.Text = Resources.CreateCertificateDataGroup;
       this.nextButton.Text = GuiResources.ButtonNext;
       this.cancelButton.Text = GuiResources.ButtonCancel;
+      this.infoLabel.Text = Resources.CreateCertificateNameAsInPhotoId;
 
       CheckValid();
     }
@@ -69,7 +70,9 @@ namespace Pirate.PiVote.Circle.Create
                 this.familyNameTextBox.Text,
                 this.emailAddressTextBox.Text,
                 baseCertificate);
-            Status.SignatureRequestInfo = new SignatureRequestInfo(this.emailAddressTextBox.Text);
+            Status.SignatureRequestInfo = new SignatureRequestInfo(
+              this.emailAddressTextBox.Text,
+              Status.SignatureRequest.Encrypt());
 
             Status.SignatureRequestFileName = Path.Combine(Status.Controller.Status.DataPath, Status.Certificate.Id.ToString() + Files.SignatureRequestDataExtension);
             Status.SignatureRequest.Save(Status.SignatureRequestFileName);

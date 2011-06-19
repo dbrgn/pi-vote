@@ -61,7 +61,10 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Response to the request.</returns>
     protected override FetchSignCheckListResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
-      return new FetchSignCheckListResponse(RequestId, server.GetSignatureRequestSignChecks(this.certificateId));
+      return new FetchSignCheckListResponse(
+        RequestId, 
+        server.GetSignatureRequestSignChecks(this.certificateId),
+        server.GetEncryptedSignatureRequest(this.certificateId));
     }
   }
 }

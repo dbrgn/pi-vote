@@ -22,6 +22,7 @@ namespace Pirate.PiVote.Gui.Printing
       VoterCertificate voterCert = new VoterCertificate(Language.English, null, 0);
       voterCert.CreateSelfSignature();
       SignatureRequest request = new SignatureRequest("Hans", "Müller", "hans@mueller.ch");
+      SignatureRequestInfo requestInfo = new SignatureRequestInfo("hans@mueller.ch", request.Encrypt());
 
       SignatureRequestDocument document = new SignatureRequestDocument(request, voterCert, GetGroupName);
 

@@ -16,12 +16,17 @@ namespace Pirate.PiVote.Rpc
 {
   public class FetchSignCheckListResponse : RpcResponse
   {
+    public byte[] EncryptedSignatureRequest { get; private set; }
+
     public List<Signed<SignatureRequestSignCheck>> SignChecks { get; private set; }
 
-    public FetchSignCheckListResponse(Guid requestId, IEnumerable<Signed<SignatureRequestSignCheck>> signChecks)
+    public FetchSignCheckListResponse(Guid requestId, 
+      IEnumerable<Signed<SignatureRequestSignCheck>> signChecks,
+      byte[] encryptedSignatureRequest)
       : base(requestId)
     {
       SignChecks = new List<Signed<SignatureRequestSignCheck>>(signChecks);
+      EncryptedSignatureRequest = encryptedSignatureRequest;
     }
 
     public FetchSignCheckListResponse(Guid requestId, PiException exception)
@@ -36,12 +41,14 @@ namespace Pirate.PiVote.Rpc
     {
       base.Serialize(context);
       context.WriteList(SignChecks);
+      context.Write(EncryptedSignatureRequest);
     }
 
     protected override void Deserialize(DeserializeContext context, byte version)
     {
       base.Deserialize(context, version);
       SignChecks = context.ReadObjectList<Signed<SignatureRequestSignCheck>>();
+      EncryptedSignatureRequest = context.ReadBytes();
     }
   }
 }

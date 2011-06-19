@@ -109,12 +109,12 @@ namespace Pirate.PiVote.Rpc
       var response = Execute<PushCertificateStorageResponse>(request);
     }
 
-    public IEnumerable<Signed<SignatureRequestSignCheck>> FetchSignCheckList(Guid certificateId)
+    public Tuple<IEnumerable<Signed<SignatureRequestSignCheck>>, byte[]> FetchSignCheckList(Guid certificateId)
     {
       var request = new FetchSignCheckListRequest(Guid.NewGuid(), certificateId);
       var response = Execute<FetchSignCheckListResponse>(request);
 
-      return response.SignChecks;
+      return new Tuple<IEnumerable<Signed<SignatureRequestSignCheck>>, byte[]>(response.SignChecks, response.EncryptedSignatureRequest);
     }
 
     public void PushSignCheck(Signed<SignatureRequestSignCheck> signedSignCheck)
