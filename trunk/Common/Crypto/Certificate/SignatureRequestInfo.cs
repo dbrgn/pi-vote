@@ -87,7 +87,7 @@ namespace Pirate.PiVote.Crypto
       base.Deserialize(context, version);
       EmailAddress = context.ReadString();
 
-      if (Version >= 1)
+      if (version >= 1)
       {
         EncryptedSignatureRequest = context.ReadBytes();
       }
