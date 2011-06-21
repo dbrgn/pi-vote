@@ -41,8 +41,15 @@ namespace Pirate.PiVote.Gui
       qrEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
       qrEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.L;
       qrEncoder.QRCodeVersion = 7;
-      qrEncoder.QRCodeScale = 6;
-      dialog.qrCodeImage.Image = qrEncoder.Encode(url);
+      qrEncoder.QRCodeScale = 10;
+
+      Image qrImage = qrEncoder.Encode(url);;
+      var image = new Bitmap(qrImage.Width / 4 * 6, qrImage.Height / 4 * 6);
+      var graphics = Graphics.FromImage(image);
+      graphics.Clear(Color.White);
+      graphics.DrawImage(qrImage, (float)qrImage.Width / 4f, (float)qrImage.Height / 4f);
+      graphics.Flush();
+      dialog.qrCodeImage.Image = image;
 
       dialog.ShowDialog();
     }

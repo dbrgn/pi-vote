@@ -29,14 +29,14 @@ namespace Pirate.PiVote.Circle.Config
       this.explainLabel.Text = Resources.ConfigProofCountExplain;
       this.fastLabel.Text = Resources.ConfigProofCountFast;
       this.secureLabel.Text = Resources.ConfigProofCountSecure;
-      BigInt probability = ((BigInt)2).Power(16 * this.initialCheckProofCountTrackBar.Value);
-      this.infoLabel.Text = string.Format(Resources.ConfigProofCountInfo, this.initialCheckProofCountTrackBar.Value, probability);
+      //BigInt probability = ((BigInt)2).Power(16 * this.initialCheckProofCountTrackBar.Value);
+      //this.infoLabel.Text = string.Format(Resources.ConfigProofCountInfo, this.initialCheckProofCountTrackBar.Value, probability);
     }
 
     private void initialCheckProofCountTrackBar_Scroll(object sender, EventArgs e)
     {
-      BigInt probability = ((BigInt)2).Power(16 * this.initialCheckProofCountTrackBar.Value);
-      this.infoLabel.Text = string.Format(Resources.ConfigProofCountInfo, this.initialCheckProofCountTrackBar.Value, probability);
+      //BigInt probability = ((BigInt)2).Power(16 * this.initialCheckProofCountTrackBar.Value);
+      //this.infoLabel.Text = string.Format(Resources.ConfigProofCountInfo, this.initialCheckProofCountTrackBar.Value, probability);
     }
 
     public int InitialProofCount
@@ -48,8 +48,8 @@ namespace Pirate.PiVote.Circle.Config
       set
       {
         this.initialCheckProofCountTrackBar.Value = value;
-        BigInt probability = ((BigInt)2).Power(16 * this.initialCheckProofCountTrackBar.Value);
-        this.infoLabel.Text = string.Format(Resources.ConfigProofCountInfo, this.initialCheckProofCountTrackBar.Value, probability);
+        //BigInt probability = ((BigInt)2).Power(16 * this.initialCheckProofCountTrackBar.Value);
+        //this.infoLabel.Text = string.Format(Resources.ConfigProofCountInfo, this.initialCheckProofCountTrackBar.Value, probability);
       }
     }
   }

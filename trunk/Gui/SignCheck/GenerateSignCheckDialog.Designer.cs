@@ -44,6 +44,7 @@
       this.qrCodeImage.Location = new System.Drawing.Point(12, 114);
       this.qrCodeImage.Name = "qrCodeImage";
       this.qrCodeImage.Size = new System.Drawing.Size(468, 284);
+      this.qrCodeImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
       this.qrCodeImage.TabIndex = 0;
       this.qrCodeImage.TabStop = false;
       // 

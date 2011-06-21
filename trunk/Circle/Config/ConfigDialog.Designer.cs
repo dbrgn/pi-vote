@@ -53,7 +53,7 @@ namespace Pirate.PiVote.Circle.Config
       this.configTabs.Location = new System.Drawing.Point(12, 13);
       this.configTabs.Name = "configTabs";
       this.configTabs.SelectedIndex = 0;
-      this.configTabs.Size = new System.Drawing.Size(570, 310);
+      this.configTabs.Size = new System.Drawing.Size(568, 308);
       this.configTabs.TabIndex = 0;
       // 
       // proofCountTab
@@ -62,7 +62,7 @@ namespace Pirate.PiVote.Circle.Config
       this.proofCountTab.Location = new System.Drawing.Point(4, 23);
       this.proofCountTab.Name = "proofCountTab";
       this.proofCountTab.Padding = new System.Windows.Forms.Padding(3);
-      this.proofCountTab.Size = new System.Drawing.Size(562, 283);
+      this.proofCountTab.Size = new System.Drawing.Size(560, 281);
       this.proofCountTab.TabIndex = 0;
       this.proofCountTab.Text = "proofCountTab";
       this.proofCountTab.UseVisualStyleBackColor = true;
@@ -70,7 +70,7 @@ namespace Pirate.PiVote.Circle.Config
       // okButton
       // 
       this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.okButton.Location = new System.Drawing.Point(352, 330);
+      this.okButton.Location = new System.Drawing.Point(350, 329);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(112, 32);
       this.okButton.TabIndex = 1;
@@ -81,7 +81,7 @@ namespace Pirate.PiVote.Circle.Config
       // cancelButton
       // 
       this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.cancelButton.Location = new System.Drawing.Point(470, 330);
+      this.cancelButton.Location = new System.Drawing.Point(468, 329);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(112, 32);
       this.cancelButton.TabIndex = 2;
@@ -92,25 +92,26 @@ namespace Pirate.PiVote.Circle.Config
       // configProofCountControl1
       // 
       this.configProofCountControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.configProofCountControl1.Font = new System.Drawing.Font("Arial", 8.25F);
       this.configProofCountControl1.InitialProofCount = 1;
       this.configProofCountControl1.Location = new System.Drawing.Point(3, 3);
       this.configProofCountControl1.Name = "configProofCountControl1";
-      this.configProofCountControl1.Size = new System.Drawing.Size(556, 277);
+      this.configProofCountControl1.Size = new System.Drawing.Size(554, 275);
       this.configProofCountControl1.TabIndex = 0;
       // 
       // ConfigDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(594, 375);
+      this.ClientSize = new System.Drawing.Size(592, 373);
       this.ControlBox = false;
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.okButton);
       this.Controls.Add(this.configTabs);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.MaximizeBox = false;
       this.MinimizeBox = false;
+      this.MinimumSize = new System.Drawing.Size(600, 400);
       this.Name = "ConfigDialog";
       this.Text = "ConfigDialog";
       this.Load += new System.EventHandler(this.ConfigDialog_Load);
