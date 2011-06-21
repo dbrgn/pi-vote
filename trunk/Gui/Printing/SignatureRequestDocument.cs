@@ -89,11 +89,11 @@ namespace Pirate.PiVote.Gui.Printing
       float space = 2f;
       Font headerFont = new Font(FontFace, BaseFontSize + 2, FontStyle.Bold);
 
-      SizeF partySize = graphics.MeasureString(LibraryResources.SigningRequestDocumentHeaderRight, headerFont);
+      SizeF partySize = graphics.MeasureString(GuiResources.SigningRequestDocumentHeaderRight, headerFont);
 
       this.graphics.DrawLine(new Pen(Color.Black, 2), bounds.Left, bounds.Top + partySize.Height + space, bounds.Right, bounds.Top + partySize.Height + space);
-      this.graphics.DrawString(LibraryResources.SigningRequestDocumentHeaderLeft, headerFont, Brushes.Black, bounds.Left, bounds.Top);
-      this.graphics.DrawString(LibraryResources.SigningRequestDocumentHeaderRight, headerFont, Brushes.Black, bounds.Right - partySize.Width, bounds.Top);
+      this.graphics.DrawString(GuiResources.SigningRequestDocumentHeaderLeft, headerFont, Brushes.Black, bounds.Left, bounds.Top);
+      this.graphics.DrawString(GuiResources.SigningRequestDocumentHeaderRight, headerFont, Brushes.Black, bounds.Right - partySize.Width, bounds.Top);
     }
 
     private void PrintData(RectangleF bounds)
@@ -115,25 +115,25 @@ namespace Pirate.PiVote.Gui.Printing
       table.AddColumn(150f);
       table.AddColumn(bounds.Width - 150f);
 
-      table.AddRow(LibraryResources.SigningRequestDocumentRequest, 2, FontStyle.Bold);
+      table.AddRow(GuiResources.SigningRequestDocumentRequest, 2, FontStyle.Bold);
 
       table.AddRow(" ", 2);
 
-      table.AddRow(LibraryResources.SigningRequestDocumentFamilyName, this.signatureRequest.FamilyName);
-      table.AddRow(LibraryResources.SigningRequestDocumentFirstName, this.signatureRequest.FirstName);
-      table.AddRow(LibraryResources.SigningRequestDocumentEmailAddress, this.signatureRequest.EmailAddress);
+      table.AddRow(GuiResources.SigningRequestDocumentFamilyName, this.signatureRequest.FamilyName);
+      table.AddRow(GuiResources.SigningRequestDocumentFirstName, this.signatureRequest.FirstName);
+      table.AddRow(GuiResources.SigningRequestDocumentEmailAddress, this.signatureRequest.EmailAddress);
       if (this.certificate is VoterCertificate)
-        table.AddRow(LibraryResources.SigningRequestDocumentGroup, this.getGroupName(((VoterCertificate)this.certificate).GroupId));
-      table.AddRow(LibraryResources.SigningRequestDocumentCertificateType, this.certificate.TypeText);
+        table.AddRow(GuiResources.SigningRequestDocumentGroup, this.getGroupName(((VoterCertificate)this.certificate).GroupId));
+      table.AddRow(GuiResources.SigningRequestDocumentCertificateType, this.certificate.TypeText);
 
       string certificateId = this.certificate.Id.ToString();
       int idLength = certificateId.Length / 2;
-      table.AddRow(LibraryResources.SigningRequestDocumentCertificateId, certificateId.Substring(0, idLength));
+      table.AddRow(GuiResources.SigningRequestDocumentCertificateId, certificateId.Substring(0, idLength));
       table.AddRow(string.Empty, certificateId.Substring(idLength));
 
       string requestKey = this.signatureRequest.Key.ToHexString();
       int requestKeyLength = requestKey.Length / 4;
-      table.AddRow(LibraryResources.SigningRequestDocumentRequestKey, FourBlocks(requestKey.Substring(0, requestKeyLength)));
+      table.AddRow(GuiResources.SigningRequestDocumentRequestKey, FourBlocks(requestKey.Substring(0, requestKeyLength)));
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength, requestKeyLength)));
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 2, requestKeyLength)));
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 3, requestKeyLength)));
@@ -153,17 +153,17 @@ namespace Pirate.PiVote.Gui.Printing
       table.AddColumn(150f);
       table.AddColumn(bounds.Width - 150f);
 
-      table.AddRow(LibraryResources.SigningRequestDocumentParent, 2, FontStyle.Bold);
+      table.AddRow(GuiResources.SigningRequestDocumentParent, 2, FontStyle.Bold);
       table.AddRow(" ", 2);
 
       string certificateId = signingCertificate.Id.ToString();
       int idLength = certificateId.Length / 2;
-      table.AddRow(LibraryResources.SigningRequestDocumentCertificateId, certificateId.Substring(0, idLength));
+      table.AddRow(GuiResources.SigningRequestDocumentCertificateId, certificateId.Substring(0, idLength));
       table.AddRow(string.Empty, certificateId.Substring(idLength));
 
       string requestKey = this.signatureRequest.Key.ToHexString();
       int requestKeyLength = requestKey.Length / 4;
-      table.AddRow(LibraryResources.SigningRequestDocumentRequestKey, FourBlocks(requestKey.Substring(0, requestKeyLength)));
+      table.AddRow(GuiResources.SigningRequestDocumentRequestKey, FourBlocks(requestKey.Substring(0, requestKeyLength)));
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength, requestKeyLength)));
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 2, requestKeyLength)));
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 3, requestKeyLength)));
@@ -176,19 +176,19 @@ namespace Pirate.PiVote.Gui.Printing
       Font font = new Font(FontFace, BaseFontSize);
       float eights = bounds.Width / 8f;
 
-      SignObject requesterSign = new SignObject(this.graphics, LibraryResources.SigningRequestDocumentSignRequester, LibraryResources.SigningRequestDocumentSignSignature, LibraryResources.SigningRequestDocumentSignDate, font);
+      SignObject requesterSign = new SignObject(this.graphics, GuiResources.SigningRequestDocumentSignRequester, GuiResources.SigningRequestDocumentSignSignature, GuiResources.SigningRequestDocumentSignDate, font);
       requesterSign.SetCenterTop(bounds.Left + eights, bounds.Top);
       requesterSign.Draw();
 
-      SignObject firstAuthoritySign = new SignObject(this.graphics, LibraryResources.SigningRequestDocumentSignFirstAuthority, LibraryResources.SigningRequestDocumentSignSignature, LibraryResources.SigningRequestDocumentSignDate, font);
+      SignObject firstAuthoritySign = new SignObject(this.graphics, GuiResources.SigningRequestDocumentSignFirstAuthority, GuiResources.SigningRequestDocumentSignSignature, GuiResources.SigningRequestDocumentSignDate, font);
       firstAuthoritySign.SetCenterTop(bounds.Left + 3 * eights, bounds.Top);
       firstAuthoritySign.Draw();
 
-      SignObject secondAuthoritySign = new SignObject(this.graphics, LibraryResources.SigningRequestDocumentSignSecondAuthority, LibraryResources.SigningRequestDocumentSignSignature, LibraryResources.SigningRequestDocumentSignDate, font);
+      SignObject secondAuthoritySign = new SignObject(this.graphics, GuiResources.SigningRequestDocumentSignSecondAuthority, GuiResources.SigningRequestDocumentSignSignature, GuiResources.SigningRequestDocumentSignDate, font);
       secondAuthoritySign.SetCenterTop(bounds.Left + 5 * eights, bounds.Top);
       secondAuthoritySign.Draw();
 
-      SignObject thirdAuthoritySign = new SignObject(this.graphics, LibraryResources.SigningRequestDocumentSignThirdAuthority, LibraryResources.SigningRequestDocumentSignSignature, LibraryResources.SigningRequestDocumentSignDate, font);
+      SignObject thirdAuthoritySign = new SignObject(this.graphics, GuiResources.SigningRequestDocumentSignThirdAuthority, GuiResources.SigningRequestDocumentSignSignature, GuiResources.SigningRequestDocumentSignDate, font);
       thirdAuthoritySign.SetCenterTop(bounds.Left + 7 * eights, bounds.Top);
       thirdAuthoritySign.Draw();
     }
@@ -251,20 +251,25 @@ namespace Pirate.PiVote.Gui.Printing
 
       Table table = new Table(font);
       table.AddColumn(bounds.Width);
-      table.AddRow(LibraryResources.SigningRequestDocumentAccepted);
-      table.AddRow(LibraryResources.SigningRequestDocumentRefusedFingerprintMismatch);
+      table.AddRow(GuiResources.SigningRequestDocumentAccepted);
+      table.AddRow(GuiResources.SigningRequestDocumentRefusedFingerprintMismatch);
+      table.AddRow(GuiResources.SigningRequestDocumentRefusedLost);
+      table.AddRow(GuiResources.SigningRequestDocumentRefusedForgotten);
+      table.AddRow(GuiResources.SigningRequestDocumentRefusedSignatureInvalid);
+
       if (this.certificate is VoterCertificate)
       {
-        table.AddRow(LibraryResources.SigningRequestDocumentRefusedNoMember);
+        table.AddRow(GuiResources.SigningRequestDocumentRefusedNoMember);
       }
       else
       {
-        table.AddRow(LibraryResources.SigningRequestDocumentRefusedNotFx);
+        table.AddRow(GuiResources.SigningRequestDocumentRefusedNotFx);
       }
-      table.AddRow(LibraryResources.SigningRequestDocumentRefusedHasCertificate);
+
+      table.AddRow(GuiResources.SigningRequestDocumentRefusedHasCertificate);
       table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
 
-      SignObject caSign = new SignObject(this.graphics, LibraryResources.SigningRequestDocumentSignCA, LibraryResources.SigningRequestDocumentSignSignature, LibraryResources.SigningRequestDocumentSignDate, font);
+      SignObject caSign = new SignObject(this.graphics, GuiResources.SigningRequestDocumentSignCA, GuiResources.SigningRequestDocumentSignSignature, GuiResources.SigningRequestDocumentSignDate, font);
       caSign.SetCenterTop(bounds.Left + bounds.Width / 8f * 7f, bounds.Top);
       caSign.Draw();
     }
@@ -275,20 +280,23 @@ namespace Pirate.PiVote.Gui.Printing
 
       Table table = new Table(font);
       table.AddColumn(bounds.Width);
-      table.AddRow(LibraryResources.SigningRequestDocumentRevokedForgotten);
-      table.AddRow(LibraryResources.SigningRequestDocumentRevokedLost);
-      table.AddRow(LibraryResources.SigningRequestDocumentRevokedStolen);
+      table.AddRow(GuiResources.SigningRequestDocumentRevokedForgotten);
+      table.AddRow(GuiResources.SigningRequestDocumentRevokedLost);
+      table.AddRow(GuiResources.SigningRequestDocumentRevokedStolen);
+
       if (this.certificate is VoterCertificate)
       {
-        table.AddRow(LibraryResources.SigningRequestDocumentRevokedNoLonger);
+        table.AddRow(GuiResources.SigningRequestDocumentRevokedNoLonger);
       }
       else
       {
-        table.AddRow(LibraryResources.SigningRequestDocumentRevokedNoMoreFx);
+        table.AddRow(GuiResources.SigningRequestDocumentRevokedNoMoreFx);
       }
+
+      table.AddRow(GuiResources.SigningRequestDocumentRevokedError);
       table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
 
-      SignObject caSign = new SignObject(this.graphics, LibraryResources.SigningRequestDocumentSignCA, LibraryResources.SigningRequestDocumentSignSignature, LibraryResources.SigningRequestDocumentSignDate, font);
+      SignObject caSign = new SignObject(this.graphics, GuiResources.SigningRequestDocumentSignCA, GuiResources.SigningRequestDocumentSignSignature, GuiResources.SigningRequestDocumentSignDate, font);
       caSign.SetCenterTop(bounds.Left + bounds.Width / 8f * 7f, bounds.Top);
       caSign.Draw();
     }

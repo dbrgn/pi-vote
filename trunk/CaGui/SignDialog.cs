@@ -21,11 +21,6 @@ namespace Pirate.PiVote.CaGui
   public partial class SignDialog : Form
   {
     private Language language;
-    private int refusedFingerprintNoMatchIndex;
-    private int refusedPersonHasAlreadyIndex;
-    private int refusedPersonNoPirateIndex;
-    private int refusedPersonNotInOfficeIndex;
-    private int refusedRequestNotValidIndex;
     private bool expiryDateEnable;
     private bool needsToPrint;
     private SignatureRequest request;
@@ -131,24 +126,23 @@ namespace Pirate.PiVote.CaGui
       if (requestValid && listEntry.VerifyRequestSimple())
       {
         LibraryResources.Culture = Language.English.ToCulture();
-        this.refusedFingerprintNoMatchIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedFingerprintNoMatch);
-        this.refusedPersonHasAlreadyIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedPersonHasAlready);
-        this.refusedPersonNoPirateIndex = -1;
-        this.refusedPersonNotInOfficeIndex = -1;
-        this.refusedRequestNotValidIndex = -1;
+        this.reasonComboBox.Items.Add(LibraryResources.RefusedFingerprintNoMatch);
+        this.reasonComboBox.Items.Add(LibraryResources.RefusedPersonHasAlready);
+        this.reasonComboBox.Items.Add(LibraryResources.RefusedRequestForgotten);
+        this.reasonComboBox.Items.Add(LibraryResources.RefusedRequestLost);
+        this.reasonComboBox.Items.Add(LibraryResources.RefusedRequestNotValid);
 
         if (certificate is VoterCertificate)
         {
-          this.refusedPersonNoPirateIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedPersonNoPirate);
+          this.reasonComboBox.Items.Add(LibraryResources.RefusedPersonNoPirate);
         }
         else
         {
-          this.refusedPersonNotInOfficeIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedPersonNotInOffice);
+          this.reasonComboBox.Items.Add(LibraryResources.RefusedPersonNotInOffice);
         }
       }
       else
       {
-        this.refusedRequestNotValidIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedRequestNotValid);
         this.refuseRadioButton.Checked = true;
         this.acceptSignRadioButton.Enabled = false;
       }
@@ -217,29 +211,29 @@ namespace Pirate.PiVote.CaGui
       {
         LibraryResources.Culture = this.language.ToCulture();
 
-        if (this.reasonComboBox.SelectedIndex == this.refusedFingerprintNoMatchIndex)
+        switch (this.reasonComboBox.SelectedIndex)
         {
-          return LibraryResources.RefusedFingerprintNoMatch;
-        }
-        else if (this.reasonComboBox.SelectedIndex == this.refusedPersonHasAlreadyIndex)
-        {
-          return LibraryResources.RefusedPersonHasAlready;
-        }
-        else if (this.reasonComboBox.SelectedIndex == this.refusedPersonNoPirateIndex)
-        {
-          return LibraryResources.RefusedPersonNoPirate;
-        }
-        else if (this.reasonComboBox.SelectedIndex == this.refusedPersonNotInOfficeIndex)
-        {
-          return LibraryResources.RefusedPersonNotInOffice;
-        }
-        else if (this.reasonComboBox.SelectedIndex == this.refusedRequestNotValidIndex)
-        {
-          return LibraryResources.RefusedRequestNotValid;
-        }
-        else
-        {
-          throw new InvalidOperationException("No valid reason.");
+          case 0:
+            return LibraryResources.RefusedFingerprintNoMatch;
+          case 1:
+            return LibraryResources.RefusedPersonHasAlready;
+          case 2:
+            return LibraryResources.RefusedRequestForgotten;
+          case 3:
+            return LibraryResources.RefusedRequestLost;
+          case 4:
+            return LibraryResources.RefusedRequestNotValid;
+          case 5:
+            if (this.certificate is VoterCertificate)
+            {
+              return LibraryResources.RefusedPersonNoPirate;
+            }
+            else
+            {
+              return LibraryResources.RefusedPersonNotInOffice;
+            }
+          default:
+            throw new InvalidOperationException("No valid reason.");
         }
       }
     }

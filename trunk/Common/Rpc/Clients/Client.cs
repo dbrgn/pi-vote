@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
-using System.Net;
-using Pirate.PiVote.Serialization;
+using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
+using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
@@ -62,6 +63,21 @@ namespace Pirate.PiVote.Rpc
     private bool run;
 
     /// <summary>
+    /// Connecting to server?
+    /// </summary>
+    public bool Connecting { get; private set; }
+
+    /// <summary>
+    /// Server IP and port.
+    /// </summary>
+    private IPEndPoint serverEndPoint;
+
+    /// <summary>
+    /// Failure exception.
+    /// </summary>
+    private Exception exception;
+
+    /// <summary>
     /// Currently active operation.
     /// </summary>
     public Operation CurrentOperation { get; private set; }
@@ -86,9 +102,39 @@ namespace Pirate.PiVote.Rpc
     /// <param name="serverEndPoint">IP address and port of the server.</param>
     public void Connect(IPEndPoint serverEndPoint)
     {
-      this.client.Connect(serverEndPoint);
-      this.proxy = new VotingRpcProxy(this.client);
-      this.proxy.Start();
+      this.serverEndPoint = serverEndPoint;
+      Connecting = true;
+
+      Thread connectThread = new Thread(ConnectAsync);
+      connectThread.Start();
+
+      while (Connecting)
+      {
+        Application.DoEvents();
+        Thread.Sleep(10);
+      }
+
+      if (this.exception != null)
+      {
+        throw this.exception;
+      }
+    }
+
+    private void ConnectAsync()
+    {
+      try
+      {
+        this.client.Connect(this.serverEndPoint);
+        this.proxy = new VotingRpcProxy(this.client);
+        this.proxy.Start();
+        this.exception = null;
+      }
+      catch (Exception exception)
+      {
+        this.exception = exception;
+      }
+
+      Connecting = false;
     }
 
     /// <summary>

@@ -76,6 +76,11 @@ namespace Pirate.PiVote.Circle
 
         this.titleLabel.Text = this.voting.Title.Text;
         this.descriptionLabel.Text = this.voting.Description.Text;
+        this.groupLabel.Text = string.Format(
+          Resources.VotingStatusGroupFromUnit,
+          Controller.Status.GetGroupName(this.voting.GroupId),
+          this.voting.VoteFrom.ToShortDateString(),
+          this.voting.VoteUntil.ToShortDateString());
 
         switch (this.voting.Status)
         {

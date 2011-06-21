@@ -513,87 +513,6 @@
   <data name="ExceptionCanceledByUser" xml:space="preserve">
     <value>Operation wurde durch den Benutzer abgebrochen.</value>
   </data>
-  <data name="SigningRequestDocumentAccepted" xml:space="preserve">
-    <value>□ Akzeptiert, gültig bis __________________________</value>
-  </data>
-  <data name="SigningRequestDocumentCertificateId" xml:space="preserve">
-    <value>Kennung:</value>
-  </data>
-  <data name="SigningRequestDocumentCertificateType" xml:space="preserve">
-    <value>Typ:</value>
-  </data>
-  <data name="SigningRequestDocumentEmailAddress" xml:space="preserve">
-    <value>Email Adresse:</value>
-  </data>
-  <data name="SigningRequestDocumentFamilyName" xml:space="preserve">
-    <value>Nachname:</value>
-  </data>
-  <data name="SigningRequestDocumentFirstName" xml:space="preserve">
-    <value>Vorname:</value>
-  </data>
-  <data name="SigningRequestDocumentGroup" xml:space="preserve">
-    <value>Gruppe:</value>
-  </data>
-  <data name="SigningRequestDocumentHeaderLeft" xml:space="preserve">
-    <value>π-Vote</value>
-  </data>
-  <data name="SigningRequestDocumentHeaderRight" xml:space="preserve">
-    <value>Piratenpartei Schweiz</value>
-  </data>
-  <data name="SigningRequestDocumentParent" xml:space="preserve">
-    <value>Basiert auf Zertifikat</value>
-  </data>
-  <data name="SigningRequestDocumentRefusedFingerprintMismatch" xml:space="preserve">
-    <value>□ Verweigert, Fingerprint stimmt nicht überein</value>
-  </data>
-  <data name="SigningRequestDocumentRefusedHasCertificate" xml:space="preserve">
-    <value>□ Verweigert, hat ein gültiges Zertifikat</value>
-  </data>
-  <data name="SigningRequestDocumentRefusedNoMember" xml:space="preserve">
-    <value>□ Verweigert, kein Mitglied in Gruppe</value>
-  </data>
-  <data name="SigningRequestDocumentRefusedNotFx" xml:space="preserve">
-    <value>□ Verweigert, nicht im Amt</value>
-  </data>
-  <data name="SigningRequestDocumentRequest" xml:space="preserve">
-    <value>Zertifizierungsanfrage</value>
-  </data>
-  <data name="SigningRequestDocumentRevokedForgotten" xml:space="preserve">
-    <value>□ Widerrufen, Passphrase vergessen</value>
-  </data>
-  <data name="SigningRequestDocumentRevokedLost" xml:space="preserve">
-    <value>□ Widerrufen, vermutlich verloren</value>
-  </data>
-  <data name="SigningRequestDocumentRevokedNoLonger" xml:space="preserve">
-    <value>□ Widerrufen, kein Mitglied mehr</value>
-  </data>
-  <data name="SigningRequestDocumentRevokedNoMoreFx" xml:space="preserve">
-    <value>□ Widerrufen, nicht mehr im Amt</value>
-  </data>
-  <data name="SigningRequestDocumentRevokedStolen" xml:space="preserve">
-    <value>□ Widerrufen, vermutlich gestolen</value>
-  </data>
-  <data name="SigningRequestDocumentSignCA" xml:space="preserve">
-    <value>Zertifizierungsstelle</value>
-  </data>
-  <data name="SigningRequestDocumentSignDate" xml:space="preserve">
-    <value>Datum</value>
-  </data>
-  <data name="SigningRequestDocumentSignFirstAuthority" xml:space="preserve">
-    <value>Erste Autorität</value>
-  </data>
-  <data name="SigningRequestDocumentSignRequester" xml:space="preserve">
-    <value>Anfragender</value>
-  </data>
-  <data name="SigningRequestDocumentSignSecondAuthority" xml:space="preserve">
-    <value>Zweite Autorität</value>
-  </data>
-  <data name="SigningRequestDocumentSignSignature" xml:space="preserve">
-    <value>Unterschrift</value>
-  </data>
-  <data name="SigningRequestDocumentSignThirdAuthority" xml:space="preserve">
-    <value>Dritte Autorität</value>
-  </data>
   <data name="CertificateStatusCrlMissing" xml:space="preserve">
     <value>Widerrufsliste fehlt</value>
   </data>
@@ -633,7 +552,16 @@
   <data name="CertificateTypeNotary" xml:space="preserve">
     <value>Notar</value>
   </data>
-  <data name="SigningRequestDocumentRequestKey" xml:space="preserve">
-    <value>Anfrageschlüssel:</value>
+  <data name="RefusedRequestForgotten" xml:space="preserve">
+    <value>Person hat ihre Passphrase vergessen</value>
+  </data>
+  <data name="RefusedRequestLost" xml:space="preserve">
+    <value>Person hat ihr Zertifikat verloren</value>
+  </data>
+  <data name="RevokedError" xml:space="preserve">
+    <value>Zertifikat wurde fälschlicherweise validiert</value>
+  </data>
+  <data name="RevokedForgotten" xml:space="preserve">
+    <value>Person hat ihre Passphrase vergessen</value>
   </data>
 </root>

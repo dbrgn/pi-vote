@@ -646,4 +646,10 @@
   <data name="CreateCertificateNameAsInPhotoId" xml:space="preserve">
     <value>Please state your full name as it is written in your photo id.</value>
   </data>
+  <data name="ControllerStatusConnecting" xml:space="preserve">
+    <value>Connecting to server...</value>
+  </data>
+  <data name="VotingStatusGroupFromUnit" xml:space="preserve">
+    <value>{0} from {1} until {2}</value>
+  </data>
 </root>

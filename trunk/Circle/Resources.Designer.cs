@@ -439,6 +439,15 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connecting to server....
+        /// </summary>
+        internal static string ControllerStatusConnecting {
+            get {
+                return ResourceManager.GetString("ControllerStatusConnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Working....
         /// </summary>
         internal static string ControllerStatusWorking {
@@ -1594,6 +1603,15 @@ namespace Pirate.PiVote.Circle {
         internal static string VotingStatusDecipher {
             get {
                 return ResourceManager.GetString("VotingStatusDecipher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} from {1} until {2}.
+        /// </summary>
+        internal static string VotingStatusGroupFromUnit {
+            get {
+                return ResourceManager.GetString("VotingStatusGroupFromUnit", resourceCulture);
             }
         }
         

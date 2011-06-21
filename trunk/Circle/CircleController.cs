@@ -81,7 +81,14 @@ namespace Pirate.PiVote.Circle
         }
         else
         {
-          return Resources.ControllerStatusWorking;
+          if (Status.VotingClient.Connecting)
+          {
+            return Resources.ControllerStatusConnecting;
+          }
+          else
+          {
+            return Resources.ControllerStatusWorking;
+          }
         }
       }
     }
@@ -440,9 +447,9 @@ namespace Pirate.PiVote.Circle
         throw new InvalidOperationException("Cannot resolve server address.");
       }
 
+      Begin();
       Status.VotingClient.Connect(serverEndPoint);
 
-      Begin();
       Status.VotingClient.GetCertificateStorage(Status.CertificateStorage, GetCertificateStorageComplete);
 
       if (WaitForCompletion() ||

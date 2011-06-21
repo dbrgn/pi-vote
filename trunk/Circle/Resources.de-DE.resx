@@ -622,4 +622,10 @@
   <data name="CreateCertificateNameAsInPhotoId" xml:space="preserve">
     <value>Bitte gib deinen vollständigen Namen an, wie er in deinem Ausweisdokument steht.</value>
   </data>
+  <data name="ControllerStatusConnecting" xml:space="preserve">
+    <value>Verbinde mit Server...</value>
+  </data>
+  <data name="VotingStatusGroupFromUnit" xml:space="preserve">
+    <value>{0} vom {1} bis {2}</value>
+  </data>
 </root>

@@ -40,6 +40,7 @@ namespace Pirate.PiVote.Circle
       this.actionButton = new System.Windows.Forms.Button();
       this.statusLabel = new System.Windows.Forms.Label();
       this.action2Button = new System.Windows.Forms.Button();
+      this.groupLabel = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // titleLabel
@@ -49,7 +50,7 @@ namespace Pirate.PiVote.Circle
       this.titleLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.titleLabel.Location = new System.Drawing.Point(0, 0);
       this.titleLabel.Name = "titleLabel";
-      this.titleLabel.Size = new System.Drawing.Size(498, 25);
+      this.titleLabel.Size = new System.Drawing.Size(498, 21);
       this.titleLabel.TabIndex = 0;
       this.titleLabel.Text = "Title";
       // 
@@ -58,9 +59,9 @@ namespace Pirate.PiVote.Circle
       this.descriptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.descriptionLabel.Location = new System.Drawing.Point(0, 25);
+      this.descriptionLabel.Location = new System.Drawing.Point(0, 21);
       this.descriptionLabel.Name = "descriptionLabel";
-      this.descriptionLabel.Size = new System.Drawing.Size(498, 58);
+      this.descriptionLabel.Size = new System.Drawing.Size(498, 56);
       this.descriptionLabel.TabIndex = 1;
       this.descriptionLabel.Text = "Description";
       // 
@@ -80,9 +81,9 @@ namespace Pirate.PiVote.Circle
       this.statusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                   | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.statusLabel.Location = new System.Drawing.Point(3, 94);
+      this.statusLabel.Location = new System.Drawing.Point(0, 94);
       this.statusLabel.Name = "statusLabel";
-      this.statusLabel.Size = new System.Drawing.Size(258, 17);
+      this.statusLabel.Size = new System.Drawing.Size(261, 17);
       this.statusLabel.TabIndex = 3;
       this.statusLabel.Text = "Status";
       // 
@@ -97,11 +98,23 @@ namespace Pirate.PiVote.Circle
       this.action2Button.UseVisualStyleBackColor = true;
       this.action2Button.Click += new System.EventHandler(this.action2Button_Click);
       // 
+      // groupLabel
+      // 
+      this.groupLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                  | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupLabel.Location = new System.Drawing.Point(0, 77);
+      this.groupLabel.Name = "groupLabel";
+      this.groupLabel.Size = new System.Drawing.Size(261, 17);
+      this.groupLabel.TabIndex = 5;
+      this.groupLabel.Text = "Group";
+      // 
       // VotingControl
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.Controls.Add(this.groupLabel);
       this.Controls.Add(this.action2Button);
       this.Controls.Add(this.statusLabel);
       this.Controls.Add(this.actionButton);
@@ -121,5 +134,6 @@ namespace Pirate.PiVote.Circle
     private System.Windows.Forms.Button actionButton;
     private System.Windows.Forms.Label statusLabel;
     private System.Windows.Forms.Button action2Button;
+    private System.Windows.Forms.Label groupLabel;
   }
 }

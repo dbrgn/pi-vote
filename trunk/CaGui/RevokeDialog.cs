@@ -20,11 +20,7 @@ namespace Pirate.PiVote.CaGui
   public partial class RevokeDialog : Form
   {
     private Language language;
-    private int revokedLostIndex;
-    private int revokedMovedIndex;
-    private int revokedNoLongerIndex;
-    private int revokedNoMoreFxIndex;
-    private int revokedStolenIndex;
+    private Certificate certificate;
 
     public RevokeDialog()
     {
@@ -60,13 +56,23 @@ namespace Pirate.PiVote.CaGui
       this.cantonTextBox.Text = certificate is VoterCertificate ? GroupList.GetGroupName(((VoterCertificate)certificate).GroupId) : "N/A";
       this.fingerprintTextBox.Text = certificate.Fingerprint;
       this.language = certificate.Language;
+      this.certificate = entry.Certificate;
 
       LibraryResources.Culture = Language.English.ToCulture();
-      this.revokedLostIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedFingerprintNoMatch);
-      this.revokedMovedIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedPersonHasAlready);
-      this.revokedNoLongerIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedPersonNoPirate);
-      this.revokedNoMoreFxIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedPersonNotInOffice);
-      this.revokedStolenIndex = this.reasonComboBox.Items.Add(LibraryResources.RefusedRequestNotValid);
+      this.reasonComboBox.Items.Add(LibraryResources.RevokedMoved);
+      this.reasonComboBox.Items.Add(LibraryResources.RevokedStolen);
+      this.reasonComboBox.Items.Add(LibraryResources.RevokedLost);
+      this.reasonComboBox.Items.Add(LibraryResources.RevokedForgotten);
+      this.reasonComboBox.Items.Add(LibraryResources.RevokedError);
+
+      if (entry.Certificate is VoterCertificate)
+      {
+        this.reasonComboBox.Items.Add(LibraryResources.RevokedNoLonger);
+      }
+      else
+      {
+        this.reasonComboBox.Items.Add(LibraryResources.RevokedNoMoreFx);
+      }
     }
 
     private void RefuseDialog_KeyDown(object sender, KeyEventArgs e)
@@ -108,29 +114,29 @@ namespace Pirate.PiVote.CaGui
       {
         LibraryResources.Culture = this.language.ToCulture();
 
-        if (this.reasonComboBox.SelectedIndex == this.revokedLostIndex)
+        switch (this.reasonComboBox.SelectedIndex)
         {
-          return LibraryResources.RevokedLost;
-        }
-        else if (this.reasonComboBox.SelectedIndex == this.revokedMovedIndex)
-        {
-          return LibraryResources.RevokedMoved;
-        }
-        else if (this.reasonComboBox.SelectedIndex == this.revokedNoLongerIndex)
-        {
-          return LibraryResources.RevokedNoLonger;
-        }
-        else if (this.reasonComboBox.SelectedIndex == this.revokedNoMoreFxIndex)
-        {
-          return LibraryResources.RevokedNoMoreFx;
-        }
-        else if (this.reasonComboBox.SelectedIndex == this.revokedStolenIndex)
-        {
-          return LibraryResources.RevokedStolen;
-        }
-        else
-        {
-          throw new InvalidOperationException("No valid reason.");
+          case 0:
+            return LibraryResources.RevokedMoved;
+          case 1:
+            return LibraryResources.RevokedStolen;
+          case 2:
+            return LibraryResources.RevokedLost;
+          case 3:
+            return LibraryResources.RevokedForgotten;
+          case 4:
+            return LibraryResources.RevokedError;
+          case 5:
+            if (this.certificate is VoterCertificate)
+            {
+              return LibraryResources.RevokedNoLonger;
+            }
+            else
+            {
+              return LibraryResources.RevokedNoMoreFx;
+            }
+          default:
+            throw new InvalidOperationException("No valid reason.");
         }
       }
     }
