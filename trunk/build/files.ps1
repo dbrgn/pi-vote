@@ -72,6 +72,5 @@
 	mv -force $tmp\$name $output\
 	rmif $tmp
 
-	$name = "PiVote_Client_Windows_x86_" + $version + ".zip"
-	& $zip a -tzip $name ..\PiVoteClientSetup\Release\PiVoteClientSetup.msi
-	mv -force $name $output\
+	$name = "PiVote_Client_Windows_x86_" + $version + ".msi"
+	mv -force ..\PiVoteClientSetup\Release\PiVoteClientSetup.msi $output\$name
