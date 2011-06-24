@@ -158,11 +158,49 @@ namespace Pirate.PiVote.CaGui
 
     private IEnumerable<ListEntry> FilterEntries(IEnumerable<ListEntry> input)
     {
-      return input
-        .Where(listEntry => listEntry.ContainsToken(this.searchTestBox.Text, CaCertificate) &&
-                            listEntry.IsOfType(this.searchTypeBox.Value) &&
-                            listEntry.IsOfStatus(this.searchStatusBox.Value) &&
-                            (!this.searchDateActive.Checked || listEntry.IsOfDate(this.searchDateBox.Value)));
+      if (this.searchTestBox.Text == string.Empty &&
+          this.searchTypeBox.Value == CertificateType.All &&
+          this.searchStatusBox.Value == CertificateStatus.All &&
+          !this.searchDateActive.Checked)
+      {
+        return input;
+      }
+      else if (this.searchTypeBox.Value == CertificateType.All &&
+               this.searchStatusBox.Value == CertificateStatus.All &&
+               !this.searchDateActive.Checked)
+      {
+        return input
+          .Where(listEntry => listEntry.ContainsToken(this.searchTestBox.Text, CaCertificate));
+      }
+      else if (this.searchTestBox.Text == string.Empty &&
+               this.searchStatusBox.Value == CertificateStatus.All &&
+               !this.searchDateActive.Checked)
+      {
+        return input
+          .Where(listEntry => listEntry.IsOfType(this.searchTypeBox.Value));
+      }
+      else if (this.searchTestBox.Text == string.Empty &&
+          this.searchTypeBox.Value == CertificateType.All &&
+          !this.searchDateActive.Checked)
+      {
+        return input
+          .Where(listEntry => listEntry.IsOfStatus(this.searchStatusBox.Value));
+      }
+      if (this.searchTestBox.Text == string.Empty &&
+          this.searchTypeBox.Value == CertificateType.All &&
+          this.searchStatusBox.Value == CertificateStatus.All)
+      {
+        return input
+          .Where(listEntry => (!this.searchDateActive.Checked || listEntry.IsOfDate(this.searchDateBox.Value)));
+      }
+      else
+      {
+        return input
+          .Where(listEntry => listEntry.ContainsToken(this.searchTestBox.Text, CaCertificate) &&
+                              listEntry.IsOfType(this.searchTypeBox.Value) &&
+                              listEntry.IsOfStatus(this.searchStatusBox.Value) &&
+                              (!this.searchDateActive.Checked || listEntry.IsOfDate(this.searchDateBox.Value)));
+      }
     }
 
     private IEnumerable<ListEntry> SortEntries(IEnumerable<ListEntry> input)
@@ -612,6 +650,7 @@ namespace Pirate.PiVote.CaGui
       this.cAPropertiesToolStripMenuItem.Enabled = haveCertificate;
       this.createAdminCertificateToolStripMenuItem.Enabled = canSign;
       this.createServerCertifiToolStripMenuItem.Enabled = canSign;
+      this.changeCAPassphraseToolStripMenuItem.Enabled = haveCertificate;
     }
 
     private void createServerCertifiToolStripMenuItem_Click(object sender, EventArgs e)
@@ -696,6 +735,47 @@ namespace Pirate.PiVote.CaGui
       CountDialog dialog = new CountDialog();
       dialog.Entries = Entries;
       dialog.ShowDialog();
+    }
+
+    private void changeCAPassphraseToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      bool done = false;
+      string message = null;
+
+      while (!done)
+      {
+        var result = ChangePassphraseDialog.ShowChangePassphrase(CaCertificate, message, 12);
+
+        if (result.First == DialogResult.OK)
+        {
+          try
+          {
+            CaCertificate.Lock();
+
+            if (result.Third.IsNullOrEmpty())
+            {
+              //this is not allowed. do nothing.
+            }
+            else
+            {
+              CaCertificate.ChangePassphrase(result.Second, result.Third);
+            }
+
+            CaCertificate.Save(DataPath(CaCertFileName));
+            CaCertificate.Unlock(result.Third);
+
+            done = true;
+          }
+          catch
+          {
+            message = GuiResources.ChangePassphraseMessageWrong;
+          }
+        }
+        else
+        {
+          done = true;
+        }
+      }
     }
   }
 }

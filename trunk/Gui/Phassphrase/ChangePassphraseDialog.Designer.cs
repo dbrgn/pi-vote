@@ -59,7 +59,7 @@ namespace Pirate.PiVote.Gui
       this.passphraseTextBox.Name = "passphraseTextBox";
       this.passphraseTextBox.PasswordChar = '*';
       this.passphraseTextBox.Size = new System.Drawing.Size(341, 20);
-      this.passphraseTextBox.TabIndex = 1;
+      this.passphraseTextBox.TabIndex = 2;
       this.passphraseTextBox.TextChanged += new System.EventHandler(this.passphraseTextBox_TextChanged);
       // 
       // passphraseLabel
@@ -79,7 +79,7 @@ namespace Pirate.PiVote.Gui
       this.repeatTextBox.Name = "repeatTextBox";
       this.repeatTextBox.PasswordChar = '*';
       this.repeatTextBox.Size = new System.Drawing.Size(341, 20);
-      this.repeatTextBox.TabIndex = 2;
+      this.repeatTextBox.TabIndex = 3;
       this.repeatTextBox.TextChanged += new System.EventHandler(this.repeatTextBox_TextChanged);
       // 
       // repeatLabel
@@ -97,7 +97,7 @@ namespace Pirate.PiVote.Gui
       this.okButton.Location = new System.Drawing.Point(310, 186);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(93, 26);
-      this.okButton.TabIndex = 3;
+      this.okButton.TabIndex = 4;
       this.okButton.Text = "&OK";
       this.okButton.UseVisualStyleBackColor = true;
       this.okButton.Click += new System.EventHandler(this.okButton_Click);
@@ -108,7 +108,7 @@ namespace Pirate.PiVote.Gui
       this.cancelButton.Location = new System.Drawing.Point(409, 186);
       this.cancelButton.Name = "cancelButton";
       this.cancelButton.Size = new System.Drawing.Size(93, 26);
-      this.cancelButton.TabIndex = 4;
+      this.cancelButton.TabIndex = 5;
       this.cancelButton.Text = "&Cancel";
       this.cancelButton.UseVisualStyleBackColor = true;
       this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
@@ -119,7 +119,7 @@ namespace Pirate.PiVote.Gui
       this.encryptCheckBox.Location = new System.Drawing.Point(14, 110);
       this.encryptCheckBox.Name = "encryptCheckBox";
       this.encryptCheckBox.Size = new System.Drawing.Size(136, 18);
-      this.encryptCheckBox.TabIndex = 0;
+      this.encryptCheckBox.TabIndex = 1;
       this.encryptCheckBox.Text = "Encrypt my private key";
       this.encryptCheckBox.UseVisualStyleBackColor = true;
       this.encryptCheckBox.CheckedChanged += new System.EventHandler(this.encryptCheckBox_CheckedChanged);
@@ -132,7 +132,7 @@ namespace Pirate.PiVote.Gui
       this.oldPassphraseTextBox.Name = "oldPassphraseTextBox";
       this.oldPassphraseTextBox.PasswordChar = '*';
       this.oldPassphraseTextBox.Size = new System.Drawing.Size(341, 20);
-      this.oldPassphraseTextBox.TabIndex = 6;
+      this.oldPassphraseTextBox.TabIndex = 0;
       this.oldPassphraseTextBox.TextChanged += new System.EventHandler(this.oldPassphraseTextBox_TextChanged);
       // 
       // oldPassphraseLabel
@@ -179,6 +179,7 @@ namespace Pirate.PiVote.Gui
       this.certificateIdTextBox.ReadOnly = true;
       this.certificateIdTextBox.Size = new System.Drawing.Size(341, 20);
       this.certificateIdTextBox.TabIndex = 13;
+      this.certificateIdTextBox.TabStop = false;
       // 
       // certificateTypeTextBox
       // 
@@ -189,6 +190,7 @@ namespace Pirate.PiVote.Gui
       this.certificateTypeTextBox.ReadOnly = true;
       this.certificateTypeTextBox.Size = new System.Drawing.Size(341, 20);
       this.certificateTypeTextBox.TabIndex = 12;
+      this.certificateTypeTextBox.TabStop = false;
       // 
       // ChangePassphraseDialog
       // 

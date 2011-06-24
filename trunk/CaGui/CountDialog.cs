@@ -28,7 +28,18 @@ namespace Pirate.PiVote.CaGui
     private void CountDialog_Load(object sender, EventArgs e)
     {
       CenterToScreen();
+      SetGroups();
       UpdateCounts();
+    }
+
+    private void SetGroups()
+    {
+      this.groupBox.Add(GroupList.Groups);
+
+      if (this.groupBox.Items.Count > 0)
+      {
+        this.groupBox.SelectedIndex = 0;
+      }
     }
 
     private void UpdateCounts()
@@ -45,28 +56,31 @@ namespace Pirate.PiVote.CaGui
       {
         foreach (var entry in Entries)
         {
-          totalCount++;
-
-          switch (entry.StatusAtDate(this.datePicker.Value))
+          if (entry.GroupId == this.groupBox.Value.Id)
           {
-            case CertificateStatus.New:
-              pendingCount++;
-              break;
-            case CertificateStatus.Refused:
-              refusedCount++;
-              break;
-            case CertificateStatus.Revoked:
-              revokedCount++;
-              break;
-            case CertificateStatus.Valid:
-              validCount++;
-              break;
-            case CertificateStatus.Outdated:
-              outdatedCount++;
-              break;
-            case CertificateStatus.NotYet:
-              notYetCount++;
-              break;
+            totalCount++;
+
+            switch (entry.StatusAtDate(this.datePicker.Value))
+            {
+              case CertificateStatus.New:
+                pendingCount++;
+                break;
+              case CertificateStatus.Refused:
+                refusedCount++;
+                break;
+              case CertificateStatus.Revoked:
+                revokedCount++;
+                break;
+              case CertificateStatus.Valid:
+                validCount++;
+                break;
+              case CertificateStatus.Outdated:
+                outdatedCount++;
+                break;
+              case CertificateStatus.NotYet:
+                notYetCount++;
+                break;
+            }
           }
         }
       }
@@ -86,6 +100,11 @@ namespace Pirate.PiVote.CaGui
     }
 
     private void datePicker_ValueChanged(object sender, EventArgs e)
+    {
+      UpdateCounts();
+    }
+
+    private void groupBox_SelectedIndexChanged(object sender, EventArgs e)
     {
       UpdateCounts();
     }

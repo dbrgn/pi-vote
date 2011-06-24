@@ -55,6 +55,8 @@ namespace Pirate.PiVote.CaGui
       this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
       this.createAdminCertificateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.createServerCertifiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+      this.countCertificatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.entryListView = new System.Windows.Forms.ListView();
       this.idColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.typeColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -70,15 +72,14 @@ namespace Pirate.PiVote.CaGui
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.searchDateActive = new System.Windows.Forms.CheckBox();
       this.searchTestBox = new System.Windows.Forms.TextBox();
-      this.searchTypeBox = new Pirate.PiVote.CaGui.CertificateTypeBox();
-      this.searchStatusBox = new Pirate.PiVote.CaGui.CertificateStatusBox();
       this.searchDateBox = new System.Windows.Forms.DateTimePicker();
       this.crlListView = new System.Windows.Forms.ListView();
       this.crlValidFromColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.crlValidUntilColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.revokedCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-      this.countCertificatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.changeCAPassphraseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.searchTypeBox = new Pirate.PiVote.CaGui.CertificateTypeBox();
+      this.searchStatusBox = new Pirate.PiVote.CaGui.CertificateStatusBox();
       this.mainMenu.SuspendLayout();
       this.entryListContextMenu.SuspendLayout();
       this.splitContainer1.Panel1.SuspendLayout();
@@ -104,6 +105,7 @@ namespace Pirate.PiVote.CaGui
             this.cAPropertiesToolStripMenuItem,
             this.toolStripMenuItem2,
             this.createToolStripMenuItem,
+            this.changeCAPassphraseToolStripMenuItem,
             this.signatureRequestToolStripMenuItem,
             this.signatureResponseToolStripMenuItem,
             this.toolStripMenuItem1,
@@ -226,6 +228,18 @@ namespace Pirate.PiVote.CaGui
       this.createServerCertifiToolStripMenuItem.Text = "Create &Server Certificate";
       this.createServerCertifiToolStripMenuItem.Click += new System.EventHandler(this.createServerCertifiToolStripMenuItem_Click);
       // 
+      // toolStripMenuItem5
+      // 
+      this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+      this.toolStripMenuItem5.Size = new System.Drawing.Size(192, 6);
+      // 
+      // countCertificatesToolStripMenuItem
+      // 
+      this.countCertificatesToolStripMenuItem.Name = "countCertificatesToolStripMenuItem";
+      this.countCertificatesToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+      this.countCertificatesToolStripMenuItem.Text = "&Count Certificates";
+      this.countCertificatesToolStripMenuItem.Click += new System.EventHandler(this.CountCertificatesToolStripMenuItem_Click);
+      // 
       // entryListView
       // 
       this.entryListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -294,27 +308,27 @@ namespace Pirate.PiVote.CaGui
             this.exportResponseToolStripMenuItem,
             this.revokeToolStripMenuItem});
       this.entryListContextMenu.Name = "entryListContextMenu";
-      this.entryListContextMenu.Size = new System.Drawing.Size(187, 70);
+      this.entryListContextMenu.Size = new System.Drawing.Size(157, 70);
       this.entryListContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.entryListContextMenu_Opening);
       // 
       // signToolStripMenuItem
       // 
       this.signToolStripMenuItem.Name = "signToolStripMenuItem";
-      this.signToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+      this.signToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
       this.signToolStripMenuItem.Text = "&Verify...";
       this.signToolStripMenuItem.Click += new System.EventHandler(this.signToolStripMenuItem_Click);
       // 
       // exportResponseToolStripMenuItem
       // 
       this.exportResponseToolStripMenuItem.Name = "exportResponseToolStripMenuItem";
-      this.exportResponseToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+      this.exportResponseToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
       this.exportResponseToolStripMenuItem.Text = "&Export Response";
       this.exportResponseToolStripMenuItem.Click += new System.EventHandler(this.exportResponseToolStripMenuItem_Click);
       // 
       // revokeToolStripMenuItem
       // 
       this.revokeToolStripMenuItem.Name = "revokeToolStripMenuItem";
-      this.revokeToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+      this.revokeToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
       this.revokeToolStripMenuItem.Text = "&Revoke";
       this.revokeToolStripMenuItem.Click += new System.EventHandler(this.revokeToolStripMenuItem_Click);
       // 
@@ -362,37 +376,6 @@ namespace Pirate.PiVote.CaGui
       this.searchTestBox.TabIndex = 5;
       this.searchTestBox.TextChanged += new System.EventHandler(this.searchTestBox_TextChanged);
       // 
-      // searchTypeBox
-      // 
-      this.searchTypeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.searchTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.searchTypeBox.FormattingEnabled = true;
-      this.searchTypeBox.Items.AddRange(new object[] {
-            "All Types",
-            "CA",
-            "Admin",
-            "Authority",
-            "Voter",
-            "Server"});
-      this.searchTypeBox.Location = new System.Drawing.Point(556, 4);
-      this.searchTypeBox.Name = "searchTypeBox";
-      this.searchTypeBox.Size = new System.Drawing.Size(192, 22);
-      this.searchTypeBox.TabIndex = 4;
-      this.searchTypeBox.Value = Pirate.PiVote.CaGui.CertificateType.All;
-      this.searchTypeBox.SelectedIndexChanged += new System.EventHandler(this.searchTypeBox_SelectedIndexChanged);
-      // 
-      // searchStatusBox
-      // 
-      this.searchStatusBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.searchStatusBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.searchStatusBox.FormattingEnabled = true;
-      this.searchStatusBox.Location = new System.Drawing.Point(882, 4);
-      this.searchStatusBox.Name = "searchStatusBox";
-      this.searchStatusBox.Size = new System.Drawing.Size(168, 22);
-      this.searchStatusBox.TabIndex = 3;
-      this.searchStatusBox.Value = Pirate.PiVote.CaGui.CertificateStatus.All;
-      this.searchStatusBox.SelectedIndexChanged += new System.EventHandler(this.searchStatusBox_SelectedIndexChanged);
-      // 
       // searchDateBox
       // 
       this.searchDateBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -436,17 +419,58 @@ namespace Pirate.PiVote.CaGui
       this.revokedCount.Text = "# Revoked";
       this.revokedCount.Width = 100;
       // 
-      // toolStripMenuItem5
+      // changeCAPassphraseToolStripMenuItem
       // 
-      this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-      this.toolStripMenuItem5.Size = new System.Drawing.Size(192, 6);
+      this.changeCAPassphraseToolStripMenuItem.Name = "changeCAPassphraseToolStripMenuItem";
+      this.changeCAPassphraseToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+      this.changeCAPassphraseToolStripMenuItem.Text = "Change CA &Passphrase";
+      this.changeCAPassphraseToolStripMenuItem.Click += new System.EventHandler(this.changeCAPassphraseToolStripMenuItem_Click);
       // 
-      // countCertificatesToolStripMenuItem
+      // searchTypeBox
       // 
-      this.countCertificatesToolStripMenuItem.Name = "countCertificatesToolStripMenuItem";
-      this.countCertificatesToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-      this.countCertificatesToolStripMenuItem.Text = "&Count Certificates";
-      this.countCertificatesToolStripMenuItem.Click += new System.EventHandler(this.CountCertificatesToolStripMenuItem_Click);
+      this.searchTypeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.searchTypeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.searchTypeBox.FormattingEnabled = true;
+      this.searchTypeBox.Items.AddRange(new object[] {
+            "All Types",
+            "CA",
+            "Admin",
+            "Authority",
+            "Voter",
+            "Server",
+            "Notary",
+            "All Types",
+            "CA",
+            "Admin",
+            "Authority",
+            "Voter",
+            "Server"});
+      this.searchTypeBox.Location = new System.Drawing.Point(556, 4);
+      this.searchTypeBox.Name = "searchTypeBox";
+      this.searchTypeBox.Size = new System.Drawing.Size(192, 22);
+      this.searchTypeBox.TabIndex = 4;
+      this.searchTypeBox.Value = Pirate.PiVote.CaGui.CertificateType.All;
+      this.searchTypeBox.SelectedIndexChanged += new System.EventHandler(this.searchTypeBox_SelectedIndexChanged);
+      // 
+      // searchStatusBox
+      // 
+      this.searchStatusBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.searchStatusBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.searchStatusBox.FormattingEnabled = true;
+      this.searchStatusBox.Items.AddRange(new object[] {
+            "All Status",
+            "New",
+            "Valid",
+            "Not yet valid",
+            "Outdated",
+            "Revoked",
+            "Refused"});
+      this.searchStatusBox.Location = new System.Drawing.Point(882, 4);
+      this.searchStatusBox.Name = "searchStatusBox";
+      this.searchStatusBox.Size = new System.Drawing.Size(168, 22);
+      this.searchStatusBox.TabIndex = 3;
+      this.searchStatusBox.Value = Pirate.PiVote.CaGui.CertificateStatus.All;
+      this.searchStatusBox.SelectedIndexChanged += new System.EventHandler(this.searchStatusBox_SelectedIndexChanged);
       // 
       // Master
       // 
@@ -517,6 +541,7 @@ namespace Pirate.PiVote.CaGui
     private System.Windows.Forms.ColumnHeader groupColumnHeader;
     private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
     private System.Windows.Forms.ToolStripMenuItem countCertificatesToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem changeCAPassphraseToolStripMenuItem;
   }
 }
 

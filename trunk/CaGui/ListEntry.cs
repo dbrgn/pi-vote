@@ -92,6 +92,8 @@ namespace Pirate.PiVote.CaGui
       switch (Status)
       {
         case CertificateStatus.Valid:
+        case CertificateStatus.NotYet:
+        case CertificateStatus.Outdated:
         case CertificateStatus.Revoked:
           SignatureResponse response = this.entry.Response.Value;
           Item.SubItems[4].Text = response.Signature.ValidFrom.ToString();
@@ -118,6 +120,29 @@ namespace Pirate.PiVote.CaGui
       }
     }
 
+    public bool IsVoter
+    {
+      get
+      {
+        return Certificate is VoterCertificate;
+      }
+    }
+
+    public int GroupId
+    {
+      get
+      {
+        if (Certificate is VoterCertificate)
+        {
+          return ((VoterCertificate)Certificate).GroupId;
+        }
+        else
+        {
+          return -1;
+        }
+      }
+    }
+
     public CertificateStatus StatusAtDate(DateTime date)
     {
       if (this.response == null)
@@ -130,12 +155,12 @@ namespace Pirate.PiVote.CaGui
         {
           case SignatureResponseStatus.Accepted:
             if (this.entry.Response != null &&
-              date.Date < this.entry.Response.Value.Signature.ValidFrom)
+              date.Date < this.entry.Response.Value.Signature.ValidFrom.Date)
             {
               return CertificateStatus.NotYet;
             }
             else if (this.entry.Response != null &&
-              date.Date > this.entry.Response.Value.Signature.ValidUntil)
+              date.Date > this.entry.Response.Value.Signature.ValidUntil.Date)
             {
               return CertificateStatus.Outdated;
             }
@@ -221,7 +246,8 @@ namespace Pirate.PiVote.CaGui
     {
       return
         this.request.FullName.ToLower().Contains(token.ToLower()) ||
-        this.certificate.Id.ToString().ToLower().Contains(token.ToLower());
+        this.certificate.Id.ToString().ToLower().Contains(token.ToLower()) ||
+        this.certificate.GetGroupName().ToLower().Contains(token.ToLower());
     }
 
     public DateTime ValidFrom

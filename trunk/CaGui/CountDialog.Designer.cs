@@ -52,12 +52,14 @@ namespace Pirate.PiVote.CaGui
       this.okButton = new System.Windows.Forms.Button();
       this.notYetBox = new System.Windows.Forms.TextBox();
       this.notYetLabel = new System.Windows.Forms.Label();
+      this.groupLabel = new System.Windows.Forms.Label();
+      this.groupBox = new Pirate.PiVote.Gui.GroupComboBox();
       this.SuspendLayout();
       // 
       // dateLabel
       // 
       this.dateLabel.AutoSize = true;
-      this.dateLabel.Location = new System.Drawing.Point(12, 15);
+      this.dateLabel.Location = new System.Drawing.Point(12, 42);
       this.dateLabel.Name = "dateLabel";
       this.dateLabel.Size = new System.Drawing.Size(69, 13);
       this.dateLabel.TabIndex = 0;
@@ -67,16 +69,16 @@ namespace Pirate.PiVote.CaGui
       // 
       this.datePicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.datePicker.Location = new System.Drawing.Point(144, 12);
+      this.datePicker.Location = new System.Drawing.Point(144, 39);
       this.datePicker.Name = "datePicker";
-      this.datePicker.Size = new System.Drawing.Size(190, 20);
+      this.datePicker.Size = new System.Drawing.Size(221, 20);
       this.datePicker.TabIndex = 1;
       this.datePicker.ValueChanged += new System.EventHandler(this.datePicker_ValueChanged);
       // 
       // totalLabel
       // 
       this.totalLabel.AutoSize = true;
-      this.totalLabel.Location = new System.Drawing.Point(12, 41);
+      this.totalLabel.Location = new System.Drawing.Point(12, 68);
       this.totalLabel.Name = "totalLabel";
       this.totalLabel.Size = new System.Drawing.Size(88, 13);
       this.totalLabel.TabIndex = 2;
@@ -86,26 +88,26 @@ namespace Pirate.PiVote.CaGui
       // 
       this.totalBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.totalBox.Location = new System.Drawing.Point(144, 38);
+      this.totalBox.Location = new System.Drawing.Point(144, 65);
       this.totalBox.Name = "totalBox";
       this.totalBox.ReadOnly = true;
-      this.totalBox.Size = new System.Drawing.Size(190, 20);
+      this.totalBox.Size = new System.Drawing.Size(221, 20);
       this.totalBox.TabIndex = 3;
       // 
       // validBox
       // 
       this.validBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.validBox.Location = new System.Drawing.Point(144, 64);
+      this.validBox.Location = new System.Drawing.Point(144, 91);
       this.validBox.Name = "validBox";
       this.validBox.ReadOnly = true;
-      this.validBox.Size = new System.Drawing.Size(190, 20);
+      this.validBox.Size = new System.Drawing.Size(221, 20);
       this.validBox.TabIndex = 4;
       // 
       // validLabel
       // 
       this.validLabel.AutoSize = true;
-      this.validLabel.Location = new System.Drawing.Point(12, 67);
+      this.validLabel.Location = new System.Drawing.Point(12, 94);
       this.validLabel.Name = "validLabel";
       this.validLabel.Size = new System.Drawing.Size(87, 13);
       this.validLabel.TabIndex = 5;
@@ -115,26 +117,26 @@ namespace Pirate.PiVote.CaGui
       // 
       this.outdatedBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.outdatedBox.Location = new System.Drawing.Point(144, 90);
+      this.outdatedBox.Location = new System.Drawing.Point(144, 117);
       this.outdatedBox.Name = "outdatedBox";
       this.outdatedBox.ReadOnly = true;
-      this.outdatedBox.Size = new System.Drawing.Size(190, 20);
+      this.outdatedBox.Size = new System.Drawing.Size(221, 20);
       this.outdatedBox.TabIndex = 6;
       // 
       // revokedBox
       // 
       this.revokedBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.revokedBox.Location = new System.Drawing.Point(144, 142);
+      this.revokedBox.Location = new System.Drawing.Point(144, 169);
       this.revokedBox.Name = "revokedBox";
       this.revokedBox.ReadOnly = true;
-      this.revokedBox.Size = new System.Drawing.Size(190, 20);
+      this.revokedBox.Size = new System.Drawing.Size(221, 20);
       this.revokedBox.TabIndex = 7;
       // 
       // outdatedLabel
       // 
       this.outdatedLabel.AutoSize = true;
-      this.outdatedLabel.Location = new System.Drawing.Point(12, 93);
+      this.outdatedLabel.Location = new System.Drawing.Point(12, 120);
       this.outdatedLabel.Name = "outdatedLabel";
       this.outdatedLabel.Size = new System.Drawing.Size(108, 13);
       this.outdatedLabel.TabIndex = 8;
@@ -143,7 +145,7 @@ namespace Pirate.PiVote.CaGui
       // revokedLabel
       // 
       this.revokedLabel.AutoSize = true;
-      this.revokedLabel.Location = new System.Drawing.Point(13, 145);
+      this.revokedLabel.Location = new System.Drawing.Point(13, 172);
       this.revokedLabel.Name = "revokedLabel";
       this.revokedLabel.Size = new System.Drawing.Size(108, 13);
       this.revokedLabel.TabIndex = 9;
@@ -153,26 +155,26 @@ namespace Pirate.PiVote.CaGui
       // 
       this.refusedBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.refusedBox.Location = new System.Drawing.Point(144, 168);
+      this.refusedBox.Location = new System.Drawing.Point(144, 195);
       this.refusedBox.Name = "refusedBox";
       this.refusedBox.ReadOnly = true;
-      this.refusedBox.Size = new System.Drawing.Size(190, 20);
+      this.refusedBox.Size = new System.Drawing.Size(221, 20);
       this.refusedBox.TabIndex = 10;
       // 
       // pendingBox
       // 
       this.pendingBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.pendingBox.Location = new System.Drawing.Point(144, 194);
+      this.pendingBox.Location = new System.Drawing.Point(144, 221);
       this.pendingBox.Name = "pendingBox";
       this.pendingBox.ReadOnly = true;
-      this.pendingBox.Size = new System.Drawing.Size(190, 20);
+      this.pendingBox.Size = new System.Drawing.Size(221, 20);
       this.pendingBox.TabIndex = 11;
       // 
       // refusedLabel
       // 
       this.refusedLabel.AutoSize = true;
-      this.refusedLabel.Location = new System.Drawing.Point(12, 171);
+      this.refusedLabel.Location = new System.Drawing.Point(12, 198);
       this.refusedLabel.Name = "refusedLabel";
       this.refusedLabel.Size = new System.Drawing.Size(104, 13);
       this.refusedLabel.TabIndex = 12;
@@ -181,7 +183,7 @@ namespace Pirate.PiVote.CaGui
       // pendingLabel
       // 
       this.pendingLabel.AutoSize = true;
-      this.pendingLabel.Location = new System.Drawing.Point(12, 197);
+      this.pendingLabel.Location = new System.Drawing.Point(12, 224);
       this.pendingLabel.Name = "pendingLabel";
       this.pendingLabel.Size = new System.Drawing.Size(103, 13);
       this.pendingLabel.TabIndex = 13;
@@ -189,7 +191,8 @@ namespace Pirate.PiVote.CaGui
       // 
       // okButton
       // 
-      this.okButton.Location = new System.Drawing.Point(236, 220);
+      this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.okButton.Location = new System.Drawing.Point(267, 247);
       this.okButton.Name = "okButton";
       this.okButton.Size = new System.Drawing.Size(98, 27);
       this.okButton.TabIndex = 14;
@@ -201,26 +204,50 @@ namespace Pirate.PiVote.CaGui
       // 
       this.notYetBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.notYetBox.Location = new System.Drawing.Point(144, 116);
+      this.notYetBox.Location = new System.Drawing.Point(144, 143);
       this.notYetBox.Name = "notYetBox";
       this.notYetBox.ReadOnly = true;
-      this.notYetBox.Size = new System.Drawing.Size(190, 20);
+      this.notYetBox.Size = new System.Drawing.Size(221, 20);
       this.notYetBox.TabIndex = 15;
       // 
       // notYetLabel
       // 
       this.notYetLabel.AutoSize = true;
-      this.notYetLabel.Location = new System.Drawing.Point(13, 119);
+      this.notYetLabel.Location = new System.Drawing.Point(13, 146);
       this.notYetLabel.Name = "notYetLabel";
       this.notYetLabel.Size = new System.Drawing.Size(123, 13);
       this.notYetLabel.TabIndex = 16;
       this.notYetLabel.Text = "Not yet valid certificates:";
       // 
+      // groupLabel
+      // 
+      this.groupLabel.AutoSize = true;
+      this.groupLabel.Location = new System.Drawing.Point(13, 15);
+      this.groupLabel.Name = "groupLabel";
+      this.groupLabel.Size = new System.Drawing.Size(39, 13);
+      this.groupLabel.TabIndex = 17;
+      this.groupLabel.Text = "Group:";
+      // 
+      // groupBox
+      // 
+      this.groupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.groupBox.FormattingEnabled = true;
+      this.groupBox.Location = new System.Drawing.Point(144, 12);
+      this.groupBox.Name = "groupBox";
+      this.groupBox.Size = new System.Drawing.Size(221, 21);
+      this.groupBox.TabIndex = 18;
+      this.groupBox.Value = null;
+      this.groupBox.SelectedIndexChanged += new System.EventHandler(this.groupBox_SelectedIndexChanged);
+      // 
       // CountDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(346, 257);
+      this.ClientSize = new System.Drawing.Size(377, 283);
+      this.Controls.Add(this.groupBox);
+      this.Controls.Add(this.groupLabel);
       this.Controls.Add(this.notYetLabel);
       this.Controls.Add(this.notYetBox);
       this.Controls.Add(this.okButton);
@@ -268,5 +295,7 @@ namespace Pirate.PiVote.CaGui
     private System.Windows.Forms.Button okButton;
     private System.Windows.Forms.TextBox notYetBox;
     private System.Windows.Forms.Label notYetLabel;
+    private System.Windows.Forms.Label groupLabel;
+    private Gui.GroupComboBox groupBox;
   }
 }
