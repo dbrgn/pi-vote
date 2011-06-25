@@ -16,7 +16,7 @@ using Emil.GMP;
 namespace Pirate.PiVote.Serialization
 {
   [SerializeObject("Base object of all serializable objects.")]
-  [SerializeAdditionalField(typeof(string), "FullName", 0, "Full name of the object type.")]
+  [SerializeAdditionalField(typeof(string), "FullName", 0, "Full name of the object type. The type name may be preceeded by @xx where xx is the hex representation of the version of this object.")]
   public abstract class Serializable
   {
     public Serializable()

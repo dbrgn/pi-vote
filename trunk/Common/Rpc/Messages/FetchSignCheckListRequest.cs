@@ -14,8 +14,16 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to get the list of sign checks on a certificate.
+  /// </summary>
+  [SerializeObject("RPC request to get the list of sign checks on a certificate.")]
   public class FetchSignCheckListRequest : RpcRequest<VotingRpcServer, FetchSignCheckListResponse>
   {
+    /// <summary>
+    /// Id of the certificate.
+    /// </summary>
+    [SerializeField(0, "Id of the certificate.")]
     private Guid certificateId;
 
     public FetchSignCheckListRequest(

@@ -54,6 +54,8 @@ namespace Pirate.PiVote.DocumentationGenerator
 
       GenerateTypes(types);
 
+      GenerateRequests();
+
       this.document.AppendLine(@"\end{document}");
     }
 
@@ -138,6 +140,10 @@ namespace Pirate.PiVote.DocumentationGenerator
       this.document.AppendLine();
     }
 
+    private void GenerateRequests()
+    {
+    }
+    
     private void GenerateTypes(IEnumerable<FieldType> types)
     {
       this.document.AppendLine(@"\section{Types}");
@@ -333,6 +339,12 @@ namespace Pirate.PiVote.DocumentationGenerator
           {
             this.document.AppendLine(@"\bf{Condition} &");
             this.document.AppendLine(fields.Condition + @" \\");
+          }
+
+          if (fields.MinVersion > 0)
+          {
+            this.document.AppendLine(@"\bf{Min Version} &");
+            this.document.AppendLine(fields.MinVersion.ToString() + @" \\");
           }
         }
 

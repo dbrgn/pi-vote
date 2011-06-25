@@ -42,19 +42,19 @@ namespace Pirate.PiVote.Crypto
     /// <summary>
     /// Data of the private key, either encrypted or unencrypted.
     /// </summary>
-    [SerializeField(8, "Data of the private key, either encrypted or unencrypted.", "PrivateKeyStatus is not Unavailable.", null)]
+    [SerializeField(8, "Data of the private key, either encrypted or unencrypted.", "PrivateKeyStatus is not Unavailable.", null, 0)]
     private byte[] privateKeyData;
 
     /// <summary>
     /// Salt used in encryption of the private key.
     /// </summary>
-    [SerializeField(9, "Salt used in encryption of the private key.", "PrivateKeyStatus is Encrypted or Decrypted.", null)]
+    [SerializeField(9, "Salt used in encryption of the private key.", "PrivateKeyStatus is Encrypted or Decrypted.", null, 0)]
     private byte[] privateKeySalt;
 
     /// <summary>
     /// Salt used to strengthen the passphrase.
     /// </summary>
-    [SerializeField(10, "Salt used to strengthen the passphrase.", "PrivateKeyStatus is Encrypted or Decrypted.", null)]
+    [SerializeField(10, "Salt used to strengthen the passphrase.", "PrivateKeyStatus is Encrypted or Decrypted.", null, 0)]
     private byte[] passphraseSalt;
 
     /// <summary>

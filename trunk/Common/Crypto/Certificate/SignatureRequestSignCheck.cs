@@ -7,12 +7,28 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
+  /// <summary>
+  /// Notary/authority sign check on a signature request.
+  /// </summary>
+  [SerializeObject("Notary/authority sign check on a signature request.")]
   public class SignatureRequestSignCheck : Serializable
   {
+    /// <summary>
+    /// Signed sign check cookie from the notary/authory.
+    /// </summary>
+    [SerializeField(0, "Signed sign check cookie from the notary/authory.")]
     public Signed<SignCheckCookie> Cookie { get; private set; }
 
+    /// <summary>
+    /// Certificate which was signed by the notary/authority.
+    /// </summary>
+    [SerializeField(1, "Certificate which was signed by the notary/authority.")]
     public Certificate Certificate { get; private set; }
     
+    /// <summary>
+    /// Date and time at which the sign check was created.
+    /// </summary>
+    [SerializeField(2, "Date and time at which the sign check was created.")]
     public DateTime SignDateTime { get; private set; }
 
     public SignatureRequestSignCheck(

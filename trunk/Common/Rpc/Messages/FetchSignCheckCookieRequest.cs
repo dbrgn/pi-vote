@@ -14,19 +14,31 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to fetch a sign check cookie.
+  /// </summary>
+  [SerializeObject("RPC request to fetch a signature response.")]
   public class FetchSignCheckCookieRequest : RpcRequest<VotingRpcServer, FetchSignCheckCookieResponse>
   {
-    private Guid id;
+    /// <summary>
+    /// Id of the notary's or authority's certificate.
+    /// </summary>
+    [SerializeField(0, "Id of the notary's or authority's certificate.")]
+    private Guid notaryCertificateId;
 
+    /// <summary>
+    /// Code to access the sign check cookie.
+    /// </summary>
+    [SerializeField(1, "Code to access the sign check cookie.")]
     private byte[] code;
 
     public FetchSignCheckCookieRequest(
       Guid requestId,
-      Guid id,
+      Guid notaryCertificateId,
       byte[] code)
       : base(requestId)
     {
-      this.id = id;
+      this.notaryCertificateId = notaryCertificateId;
       this.code = code;
     }
 
@@ -45,7 +57,7 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(this.id);
+      context.Write(this.notaryCertificateId);
       context.Write(this.code);
     }
 
@@ -56,7 +68,7 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context, byte version)
     {
       base.Deserialize(context, version);
-      this.id = context.ReadGuid();
+      this.notaryCertificateId = context.ReadGuid();
       this.code = context.ReadBytes();
     }
 
@@ -68,7 +80,7 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Response to the request.</returns>
     protected override FetchSignCheckCookieResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
-      return new FetchSignCheckCookieResponse(RequestId, server.GetSignCheckCookie(this.id, this.code));
+      return new FetchSignCheckCookieResponse(RequestId, server.GetSignCheckCookie(this.notaryCertificateId, this.code));
     }
   }
 }

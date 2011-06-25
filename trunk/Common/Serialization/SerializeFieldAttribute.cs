@@ -23,22 +23,30 @@ namespace Pirate.PiVote.Serialization
 
     public Type AlternateType { get; private set; }
 
+    public int MinVersion { get; private set; }
+
     public SerializeFieldAttribute(int index, string comment)
-      : this(index, comment, string.Empty, null)
+      : this(index, comment, string.Empty, null, 0)
     { 
     }
 
-    public SerializeFieldAttribute(int index, string comment, Type alternateType)
-      : this(index, comment, string.Empty, alternateType)
+    public SerializeFieldAttribute(int index, string comment, int minVersion)
+      : this(index, comment, string.Empty, null, minVersion)
     {
     }
 
-    public SerializeFieldAttribute(int index, string comment, string condition, Type alternateType)
+    public SerializeFieldAttribute(int index, string comment, Type alternateType)
+      : this(index, comment, string.Empty, alternateType, 0)
+    {
+    }
+
+    public SerializeFieldAttribute(int index, string comment, string condition, Type alternateType, int minVersion)
     {
       Index = index;
       Comment = comment;
       Condition = condition;
       AlternateType = alternateType;
+      MinVersion = minVersion;
     }
   }
 }

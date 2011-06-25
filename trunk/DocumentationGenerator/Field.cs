@@ -24,6 +24,8 @@ namespace Pirate.PiVote.DocumentationGenerator
 
     public string FieldTypeName { get; private set; }
 
+    public int MinVersion { get; private set; }
+
     public string ShortFieldTypeName
     {
       get
@@ -34,13 +36,14 @@ namespace Pirate.PiVote.DocumentationGenerator
       }
     }
 
-    public Field(FieldType type, string fieldTypeName, string name, string comment, string condition)
+    public Field(FieldType type, string fieldTypeName, string name, string comment, string condition, int minVersion)
     {
       Type = type;
       FieldTypeName = fieldTypeName;
       Name = name.Substring(0, 1).ToUpper() + name.Substring(1); 
       Comment = comment;
       Condition = condition;
+      MinVersion = minVersion;
     }
   }
 }

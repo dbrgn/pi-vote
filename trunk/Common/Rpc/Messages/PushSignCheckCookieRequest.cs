@@ -14,8 +14,16 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request setting the sign check cookie for a notary/authority.
+  /// </summary>
+  [SerializeObject("RPC request setting the sign check cookie for a notary/authority.")]
   public class PushSignCheckCookieRequest : RpcRequest<VotingRpcServer, PushSignCheckCookieResponse>
   {
+    /// <summary>
+    /// Signed sign check cookie.
+    /// </summary>
+    [SerializeField(0, "Signed sign check cookie.")]
     private Signed<SignCheckCookie> cookie;
 
     public PushSignCheckCookieRequest(

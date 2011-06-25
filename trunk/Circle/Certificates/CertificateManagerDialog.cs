@@ -271,6 +271,7 @@ namespace Pirate.PiVote.Circle.Certificates
       {
         ListViewItem item = this.certificateList.SelectedItems[0];
         Certificate certificate = (Certificate)item.Tag;
+        this.controller.DeactiveCertificate(certificate);
         item.Remove();
       }
     }

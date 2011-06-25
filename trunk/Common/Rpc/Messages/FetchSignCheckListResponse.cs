@@ -14,11 +14,23 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering a list of sign check and the encrypted request data.
+  /// </summary>
+  [SerializeObject("RPC response delivering a list of sign check and the encrypted request data.")]
   public class FetchSignCheckListResponse : RpcResponse
   {
-    public byte[] EncryptedSignatureRequest { get; private set; }
-
+    /// <summary>
+    /// List of sign checks.
+    /// </summary>
+    [SerializeField(0, "List of sign checks.")]
     public List<Signed<SignatureRequestSignCheck>> SignChecks { get; private set; }
+
+    /// <summary>
+    /// Encrypted request data.
+    /// </summary>
+    [SerializeField(1, "Encrypted request data.")]
+    public byte[] EncryptedSignatureRequest { get; private set; }
 
     public FetchSignCheckListResponse(Guid requestId, 
       IEnumerable<Signed<SignatureRequestSignCheck>> signChecks,

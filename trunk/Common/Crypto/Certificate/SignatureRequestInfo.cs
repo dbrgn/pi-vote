@@ -26,6 +26,10 @@ namespace Pirate.PiVote.Crypto
     [SerializeField(0, "Email address of requester.")]
     public string EmailAddress { get; private set; }
 
+    /// <summary>
+    /// Encrypted request data.
+    /// </summary>
+    [SerializeField(1, "Encrypted request data.", 1)]
     public byte[] EncryptedSignatureRequest { get; private set; }
 
     public override byte Version

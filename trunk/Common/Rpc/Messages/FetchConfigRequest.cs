@@ -18,10 +18,19 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to fetch the config.
   /// </summary>
   [SerializeObject("RPC request to fetch the config.")]
+  [RpcRequest("Downloads the config and the voting groups from the server. Also tells the server what kind of client is connected. This is the first message as it also contains information about updates.")]
   public class FetchConfigRequest : RpcRequest<VotingRpcServer, FetchConfigResponse>
   {
+    /// <summary>
+    /// Name of the client software.
+    /// </summary>
+    [SerializeField(0, "Name of the client software.", 1)]
     public string ClientName { get; private set; }
 
+    /// <summary>
+    /// Version of the client software.
+    /// </summary>
+    [SerializeField(1, "Version of the client software.", 1)]
     public string ClientVersion { get; private set; }
 
     public FetchConfigRequest(

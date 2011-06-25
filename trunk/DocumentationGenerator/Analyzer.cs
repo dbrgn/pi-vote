@@ -86,48 +86,51 @@ namespace Pirate.PiVote.DocumentationGenerator
         {
           var soa = (SerializeObjectAttribute)type.GetCustomAttributes(this.serializeObjectAttribute, false).SingleOrDefault();
 
-          ObjectType inherits = null;
-
-          if (type.BaseType != typeof(object))
+          if (soa != null)
           {
-            if (!this.types.ContainsKey(type.BaseType.GenericFullName()))
+            ObjectType inherits = null;
+
+            if (type.BaseType != typeof(object))
             {
-              AnalyzeType(type.BaseType);
+              if (!this.types.ContainsKey(type.BaseType.GenericFullName()))
+              {
+                AnalyzeType(type.BaseType);
+              }
+
+              inherits = this.types[type.BaseType.GenericFullName()] as ObjectType;
             }
 
-            inherits = this.types[type.BaseType.GenericFullName()] as ObjectType;
-          }
+            ObjectType objectType = new ObjectType(type.GenericFullName(), soa.Comment, inherits);
 
-          ObjectType objectType = new ObjectType(type.GenericFullName(), soa.Comment, inherits);
-
-          foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
-          {
-            if (field.DeclaringType == type)
+            foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
-              AnalyzeType(objectType, field);
+              if (field.DeclaringType == type)
+              {
+                AnalyzeType(objectType, field);
+              }
             }
-          }
 
-          foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
-          {
-            if (property.DeclaringType == type)
+            foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
-              AnalyzeType(objectType, property);
+              if (property.DeclaringType == type)
+              {
+                AnalyzeType(objectType, property);
+              }
             }
+
+            if (soa == null)
+            {
+              Console.WriteLine("  Serialize Object Attribute on type " + type.FullName + " missing");
+              Console.ReadLine();
+            }
+
+            objectType.Validate();
+
+            this.types.Add(objectType.Name, objectType);
           }
-
-          if (soa == null)
+          else
           {
-            Console.WriteLine("  Serialize Object Attribute on type " + type.FullName + " missing");
-            Console.ReadLine();
-          }
-
-          objectType.Validate();
-
-          this.types.Add(objectType.Name, objectType);
-          
-          if (soa == null)
-          {
+            Console.WriteLine("Type {0} has no SerializeObjectAttribute!", type.FullName);
             Console.ReadLine();
           }
         }
@@ -207,22 +210,22 @@ namespace Pirate.PiVote.DocumentationGenerator
     {
       if (this.types.ContainsKey(type.GenericFullName()))
       {
-        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition));
+        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition, attribute.MinVersion));
       }
       else if (type.IsSubclassOf(this.serializableType))
       {
         AnalyzeType(type);
-        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition));
+        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition, attribute.MinVersion));
       }
       else if (IsListOf(type))
       {
         AnalyzeListType(type);
-        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition));
+        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition, attribute.MinVersion));
       }
       else if (type.IsEnum)
       {
         AnalyzeEnumType(type);
-        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition));
+        objectType.AddField(attribute.Index, new Field(this.types[type.GenericFullName()], type.SpecificFullName(), fieldName, attribute.Comment, attribute.Condition, attribute.MinVersion));
       }
       else
       {

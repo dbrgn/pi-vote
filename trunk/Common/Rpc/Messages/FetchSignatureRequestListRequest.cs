@@ -18,6 +18,7 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to fetch list signature requests.
   /// </summary>
   [SerializeObject("RPC request to fetch list signature requests.")]
+  [RpcRequest("Downloads a list of ids of the pending signature requests. This is done by an administrator when downloading signature requests.")]
   public class FetchSignatureRequestListRequest : RpcRequest<VotingRpcServer, FetchSignatureRequestListResponse>
   {
     public FetchSignatureRequestListRequest(

@@ -7,11 +7,23 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Crypto
 {
+  /// <summary>
+  /// Cookie authorizing the posting of sign checks.
+  /// </summary>
+  [SerializeObject("Cookie authorizing the posting of sign checks.")]
   public class SignCheckCookie : Serializable
   {
-    public byte[] Randomness { get; private set; }
-
+    /// <summary>
+    /// Data of creation of cookie.
+    /// </summary>
+    [SerializeField(0, "Data of creation of cookie.")]
     public DateTime CreationDate { get; private set; }
+    
+    /// <summary>
+    /// Random data defining the cookie.
+    /// </summary>
+    [SerializeField(1, "Random data defining the cookie.")]
+    public byte[] Randomness { get; private set; }
 
     public SignCheckCookie()
     {

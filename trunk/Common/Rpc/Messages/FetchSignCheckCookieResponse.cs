@@ -14,8 +14,16 @@ using Pirate.PiVote.Serialization;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC response delivering a sign check cookie.
+  /// </summary>
+  [SerializeObject("RPC response delivering a sign check cookie.")]
   public class FetchSignCheckCookieResponse : RpcResponse
   {
+    /// <summary>
+    /// Signed sign check cookie.
+    /// </summary>
+    [SerializeField(0, "Signed sign check cookie.")]
     public Signed<SignCheckCookie> Cookie { get; private set; }
 
     public FetchSignCheckCookieResponse(

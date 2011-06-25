@@ -18,6 +18,7 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to fetch an envelope.
   /// </summary>
   [SerializeObject("RPC request to fetch an envelope.")]
+  [RpcRequest("Downloads an envelope from the server by stating the voting and index of the envelope.")]
   public class FetchEnvelopeRequest : RpcRequest<VotingRpcServer, FetchEnvelopeResponse>
   {
     /// <summary>

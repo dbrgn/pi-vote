@@ -18,6 +18,7 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to fetch voting parameters.
   /// </summary>
   [SerializeObject("RPC request to fetch voting parameters.")]
+  [RpcRequest("Gets the parameters for a voting together with the index of an authority in a voting. This is used by the authorities.")]
   public class FetchParametersRequest : RpcRequest<VotingRpcServer, FetchParametersResponse>
   {
     /// <summary>

@@ -18,6 +18,8 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to end a voting procedure.
   /// </summary>
   [SerializeObject("RPC request to end a voting procedure.")]
+  [RpcRequest("Tells the server to and a voting. This request is no longer supported.")]
+  [Obsolete]
   public class EndVotingRequest : RpcRequest<VotingRpcServer, EndVotingResponse>
   {
     /// <summary>

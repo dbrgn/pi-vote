@@ -696,6 +696,8 @@ namespace Pirate.PiVote.Crypto
     /// </summary>
     public void EndVote()
     {
+      throw new PiSecurityException(ExceptionCode.NoVotingWithId, "This is not allowed.");
+
       if (Status != VotingStatus.Voting)
         throw new InvalidOperationException("Wrong status for operation.");
 

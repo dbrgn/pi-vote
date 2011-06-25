@@ -14,8 +14,16 @@ using Pirate.PiVote.Crypto;
 
 namespace Pirate.PiVote.Rpc
 {
+  /// <summary>
+  /// RPC request to add a sign check.
+  /// </summary>
+  [SerializeObject("RPC request to add a sign check.")]
   public class PushSignCheckRequest : RpcRequest<VotingRpcServer, PushSignCheckResponse>
   {
+    /// <summary>
+    /// Signed sign check.
+    /// </summary>
+    [SerializeField(0, "Signed sign check.")]
     private Signed<SignatureRequestSignCheck> signedSignCheck;
 
     public PushSignCheckRequest(
