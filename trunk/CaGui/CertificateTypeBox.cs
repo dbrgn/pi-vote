@@ -19,6 +19,10 @@ namespace Pirate.PiVote.CaGui
   {
     public CertificateTypeBox()
     {
+    }
+
+    public override void SetValues()
+    {
       AddItem(CertificateType.All);
       AddItem(CertificateType.CA);
       AddItem(CertificateType.Admin);

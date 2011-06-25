@@ -19,6 +19,10 @@ namespace Pirate.PiVote.CaGui
   {
     public CertificateStatusBox()
     {
+    }
+
+    public override void SetValues()
+    {
       AddItem(CertificateStatus.All);
       AddItem(CertificateStatus.New);
       AddItem(CertificateStatus.Valid);

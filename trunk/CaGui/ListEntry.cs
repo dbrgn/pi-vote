@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -89,6 +90,7 @@ namespace Pirate.PiVote.CaGui
         Item.SubItems[3].Text = string.Format("{0}, {1}", request.FamilyName, request.FirstName);
       }
 
+
       switch (Status)
       {
         case CertificateStatus.Valid:
@@ -110,6 +112,31 @@ namespace Pirate.PiVote.CaGui
       }
 
       Item.SubItems[6].Text = Status.Text();
+      Item.BackColor = BackColor;
+    }
+
+    private Color BackColor
+    {
+      get
+      {
+        switch (Status)
+        {
+          case CertificateStatus.Valid:
+            return Color.LightGreen;
+          case CertificateStatus.NotYet:
+            return Color.YellowGreen;
+          case CertificateStatus.Outdated:
+            return Color.Yellow;
+          case CertificateStatus.Revoked:
+            return Color.OrangeRed;
+          case CertificateStatus.Refused:
+            return Color.Orange;
+          case CertificateStatus.New:
+            return Color.LightBlue;
+          default:
+            return Color.White;
+        }
+      }
     }
 
     public CertificateStatus Status
@@ -237,6 +264,7 @@ namespace Pirate.PiVote.CaGui
         }
       }
 
+      Item.BackColor = BackColor;
       Item.Tag = this;
 
       return Item;
@@ -300,7 +328,8 @@ namespace Pirate.PiVote.CaGui
 
     public bool IsOfDate(DateTime date)
     {
-      if (this.response == null)
+      if (this.response == null ||
+          this.response.Signature == null)
       {
         return false;
       }

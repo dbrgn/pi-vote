@@ -18,6 +18,7 @@ using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Gui;
 using Pirate.PiVote.Serialization;
+using Pirate.PiVote.Gui.Printing;
 
 namespace Pirate.PiVote.CaGui
 {
@@ -60,29 +61,37 @@ namespace Pirate.PiVote.CaGui
     {
       CenterToScreen();
 
+      this.searchTypeBox.SetValues();
+      this.searchStatusBox.SetValues();
+
       WaitForm waitForm = new WaitForm();
       waitForm.Update("Loading CA GUI...", "Loading basic files...", 0d);
       waitForm.Show();
 
-      LoadFiles();
-
-      Thread loadDataThread = new Thread(LoadEntries);
-      this.loadProgress = 0;
-      loadDataThread.Start();
-
-      while (loadDataThread.IsAlive)
+      if (LoadFiles())
       {
-        waitForm.Update("Loading CA GUI...", "Loading entries...", this.loadProgress);
-        Application.DoEvents();
-        Thread.Sleep(1);
+        Thread loadDataThread = new Thread(LoadEntries);
+        this.loadProgress = 0;
+        loadDataThread.Start();
+
+        while (loadDataThread.IsAlive)
+        {
+          waitForm.Update("Loading CA GUI...", "Loading entries...", this.loadProgress);
+          Application.DoEvents();
+          Thread.Sleep(1);
+        }
+
+        waitForm.Update("Loading CA GUI...", "Loading main view...", 0d);
+        DisplayEntries();
+
+        waitForm.Close();
+
+        Show();
       }
-
-      waitForm.Update("Loading CA GUI...", "Loading main view...", 0d);
-      DisplayEntries();
-
-      waitForm.Close();
-
-      Show();
+      else
+      {
+        Close();
+      }
     }
 
     private string DataPath(string fileName)
@@ -90,7 +99,7 @@ namespace Pirate.PiVote.CaGui
       return Path.Combine(this.dataPath, fileName);
     }
 
-    private void LoadFiles()
+    private bool LoadFiles()
     {
       this.dataPath = Path.Combine(Application.StartupPath, DataPathPart);
       
@@ -105,8 +114,7 @@ namespace Pirate.PiVote.CaGui
 
         if (!DecryptCaKeyDialog.TryUnlock(CaCertificate))
         {
-          Close();
-          return;
+          return false;
         }
       }
 
@@ -124,6 +132,8 @@ namespace Pirate.PiVote.CaGui
       {
         AddRevocationList(signedRevocationList.Value);
       }
+
+      return true;
     }
 
     private void AddRevocationList(RevocationList revocationList)
@@ -556,6 +566,7 @@ namespace Pirate.PiVote.CaGui
       this.signToolStripMenuItem.Enabled = notAnswered && canSign;
       this.revokeToolStripMenuItem.Enabled = isAnwered && canSign;
       this.exportResponseToolStripMenuItem.Enabled = isAnwered;
+      this.printToolStripMenuItem.Enabled = hasRow;
     }
 
     private void exportResponseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -774,6 +785,24 @@ namespace Pirate.PiVote.CaGui
         else
         {
           done = true;
+        }
+      }
+    }
+
+    private void printToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      if (EntrySelected)
+      {
+        var listEntry = SelectedEntry;
+
+        SignatureRequestDocument document = new SignatureRequestDocument(listEntry.Request, listEntry.Certificate, GroupList.GetGroupName);
+
+        PrintDialog dialog = new PrintDialog();
+        dialog.Document = document;
+
+        if (dialog.ShowDialog() == DialogResult.OK)
+        {
+          document.Print();
         }
       }
     }

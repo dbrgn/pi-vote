@@ -26,6 +26,10 @@ namespace Pirate.PiVote.CaGui
       this.valueIndex = new Dictionary<T, int>();
     }
 
+    public virtual void SetValues()
+    { 
+    }
+
     protected virtual void AddItem(T value, string text)
     {
       int index = Items.Add(text);
@@ -48,7 +52,8 @@ namespace Pirate.PiVote.CaGui
       }
       set
       {
-        if (value != null)
+        if (value != null &&
+          this.valueIndex.Count > 0)
         {
           SelectedIndex = this.valueIndex[value];
         }

@@ -22,7 +22,6 @@ namespace Pirate.PiVote.CaGui
   {
     private Language language;
     private bool expiryDateEnable;
-    private bool needsToPrint;
     private SignatureRequest request;
     private Certificate certificate;
   
@@ -86,7 +85,6 @@ namespace Pirate.PiVote.CaGui
           this.validUntilPicker.Enabled = false;
           this.expiryDateEnable = false;
           this.printButton.Enabled = true;
-          this.needsToPrint = true;
         }
         else
         {
@@ -94,7 +92,6 @@ namespace Pirate.PiVote.CaGui
           this.signedByEmailAddressTextBox.Text = "N/A";
           this.expiryDateEnable = true;
           this.printButton.Enabled = false;
-          this.needsToPrint = false;
         }
 
         var result = request2.SigningCertificate.Validate(storage);
@@ -119,7 +116,6 @@ namespace Pirate.PiVote.CaGui
         this.signedByTypeLabel.Text = "N/A";
         this.expiryDateEnable = true;
         this.printButton.Enabled = false;
-        this.needsToPrint = false;
         this.validUntilPicker.Value = DateTime.Now.AddYears(3);
       }
 
@@ -176,8 +172,7 @@ namespace Pirate.PiVote.CaGui
     private void CheckValid()
     {
       this.okButton.Enabled = ((this.acceptSignRadioButton.Checked && this.validUntilPicker.Value > DateTime.Now) ||
-                              (this.reasonComboBox.Enabled && this.reasonComboBox.SelectedIndex >= 0)) &&
-                              !this.needsToPrint;
+                              (this.reasonComboBox.Enabled && this.reasonComboBox.SelectedIndex >= 0));
     }
 
     private void acceptSignRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -261,7 +256,6 @@ namespace Pirate.PiVote.CaGui
       if (dialog.ShowDialog() == DialogResult.OK)
       {
         document.Print();
-        this.needsToPrint = false;
         CheckValid();
       }
     }
