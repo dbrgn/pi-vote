@@ -406,6 +406,10 @@ namespace Pirate.PiVote.Circle
       {
         switch (certificate.Validate(Status.CertificateStorage))
         {
+          case CertificateValidationResult.Valid:
+            
+            DeleteContinueSignatureRequestFiles(certificate);
+            break;
           case CertificateValidationResult.NoSignature:
             var response = GetSignatureResponse(certificate);
 
@@ -416,6 +420,7 @@ namespace Pirate.PiVote.Circle
                   Resources.ControllerLoadCertificatesAccepted,
                   certificate.Id.ToString(), certificate.TypeText);
                 MessageForm.Show(acceptedMessage, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DeleteContinueSignatureRequestFiles(certificate);
                 break;
               case SignatureResponseStatus.Declined:
                 string declinedMessage = string.Format(
@@ -427,6 +432,19 @@ namespace Pirate.PiVote.Circle
 
             break;
         }
+      }
+    }
+
+    private void DeleteContinueSignatureRequestFiles(Certificate certificate)
+    {
+      string signatureRequestFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + Files.SignatureRequestDataExtension);
+      string signatureRequestInfoFileName = Path.Combine(Status.DataPath, certificate.Id.ToString() + Files.SignatureRequestInfoExtension);
+
+      if (File.Exists(signatureRequestFileName) &&
+          File.Exists(signatureRequestInfoFileName))
+      {
+        File.Delete(signatureRequestFileName);
+        File.Delete(signatureRequestInfoFileName);
       }
     }
 

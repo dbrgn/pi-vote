@@ -628,4 +628,13 @@
   <data name="VotingStatusGroupFromUnit" xml:space="preserve">
     <value>{0} vom {1} bis {2}</value>
   </data>
+  <data name="CreateCertificateFinishPrint" xml:space="preserve">
+    <value>Drucken</value>
+  </data>
+  <data name="CreateCertificateFinishUpload" xml:space="preserve">
+    <value>Hochladen</value>
+  </data>
+  <data name="CreateCertificateNotUploadeMessage" xml:space="preserve">
+    <value>Du hast deinen Zertifikatsantrag noch nicht heraufgeladen. Wenn du deinen Zertifikatsantrag nicht herauflädst, kannst du nicht Zertifiziert werden. Willst du jetzt heraufladen?</value>
+  </data>
 </root>

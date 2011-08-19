@@ -32,11 +32,6 @@ namespace Pirate.PiVote.Rpc
     /// Config file for the remote configuration of the clients.
     /// </summary>
     private const string RemoteConfigFileName = "pi-vote-remote.cfg";
-
-    /// <summary>
-    /// MySQL database connection.
-    /// </summary>
-    private MySqlConnection dbConnection;
     
     /// <summary>
     /// List of voting procedures.
@@ -57,6 +52,11 @@ namespace Pirate.PiVote.Rpc
     /// Server config file.
     /// </summary>
     private ServerConfig serverConfig;
+
+    /// <summary>
+    /// MySQL database connection.
+    /// </summary>
+    private MySqlConnection dbConnection;
 
     /// <summary>
     /// Server config file.
@@ -93,7 +93,7 @@ namespace Pirate.PiVote.Rpc
     {
       get { return this.dbConnection; }
     }
-
+    
     /// <summary>
     /// Server certificate without private key.
     /// </summary>
@@ -689,12 +689,12 @@ namespace Pirate.PiVote.Rpc
             signCheck.Cookie.Certificate is NotaryCertificate))
         throw new PiSecurityException(ExceptionCode.SignCheckCookieNotFromNotary, "Signature on sign check cookie not from notary.");
 
-      var reader = this.dbConnection.ExecuteReader(
+      Signed<SignCheckCookie> dbCookie = null;
+
+      var reader = DbConnection.ExecuteReader(
         "SELECT Cookie FROM signcheckcookie WHERE NotaryId = @NotaryId",
         "@NotaryId",
-        signCheck.Cookie.Certificate.Id.ToByteArray());
-
-      Signed<SignCheckCookie> dbCookie = null;
+        signCheck.Cookie.Certificate.Id);
 
       if (reader.Read())
       {
@@ -706,7 +706,6 @@ namespace Pirate.PiVote.Rpc
         reader.Close();
         throw new PiSecurityException(ExceptionCode.SignCheckCookieNotFound, "Sign check cookie not found.");
       }
-
 
       if (dbCookie.Certificate.Fingerprint != signCheck.Cookie.Certificate.Fingerprint)
         throw new PiSecurityException(ExceptionCode.SignCheckCookieFingerprintMismatch, "Fingerprint on sign check cookie does not match.");
@@ -747,7 +746,7 @@ namespace Pirate.PiVote.Rpc
 
     public Signed<SignCheckCookie> GetSignCheckCookie(Guid notaryId, byte[] code)
     {
-      var reader = this.dbConnection.ExecuteReader(
+      var reader = this.DbConnection.ExecuteReader(
         "SELECT Cookie, Code, Expires FROM signcheckcookie WHERE NotaryId = @NotaryId",
         "@NotaryId",
         notaryId.ToByteArray());
@@ -789,7 +788,7 @@ namespace Pirate.PiVote.Rpc
             signedCookie.Certificate is NotaryCertificate))
         throw new PiSecurityException(ExceptionCode.SignCheckCookieNotFromNotary, "Not from proper authority or notary.");
 
-      this.dbConnection.ExecuteNonQuery(
+      this.DbConnection.ExecuteNonQuery(
         "DELETE FROM signcheckcookie WHERE NotaryId = @NotaryId",
         "@NotaryId", 
         signedCookie.Certificate.Id.ToByteArray());
@@ -801,7 +800,7 @@ namespace Pirate.PiVote.Rpc
 
       MySqlCommand insertCommand = new MySqlCommand(
         "INSERT INTO signcheckcookie (NotaryId, Cookie, Code, Expires) VALUES (@NotaryId, @Cookie, @Code, @Expires)", 
-        this.dbConnection);
+        this.DbConnection);
       insertCommand.Parameters.AddWithValue("@NotaryId", signedCookie.Certificate.Id.ToByteArray());
       insertCommand.Parameters.AddWithValue("@Cookie", signedCookie.ToBinary());
       insertCommand.Parameters.AddWithValue("@Code", code);

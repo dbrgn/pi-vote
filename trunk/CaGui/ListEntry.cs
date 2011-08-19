@@ -282,7 +282,8 @@ namespace Pirate.PiVote.CaGui
     {
       get
       {
-        if (this.response == null)
+        if (this.response == null ||
+            this.response.Signature == null)
         {
           return DateTime.MaxValue;
         }
@@ -297,7 +298,8 @@ namespace Pirate.PiVote.CaGui
     {
       get
       {
-        if (this.response == null)
+        if (this.response == null ||
+            this.response.Signature == null)
         {
           return DateTime.MaxValue;
         }

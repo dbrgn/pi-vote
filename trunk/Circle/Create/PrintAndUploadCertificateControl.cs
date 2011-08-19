@@ -21,6 +21,8 @@ namespace Pirate.PiVote.Circle.Create
 {
   public partial class PrintAndUploadCertificateControl : CreateCertificateControl
   {
+    private bool uploaded = false;
+
     public PrintAndUploadCertificateControl()
     {
       InitializeComponent();
@@ -61,6 +63,11 @@ namespace Pirate.PiVote.Circle.Create
 
     private void uploadButton_Click(object sender, EventArgs e)
     {
+      Upload();
+    }
+
+    private void Upload()
+    {
       if (Status.Controller.Status.ServerCertificate != null)
       {
         if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(Status.Certificate, GuiResources.UnlockActionSignRequest))
@@ -89,11 +96,22 @@ namespace Pirate.PiVote.Circle.Create
       {
         MessageForm.Show(Resources.CreateCertificateServerCertificateInvalidMessage, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
+
+      this.uploaded = true;
     }
 
     private void doneButton_Click(object sender, EventArgs e)
     {
       OnCloseCreateDialog();
+    }
+
+    public override void BeforeClose()
+    {
+      if (!this.uploaded &&
+          MessageBox.Show(Resources.CreateCertificateNotUploadeMessage, Resources.MessageBoxTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+      {
+        Upload();
+      }
     }
   }
 }

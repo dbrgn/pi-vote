@@ -189,7 +189,7 @@ namespace Pirate.PiVote.Crypto
     /// Create a new voting procedure.
     /// </summary>
     /// <param name="logger">Logs messages to file.</param>
-    /// <param name="dbConnection">Connection to the database.</param>
+    /// <param name="DataAccess.DbConnection">Connection to the database.</param>
     /// <param name="parameters">Voting parameters.</param>
     /// <param name="rootCertificate">Certificate storage.</param>
     public VotingServerEntity(
@@ -224,7 +224,7 @@ namespace Pirate.PiVote.Crypto
     /// Create a new voting procedure.
     /// </summary>
     /// <param name="logger">Logs messages to file.</param>
-    /// <param name="dbConnection">Connection to the database.</param>
+    /// <param name="DataAccess.DbConnection">Connection to the database.</param>
     /// <param name="parameters">Voting parameters.</param>
     /// <param name="rootCertificate">Certificate storage.</param>
     /// <param name="status">Voting status.</param>

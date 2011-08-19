@@ -652,4 +652,7 @@
   <data name="VotingStatusGroupFromUnit" xml:space="preserve">
     <value>{0} from {1} until {2}</value>
   </data>
+  <data name="CreateCertificateNotUploadeMessage" xml:space="preserve">
+    <value>You have not yet uploaded your certificate. You cannot be certified if you do not upload your certificate. Do you want to do so now?</value>
+  </data>
 </root>

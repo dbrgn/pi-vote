@@ -21,7 +21,6 @@ namespace Pirate.PiVote.Client
 {
   public partial class SimpleCreateCertificateItem : WizardItem
   {
-    private byte[] signatureRequestKey;
     private SignatureRequest signatureRequest;
     private SignatureRequestInfo signatureRequestInfo;
     private Secure<SignatureRequest> secureSignatureRequest;

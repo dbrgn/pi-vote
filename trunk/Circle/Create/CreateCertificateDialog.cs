@@ -19,6 +19,8 @@ namespace Pirate.PiVote.Circle.Create
 {
   public partial class CreateCertificateDialog : Form
   {
+    private CreateCertificateControl control;
+
     public CreateCertificateDialog()
     {
       InitializeComponent();
@@ -31,37 +33,41 @@ namespace Pirate.PiVote.Circle.Create
       Text = Resources.CreateCertificateDialogTitle;
     }
 
+    private void SetControl(CreateCertificateControl control, CreateDialogStatus status)
+    {
+      Controls.Clear();
+
+      if (status != null)
+      {
+        this.control.Status = status;
+      }
+
+      this.control.Dock = DockStyle.Fill;
+      this.control.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
+      this.control.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
+      this.control.Prepare();
+      this.Controls.Add(control);
+    }
+
     private void CreateNewCertificate(CircleController controller)
     {
-      SelectCertificateTypeControl control = new SelectCertificateTypeControl();
-      control.Status = new CreateDialogStatus(controller);
-      control.Dock = DockStyle.Fill;
-      control.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
-      control.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
-      control.Prepare();
-      Controls.Add(control);
+      SetControl(
+        new SelectCertificateTypeControl(), 
+        new CreateDialogStatus(controller));
     }
 
     private void CreateNewVoterCertificate(CircleController controller)
     {
-      EnterVoterCertificateDataControl control = new EnterVoterCertificateDataControl();
-      control.Status = new CreateDialogStatus(controller);
-      control.Dock = DockStyle.Fill;
-      control.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
-      control.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
-      control.Prepare();
-      Controls.Add(control);
+      SetControl(
+        new EnterVoterCertificateDataControl(), 
+        new CreateDialogStatus(controller));
     }
 
     private void CreateNewAuthorityCertificate(CircleController controller)
     {
-      EnterAuthorityCertificateDataControl control = new EnterAuthorityCertificateDataControl();
-      control.Status = new CreateDialogStatus(controller);
-      control.Dock = DockStyle.Fill;
-      control.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
-      control.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
-      control.Prepare();
-      Controls.Add(control);
+      SetControl(
+        new EnterAuthorityCertificateDataControl(),
+        new CreateDialogStatus(controller));
     }
 
     private bool TryResumeCertificateCreation(CircleController controller, Certificate certificate)
@@ -71,14 +77,10 @@ namespace Pirate.PiVote.Circle.Create
 
       if (status.TryLoadSignatureRequest())
       {
-        PrintAndUploadCertificateControl control = new PrintAndUploadCertificateControl();
-        control.Status = new CreateDialogStatus(controller);
-        control.Status = status;
-        control.Dock = DockStyle.Fill;
-        control.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
-        control.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
-        control.Prepare();
-        Controls.Add(control);
+        SetControl(
+          new PrintAndUploadCertificateControl(),
+          status);
+
         return true;
       }
       else
@@ -94,12 +96,7 @@ namespace Pirate.PiVote.Circle.Create
 
     private void Control_ShowNextControl(CreateCertificateControl nextControl)
     {
-      Controls.Clear();
-      nextControl.Dock = DockStyle.Fill;
-      nextControl.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
-      nextControl.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
-      nextControl.Prepare();
-      Controls.Add(nextControl);
+      SetControl(nextControl, null);
     }
 
     public static void ShowCreateNewCertificate(CircleController controller)
@@ -128,6 +125,11 @@ namespace Pirate.PiVote.Circle.Create
       CreateCertificateDialog dialog = new CreateCertificateDialog();
       dialog.CreateNewVoterCertificate(controller);
       dialog.ShowDialog();
+    }
+
+    protected override void OnClosing(CancelEventArgs e)
+    {
+      this.control.BeforeClose();
     }
   }
 }

@@ -37,6 +37,10 @@ namespace Pirate.PiVote.Circle.Create
     { 
     }
 
+    public virtual void BeforeClose()
+    {
+    }
+
     protected void OnShowNextControl(CreateCertificateControl nextControl)
     {
       if (ShowNextControl != null)
