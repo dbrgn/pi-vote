@@ -81,7 +81,7 @@ namespace Pirate.PiVote.CaGui
       // validUntilLabel
       // 
       this.validUntilLabel.AutoSize = true;
-      this.validUntilLabel.Location = new System.Drawing.Point(8, 260);
+      this.validUntilLabel.Location = new System.Drawing.Point(8, 286);
       this.validUntilLabel.Name = "validUntilLabel";
       this.validUntilLabel.Size = new System.Drawing.Size(55, 14);
       this.validUntilLabel.TabIndex = 0;
@@ -402,7 +402,7 @@ namespace Pirate.PiVote.CaGui
       // validFromLabel
       // 
       this.validFromLabel.AutoSize = true;
-      this.validFromLabel.Location = new System.Drawing.Point(8, 284);
+      this.validFromLabel.Location = new System.Drawing.Point(8, 260);
       this.validFromLabel.Name = "validFromLabel";
       this.validFromLabel.Size = new System.Drawing.Size(58, 14);
       this.validFromLabel.TabIndex = 35;
