@@ -441,24 +441,66 @@ namespace Pirate.PiVote.Crypto
     {
       if (signedSharePart == null)
         throw new ArgumentNullException("shares");
+
       if (Status != VotingStatus.New)
+      {
+        Logger.Log(LogLevel.Warning, 
+          "Connection {0}: Authority id {1} (unverified) tried to deposit shares, but the status was {2}.",
+          connection.Id,
+          signedSharePart.Certificate.Id.ToString(),
+          Status.ToString());
         throw new PiArgumentException(ExceptionCode.WrongStatusForOperation, "Wrong status for operation.");
+      }
 
       SharePart sharePart = signedSharePart.Value;
 
       Certificate certificate = GetAuthority(sharePart.AuthorityIndex);
 
       if (!signedSharePart.Verify(this.certificateStorage, Parameters.VotingBeginDate))
+      {
+        if (signedSharePart.VerifySimple())
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Authority id {1} (unverified) tried to deposit shares, but his certificate had state {2}.",
+            connection.Id,
+            signedSharePart.Certificate.Id.ToString(), 
+            signedSharePart.Certificate.Validate(this.certificateStorage, Parameters.VotingBeginDate).Text());
+        }
+        else
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Authority id {1} (unverified) tried to deposit shares, but the signature was invalid.", 
+            connection.Id,
+            signedSharePart.Certificate.Id.ToString());
+        }
+
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Bad signature.");
+      }
+
       if (!signedSharePart.Certificate.IsIdentic(certificate))
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Authority id {1} (verified) tried to deposit shares, but his certificate did not match id {2} for authority index {3}.",
+          connection.Id,
+          signedSharePart.Certificate.Id.ToString(), 
+          certificate.Id.ToString(),
+          sharePart.AuthorityIndex);
         throw new PiSecurityException(ExceptionCode.NoAuthorizedAuthority, "Not signed by proper authority.");
+      }
 
       bool exists = DbConnection.ExecuteHasRows(
         "SELECT count(*) FROM sharepart WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
         "@VotingId", Id.ToByteArray(),
         "@AuthorityIndex", sharePart.AuthorityIndex);
+
       if (exists)
+      {
+        Logger.Log(LogLevel.Warning, 
+          "Connection {0}: uthority id {1} (verified) tried to deposit shares, these were already present.", 
+          connection.Id,
+          signedSharePart.Certificate.Id.ToString());
         throw new PiArgumentException(ExceptionCode.AuthorityHasAlreadyDeposited, "Authority has already deposited shares.");
+      }
 
       MySqlCommand insertCommand = new MySqlCommand("INSERT INTO sharepart (VotingId, AuthorityIndex, Value) VALUES (@VotingId, @AuthorityIndex, @Value)", DbConnection);
       insertCommand.Add("@VotingId", Id.ToByteArray());
@@ -466,7 +508,10 @@ namespace Pirate.PiVote.Crypto
       insertCommand.Add("@Value", signedSharePart.ToBinary());
       insertCommand.ExecuteNonQuery();
 
-      Logger.Log(LogLevel.Info, "Connection {0}: Shares for certificate id {1} on voting id {2} stored.", connection.Id, signedSharePart.Certificate.Id.ToString(), Id.ToString()); 
+      Logger.Log(LogLevel.Info,
+        "Connection {0}: Shares for certificate id {1} on voting id {2} stored.", 
+        connection.Id,
+        signedSharePart.Certificate.Id.ToString(), Id.ToString()); 
 
       long depositedSharePartCount = (long)DbConnection.ExecuteScalar(
         "SELECT count(*) FROM sharepart WHERE VotingId = @VotingId",
@@ -537,17 +582,51 @@ namespace Pirate.PiVote.Crypto
     {
       if (signedShareResponse == null)
         throw new ArgumentNullException("shares");
+
       if (Status != VotingStatus.Sharing)
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Authority id {1} (unverified) tried to deposit the share response, but the status was {2}.", 
+          connection.Id,
+          signedShareResponse.Certificate.Id.ToString(), Status.ToString());
         throw new PiArgumentException(ExceptionCode.WrongStatusForOperation, "Wrong status for operation.");
+      }
 
       ShareResponse shareResponse = signedShareResponse.Value;
 
       Certificate certificate = GetAuthority(shareResponse.AuthorityIndex);
 
       if (!signedShareResponse.Verify(this.certificateStorage, Parameters.VotingBeginDate))
+      {
+        if (signedShareResponse.VerifySimple())
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Authority id {1} (unverified) tried to deposit the share response, but his certificate had state {2}.", 
+            connection.Id,
+            signedShareResponse.Certificate.Id.ToString(),
+            signedShareResponse.Certificate.Validate(this.certificateStorage, Parameters.VotingBeginDate).Text());
+        }
+        else
+        {
+          Logger.Log(LogLevel.Warning, 
+            "Connection {0}: Authority id {1} (unverified) tried to deposit the share response, but the signature was invalid.", 
+            connection.Id,
+            signedShareResponse.Certificate.Id.ToString());
+        }
+
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Bad signature.");
+      }
+
       if (!signedShareResponse.Certificate.IsIdentic(certificate))
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Authority id {1} (verified) tried to deposit the share response, but his certificate did not match id {2} for authority index {3}.", 
+          connection.Id,
+          signedShareResponse.Certificate.Id.ToString(), 
+          certificate.Id.ToString(),
+          shareResponse.AuthorityIndex);
         throw new PiSecurityException(ExceptionCode.NoAuthorizedAuthority, "Not signed by proper authority.");
+      }
 
       bool exists = DbConnection.ExecuteHasRows(
         "SELECT count(*) FROM shareresponse WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",
@@ -562,7 +641,11 @@ namespace Pirate.PiVote.Crypto
       insertCommand.Add("@Value", signedShareResponse.ToBinary());
       insertCommand.ExecuteNonQuery();
 
-      Logger.Log(LogLevel.Info, "Connection {0}: Share response for certificate id {1} on voting id {2} stored.", connection.Id, signedShareResponse.Certificate.Id.ToString(), Id.ToString()); 
+      Logger.Log(LogLevel.Info,
+        "Connection {0}: Share response for certificate id {1} on voting id {2} stored.",
+        connection.Id,
+        signedShareResponse.Certificate.Id.ToString(), 
+        Id.ToString()); 
 
       long depositedShareResponseCount = (long)DbConnection.ExecuteScalar(
         "SELECT count(*) FROM shareresponse WHERE VotingId = @VotingId",
@@ -623,24 +706,91 @@ namespace Pirate.PiVote.Crypto
     {
       if (signedEnvelope == null)
         throw new ArgumentNullException("ballot");
+
       if (Status != VotingStatus.Voting)
+      {
+        Logger.Log(LogLevel.Warning, 
+          "Connection {0}: Voter id {1} (unverified) tried to vote, but status was {2}.", 
+          connection.Id,
+          signedEnvelope.Certificate.Id.ToString(),
+          Status.ToString());
         throw new PiArgumentException(ExceptionCode.WrongStatusForOperation, "Wrong status for operation.");
+      }
+
       if (!signedEnvelope.Verify(this.certificateStorage))
+      {
+        if (signedEnvelope.VerifySimple())
+        {
+          Logger.Log(LogLevel.Warning, 
+            "Connection {0}: Voter id {1} (unverified) tried to vote, but his certificate had state {2}.",
+            connection.Id,
+            signedEnvelope.Certificate.Id.ToString(), 
+            signedEnvelope.Certificate.Validate(this.certificateStorage).Text());
+        }
+        else
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Voter id {1} (unverified) tried to vote, but the signature on envelope was invalid.",
+            connection.Id,
+            signedEnvelope.Certificate.Id.ToString());
+        }
+
         throw new PiArgumentException(ExceptionCode.VoteSignatureNotValid, "Vote signature not valid.");
+      }
+
       if (!(signedEnvelope.Certificate is VoterCertificate))
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Voter id {1} (verified) tried to vote, but his certificate was not a voter certificate.", 
+          connection.Id,
+          signedEnvelope.Certificate.Id.ToString());
         throw new PiArgumentException(ExceptionCode.NoVoterCertificate, "Not a voter certificate.");
+      }
+
       if (Parameters.GroupId != ((VoterCertificate)signedEnvelope.Certificate).GroupId)
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Voter id {1} (verified) tried to vote, but his group id was {2} when it should have been {3}.", 
+          connection.Id,
+          signedEnvelope.Certificate.Id.ToString(), 
+          ((VoterCertificate)signedEnvelope.Certificate).GroupId,
+          Parameters.GroupId);
         throw new PiArgumentException(ExceptionCode.BadGroupIdInCertificate, "Wrong group id in certificate.");
+      }
 
       var envelope = signedEnvelope.Value;
 
       if (envelope.Date.Subtract(DateTime.Now).TotalHours < -1d ||
           envelope.Date.Subtract(DateTime.Now).TotalHours > 1d)
+      {
+        Logger.Log(LogLevel.Warning, 
+          "Connection {0}: Voter id {1} (verified) tried to vote, but the envelope was created at {2} and pushed at {3}.", 
+          connection.Id,
+          signedEnvelope.Certificate.Id.ToString(), 
+          envelope.Date.ToString(),
+          DateTime.Now.ToString());
         throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadDateTime, "Invalid envelope. Date out of range.");
+      }
+
       if (envelope.VoterId != signedEnvelope.Certificate.Id)
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Voter id {1} (verified) tried to vote, but the envelope voter id did not match his certificate.",
+          connection.Id,
+          signedEnvelope.Certificate.Id.ToString());
         throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadVoterId, "Invalid envelope. Voter id does not match.");
+      }
+
       if (envelope.Ballots.Count != Parameters.Questions.Count())
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Voter id {1} (verified) tried to vote, but there were {2} ballots in the envelope for {3} questions.",
+          connection.Id,
+          signedEnvelope.Certificate.Id.ToString(), 
+          envelope.Ballots.Count, 
+          Parameters.Questions.Count());
         throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadBallotCount, "Invalid envelope. Ballot count does not match.");
+      }
 
       for (int questionIndex = 0; questionIndex < parameters.Questions.Count(); questionIndex++)
       {
@@ -648,11 +798,35 @@ namespace Pirate.PiVote.Crypto
         var question = parameters.Questions.ElementAt(questionIndex);
 
         if (ballot.SumProves.Count != parameters.ProofCount)
+        {
+          Logger.Log(LogLevel.Warning, 
+            "Connection {0}: Voter id {1} (verified) tried to vote, but there were {2} sum proofs present where there sould have been {3}.", 
+            connection.Id,
+            signedEnvelope.Certificate.Id.ToString(), 
+            ballot.SumProves.Count,
+            parameters.ProofCount);
           throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadProofCount, "Invalid envelope. Number of sum prooves does not match.");
+        }
+
         if (ballot.Votes.Count != question.Options.Count())
+        {
+          Logger.Log(LogLevel.Warning, 
+            "Connection {0}: Voter id {1} (verified) tried to vote, but there were {2} votes present for {3} options.",
+            connection.Id,
+            signedEnvelope.Certificate.Id.ToString(),
+            ballot.Votes.Count, 
+            question.Options.Count());
           throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadVoteCount, "Invalid envelope. Vote count does not match.");
+        }
+
         if (ballot.Votes.Any(vote => vote.RangeProves.Count != parameters.ProofCount))
+        {
+          Logger.Log(LogLevel.Warning, 
+            "Connection {0}: Voter id {1} (verified) tried to vote, but there was the wrong number of range proofs on a vote.", 
+            connection.Id,
+            signedEnvelope.Certificate.Id.ToString());
           throw new PiArgumentException(ExceptionCode.InvalidEnvelopeBadProofCount, "Invalid envelope. Number of range prooves does not match.");
+        }
       }
 
       bool hasVoted = DbConnection.ExecuteHasRows(
@@ -684,7 +858,11 @@ namespace Pirate.PiVote.Crypto
 
       transaction.Commit();
 
-      Logger.Log(LogLevel.Info, "Connection {0}: Envelope for certificate id {1} on voting id {2} stored.", connection.Id, signedEnvelope.Certificate.Id.ToString(), Id.ToString()); 
+      Logger.Log(LogLevel.Info,
+        "Connection {0}: Envelope for certificate id {1} on voting id {2} stored.",
+        connection.Id, 
+        signedEnvelope.Certificate.Id.ToString(), 
+        Id.ToString()); 
       
       VoteReceipt voteReceipt = new VoteReceipt(Parameters, signedEnvelope);
 
@@ -714,19 +892,42 @@ namespace Pirate.PiVote.Crypto
     {
       if (signedPartialDecipherList == null)
         throw new ArgumentNullException("partialDecipherContainer");
+
       if (Status != VotingStatus.Deciphering)
+      {
+        Logger.Log(LogLevel.Warning, "Authority id {0} (unverified) tried to deposit his partial decipher, but the status was {1}.", signedPartialDecipherList.Certificate.Id.ToString(), Status.ToString());
         throw new InvalidOperationException("Wrong status for operation.");
+      }
 
       PartialDecipherList partialDecipherList = signedPartialDecipherList.Value;
 
       Certificate certificate = GetAuthority(partialDecipherList.AuthorityIndex);
 
       if (!signedPartialDecipherList.Verify(this.certificateStorage, Parameters.VotingBeginDate))
+      {
+        if (signedPartialDecipherList.VerifySimple())
+        {
+          Logger.Log(LogLevel.Warning, "Authority id {0} (unverified) tried to deposit his partial decipher, but his certificate had state {1}.", signedPartialDecipherList.Certificate.Id.ToString(), signedPartialDecipherList.Certificate.Validate(this.certificateStorage, Parameters.VotingBeginDate).Text());
+        }
+        else
+        {
+          Logger.Log(LogLevel.Warning, "Authority id {0} (unverified) tried to deposit his partial decipher, but the signature was invalid.", signedPartialDecipherList.Certificate.Id.ToString());
+        } 
+        
         throw new PiArgumentException(ExceptionCode.InvalidSignature, "Bad signature.");
+      }
+
       if (!signedPartialDecipherList.Certificate.IsIdentic(certificate))
+      {
+        Logger.Log(LogLevel.Warning, "Authority id {0} (verified) tried to deposit his partial decipher, but his certificate did not match id {1} for authority index {2}.", signedPartialDecipherList.Certificate.Id.ToString(), certificate.Id.ToString(), partialDecipherList.AuthorityIndex);
         throw new PiArgumentException(ExceptionCode.AuthorityInvalid, "Not signed by proper authority.");
+      }
+
       if (partialDecipherList.PartialDeciphers.Count < 4)
+      {
+        Logger.Log(LogLevel.Warning, "Authority id {0} (verified) tried to deposit his partial decipher, but there were only {1} parts instead of 4.", signedPartialDecipherList.Certificate.Id.ToString(), partialDecipherList.PartialDeciphers.Count);
         throw new PiArgumentException(ExceptionCode.AuthorityCountMismatch, "Your Pi-Vote client is outdated.");
+      }
 
       bool exists = DbConnection.ExecuteHasRows(
         "SELECT count(*) FROM deciphers WHERE VotingId = @VotingId AND AuthorityIndex = @AuthorityIndex",

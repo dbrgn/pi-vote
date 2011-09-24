@@ -80,7 +80,7 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Response to the request.</returns>
     protected override FetchSignCheckCookieResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
-      return new FetchSignCheckCookieResponse(RequestId, server.GetSignCheckCookie(this.notaryCertificateId, this.code));
+      return new FetchSignCheckCookieResponse(RequestId, server.GetSignCheckCookie(connection, this.notaryCertificateId, this.code));
     }
   }
 }

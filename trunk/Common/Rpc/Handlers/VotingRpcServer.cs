@@ -107,7 +107,7 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     public VotingRpcServer()
     {
-      this.logger = new Logger(Pirate.PiVote.Logger.ServerLogFileName, LogLevel.Debug);
+      this.logger = new Logger(Pirate.PiVote.Logger.ServerLogFileName, LogLevel.Info);
       Logger.Log(LogLevel.Info, "Voting RPC server starting...");
 
       this.serverConfig = new ServerConfig(ServerConfigFileName);
@@ -316,15 +316,43 @@ namespace Pirate.PiVote.Rpc
       Guid id = signatureRequest.Certificate.Id;
 
       if (signatureRequest.Certificate.Id != signatureRequestInfo.Certificate.Id)
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Certificate id {1} (unverified) tried to set a signature request, but the certificate id on the request info was {2}.",
+          connection.Id,
+          signatureRequest.Certificate.Id.ToString(),
+          signatureRequestInfo.Certificate.Id);
         throw new PiArgumentException(ExceptionCode.SignatureRequestInvalid, "Signature request invalid.");
+      }
+
       if (!signatureRequest.VerifySimple())
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Certificate id {1} (unverified) tried to set a signature request, but the signature on the request was invalid.",
+          connection.Id,
+          signatureRequest.Certificate.Id.ToString());
         throw new PiArgumentException(ExceptionCode.SignatureRequestInvalid, "Signature request invalid.");
+      }
+
       if (!signatureRequestInfo.VerifySimple())
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Certificate id {1} (unverified) tried to set a signature request, but the signature on the request info was invalid.",
+          connection.Id,
+          signatureRequest.Certificate.Id.ToString());
         throw new PiArgumentException(ExceptionCode.SignatureRequestInvalid, "Signature request invalid.");
+      }
 
       SignatureRequestInfo requestInfo = signatureRequestInfo.Value.Decrypt(this.serverCertificate);
+
       if (!requestInfo.Valid)
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Certificate id {1} (unverified) tried to set a signature request, but the request data was invalid.",
+          connection.Id,
+          signatureRequest.Certificate.Id.ToString());
         throw new PiArgumentException(ExceptionCode.InvalidSignatureRequest, "Signature request data not valid.");
+      }
 
       MySqlCommand replaceCommand = new MySqlCommand("REPLACE INTO signaturerequest (Id, Value, Info) VALUES (@Id, @Value, @Info)", DbConnection);
       replaceCommand.Parameters.AddWithValue("@Id", id.ToByteArray());
@@ -524,9 +552,34 @@ namespace Pirate.PiVote.Rpc
       Signed<SignatureResponse> signedSignatureResponse)
     {
       if (!signedSignatureResponse.Verify(CertificateStorage))
+      {
+        if (signedSignatureResponse.VerifySimple())
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: CA id {1} (unverified) tried to set a signature response, but his certificate status was {2}.",
+            connection.Id,
+            signedSignatureResponse.Certificate.Id.ToString(),
+            signedSignatureResponse.Certificate.Validate(CertificateStorage).Text());
+        }
+        else
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: CA id {1} (unverified) tried to set a signature response, but the signature was invalid.",
+            connection.Id,
+            signedSignatureResponse.Certificate.Id.ToString());
+        }
+
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature response has invalid signature.");
+      }
+
       if (!(signedSignatureResponse.Certificate is CACertificate))
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: CA id {1} (unverified) tried to set a signature response, but it's not a CA.",
+          connection.Id,
+          signedSignatureResponse.Certificate.Id.ToString());
         throw new PiSecurityException(ExceptionCode.SignatureResponseNotFromCA, "Signature response not from proper CA.");
+      }
       
       SignatureResponse signatureResponse = signedSignatureResponse.Value;
 
@@ -535,7 +588,7 @@ namespace Pirate.PiVote.Rpc
       replaceCommand.Parameters.AddWithValue("@Value", signedSignatureResponse.ToBinary());
       replaceCommand.ExecuteNonQuery();
 
-      Logger.Log(LogLevel.Info, "Connection {0}: Signature response for certificate id {1} stored on behalf of id {2}.", connection.Id, signatureResponse.SubjectId.ToString(), signedSignatureResponse.Certificate.Id.ToString());
+      Logger.Log(LogLevel.Info, "Connection {0}: Signature response for certificate id {1} stored on behalf of CA id {2}.", connection.Id, signatureResponse.SubjectId.ToString(), signedSignatureResponse.Certificate.Id.ToString());
 
       if (signatureResponse.Status == SignatureResponseStatus.Accepted)
       {
@@ -588,8 +641,6 @@ namespace Pirate.PiVote.Rpc
 
       foreach (Certificate certificate in CertificateStorage.Certificates)
       {
-        Console.WriteLine("{0} from {1} is {2}", certificate.Id.ToString(), certificate.FullName, certificate.Validate(CertificateStorage));
-
         if (certificate is AuthorityCertificate &&
           certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid)
         {
@@ -672,22 +723,83 @@ namespace Pirate.PiVote.Rpc
       Signed<SignatureRequestSignCheck> signedSignCheck)
     {
       if (!signedSignCheck.Verify(CertificateStorage))
+      {
+        if (signedSignCheck.VerifySimple())
+        {
+          Logger.Log(LogLevel.Warning, 
+            "Connection {0}: Server id {1} (unverified) tried to add a sign check, but his certificate status was {2}.", 
+            connection.Id, 
+            signedSignCheck.Certificate.Id.ToString(), 
+            signedSignCheck.Certificate.Validate(CertificateStorage).Text());
+        }
+        else
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Server id {1} (unverified) tried to add a sign check, but the signature was invalid.", 
+            connection.Id, 
+            signedSignCheck.Certificate.Id.ToString());
+        }
+
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature on sign check invalid.");
+      }
+
       if (!(signedSignCheck.Certificate is ServerCertificate))
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Server id {1} (verified) tried to add a sign check, but he is not a server.",
+          connection.Id, 
+          signedSignCheck.Certificate.Id.ToString());
         throw new PiSecurityException(ExceptionCode.SignCheckNotFromServer, "Signature on sign check not from server.");
+      }
 
       var signCheck = signedSignCheck.Value;
       Signed<SignatureResponse> signatureResponse = null;
       var status = GetSignatureResponseStatus(signCheck.Certificate.Id, out signatureResponse);
 
       if (status != SignatureResponseStatus.Pending)
+      {
+        Logger.Log(LogLevel.Warning, 
+          "Connection {0}: Notary id {1} (unverified) tried to a sign check to id {2}, but its status was {3}.", 
+          connection.Id,
+          signCheck.Cookie.Certificate.Id.ToString(), 
+          signCheck.Certificate.Id.ToString(),
+          status.ToString());
         throw new PiException(ExceptionCode.SignCheckResponseStateMismatch, "Signature response status mismatch.");
+      }
 
       if (!signCheck.Cookie.Verify(CertificateStorage))
+      {
+        if (signCheck.Cookie.VerifySimple())
+        {
+          Logger.Log(LogLevel.Warning, 
+            "Connection {0}: Notary id {1} (unverified) tried to a sign check to id {2}, but his certificate status was {3}.",
+            connection.Id, 
+            signCheck.Cookie.Certificate.Id.ToString(), 
+            signCheck.Certificate.Id.ToString(), 
+            signCheck.Cookie.Certificate.Validate(CertificateStorage).Text());
+        }
+        else
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Notary id {1} (unverified) tried to a sign check to id {2}, but the signature was invalid.",
+            connection.Id,
+            signCheck.Cookie.Certificate.Id.ToString(),
+            signCheck.Certificate.Id.ToString());
+        }
+
         throw new PiSecurityException(ExceptionCode.SignCheckCookieSignatureInvalid, "Signature on sign check cookie invalid.");
+      }
+
       if (!(signCheck.Cookie.Certificate is AuthorityCertificate ||
             signCheck.Cookie.Certificate is NotaryCertificate))
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Notary id {1} (unverified) tried to a sign check to id {2}, but he is not an authority or notary.", 
+          connection.Id,
+          signCheck.Cookie.Certificate.Id.ToString(),
+          signCheck.Certificate.Id.ToString());
         throw new PiSecurityException(ExceptionCode.SignCheckCookieNotFromNotary, "Signature on sign check cookie not from notary.");
+      }
 
       Signed<SignCheckCookie> dbCookie = null;
 
@@ -717,7 +829,12 @@ namespace Pirate.PiVote.Rpc
       insertCommand.Parameters.AddWithValue("@Value", signedSignCheck.ToBinary());
       insertCommand.ExecuteNonQuery();
 
-      Logger.Log(LogLevel.Info, "Connection {0}: Notary {1}, {2} has signed signature request {3}", connection.Id, signCheck.Cookie.Certificate.Id.ToString(), signCheck.Cookie.Certificate.FullName, signCheck.Certificate.Id.ToString());
+      Logger.Log(LogLevel.Info,
+        "Connection {0}: Notary {1}, {2} has signed signature request {3}", 
+        connection.Id,
+        signCheck.Cookie.Certificate.Id.ToString(), 
+        signCheck.Cookie.Certificate.FullName, 
+        signCheck.Certificate.Id.ToString());
     }
 
     /// <summary>
@@ -744,7 +861,10 @@ namespace Pirate.PiVote.Rpc
       return signChecks;
     }
 
-    public Signed<SignCheckCookie> GetSignCheckCookie(Guid notaryId, byte[] code)
+    public Signed<SignCheckCookie> GetSignCheckCookie(
+      IRpcConnection connection,
+      Guid notaryId, 
+      byte[] code)
     {
       var reader = this.DbConnection.ExecuteReader(
         "SELECT Cookie, Code, Expires FROM signcheckcookie WHERE NotaryId = @NotaryId",
@@ -759,16 +879,28 @@ namespace Pirate.PiVote.Rpc
           {
             var signedCookie = Serializable.FromBinary<Signed<SignCheckCookie>>(reader.GetBlob(0));
             reader.Close();
+            Logger.Log(LogLevel.Warning,
+              "Connection {0}: Notary id {1} (unverified) got his sign check cookie.",
+              connection.Id,
+              notaryId.ToString());
             return signedCookie;
           }
           else
           {
+            Logger.Log(LogLevel.Warning,
+              "Connection {0}: Notary id {1} (unverified) tried to get his sign check cookie, but the code was invalid.",
+              connection.Id,
+              notaryId.ToString());
             reader.Close();
             throw new PiSecurityException(ExceptionCode.SignCheckCookieCodeWrong, "Sign check cookie code wrong.");
           }
         }
         else
         {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Notary id {1} (unverified) tried to get his sign check cookie, the this had already run out.",
+            connection.Id,
+            notaryId.ToString());
           reader.Close();
           throw new PiSecurityException(ExceptionCode.SignCheckCookieCodeExpired, "Sign check cookie code has expired.");
         }
@@ -779,14 +911,40 @@ namespace Pirate.PiVote.Rpc
       }
     }
 
-    public byte[] SetSignCheckCookie(Signed<SignCheckCookie> signedCookie)
+    public byte[] SetSignCheckCookie(
+      IRpcConnection connection,
+      Signed<SignCheckCookie> signedCookie)
     {
       if (!signedCookie.Verify(CertificateStorage))
+      {
+        if (signedCookie.VerifySimple())
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Notary id {1} (unverified) tried to set his sign check cookie, but his certificate status was {2}.",
+            connection.Id,
+            signedCookie.Certificate.Id.ToString(),
+            signedCookie.Certificate.Validate(CertificateStorage).Text());
+        }
+        else
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Notary id {1} (unverified) tried to set his sign check cookie, but the signature was invalid.",
+            connection.Id,
+            signedCookie.Certificate.Id.ToString());
+        }
+
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Invalid signature.");
+      }
 
       if (!(signedCookie.Certificate is AuthorityCertificate ||
             signedCookie.Certificate is NotaryCertificate))
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Notary id {0} (verified) tried to set his sign check cookie, but he is no authority or notary.", 
+          connection.Id,
+          signedCookie.Certificate.Id.ToString());
         throw new PiSecurityException(ExceptionCode.SignCheckCookieNotFromNotary, "Not from proper authority or notary.");
+      }
 
       this.DbConnection.ExecuteNonQuery(
         "DELETE FROM signcheckcookie WHERE NotaryId = @NotaryId",
@@ -806,6 +964,12 @@ namespace Pirate.PiVote.Rpc
       insertCommand.Parameters.AddWithValue("@Code", code);
       insertCommand.Parameters.AddWithValue("@Expires", DateTime.Now.AddMinutes(15).ToString("yyyy-MM-dd HH:mm:ss"));
       insertCommand.ExecuteNonQuery();
+
+      Logger.Log(LogLevel.Warning,
+        "Connection {0}: Notary id {1} (verified) has set his sign check cookie with code {2}.",
+        connection.Id,
+        signedCookie.Certificate.Id.ToString(),
+        code.ToHexString());
 
       return encryptedCode;
     }

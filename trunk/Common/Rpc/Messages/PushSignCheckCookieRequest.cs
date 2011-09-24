@@ -70,7 +70,7 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Response to the request.</returns>
     protected override PushSignCheckCookieResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
-      return new PushSignCheckCookieResponse(RequestId, server.SetSignCheckCookie(this.cookie));
+      return new PushSignCheckCookieResponse(RequestId, server.SetSignCheckCookie(connection, this.cookie));
     }
   }
 }
