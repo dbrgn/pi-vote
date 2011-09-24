@@ -12,6 +12,7 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using Emil.GMP;
+using Pirate.PiVote.Utilitiy;
 
 namespace Pirate.PiVote.Serialization
 {
@@ -79,7 +80,7 @@ namespace Pirate.PiVote.Serialization
 
     public DateTime ReadDateTime()
     {
-      return new DateTime(ReadInt64());
+      return new DateTime(ReadInt64(), DateTimeKind.Unspecified).FromPiTime();
     }
 
     public Guid ReadGuid()

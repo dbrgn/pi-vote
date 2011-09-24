@@ -285,6 +285,7 @@
     <Compile Include="Serialization\SerializeEnumAttribute.cs" />
     <Compile Include="Serialization\SerializeAdditionalFieldAttribute.cs" />
     <Compile Include="Serialization\SerializeObjectAttribute.cs" />
+    <Compile Include="Utilitiy\DateTimeExtensions.cs" />
     <Compile Include="Utilitiy\StringTable.cs" />
     <Compile Include="Utilitiy\BackupFile.cs" />
     <Compile Include="Utilitiy\DummyLogger.cs" />

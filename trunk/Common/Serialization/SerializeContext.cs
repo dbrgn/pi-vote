@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
 using Emil.GMP;
+using Pirate.PiVote.Utilitiy;
 
 namespace Pirate.PiVote.Serialization
 {
@@ -76,7 +77,7 @@ namespace Pirate.PiVote.Serialization
 
     public void Write(DateTime value)
     {
-      Write(value.Ticks);
+      Write(value.ToPiTime().Ticks);
     }
 
     public void Write(Guid value)
