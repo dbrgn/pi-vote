@@ -313,7 +313,7 @@ namespace Pirate.PiVote.Circle
     {
       return
         this.certificates.Keys
-        .Where(certificate => certificate is NotaryCertificate || certificate is AuthorityCertificate &&
+        .Where(certificate => (certificate is NotaryCertificate || certificate is AuthorityCertificate) &&
           certificate.Validate(Status.CertificateStorage) == CertificateValidationResult.Valid)
         .FirstOrDefault();
     }

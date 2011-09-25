@@ -637,4 +637,7 @@
   <data name="CreateCertificateNotUploadeMessage" xml:space="preserve">
     <value>Du hast deinen Zertifikatsantrag noch nicht heraufgeladen. Wenn du deinen Zertifikatsantrag nicht herauflädst, kannst du nicht Zertifiziert werden. Willst du jetzt heraufladen?</value>
   </data>
+  <data name="CreateCertificateFinishInfoSubgroup" xml:space="preserve">
+    <value>Du musst deine Zertifizierungsanfrage jetzt hochladen. Es ist nicht nötig, diese Zertifizierungsanfrage auszudrucken oder Unterschriften zu sammeln, da diese Anfrage aufgrund deiner vorhergehenden Anfrage beantwortet werden kann.</value>
+  </data>
 </root>

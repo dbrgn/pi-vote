@@ -59,7 +59,11 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.Write(EncryptedCode);
+
+      if (Exception == null)
+      {
+        context.Write(EncryptedCode);
+      }
     }
 
     /// <summary>
@@ -69,7 +73,11 @@ namespace Pirate.PiVote.Rpc
     protected override void Deserialize(DeserializeContext context, byte version)
     {
       base.Deserialize(context, version);
-      EncryptedCode = context.ReadBytes();
+
+      if (Exception == null)
+      {
+        EncryptedCode = context.ReadBytes();
+      }
     }
   }
 }

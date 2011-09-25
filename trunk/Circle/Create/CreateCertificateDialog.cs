@@ -37,6 +37,8 @@ namespace Pirate.PiVote.Circle.Create
     {
       Controls.Clear();
 
+      this.control = control;
+
       if (status != null)
       {
         this.control.Status = status;
@@ -46,7 +48,7 @@ namespace Pirate.PiVote.Circle.Create
       this.control.ShowNextControl += new ShowNextControlHandler(Control_ShowNextControl);
       this.control.CloseCreateDialog += new CloseCreateDialogHandler(Control_CloseCreateDialog);
       this.control.Prepare();
-      this.Controls.Add(control);
+      this.Controls.Add(this.control);
     }
 
     private void CreateNewCertificate(CircleController controller)

@@ -655,4 +655,7 @@
   <data name="CreateCertificateNotUploadeMessage" xml:space="preserve">
     <value>You have not yet uploaded your certificate. You cannot be certified if you do not upload your certificate. Do you want to do so now?</value>
   </data>
+  <data name="CreateCertificateFinishInfoSubgroup" xml:space="preserve">
+    <value>You must now upload your signing request. You do not need to print your signing request or collect any signatures as this request may be granted using the data from your original request.</value>
+  </data>
 </root>

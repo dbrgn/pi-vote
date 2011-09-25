@@ -92,6 +92,12 @@
     <Compile Include="Controls\MultiLanguageTextBox.Designer.cs">
       <DependentUpon>MultiLanguageTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Help\AboutDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Help\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="SignCheck\GenerateSignCheckDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MultiLanguageTextBox.resx">
       <DependentUpon>MultiLanguageTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Help\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Phassphrase\ChangePassphraseDialog.resx">
       <DependentUpon>ChangePassphraseDialog.cs</DependentUpon>

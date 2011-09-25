@@ -33,12 +33,20 @@ namespace Pirate.PiVote.Circle.Create
       this.emailLabel.Text = Resources.CreateCertificateFinishEmailAddress;
       this.printButton.Text = Resources.CreateCertificateFinishPrint;
       this.uploadButton.Text = Resources.CreateCertificateFinishUpload;
-      this.infoLabel.Text = Resources.CreateCertificateFinishInfo;
       this.doneButton.Text = GuiResources.ButtonDone;
     }
 
     private void PrintAndUploadCertificateControl_Load(object sender, EventArgs e)
     {
+      if (Status.SignatureRequest is SignatureRequest2)
+      {
+        this.infoLabel.Text = Resources.CreateCertificateFinishInfoSubgroup;
+      }
+      else
+      {
+        this.infoLabel.Text = Resources.CreateCertificateFinishInfo;
+      }
+
       this.typeTextBox.Text = Status.Certificate.TypeText;
       this.idTextBox.Text = Status.Certificate.Id.ToString();
       this.nameTextBox.Text = Status.SignatureRequest.FullName;

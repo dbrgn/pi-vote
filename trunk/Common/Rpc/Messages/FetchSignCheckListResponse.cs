@@ -52,15 +52,23 @@ namespace Pirate.PiVote.Rpc
     public override void Serialize(SerializeContext context)
     {
       base.Serialize(context);
-      context.WriteList(SignChecks);
-      context.Write(EncryptedSignatureRequest);
+
+      if (Exception == null)
+      {
+        context.WriteList(SignChecks);
+        context.Write(EncryptedSignatureRequest);
+      }
     }
 
     protected override void Deserialize(DeserializeContext context, byte version)
     {
       base.Deserialize(context, version);
-      SignChecks = context.ReadObjectList<Signed<SignatureRequestSignCheck>>();
-      EncryptedSignatureRequest = context.ReadBytes();
+
+      if (Exception == null)
+      {
+        SignChecks = context.ReadObjectList<Signed<SignatureRequestSignCheck>>();
+        EncryptedSignatureRequest = context.ReadBytes();
+      }
     }
   }
 }
