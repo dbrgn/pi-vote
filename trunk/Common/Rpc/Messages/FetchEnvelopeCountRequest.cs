@@ -19,6 +19,8 @@ namespace Pirate.PiVote.Rpc
   /// </summary>
   [SerializeObject("Request to fetch the number of envelopes in a voting.")]
   [RpcRequest("Gets the number of envelopes in a voting. This is done before downloading the votings.")]
+  [RpcInput("Id of the voting.")]
+  [RpcOutput("Number of envelopes in that voting.")]
   public class FetchEnvelopeCountRequest : RpcRequest<VotingRpcServer, FetchEnvelopeCountResponse>
   {
     /// <summary>

@@ -19,6 +19,7 @@ namespace Pirate.PiVote.Rpc
   /// </summary>
   [SerializeObject("RPC request to fetch the certificate storage.")]
   [RpcRequest("Fetches the certificate storage and the server certificate from the server. This is done upon start of the client to get the nessecary date to validate certificates.")]
+  [RpcOutput("Certificate storage with all CAs and CRLs, server certificate.")]
   public class FetchCertificateStorageRequest : RpcRequest<VotingRpcServer, FetchCertificateStorageResponse>
   {
     public FetchCertificateStorageRequest(

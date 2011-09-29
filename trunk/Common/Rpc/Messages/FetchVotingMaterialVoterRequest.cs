@@ -19,6 +19,9 @@ namespace Pirate.PiVote.Rpc
   /// May fetch material and status of one, some or all votings at once.
   /// </summary>
   [SerializeObject("RPC request to fetch voting material and status.")]
+  [RpcRequest("Downloads voting materials and status for several votings at once.")]
+  [RpcInput("List of ids of votings or null list for all votings.")]
+  [RpcOutput("List of tuples containing voting material, voting status and a list of ids of the involved authorites.")]
   public class FetchVotingMaterialVoterRequest : RpcRequest<VotingRpcServer, FetchVotingMaterialVoterResponse>
   {
     /// <summary>

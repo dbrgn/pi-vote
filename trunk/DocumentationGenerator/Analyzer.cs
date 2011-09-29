@@ -18,12 +18,18 @@ namespace Pirate.PiVote.DocumentationGenerator
   {
     public IEnumerable<FieldType> Types { get { return this.types.Values; } }
 
+    public IEnumerable<Request> Requests { get { return this.requests.Values; } }
+
+    private Dictionary<string, Request> requests;
     private Dictionary<string, FieldType> types;
     private Type serializeObjectAttribute = typeof(SerializeObjectAttribute);
     private Type serializeAdditionalFieldAttribute = typeof(SerializeAdditionalFieldAttribute);
     private Type serializeFieldAttribute = typeof(SerializeFieldAttribute);
     private Type serializableType = typeof(Serializable);
     private Type serializeEnumAttribute = typeof(SerializeEnumAttribute);
+    private Type rpcRequestAttribute = typeof(RpcRequestAttribute);
+    private Type rpcInputAttribute = typeof(RpcInputAttribute);
+    private Type rpcOutputAttribute = typeof(RpcOutputAttribute);
 
     private void AddBasicType(string name, string comment)
     {
@@ -38,6 +44,8 @@ namespace Pirate.PiVote.DocumentationGenerator
     public void Analyze()
     {
       this.types = new Dictionary<string, FieldType>();
+      this.requests = new Dictionary<string, Request>();
+
       AddBasicType("System.Int32", "4 byte signed integer written in little endian format");
       AddBasicType("System.UInt32", "4 byte unsigned integer written in little endian format");
       AddBasicType("System.Int64", "8 byte signed integer written in little endian format");
@@ -67,6 +75,7 @@ namespace Pirate.PiVote.DocumentationGenerator
             AnalyzeType(type);
           }
         }
+
         if (type.IsSubclassOf(this.serializableType))
         {
           AnalyzeType(type);
@@ -84,74 +93,103 @@ namespace Pirate.PiVote.DocumentationGenerator
         }
         else if (type == typeof(Serializable) || type.IsSubclassOf(this.serializableType))
         {
-          var soa = (SerializeObjectAttribute)type.GetCustomAttributes(this.serializeObjectAttribute, false).SingleOrDefault();
-
-          if (soa != null)
-          {
-            ObjectType inherits = null;
-
-            if (type.BaseType != typeof(object))
-            {
-              if (!this.types.ContainsKey(type.BaseType.GenericFullName()))
-              {
-                AnalyzeType(type.BaseType);
-              }
-
-              inherits = this.types[type.BaseType.GenericFullName()] as ObjectType;
-            }
-
-            ObjectType objectType = new ObjectType(type.GenericFullName(), soa.Comment, inherits);
-
-            foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
-            {
-              if (field.DeclaringType == type)
-              {
-                AnalyzeType(objectType, field);
-              }
-            }
-
-            foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
-            {
-              if (property.DeclaringType == type)
-              {
-                AnalyzeType(objectType, property);
-              }
-            }
-
-            if (soa == null)
-            {
-              Console.WriteLine("  Serialize Object Attribute on type " + type.FullName + " missing");
-              Console.ReadLine();
-            }
-
-            objectType.Validate();
-
-            this.types.Add(objectType.Name, objectType);
-          }
-          else
-          {
-            Console.WriteLine("Type {0} has no SerializeObjectAttribute!", type.FullName);
-            Console.ReadLine();
-          }
+          AnalyzeSerializableType(type);
+          AnalyzeRequest(type);
         }
         else if (type.OwnName() == "System.Tuple")
         {
-          ObjectType objectType = new ObjectType(type.GenericFullName(), "Tuple of values.", null);
-
-          foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public))
-          {
-            AnalyzeType(objectType, property);
-          }
-
-          objectType.Validate();
-
-          this.types.Add(objectType.Name, objectType);
+          AnalyzeTypeType(type);
         }
         else
         {
           Console.WriteLine("**  Type {0} cannot be analyzed.", type.GenericFullName());
           Console.ReadLine();
         }
+      }
+    }
+
+    private void AnalyzeRequest(Type type)
+    {
+      if (!this.requests.ContainsKey(type.OwnName()))
+      {
+        var requestAttribute = (RpcRequestAttribute)type.GetCustomAttributes(this.rpcRequestAttribute, false).SingleOrDefault();
+        var inputAttribute = (RpcInputAttribute)type.GetCustomAttributes(this.rpcInputAttribute, false).SingleOrDefault();
+        var outputAttribute = (RpcOutputAttribute)type.GetCustomAttributes(this.rpcOutputAttribute, false).SingleOrDefault();
+
+        if (requestAttribute != null)
+        {
+          string requestText = requestAttribute.Comment;
+          string inputText = inputAttribute == null ? string.Empty : inputAttribute.Comment;
+          string outputText = outputAttribute == null ? string.Empty : outputAttribute.Comment;
+          this.requests.Add(type.OwnName(), new Request(type.Name, requestText, inputText, outputText));
+        }
+      }
+    }
+
+    private void AnalyzeTypeType(Type type)
+    {
+      ObjectType objectType = new ObjectType(type.GenericFullName(), "Tuple of values.", null);
+
+      foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public))
+      {
+        AnalyzeType(objectType, property);
+      }
+
+      objectType.Validate();
+
+      this.types.Add(objectType.Name, objectType);
+    }
+
+    private void AnalyzeSerializableType(Type type)
+    {
+      var soa = (SerializeObjectAttribute)type.GetCustomAttributes(this.serializeObjectAttribute, false).SingleOrDefault();
+
+      if (soa != null)
+      {
+        ObjectType inherits = null;
+
+        if (type.BaseType != typeof(object))
+        {
+          if (!this.types.ContainsKey(type.BaseType.GenericFullName()))
+          {
+            AnalyzeType(type.BaseType);
+          }
+
+          inherits = this.types[type.BaseType.GenericFullName()] as ObjectType;
+        }
+
+        ObjectType objectType = new ObjectType(type.GenericFullName(), soa.Comment, inherits);
+
+        foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+        {
+          if (field.DeclaringType == type)
+          {
+            AnalyzeType(objectType, field);
+          }
+        }
+
+        foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+        {
+          if (property.DeclaringType == type)
+          {
+            AnalyzeType(objectType, property);
+          }
+        }
+
+        if (soa == null)
+        {
+          Console.WriteLine("  Serialize Object Attribute on type " + type.FullName + " missing");
+          Console.ReadLine();
+        }
+
+        objectType.Validate();
+
+        this.types.Add(objectType.Name, objectType);
+      }
+      else
+      {
+        Console.WriteLine("Type {0} has no SerializeObjectAttribute!", type.FullName);
+        Console.ReadLine();
       }
     }
 

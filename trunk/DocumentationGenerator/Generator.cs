@@ -9,141 +9,123 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Pirate.PiVote.DocumentationGenerator
 {
   public class Generator
   {
+    private const string TagSeparator = "$$";
+
+    private const string ArgumentSeparator = ",";
+
+    private const string TemplateFolder = "Templates";
+
     private StringBuilder document;
 
     public Generator()
     { 
     }
 
-    public void Generate(IEnumerable<FieldType> types)
+    private string BasePath
     {
-      string version = typeof(Pirate.PiVote.Serialization.Serializable).Assembly.GetName().Version.ToString();
+      get
+      {
+        return new Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath;
+      }
+    }
 
+    private void AddTemplate(string templateFile)
+    {
+      string rawText = File.ReadAllText(Path.Combine(Path.Combine(Path.GetDirectoryName(BasePath), TemplateFolder), templateFile), Encoding.UTF8);
+
+      string[] parts = rawText.Split(new string[] { TagSeparator }, StringSplitOptions.None);
+
+      for (int index = 0; index < parts.Length; index++)
+      {
+        if (index % 2 == 0)
+        {
+          this.document.Append(parts[index]);
+        }
+        else if (parts[index] == string.Empty)
+        {
+          this.document.Append(TagSeparator);
+        }
+        else
+        {
+          this.document.Append(Function(parts[index]));
+        }
+      }
+    }
+
+    private string Function(string text)
+    {
+      string[] parts = text.Split(new string[] { ArgumentSeparator }, StringSplitOptions.None);
+
+      switch (parts[0])
+      {
+        case "version":
+          return typeof(Pirate.PiVote.Serialization.Serializable).Assembly.GetName().Version.ToString();
+        default:
+          throw new ArgumentException("Unknow function");
+      }
+    }
+
+    public void Generate(IEnumerable<FieldType> types, IEnumerable<Request> requests)
+    {
       this.document = new StringBuilder();
 
-      this.document.AppendLine(@"\documentclass[a4paper]{article}");
-      this.document.AppendLine(@"\usepackage[UTF8]{inputenc}");
-      this.document.AppendLine(@"\usepackage{supertabular}");
-      this.document.AppendLine(@"\usepackage{fullpage}");
-
-      this.document.AppendLine();
-      this.document.AppendLine(@"\title{Pi-Vote Protocol Documentation}");
-      this.document.AppendLine(@"\author{");
-      this.document.AppendLine(@"\and");
-      this.document.AppendLine(@"Pi-Vote Doc Generator, Pirate Party Switzerland");
-      this.document.AppendLine(@"\and");
-      this.document.AppendLine(@"Stefan Thöni, Pirate Party Switzerland");
-      this.document.AppendLine(@"}");
-      this.document.AppendLine(@"\date{Steinhausen, \today, Version " + version + "}");
-
-      this.document.AppendLine();
-      this.document.AppendLine(@"\begin{document}");
-      this.document.AppendLine();
-      this.document.AppendLine(@"\maketitle");
-      this.document.AppendLine();
-      this.document.AppendLine(@"\tableofcontents");
-      this.document.AppendLine();
-      this.document.AppendLine(@"\newpage");
-
-      GenerateRpc();
-
+      AddTemplate("Meta.tex");
+      AddTemplate("Header.tex");
+      AddTemplate("Rpc.tex");
+      AddTemplate("Sequence.tex");
+      GenerateRequests(requests);
       GenerateTypes(types);
-
-      GenerateRequests();
-
-      this.document.AppendLine(@"\end{document}");
+      AddTemplate("Footer.tex");
     }
 
-    private void GenerateRpc()
+    private void GenerateRequests(IEnumerable<Request> requests)
     {
-      this.document.AppendLine(@"\section{RPC Protocol}");
+      this.document.AppendLine(@"\section{Requests}");
       this.document.AppendLine();
-      this.document.AppendLine(@"Pi-Vote uses an Remote Procedure Call protocol over TCP. To establish");
-      this.document.AppendLine(@"communication the client opens a TCP connection to the server. All");
-      this.document.AppendLine(@"action is initiated by the client sending a request. The server");
-      this.document.AppendLine(@"processes these request and answers each one with a response.");
-
-      this.document.AppendLine(@"\subsection{Messages}");
+      this.document.AppendLine("The following request are used to upload and download data from the Pi-Vote server. For detailed data types, consult the Types section.");
       this.document.AppendLine();
-      this.document.AppendLine(@"Both request and response are messages which use a common transmission");
-      this.document.AppendLine(@"format.");
 
-      this.document.AppendLine(@"\begin{center}");
-      this.document.AppendLine(@"\begin{supertabular}{| p{2cm} | p{2cm} | p{8cm}|}");
+      foreach (Request request in requests.OrderBy(r => r.Name))
+      {
+        this.document.AppendLine(@"\begin{centering}");
+        this.document.AppendLine(@"\begin{supertabular}{| p{2.2cm} | p{12.6cm} |}");
 
-      this.document.AppendLine(@"\hline");
-      this.document.AppendLine(@"\bf{Part} &");
-      this.document.AppendLine(@"\bf{Type} &");
-      this.document.AppendLine(@"\bf{Usage} \\");
+        this.document.AppendLine(@"\hline");
+        this.document.AppendLine(@"\bf{Type} &");
+        this.document.AppendLine(request.Name + @" \\");
 
-      this.document.AppendLine(@"\hline");
-      this.document.AppendLine(@"Length &");
-      this.document.AppendLine(@"Int32 &");
-      this.document.AppendLine(@"Contains the length of the following data.\\");
+        this.document.AppendLine(@"\bf{Text} &");
+        this.document.AppendLine(request.Text + @" \\");
 
-      this.document.AppendLine(@"\hline");
-      this.document.AppendLine(@"Data &");
-      this.document.AppendLine(@"Byte[] &");
-      this.document.AppendLine(@"Contains the serialized message data.\\");
+        if (!request.Input.IsNullOrEmpty())
+        {
+          this.document.AppendLine(@"\bf{Input} &");
+          this.document.AppendLine(request.Input + @" \\");
+        }
 
-      this.document.AppendLine(@"\hline");
-      this.document.AppendLine(@"\end{supertabular}");
-      this.document.AppendLine(@"\end{center}");
+        if (!request.Output.IsNullOrEmpty())
+        {
+          this.document.AppendLine(@"\bf{Output} &");
+          this.document.AppendLine(request.Output + @" \\");
+        }
+        
+        this.document.AppendLine(@"\hline");
 
-      this.document.AppendLine(@"\subsection{Example}");
-      this.document.AppendLine();
-      this.document.AppendLine(@"Exampele of a keep alive request.");
-
-      this.document.AppendLine(@"\begin{center}");
-      this.document.AppendLine(@"\begin{supertabular}{| p{7cm} | p{8cm} |}");
-      this.document.AppendLine(@"\hline");
-      this.document.AppendLine(@"Hex bytes &");
-      this.document.AppendLine(@"Comment \\");
-      this.document.AppendLine(@"\hline");
-      this.document.AppendLine(@"37 00 00 00 &");
-      this.document.AppendLine(@"Length of the following data. \\");
-      this.document.AppendLine(@"22 50 69 72 61 74 65 2e  50 69 56 6f 74 65 2e 52 70 63 2e 4b 65 65 70 41 6c 69 76 65 52 65 71 75 65 73 74 &");
-      this.document.AppendLine(@"String 'Pirate.PiVote.Rpc.KeepAliveRequest' in UTF8 with prefixed length. \\");
-      this.document.AppendLine(@"10 00 00 00 09 35 5d d3  9a b9 8a 41 96 e0 41 18 82 a5 85 90 &");
-      this.document.AppendLine(@"Request Guid as 16 bytes with prefixed length. \\");
-      this.document.AppendLine(@"\hline");
-      this.document.AppendLine(@"\end{supertabular}");
-      this.document.AppendLine(@"\end{center}");
-
-      this.document.AppendLine(@"And the corresponding keep alive response:");
-
-      this.document.AppendLine(@"\begin{center}");
-      this.document.AppendLine(@"\begin{supertabular}{| p{7cm} | p{8cm} |}");
-      this.document.AppendLine(@"\hline");
-      this.document.AppendLine(@"Hex bytes &");
-      this.document.AppendLine(@"Comment \\");
-      this.document.AppendLine(@"\hline");
-      this.document.AppendLine(@"39 00 00 00 &");
-      this.document.AppendLine(@"Length of the following data. \\");
-      this.document.AppendLine(@"23 50 69 72 61 74 65 2e  50 69 56 6f 74 65 2e 52 70 63 2e 4b 65 65 70 41  6c 69 76 65 52 65 73 70 6f 6e 73 65 &");
-      this.document.AppendLine(@"String 'Pirate.PiVote.Rpc.KeepAliveResponse' in UTF8 with prefixed length. \\");
-      this.document.AppendLine(@"10 00 00 00 09 35 5d d3  9a b9 8a 41 96 e0 41 18 82 a5 85 90 &");
-      this.document.AppendLine(@"Request Guid as 16 bytes with prefixed length. \\");
-      this.document.AppendLine(@"01 &");
-      this.document.AppendLine(@"Boolean specifying that no exception occurred in execution. \\");
-      this.document.AppendLine(@"\hline");
-      this.document.AppendLine(@"\end{supertabular}");
-      this.document.AppendLine(@"\end{center}"); 
+        this.document.AppendLine(@"\end{supertabular}");
+        this.document.AppendLine(@"\end{centering}");
+        this.document.AppendLine(@"\vspace{0.3cm}");
+        this.document.AppendLine();
+      } 
       
-      this.document.AppendLine();
       this.document.AppendLine(@"\newpage");
-      this.document.AppendLine();
     }
 
-    private void GenerateRequests()
-    {
-    }
-    
     private void GenerateTypes(IEnumerable<FieldType> types)
     {
       this.document.AppendLine(@"\section{Types}");

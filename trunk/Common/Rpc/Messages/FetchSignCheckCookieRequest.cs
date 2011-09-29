@@ -18,6 +18,9 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to fetch a sign check cookie.
   /// </summary>
   [SerializeObject("RPC request to fetch a signature response.")]
+  [RpcRequest("Download a sign check cookie.")]
+  [RpcInput("Id of the notary or authority certificate, code to access the sign check cookie.")]
+  [RpcOutput("Sign check cookie signed by the notary or authority.")]
   public class FetchSignCheckCookieRequest : RpcRequest<VotingRpcServer, FetchSignCheckCookieResponse>
   {
     /// <summary>

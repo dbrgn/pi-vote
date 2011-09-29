@@ -1,0 +1,230 @@
+\section{Sequences}
+
+This section shows common sequences in the Pi-Vote process. Beware that these diagrams do not show where to encrypt, decrypt, sign or verify what with what certificate. Please consult the request list in the next section for this information.
+
+\subsection{Request certificate signing}
+
+How the client can get all nessecary data, create his certificate signing request and upload this to the server.
+
+\begin{sequencediagram}
+  \newinst{usr}{User}
+  \newinst[2]{clt}{Client}
+  \newinst[7]{srv}{Server}
+
+  \begin{call}{usr}{Start}{clt}{Quit}
+    \begin{call}{clt}{FetchConfigRequest("Client", "0.1")}{srv}{remote config, voting groups}
+    \end{call}
+    \begin{call}{clt}{FetchCertificateStorageResponse}{srv}{certificate storage, server certificate}
+    \end{call}
+    \begin{call}{clt}{Data entry}{usr}{}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+    \end{call}
+    \begin{call}{clt}{PushSignatureRequestRequest(request)}{srv}{}
+    \end{call}
+  \end{call}
+\end{sequencediagram}
+
+\subsection{Get response to signing request}
+
+How the client can detect when the signature response is available and fetch it.
+
+\begin{sequencediagram}
+  \newinst{usr}{User}
+  \newinst[2]{clt}{Client}
+  \newinst[7]{srv}{Server}
+
+  \begin{call}{usr}{Start}{clt}{Quit}
+    \begin{call}{clt}{FetchConfigRequest("Client", "0.1")}{srv}{remote config, voting groups}
+    \end{call}
+    \begin{call}{clt}{FetchCertificateStorageResponse}{srv}{certificate storage, server certificate}
+    \end{call}
+    \begin{call}{clt}{FetchSignatureResponseRequest(certificate id)}{srv}{status, signature response}
+    \end{call}
+  \end{call}
+\end{sequencediagram}
+
+\subsection{Cast a vote}
+
+How the client can get all nessecary data and then cast a vote.
+
+\begin{sequencediagram}
+  \newinst{usr}{User}
+  \newinst[2]{clt}{Client}
+  \newinst[7]{srv}{Server}
+
+  \begin{call}{usr}{Start}{clt}{Quit}
+    \begin{call}{clt}{FetchConfigRequest("Client", "0.1")}{srv}{remote config, voting groups}
+    \end{call}
+    \begin{call}{clt}{FetchCertificateStorageResponse}{srv}{certificate storage, server certificate}
+    \end{call}
+    \begin{call}{clt}{FetchVotingRequest(null)}{srv}{voting containers}
+    \end{call}
+    \begin{call}{clt}{Display}{usr}{Vote}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+    \end{call}
+    \begin{call}{clt}{PushEnvelopeRequest(voting id, envelope)}{srv}{vote receipt}
+    \end{call}
+  \end{call}
+\end{sequencediagram}
+
+\subsection{Create and delete a voting}
+
+How the client can create a voting and then delete it again.
+
+\begin{sequencediagram}
+  \newinst{usr}{User}
+  \newinst[2]{clt}{Client}
+  \newinst[7]{srv}{Server}
+
+  \begin{call}{usr}{Start}{clt}{Quit}
+    \begin{call}{clt}{FetchConfigRequest("Client", "0.1")}{srv}{remote config, voting groups}
+    \end{call}
+    \begin{call}{clt}{FetchCertificateStorageResponse}{srv}{certificate storage, server certificate}
+    \end{call}
+    \begin{call}{clt}{Wait}{usr}{Command}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+    \end{call}
+    \begin{call}{clt}{CreateVotingRequest(voting parameters, authorities)}{srv}{}
+    \end{call}
+    \begin{call}{clt}{Wait}{usr}{Command}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+    \end{call}
+    \begin{call}{clt}{DeleteVotingRequest(command(voting id))}{srv}{}
+    \end{call}
+  \end{call}
+\end{sequencediagram}
+
+\subsection{Depsit share part and share response}
+
+How the client can deposit an authorities share part and share response. This assumes that the authority is the last one to deposit the share part so it can move on to the response immediatly.
+
+\begin{sequencediagram}
+  \newinst{usr}{User}
+  \newinst[2]{clt}{Client}
+  \newinst[7]{srv}{Server}
+
+  \begin{call}{usr}{Start}{clt}{Quit}
+    \begin{call}{clt}{FetchConfigRequest("Client", "0.1")}{srv}{remote config, voting groups}
+    \end{call}
+    \begin{call}{clt}{FetchCertificateStorageResponse}{srv}{certificate storage, server certificate}
+    \end{call}
+    \begin{call}{clt}{FetchVotingRequest(null)}{srv}{voting containers}
+    \end{call}
+    \begin{call}{clt}{Wait}{usr}{Command}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+    \end{call}
+    \begin{call}{clt}{FetchAuthorityListRequest(voting id)}{srv}{authority ids}
+    \end{call}
+    \begin{call}{clt}{PushSharesRequest(voting id, share part)}{srv}{}
+    \end{call}
+    \begin{call}{clt}{VotingStatusResponse(voting id}{srv}{status, authorities done}
+    \end{call}
+    \begin{call}{clt}{Wait}{usr}{Command}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+    \end{call}
+    \begin{call}{clt}{FetchAllSharesRequest(voting id}{srv}{all share parts}
+    \end{call}
+    \begin{call}{clt}{Question}{usr}{Decision}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+    \end{call}
+    \begin{call}{clt}{PushShareResponseRequest(voting id, share response}{srv}{}
+    \end{call}
+  \end{call}
+\end{sequencediagram}
+
+\subsection{Tally voting an publish decipher part}
+
+How the client can tally a voting and upload the decipher parts. It needs to download all envelopes and sum them up, partially decrypt the sum and upload the partial deciphers.
+
+\begin{sequencediagram}
+  \newinst{usr}{User}
+  \newinst[2]{clt}{Client}
+  \newinst[7]{srv}{Server}
+
+  \begin{call}{usr}{Start}{clt}{Quit}
+    \begin{call}{clt}{FetchConfigRequest("Client", "0.1")}{srv}{remote config, voting groups}
+    \end{call}
+    \begin{call}{clt}{FetchCertificateStorageResponse}{srv}{certificate storage, server certificate}
+    \end{call}
+    \begin{call}{clt}{FetchVotingRequest(null)}{srv}{voting containers}
+    \end{call}
+    \begin{call}{clt}{Wait}{usr}{Command}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+    \end{call}
+    \begin{call}{clt}{FetchAuthorityListRequest(voting id)}{srv}{authority ids}
+    \end{call}
+    \begin{call}{clt}{FetchEnvelopeCountRequest(voting id)}{srv}{envelope count}
+    \end{call}
+    \begin{call}{clt}{FetchEnvelopeRequest(voting id, envelope index)}{srv}{envelope}
+    \end{call}
+	\begin{call}{clt}{FetchEnvelopeRequest(voting id, envelope index)}{srv}{envelope}
+    \end{call}
+    \begin{call}{clt}{FetchEnvelopeRequest(voting id, envelope index)}{srv}{envelope}
+    \end{call}
+    \begin{call}{clt}{...}{srv}{envelope}
+    \end{call}
+    \begin{call}{clt}{Question}{usr}{Decision}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+    \end{call}
+    \begin{call}{clt}{PushPartialDecipherRequest(voting id, partial dec. list)}{srv}{}
+    \end{call}
+  \end{call}
+\end{sequencediagram}
+
+\subsection{Tally voting an display the result}
+
+How the client can tally a voting and calculate the result. It needs to download all envelopes and sum them up, then download all decipher parts and decipher the result.
+
+\begin{sequencediagram}
+  \newinst{usr}{User}
+  \newinst[2]{clt}{Client}
+  \newinst[7]{srv}{Server}
+
+  \begin{call}{usr}{Start}{clt}{Quit}
+    \begin{call}{clt}{FetchConfigRequest("Client", "0.1")}{srv}{remote config, voting groups}
+    \end{call}
+    \begin{call}{clt}{FetchCertificateStorageResponse}{srv}{certificate storage, server certificate}
+    \end{call}
+    \begin{call}{clt}{FetchVotingRequest(null)}{srv}{voting containers}
+    \end{call}
+    \begin{call}{clt}{Wait}{usr}{Command}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+    \end{call}
+    \begin{call}{clt}{FetchAuthorityListRequest(voting id)}{srv}{authority ids}
+    \end{call}
+    \begin{call}{clt}{FetchEnvelopeCountRequest(voting id)}{srv}{envelope count}
+    \end{call}
+    \begin{call}{clt}{FetchEnvelopeRequest(voting id, envelope index)}{srv}{envelope}
+    \end{call}
+	\begin{call}{clt}{FetchEnvelopeRequest(voting id, envelope index)}{srv}{envelope}
+    \end{call}
+    \begin{call}{clt}{FetchEnvelopeRequest(voting id, envelope index)}{srv}{envelope}
+    \end{call}
+    \begin{call}{clt}{...}{srv}{envelope}
+    \end{call}
+    \begin{call}{clt}{FetchPartialDecipherRequest(voting id)}{srv}{partial decipher list}
+    \end{call}
+    \begin{call}{clt}{FetchPartialDecipherRequest(voting id)}{srv}{partial decipher list}
+    \end{call}
+    \begin{call}{clt}{... (3x more)}{srv}{partial decipher list}
+    \end{call}
+    \begin{call}{clt}{Display}{usr}{}
+		\begin{call}{clt}{KeepAliveRequest}{srv}{}
+		\end{call}
+    \end{call}
+  \end{call}
+\end{sequencediagram}

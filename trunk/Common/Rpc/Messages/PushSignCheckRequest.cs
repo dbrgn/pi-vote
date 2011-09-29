@@ -18,6 +18,8 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to add a sign check.
   /// </summary>
   [SerializeObject("RPC request to add a sign check.")]
+  [RpcRequest("Uploads a sign check from a notary or authority.")]
+  [RpcInput("Signature request sign check signed by the web server.")]
   public class PushSignCheckRequest : RpcRequest<VotingRpcServer, PushSignCheckResponse>
   {
     /// <summary>

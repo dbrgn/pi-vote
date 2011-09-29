@@ -1,0 +1,52 @@
+\section{RPC Protocol}
+
+Pi-Vote uses an Remote Procedure Call protocol over TCP. To establish communication the client opens a TCP connection to the server. All action is initiated by the client sending a request. The server processes these request and answers each one with a response.
+
+\subsection{Messages}
+
+Both request and response are messages which use a common transmission format.
+
+\begin{center}
+	\begin{supertabular}{| p{2cm} | p{2cm} | p{8cm}|}
+		\hline
+		\bf{Part} 	& \bf{Type} 	& \bf{Usage} \\
+		\hline
+		Length 		& Int32 		& Contains the length of the following data. \\
+		\hline
+		Data 		& Byte[] 		& Contains the serialized message data. \\
+		\hline
+	\end{supertabular}
+\end{center}
+
+\subsection{Example}
+
+Exampele of a keep alive request.
+
+\begin{center}
+	\begin{supertabular}{| p{7cm} | p{8cm} |}
+		\hline
+		Hex bytes & Comment \\
+		\hline"
+		37 00 00 00 & Length of the following data. \\
+		22 50 69 72 61 74 65 2e  50 69 56 6f 74 65 2e 52 70 63 2e 4b 65 65 70 41 6c 69 76 65 52 65 71 75 65 73 74 & String 'Pirate.PiVote.Rpc.KeepAliveRequest' in UTF8 with prefixed length. \\
+		10 00 00 00 09 35 5d d3  9a b9 8a 41 96 e0 41 18 82 a5 85 90 & Request Guid as 16 bytes with prefixed length. \\
+		\hline
+	\end{supertabular}
+\end{center}
+
+And the corresponding keep alive response:
+
+\begin{center}
+	\begin{supertabular}{| p{7cm} | p{8cm} |}
+		\hline
+		Hex bytes & Comment \\
+		\hline
+		39 00 00 00 & Length of the following data. \\
+		23 50 69 72 61 74 65 2e  50 69 56 6f 74 65 2e 52 70 63 2e 4b 65 65 70 41  6c 69 76 65 52 65 73 70 6f 6e 73 65 & String 'Pirate.PiVote.Rpc.KeepAliveResponse' in UTF8 with prefixed length. \\
+		10 00 00 00 09 35 5d d3  9a b9 8a 41 96 e0 41 18 82 a5 85 90 & Request Guid as 16 bytes with prefixed length. \\
+		01 & Boolean specifying that no exception occurred in execution. \\
+		\hline
+	\end{supertabular}
+\end{center}
+      
+\newpage

@@ -18,6 +18,9 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to get the list of sign checks on a certificate.
   /// </summary>
   [SerializeObject("RPC request to get the list of sign checks on a certificate.")]
+  [RpcRequest("Download the list of sign checks for a certificate.")]
+  [RpcInput("Id of the certificate.")]
+  [RpcOutput("List of signature request sign checks signed by the web server.")]
   public class FetchSignCheckListRequest : RpcRequest<VotingRpcServer, FetchSignCheckListResponse>
   {
     /// <summary>

@@ -19,6 +19,8 @@ namespace Pirate.PiVote.Rpc
   /// </summary>
   [SerializeObject("RPC request to fetch a partial decipher.")]
   [RpcRequest("Downloads list of partial decipehrs from an authority for a specified voting. This is done when tallying a voting.")]
+  [RpcInput("Id of the voting, index of an authority.")]
+  [RpcOutput("Partial decipher list signed by that authority.")]
   public class FetchPartialDecipherRequest : RpcRequest<VotingRpcServer, FetchPartialDecipherResponse>
   {
     /// <summary>

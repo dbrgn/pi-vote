@@ -21,6 +21,8 @@ namespace Pirate.PiVote.Rpc
   /// Used to add new CRLs.
   /// </remarks>
   [SerializeObject("RPC request to add a certificate storage to the server's data.")]
+  [RpcRequest("Uploads a certificate storage which will be merge into the server database.")]
+  [RpcInput("A certificate storage including CAs and CRLs.")]
   public class PushCertificateStorageRequest : RpcRequest<VotingRpcServer, PushCertificateStorageResponse>
   {
     /// <summary>

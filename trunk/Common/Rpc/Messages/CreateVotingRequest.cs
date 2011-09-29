@@ -18,7 +18,8 @@ namespace Pirate.PiVote.Rpc
   /// RPC request creates a new voting.
   /// </summary>
   [SerializeObject("RPC request creates a new voting.")]
-  [RpcRequest("Tells the server to create a new voting procedure. The voting parameters need to be signed by an admin certificate.")]
+  [RpcRequest("Tells the server to create a new voting procedure.")]
+  [RpcInput("Voting parameters signed by an admin certificate, list of 5 authorities")]
   public class CreateVotingRequest : RpcRequest<VotingRpcServer, CreateVotingResponse>
   {
     /// <summary>

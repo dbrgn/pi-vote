@@ -19,6 +19,8 @@ namespace Pirate.PiVote.Rpc
   /// </summary>
   [SerializeObject("RPC request to fetch all shares of a voting.")]
   [RpcRequest("Downloads all authority key shares for a voting from the server.")]
+  [RpcInput("Id of the voting.")]
+  [RpcOutput("All share parts in a single container.")]
   public class FetchAllSharesRequest : RpcRequest<VotingRpcServer, FetchAllSharesResponse>
   {
     [SerializeField(0, "Id of the voting.")]

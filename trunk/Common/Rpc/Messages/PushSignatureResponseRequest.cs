@@ -18,6 +18,8 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to push signature response.
   /// </summary>
   [SerializeObject("RPC request to push signature response.")]
+  [RpcRequest("Uploads a signature response from the CA.")]
+  [RpcInput("Signature response signed by the CA.")]
   public class PushSignatureResponseRequest : RpcRequest<VotingRpcServer, PushSignatureResponseResponse>
   {
     /// <summary>

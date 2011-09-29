@@ -18,6 +18,9 @@ namespace Pirate.PiVote.Rpc
   /// RPC request setting the sign check cookie for a notary/authority.
   /// </summary>
   [SerializeObject("RPC request setting the sign check cookie for a notary/authority.")]
+  [RpcRequest("Uploads a sign check cookie from a notary or authority.")]
+  [RpcInput("Sign check cookie signed by the notary or authority.")]
+  [RpcOutput("Code encrypted for the notary or authority.")]
   public class PushSignCheckCookieRequest : RpcRequest<VotingRpcServer, PushSignCheckCookieResponse>
   {
     /// <summary>

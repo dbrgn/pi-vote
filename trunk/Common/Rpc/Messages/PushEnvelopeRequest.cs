@@ -18,6 +18,9 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to push an envelope.
   /// </summary>
   [SerializeObject("RPC request to push an envelope.")]
+  [RpcRequest("Cast a vote by uploading an envelope.")]
+  [RpcInput("Id of the voting, envelope signed by the voter.")]
+  [RpcOutput("Receipt for the voter signed by the server.")]
   public class PushEnvelopeRequest : RpcRequest<VotingRpcServer, PushEnvelopeResponse>
   {
     /// <summary>

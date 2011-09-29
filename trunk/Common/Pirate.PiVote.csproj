@@ -280,6 +280,8 @@
     <Compile Include="Rpc\Messages\CreateVotingRequest.cs" />
     <Compile Include="Rpc\Handlers\VotingRpcServer.cs" />
     <Compile Include="Rpc\Tcp\IRpcConnection.cs" />
+    <Compile Include="Serialization\RpcInputAttribute.cs" />
+    <Compile Include="Serialization\RpcOutputAttribute.cs" />
     <Compile Include="Serialization\RpcRequestAttribute.cs" />
     <Compile Include="Serialization\GenericArgumentAttribute.cs" />
     <Compile Include="Serialization\SerializeEnumAttribute.cs" />

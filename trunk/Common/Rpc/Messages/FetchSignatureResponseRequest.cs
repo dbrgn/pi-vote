@@ -18,6 +18,9 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to fetch a signature response.
   /// </summary>
   [SerializeObject("RPC request to fetch a signature response.")]
+  [RpcRequest("Downloads the CA's response to a signature request.")]
+  [RpcInput("Id of the signature request.")]
+  [RpcOutput("Status of the signature request, signature response signed by the CA.")]
   public class FetchSignatureResponseRequest : RpcRequest<VotingRpcServer, FetchSignatureResponseResponse>
   {
     /// <summary>

@@ -18,6 +18,8 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to push share response.
   /// </summary>
   [SerializeObject("RPC request to push share response.")]
+  [RpcRequest("Uploads an authority's response to the sharing.")]
+  [RpcInput("Id of the voting, share response signed by the authority.")]
   public class PushShareResponseRequest : RpcRequest<VotingRpcServer, PushShareResponseResponse>
   {
     /// <summary>

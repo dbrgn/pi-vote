@@ -18,6 +18,8 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to push a partial decipher.
   /// </summary>
   [SerializeObject("RPC request to push a partial decipher.")]
+  [RpcRequest("Uploads partials deciphers from an authority.")]
+  [RpcInput("Id of the voting, partial decipher list signed by the authority.")]
   public class PushPartialDecipherRequest : RpcRequest<VotingRpcServer, PushPartialDecipherResponse>
   {
     /// <summary>

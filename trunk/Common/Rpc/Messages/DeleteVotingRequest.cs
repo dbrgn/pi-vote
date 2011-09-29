@@ -18,7 +18,8 @@ namespace Pirate.PiVote.Rpc
   /// RPC request creates a new voting.
   /// </summary>
   [SerializeObject("RPC request creates a new voting.")]
-  [RpcRequest("Tells the server to delete a voting. The embedded command object needs to be signed by an admin certificate.")]
+  [RpcRequest("Tells the server to delete a voting.")]
+  [RpcInput("Embedded command object with id of the voting signed by an admin certificate.")]
   public class DeleteVotingRequest : RpcRequest<VotingRpcServer, DeleteVotingResponse>
   {
     /// <summary>

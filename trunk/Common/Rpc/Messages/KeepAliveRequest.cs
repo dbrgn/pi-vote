@@ -18,6 +18,7 @@ namespace Pirate.PiVote.Rpc
   /// RPC keep alive request.
   /// </summary>
   [SerializeObject("RPC keep alive request.")]
+  [RpcRequest("Does nothing but keep the connection alive.")]
   public class KeepAliveRequest : RpcRequest<VotingRpcServer, KeepAliveResponse>
   {
     public KeepAliveRequest(

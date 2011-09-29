@@ -18,6 +18,8 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to list voting ids.
   /// </summary>
   [SerializeObject("RPC request to list voting ids.")]
+  [RpcRequest("Fetches the ids of all votings.")]
+  [RpcOutput("List of ids of votings.")]
   public class ListVotingIdsRequest : RpcRequest<VotingRpcServer, ListVotingIdsResponse>
   {
     public ListVotingIdsRequest(

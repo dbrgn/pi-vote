@@ -18,6 +18,9 @@ namespace Pirate.PiVote.Rpc
   /// RPC request to get voting status.
   /// </summary>
   [SerializeObject("RPC request to get voting status.")]
+  [RpcRequest("Gets the status of a voting.")]
+  [RpcInput("Id of the voting.")]
+  [RpcOutput("Status of the voting, list of the authorities which have completed the current phase.")]
   public class VotingStatusRequest : RpcRequest<VotingRpcServer, VotingStatusResponse>
   {
     /// <summary>
