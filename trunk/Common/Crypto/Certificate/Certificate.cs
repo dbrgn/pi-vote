@@ -97,6 +97,33 @@ namespace Pirate.PiVote.Crypto
     public IEnumerable<Signature> Signatures { get { return this.signatures; } }
 
     /// <summary>
+    /// Valid signatures affixed to the certificate.
+    /// </summary>
+    /// <param name="certificateStorage">Certificate storage to verify against.</param>
+    /// <returns>List of signatures.</returns>
+    public IEnumerable<Signature> ValidSignatures(ICertificateStorage certificateStorage)
+    {
+      return ValidSignatures(certificateStorage, DateTime.Now);
+    }
+
+    /// <summary>
+    /// Valid signatures affixed to the certificate.
+    /// </summary>
+    /// <param name="certificateStorage">Certificate storage to verify against.</param>
+    /// <param name="date">Date to verify with.</param>
+    /// <returns>List of signatures.</returns>
+    public IEnumerable<Signature> ValidSignatures(ICertificateStorage certificateStorage, DateTime date)
+    {
+      foreach (var signature in Signatures)
+      {
+        if (signature.Verify(GetSignatureContent(), certificateStorage, date) == CertificateValidationResult.Valid)
+        {
+          yield return signature;
+        }
+      }
+    }
+
+    /// <summary>
     /// Signature from the certificate itself.
     /// </summary>
     /// <remarks>

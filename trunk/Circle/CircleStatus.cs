@@ -53,7 +53,7 @@ namespace Pirate.PiVote.Circle
 
         IEnumerable<Certificate> caLeaveCertificates = caCertificates.
           Where(certificate => !caCertificates
-            .Any(otherCert => otherCert.Signatures
+            .Any(otherCert => otherCert.ValidSignatures(CertificateStorage)
               .Any(signature => signature.SignerId == certificate.Id)));
 
         return caLeaveCertificates
