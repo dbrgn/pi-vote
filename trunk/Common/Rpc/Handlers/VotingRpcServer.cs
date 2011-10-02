@@ -668,6 +668,8 @@ namespace Pirate.PiVote.Rpc
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature on CRL or issuer not valid.");
       if (!certificateStorage.Certificates.All(certificate => certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid))
         throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Certificate not valid.");
+      if (!certificateStorage.Certificates.All(certificate => certificate.AllSignaturesValid(CertificateStorage)))
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Invalid signatures detected.");
 
       CertificateStorage.Add(certificateStorage);
     }

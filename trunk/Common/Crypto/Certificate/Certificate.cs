@@ -368,6 +368,28 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Are all signatures valid?
+    /// </summary>
+    /// <param name="certificateStorage">Storage of certificates.</param>
+    public bool AllSignaturesValid(ICertificateStorage certificateStorage)
+    {
+      foreach (var signature in this.signatures)
+      {
+        switch (signature.Verify(GetSignatureContent(), certificateStorage, signature.ValidFrom))
+        {
+          case CertificateValidationResult.Valid:
+          case CertificateValidationResult.Outdated:
+          case CertificateValidationResult.NotYetValid:
+            break;
+          default:
+            return false;
+        }
+      }
+
+      return true;
+    }
+
+    /// <summary>
     /// Is the certificate valid?
     /// </summary>
     /// <param name="certificateStorage">Storage of certificates.</param>
