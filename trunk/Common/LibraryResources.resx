@@ -163,7 +163,7 @@
     <value>Partially deciphering voting.</value>
   </data>
   <data name="ClientCreateDeciphersFetchEnvelope" xml:space="preserve">
-    <value>Fetching all envelopes ({0} / {1}.</value>
+    <value>Fetching all envelopes ({0} / {1}).</value>
   </data>
   <data name="ClientCreateDeciphersFetchEnvelopeCount" xml:space="preserve">
     <value>Fetching envelope count.</value>
