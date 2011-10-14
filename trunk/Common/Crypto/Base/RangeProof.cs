@@ -17,7 +17,8 @@ using Pirate.PiVote.Serialization;
 namespace Pirate.PiVote.Crypto
 {
   /// <summary>
-  /// Non-interactive zero knowledge proof that a vote is in range 0-1.
+  /// Non-interactive zero knowledge proof that a vote is
+  /// in range 0-1. Implements Schnorr's protocol.
   /// </summary>
   [SerializeObject("Non-interactive zero knowledge proof that a vote is in range 0-1.")]
   public class RangeProof : Serializable

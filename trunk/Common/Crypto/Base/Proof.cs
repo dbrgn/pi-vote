@@ -17,7 +17,8 @@ using Pirate.PiVote.Serialization;
 namespace Pirate.PiVote.Crypto
 {
   /// <summary>
-  /// Non-interactive zero knowledge proof that a vote sum is MaxVota.
+  /// Non-interactive zero knowledge proof that a vote sum is
+  /// MaxVota. Implements Schnorr's protocol.
   /// </summary>
   [SerializeObject("Non-interactive zero knowledge proof that a vote sum is MaxVota.")]
   public class Proof : Serializable
@@ -146,7 +147,7 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
-    /// Verifies a range proof.
+    /// Verifies a sum proof.
     /// </summary>
     /// <param name="voteSum">The vote sum for which to verify the proof.</param>
     /// <param name="publicKey">Public key against which to verify the proof.</param>

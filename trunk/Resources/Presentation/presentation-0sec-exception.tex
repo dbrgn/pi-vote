@@ -1,0 +1,249 @@
+\documentclass{beamer}
+\usetheme{malmoe}
+
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usepackage[underline=true,rounded corners=false]{pgf-umlsd}
+
+\title{E-Voting done right, is it reliable?}
+\author{Thomas Bruderer, Stefan Thöni}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\section{Outline}{}
+
+\frame{\tableofcontents}
+
+\section{Secret Ballot}
+
+\frame
+{
+	\frametitle{Goal}
+	
+	\begin{itemize} 
+		\item No individual vote must ever be revealed.
+		\item The sum of votes must be published in a verifiable manner.
+	\end{itemize}
+	
+	A contradiction?
+}
+
+\frame
+{
+	\frametitle{ElGamal public-key cryptosystem}
+
+	System parameters
+	\begin{itemize} 
+		\item Safe prime $p= 2q + 1$ where $q$ prime
+		\item Generator $g$ order $q$ element of $\mathbb{Z}_p^*$
+	\end{itemize}
+	
+	\vspace{0.4cm}
+	
+	Everything that follows is in modular arithmetic!
+	
+	\vspace{0.4cm}
+	
+	Authority selects
+	\begin{itemize} 
+		\item Private key $x \in \mathbb{N}$
+		\item Public key $h = g^x$
+	\end{itemize}
+
+}
+\frame
+{
+	\frametitle{ElGamal public-key cryptosystem (cont'd.)}
+	
+	Voter selects
+	\begin{itemize} 
+		\item Vote $v \in \{0,1\}$
+		\item Nonce $r \in \mathbb{N}$
+	\end{itemize}
+
+	\vspace{0.4cm}
+
+	Encryption of $v$
+	\begin{itemize}
+		\item $(g^r, h^r f^v)$)
+	\end{itemize}
+	
+	\vspace{0.4cm}
+
+	Decryption
+	\begin{itemize} 
+		\item $(g^r)^x = (g^x)^r = h^r$
+		\item $\frac{h^r f^v}{h^r} = f^v$
+	\end{itemize}
+}
+
+\frame
+{
+	\frametitle{Homomorphic property}
+	
+	The sum of two encrypted votes $v_0$ and $v_1$ \\
+	\vspace{0.6cm}
+	$(g^{r_0}$, $h^{r_0} f^{v_0}) + (g^{r_1}$, $h^{r_1} f^{v_1}) =$ \\
+	\vspace{0.6cm}
+	$(g^{r_0} g^{r_1}$, $h^{r_0} f^{v_0} h^{r_1} f^{v_0}) =$ \\
+	\vspace{0.6cm}
+	$(g^{r_0 + r_1}, h^{r_0 + r_1} f^{v_0 + v_1})$ \\
+	\vspace{0.6cm}
+	yields the encrypted sum of $v_0$ and $v_1$!
+}
+
+\frame
+{
+	\frametitle{ElGamal homomorphic encryption - Results}
+	
+	\begin{itemize} 
+		\item Can sum up encrypted votes
+		\item Secure given the computational Diffie-Hellman assumption is true
+		\item Therefore we require that the discrete logarithms are hard to compute
+	\end{itemize}
+}
+
+\section{Division of Power}
+
+\frame
+{
+	\frametitle{We need to trust. But in whom?}
+	
+	\begin{itemize}
+		\item Before we saw that we need the key pair of an authority. But whom do we trust with this?
+		\item No one individually. Rather we distribute the key among server authorities.
+		\item Therefore we need a secret sharing scheme were $t$ of $n$ authorities can decrypt the result.
+	\end{itemize}
+}
+
+\frame
+{
+	\frametitle{Shamir's Secret Sharing}
+	
+	Each authority $i$
+	\begin{itemize}
+		\item Creates random polynomial $P_i(x) \in \mathbb{Z}_q[x]$ with coefficients $c_{i,l}$ for $l \in 0...t-1$
+		\item Evaluates for each authority $j$ as share $s_{i,j} = P_i(j)$
+		\item Sends $s_{i,j}$ securely to $j$
+		\item Calculates and publishes values $G_{i,l} = g^{c_{i,l}}$
+	\end{itemize}
+}
+
+\frame
+{
+	\frametitle{Shamir's Secret Sharing (cont'd)}
+	
+	Each authority $j$
+	\begin{itemize}
+		\item Verify for each $i$ that $g^{s_{i,j}} = \prod\limits_{l=0}^{t-1}{(G_{i,l})^{i^k}}$
+		\item Computes its secret key part as $x_i = \sum\limits_{i=0}^{n-1}{s_{i,j}}$
+	\end{itemize}
+	\vspace{0.8cm}
+	Each voter
+	\begin{itemize}
+		\item Computes public key $h = \prod\limits_{i=0}^{n-1}{G_{i,0}}$
+	\end{itemize}
+}
+
+\frame
+{
+	\frametitle{Shamir's Secret Sharing (cont'd)}
+	
+	Each authority $i$
+	\begin{itemize}
+		\item Sums up all encrypted votes $\sum{(g^{r_j}, h^{r_j} f^{v_j})} = (g^r, h^r f^v)$
+		\item Computes and publishes partial deciphers $p_{i,k} = (g^r)^{x_i l_{i,k}}$ where $l_{i,k}$ are the Lagrange coefficients.
+	\end{itemize}
+
+	\vspace{0.3cm}
+
+	Everyone
+	\begin{itemize}
+		\item Sums up all encrypted votes $\sum{(g^{r_j}, h^{r_j} f^{v_j})} = (g^r, h^r f^v)$
+		\item Decrypt the sum of votes $g^r \prod{p_{i,k}} = (g^r)^x = h^r$ and $\frac{h^r f^v}{h^r} = f^v$ where the $v$ is the plain sum of votes.
+	\end{itemize}
+}
+
+\frame
+{
+	\frametitle{Shamir's Secret Sharing - Results}
+	
+	\begin{itemize}
+		\item Only $t$ out of $n$ authorities together can decrypt a vote
+		\item Information theoretic security
+	\end{itemize}
+}
+
+\section{Valid Ballot}
+
+\frame
+{
+	\frametitle{Valid Ballot}
+	
+	What make a valid ballot?
+	\begin{itemize}
+		\item Each vote is $v \in \{0,1\}$ 
+		\item The sum of all votes in the ballot is $\sum\limits_{o \in Options}{v_o} = m$ where $m$ is the allowed number of votes on this issue (typically $m = 1$)
+	\end{itemize}
+}
+
+\frame
+{
+	\frametitle{Zero knowledge proof}
+	
+	\begin{itemize}
+		\item A proof of knowledge: Peggy proves to Vic that she nows an $x$ such that $x$ has some property $P$
+		\item In zero knowledge: Peggy proves this such that Vic does not learn anything about $x$ besides the fact that it satisfies $P$
+	\end{itemize}
+}
+
+\frame
+{
+	\frametitle{Zero knowledge proof (cont'd)}
+	
+	Which means for Pi-Vote
+	\begin{itemize}
+		\item Remember encryption: $(g^r ,h^r f^v)$
+		\item Proof to know an $r$ such that $(g^r, h^r f^v)$ where $v$ is the sum of votes in a ballot.
+		\item Transformed to know $r = log_h f^v$
+		\item Fits perfectly to Schnorr's protocol
+	\end{itemize}
+}
+
+\frame
+{
+	\frametitle{Schnorr's Protocol}
+	
+	\begin{sequencediagram}
+		\newinst{p}{Peggy}
+		\newinst[4]{v}{Vic}
+
+		\messself{p}{$u = \in_R \mathbb{Z}_n$}
+		\messself{p}{$a = h^u$}
+		\mess{p}{a}{v}
+		\messself{v}{$c = \in_R \{0,1\}$}
+		\mess{v}{c}{p}
+		\messself{p}{$s = u + x c$}
+		\mess{p}{r}{v}
+		\messself{v}{$g^s = a {f^v}^c$?}
+	\end{sequencediagram}
+}
+
+\section{Right to Vote}
+
+\frame
+{
+	\frametitle{Who has the right to vote?}
+	
+	\begin{itemize}
+		\item Certificates for voters and authorities
+		\item Using RSA and SHA2 exclusively, plus AES for encryption
+		\item Our own, independent public key infrastructure
+		\item Strict rules: One root only, must have a valid revocation list at all times
+	\end{itemize}
+}
+
+\end{document}
