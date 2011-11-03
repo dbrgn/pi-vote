@@ -21,6 +21,11 @@ namespace Pirate.PiVote.Crypto
   public class VotingServerEntity
   {
     /// <summary>
+    /// This was last processed...
+    /// </summary>
+    private DateTime lastProcessTime;
+
+    /// <summary>
     /// Voting RPC server.
     /// </summary>
     private VotingRpcServer Server { get; set; }
@@ -72,15 +77,7 @@ namespace Pirate.PiVote.Crypto
     {
       get
       {
-        if (this.status == VotingStatus.Ready && DateTime.Now.Date >= this.parameters.VotingBeginDate.Date)
-        {
-          Status = VotingStatus.Voting;
-        }
-
-        if (this.status == VotingStatus.Voting && DateTime.Now.Date > this.parameters.VotingEndDate.Date)
-        {
-         Status = VotingStatus.Deciphering;
-        }
+        CheckStatus();
 
         return this.status;
       }
@@ -94,12 +91,11 @@ namespace Pirate.PiVote.Crypto
 
         Logger.Log(LogLevel.Info, "Status of voting {0} changed to {1}.", Id.ToString(), this.status.ToString());
 
-        string body = string.Format(
-          ServerConfig.MailAdminVotingStatusBody,
-          Id.ToString(),
-          Parameters.Title.Text,
-          this.status.ToString());
-        Mailer.TrySend(ServerConfig.MailAdminAddress, ServerConfig.MailAdminVotingStatusSubject, body);
+        Server.SendMail(
+          ServerConfig.MailAdminAddress,
+          MailType.AdminStatusChanged,
+          this,
+          this.status);
 
         switch (this.status)
         {
@@ -108,6 +104,19 @@ namespace Pirate.PiVote.Crypto
             SendAuthorityActionRequiredMail();
             break;
         }
+      }
+    }
+
+    private void CheckStatus()
+    {
+      if (this.status == VotingStatus.Ready && DateTime.Now.Date >= this.parameters.VotingBeginDate.Date)
+      {
+        Status = VotingStatus.Voting;
+      }
+
+      if (this.status == VotingStatus.Voting && DateTime.Now.Date > this.parameters.VotingEndDate.Date)
+      {
+        Status = VotingStatus.Deciphering;
       }
     }
 
@@ -199,25 +208,285 @@ namespace Pirate.PiVote.Crypto
       ServerCertificate serverCertificate)
       : this(server, signedParameters, certificateStorage, serverCertificate, VotingStatus.New)
     {
+      this.lastProcessTime = DateTime.Now;
       SendAuthorityActionRequiredMail();
+    }
+
+    /// <summary>
+    /// Process things.
+    /// </summary>
+    public void Process()
+    {
+      CheckStatus();
+      RemindAuthorities();
+      RemindVoters();
+      this.lastProcessTime = DateTime.Now;
+    }
+
+    /// <summary>
+    /// Remind voters to vote.
+    /// </summary>
+    private void RemindVoters()
+    {
+      if (this.lastProcessTime.Day < DateTime.Now.Day)
+      {
+        if (Parameters.VotingEndDate.Date == DateTime.Now.Date)
+        {
+          RemindVoters(MailType.VoterRequestLastChance);
+        }
+        else if (Parameters.VotingEndDate.AddDays(-6).Date == DateTime.Now.Date)
+        {
+          RemindVoters(MailType.VoterRequestCanStill);
+        }
+      }
+    }
+
+    /// <summary>
+    /// Remind voters to vote.
+    /// </summary>
+    /// <param name="mailType">Type of mail to send.</param>
+    private void RemindVoters(MailType mailType)
+    {
+      var envelopes = GetAllEnvelopes();
+      var notVotedYet = Server.GetValidCertificates()
+        .Where(item => item.First is VoterCertificate &&
+                       ((VoterCertificate)item.First).GroupId == Parameters.GroupId &&
+                       !envelopes.Any(envelope => envelope.Certificate.IsIdentic(item.First)));
+      var addresses = notVotedYet.Select(item => item.Second.EmailAddress);
+
+      foreach (var address in addresses)
+      {
+        Server.SendMail(
+          address,
+          mailType,
+          Parameters.Title.Get(Language.English),
+          Parameters.Title.Get(Language.German),
+          Parameters.Title.Get(Language.French),
+          Parameters.VotingEndDate.ToString("D", Language.English.ToCulture()),
+          Parameters.VotingEndDate.ToString("D", Language.German.ToCulture()),
+          Parameters.VotingEndDate.ToString("D", Language.French.ToCulture()));
+      }
+    }
+
+    /// <summary>
+    /// Remind authorities to do their duties.
+    /// </summary>
+    private void RemindAuthorities()
+    {
+      if (this.lastProcessTime.Hour < DateTime.Now.Hour)
+      {
+        DateTime criticalDate = DateTime.MaxValue;
+        bool sendAuthority = false;
+
+        switch (this.status)
+        {
+          case VotingStatus.New:
+            criticalDate = Parameters.VotingBeginDate.AddDays(-2);
+            sendAuthority = true;
+            break;
+          case VotingStatus.Sharing:
+            criticalDate = Parameters.VotingBeginDate;
+            sendAuthority = true;
+            break;
+          case VotingStatus.Deciphering:
+            criticalDate = Parameters.VotingEndDate.AddDays(3);
+            sendAuthority = true;
+            break;
+        }
+
+        if (sendAuthority)
+        {
+          if (DateTime.Now > criticalDate)
+          {
+            SendAuthorityActionRequiredMail();
+            SendAdminStatusMail();
+          }
+          else if (DateTime.Now > criticalDate.AddDays(-1))
+          {
+            switch (DateTime.Now.Hour)
+            {
+              case 2:
+              case 5:
+              case 8:
+              case 11:
+              case 14:
+              case 17:
+              case 20:
+              case 23:
+                SendAuthorityActionRequiredMail();
+                SendAdminStatusMail();
+                break;
+            }
+          }
+          else if (DateTime.Now > criticalDate.AddDays(-2))
+          {
+            switch (DateTime.Now.Hour)
+            {
+              case 7:
+              case 13:
+              case 20:
+                SendAuthorityActionRequiredMail();
+                SendAdminStatusMail();
+                break;
+            }
+          }
+          else if (DateTime.Now > criticalDate.AddDays(-3))
+          {
+            switch (DateTime.Now.Hour)
+            {
+              case 8:
+              case 20:
+                SendAuthorityActionRequiredMail();
+                SendAdminStatusMail();
+                break;
+            }
+          }
+          else
+          {
+            switch (DateTime.Now.Hour)
+            {
+              case 18:
+                SendAuthorityActionRequiredMail();
+                SendAdminStatusMail();
+                break;
+            }
+          }
+        }
+        else
+        {
+          switch (this.status)
+          {
+            case VotingStatus.Deciphering:
+            case VotingStatus.New:
+            case VotingStatus.Ready:
+            case VotingStatus.Sharing:
+            case VotingStatus.Voting:
+              if (DateTime.Now.Hour == 18)
+              {
+                SendAdminStatusMail();
+              }
+              break;
+          }
+        }
+      }
+    }
+
+     /// <summary>
+     /// Send action required mail to all authorities
+     /// </summary>
+    public void SendAuthorityActionRequiredMail()
+    {
+      switch (this.status)
+      { 
+        case VotingStatus.New:
+          if (DateTime.Now > Parameters.VotingBeginDate.AddDays(-2))
+          {
+            SendAuthorityActionRequiredMail(MailType.AuthorityCreateSharesRed);
+          }
+          else if (DateTime.Now > Parameters.VotingBeginDate.AddDays(-3))
+          {
+            SendAuthorityActionRequiredMail(MailType.AuthorityCreateSharesOrange);
+          }
+          else
+          {
+            SendAuthorityActionRequiredMail(MailType.AuthorityCreateSharesGreen);
+          }
+          break;
+        case VotingStatus.Sharing:
+          if (DateTime.Now > Parameters.VotingBeginDate)
+          {
+            SendAuthorityActionRequiredMail(MailType.AuthorityVerifySharesRed);
+          }
+          else if (DateTime.Now > Parameters.VotingBeginDate.AddDays(-1))
+          {
+            SendAuthorityActionRequiredMail(MailType.AuthorityVerifySharesOrange);
+          }
+          else
+          {
+            SendAuthorityActionRequiredMail(MailType.AuthorityVerifySharesGreen);
+          } 
+          break;
+        case VotingStatus.Deciphering:
+          if (DateTime.Now > Parameters.VotingEndDate.AddDays(3))
+          {
+            SendAuthorityActionRequiredMail(MailType.AuthorityDecipherRed);
+          }
+          else if (DateTime.Now > Parameters.VotingEndDate.AddDays(2))
+          {
+            SendAuthorityActionRequiredMail(MailType.AuthorityDecipherOrange);
+          }
+          else
+          {
+            SendAuthorityActionRequiredMail(MailType.AuthorityDecipherGreen);
+          }
+          break;
+      }
+    }
+
+    /// <summary>
+    /// Notify the admin about status.
+    /// </summary>
+    public void SendAdminStatusMail()
+    {
+      StringBuilder report = new StringBuilder();
+      report.AppendLine("Id: {0}", Id.ToString());
+      report.AppendLine("Title: {0}", Parameters.Title.Text);
+      report.AppendLine("Status: {0}", this.status.ToString());
+
+      foreach (var authority in Authorities)
+      {
+        if (AuthoritiesDone.Contains(authority.Id))
+        {
+          report.AppendLine("Authority: {0}, {1}, Done", authority.Id.ToString(), authority.FullName);
+        }
+        else
+        {
+          report.AppendLine("Authority: {0}, {1}, Waiting", authority.Id.ToString(), authority.FullName);
+        }
+      }
+
+      report.AppendLine("Envelopes: {0}", GetEnvelopeCount());
+
+      Server.SendMail(ServerConfig.MailAdminAddress, MailType.AdminStatusReport, report.ToString());
     }
 
     /// <summary>
     /// Send action required mail to all authorities
     /// </summary>
-    public void SendAuthorityActionRequiredMail()
+    /// <param name="mailType">Type of mail to send.</param>
+    public void SendAuthorityActionRequiredMail(MailType mailType)
     {
-      List<string> authorities = new List<string>(
-        Authorities
-        .Where(authority => Server.HasSignatureRequest(authority.Id))
-        .Select(authority => Server.GetSignatureRequestInfo(authority.Id).Value.Decrypt(this.serverCertificate).EmailAddress)
-        .Where(emailAddress => !emailAddress.IsNullOrEmpty()));
-      string authorityBody = string.Format(
-        ServerConfig.MailAuthorityActionRequiredBody,
-        Id.ToString(),
-        Parameters.Title.Text,
-        this.status.ToString());
-      Mailer.TrySend(authorities, ServerConfig.MailAuthorityActionRequiredSubject, authorityBody);
+      foreach (var authority in Authorities)
+      {
+        if (!AuthoritiesDone.Contains(authority.Id))
+        {
+          try
+          {
+            string address = Server.GetSignatureRequestInfo(authority.Id).Value.Decrypt(this.serverCertificate).EmailAddress;
+            Server.SendMail(address, mailType, Id.ToString(), Parameters.Title.Text);
+          }
+          catch (Exception exception)
+          {
+            Logger.Log(LogLevel.Error, exception.ToString());
+            SendAdminErrorReport(exception);
+          }
+        }
+      }
+    }
+
+    /// <summary>
+    /// Send error report to admin.
+    /// </summary>
+    /// <param name="exception">Exception to send.</param>
+    public void SendAdminErrorReport(Exception exception)
+    {
+      string body = string.Format(
+        ServerConfig.GetMailText(MailType.AdminErrorReport, Server.Logger).Second,
+        exception.ToString());
+      Mailer.TrySend(
+        ServerConfig.MailAdminAddress,
+        ServerConfig.GetMailText(MailType.AdminErrorReport, Server.Logger).First,
+        body);
     }
 
     /// <summary>
@@ -243,6 +512,7 @@ namespace Pirate.PiVote.Crypto
         throw new ArgumentNullException("serverCertificate");
 
       Server = server;
+      this.lastProcessTime = DateTime.Now;
       this.certificateStorage = certificateStorage;
       this.serverCertificate = serverCertificate;
       this.signedParameters = signedParameters;
@@ -525,15 +795,28 @@ namespace Pirate.PiVote.Crypto
       }
     }
 
+    /// <summary>
+    /// Text for internal purposes.
+    /// </summary>
+    /// <returns>Text.</returns>
+    public override string ToString()
+    {
+      return string.Format("{0}: {1}", Id, Parameters.Title.Text);
+    }
+
+    /// <summary>
+    /// Notify the admin about an authority that has done her job.
+    /// </summary>
+    /// <param name="authority">Authority in question.</param>
+    /// <param name="activity">Activity string.</param>
     private void SendAdminAuthorityActivityMail(Certificate authority, string activity)
     {
-      string body = string.Format(
-        ServerConfig.MailAdminAuthorityActivityBody,
-        Id.ToString(),
-        Parameters.Title.Text,
-        authority.FullName,
+      Server.SendMail(
+        ServerConfig.MailAdminAddress, 
+        MailType.AdminAuthorityActivity, 
+        this,
+        authority,
         activity);
-      Mailer.TrySend(ServerConfig.MailAdminAddress, ServerConfig.MailAdminAuthorityActivitySubject, body);
     }
 
     /// <summary>
@@ -954,6 +1237,27 @@ namespace Pirate.PiVote.Crypto
       {
         Status = VotingStatus.Finished;
       }
+    }
+
+    /// <summary>
+    /// Get all signed envelopes.
+    /// </summary>
+    /// <returns>Signed envelopes.</returns>
+    public IEnumerable<Signed<Envelope>> GetAllEnvelopes()
+    {
+      MySqlDataReader reader = DbConnection.ExecuteReader(
+        "SELECT Value FROM envelope WHERE VotingId = @VotingId",
+        "@VotingId", Id.ToByteArray());
+      List<Signed<Envelope>> list = new List<Signed<Envelope>>();
+
+      while (reader.Read())
+      {
+        byte[] signedEnvelopeData = reader.GetBlob(0);
+        list.Add(Serializable.FromBinary<Signed<Envelope>>(signedEnvelopeData));
+      }
+
+      reader.Close();
+      return list;
     }
 
     /// <summary>

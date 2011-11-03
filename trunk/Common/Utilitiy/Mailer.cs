@@ -56,7 +56,7 @@ namespace Pirate.PiVote
     /// <returns>Successful sending?</returns>
     public bool TrySend(string recipient, string subject, string body)
     {
-      return TrySend(new string[] { recipient }, subject, body);
+      return TrySend(recipient.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries), subject, body);
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ namespace Pirate.PiVote
         try
         {
           MailMessage message = new MailMessage();
-          message.From = new MailAddress(this.serverConfig.MailAdminAddress);
+          message.From = new MailAddress(this.serverConfig.MailAuthorityAddress);
           message.Subject = subject;
           message.Body = body;
           goodRecipients.Foreach(recipient => message.To.Add(recipient));

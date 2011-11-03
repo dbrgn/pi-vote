@@ -59,6 +59,11 @@ namespace Pirate.PiVote.Rpc
     private MySqlConnection dbConnection;
 
     /// <summary>
+    /// Time of last processing.
+    /// </summary>
+    private DateTime lastProcess;
+
+    /// <summary>
     /// Server config file.
     /// </summary>
     public override IServerConfig ServerConfig
@@ -107,10 +112,13 @@ namespace Pirate.PiVote.Rpc
     /// </summary>
     public VotingRpcServer()
     {
+      this.lastProcess = DateTime.Now;
+
       this.logger = new Logger(Pirate.PiVote.Logger.ServerLogFileName, LogLevel.Info);
       Logger.Log(LogLevel.Info, "Voting RPC server starting...");
 
       this.serverConfig = new ServerConfig(ServerConfigFileName);
+      this.serverConfig.ValidateMail(Logger);
       Logger.Log(LogLevel.Info, "Config file is read.");
 
       RemoteConfig = new RemoteStoredConfig(RemoteConfigFileName);
@@ -373,20 +381,33 @@ namespace Pirate.PiVote.Rpc
 
       if (!requestInfo.EmailAddress.IsNullOrEmpty())
       {
-        string userBody = string.Format(
-          this.serverConfig.MailRequestDepositedBody,
+        SendMail(
+          requestInfo.EmailAddress,
+          MailType.VoterRequestDeposited,
           requestInfo.EmailAddress,
           signatureRequest.Certificate.Id.ToString(),
           signatureRequest.Certificate.TypeText);
-        Mailer.TrySend(requestInfo.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
       }
 
-      string adminBody = string.Format(
-        this.serverConfig.MailAdminNewRequestBody,
+      SendMail(
+        this.serverConfig.MailAdminAddress,
+        MailType.AdminNewRequest,
         requestInfo.EmailAddress.IsNullOrEmpty() ? "?@?.?" : requestInfo.EmailAddress,
         signatureRequest.Certificate.Id.ToString(),
         signatureRequest.Certificate.TypeText);
-      Mailer.TrySend(this.serverConfig.MailAdminAddress, this.serverConfig.MailAdminNewRequestSubject, adminBody);
+    }
+
+    /// <summary>
+    /// Send a mail.
+    /// </summary>
+    /// <param name="address">Address to send to.</param>
+    /// <param name="mailType">Type of mail to send.</param>
+    /// <param name="arguments">Arguments to add.</param>
+    public void SendMail(string address, MailType mailType, params object[] arguments)
+    {
+      var texts = ServerConfig.GetMailText(mailType, Logger);
+      string body = string.Format(texts.Second, arguments);
+      Mailer.TrySend(address, texts.First, body);
     }
 
     /// <summary>
@@ -543,6 +564,30 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Get all valid certificates.
+    /// </summary>
+    /// <returns>Tuples of certifcate and signature request info.</returns>
+    public IEnumerable<Tuple<Certificate, SignatureRequestInfo>> GetValidCertificates()
+    {
+      MySqlCommand selectCommand = new MySqlCommand("SELECT Info FROM signaturerequest", DbConnection);
+      MySqlDataReader selectReader = selectCommand.ExecuteReader();
+      List<Tuple<Certificate, SignatureRequestInfo>> list = new List<Tuple<Certificate, SignatureRequestInfo>>();
+
+      while (selectReader.Read())
+      {
+        var requestInfo = Serializable.FromBinary<Secure<SignatureRequestInfo>>(selectReader.GetBlob(0));
+
+        if (requestInfo.Verify(CertificateStorage))
+        {
+          list.Add(new Tuple<Certificate, SignatureRequestInfo>(requestInfo.Certificate, requestInfo.Value.Decrypt(this.serverCertificate)));
+        }
+      }
+
+      selectReader.Close();
+      return list;
+    }
+
+    /// <summary>
     /// Sets a signature response.
     /// </summary>
     /// <param name="signatureRequestId">Id of the corresponding request.</param>
@@ -603,12 +648,14 @@ namespace Pirate.PiVote.Rpc
         SignatureRequestInfo signatureRequestInfo = secureSignatureRequestInfo.Value.Decrypt(this.serverCertificate);
         if (!signatureRequestInfo.EmailAddress.IsNullOrEmpty())
         {
-          string userBody = string.Format(
-            this.serverConfig.MailRequestApprovedBody,
+          SendMail(
+            signatureRequestInfo.EmailAddress,
+            MailType.VoterRequestApproved,
             signatureRequestInfo.EmailAddress,
             secureSignatureRequestInfo.Certificate.Id.ToString(),
-            secureSignatureRequestInfo.Certificate.TypeText);
-          Mailer.TrySend(signatureRequestInfo.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
+            CertificateTypeText(secureSignatureRequestInfo.Certificate, Language.English),
+            CertificateTypeText(secureSignatureRequestInfo.Certificate, Language.German),
+            CertificateTypeText(secureSignatureRequestInfo.Certificate, Language.French));
         }
       }
       else
@@ -617,14 +664,54 @@ namespace Pirate.PiVote.Rpc
         SignatureRequestInfo signatureRequestInfo = secureSignatureRequestInfo.Value.Decrypt(this.serverCertificate);
         if (!signatureRequestInfo.EmailAddress.IsNullOrEmpty())
         {
-          string userBody = string.Format(
-            this.serverConfig.MailRequestDeclinedBody,
+          SendMail(
+            signatureRequestInfo.EmailAddress,
+            MailType.VoterRequestDeclined,
             signatureRequestInfo.EmailAddress,
             secureSignatureRequestInfo.Certificate.Id.ToString(),
-            secureSignatureRequestInfo.Certificate.TypeText,
+            CertificateTypeText(secureSignatureRequestInfo.Certificate, Language.English),
+            CertificateTypeText(secureSignatureRequestInfo.Certificate, Language.German),
+            CertificateTypeText(secureSignatureRequestInfo.Certificate, Language.French),
             signatureResponse.Reason);
-          Mailer.TrySend(signatureRequestInfo.EmailAddress, this.serverConfig.MailRequestSubject, userBody);
         }
+      }
+    }
+
+    /// <summary>
+    /// Get certificate type text in the selected language.
+    /// </summary>
+    /// <param name="certificate">Certificate in question.</param>
+    /// <param name="language">Desired language.</param>
+    /// <returns>Type text.</returns>
+    private string CertificateTypeText(Certificate certificate, Language language)
+    {
+      if (certificate is VoterCertificate)
+      {
+        return LibraryResources.ResourceManager.GetString("CertificateTypeVoter", language.ToCulture());
+      }
+      else if (certificate is AdminCertificate)
+      {
+        return LibraryResources.ResourceManager.GetString("CertificateTypeAdmin", language.ToCulture());
+      }
+      else if (certificate is AuthorityCertificate)
+      {
+        return LibraryResources.ResourceManager.GetString("CertificateTypeAuthority", language.ToCulture());
+      }
+      else if (certificate is NotaryCertificate)
+      {
+        return LibraryResources.ResourceManager.GetString("CertificateTypeNotary", language.ToCulture());
+      }
+      else if (certificate is ServerCertificate)
+      {
+        return LibraryResources.ResourceManager.GetString("CertificateTypeServer", language.ToCulture());
+      }
+      else if (certificate is CACertificate)
+      {
+        return LibraryResources.ResourceManager.GetString("CertificateTypeCA", language.ToCulture());
+      }
+      else
+      {
+        return LibraryResources.ResourceManager.GetString("CertificateTypeUnknown", language.ToCulture());
       }
     }
 
@@ -660,18 +747,30 @@ namespace Pirate.PiVote.Rpc
     /// Used to add new CRLs.
     /// </remarks>
     /// <param name="certificateStorage">Certificate storage to add.</param>
-    public void AddCertificateStorage(CertificateStorage certificateStorage)
+    public void AddCertificateStorage(
+      IRpcConnection connection,
+      CertificateStorage certificateStorage)
     {
       if (!certificateStorage.SignedRevocationLists.All(crl => crl.Certificate is CACertificate &&
                                                                crl.Value.IssuerId.Equals(crl.Certificate.Id) &&
                                                                crl.Verify(CertificateStorage)))
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Add certificate storage failed; Signature on CRL or issuer not valid.",
+          connection.Id);
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Signature on CRL or issuer not valid.");
-      if (!certificateStorage.Certificates.All(certificate => certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid))
-        throw new PiSecurityException(ExceptionCode.InvalidCertificate, "Certificate not valid.");
-      if (!certificateStorage.Certificates.All(certificate => certificate.AllSignaturesValid(CertificateStorage)))
-        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Invalid signatures detected.");
+      }
 
-      CertificateStorage.Add(certificateStorage);
+      CertificateStorage.Add(certificateStorage.SignedRevocationLists);
+
+      var validCertificates = certificateStorage.Certificates
+        .Where(certificate => certificate.Validate(CertificateStorage) == CertificateValidationResult.Valid &&
+                              certificate.AllSignaturesValid(CertificateStorage));
+      CertificateStorage.Add(validCertificates);
+
+      Logger.Log(LogLevel.Info,
+        "Connection {0}: Certificate storage added.",
+        connection.Id);
     }
 
     /// <summary>
@@ -681,7 +780,49 @@ namespace Pirate.PiVote.Rpc
     public override void Process()
     {
       int certificateCount = CertificateStorage.Certificates.Count();
-      Logger.Log(LogLevel.Debug, "SQL keep alive.", certificateCount);
+      this.votings.Values.Foreach(voting => voting.Process());
+      RemindAdmin();
+      this.lastProcess = DateTime.Now;
+      Logger.Log(LogLevel.Debug, "Processing.", certificateCount);
+    }
+
+    /// <summary>
+    /// Remind authorities to do their duties.
+    /// </summary>
+    private void RemindAdmin()
+    {
+      if (DateTime.Now.Hour > this.lastProcess.Hour)
+      {
+        var maxValid = CertificateStorage.SignedRevocationLists
+          .Where(crl => crl.Verify(CertificateStorage))
+          .Select(crl => crl.Value.ValidUntil.Date)
+          .Max();
+
+        if (DateTime.Now > maxValid &&
+            DateTime.Now.Hour % 3 == 0)
+        {
+          SendMail(
+            ServerConfig.MailAdminAddress,
+            MailType.AdminCrlRed,
+            maxValid.ToLongDateString());
+        }
+        else if (DateTime.Now.AddDays(-2) > maxValid &&
+                 DateTime.Now.Hour % 12 == 6)
+        {
+          SendMail(
+            ServerConfig.MailAdminAddress,
+            MailType.AdminCrlOrange,
+            maxValid.ToLongDateString());
+        }
+        else if (DateTime.Now.AddDays(-5) > maxValid &&
+                 DateTime.Now.Hour == 18)
+        {
+          SendMail(
+            ServerConfig.MailAdminAddress,
+            MailType.AdminCrlOrange,
+            maxValid.ToLongDateString());
+        }
+      }
     }
 
     /// <summary>
@@ -808,7 +949,7 @@ namespace Pirate.PiVote.Rpc
       var reader = DbConnection.ExecuteReader(
         "SELECT Cookie FROM signcheckcookie WHERE NotaryId = @NotaryId",
         "@NotaryId",
-        signCheck.Cookie.Certificate.Id);
+        signCheck.Cookie.Certificate.Id.ToByteArray());
 
       if (reader.Read())
       {

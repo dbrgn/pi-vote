@@ -1160,5 +1160,14 @@ namespace Pirate.PiVote.Crypto
         PrivateKeyStatus = PrivateKeyStatus.Encrypted;
       }
     }
+
+    /// <summary>
+    /// Text for internal purposes.
+    /// </summary>
+    /// <returns>Text.</returns>
+    public override string ToString()
+    {
+      return string.Format("{0}: {1}", Id, FullName);
+    }
   }
 }

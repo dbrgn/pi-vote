@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using System.Text;
 using System.IO;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace Pirate.PiVote
 {
@@ -111,121 +112,14 @@ namespace Pirate.PiVote
       get { return ReadString("MailAuthorityAddress", "a@b.c"); }
     }
 
-    /// <summary>
-    /// Email subject for messages pertaining to signing requests.
-    /// </summary>
-    public string MailRequestSubject
-    {
-      get { return ReadString("MailRequestSubject", "Insert subject here."); }
-    }
-
-    /// <summary>
-    /// Email body for signing request deposited messages.
-    /// </summary>
-    public string MailRequestDepositedBody
-    {
-      get { return ReadString("MailRequestDepositedBody", "Insert message here."); }
-    }
-
-    /// <summary>
-    /// Email body for signing request declined messages.
-    /// </summary>
-    public string MailRequestDeclinedBody
-    {
-      get { return ReadString("MailRequestDeclinedBody", "Insert message here."); }
-    }
-
-    /// <summary>
-    /// Email body for signing request approved messages.
-    /// </summary>
-    public string MailRequestApprovedBody
-    {
-      get { return ReadString("MailRequestApprovedBody", "Insert message here."); }
-    }
-
-    /// <summary>
-    /// Email subject for admin new signing request messages.
-    /// </summary>
-    public string MailAdminNewRequestSubject
-    {
-      get { return ReadString("MailAdminNewRequestSubject", "Insert subject here."); }
-    }
-
-    /// <summary>
-    /// Email body for admin new signing request messages.
-    /// </summary>
-    public string MailAdminNewRequestBody
-    {
-      get { return ReadString("MailAdminNewRequestBody", "Insert message here."); }
-    }
-
-    /// <summary>
-    /// Email subject for admin voting status messages.
-    /// </summary>
-    public string MailAdminVotingStatusSubject
-    {
-      get { return ReadString("MailAdminVotingStatusSubject", "Insert subject here."); }
-    }
-
-    /// <summary>
-    /// Email body for admin voting status messages.
-    /// </summary>
-    public string MailAdminVotingStatusBody
-    {
-      get { return ReadString("MailAdminVotingStatusBody", "Insert message here."); }
-    }
-
-    /// <summary>
-    /// Email subject for admin authority activity messages.
-    /// </summary>
-    public string MailAdminAuthorityActivitySubject
-    {
-      get { return ReadString("MailAdminAuthorityActivitySubject", "Insert subject here."); }
-    }
-
-    /// <summary>
-    /// Email body for admin authority activity messages.
-    /// </summary>
-    public string MailAdminAuthorityActivityBody
-    {
-      get { return ReadString("MailAdminAuthorityActivityBody", "Insert message here."); }
-    }
-
-    /// <summary>
-    /// Email subject for authority action required messages.
-    /// </summary>
-    public string MailAuthorityActionRequiredSubject
-    {
-      get { return ReadString("MailAuthorityActionRequiredSubject", "Insert subject here."); }
-    }
-
-    /// <summary>
-    /// Email body for authority action required messages.
-    /// </summary>
-    public string MailAuthorityActionRequiredBody
-    {
-      get { return ReadString("MailAuthorityActionRequiredBody", "Insert message here."); }
-    }
-
     protected override void Validate()
     {
       string dummy = null;
 
       dummy = MailAdminAddress;
-      dummy = MailAdminNewRequestBody;
-      dummy = MailAdminNewRequestSubject;
       dummy = MailAuthorityAddress;
-      dummy = MailRequestApprovedBody;
-      dummy = MailRequestDeclinedBody;
-      dummy = MailRequestSubject;
       dummy = MailServerAddress;
-      dummy = MailAdminAuthorityActivityBody;
-      dummy = MailAdminAuthorityActivitySubject;
-      dummy = MailAdminVotingStatusBody;
-      dummy = MailAdminVotingStatusSubject;
       dummy = MailServerPort.ToString();
-      dummy = MailAuthorityActionRequiredBody;
-      dummy = MailAuthorityActionRequiredSubject;
 
       dummy = Port.ToString();
       dummy = WorkerCount.ToString();
@@ -240,6 +134,50 @@ namespace Pirate.PiVote
       {
         Save();
         throw new InvalidDataException("The MySQL connection string in the config file is not valid");
+      }
+    }
+
+    /// <summary>
+    /// Validate mail texts.
+    /// </summary>
+    /// <param name="logger">Where to log.</param>
+    public void ValidateMail(ILogger logger)
+    {
+      foreach (MailType mailType in Enum.GetValues(typeof(MailType)))
+      {
+        GetMailText(mailType, logger);
+      }
+    }
+
+    /// <summary>
+    /// Get the mail subject and body.
+    /// </summary>
+    /// <param name="mailType">Type of mail</param>
+    /// <param name="logger">Log errors to</param>
+    /// <returns>Subject and body</returns>
+    public Tuple<string, string> GetMailText(MailType mailType, ILogger logger)
+    {
+      string file = Path.Combine(Path.Combine(Application.StartupPath, "messages"), mailType.ToString());
+
+      if (File.Exists(file))
+      {
+        string text = File.ReadAllText(file, Encoding.UTF8);
+
+        if (text.Contains(Environment.NewLine))
+        {
+          string subject = text.Substring(0, text.IndexOf(Environment.NewLine));
+          string body = text.Substring(text.IndexOf(Environment.NewLine) + Environment.NewLine.Length);
+          return new Tuple<string, string>(subject, body);
+        }
+        else
+        {
+          return new Tuple<string, string>("Unknown PiVote Message", text);
+        }
+      }
+      else
+      {
+        logger.Log(LogLevel.Warning, "Mail message file {0} not present.", file);
+        return new Tuple<string, string>("Unknown PiVote Message", "This this an unknown message from PiVote. Please contact your administrator.");
       }
     }
   }

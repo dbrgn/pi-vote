@@ -155,6 +155,8 @@ namespace Pirate.PiVote.Circle.CreateVoting
       this.storedPrimesLabel.Text = string.Format(Resources.CreateVotingStored, primesStored);
 
       FindForm().Enabled = true;
+
+      this.doneButton.Enabled = primesStored > 0;
     }
 
     private void GeneratePrime()

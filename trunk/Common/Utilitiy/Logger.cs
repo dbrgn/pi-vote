@@ -81,8 +81,29 @@ namespace Pirate.PiVote
           Console.WriteLine(DateTime.Now.ToString("s") + " \t" + logLevel.ToString() + " \t" + message, values);
           this.logWriter.WriteLine(DateTime.Now.ToString("s") + " \t" + logLevel.ToString() + " \t" + message, values);
           this.logWriter.Flush();
-          EventLog.WriteEntry(EventLogSource, string.Format(message, values), logLevel.ToLogEntryType());
+
+          if (Environment.OSVersion.Platform == PlatformID.Unix)
+          {
+            System.Diagnostics.Process.Start("logger", string.Format("-p {0} {1}", LogLevelToUnix(logLevel), string.Format(message, values)));
+          }
+
+          // Does not work!
+          //// EventLog.WriteEntry(EventLogSource, string.Format(message, values), logLevel.ToLogEntryType());
         }
+      }
+    }
+
+    private string LogLevelToUnix(LogLevel logLevel)
+    {
+      switch (logLevel)
+      {
+        case LogLevel.Emergency:
+        case LogLevel.Error:
+          return "local7.alert";
+        case LogLevel.Warning:
+          return "local7.warn";
+        default:
+          return "local7.info";
       }
     }
 

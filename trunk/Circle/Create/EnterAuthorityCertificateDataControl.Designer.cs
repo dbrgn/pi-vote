@@ -51,7 +51,7 @@ namespace Pirate.PiVote.Circle.Create
       // firstNameLabel
       // 
       this.firstNameLabel.AutoSize = true;
-      this.firstNameLabel.Location = new System.Drawing.Point(4, 54);
+      this.firstNameLabel.Location = new System.Drawing.Point(6, 42);
       this.firstNameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
       this.firstNameLabel.Name = "firstNameLabel";
       this.firstNameLabel.Size = new System.Drawing.Size(60, 14);

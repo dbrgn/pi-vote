@@ -318,6 +318,26 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
+    /// Adds certificates.
+    /// </summary>
+    /// <param name="certificates">Add these.</param>
+    public void Add(IEnumerable<Certificate> certificates)
+    {
+      certificates
+        .Foreach(certificate => Add(certificate));
+    }
+
+    /// <summary>
+    /// Adds certificate revocation lists..
+    /// </summary>
+    /// <param name="revocationLists">Add these.</param>
+    public void Add(IEnumerable<Signed<RevocationList>> revocationLists)
+    {
+      revocationLists
+        .Foreach(reveocationList => AddRevocationList(reveocationList));
+    }
+
+    /// <summary>
     /// Adds only CA certificates and revocation lists from a storage.
     /// </summary>
     /// <remarks>

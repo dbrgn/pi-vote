@@ -248,7 +248,7 @@ namespace Pirate.PiVote.Rpc
 
             if (connection.Overdue)
             {
-              Logger.Log(LogLevel.Info, "Connection {0} was overdue and therefore dropped.", connection.Id);
+              Logger.Log(LogLevel.Debug, "Connection {0} was overdue and therefore dropped.", connection.Id);
               connection.Close();
             }
             else
@@ -296,7 +296,7 @@ namespace Pirate.PiVote.Rpc
             this.connections.Enqueue(connection);
           }
 
-          Logger.Log(LogLevel.Info, "New connection {0}.", connection.Id);
+          Logger.Log(LogLevel.Debug, "New connection {0}.", connection.Id);
 
           Thread.Sleep(1);
         }

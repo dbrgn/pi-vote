@@ -74,7 +74,7 @@ namespace Pirate.PiVote.Rpc
     /// <returns>Response to the request.</returns>
     protected override PushCertificateStorageResponse Execute(IRpcConnection connection, VotingRpcServer server)
     {
-      server.AddCertificateStorage(this.certificateStorage);
+      server.AddCertificateStorage(connection, this.certificateStorage);
 
       return new PushCertificateStorageResponse(RequestId);
     }

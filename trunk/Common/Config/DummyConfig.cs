@@ -108,99 +108,22 @@ namespace Pirate.PiVote
     }
 
     /// <summary>
-    /// Email subject for messages pertaining to signing requests.
+    /// Get the mail subject and body.
     /// </summary>
-    public string MailRequestSubject
+    /// <param name="mailType">Type of mail</param>
+    /// <param name="logger">Where to log.</param>
+    /// <returns>Subject and body</returns>
+    public Tuple<string, string> GetMailText(MailType mailType, ILogger logger)
     {
-      get { return "Insert subject here."; }
+      return new Tuple<string, string>("subject", "body");
     }
 
     /// <summary>
-    /// Email body for signing request deposited messages.
+    /// Validate mail texts.
     /// </summary>
-    public string MailRequestDepositedBody
+    /// <param name="logger">Where to log.</param>
+    public void ValidateMail(ILogger logger)
     {
-      get { return "Insert subject here."; }
-    }
-
-    /// <summary>
-    /// Email body for signing request declined messages.
-    /// </summary>
-    public string MailRequestDeclinedBody
-    {
-      get { return "Insert subject here."; }
-    }
-
-    /// <summary>
-    /// Email body for signing request approved messages.
-    /// </summary>
-    public string MailRequestApprovedBody
-    {
-      get { return "Insert subject here."; }
-    }
-
-    /// <summary>
-    /// Email subject for admin new signing request messages.
-    /// </summary>
-    public string MailAdminNewRequestSubject
-    {
-      get { return "Insert subject here."; }
-    }
-
-    /// <summary>
-    /// Email body for admin new signing request messages.
-    /// </summary>
-    public string MailAdminNewRequestBody
-    {
-      get { return "Insert subject here."; }
-    }
-
-    /// <summary>
-    /// Email subject for admin voting status messages.
-    /// </summary>
-    public string MailAdminVotingStatusSubject
-    {
-      get { return "Insert subject here."; }
-    }
-
-    /// <summary>
-    /// Email body for admin voting status messages.
-    /// </summary>
-    public string MailAdminVotingStatusBody
-    {
-      get { return "Insert subject here."; }
-    }
-
-    /// <summary>
-    /// Email subject for admin authority activity messages.
-    /// </summary>
-    public string MailAdminAuthorityActivitySubject
-    {
-      get { return "Insert subject here."; }
-    }
-
-    /// <summary>
-    /// Email body for admin authority activity messages.
-    /// </summary>
-    public string MailAdminAuthorityActivityBody
-    {
-      get { return "Insert subject here."; }
-    }
-
-    /// <summary>
-    /// Email subject for authority action required messages.
-    /// </summary>
-    public string MailAuthorityActionRequiredSubject
-    {
-      get { return "Insert subject here."; }
-    }
-
-    /// <summary>
-    /// Email body for authority action required messages.
-    /// </summary>
-    public string MailAuthorityActionRequiredBody
-    {
-      get { return "Insert subject here."; }
     }
   }
 }

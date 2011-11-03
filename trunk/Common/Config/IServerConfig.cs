@@ -16,6 +16,172 @@ using System.Globalization;
 namespace Pirate.PiVote
 {
   /// <summary>
+  /// Type of sendable mails with preprepared text files.
+  /// </summary>
+  public enum MailType
+  {
+    /// <summary>
+    /// Notifies the admin about an authority done her job.
+    /// {0} Voting id an title
+    /// {1} Id and full name of the authority
+    /// {2} Activity string
+    /// </summary>
+    AdminAuthorityActivity,
+
+    /// <summary>
+    /// Report an error to the admin.
+    /// {0} Exception string
+    /// </summary>
+    AdminErrorReport,
+
+    /// <summary>
+    /// Notify the admin about a new certificate signing request.
+    /// {0} Email address on the request
+    /// {1} Certificate id on the request
+    /// {2} Certificate type on the request
+    /// </summary>
+    AdminNewRequest,
+
+    /// <summary>
+    /// Notifies the admin that the status of a voting changed.
+    /// {0} Id and title of the voting
+    /// {1} New status of the voting
+    /// </summary>
+    AdminStatusChanged,
+
+    /// <summary>
+    /// Status report to the admin.
+    /// {0} Status report text
+    /// </summary>
+    AdminStatusReport,
+
+    /// <summary>
+    /// Remind the admin to renew the Certificate Revocation List.
+    /// {0} Date the last CRL runs out.
+    /// </summary>
+    AdminCrlGreen,
+
+    /// <summary>
+    /// Remind the admin to renew the Certificate Revocation List.
+    /// {0} Date the last CRL runs out.
+    /// </summary>
+    AdminCrlOrange,
+
+    /// <summary>
+    /// Remind the admin to renew the Certificate Revocation List.
+    /// {0} Date the last CRL runs out.
+    /// </summary>
+    AdminCrlRed,
+
+    /// <summary>
+    /// Warns the autority to create shares.
+    /// {0} Id and title of the voting
+    /// </summary>
+    AuthorityCreateSharesGreen,
+
+    /// <summary>
+    /// Warns the autority to create shares.
+    /// {0} Id and title of the voting
+    /// </summary>
+    AuthorityCreateSharesOrange,
+
+    /// <summary>
+    /// Warns the autority to create shares.
+    /// {0} Id and title of the voting
+    /// </summary>
+    AuthorityCreateSharesRed,
+
+    /// <summary>
+    /// Warns the autority to verify shares.
+    /// {0} Id and title of the voting
+    /// </summary>
+    AuthorityVerifySharesGreen,
+
+    /// <summary>
+    /// Warns the autority to verify shares.
+    /// {0} Id and title of the voting
+    /// </summary>
+    AuthorityVerifySharesOrange,
+
+    /// <summary>
+    /// Warns the autority to verify shares.
+    /// {0} Id and title of the voting
+    /// </summary>
+    AuthorityVerifySharesRed,
+
+    /// <summary>
+    /// Warns the autority to decipher.
+    /// {0} Id and title of the voting
+    /// </summary>
+    AuthorityDecipherGreen,
+
+    /// <summary>
+    /// Warns the autority to decipher.
+    /// {0} Id and title of the voting
+    /// </summary>
+    AuthorityDecipherOrange,
+    
+    /// <summary>
+    /// Warns the autority to decipher.
+    /// {0} Id and title of the voting
+    /// </summary>
+    AuthorityDecipherRed,
+
+    /// <summary>
+    /// Notifes the voter that his request was approved.
+    /// {0} Email address on the request
+    /// {1} Certificate id on the request
+    /// {2} Certificate type on the request in English
+    /// {3} Certificate type on the request in German
+    /// {4} Certificate type on the request in French
+    /// </summary>
+    VoterRequestApproved,
+
+    /// <summary>
+    /// Notifies the voter that his request was declined.
+    /// {0} Email address on the request
+    /// {1} Certificate id on the request
+    /// {2} Certificate type on the request in English
+    /// {3} Certificate type on the request in German
+    /// {4} Certificate type on the request in French
+    /// {5} Reason for declining
+    /// </summary>
+    VoterRequestDeclined,
+
+    /// <summary>
+    /// Notifies the voter that his request was stored on the server.
+    /// {0} Email address on the request
+    /// {1} Certificate id on the request
+    /// {2} Certificate type on the request in English
+    /// {3} Certificate type on the request in German
+    /// {4} Certificate type on the request in French
+    /// </summary>
+    VoterRequestDeposited,
+
+    /// <summary>
+    /// Tells a voter that he can still vote.
+    /// {0} Voting title in English
+    /// {1} Voting title in German
+    /// {2} Voting title in French
+    /// {3} Closing date in English
+    /// {4} Closing date in German
+    /// {5} Closing date in French
+    /// </summary>
+    VoterRequestCanStill,
+
+    /// <summary>
+    /// Tells a voter that he has a last chance to vote.
+    /// {0} Voting title in English
+    /// {1} Voting title in German
+    /// {2} Voting title in French
+    /// {3} Closing date in English
+    /// {4} Closing date in German
+    /// {5} Closing date in French
+    /// </summary>
+    VoterRequestLastChance
+  }
+
+  /// <summary>
   /// Server config interface.
   /// </summary>
   public interface IServerConfig
@@ -29,71 +195,6 @@ namespace Pirate.PiVote
     /// Email address of the admin.
     /// </summary>
     string MailAdminAddress { get; }
-
-    /// <summary>
-    /// Email body for admin authority activity messages.
-    /// </summary>
-    string MailAdminAuthorityActivityBody { get; }
-
-    /// <summary>
-    /// Email subject for admin authority activity messages.
-    /// </summary>
-    string MailAdminAuthorityActivitySubject { get; }
-
-    /// <summary>
-    /// Email body for admin new signing request messages.
-    /// </summary>
-    string MailAdminNewRequestBody { get; }
-
-    /// <summary>
-    /// Email subject for admin new signing request messages.
-    /// </summary>
-    string MailAdminNewRequestSubject { get; }
-
-    /// <summary>
-    /// Email body for admin new signing request messages.
-    /// </summary>
-    string MailAdminVotingStatusBody { get; }
-
-    /// <summary>
-    /// Email subject for admin voting status messages.
-    /// </summary>
-    string MailAdminVotingStatusSubject { get; }
-
-    /// <summary>
-    /// Email subject for authority action required messages.
-    /// </summary>
-    string MailAuthorityActionRequiredBody { get; }
-
-    /// <summary>
-    /// Email body for authority action required messages.
-    /// </summary>
-    string MailAuthorityActionRequiredSubject { get; }
-
-    /// <summary>
-    /// Email address of the authorities.
-    /// </summary>
-    string MailAuthorityAddress { get; }
-
-    /// <summary>
-    /// Email body for signing request approved messages.
-    /// </summary>
-    string MailRequestApprovedBody { get; }
-
-    /// <summary>
-    /// Email body for signing request declined messages.
-    /// </summary>
-    string MailRequestDeclinedBody { get; }
-
-    /// <summary>
-    /// Email body for signing request deposited messages.
-    /// </summary>
-    string MailRequestDepositedBody { get; }
-
-    /// <summary>
-    /// Email subject for messages pertaining to signing requests.
-    /// </summary>
-    string MailRequestSubject { get; }
 
     /// <summary>
     /// DNS or IP address of the mail server.
@@ -134,5 +235,19 @@ namespace Pirate.PiVote
     /// Short sleep time for workers in milliseconds.
     /// </summary>
     int WorkerShortWait { get; }
+
+    /// <summary>
+    /// Get the mail subject and body.
+    /// </summary>
+    /// <param name="mailType">Type of mail</param>
+    /// <param name="logger">Where to log.</param>
+    /// <returns>Subject and body</returns>
+    Tuple<string, string> GetMailText(MailType mailType, ILogger logger);
+
+    /// <summary>
+    /// Validate mail texts.
+    /// </summary>
+    /// <param name="logger">Where to log.</param>
+    void ValidateMail(ILogger logger);
   }
 }
