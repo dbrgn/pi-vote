@@ -10,12 +10,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
-using System.Net;
+using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.Circle.Error
 {
@@ -38,31 +41,39 @@ namespace Pirate.PiVote.Circle.Error
 
     public static void ShowError(Exception exception)
     {
-      ErrorDialog dialog = new ErrorDialog();
-      dialog.messageBox.Text = exception.Message;
-
-      StringBuilder builder = new StringBuilder();
-      AssemblyName programName = Assembly.GetExecutingAssembly().GetName();
-      AssemblyName libraryName = typeof(Prime).Assembly.GetName();
-
-      builder.AppendLine("Operating system:    {0}", Environment.OSVersion.VersionString);
-      builder.AppendLine("Program version:     {0}", programName.Version.ToString());
-      builder.AppendLine("Library version:     {0}", libraryName.Version.ToString());
-      builder.AppendLine("Message:             {0}", exception.Message.ToString());
-
-      if (exception is PiException &&
-         !((PiException)exception).ServerMessage.IsNullOrEmpty())
+      if (exception is SocketException || exception.InnerException is SocketException)
       {
-        builder.AppendLine();
-        builder.AppendLine("Server Message:      {0}", ((PiException)exception).ServerMessage);
+        MessageForm.Show(Resources.ConnectionLostErrorMessage, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        System.Diagnostics.Process.GetCurrentProcess().Kill();
       }
+      else
+      {
+        ErrorDialog dialog = new ErrorDialog();
+        dialog.messageBox.Text = exception.Message;
 
-      builder.AppendLine();
-      builder.AppendLine(exception.ToString());
+        StringBuilder builder = new StringBuilder();
+        AssemblyName programName = Assembly.GetExecutingAssembly().GetName();
+        AssemblyName libraryName = typeof(Prime).Assembly.GetName();
 
-      dialog.detailBox.Text = builder.ToString();
+        builder.AppendLine("Operating system:    {0}", Environment.OSVersion.VersionString);
+        builder.AppendLine("Program version:     {0}", programName.Version.ToString());
+        builder.AppendLine("Library version:     {0}", libraryName.Version.ToString());
+        builder.AppendLine("Message:             {0}", exception.Message.ToString());
 
-      dialog.ShowDialog();
+        if (exception is PiException &&
+           !((PiException)exception).ServerMessage.IsNullOrEmpty())
+        {
+          builder.AppendLine();
+          builder.AppendLine("Server Message:      {0}", ((PiException)exception).ServerMessage);
+        }
+
+        builder.AppendLine();
+        builder.AppendLine(exception.ToString());
+
+        dialog.detailBox.Text = builder.ToString();
+
+        dialog.ShowDialog();
+      }
     }
 
     private void closeButton_Click(object sender, EventArgs e)

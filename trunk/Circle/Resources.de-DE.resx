@@ -640,4 +640,7 @@
   <data name="CreateCertificateFinishInfoSubgroup" xml:space="preserve">
     <value>Du musst deine Zertifizierungsanfrage jetzt hochladen. Es ist nicht nötig, diese Zertifizierungsanfrage auszudrucken oder Unterschriften zu sammeln, da diese Anfrage aufgrund deiner vorhergehenden Anfrage beantwortet werden kann.</value>
   </data>
+  <data name="ConnectionLostErrorMessage" xml:space="preserve">
+    <value>Die Verbindung zum Server ist abgebrochen. Das Programm wird jetzt geschlossen.</value>
+  </data>
 </root>

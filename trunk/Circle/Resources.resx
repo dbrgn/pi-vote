@@ -658,4 +658,7 @@
   <data name="CreateCertificateFinishInfoSubgroup" xml:space="preserve">
     <value>You must now upload your signing request. You do not need to print your signing request or collect any signatures as this request may be granted using the data from your original request.</value>
   </data>
+  <data name="ConnectionLostErrorMessage" xml:space="preserve">
+    <value>The server connection was lost. This program will now terminate.</value>
+  </data>
 </root>

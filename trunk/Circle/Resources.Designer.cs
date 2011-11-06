@@ -394,6 +394,15 @@ namespace Pirate.PiVote.Circle {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The server connection was lost. This program will now terminate..
+        /// </summary>
+        internal static string ConnectionLostErrorMessage {
+            get {
+                return ResourceManager.GetString("ConnectionLostErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Some shares were invalid. The voting will be aborted..
         /// </summary>
         internal static string ControllerCheckSharesFailed {
