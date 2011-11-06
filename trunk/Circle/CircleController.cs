@@ -223,7 +223,15 @@ namespace Pirate.PiVote.Circle
 
     public void DeactiveCertificate(Certificate certificate)
     {
-      File.Move(this.certificates[certificate], this.certificates[certificate] + Files.BakExtension);
+      var newFileName = this.certificates[certificate] + Files.BakExtension;
+
+      if (File.Exists(newFileName))
+      {
+        File.Delete(newFileName);
+      }
+
+      File.Move(this.certificates[certificate], newFileName);
+
       this.certificates.Remove(certificate);
     }
 
