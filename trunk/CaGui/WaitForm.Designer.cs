@@ -80,7 +80,12 @@ namespace Pirate.PiVote.CaGui
       this.Controls.Add(this.progressBar);
       this.Controls.Add(this.info1Label);
       this.Controls.Add(this.info0Label);
+
+      // This hack is necessary because the mono compiler/runtime seems to be broken when it comes to icons.
+#if !__MonoCS__
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+#endif
+
       this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
       this.MaximizeBox = false;
       this.MaximumSize = new System.Drawing.Size(400, 111);

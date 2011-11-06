@@ -45,7 +45,12 @@ namespace Pirate.PiVote.Circle.Create
       this.ClientSize = new System.Drawing.Size(594, 325);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+
+      // This hack is necessary because the mono compiler/runtime seems to be broken when it comes to icons.
+#if !__MonoCS__
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+#endif
+
       this.MaximizeBox = false;
       this.MaximumSize = new System.Drawing.Size(800, 400);
       this.MinimizeBox = false;

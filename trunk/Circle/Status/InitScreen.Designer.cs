@@ -135,7 +135,12 @@ namespace Pirate.PiVote.Circle.Status
       this.Controls.Add(this.progressBar);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+
+      // This hack is necessary because the mono compiler/runtime seems to be broken when it comes to icons.
+#if !__MonoCS__
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+#endif
+
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "InitScreen";

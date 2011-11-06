@@ -110,7 +110,12 @@ namespace Pirate.PiVote.Circle.Vote
       this.Controls.Add(this.cancelButton);
       this.Controls.Add(this.votingControl);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
+
+      // This hack is necessary because the mono compiler/runtime seems to be broken when it comes to icons.
+#if !__MonoCS__
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+#endif
+
       this.MinimumSize = new System.Drawing.Size(300, 321);
       this.Name = "VotingDialog";
       this.Text = "VotingDialog";

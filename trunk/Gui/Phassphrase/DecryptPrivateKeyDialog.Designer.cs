@@ -177,7 +177,12 @@ namespace Pirate.PiVote.Gui
       this.Controls.Add(this.passphraseLabel);
       this.Controls.Add(this.infoLabel);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
+
+      // This hack is necessary because the mono compiler/runtime seems to be broken when it comes to icons.
+#if !__MonoCS__
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+#endif
+
       this.KeyPreview = true;
       this.MaximizeBox = false;
       this.MaximumSize = new System.Drawing.Size(2000, 219);
