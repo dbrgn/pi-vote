@@ -147,7 +147,7 @@ namespace Pirate.PiVote.Rpc
       Logger.Log(LogLevel.Info, "Server certificate is loaded.");
 
       LoadVotings();
-      Logger.Log(LogLevel.Info, "Votings are loaded.");  
+      Logger.Log(LogLevel.Info, "Votings are loaded.");
     }
 
     /// <summary>
@@ -564,23 +564,75 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
-    /// Get all valid certificates.
+    /// Get all certificates.
     /// </summary>
-    /// <returns>Tuples of certifcate and signature request info.</returns>
-    public IEnumerable<Tuple<Certificate, SignatureRequestInfo>> GetValidCertificates()
+    /// <returns>Tuples of certificate, validation result and email address.</returns>
+    public IEnumerable<Tuple<Certificate, CertificateValidationResult, string>> GetCertificates()
+    {
+      var signatureResponse = new Dictionary<Guid, SignatureResponse>();
+      foreach (var signedSignatureResponse in QuerySignatureResponses())
+      {
+        if (signedSignatureResponse.Verify(CertificateStorage))
+        {
+          signatureResponse.Add(signedSignatureResponse.Value.SubjectId, signedSignatureResponse.Value);
+        }
+      }
+
+      foreach (var secureSignatureRequestInfo in QuerySignatureRequests())
+      {
+        var certificate = secureSignatureRequestInfo.Certificate;
+        var signatureRequestInfo = secureSignatureRequestInfo.Value.Decrypt(this.serverCertificate);
+        var emailAddress = string.IsNullOrEmpty(signatureRequestInfo.EmailAddress) ? null : signatureRequestInfo.EmailAddress;
+
+        if (signatureResponse.ContainsKey(certificate.Id))
+        {
+          var response = signatureResponse[certificate.Id];
+
+          if (response.Status == SignatureResponseStatus.Accepted &&
+              response.Signature != null)
+          {
+            certificate.AddSignature(response.Signature);
+          }
+        }
+
+        yield return new Tuple<Certificate, CertificateValidationResult, string>(certificate, certificate.Validate(CertificateStorage), emailAddress);
+      }
+    }
+
+    /// <summary>
+    /// Query signature responses.
+    /// </summary>
+    /// <returns>Signed signature responses</returns>
+    private IEnumerable<Signed<SignatureResponse>> QuerySignatureResponses()
+    {
+      MySqlCommand selectCommand = new MySqlCommand("SELECT Value FROM signatureresponse", DbConnection);
+      MySqlDataReader selectReader = selectCommand.ExecuteReader();
+      List<Signed<SignatureResponse>> list = new List<Signed<SignatureResponse>>();
+
+      while (selectReader.Read())
+      {
+        var requestInfo = Serializable.FromBinary<Signed<SignatureResponse>>(selectReader.GetBlob(0));
+        list.Add(requestInfo);
+      }
+
+      selectReader.Close();
+      return list;
+    }
+
+    /// <summary>
+    /// Query signature requests.
+    /// </summary>
+    /// <returns>Secure signature requests.</returns>
+    private IEnumerable<Secure<SignatureRequestInfo>> QuerySignatureRequests()
     {
       MySqlCommand selectCommand = new MySqlCommand("SELECT Info FROM signaturerequest", DbConnection);
       MySqlDataReader selectReader = selectCommand.ExecuteReader();
-      List<Tuple<Certificate, SignatureRequestInfo>> list = new List<Tuple<Certificate, SignatureRequestInfo>>();
+      List<Secure<SignatureRequestInfo>> list = new List<Secure<SignatureRequestInfo>>();
 
       while (selectReader.Read())
       {
         var requestInfo = Serializable.FromBinary<Secure<SignatureRequestInfo>>(selectReader.GetBlob(0));
-
-        if (requestInfo.Verify(CertificateStorage))
-        {
-          list.Add(new Tuple<Certificate, SignatureRequestInfo>(requestInfo.Certificate, requestInfo.Value.Decrypt(this.serverCertificate)));
-        }
+        list.Add(requestInfo);
       }
 
       selectReader.Close();
@@ -782,8 +834,90 @@ namespace Pirate.PiVote.Rpc
       int certificateCount = CertificateStorage.Certificates.Count();
       this.votings.Values.Foreach(voting => voting.Process());
       RemindAdmin();
+      CheckSendStatusReport();
       this.lastProcess = DateTime.Now;
       Logger.Log(LogLevel.Debug, "Processing.", certificateCount);
+    }
+
+    /// <summary>
+    /// Check if one should send status report now.
+    /// </summary>
+    private void CheckSendStatusReport()
+    {
+      if (DateTime.Now.Hour > this.lastProcess.Hour &&
+      DateTime.Now.Hour == 20 &&
+      (DateTime.Now.DayOfWeek == DayOfWeek.Saturday ||
+      this.votings.Values.Any(voting => voting.Status != VotingStatus.Finished &&
+                              DateTime.Now.Subtract(voting.Parameters.VotingEndDate).TotalDays >= 7)))
+      {
+        SendStatusReport();
+      }
+    }
+
+    /// <summary>
+    /// Send the status report.
+    /// </summary>
+    private void SendStatusReport()
+    {
+      try
+      {
+        StringBuilder report = new StringBuilder();
+
+        var certificateList = GetCertificates();
+
+        var authorityCertificateList = certificateList
+          .Where(item => item.First is AuthorityCertificate);
+        report.AppendLine("Authorities");
+
+        foreach (var item in authorityCertificateList.GroupBy(x => x.Second))
+        {
+          report.AppendLine("{0}: {1}", item.Key.ToString(), item.Count());
+        }
+
+        report.AppendLine();
+
+        var notaryCertificateList = certificateList
+          .Where(item => item.First is NotaryCertificate);
+        report.AppendLine("Notaries");
+
+        foreach (var item in notaryCertificateList.GroupBy(x => x.Second))
+        {
+          report.AppendLine("{0}: {1}", item.Key.ToString(), item.Count());
+        }
+
+        report.AppendLine();
+
+        var voterCertificateList = certificateList
+          .Where(item => item.First is VoterCertificate);
+
+        foreach (var item2 in voterCertificateList.GroupBy(item2 => ((VoterCertificate)item2.First).GroupId))
+        {
+          report.AppendLine(GetGroupName(item2.Key));
+
+          foreach (var item in item2.GroupBy(x => x.Second))
+          {
+            report.AppendLine("{0}: {1}", item.Key.ToString(), item.Count());
+          }
+
+          report.AppendLine();
+        }
+
+        foreach (var voting in this.votings.Values)
+        {
+          if (voting.Status != VotingStatus.Finished &&
+              DateTime.Now.Subtract(voting.Parameters.VotingEndDate).TotalDays >= 7)
+          {
+            voting.AddStatusReport(report);
+            report.AppendLine();
+          }
+        }
+
+        SendMail(ServerConfig.MailAdminAddress, MailType.AdminStatusReport, report.ToString());
+      }
+      catch (Exception exception)
+      {
+        Logger.Log(LogLevel.Error, "Sending status report failed:\n{0}", exception.ToString());
+      }
     }
 
     /// <summary>
@@ -855,6 +989,28 @@ namespace Pirate.PiVote.Rpc
       reader.Close();
 
       return groupList;
+    }
+
+    /// <summary>
+    /// Get group name.
+    /// </summary>
+    /// <returns>Name of the group.</returns>
+    public string GetGroupName(int groupId)
+    {
+      MySqlDataReader reader = DbConnection
+        .ExecuteReader("SELECT NameEnglish FROM votinggroup WHERE Id = @Id",
+        "@Id", groupId);
+
+      if (reader.Read())
+      {
+        var groupName = reader.GetString(0);
+        reader.Close();
+        return groupName;
+      }
+      else
+      {
+        return "Unknown Group";
+      }
     }
 
     /// <summary>

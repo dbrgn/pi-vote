@@ -248,11 +248,13 @@ namespace Pirate.PiVote.Crypto
     private void RemindVoters(MailType mailType)
     {
       var envelopes = GetAllEnvelopes();
-      var notVotedYet = Server.GetValidCertificates()
-        .Where(item => item.First is VoterCertificate &&
+      var notVotedYet = Server.GetCertificates()
+        .Where(item => item.Second == CertificateValidationResult.Valid &&
+                       !string.IsNullOrEmpty(item.Third) &&
+                       item.First is VoterCertificate &&
                        ((VoterCertificate)item.First).GroupId == Parameters.GroupId &&
                        !envelopes.Any(envelope => envelope.Certificate.IsIdentic(item.First)));
-      var addresses = notVotedYet.Select(item => item.Second.EmailAddress);
+      var addresses = notVotedYet.Select(item => item.Third);
 
       foreach (var address in addresses)
       {
@@ -299,7 +301,6 @@ namespace Pirate.PiVote.Crypto
           if (DateTime.Now > criticalDate)
           {
             SendAuthorityActionRequiredMail();
-            SendAdminStatusMail();
           }
           else if (DateTime.Now > criticalDate.AddDays(-1))
           {
@@ -314,7 +315,6 @@ namespace Pirate.PiVote.Crypto
               case 20:
               case 23:
                 SendAuthorityActionRequiredMail();
-                SendAdminStatusMail();
                 break;
             }
           }
@@ -326,7 +326,6 @@ namespace Pirate.PiVote.Crypto
               case 13:
               case 20:
                 SendAuthorityActionRequiredMail();
-                SendAdminStatusMail();
                 break;
             }
           }
@@ -337,7 +336,6 @@ namespace Pirate.PiVote.Crypto
               case 8:
               case 20:
                 SendAuthorityActionRequiredMail();
-                SendAdminStatusMail();
                 break;
             }
           }
@@ -347,25 +345,8 @@ namespace Pirate.PiVote.Crypto
             {
               case 18:
                 SendAuthorityActionRequiredMail();
-                SendAdminStatusMail();
                 break;
             }
-          }
-        }
-        else
-        {
-          switch (this.status)
-          {
-            case VotingStatus.Deciphering:
-            case VotingStatus.New:
-            case VotingStatus.Ready:
-            case VotingStatus.Sharing:
-            case VotingStatus.Voting:
-              if (DateTime.Now.Hour == 18)
-              {
-                SendAdminStatusMail();
-              }
-              break;
           }
         }
       }
@@ -424,30 +405,42 @@ namespace Pirate.PiVote.Crypto
     }
 
     /// <summary>
-    /// Notify the admin about status.
+    /// Add text for a status report.
     /// </summary>
-    public void SendAdminStatusMail()
+    /// <param name="report">Report text.</param>
+    public void AddStatusReport(StringBuilder report)
     {
-      StringBuilder report = new StringBuilder();
       report.AppendLine("Id: {0}", Id.ToString());
       report.AppendLine("Title: {0}", Parameters.Title.Text);
       report.AppendLine("Status: {0}", this.status.ToString());
 
-      foreach (var authority in Authorities)
+      switch (Status)
       {
-        if (AuthoritiesDone.Contains(authority.Id))
-        {
-          report.AppendLine("Authority: {0}, {1}, Done", authority.Id.ToString(), authority.FullName);
-        }
-        else
-        {
-          report.AppendLine("Authority: {0}, {1}, Waiting", authority.Id.ToString(), authority.FullName);
-        }
+        case VotingStatus.New:
+        case VotingStatus.Sharing:
+        case VotingStatus.Deciphering:
+          foreach (var authority in Authorities)
+          {
+            if (AuthoritiesDone.Contains(authority.Id))
+            {
+              report.AppendLine("Authority: {0}, {1}, Done", authority.Id.ToString(), authority.FullName);
+            }
+            else
+            {
+              report.AppendLine("Authority: {0}, {1}, Waiting", authority.Id.ToString(), authority.FullName);
+            }
+          }
+          break;
       }
 
-      report.AppendLine("Envelopes: {0}", GetEnvelopeCount());
-
-      Server.SendMail(ServerConfig.MailAdminAddress, MailType.AdminStatusReport, report.ToString());
+      switch (Status)
+      {
+        case VotingStatus.Voting:
+        case VotingStatus.Deciphering:
+        case VotingStatus.Finished:
+          report.AppendLine("Envelopes: {0}", GetEnvelopeCount());
+          break;
+      }
     }
 
     /// <summary>
