@@ -1,0 +1,9 @@
+The following third party components are used by Pi-Vote
+
+GNU Multi-Precision Library for .NET
+Copyright 2009 by Emil Stefanov
+GNU Lesser Global Public License
+
+Open Source QRCode Library
+Copyright 2007 by twit88
+Code Project Open License

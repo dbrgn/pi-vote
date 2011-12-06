@@ -148,6 +148,8 @@ namespace Pirate.PiVote.Rpc
 
       LoadVotings();
       Logger.Log(LogLevel.Info, "Votings are loaded.");
+
+      ////OutputReport();
     }
 
     /// <summary>
@@ -231,8 +233,13 @@ namespace Pirate.PiVote.Rpc
 
       VotingParameters votingParameters = signedVotingParameters.Value;
 
+      if (!CertificateStorage.SignedRevocationLists
+        .Any(signedCrl => signedCrl.Verify(CertificateStorage) && 
+                          votingParameters.VotingBeginDate >= signedCrl.Value.ValidFrom && 
+                          votingParameters.VotingBeginDate <= signedCrl.Value.ValidUntil))
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Voting begin date not covered by CRL.");
       if (!signedVotingParameters.Verify(CertificateStorage, votingParameters.VotingBeginDate))
-        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Invalid signature.");
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Invalid signature of voting authority.");
       if (!(signedVotingParameters.Certificate is AdminCertificate))
         throw new PiSecurityException(ExceptionCode.NoAuthorizedAdmin, "No authorized admin.");
 
@@ -386,7 +393,9 @@ namespace Pirate.PiVote.Rpc
           MailType.VoterRequestDeposited,
           requestInfo.EmailAddress,
           signatureRequest.Certificate.Id.ToString(),
-          signatureRequest.Certificate.TypeText);
+          CertificateTypeText(signatureRequest.Certificate, Language.English),
+          CertificateTypeText(signatureRequest.Certificate, Language.German),
+          CertificateTypeText(signatureRequest.Certificate, Language.French));
       }
 
       SendMail(
@@ -561,6 +570,71 @@ namespace Pirate.PiVote.Rpc
           return SignatureResponseStatus.Unknown;
         }
       }
+    }
+
+    private void OutputReport()
+    {
+      Console.Write("Building report");
+
+      StringBuilder report = new StringBuilder();
+      Dictionary<Guid, int> voteCounts = new Dictionary<Guid,int>();
+      var certs = GetCertificates();
+
+      Console.Write(".");
+
+      foreach (var item in certs)
+      {
+        voteCounts.Add(item.First.Id, 0);
+      }
+
+      Console.Write(".");
+
+      foreach (var voting in this.votings.Values)
+      {
+        for (int envelopeIndex = 0; envelopeIndex < voting.GetEnvelopeCount(); envelopeIndex++)
+        {
+          var envelope = voting.GetEnvelope(envelopeIndex);
+          voteCounts[envelope.Certificate.Id]++;
+        }
+      }
+
+      Console.Write(".");
+
+      report.AppendLine("{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10}",
+        "Type",
+        "Id",
+        "Name",
+        "Fingerprint",
+        "SelfSignatureValid",
+        "Validate",
+        "CreationDate",
+        "Signatures",
+        "ExpectedValidFrom",
+        "ExpectedValidUntil",
+        "VoteCount");
+
+      foreach (var item in certs)
+      {
+        report.AppendLine("{0};{1};{2};{3};{4};{5};{6};{7};{8};{9};{10}",
+          item.First.TypeText,
+          item.First.Id,
+          item.First.FullName,
+          item.First.Fingerprint,
+          item.First.SelfSignatureValid,
+          item.First.Validate(CertificateStorage),
+          item.First.CreationDate.ToString("yyyy-MM-dd"),
+          item.First.Signatures.Count(),
+          item.First.ExpectedValidFrom(CertificateStorage).ToString("yyyy-MM-dd"),
+          item.First.ExpectedValidUntil(CertificateStorage, DateTime.Now).ToString("yyyy-MM-dd"),
+          voteCounts[item.First.Id]);
+      }
+
+      Console.Write(".");
+
+      File.WriteAllText(Path.Combine(System.Windows.Forms.Application.StartupPath, "report.csv"), report.ToString());
+
+      Console.WriteLine("Done");
+
     }
 
     /// <summary>

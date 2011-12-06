@@ -20,6 +20,10 @@ namespace Pirate.PiVote.Circle
     [STAThread]
     public static void Main()
     {
+      var req = Pirate.PiVote.Serialization.Serializable.Load<Pirate.PiVote.Crypto.Secure<Pirate.PiVote.Crypto.SignatureRequest>>(@"d:\downloads\apo-req.bin");
+      req.Certificate.Save(@"d:\downloads\apo-cert.bin");
+      return;
+
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       Application.Run(new Master());
