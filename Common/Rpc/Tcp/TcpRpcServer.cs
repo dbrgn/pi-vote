@@ -280,23 +280,30 @@ namespace Pirate.PiVote.Rpc
       {
         while (this.listener.Pending())
         {
-          TcpClient client = this.listener.AcceptTcpClient();
-          ulong connectionId = 0;
-
-          lock (this.connections)
+          try
           {
-            connectionId = this.nextConnectionId;
-            this.nextConnectionId++;
+            TcpClient client = this.listener.AcceptTcpClient();
+            ulong connectionId = 0;
+
+            lock (this.connections)
+            {
+              connectionId = this.nextConnectionId;
+              this.nextConnectionId++;
+            }
+
+            TcpRpcConnection connection = new TcpRpcConnection(client, rpcServer, connectionId, this.clientTimeOut);
+
+            lock (this.connections)
+            {
+              this.connections.Enqueue(connection);
+            }
+
+            Logger.Log(LogLevel.Debug, "New connection {0}.", connection.Id);
           }
-
-          TcpRpcConnection connection = new TcpRpcConnection(client, rpcServer, connectionId, this.clientTimeOut);
-
-          lock (this.connections)
+          catch (SocketException socketException)
           {
-            this.connections.Enqueue(connection);
+            Logger.Log(LogLevel.Warning, "New connection failed: {0}", socketException.Message);
           }
-
-          Logger.Log(LogLevel.Debug, "New connection {0}.", connection.Id);
 
           Thread.Sleep(1);
         }

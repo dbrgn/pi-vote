@@ -417,6 +417,7 @@ namespace Pirate.PiVote.Rpc
       var texts = ServerConfig.GetMailText(mailType, Logger);
       string body = string.Format(texts.Second, arguments);
       Mailer.TrySend(address, texts.First, body);
+      Logger.Log(LogLevel.Info, "Sending message of type {0} to {1}.", mailType, address);
     }
 
     /// <summary>
@@ -921,8 +922,8 @@ namespace Pirate.PiVote.Rpc
       if (DateTime.Now.Hour > this.lastProcess.Hour &&
       DateTime.Now.Hour == 20 &&
       (DateTime.Now.DayOfWeek == DayOfWeek.Saturday ||
-      this.votings.Values.Any(voting => voting.Status != VotingStatus.Finished &&
-                              DateTime.Now.Subtract(voting.Parameters.VotingEndDate).TotalDays >= 7)))
+      this.votings.Values.Any(voting => voting.Status != VotingStatus.Finished ||
+                              voting.Parameters.VotingEndDate.AddDays(7) >= DateTime.Now)))
       {
         SendStatusReport();
       }
@@ -978,8 +979,8 @@ namespace Pirate.PiVote.Rpc
 
         foreach (var voting in this.votings.Values)
         {
-          if (voting.Status != VotingStatus.Finished &&
-              DateTime.Now.Subtract(voting.Parameters.VotingEndDate).TotalDays >= 7)
+          if (voting.Status != VotingStatus.Finished ||
+              voting.Parameters.VotingEndDate.AddDays(7) >= DateTime.Now)
           {
             voting.AddStatusReport(report);
             report.AppendLine();

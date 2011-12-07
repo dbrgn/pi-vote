@@ -455,8 +455,8 @@ namespace Pirate.PiVote.Crypto
         {
           try
           {
-            string address = Server.GetSignatureRequestInfo(authority.Id).Value.Decrypt(this.serverCertificate).EmailAddress;
-            Server.SendMail(address, mailType, Id.ToString(), Parameters.Title.Text);
+            var authorityInfo = Server.GetSignatureRequestInfo(authority.Id).Value.Decrypt(this.serverCertificate);
+            Server.SendMail(authorityInfo.EmailAddress, mailType, Id.ToString(), Parameters.Title.Text);
           }
           catch (Exception exception)
           {
