@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using Pirate.PiVote.Utilitiy;
 
 namespace Pirate.PiVote
 {
@@ -50,6 +52,11 @@ namespace Pirate.PiVote
     private LogLevel maxLogLevel;
 
     /// <summary>
+    /// Unix syslog
+    /// </summary>
+    private Syslog syslog;
+
+    /// <summary>
     /// Create a new logger.
     /// </summary>
     /// <param name="logFileName">Name and path of the log file</param>
@@ -63,6 +70,11 @@ namespace Pirate.PiVote
       if (!EventLog.SourceExists(EventLogSource))
       {
         EventLog.CreateEventSource(EventLogSource, EventLogName);
+      }
+
+      if (Environment.OSVersion.Platform == PlatformID.Unix)
+      {
+        this.syslog = new Syslog();
       }
     }
 
@@ -84,26 +96,24 @@ namespace Pirate.PiVote
 
           if (Environment.OSVersion.Platform == PlatformID.Unix)
           {
-            System.Diagnostics.Process.Start("logger", string.Format("-p {0} {1}", LogLevelToUnix(logLevel), string.Format(message, values)));
+            this.syslog.Log(LogLevelToUnix(logLevel), string.Format(message, values));
           }
-
-          // Does not work!
-          //// EventLog.WriteEntry(EventLogSource, string.Format(message, values), logLevel.ToLogEntryType());
         }
       }
     }
 
-    private string LogLevelToUnix(LogLevel logLevel)
+    private Pirate.PiVote.Utilitiy.Syslog.SyslogSeverity LogLevelToUnix(LogLevel logLevel)
     {
       switch (logLevel)
       {
         case LogLevel.Emergency:
+          return Utilitiy.Syslog.SyslogSeverity.Alert;
         case LogLevel.Error:
-          return "local7.alert";
+          return Utilitiy.Syslog.SyslogSeverity.Error;
         case LogLevel.Warning:
-          return "local7.warn";
+          return Utilitiy.Syslog.SyslogSeverity.Warning;
         default:
-          return "local7.info";
+          return Utilitiy.Syslog.SyslogSeverity.Informational;
       }
     }
 
@@ -114,6 +124,7 @@ namespace Pirate.PiVote
     {
       this.logWriter.Close();
       this.logFileStream.Close();
+      this.syslog.Dispose();
     }
   }
 }

@@ -313,6 +313,7 @@
     <Compile Include="Serialization\SerializeContext.cs" />
     <Compile Include="Utilitiy\RandomNumberGeneratorExtensions.cs" />
     <Compile Include="Utilitiy\StringBuilderExtensions.cs" />
+    <Compile Include="Utilitiy\Syslog.cs" />
     <Compile Include="Utilitiy\SystemExtensions.cs" />
     <Compile Include="Utilitiy\Tools.cs" />
     <Compile Include="Utilitiy\Tuple.cs" />

@@ -41,6 +41,8 @@ namespace Pirate.PiVote.Circle
 
     public void Set(CircleController controller, IEnumerable<VotingDescriptor2> newVotings)
     {
+      SuspendLayout();
+
       var oldQueue = new Queue<VotingDescriptor2>(this.votings);
       var newQueue = new Queue<VotingDescriptor2>(newVotings);
       var oldControlQueue = new Queue<VotingControl>(this.controls);
@@ -109,11 +111,19 @@ namespace Pirate.PiVote.Circle
       {
         control.Width = Width - (VerticalScroll.Visible ? 16 : 0) - HorizontalSpace;
       }
+
+      ResumeLayout();
     }
 
     protected override void OnResize(EventArgs e)
     {
       base.OnResize(e);
+      UpdateDisplay();
+    }
+
+    public void UpdateDisplay()
+    {
+      SuspendLayout();
 
       if (this.controls != null)
       {
@@ -122,6 +132,8 @@ namespace Pirate.PiVote.Circle
           control.Width = Width - (VerticalScroll.Visible ? 16 : 0) - HorizontalSpace;
         }
       }
+
+      ResumeLayout();
     }
 
     public void UpdateLanguage()

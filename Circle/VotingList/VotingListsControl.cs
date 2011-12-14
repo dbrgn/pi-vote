@@ -126,5 +126,12 @@ namespace Pirate.PiVote.Circle
     {
       OnResumeCertificate();
     }
+
+    private void votingTabPage_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      this.currentVotingListControl.UpdateDisplay();
+      this.pastVotingListControl.UpdateDisplay();
+      this.certificateStatus.UpdateDisplay();
+    }
   }
 }

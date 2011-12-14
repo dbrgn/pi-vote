@@ -100,8 +100,10 @@ namespace Pirate.PiVote.Crypto
         switch (this.status)
         {
           case VotingStatus.Sharing:
+            SendAuthorityActionRequiredMail(MailType.AuthorityVerifySharesGreen);
+            break;
           case VotingStatus.Deciphering:
-            SendAuthorityActionRequiredMail();
+            SendAuthorityActionRequiredMail(MailType.AuthorityDecipherGreen);
             break;
         }
       }
@@ -209,7 +211,6 @@ namespace Pirate.PiVote.Crypto
       : this(server, signedParameters, certificateStorage, serverCertificate, VotingStatus.New)
     {
       this.lastProcessTime = DateTime.Now;
-      SendAuthorityActionRequiredMail();
     }
 
     /// <summary>
@@ -279,20 +280,30 @@ namespace Pirate.PiVote.Crypto
       {
         DateTime criticalDate = DateTime.MaxValue;
         bool sendAuthority = false;
+        List<MailType> redOrangeGreen = new List<MailType>();
 
         switch (this.status)
         {
           case VotingStatus.New:
             criticalDate = Parameters.VotingBeginDate.AddDays(-2);
             sendAuthority = true;
+            redOrangeGreen.Add(MailType.AuthorityCreateSharesRed);
+            redOrangeGreen.Add(MailType.AuthorityCreateSharesOrange);
+            redOrangeGreen.Add(MailType.AuthorityCreateSharesGreen);
             break;
           case VotingStatus.Sharing:
             criticalDate = Parameters.VotingBeginDate;
             sendAuthority = true;
+            redOrangeGreen.Add(MailType.AuthorityVerifySharesRed);
+            redOrangeGreen.Add(MailType.AuthorityVerifySharesOrange);
+            redOrangeGreen.Add(MailType.AuthorityVerifySharesGreen);
             break;
           case VotingStatus.Deciphering:
             criticalDate = Parameters.VotingEndDate.AddDays(3);
             sendAuthority = true;
+            redOrangeGreen.Add(MailType.AuthorityDecipherRed);
+            redOrangeGreen.Add(MailType.AuthorityDecipherOrange);
+            redOrangeGreen.Add(MailType.AuthorityDecipherGreen);
             break;
         }
 
@@ -300,21 +311,12 @@ namespace Pirate.PiVote.Crypto
         {
           if (DateTime.Now > criticalDate)
           {
-            SendAuthorityActionRequiredMail();
-          }
-          else if (DateTime.Now > criticalDate.AddDays(-1))
-          {
             switch (DateTime.Now.Hour)
             {
-              case 2:
               case 5:
-              case 8:
-              case 11:
-              case 14:
-              case 17:
-              case 20:
-              case 23:
-                SendAuthorityActionRequiredMail();
+              case 13:
+              case 21:
+                SendAuthorityActionRequiredMail(redOrangeGreen[0]);
                 break;
             }
           }
@@ -322,20 +324,9 @@ namespace Pirate.PiVote.Crypto
           {
             switch (DateTime.Now.Hour)
             {
-              case 7:
-              case 13:
-              case 20:
-                SendAuthorityActionRequiredMail();
-                break;
-            }
-          }
-          else if (DateTime.Now > criticalDate.AddDays(-3))
-          {
-            switch (DateTime.Now.Hour)
-            {
-              case 8:
-              case 20:
-                SendAuthorityActionRequiredMail();
+              case 9:
+              case 21:
+                SendAuthorityActionRequiredMail(redOrangeGreen[1]);
                 break;
             }
           }
@@ -343,64 +334,12 @@ namespace Pirate.PiVote.Crypto
           {
             switch (DateTime.Now.Hour)
             {
-              case 18:
-                SendAuthorityActionRequiredMail();
+              case 13:
+                SendAuthorityActionRequiredMail(redOrangeGreen[2]);
                 break;
             }
           }
         }
-      }
-    }
-
-     /// <summary>
-     /// Send action required mail to all authorities
-     /// </summary>
-    public void SendAuthorityActionRequiredMail()
-    {
-      switch (this.status)
-      { 
-        case VotingStatus.New:
-          if (DateTime.Now > Parameters.VotingBeginDate.AddDays(-2))
-          {
-            SendAuthorityActionRequiredMail(MailType.AuthorityCreateSharesRed);
-          }
-          else if (DateTime.Now > Parameters.VotingBeginDate.AddDays(-3))
-          {
-            SendAuthorityActionRequiredMail(MailType.AuthorityCreateSharesOrange);
-          }
-          else
-          {
-            SendAuthorityActionRequiredMail(MailType.AuthorityCreateSharesGreen);
-          }
-          break;
-        case VotingStatus.Sharing:
-          if (DateTime.Now > Parameters.VotingBeginDate)
-          {
-            SendAuthorityActionRequiredMail(MailType.AuthorityVerifySharesRed);
-          }
-          else if (DateTime.Now > Parameters.VotingBeginDate.AddDays(-1))
-          {
-            SendAuthorityActionRequiredMail(MailType.AuthorityVerifySharesOrange);
-          }
-          else
-          {
-            SendAuthorityActionRequiredMail(MailType.AuthorityVerifySharesGreen);
-          } 
-          break;
-        case VotingStatus.Deciphering:
-          if (DateTime.Now > Parameters.VotingEndDate.AddDays(3))
-          {
-            SendAuthorityActionRequiredMail(MailType.AuthorityDecipherRed);
-          }
-          else if (DateTime.Now > Parameters.VotingEndDate.AddDays(2))
-          {
-            SendAuthorityActionRequiredMail(MailType.AuthorityDecipherOrange);
-          }
-          else
-          {
-            SendAuthorityActionRequiredMail(MailType.AuthorityDecipherGreen);
-          }
-          break;
       }
     }
 

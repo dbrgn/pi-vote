@@ -72,6 +72,7 @@ namespace Pirate.PiVote.Circle.Status
       }
 
       CenterToScreen();
+      this.progressBar.MarqueeAnimationSpeed = Environment.OSVersion.Platform == PlatformID.Unix ? 3000 : 100;
 
       this.timer = new System.Windows.Forms.Timer();
       this.timer.Tick += new EventHandler(Timer_Tick);

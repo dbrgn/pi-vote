@@ -298,11 +298,13 @@ namespace Pirate.PiVote.Rpc
               this.connections.Enqueue(connection);
             }
 
-            Logger.Log(LogLevel.Debug, "New connection {0}.", connection.Id);
+            Logger.Log(LogLevel.Info, "New connection {0} from {1}.", connection.Id, client.Client.RemoteEndPoint);
           }
           catch (SocketException socketException)
           {
             Logger.Log(LogLevel.Warning, "New connection failed: {0}", socketException.Message);
+            this.listener = new TcpListener(new IPEndPoint(IPAddress.Any, this.port));
+            this.listener.Start();
           }
 
           Thread.Sleep(1);

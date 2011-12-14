@@ -77,6 +77,7 @@ namespace Pirate.PiVote.Circle.Status
       Application.DoEvents();
 
       this.versionLabel.Text += Assembly.GetExecutingAssembly().GetName().Version.ToString();
+      this.progressBar.MarqueeAnimationSpeed = Environment.OSVersion.Platform == PlatformID.Unix ? 2000 : 100;
 
       this.timer = new System.Windows.Forms.Timer();
       this.timer.Tick += new EventHandler(Timer_Tick);

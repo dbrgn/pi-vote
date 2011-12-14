@@ -56,6 +56,7 @@ namespace Pirate.PiVote.Circle
       this.votingTabPage.SelectedIndex = 0;
       this.votingTabPage.Size = new System.Drawing.Size(928, 654);
       this.votingTabPage.TabIndex = 0;
+      this.votingTabPage.SelectedIndexChanged += new System.EventHandler(this.votingTabPage_SelectedIndexChanged);
       // 
       // currentTabPage
       // 
@@ -102,7 +103,7 @@ namespace Pirate.PiVote.Circle
       this.currentVotingListControl.Font = new System.Drawing.Font("Arial", 8.25F);
       this.currentVotingListControl.Location = new System.Drawing.Point(0, 38);
       this.currentVotingListControl.Name = "currentVotingListControl";
-      this.currentVotingListControl.Size = new System.Drawing.Size(921, 585);
+      this.currentVotingListControl.Size = new System.Drawing.Size(921, 581);
       this.currentVotingListControl.TabIndex = 0;
       this.currentVotingListControl.VotingAction += new Pirate.PiVote.Circle.VotingActionHandler(this.CurrentVotingListControl_VotingAction);
       // 

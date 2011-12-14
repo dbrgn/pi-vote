@@ -291,7 +291,7 @@ namespace Pirate.PiVote.Rpc
       VotingServerEntity voting = new VotingServerEntity(this, signedVotingParameters, CertificateStorage, this.serverCertificate);
       authorities.Foreach(authority => voting.AddAuthority(connection, authority));
       this.votings.Add(voting.Id, voting);
-      voting.SendAuthorityActionRequiredMail();
+      voting.SendAuthorityActionRequiredMail(MailType.AuthorityCreateSharesGreen);
     }
 
     /// <summary>
@@ -1028,7 +1028,7 @@ namespace Pirate.PiVote.Rpc
         {
           SendMail(
             ServerConfig.MailAdminAddress,
-            MailType.AdminCrlOrange,
+            MailType.AdminCrlGreen,
             maxValid.ToLongDateString());
         }
       }
