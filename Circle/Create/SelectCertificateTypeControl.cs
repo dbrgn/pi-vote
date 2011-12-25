@@ -95,8 +95,10 @@ namespace Pirate.PiVote.Circle.Create
     public override void Prepare()
     {
       var certificates = Status.Controller.GetValidVoterCertificates();
-      this.voterSubGroupCheckBox.Enabled = certificates.Any(certificate => certificate.GroupId == 0);
-      this.notaryCheckBox.Enabled = certificates.Any(certificate => certificate.GroupId == 0);
+      bool haveParentCertificate = certificates.Any(certificate => certificate.GroupId == 0);
+      this.voterSubGroupCheckBox.Enabled = haveParentCertificate;
+      this.authorityCheckBox.Enabled = haveParentCertificate;
+      this.notaryCheckBox.Enabled = haveParentCertificate;
     }
 
     private void notaryCheckBox_CheckedChanged(object sender, EventArgs e)

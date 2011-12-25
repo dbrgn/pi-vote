@@ -634,29 +634,30 @@ namespace Pirate.PiVote.Circle
       string fileName = string.Format("{0}@{1}.pi-auth", certificate.Id.ToString(), voting.Id.ToString());
       string filePath = Path.Combine(Status.DataPath, fileName);
 
-      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, GuiResources.UnlockActionAuthorityCreateShares))
+      if (Circle.Vote.VotingDialog.ShowVoting(this, null, voting) == DialogResult.OK)
       {
-        try
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(certificate, GuiResources.UnlockActionAuthorityCreateShares))
         {
-          Begin();
-          Status.VotingClient.CreateSharePart(voting.Id, (AuthorityCertificate)certificate, filePath, CreateSharesCompleteCallBack);
-
-          if (!WaitForCompletion())
+          try
           {
-            throw this.exception;
-          }
-        }
-        finally
-        {
-          certificate.Lock();
-        }
+            Begin();
+            Status.VotingClient.CreateSharePart(voting.Id, (AuthorityCertificate)certificate, filePath, CreateSharesCompleteCallBack);
 
-        return this.votingDescriptor;
+            if (!WaitForCompletion())
+            {
+              throw this.exception;
+            }
+          }
+          finally
+          {
+            certificate.Lock();
+          }
+
+          return this.votingDescriptor;
+        }
       }
-      else
-      {
-        return voting;
-      }
+
+      return voting;
     }
 
     private void CreateSharesCompleteCallBack(VotingDescriptor votingDescriptor, Exception exception)

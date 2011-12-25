@@ -45,7 +45,7 @@ namespace Pirate.PiVote.Circle.Vote
     {
       this.nextButton.Enabled = this.votingControl.CanNext;
       this.previousButton.Enabled = this.votingControl.CanPrevious;
-      this.voteButton.Enabled = this.votingControl.Valid;
+      this.voteButton.Enabled = this.voterCertificate == null || this.votingControl.Valid;
     }
 
     private void VotingDialog_Load(object sender, EventArgs e)
@@ -73,51 +73,70 @@ namespace Pirate.PiVote.Circle.Vote
 
       this.votingControl.Display(voting);
 
+      if (this.voterCertificate == null)
+      {
+        this.voteButton.Text = Resources.VotingDialogConfirm;
+      }
+      else
+      {
+        this.voteButton.Text = Resources.VotingDialogVote;
+      }
+
       this.cancelButton.Enabled = true;
       this.nextButton.Enabled = this.votingControl.CanNext;
       this.previousButton.Enabled = this.votingControl.CanPrevious;
-      this.voteButton.Enabled = this.votingControl.Valid;
+      this.voteButton.Enabled = this.voterCertificate == null || this.votingControl.Valid;
     }
 
     private void cancelButton_Click(object sender, EventArgs e)
     {
+      DialogResult = DialogResult.Cancel;
       Close();
     }
 
     private void voteButton_Click(object sender, EventArgs e)
     {
-      if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(this.voterCertificate, GuiResources.UnlockActionVote))
+      if (this.voterCertificate == null)
       {
-        Status.TextStatusDialog.ShowInfo(controller, this);
+        DialogResult = DialogResult.OK;
+        Close();
+      }
+      else
+      {
+        if (DecryptPrivateKeyDialog.TryDecryptIfNessecary(this.voterCertificate, GuiResources.UnlockActionVote))
+        {
+          Status.TextStatusDialog.ShowInfo(controller, this);
 
-        try
-        {
-          this.controller.Vote(this.voterCertificate, this.voting, this.votingControl.Vota);
-        }
-        catch (PiArgumentException exception)
-        {
-          if (exception.Code == ExceptionCode.AlreadyVoted)
+          try
           {
-            MessageForm.Show(Resources.VoteAlreadyVote, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.controller.Vote(this.voterCertificate, this.voting, this.votingControl.Vota);
           }
-          else
+          catch (PiArgumentException exception)
+          {
+            if (exception.Code == ExceptionCode.AlreadyVoted)
+            {
+              MessageForm.Show(Resources.VoteAlreadyVote, Resources.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+              Error.ErrorDialog.ShowError(exception);
+            }
+          }
+          catch (Exception exception)
           {
             Error.ErrorDialog.ShowError(exception);
           }
-        }
-        catch (Exception exception)
-        {
-          Error.ErrorDialog.ShowError(exception);
-        }
-        finally
-        {
-          this.voterCertificate.Lock();
+          finally
+          {
+            this.voterCertificate.Lock();
+          }
+
+          Status.TextStatusDialog.HideInfo();
         }
 
-        Status.TextStatusDialog.HideInfo();
+        DialogResult = DialogResult.OK;
+        Close();
       }
-
-      Close();
     }
 
     private void nextButton_Click(object sender, EventArgs e)
@@ -130,11 +149,11 @@ namespace Pirate.PiVote.Circle.Vote
       this.votingControl.Previous();
     }
 
-    public static void ShowVoting(CircleController controller, VoterCertificate voterCertificate, VotingDescriptor2 voting)
+    public static DialogResult ShowVoting(CircleController controller, VoterCertificate voterCertificate, VotingDescriptor2 voting)
     {
       VotingDialog dialog = new VotingDialog();
       dialog.Display(controller, voterCertificate, voting);
-      dialog.ShowDialog();
+      return dialog.ShowDialog();
     }
   }
 }

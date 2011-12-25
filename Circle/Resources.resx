@@ -644,7 +644,7 @@
     <value>Create a new certificate for a notary. Choose this if you have been elected to be a notary.</value>
   </data>
   <data name="CreateCertificateNameAsInPhotoId" xml:space="preserve">
-    <value>Please state your full name as it is written in your photo id.</value>
+    <value>Please state your full name as it is written in your photo id, including all first names.</value>
   </data>
   <data name="ControllerStatusConnecting" xml:space="preserve">
     <value>Connecting to server...</value>
@@ -660,5 +660,11 @@
   </data>
   <data name="ConnectionLostErrorMessage" xml:space="preserve">
     <value>The server connection was lost. This program will now terminate.</value>
+  </data>
+  <data name="VotingDialogConfirm" xml:space="preserve">
+    <value>&amp;Confirm</value>
+  </data>
+  <data name="VotingDialogTitleAuthority" xml:space="preserve">
+    <value>Circle - Verify questions</value>
   </data>
 </root>

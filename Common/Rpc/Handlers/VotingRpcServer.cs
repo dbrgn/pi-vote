@@ -212,6 +212,7 @@ namespace Pirate.PiVote.Rpc
           this.votings.Remove(votingId);
           break;
         default:
+          Logger.Log(LogLevel.Warning, "Connection {0}: Tried to delete voting id {1} title {2} but it was in state {3}.", connection.Id, voting.Parameters.VotingId.ToString(), voting.Parameters.Title.Text, voting.Status.ToString());
           throw new PiException(ExceptionCode.CommandNotAllowedInStatus, "Deletion of voting is not allowed in current status.");
       }
     }
@@ -233,15 +234,67 @@ namespace Pirate.PiVote.Rpc
 
       VotingParameters votingParameters = signedVotingParameters.Value;
 
-      if (!CertificateStorage.SignedRevocationLists
-        .Any(signedCrl => signedCrl.Verify(CertificateStorage) && 
-                          votingParameters.VotingBeginDate >= signedCrl.Value.ValidFrom && 
-                          votingParameters.VotingBeginDate <= signedCrl.Value.ValidUntil))
-        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Voting begin date not covered by CRL.");
       if (!signedVotingParameters.Verify(CertificateStorage, votingParameters.VotingBeginDate))
+      {
+        if (!signedVotingParameters.VerifySimple())
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Admin {1} (unverified) tried to create voting {2} title {3} but the signature was wrong.",
+            connection.Id,
+            signedVotingParameters.Certificate.Id.ToString(),
+            votingParameters.VotingId.ToString(),
+            votingParameters.Title.Text);
+        }
+        else if (signedVotingParameters.Certificate.Validate(CertificateStorage, votingParameters.VotingBeginDate) != CertificateValidationResult.Valid)
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Admin {1} (unverified) tried to create voting {2} title {3} but his certificate status was {4}.",
+            connection.Id,
+            signedVotingParameters.Certificate.Id.ToString(),
+            votingParameters.VotingId.ToString(),
+            votingParameters.Title.Text,
+            signedVotingParameters.Certificate.Validate(CertificateStorage, votingParameters.VotingBeginDate).ToString());
+        }
+        else
+        {
+          Logger.Log(LogLevel.Warning,
+            "Connection {0}: Admin {1} (unverified) tried to create voting {2} title {3} but his signature was invalid.",
+            connection.Id,
+            signedVotingParameters.Certificate.Id.ToString(),
+            votingParameters.VotingId.ToString(),
+            votingParameters.Title.Text);
+        }
+
         throw new PiSecurityException(ExceptionCode.InvalidSignature, "Invalid signature of voting authority.");
+      }
+
       if (!(signedVotingParameters.Certificate is AdminCertificate))
+      {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Admin {1} (verified) tried to create voting {2} title {3} but he is a {4}.",
+          connection.Id,
+          signedVotingParameters.Certificate.Id.ToString(),
+          votingParameters.VotingId.ToString(),
+          votingParameters.Title.Text,
+          signedVotingParameters.Certificate.TypeText);
         throw new PiSecurityException(ExceptionCode.NoAuthorizedAdmin, "No authorized admin.");
+      }
+
+      if (!CertificateStorage.SignedRevocationLists
+        .Any(signedCrl => signedCrl.Verify(CertificateStorage) &&
+                          votingParameters.VotingBeginDate >= signedCrl.Value.ValidFrom &&
+                          votingParameters.VotingBeginDate <= signedCrl.Value.ValidUntil))
+      {
+        Logger.Log(LogLevel.Info, 
+          "Connection {0}: Admin id {1} name {2} tried to create voting {3} title {4} but the voting begin date {5} was not covered by any CRL.", 
+          connection.Id, 
+          signedVotingParameters.Certificate.Id.ToString(),
+          ((AdminCertificate)signedVotingParameters.Certificate).FullName,
+          votingParameters.VotingId.ToString(), 
+          votingParameters.Title.Text,
+          votingParameters.VotingBeginDate.ToString());
+        throw new PiSecurityException(ExceptionCode.InvalidSignature, "Voting begin date not covered by CRL.");
+      }
 
       if (votingParameters.P == null)
         throw new PiArgumentException(ExceptionCode.ArgumentNull, "P cannot be null.");
@@ -1253,7 +1306,7 @@ namespace Pirate.PiVote.Rpc
           {
             var signedCookie = Serializable.FromBinary<Signed<SignCheckCookie>>(reader.GetBlob(0));
             reader.Close();
-            Logger.Log(LogLevel.Warning,
+            Logger.Log(LogLevel.Info,
               "Connection {0}: Notary id {1} (unverified) got his sign check cookie.",
               connection.Id,
               notaryId.ToString());
@@ -1281,6 +1334,10 @@ namespace Pirate.PiVote.Rpc
       }
       else
       {
+        Logger.Log(LogLevel.Warning,
+          "Connection {0}: Notary id {1} (unverified) tried to get his sign check cookie, but it was not found.",
+          connection.Id,
+          notaryId.ToString());
         throw new PiException(ExceptionCode.SignCheckCookieNotFound, "Sign check cookie not found.");
       }
     }
@@ -1339,7 +1396,7 @@ namespace Pirate.PiVote.Rpc
       insertCommand.Parameters.AddWithValue("@Expires", DateTime.Now.AddMinutes(15).ToString("yyyy-MM-dd HH:mm:ss"));
       insertCommand.ExecuteNonQuery();
 
-      Logger.Log(LogLevel.Warning,
+      Logger.Log(LogLevel.Info,
         "Connection {0}: Notary id {1} (verified) has set his sign check cookie with code {2}.",
         connection.Id,
         signedCookie.Certificate.Id.ToString(),

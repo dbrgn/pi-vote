@@ -212,7 +212,7 @@ namespace Pirate.PiVote.Client
     private Certificate TryFindValidParentCertificate()
     {
       if (Status.Certificate != null &&
-        Status.Certificate is VoterCertificate)
+        ((!(Status.Certificate is VoterCertificate)) || ((VoterCertificate)Status.Certificate).GroupId != 0))
       {
         DirectoryInfo directory = new DirectoryInfo(Status.DataPath);
         List<Certificate> candidates = new List<Certificate>();
@@ -224,7 +224,7 @@ namespace Pirate.PiVote.Client
             Certificate certificate = Serializable.Load<Certificate>(file.FullName);
 
             if (certificate is VoterCertificate &&
-              ((VoterCertificate)certificate).GroupId != ((VoterCertificate)Status.Certificate).GroupId &&
+              ((VoterCertificate)certificate).GroupId == 0 &&
               certificate.Validate(Status.CertificateStorage) == CertificateValidationResult.Valid)
             {
               candidates.Add(certificate);

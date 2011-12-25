@@ -21,7 +21,6 @@ namespace Pirate.PiVote.CaGui
   public partial class SignDialog : Form
   {
     private Language language;
-    private bool expiryDateEnable;
     private SignatureRequest request;
     private Certificate certificate;
   
@@ -59,6 +58,8 @@ namespace Pirate.PiVote.CaGui
       this.cantonTextBox.Text = this.certificate is VoterCertificate ? GroupList.GetGroupName(((VoterCertificate)this.certificate).GroupId) : "N/A";
       this.fingerprintTextBox.Text = this.certificate.Fingerprint;
       this.language = this.certificate.Language;
+      this.validFromPicker.MinDate = DateTime.Now;
+      this.validFromPicker.MaxDate = DateTime.Now.AddMonths(6);
       this.validFromPicker.Value = DateTime.Now;
 
       bool requestValid = true;
@@ -80,17 +81,17 @@ namespace Pirate.PiVote.CaGui
 
           this.signedByNameTextBox.Text = signingListEntry.Request.FullName;
           this.signedByEmailAddressTextBox.Text = signingListEntry.Request.EmailAddress;
-
           this.validUntilPicker.Value = request2.SigningCertificate.ExpectedValidUntil(storage, DateTime.Now);
-          this.validUntilPicker.Enabled = false;
-          this.expiryDateEnable = false;
+          this.validUntilPicker.MinDate = DateTime.Now;
+          this.validUntilPicker.MaxDate = this.validUntilPicker.Value;
           this.printButton.Enabled = true;
         }
         else
         {
           this.signedByNameTextBox.Text = "N/A";
           this.signedByEmailAddressTextBox.Text = "N/A";
-          this.expiryDateEnable = true;
+          this.validUntilPicker.MinDate = DateTime.Now;
+          this.validUntilPicker.MaxDate = DateTime.Now.AddYears(3).AddMonths(6);
           this.printButton.Enabled = false;
         }
 
@@ -114,7 +115,6 @@ namespace Pirate.PiVote.CaGui
         this.signedBySignatureTextBox.Text = "N/A";
         this.signedByCantonLabel.Text = "N/A";
         this.signedByTypeLabel.Text = "N/A";
-        this.expiryDateEnable = true;
         this.printButton.Enabled = false;
         this.validUntilPicker.Value = DateTime.Now.AddYears(3);
       }
@@ -178,14 +178,14 @@ namespace Pirate.PiVote.CaGui
     private void acceptSignRadioButton_CheckedChanged(object sender, EventArgs e)
     {
       this.validFromPicker.Enabled = true;
-      this.validUntilPicker.Enabled = this.acceptSignRadioButton.Checked && this.expiryDateEnable;
+      this.validUntilPicker.Enabled = this.acceptSignRadioButton.Checked;
       this.reasonComboBox.Enabled = this.refuseRadioButton.Checked;
       CheckValid();
     }
 
     private void refuseRadioButton_CheckedChanged(object sender, EventArgs e)
     {
-      this.validUntilPicker.Enabled = this.acceptSignRadioButton.Checked && this.expiryDateEnable;
+      this.validUntilPicker.Enabled = this.acceptSignRadioButton.Checked;
       this.reasonComboBox.Enabled = this.refuseRadioButton.Checked;
       CheckValid();
     }
@@ -262,7 +262,14 @@ namespace Pirate.PiVote.CaGui
 
     private void validFromPicker_ValueChanged(object sender, EventArgs e)
     {
-      this.validUntilPicker.Value = this.validFromPicker.Value.AddYears(3);
+      if (this.validFromPicker.Value.AddYears(3) > this.validUntilPicker.MaxDate)
+      {
+        this.validUntilPicker.Value = this.validUntilPicker.MaxDate;
+      }
+      else
+      {
+        this.validUntilPicker.Value = this.validFromPicker.Value.AddYears(3);
+      }
     }
   }
 }

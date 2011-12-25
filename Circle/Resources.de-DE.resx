@@ -620,7 +620,7 @@
     <value>Ein Zertifikat für einen Notar erstellen. Wähle diese Option, wenn du zum Notar gewählt wurdest.</value>
   </data>
   <data name="CreateCertificateNameAsInPhotoId" xml:space="preserve">
-    <value>Bitte gib deinen vollständigen Namen an, wie er in deinem Ausweisdokument steht.</value>
+    <value>Bitte gib deinen vollständigen Namen an, wie er in deinem Ausweisdokument steht, inklusive aller Vornamen</value>
   </data>
   <data name="ControllerStatusConnecting" xml:space="preserve">
     <value>Verbinde mit Server...</value>
@@ -642,5 +642,11 @@
   </data>
   <data name="ConnectionLostErrorMessage" xml:space="preserve">
     <value>Die Verbindung zum Server ist abgebrochen. Das Programm wird jetzt geschlossen.</value>
+  </data>
+  <data name="VotingDialogConfirm" xml:space="preserve">
+    <value>&amp;Bestätigen</value>
+  </data>
+  <data name="VotingDialogTitleAuthority" xml:space="preserve">
+    <value>Circle - Fragen prüfen</value>
   </data>
 </root>
