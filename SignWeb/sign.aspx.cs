@@ -127,37 +127,6 @@ namespace SignWeb
 
       try
       {
-        Signed<SignatureResponse> signedResponse = null;
-        this.status = proxy.FetchSignatureResponse(this.certificateId, out signedResponse);
-
-        switch (this.status)
-        {
-          case SignatureResponseStatus.Pending:
-            break;
-          case SignatureResponseStatus.Declined:
-            table.AddRow(string.Empty, "Signature request already declined.");
-            table.AddSpaceRow(2, 32);
-            return false;
-          case SignatureResponseStatus.Accepted:
-            table.AddRow(string.Empty, "Signature request already accepted.");
-            table.AddSpaceRow(2, 32);
-            return false;
-          case SignatureResponseStatus.Unknown:
-          default:
-            table.AddRow(string.Empty, "Cannot find signature request.");
-            table.AddSpaceRow(2, 32);
-            return false;
-        }
-      }
-      catch
-      {
-        table.AddRow(string.Empty, "Cannot determine response status.");
-        table.AddSpaceRow(2, 32);
-        return false;
-      }
-
-      try
-      {
         var request = proxy.FetchSignatureRequest(this.certificateId);
         this.certificate = request.Certificate;
 
@@ -207,6 +176,37 @@ namespace SignWeb
       catch
       {
         table.AddRow(string.Empty, "Cannot decrypt signature request data.");
+        table.AddSpaceRow(2, 32);
+        return false;
+      }
+
+      try
+      {
+        Signed<SignatureResponse> signedResponse = null;
+        this.status = proxy.FetchSignatureResponse(this.certificateId, out signedResponse);
+
+        switch (this.status)
+        {
+          case SignatureResponseStatus.Pending:
+            break;
+          case SignatureResponseStatus.Declined:
+            table.AddRow(string.Empty, "Signature request already declined.");
+            table.AddSpaceRow(2, 32);
+            return false;
+          case SignatureResponseStatus.Accepted:
+            table.AddRow(string.Empty, "Signature request already accepted.");
+            table.AddSpaceRow(2, 32);
+            return false;
+          case SignatureResponseStatus.Unknown:
+          default:
+            table.AddRow(string.Empty, "Cannot find signature request.");
+            table.AddSpaceRow(2, 32);
+            return false;
+        }
+      }
+      catch
+      {
+        table.AddRow(string.Empty, "Cannot determine response status.");
         table.AddSpaceRow(2, 32);
         return false;
       }
