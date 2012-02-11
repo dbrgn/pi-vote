@@ -34,7 +34,6 @@ namespace Pirate.PiVote.Client
     private ContinueTo continueTo;
     private Signed<SignatureResponse> response;
     private SignatureResponseStatus responseStatus;
-    private string message;
     private Exception exception;
     public WizardItem PreviousItem { get; set; }
 
