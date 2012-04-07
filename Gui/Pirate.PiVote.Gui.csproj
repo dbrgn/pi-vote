@@ -45,6 +45,10 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PdfSharp, Version=1.32.2608.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\PdfSharp\PdfSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -124,9 +128,7 @@
     </Compile>
     <Compile Include="Printing\DocumentTest.cs" />
     <Compile Include="Printing\DrawObject.cs" />
-    <Compile Include="Printing\SignatureRequestDocument.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Printing\SignatureRequestDocument.cs" />
     <Compile Include="Printing\SignObject.cs" />
     <Compile Include="Printing\StringObject.cs" />
     <Compile Include="Printing\Table.cs" />

@@ -29,7 +29,7 @@ namespace Pirate.PiVote.Cli
       if (ArgCount >= 3)
       {
         string idText = ArgGetString(1);
-        string printer = ArgGetString(2);
+        string fileName = ArgGetString(2);
 
         var candidates = Certificates
           .Where(certificate => certificate.Id.ToString().Contains(idText));
@@ -46,33 +46,15 @@ namespace Pirate.PiVote.Cli
         {
           var certificate = candidates.Single();
 
-          var printerCandidates = PrinterSettings.InstalledPrinters
-            .Cast<string>()
-            .Where(printerName => printerName.Contains(printer));
-
-          if (printerCandidates.Count() == 0)
+          if (HasSignatureRequestDataFile(certificate))
           {
-            Console.WriteLine("No printer with such name found.");
-          }
-          else if (printerCandidates.Count() > 1)
-          {
-            Console.WriteLine("Given printer name is ambigous.");
+            var request = Serializable.Load<SignatureRequest>(SignatureRequestDataFileName(certificate));
+            SignatureRequestDocument document = new SignatureRequestDocument(request, certificate, Status.GetGroupName);
+            document.Create(fileName);
           }
           else
           {
-            string printerName = printerCandidates.Single();
-
-            if (HasSignatureRequestDataFile(certificate))
-            {
-              var request = Serializable.Load<SignatureRequest>(SignatureRequestDataFileName(certificate));
-              SignatureRequestDocument document = new SignatureRequestDocument(request, certificate, Status.GetGroupName);
-              document.PrinterSettings.PrinterName = printerName;
-              document.Print();
-            }
-            else
-            {
-              Console.WriteLine("Cannot find signature request file.");
-            }
+            Console.WriteLine("Cannot find signature request file.");
           }
         }
       }

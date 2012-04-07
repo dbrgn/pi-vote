@@ -367,13 +367,14 @@ namespace Pirate.PiVote.Client
         this.signatureRequest,
         Status.Certificate, 
         Status.GetGroupName);
-      PrintDialog printDialog = new PrintDialog();
-      printDialog.Document = document;
 
-      if (printDialog.ShowDialog() == DialogResult.OK &&
-        printDialog.PrinterSettings.IsValid)
+      SaveFileDialog dialog = new SaveFileDialog();
+      dialog.Title = GuiResources.SaveDocumentDialogTitle;
+      dialog.Filter = Files.PdfFileFilter;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
       {
-        document.Print();
+        document.Create(dialog.FileName);
         this.uploadButton.Enabled = true;
       }
 

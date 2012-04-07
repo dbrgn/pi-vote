@@ -19,9 +19,9 @@ namespace Pirate.PiVote.Gui.Printing
 {
   public class TableColumn
   {
-    public float Width { get; set; }
+    public double Width { get; set; }
 
-    public TableColumn(float width)
+    public TableColumn(double width)
     {
       Width = width;
     }

@@ -14,20 +14,28 @@ using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using Pirate.PiVote.Crypto;
 using ThoughtWorks.QRCode.Codec;
+using PdfSharp;
+using PdfSharp.Pdf;
+using PdfSharp.Fonts;
+using PdfSharp.Drawing;
+using PdfSharp.Drawing.Layout;
 
 namespace Pirate.PiVote.Gui.Printing
 {
   public delegate string GetGroupNameHandler(int groupId);
 
-  public class SignatureRequestDocument : PrintDocument
+  public class SignatureRequestDocument
   {
-    private const string FontFace = "DejaVu Sans";
-    private const int BaseFontSize = 12;
+    private const string FontFace = "Dejavu Sans";
+    private const double BaseFontSize = 10d;
+    private const float FirstColumnWidth = 100f;
 
     private SignatureRequest signatureRequest;
     private Certificate certificate;
-    private Graphics graphics;
+    private XGraphics graphics;
+    private PdfPage page;
     private GetGroupNameHandler getGroupName;
+    private PdfDocument document;
 
     public SignatureRequestDocument(SignatureRequest signatureRequest, Certificate certificate, GetGroupNameHandler getGroupName)
     {
@@ -39,64 +47,70 @@ namespace Pirate.PiVote.Gui.Printing
       this.signatureRequest = signatureRequest;
       this.certificate = certificate;
       this.getGroupName = getGroupName;
-
-      DocumentName = "Certificate Request";
-      OriginAtMargins = false;
     }
 
-    protected override void OnPrintPage(PrintPageEventArgs e)
+    public void Create(string fileName)
     {
-      this.graphics = e.Graphics;
+      this.document = new PdfDocument();
+      this.document.Info.Title = "Certificate Request";
+
+      PrintPage();
+
+      this.document.Save(fileName);
+    }
+
+    private void PrintPage()
+    {
+      this.page = this.document.AddPage();
+      this.graphics = XGraphics.FromPdfPage(this.page);
+      var marginBounds = new XRect(50d, 50d, (float)this.page.Width - 100d, (float)this.page.Height - 100d);
 
       this.graphics.Clear(Color.White);
 
-      this.top = e.MarginBounds.Top;
+      this.top = marginBounds.Top;
 
-      PrintHeader(Snippet(e.MarginBounds, 50f));
-      PrintData(Snippet(e.MarginBounds, 280f));
+      PrintHeader(Snippet(marginBounds, 40d));
+      PrintData(Snippet(marginBounds, 230d));
 
       if (this.signatureRequest is SignatureRequest2)
       {
-        PrintParentData(Snippet(e.MarginBounds, 200f));
+        PrintParentData(Snippet(marginBounds, 140d));
 
-        PrintDontSend(Snippet(e.MarginBounds, 170f));
+        PrintDontSend(Snippet(marginBounds, 120d));
       }
       else
       {
-        PrintRequest(Snippet(e.MarginBounds, 150f));
+        PrintRequest(Snippet(marginBounds, 100f));
 
-        PrintInfo(Snippet(e.MarginBounds, 220f));
+        PrintInfo(Snippet(marginBounds, 160f));
       }
 
-      PrintResponse(Snippet(e.MarginBounds, 150f));
-      PrintRevoke(Snippet(e.MarginBounds, 150f));
-      PrintFooter(Snippet(e.MarginBounds, 10f));
-
-      e.HasMorePages = false;
+      PrintResponse(Snippet(marginBounds, 110f));
+      PrintRevoke(Snippet(marginBounds, 110f));
+      PrintFooter(Snippet(marginBounds, 10f));
     }
 
-    private float top;
+    private double top;
 
-    private RectangleF Snippet(RectangleF pageBounds, float size)
+    private XRect Snippet(XRect pageBounds, double size)
     {
-      RectangleF area = new RectangleF(pageBounds.Left, this.top, pageBounds.Width, this.top + size);
+      var area = new XRect(pageBounds.Left, this.top, pageBounds.Width, this.top + size);
       this.top += size;
       return area;
     }
 
-    private void PrintHeader(RectangleF bounds)
+    private void PrintHeader(XRect bounds)
     {
-      float space = 2f;
-      Font headerFont = new Font(FontFace, BaseFontSize + 2, FontStyle.Bold);
+      var headerFont = GetFont(BaseFontSize + 2, XFontStyle.Bold);
 
-      SizeF partySize = graphics.MeasureString(GuiResources.SigningRequestDocumentHeaderRight, headerFont);
+      var partySize = graphics.MeasureString(GuiResources.SigningRequestDocumentHeaderRight, headerFont);
 
-      this.graphics.DrawLine(new Pen(Color.Black, 2), bounds.Left, bounds.Top + partySize.Height + space, bounds.Right, bounds.Top + partySize.Height + space);
-      this.graphics.DrawString(GuiResources.SigningRequestDocumentHeaderLeft, headerFont, Brushes.Black, bounds.Left, bounds.Top);
-      this.graphics.DrawString(GuiResources.SigningRequestDocumentHeaderRight, headerFont, Brushes.Black, bounds.Right - partySize.Width, bounds.Top);
+      this.graphics.DrawLine(new Pen(Color.Black, 1.5f), bounds.Left, bounds.Top + partySize.Height, bounds.Right, bounds.Top + partySize.Height);
+      this.graphics.DrawString(GuiResources.SigningRequestDocumentHeaderLeft, headerFont, Brushes.Black, bounds.Left, bounds.Top + partySize.Height - 5f);
+      this.graphics.DrawString(GuiResources.SigningRequestDocumentHeaderRight, headerFont, Brushes.Black, bounds.Right - partySize.Width, bounds.Top + partySize.Height - 5f);
     }
 
-    private void PrintData(RectangleF bounds)
+    private void PrintData(XRect bounds)
     {
       QRCodeEncoder qrEncoder = new QRCodeEncoder();
       qrEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
@@ -109,13 +123,21 @@ namespace Pirate.PiVote.Gui.Printing
         this.signatureRequest.Key.ToHexString());
       var image = qrEncoder.Encode(url);
 
-      this.graphics.DrawImage(image, bounds.Right - image.Width, bounds.Top);
+      var stream = new System.IO.MemoryStream();
+      image.Save(stream, ImageFormat.Png);
+      var pngImage = Image.FromStream(stream);
 
-      Table table = new Table(new Font(FontFace, BaseFontSize));
-      table.AddColumn(150f);
-      table.AddColumn(bounds.Width - 150f);
+      this.graphics.DrawImage(
+        pngImage,
+        bounds.Right - XUnit.FromInch(image.Width / graphics.Graphics.DpiX).Point,
+        bounds.Top);
 
-      table.AddRow(GuiResources.SigningRequestDocumentRequest, 2, FontStyle.Bold);
+      var font = GetFont();
+      Table table = new Table(font);
+      table.AddColumn(FirstColumnWidth);
+      table.AddColumn(bounds.Width - FirstColumnWidth);
+
+      table.AddRow(GuiResources.SigningRequestDocumentRequest, 2, XFontStyle.Bold);
 
       table.AddRow(" ", 2);
 
@@ -138,10 +160,10 @@ namespace Pirate.PiVote.Gui.Printing
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 2, requestKeyLength)));
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 3, requestKeyLength)));
 
-      table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
+      table.Draw(new XPoint(bounds.Left, bounds.Top), this.graphics);
     }
 
-    private void PrintParentData(RectangleF bounds)
+    private void PrintParentData(XRect bounds)
     {
       if (!(this.signatureRequest is SignatureRequest2))
         throw new InvalidOperationException("Must be a SignatureRequest2");
@@ -149,11 +171,12 @@ namespace Pirate.PiVote.Gui.Printing
       SignatureRequest2 signatureRequest2 = (SignatureRequest2)this.signatureRequest;
       Certificate signingCertificate = signatureRequest2.SigningCertificate;
 
-      Table table = new Table(new Font(FontFace, BaseFontSize));
-      table.AddColumn(150f);
-      table.AddColumn(bounds.Width - 150f);
+      var font = GetFont();
+      Table table = new Table(font);
+      table.AddColumn(FirstColumnWidth);
+      table.AddColumn(bounds.Width - FirstColumnWidth);
 
-      table.AddRow(GuiResources.SigningRequestDocumentParent, 2, FontStyle.Bold);
+      table.AddRow(GuiResources.SigningRequestDocumentParent, 2, XFontStyle.Bold);
       table.AddRow(" ", 2);
 
       string certificateId = signingCertificate.Id.ToString();
@@ -168,13 +191,13 @@ namespace Pirate.PiVote.Gui.Printing
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 2, requestKeyLength)));
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 3, requestKeyLength)));
 
-      table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
+      table.Draw(new XPoint(bounds.Left, bounds.Top), this.graphics);
     }
 
-    private void PrintRequest(RectangleF bounds)
+    private void PrintRequest(XRect bounds)
     {
-      Font font = new Font(FontFace, BaseFontSize);
-      float eights = bounds.Width / 8f;
+      var font = GetFont();
+      double eights = bounds.Width / 8f;
 
       SignObject requesterSign = new SignObject(this.graphics, GuiResources.SigningRequestDocumentSignRequester, GuiResources.SigningRequestDocumentSignSignature, GuiResources.SigningRequestDocumentSignDate, font);
       requesterSign.SetCenterTop(bounds.Left + eights, bounds.Top);
@@ -210,44 +233,50 @@ namespace Pirate.PiVote.Gui.Printing
       return newLine;
     }
 
-    private void PrintInfo(RectangleF bounds)
+    private void PrintInfo(XRect bounds)
     {
-      Font font = new Font(FontFace, BaseFontSize);
+      var font = GetFont();
 
-      this.graphics.DrawString(
+      var textFormatter0 = new XTextFormatter(this.graphics);
+      textFormatter0.Alignment = XParagraphAlignment.Left;
+      textFormatter0.DrawString(
         GuiResources.SigningRequestDocumentInfo, 
-        font,
-        Brushes.Black,
-        new RectangleF(bounds.Left, bounds.Top, bounds.Width, 70f));
+        font, 
+        XBrushes.Black,
+        new XRect(bounds.Left, bounds.Top, bounds.Width, 100d));
 
       Table table = new Table(font);
-      table.AddColumn(150f);
-      table.AddColumn(bounds.Width - 150f);
+      table.AddColumn(FirstColumnWidth);
+      table.AddColumn(bounds.Width - FirstColumnWidth);
       table.AddRow(GuiResources.SigningRequestDocumentSendTo, GuiResources.SigningRequestDocumentPpsAddress1);
       table.AddRow(string.Empty, GuiResources.SigningRequestDocumentPpsAddress2);
-      table.Draw(new PointF(bounds.Left, bounds.Top + 70f), this.graphics);
+      table.Draw(new XPoint(bounds.Left, bounds.Top + 40f), this.graphics);
 
-      this.graphics.DrawString(
+      var textFormatter1 = new XTextFormatter(this.graphics);
+      textFormatter0.Alignment = XParagraphAlignment.Left;
+      textFormatter1.DrawString(
         GuiResources.SigningRequestDocumentLeave, 
         font,
-        Brushes.Black,
-        new RectangleF(bounds.Left, bounds.Top + 140f, bounds.Width, 70f));
+        XBrushes.Black,
+        new XRect(bounds.Left, bounds.Top + 90d, bounds.Width, 100d));
     }
 
-    private void PrintDontSend(RectangleF bounds)
+    private void PrintDontSend(XRect bounds)
     {
-      Font font = new Font(FontFace, BaseFontSize);
+      var font = GetFont();
 
-      this.graphics.DrawString(
+      var textFormatter = new XTextFormatter(this.graphics);
+      textFormatter.Alignment = XParagraphAlignment.Left;
+      textFormatter.DrawString(
         GuiResources.SigningRequestDocumentDontSend,
         font,
-        Brushes.Black,
-        new RectangleF(bounds.Left, bounds.Top, bounds.Width, 70f));      
+        XBrushes.Black,
+        new XRect(bounds.Left, bounds.Top, bounds.Width, bounds.Height));
     }
 
-    private void PrintResponse(RectangleF bounds)
+    private void PrintResponse(XRect bounds)
     {
-      Font font = new Font(FontFace, BaseFontSize);
+      var font = GetFont();
 
       Table table = new Table(font);
       table.AddColumn(bounds.Width);
@@ -267,16 +296,28 @@ namespace Pirate.PiVote.Gui.Printing
       }
 
       table.AddRow(GuiResources.SigningRequestDocumentRefusedHasCertificate);
-      table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
+      table.Draw(new XPoint(bounds.Left, bounds.Top), this.graphics);
 
       SignObject caSign = new SignObject(this.graphics, GuiResources.SigningRequestDocumentSignCA, GuiResources.SigningRequestDocumentSignSignature, GuiResources.SigningRequestDocumentSignDate, font);
       caSign.SetCenterTop(bounds.Left + bounds.Width / 8f * 7f, bounds.Top);
       caSign.Draw();
     }
 
-    private void PrintRevoke(RectangleF bounds)
+    private static XFont GetFont()
     {
-      Font font = new Font(FontFace, BaseFontSize);
+      return GetFont(BaseFontSize, XFontStyle.Regular);
+    }
+
+    private static XFont GetFont(double size, XFontStyle fontStyle)
+    {
+      var options = new XPdfFontOptions(PdfFontEncoding.Unicode, PdfFontEmbedding.Always);
+      var font = new XFont(FontFace, size, fontStyle, options);
+      return font;
+    }
+
+    private void PrintRevoke(XRect bounds)
+    {
+      var font = GetFont();
 
       Table table = new Table(font);
       table.AddColumn(bounds.Width);
@@ -294,14 +335,14 @@ namespace Pirate.PiVote.Gui.Printing
       }
 
       table.AddRow(GuiResources.SigningRequestDocumentRevokedError);
-      table.Draw(new PointF(bounds.Left, bounds.Top), this.graphics);
+      table.Draw(new XPoint(bounds.Left, bounds.Top), this.graphics);
 
       SignObject caSign = new SignObject(this.graphics, GuiResources.SigningRequestDocumentSignCA, GuiResources.SigningRequestDocumentSignSignature, GuiResources.SigningRequestDocumentSignDate, font);
       caSign.SetCenterTop(bounds.Left + bounds.Width / 8f * 7f, bounds.Top);
       caSign.Draw();
     }
 
-    private void PrintFooter(RectangleF bounds)
+    private void PrintFooter(XRect bounds)
     {
     }
   }

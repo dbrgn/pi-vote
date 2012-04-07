@@ -13,16 +13,18 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using Pirate.PiVote.Crypto;
+using PdfSharp;
+using PdfSharp.Drawing;
 
 namespace Pirate.PiVote.Gui.Printing
 {
   public class SignObject : DrawObject
   {
-    private const float LineHalf = 70;
-    private const float DateSpace = 20;
-    private const float SignSpace = 30;
+    private const double LineHalf = 50d;
+    private const double DateSpace = 15d;
+    private const double SignSpace = 25d;
 
-    private Graphics graphics;
+    private XGraphics graphics;
 
     public string SubjectText { get; set; }
 
@@ -30,13 +32,13 @@ namespace Pirate.PiVote.Gui.Printing
 
     public string DateText { get; set; }
     
-    public Font Font { get; set; }
+    public XFont Font { get; set; }
 
     public Brush Brush { get; set; }
 
-    public PointF Position { get; set; }
+    public XPoint Position { get; set; }
 
-    public SignObject(Graphics graphics, string subjectText, string signatureText, string dateText, Font font)
+    public SignObject(XGraphics graphics, string subjectText, string signatureText, string dateText, XFont font)
     {
       this.graphics = graphics;
       SubjectText = subjectText;
@@ -46,15 +48,15 @@ namespace Pirate.PiVote.Gui.Printing
       Brush = Brushes.Black;
     }
 
-    public void SetCenterTop(float center, float top)
+    public void SetCenterTop(double center, double top)
     {
-      Position = new PointF(center, top);
+      Position = new XPoint(center, top);
     }
 
     public override void Draw()
     {
-      float y = Position.Y;
-      float center = Position.X;
+      var y = Position.Y;
+      var center = Position.X;
 
       StringObject date = new StringObject(this.graphics, DateText, Font);
       date.SetCenterTop(center, y);
@@ -62,7 +64,7 @@ namespace Pirate.PiVote.Gui.Printing
       y += date.Size.Height;
 
       y += DateSpace;
-      this.graphics.DrawLine(new Pen(Color.Black, 1), center - LineHalf, y, center + LineHalf, y);
+      this.graphics.DrawLine(new Pen(Color.Black, 1), center - LineHalf, y - date.Height, center + LineHalf, y - date.Height);
 
       StringObject signature = new StringObject(this.graphics, SignatureText, Font);
       signature.SetCenterTop(center, y);
@@ -75,7 +77,7 @@ namespace Pirate.PiVote.Gui.Printing
       y += subject.Size.Height;
 
       y += SignSpace;
-      this.graphics.DrawLine(new Pen(Color.Black, 1), center - LineHalf, y, center + LineHalf, y);
+      this.graphics.DrawLine(new Pen(Color.Black, 1), center - LineHalf, y - subject.Height, center + LineHalf, y - subject.Height);
     }
   }
 }

@@ -14,6 +14,8 @@ using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
+using PdfSharp;
+using PdfSharp.Drawing;
 
 namespace Pirate.PiVote.Gui.Printing
 {
@@ -23,19 +25,19 @@ namespace Pirate.PiVote.Gui.Printing
 
     public HorizontalAlignment Alignment { get; set; }
 
-    public Font Font { get; set; }
+    public XFont Font { get; set; }
 
     public int ColumnSpan { get; set; }
 
-    public TableCell(string text, Font font)
+    public TableCell(string text, XFont font)
       : this(text, font, 1)
     { }
 
-    public TableCell(string text, Font font, int columnSpan)
+    public TableCell(string text, XFont font, int columnSpan)
       : this(text, font, columnSpan, HorizontalAlignment.Left)
     { }
 
-    public TableCell(string text, Font font, int columnSpan, HorizontalAlignment alignment)
+    public TableCell(string text, XFont font, int columnSpan, HorizontalAlignment alignment)
     {
       Text = text;
       Font = font;
@@ -43,7 +45,7 @@ namespace Pirate.PiVote.Gui.Printing
       ColumnSpan = columnSpan;
     }
 
-    public float Draw(Graphics graphics, RectangleF bounds)
+    public double Draw(XGraphics graphics, XRect bounds)
     {
       StringObject stringObject = new StringObject(graphics, Text, Font);
 

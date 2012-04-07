@@ -15,6 +15,7 @@ using System.Text;
 using System.Windows.Forms;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Gui.Printing;
+using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.CaGui
 {
@@ -250,12 +251,13 @@ namespace Pirate.PiVote.CaGui
 
       SignatureRequestDocument document = new SignatureRequestDocument(this.request, this.certificate, GroupList.GetGroupName);
 
-      PrintDialog dialog = new PrintDialog();
-      dialog.Document = document;
+      SaveFileDialog dialog = new SaveFileDialog();
+      dialog.Title = GuiResources.SaveDocumentDialogTitle;
+      dialog.Filter = Files.PdfFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
-        document.Print();
+        document.Create(dialog.FileName);
         CheckValid();
       }
     }

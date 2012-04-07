@@ -60,12 +60,13 @@ namespace Pirate.PiVote.Circle.Create
         Status.Certificate, 
         Status.Controller.Status.GetGroupName);
 
-      PrintDialog dialog = new PrintDialog();
-      dialog.Document = document;
+      SaveFileDialog dialog = new SaveFileDialog();
+      dialog.Title = GuiResources.SaveDocumentDialogTitle;
+      dialog.Filter = Files.PdfFileFilter;
 
       if (dialog.ShowDialog() == DialogResult.OK)
       {
-        document.Print();
+        document.Create(dialog.FileName);
       }
     }
 

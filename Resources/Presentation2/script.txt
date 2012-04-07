@@ -1,0 +1,38 @@
+Vortrag Pi-Vote BFH
+
+# Intro
+## About the party
+## About myself
+## Overview
+
+# Secrecy
+## Homomorphic Encryption
+## Secret Sharing
+### Problem: Unreliable Authorities
+
+# Correctness
+## Zero knowledge proofs
+### Fiat-Shamir heuristic
+### Problem: Lengthy calculations
+
+# Authorization
+## Zertificates
+### Problem: Pseudonymity
+### Problem: Corrupt CA
+#### Check and Balances
+
+# Authentication
+## Forms und Signatures
+### Problem: Forgery
+#### Combatting with SignCheck
+### Problem: Not easy enough to use
+
+# Receipt-freeness
+## Not a requirement
+### Very difficult to achieve with at-home-voting
+
+# Problem: Manipulated software
+## Transparency maybe not sufficient?
+
+# Problem: Poor understanding by voters
+## Difficult to improve

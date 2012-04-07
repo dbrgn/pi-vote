@@ -17,6 +17,7 @@ using System.Threading;
 using Pirate.PiVote.Rpc;
 using Pirate.PiVote.Crypto;
 using Pirate.PiVote.Gui.Printing;
+using Pirate.PiVote.Gui;
 
 namespace Pirate.PiVote.Client
 {
@@ -100,10 +101,10 @@ namespace Pirate.PiVote.Client
       this.run = true;
       OnUpdateWizard();
 
-      SignatureRequest signatureRequest 
+      SignatureRequest signatureRequest
         = new SignatureRequest(
-          this.firstNameTextBox.Text, 
-          this.familyNameTextBox.Text, 
+          this.firstNameTextBox.Text,
+          this.familyNameTextBox.Text,
           this.emailAddressTextBox.Text);
 
       SignatureRequestInfo signatureRequestInfo
@@ -112,15 +113,17 @@ namespace Pirate.PiVote.Client
           signatureRequest.Encrypt());
 
       SignatureRequestDocument document = new SignatureRequestDocument(
-        signatureRequest, 
-        Status.Certificate, 
+        signatureRequest,
+        Status.Certificate,
         Status.GetGroupName);
-      PrintDialog printDialog = new PrintDialog();
-      printDialog.Document = document;
 
-      if (printDialog.ShowDialog() == DialogResult.OK)
+      SaveFileDialog dialog = new SaveFileDialog();
+      dialog.Title = GuiResources.SaveDocumentDialogTitle;
+      dialog.Filter = Files.PdfFileFilter;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
       {
-        document.Print();
+        document.Create(dialog.FileName);
 
         Secure<SignatureRequest> secureSignatureRequest =
           new Secure<SignatureRequest>(signatureRequest, Status.CaCertificate, Status.Certificate);

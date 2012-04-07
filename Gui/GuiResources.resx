@@ -412,4 +412,7 @@ Every time you generate a new sign check cookie the old will be disabled.</value
   <data name="SigningRequestDocumentSignThirdAuthority" xml:space="preserve">
     <value>Third Authority</value>
   </data>
+  <data name="SaveDocumentDialogTitle" xml:space="preserve">
+    <value>Save Request Document</value>
+  </data>
 </root>

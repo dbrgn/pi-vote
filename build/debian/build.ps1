@@ -1,3 +1,10 @@
+function set-linux-newlines($file)
+{
+	$data = [system.io.file]::readalltext($file)
+	$data = $data.replace([system.environment]::newline, [system.environment]::newline.substring(1))
+	[system.io.file]::writealltext($file, $data)
+}
+
 $tgt
 $port
 $key
@@ -14,7 +21,18 @@ cp ../../client/bin/release/Pirate.PiVote.Client.exe ./package/opt/pivote/
 cp ../../circle/bin/release/Pirate.PiVote.Circle.exe ./package/opt/pivote/
 cp ../../client/bin/release/Pirate.PiVote.Gui.dll ./package/opt/pivote/
 cp ../../client/bin/release/Pirate.PiVote.dll ./package/opt/pivote/
+cp ../../client/bin/release/PdfSharp.dll ./package/opt/pivote/
 cp -r ../files-linux/* ./package/opt/pivote/
+
+foreach ($f in (ls ./package/DEBIAN/*))
+{
+	set-linux-newlines $f.fullname
+}
+
+foreach ($f in (ls ./package/usr/bin/*))
+{
+	set-linux-newlines $f.fullname
+}
 
 cp -r package packagetmp
 $svndirs = ls -r -force -filter .svn ./packagetmp

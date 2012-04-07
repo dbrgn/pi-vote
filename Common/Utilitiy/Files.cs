@@ -23,6 +23,7 @@ namespace Pirate.PiVote
     public const string TextFileFilter = "Text|*.txt";
     public const string RootCertificateFileName = "root.pi-cert";
     public const string CertificateStorageFileFilter = "Pi-Vote Certificate Storage|*.pi-cert-storage";
+    public const string PdfFileFilter = "PDF|*.pdf";
     public const string CertificateFileFilter = "Pi-Vote Certificate|*.pi-cert";
     public const string BackupFileFilter = "Pi-Vote Backup|*.pi-backup";
     public const string CertificateExtension = ".pi-cert";

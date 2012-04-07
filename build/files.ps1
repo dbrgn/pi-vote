@@ -19,6 +19,7 @@
 	cp ../circle/bin/release/Pirate.PiVote.Circle.exe $tmp/
 	cp ../client/bin/release/Pirate.PiVote.Gui.dll $tmp/
 	cp ../client/bin/release/Pirate.PiVote.dll $tmp/
+	cp ../client/bin/release/PdfSharp.dll $tmp/
 	cp -r ./files-linux/* $tmp/
 	$name = "PiVote_Client_Linux_x86_" + $version + ".zip"
 	pushd
@@ -41,6 +42,7 @@
 	cp ../circle/bin/release/Pirate.PiVote.Circle.exe $tmp/
 	cp ../client/bin/release/Pirate.PiVote.Gui.dll $tmp/
 	cp ../client/bin/release/Pirate.PiVote.dll $tmp/
+	cp ../client/bin/release/PdfSharp.dll $tmp/
 	cp -r ./files-mac/* $tmp/
 	$name = "PiVote_Client_MaxOsX_x86_" + $version + ".zip"
 	pushd
@@ -63,6 +65,7 @@
 	cp ../circle/bin/release/Pirate.PiVote.Circle.exe $tmp/
 	cp ../client/bin/release/Pirate.PiVote.Gui.dll $tmp/
 	cp ../client/bin/release/Pirate.PiVote.dll $tmp/
+	cp ../client/bin/release/PdfSharp.dll $tmp/
 	cp -r ./files-windows/* $tmp/
 	cp -r ./files-linux/* $tmp/
 	mkdir $tmp/Data
@@ -84,6 +87,7 @@
 	cp ../cagui/bin/release/CaGui.exe $tmp/
 	cp ../cagui/bin/release/Pirate.PiVote.Gui.dll $tmp/
 	cp ../cagui/bin/release/Pirate.PiVote.dll $tmp/
+	cp ../cagui/bin/release/PdfSharp.dll $tmp/
 	cp -r ./files-windows/* $tmp/
 	cp -r ./files-linux/* $tmp/
 	$name = "PiVote_Admin_Package_x86_" + $version + ".zip"

@@ -26,13 +26,13 @@ namespace Pirate.PiVote.Gui.Printing
 
       SignatureRequestDocument document = new SignatureRequestDocument(request, voterCert, GetGroupName);
 
-      PrintDialog dialog = new PrintDialog();
-      dialog.Document = document;
+      ////PrintDialog dialog = new PrintDialog();
+      ////dialog.Document = document;
 
-      if (dialog.ShowDialog() == DialogResult.OK)
-      {
-        document.Print();
-      }
+      ////if (dialog.ShowDialog() == DialogResult.OK)
+      ////{
+      ////  document.Print();
+      ////}
     }
 
     private static string GetGroupName(int groupId)
