@@ -34,3 +34,5 @@
 /SignWeb/root.pi-cert
 /SignWeb/server.pi-cert
 /TestResults
+/build/output
+/build/tmp

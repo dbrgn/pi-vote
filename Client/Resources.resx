@@ -208,7 +208,7 @@
     <value>Party function</value>
   </data>
   <data name="CreateCertificateSaveButton" xml:space="preserve">
-    <value>&amp;Save...</value>
+    <value>&amp;Save as PDF...</value>
   </data>
   <data name="CreateCertificateSaveDialog" xml:space="preserve">
     <value>Save Certificate</value>
@@ -277,7 +277,7 @@
     <value>Pi-Vote Client</value>
   </data>
   <data name="SaveSignatureRequestButton" xml:space="preserve">
-    <value>&amp;Save...</value>
+    <value>&amp;Save as PDF...</value>
   </data>
   <data name="SignatureResponseUploaded" xml:space="preserve">
     <value>Signature responses were uploaded to the server.</value>
@@ -417,7 +417,7 @@
   <data name="SimpleChooseCertificateCreateExplain" xml:space="preserve">
     <value>To get a certificate signed by the certificate authority you first need to create your certificate. 
 
-Then you must fill in your personal data which is then included in your request for certificate signing. This request will be printed out and you need to meet three voting authorities which will check your identity, sign your paper request and forward it to the certificate authority.
+Then you must fill in your personal data which is then included in your request for certificate signing. This request will be saved as PDF and you need to print it out and meet three voting authorities which will check your identity, sign your request form and forward it to the certificate authority.
 
 Finally you need to upload your request for certificate signing to the server to facilitate the signing process. You will be notified by the certificate authority via email once you certificate is signed and the response is uploaded to the server.</value>
   </data>
@@ -434,7 +434,7 @@ Finally you need to upload your request for certificate signing to the server to
     <value>I already have a certificate</value>
   </data>
   <data name="SimpleChooseCertificatePrintButton" xml:space="preserve">
-    <value>&amp;Print</value>
+    <value>&amp;Save as PDF...</value>
   </data>
   <data name="SimpleChooseCertificateUploadButton" xml:space="preserve">
     <value>&amp;Upload</value>
@@ -446,7 +446,7 @@ Finally you need to upload your request for certificate signing to the server to
     <value>Id</value>
   </data>
   <data name="CreateCertificatePrintAndSend" xml:space="preserve">
-    <value>&amp;Print and Save</value>
+    <value>&amp;Save</value>
   </data>
   <data name="StartConnecting" xml:space="preserve">
     <value>Connecting to server...</value>

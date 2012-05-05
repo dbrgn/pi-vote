@@ -211,7 +211,7 @@
     <value>Parteifunktion</value>
   </data>
   <data name="CreateCertificateSaveButton" xml:space="preserve">
-    <value>&amp;Speichern...</value>
+    <value>&amp;PDF Speichern...</value>
   </data>
   <data name="CreateCertificateSaveDialog" xml:space="preserve">
     <value>Zertifikat Speichern</value>
@@ -411,7 +411,7 @@
   <data name="SimpleChooseCertificateCreateExplain" xml:space="preserve">
     <value>Um ein von der Zertifizierungstelle signiertes Zertifikat zu erhalten, musst du zunächst ein Zertifikat erstellen.
 
-Dann musst du deine persönlichen Daten eingeben, die dann in der Zertifizierungsanfrage erwähnt werden. Die Zertifizierungsanfrage wird dann ausgedruckt. Dann musst du das Forumlar zu einem Treffen mit drei Abstimmungsautoritäten mitnehmen. Diese prüfen dann deine Identität, Unterschreiben die Zertifizierungsanfrage und leiten diese an die Zertifizierungstelle weiter.
+Dann musst du deine persönlichen Daten eingeben, die dann in der Zertifizierungsanfrage erwähnt werden. Die Zertifizierungsanfrage wird dann as PDF gespeichert. Dann musst du das Formular ausdrucken und zu einem Treffen mit drei Abstimmungsautoritäten mitnehmen. Diese prüfen dann deine Identität, Unterschreiben die Zertifizierungsanfrage und leiten diese an die Zertifizierungstelle weiter.
 
 Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit die Zertifizierungstelle diese beantworten kann. Du wirst via Email benachrichtigt, wenn deine Zertifizierungsanfrage beantwortet wurde.</value>
   </data>
@@ -428,7 +428,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
     <value>Ich habe schon ein Zertifikat</value>
   </data>
   <data name="SimpleChooseCertificatePrintButton" xml:space="preserve">
-    <value>&amp;Drucken</value>
+    <value>&amp;PDF speichern...</value>
   </data>
   <data name="SimpleChooseCertificateUploadButton" xml:space="preserve">
     <value>&amp;Hochladen</value>
@@ -482,7 +482,7 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
     <value>Zertifikat erfolgreich importiert.</value>
   </data>
   <data name="SaveSignatureRequestButton" xml:space="preserve">
-    <value>&amp;Speichern...</value>
+    <value>&amp;PDF speichern...</value>
   </data>
   <data name="VoteDescriptionCloseButton" xml:space="preserve">
     <value>&amp;Schliessen</value>

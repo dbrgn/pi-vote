@@ -223,13 +223,13 @@
     <value>Certificate id:</value>
   </data>
   <data name="CreateCertificateFinishInfo" xml:space="preserve">
-    <value>You need to print out your signing request and upload it to the server. Then you need to collect 3 signatures from elected voting authorities on your printout and send it to the certificate authority. Once the certificate authority has accepted your request you may use your certificate to vote.</value>
+    <value>You need to upload your signing request to the server, save it as PDF and print it out. Then you need to collect 3 signatures from elected voting authorities on your printout and send it to the certificate authority. Once the certificate authority has accepted your request you may use your certificate to vote.</value>
   </data>
   <data name="CreateCertificateFinishName" xml:space="preserve">
     <value>Full name:</value>
   </data>
   <data name="CreateCertificateFinishPrint" xml:space="preserve">
-    <value>&amp;Print</value>
+    <value>&amp;Save as PDF...</value>
   </data>
   <data name="CreateCertificateFinishType" xml:space="preserve">
     <value>Certificate type:</value>

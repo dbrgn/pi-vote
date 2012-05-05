@@ -211,7 +211,7 @@
     <value>Circle - Zertifikat erstellen</value>
   </data>
   <data name="CreateCertificateFinishInfo" xml:space="preserve">
-    <value>Du musst deine Zertifizierungsanfrage auf den Server hochlanden und ausdrucken. Dann musst du auf dem Ausdruck die Unterschrift von 3 gewählten Abstimmungsautoritäten sammeln und den Ausdruck der Zertifizierungsstelle schicken. Wenn die Zertifizerungsstelle deinen Antrag gutgeheissen hat, kannst du dein Zertifikat gebrauche, um abzustimmen.</value>
+    <value>Du musst deine Zertifizierungsanfrage auf den Server hochlanden, als PDF speichern und dann ausdrucken. Dann musst du auf dem Ausdruck die Unterschrift von 3 gewählten Abstimmungsautoritäten sammeln und den Ausdruck der Zertifizierungsstelle schicken. Wenn die Zertifizerungsstelle deinen Antrag gutgeheissen hat, kannst du dein Zertifikat gebrauche, um abzustimmen.</value>
   </data>
   <data name="CreateCertificateSelectAuthority" xml:space="preserve">
     <value>&amp;Abstimmungsautorität</value>
@@ -629,7 +629,7 @@
     <value>{0} vom {1} bis {2}</value>
   </data>
   <data name="CreateCertificateFinishPrint" xml:space="preserve">
-    <value>Drucken</value>
+    <value>&amp;PDF Speichern...</value>
   </data>
   <data name="CreateCertificateFinishUpload" xml:space="preserve">
     <value>Hochladen</value>

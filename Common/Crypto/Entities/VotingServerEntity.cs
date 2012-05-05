@@ -231,13 +231,26 @@ namespace Pirate.PiVote.Crypto
     {
       if (this.lastProcessTime.Day < DateTime.Now.Day)
       {
-        if (Parameters.VotingEndDate.Date == DateTime.Now.Date)
+        if (this.status == VotingStatus.Voting)
         {
-          RemindVoters(MailType.VoterRequestLastChance);
-        }
-        else if (Parameters.VotingEndDate.AddDays(-6).Date == DateTime.Now.Date)
-        {
-          RemindVoters(MailType.VoterRequestCanStill);
+          var today = DateTime.Now.Date;
+          Logger.Log(LogLevel.Warning, "{0} starts at {1}", Parameters.Title, Parameters.VotingBeginDate.Date);
+          Logger.Log(LogLevel.Warning, "{0} ends at {1}", Parameters.Title, Parameters.VotingEndDate.Date);
+          Logger.Log(LogLevel.Warning, "{0} sees today as {1}", Parameters.Title, today);
+          Logger.Log(LogLevel.Warning, "{0} has duration {1}", Parameters.Title, Parameters.VotingEndDate.Subtract(Parameters.VotingBeginDate));
+          Logger.Log(LogLevel.Warning, "{0} has halflife {1}", Parameters.Title, Parameters.VotingEndDate.Subtract(Parameters.VotingBeginDate).TotalDays / 2d);
+          Logger.Log(LogLevel.Warning, "{0} has halftime {1}", Parameters.Title, Parameters.VotingBeginDate.AddDays(Parameters.VotingEndDate.Subtract(Parameters.VotingBeginDate).TotalDays / 2d).Date);
+
+          if (Parameters.VotingEndDate.Date == today)
+          {
+            RemindVoters(MailType.VoterRequestLastChance);
+            Logger.Log(LogLevel.Warning, "{0} is reminding as VoterRequestLastChance", Parameters.Title);
+          }
+          else if (Parameters.VotingBeginDate.AddDays(Parameters.VotingEndDate.Subtract(Parameters.VotingBeginDate).TotalDays / 2d).Date == today)
+          {
+            RemindVoters(MailType.VoterRequestCanStill);
+            Logger.Log(LogLevel.Warning, "{0} is reminding as VoterRequestCanStill", Parameters.Title);
+          }
         }
       }
     }

@@ -415,4 +415,7 @@ Jedes mal, wenn du ein neues Authentifzierungscookie generierst, wird das alte d
   <data name="SaveDocumentDialogTitle" xml:space="preserve">
     <value>Antragsformular speichern</value>
   </data>
+  <data name="SigningRequestDocumentFingerprint" xml:space="preserve">
+    <value>Fingerprint</value>
+  </data>
 </root>

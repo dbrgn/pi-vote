@@ -101,7 +101,7 @@ namespace Pirate.PiVote.Gui.Printing
 
     private void PrintHeader(XRect bounds)
     {
-      var headerFont = GetFont(BaseFontSize + 2, XFontStyle.Bold);
+      var headerFont = GetFont(BaseFontSize + 2, XFontStyle.Regular);
 
       var partySize = graphics.MeasureString(GuiResources.SigningRequestDocumentHeaderRight, headerFont);
 
@@ -137,7 +137,7 @@ namespace Pirate.PiVote.Gui.Printing
       table.AddColumn(FirstColumnWidth);
       table.AddColumn(bounds.Width - FirstColumnWidth);
 
-      table.AddRow(GuiResources.SigningRequestDocumentRequest, 2, XFontStyle.Bold);
+      table.AddRow(GuiResources.SigningRequestDocumentRequest, 2, XFontStyle.Regular);
 
       table.AddRow(" ", 2);
 
@@ -160,6 +160,13 @@ namespace Pirate.PiVote.Gui.Printing
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 2, requestKeyLength)));
       table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 3, requestKeyLength)));
 
+      string fingerprint = this.certificate.Fingerprint.Replace(" ", string.Empty);
+      int fingerprintLength = fingerprint.Length / 4;
+      table.AddRow(GuiResources.SigningRequestDocumentFingerprint, FourBlocks(fingerprint.Substring(0, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 2, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 3, fingerprintLength)));
+
       table.Draw(new XPoint(bounds.Left, bounds.Top), this.graphics);
     }
 
@@ -176,7 +183,7 @@ namespace Pirate.PiVote.Gui.Printing
       table.AddColumn(FirstColumnWidth);
       table.AddColumn(bounds.Width - FirstColumnWidth);
 
-      table.AddRow(GuiResources.SigningRequestDocumentParent, 2, XFontStyle.Bold);
+      table.AddRow(GuiResources.SigningRequestDocumentParent, 2, XFontStyle.Regular);
       table.AddRow(" ", 2);
 
       string certificateId = signingCertificate.Id.ToString();
@@ -184,12 +191,12 @@ namespace Pirate.PiVote.Gui.Printing
       table.AddRow(GuiResources.SigningRequestDocumentCertificateId, certificateId.Substring(0, idLength));
       table.AddRow(string.Empty, certificateId.Substring(idLength));
 
-      string requestKey = this.signatureRequest.Key.ToHexString();
-      int requestKeyLength = requestKey.Length / 4;
-      table.AddRow(GuiResources.SigningRequestDocumentRequestKey, FourBlocks(requestKey.Substring(0, requestKeyLength)));
-      table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength, requestKeyLength)));
-      table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 2, requestKeyLength)));
-      table.AddRow(string.Empty, FourBlocks(requestKey.Substring(requestKeyLength * 3, requestKeyLength)));
+      string fingerprint = signingCertificate.Fingerprint.Replace(" ", string.Empty);
+      int fingerprintLength = fingerprint.Length / 4;
+      table.AddRow(GuiResources.SigningRequestDocumentFingerprint, FourBlocks(fingerprint.Substring(0, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 2, fingerprintLength)));
+      table.AddRow(string.Empty, FourBlocks(fingerprint.Substring(fingerprintLength * 3, fingerprintLength)));
 
       table.Draw(new XPoint(bounds.Left, bounds.Top), this.graphics);
     }

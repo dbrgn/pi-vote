@@ -1059,8 +1059,14 @@ namespace Pirate.PiVote.Rpc
           .Where(crl => crl.Verify(CertificateStorage))
           .Select(crl => crl.Value.ValidUntil.Date)
           .Max();
+        var today = DateTime.Now.Date;
 
-        if (DateTime.Now > maxValid &&
+        Logger.Log(LogLevel.Warning, "Today is {0}", today);
+        Logger.Log(LogLevel.Warning, "CRL valid until {0}", maxValid);
+        Logger.Log(LogLevel.Warning, "Caution at {0}", maxValid.AddDays(-2));
+        Logger.Log(LogLevel.Warning, "Warning at {0}", maxValid.AddDays(-5));
+
+        if (today > maxValid &&
             DateTime.Now.Hour % 3 == 0)
         {
           SendMail(
@@ -1068,7 +1074,7 @@ namespace Pirate.PiVote.Rpc
             MailType.AdminCrlRed,
             maxValid.ToLongDateString());
         }
-        else if (DateTime.Now.AddDays(-2) > maxValid &&
+        else if (today > maxValid.AddDays(-2) &&
                  DateTime.Now.Hour % 12 == 6)
         {
           SendMail(
@@ -1076,7 +1082,7 @@ namespace Pirate.PiVote.Rpc
             MailType.AdminCrlOrange,
             maxValid.ToLongDateString());
         }
-        else if (DateTime.Now.AddDays(-5) > maxValid &&
+        else if (today > maxValid.AddDays(-5) &&
                  DateTime.Now.Hour == 18)
         {
           SendMail(
