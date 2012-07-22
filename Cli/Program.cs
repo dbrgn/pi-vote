@@ -16,15 +16,36 @@ namespace Pirate.PiVote.Cli
   {
     public static void Main(string[] args)
     {
-      Controller controller = new Controller();
+      var parameters = new List<string>();
+      var options = new List<string>();
+      var handler = new Handler();
 
-      if (args.Length >= 1)
+      if (args.Length >= 2)
       {
-        controller.Execute(args);
+        var verb = args[0];
+        var subject = args[1];
+
+        for (var i = 2; i < args.Length; i++)
+        {
+          if (args[i].StartsWith("--"))
+          {
+            options.Add(args[i].Substring(2));
+          }
+          else if (args[i].StartsWith("\"") && args[i].EndsWith("\""))
+          {
+            parameters.Add(args[i].Substring(1, args[i].Length - 2));
+          }
+          else
+          {
+            parameters.Add(args[i]);
+          }
+        }
+
+        handler.Execute(verb, subject, parameters, options);
       }
       else
       {
-        controller.Loop();
+        Console.WriteLine("Verb or subject missing.");
       }
     }
   }

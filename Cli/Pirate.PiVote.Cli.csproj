@@ -46,23 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command.cs" />
-    <Compile Include="ConnectCommand.cs" />
-    <Compile Include="Controller.cs" />
-    <Compile Include="AutoCACommand.cs" />
-    <Compile Include="ChangePassphraseCommand.cs" />
-    <Compile Include="CheckCommand.cs" />
-    <Compile Include="UploadCommand.cs" />
-    <Compile Include="ListPrintersCommand.cs" />
-    <Compile Include="PrintCommand.cs" />
-    <Compile Include="DeleteCertificateCommand.cs" />
-    <Compile Include="CreateCertificateCommand.cs" />
-    <Compile Include="ListCertificatesCommand.cs" />
-    <Compile Include="HelpCommand.cs" />
-    <Compile Include="ExitCommand.cs" />
-    <Compile Include="ListVotingsCommend.cs" />
+    <Compile Include="Handler.cs" />
+    <Compile Include="ListCertificateCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Status.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Pirate.PiVote.csproj">

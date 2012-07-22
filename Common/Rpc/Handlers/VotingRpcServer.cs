@@ -1061,11 +1061,6 @@ namespace Pirate.PiVote.Rpc
           .Max();
         var today = DateTime.Now.Date;
 
-        Logger.Log(LogLevel.Warning, "Today is {0}", today);
-        Logger.Log(LogLevel.Warning, "CRL valid until {0}", maxValid);
-        Logger.Log(LogLevel.Warning, "Caution at {0}", maxValid.AddDays(-2));
-        Logger.Log(LogLevel.Warning, "Warning at {0}", maxValid.AddDays(-5));
-
         if (today > maxValid &&
             DateTime.Now.Hour % 3 == 0)
         {

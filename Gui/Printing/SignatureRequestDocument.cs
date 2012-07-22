@@ -7,18 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
-using Pirate.PiVote.Crypto;
-using ThoughtWorks.QRCode.Codec;
+using System.IO;
+using System.Linq;
+using System.Text;
 using PdfSharp;
-using PdfSharp.Pdf;
-using PdfSharp.Fonts;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
+using PdfSharp.Fonts;
+using PdfSharp.Pdf;
+using Pirate.PiVote.Crypto;
+using ThoughtWorks.QRCode.Codec;
 
 namespace Pirate.PiVote.Gui.Printing
 {
@@ -27,6 +28,7 @@ namespace Pirate.PiVote.Gui.Printing
   public class SignatureRequestDocument
   {
     private const string FontFace = "Dejavu Sans";
+    private const string FontFilename = "DejaVuSans.ttf";
     private const double BaseFontSize = 10d;
     private const float FirstColumnWidth = 100f;
 
@@ -47,6 +49,10 @@ namespace Pirate.PiVote.Gui.Printing
       this.signatureRequest = signatureRequest;
       this.certificate = certificate;
       this.getGroupName = getGroupName;
+
+      var fontPath = Path.Combine(System.Windows.Forms.Application.StartupPath, FontFilename);
+      var fontData = File.ReadAllBytes(fontPath);
+      XPrivateFontCollection.Global.AddFont(fontData, "Dejavu Sans");
     }
 
     public void Create(string fileName)
