@@ -14,6 +14,29 @@ namespace System
 {
   public static class Bytes
   {
+    public static byte[] FromHexString(this string text)
+    {
+      if (text == null)
+      {
+        throw new ArgumentNullException("text");
+      }
+      else if (text.Length % 2 != 0)
+      {
+        throw new ArgumentException("Text length is uneven.");
+      }
+
+      var data = new byte[text.Length / 2];
+
+      for (var index = 0; index < text.Length; index += 2)
+      {
+        var byteText = text.Substring(index, 2);
+        var byteValue = byte.Parse(byteText, Globalization.NumberStyles.HexNumber);
+        data[index / 2] = byteValue;
+      }
+
+      return data;
+    }
+
     public static string ToHexString(this byte[] data)
     {
       return string.Join(string.Empty, data.Select(b => string.Format("{0:x2}", b)).ToArray());
