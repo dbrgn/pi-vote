@@ -107,28 +107,8 @@ namespace Pirate.PiVote.ResourceManager
     public void ImportCsv(string fileName)
     {
       string[] lines = File.ReadAllLines(fileName, Encoding.UTF8);
-      List<string> changedLines = new List<string>();
-      string changedLine = null;
 
       foreach (string line in lines)
-      {
-        if (changedLine == null)
-        {
-          changedLine = line;
-        }
-        else
-        {
-          changedLine = changedLine + Environment.NewLine + line;
-        }
-
-        if (!changedLine.Contains("\"") || changedLine.EndsWith("\""))
-        {
-          changedLines.Add(changedLine);
-          changedLine = null;
-        }
-      }
-
-      foreach (string line in changedLines)
       {
         IEnumerable<string> rows = ParseLine(line);
 

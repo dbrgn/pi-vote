@@ -117,8 +117,140 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="PpsLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\ppLogo-ww-fr-web.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CertificateManagerBackup" xml:space="preserve">
+    <value>&amp;Sauvegarder</value>
+  </data>
+  <data name="CertificateManagerClose" xml:space="preserve">
+    <value>&amp;Fermer</value>
+  </data>
+  <data name="CertificateManagerColumnGroupName" xml:space="preserve">
+    <value>Groupe/Nom</value>
+  </data>
+  <data name="CertificateManagerColumnId" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="CertificateManagerColumnValidUntil" xml:space="preserve">
+    <value>Valide jusque'au</value>
+  </data>
+  <data name="CertificateManagerCreateNew" xml:space="preserve">
+    <value>&amp;Créer nouveau...</value>
+  </data>
+  <data name="CertificateManagerExport" xml:space="preserve">
+    <value>&amp;Exporter</value>
+  </data>
+  <data name="CertificateManagerImport" xml:space="preserve">
+    <value>&amp;Importer</value>
+  </data>
+  <data name="CertificateManagerRefresh" xml:space="preserve">
+    <value>&amp;Actualiser</value>
+  </data>
+  <data name="CertificateManagerRemove" xml:space="preserve">
+    <value>&amp;Supprimer</value>
+  </data>
+  <data name="CertificateManagerRestore" xml:space="preserve">
+    <value>&amp;Restaurer</value>
+  </data>
+  <data name="CertificateManagerSetPassword" xml:space="preserve">
+    <value>&amp;Definir mot de passe</value>
+  </data>
+  <data name="CertificateManagerTitle" xml:space="preserve">
+    <value>Circle – Gestionnaire de Certificat</value>
+  </data>
+  <data name="CertificateManagerValidIndefinite" xml:space="preserve">
+    <value>"ControllerLoadCertificatesAccepted"</value>
+  </data>
+  <data name="MenuCertificatesCreateNew" xml:space="preserve">
+    <value>&amp;Créer...</value>
+  </data>
+  <data name="MenuCertificatesReload" xml:space="preserve">
+    <value>&amp;Recharger</value>
+  </data>
+  <data name="MenuLanguage" xml:space="preserve">
+    <value>&amp;Langue</value>
+  </data>
+  <data name="MenuManage" xml:space="preserve">
+    <value>&amp;Gérer...</value>
+  </data>
+  <data name="MenuVotings" xml:space="preserve">
+    <value>&amp;Votations</value>
+  </data>
+  <data name="ResultDialogTotalBallots" xml:space="preserve">
+    <value>Bulletins totaux</value>
+  </data>
+  <data name="ResultDialogValidBallots" xml:space="preserve">
+    <value>Bulletins valides</value>
+  </data>
+  <data name="ResultDialogYourVote" xml:space="preserve">
+    <value>Ton vote</value>
+  </data>
+  <data name="VotingActionVote" xml:space="preserve">
+    <value>&amp;Voter</value>
+  </data>
+  <data name="VotingListEmpty" xml:space="preserve">
+    <value>Il n'y a aucun vote à afficher.</value>
+  </data>
+  <data name="VotingListPast" xml:space="preserve">
+    <value>Archives</value>
+  </data>
+  <data name="ConfigProofCountSecure" xml:space="preserve">
+    <value>Fiable</value>
+  </data>
+  <data name="ConfigTabProofCount" xml:space="preserve">
+    <value>Vérifications</value>
+  </data>
+  <data name="ConfigTitle" xml:space="preserve">
+    <value>Circle - Configuration</value>
+  </data>
+  <data name="CertificateManagerColumnValidFrom" xml:space="preserve">
+    <value>Valide depuis</value>
+  </data>
+  <data name="CreateCertificateDataGroup" xml:space="preserve">
+    <value>Groupe:</value>
+  </data>
+  <data name="CreateCertificateDataValidUntil" xml:space="preserve">
+    <value>Valide depuis:</value>
+  </data>
+  <data name="MenuCertificates" xml:space="preserve">
+    <value>&amp;Certificats</value>
+  </data>
+  <data name="ResultDialogInvalidBallots" xml:space="preserve">
+    <value>Bulletins invalides</value>
+  </data>
+  <data name="ResultDialogTitle" xml:space="preserve">
+    <value>Circle – Résultats du vote</value>
+  </data>
+  <data name="VotingActionDownload" xml:space="preserve">
+    <value>&amp;Télécharger</value>
+  </data>
+  <data name="VotingActionTally" xml:space="preserve">
+    <value>&amp;Décompter</value>
+  </data>
+  <data name="VotingListCurrent" xml:space="preserve">
+    <value>Actuel</value>
+  </data>
+  <data name="VotingStatusTally" xml:space="preserve">
+    <value>Terminé, {0} votes peuvent être décomptés</value>
+  </data>
+  <data name="MenuCreateVoting" xml:space="preserve">
+    <value>&amp;Créer...</value>
+  </data>
+  <data name="CertificateStatusResumeAction" xml:space="preserve">
+    <value>&amp;Reprendre la création</value>
+  </data>
+  <data name="CertificateStatusValid" xml:space="preserve">
+    <value>Tu as un certificat qui est valide jusque'au {0}</value>
+  </data>
+  <data name="ConfigProofCountInfo" xml:space="preserve">
+    <value>Effectuer {0} vérifications signifie ne détecter aucun bulletin suspect avec une probabilité de 1 sur {2}</value>
+  </data>
+  <data name="MenuGenerateSignCheck" xml:space="preserve">
+    <value>&amp;Générer signe de vérification</value>
+  </data>
+  <data name="VotingStatusGroupFromUnit" xml:space="preserve">
+    <value>{0} de {1} jusque'au {2}</value>
   </data>
 </root>
