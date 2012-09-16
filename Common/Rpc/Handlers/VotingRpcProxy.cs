@@ -117,6 +117,19 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Fetches an envelope.
+    /// </summary>
+    /// <param name="type">The type.</param>
+    /// <returns>Statistics data.</returns>
+    public string FetchStats(StatisticsDataType type)
+    {
+      var request = new FetchStatsRequest(Guid.NewGuid(), type);
+      var response = Execute<FetchStatsResponse>(request);
+
+      return response.Data;
+    }
+
+    /// <summary>
     /// Fetches a partial decipher list.
     /// </summary>
     /// <param name="votingId">Id of the voting.</param>

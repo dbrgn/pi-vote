@@ -163,7 +163,7 @@
     <value>&amp;Passwort setzen...</value>
   </data>
   <data name="CertificateManagerTitle" xml:space="preserve">
-    <value>Circle - Zertifiktasmanager</value>
+    <value>Circle - Zertifikatsmanager</value>
   </data>
   <data name="CertificateManagerValidIndefinite" xml:space="preserve">
     <value>Beliebig</value>
@@ -648,5 +648,23 @@
   </data>
   <data name="VotingDialogTitleAuthority" xml:space="preserve">
     <value>Circle - Fragen prüfen</value>
+  </data>
+  <data name="MenuStats" xml:space="preserve">
+    <value>&amp;Statistiken</value>
+  </data>
+  <data name="MenuStatsBallots" xml:space="preserve">
+    <value>&amp;Stimmen...</value>
+  </data>
+  <data name="MenuStatsCertificateRequests" xml:space="preserve">
+    <value>&amp;Zertifizierungsanfragen...</value>
+  </data>
+  <data name="MenuStatsTimeline" xml:space="preserve">
+    <value>&amp;Zeitlinie...</value>
+  </data>
+  <data name="MenuStatsVotings" xml:space="preserve">
+    <value>&amp;Abstimmungen...</value>
+  </data>
+  <data name="SaveStatisticsDialogTitle" xml:space="preserve">
+    <value>Statistik speichern</value>
   </data>
 </root>

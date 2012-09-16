@@ -310,7 +310,7 @@ namespace Pirate.PiVote.Rpc
           Thread.Sleep(1);
         }
 
-        Thread.Sleep(100);
+        Thread.Sleep(10);
       }
 
       this.listener.Stop();

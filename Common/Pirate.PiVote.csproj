@@ -177,6 +177,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exception\PiException.cs" />
     <Compile Include="Rpc\Clients\CheckShares.cs" />
+    <Compile Include="Rpc\Clients\GetStats.cs" />
     <Compile Include="Rpc\Clients\GenerateSignCheck.cs" />
     <Compile Include="Rpc\Clients\VotingDescriptor2.cs" />
     <Compile Include="Rpc\Clients\GetVotings.cs" />
@@ -211,6 +212,8 @@
     <Compile Include="Rpc\Generic\RpcRequest.cs" />
     <Compile Include="Rpc\Generic\RpcMessage.cs" />
     <Compile Include="Rpc\Handlers\IBinaryRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\FetchStatsRequest.cs" />
+    <Compile Include="Rpc\Messages\FetchStatsResponse.cs" />
     <Compile Include="Rpc\Messages\FetchSignCheckCookieRequest.cs" />
     <Compile Include="Rpc\Messages\FetchSignCheckCookieResponse.cs" />
     <Compile Include="Rpc\Messages\PushSignCheckCookieRequest.cs" />
@@ -273,6 +276,7 @@
     <Compile Include="Rpc\Messages\FetchVotingMaterialVoterRequest.cs" />
     <Compile Include="Rpc\Messages\FetchVotingMaterialVoterResponse.cs" />
     <Compile Include="Rpc\Handlers\VotingRpcProxy.cs" />
+    <Compile Include="Rpc\Messages\StatisticsDataType.cs" />
     <Compile Include="Rpc\Messages\VotingContainer.cs" />
     <Compile Include="Rpc\Messages\VotingStatusRequest.cs" />
     <Compile Include="Rpc\Messages\VotingStatusResponse.cs" />

@@ -55,6 +55,11 @@ namespace Pirate.PiVote.Circle
       this.frenchMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.extrasMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.configMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.statsMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.statsCertificateRequestsMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.statsVotingMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.statsBallotsMenu = new System.Windows.Forms.ToolStripMenuItem();
+      this.statsTimelineMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.mainPanel = new System.Windows.Forms.Panel();
       this.votingListsControl = new Pirate.PiVote.Circle.VotingListsControl();
       this.mainMenu.SuspendLayout();
@@ -203,7 +208,8 @@ namespace Pirate.PiVote.Circle
       // extrasMenu
       // 
       this.extrasMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configMenu});
+            this.configMenu,
+            this.statsMenu});
       this.extrasMenu.Name = "extrasMenu";
       this.extrasMenu.Size = new System.Drawing.Size(50, 20);
       this.extrasMenu.Text = "E&xtras";
@@ -211,9 +217,48 @@ namespace Pirate.PiVote.Circle
       // configMenu
       // 
       this.configMenu.Name = "configMenu";
-      this.configMenu.Size = new System.Drawing.Size(105, 22);
+      this.configMenu.Size = new System.Drawing.Size(152, 22);
       this.configMenu.Text = "&Config";
       this.configMenu.Click += new System.EventHandler(this.configMenu_Click);
+      // 
+      // statsMenu
+      // 
+      this.statsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statsCertificateRequestsMenu,
+            this.statsVotingMenu,
+            this.statsBallotsMenu,
+            this.statsTimelineMenu});
+      this.statsMenu.Name = "statsMenu";
+      this.statsMenu.Size = new System.Drawing.Size(152, 22);
+      this.statsMenu.Text = "st";
+      // 
+      // statsCertificateRequestsMenu
+      // 
+      this.statsCertificateRequestsMenu.Name = "statsCertificateRequestsMenu";
+      this.statsCertificateRequestsMenu.Size = new System.Drawing.Size(172, 22);
+      this.statsCertificateRequestsMenu.Text = "Certificate Requests";
+      this.statsCertificateRequestsMenu.Click += new System.EventHandler(this.statsCertificateRequestsMenu_Click);
+      // 
+      // statsVotingMenu
+      // 
+      this.statsVotingMenu.Name = "statsVotingMenu";
+      this.statsVotingMenu.Size = new System.Drawing.Size(172, 22);
+      this.statsVotingMenu.Text = "Votings";
+      this.statsVotingMenu.Click += new System.EventHandler(this.statsVotingMenu_Click);
+      // 
+      // statsBallotsMenu
+      // 
+      this.statsBallotsMenu.Name = "statsBallotsMenu";
+      this.statsBallotsMenu.Size = new System.Drawing.Size(172, 22);
+      this.statsBallotsMenu.Text = "Ballots";
+      this.statsBallotsMenu.Click += new System.EventHandler(this.statsBallotsMenu_Click);
+      // 
+      // statsTimelineMenu
+      // 
+      this.statsTimelineMenu.Name = "statsTimelineMenu";
+      this.statsTimelineMenu.Size = new System.Drawing.Size(172, 22);
+      this.statsTimelineMenu.Text = "Timeline";
+      this.statsTimelineMenu.Click += new System.EventHandler(this.statsTimelineMenu_Click);
       // 
       // mainPanel
       // 
@@ -248,12 +293,7 @@ namespace Pirate.PiVote.Circle
       this.Controls.Add(this.mainPanel);
       this.Controls.Add(this.mainMenu);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
-
-      // This hack is necessary because the mono compiler/runtime seems to be broken when it comes to icons.
-#if !__MonoCS__
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-#endif
-
       this.KeyPreview = true;
       this.MainMenuStrip = this.mainMenu;
       this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -294,6 +334,11 @@ namespace Pirate.PiVote.Circle
     private System.Windows.Forms.ToolStripMenuItem extrasMenu;
     private System.Windows.Forms.ToolStripMenuItem configMenu;
     private System.Windows.Forms.ToolStripMenuItem generateSignCheckMenu;
+    private System.Windows.Forms.ToolStripMenuItem statsMenu;
+    private System.Windows.Forms.ToolStripMenuItem statsCertificateRequestsMenu;
+    private System.Windows.Forms.ToolStripMenuItem statsVotingMenu;
+    private System.Windows.Forms.ToolStripMenuItem statsBallotsMenu;
+    private System.Windows.Forms.ToolStripMenuItem statsTimelineMenu;
   }
 }
 

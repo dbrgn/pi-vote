@@ -667,4 +667,22 @@
   <data name="VotingDialogTitleAuthority" xml:space="preserve">
     <value>Circle - Verify questions</value>
   </data>
+  <data name="MenuStats" xml:space="preserve">
+    <value>&amp;Statistics</value>
+  </data>
+  <data name="MenuStatsBallots" xml:space="preserve">
+    <value>&amp;Ballots...</value>
+  </data>
+  <data name="MenuStatsCertificateRequests" xml:space="preserve">
+    <value>&amp;Certificate Requests...</value>
+  </data>
+  <data name="MenuStatsTimeline" xml:space="preserve">
+    <value>&amp;Timeline...</value>
+  </data>
+  <data name="MenuStatsVotings" xml:space="preserve">
+    <value>&amp;Votings...</value>
+  </data>
+  <data name="SaveStatisticsDialogTitle" xml:space="preserve">
+    <value>Save statistics</value>
+  </data>
 </root>

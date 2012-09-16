@@ -446,6 +446,12 @@ namespace Pirate.PiVote.Circle
       this.extrasMenu.Text = Resources.MenuExtras;
       this.configMenu.Text = Resources.MenuConfig;
 
+      this.statsMenu.Text = Resources.MenuStats;
+      this.statsTimelineMenu.Text = Resources.MenuStatsTimeline;
+      this.statsBallotsMenu.Text = Resources.MenuStatsBallots;
+      this.statsVotingMenu.Text = Resources.MenuStatsVotings;
+      this.statsCertificateRequestsMenu.Text = Resources.MenuStatsCertificateRequests;
+
       this.votingListsControl.UpdateLanguage();
     }
 
@@ -612,6 +618,52 @@ namespace Pirate.PiVote.Circle
           Status.TextStatusDialog.HideInfo();
         }
       }
+    }
+
+    private void DownloadStats(StatisticsDataType type)
+    {
+      SaveFileDialog dialog = new SaveFileDialog();
+      dialog.Title = Resources.SaveStatisticsDialogTitle;
+      dialog.CheckPathExists = true;
+      dialog.Filter = Files.CsvFileFilter;
+      dialog.FileName = string.Empty;
+
+      if (dialog.ShowDialog() == DialogResult.OK)
+      {
+        Status.TextStatusDialog.ShowInfo(Controller, this);
+
+        try
+        {
+          var data = Controller.DownloadStats(type);
+          File.WriteAllText(dialog.FileName, data);
+        }
+        catch (Exception exception)
+        {
+          Error.ErrorDialog.ShowError(exception);
+        }
+
+        Status.TextStatusDialog.HideInfo();
+      }
+    }
+
+    private void statsCertificateRequestsMenu_Click(object sender, EventArgs e)
+    {
+      DownloadStats(StatisticsDataType.SignatureRequests);
+    }
+
+    private void statsVotingMenu_Click(object sender, EventArgs e)
+    {
+      DownloadStats(StatisticsDataType.Votings);
+    }
+
+    private void statsBallotsMenu_Click(object sender, EventArgs e)
+    {
+      DownloadStats(StatisticsDataType.Ballots);
+    }
+
+    private void statsTimelineMenu_Click(object sender, EventArgs e)
+    {
+      DownloadStats(StatisticsDataType.Timeline);
     }
   }
 }

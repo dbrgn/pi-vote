@@ -356,6 +356,296 @@ namespace Pirate.PiVote.Rpc
       return this.votings.Keys;
     }
 
+    private void AddRow(StringBuilder data, params object[] values)
+    {
+      data.AppendLine(string.Join(";", values.Select(v => v == null ? "\"\"" : "\"" + v.ToString() + "\"").ToArray()));
+    }
+
+    private string GetSignatureRequestStatistics()
+    {
+      var data = new StringBuilder();
+
+      AddRow(
+        data,
+        "Type",
+        "Group",
+        "Id",
+        "FullName",
+        "Language",
+        "CreationData",
+        "Fingerprint",
+        "SelfSignatureValid",
+        "Valid",
+        "ResponseStatus",
+        "ResponseSignerId",
+        "ResponseSignerName",
+        "ResponseValid",
+        "ResponseReason",
+        "Used");
+
+      foreach (var secureRequest in GetSignatureRequests())
+      {
+        var certificate = secureRequest.Certificate;
+        Signed<SignatureResponse> signedResponse = null;
+        var responseStatus = GetSignatureResponseStatus(secureRequest.Certificate.Id, out signedResponse);
+
+        if (signedResponse != null &&
+            signedResponse.Value.Signature != null)
+        {
+          certificate.AddSignature(signedResponse.Value.Signature);
+        }
+
+        var responseSignerId = signedResponse != null ? (object)signedResponse.Certificate.Id : null;
+        var responseSignerName = signedResponse != null ? (object)signedResponse.Certificate.FullName : null;
+        var responseValid = signedResponse != null ? (object)signedResponse.Verify(CertificateStorage) : null;
+        var responseReason = signedResponse != null ? (object)signedResponse.Value.Reason : null;
+        var group = (certificate as VoterCertificate) == null ? string.Empty : GetGroupName((certificate as VoterCertificate).GroupId);
+
+        var used = this.votings.Values
+          .SelectMany(v => v.GetAllEnvelopes())
+          .Where(e => e.Certificate.Id.Equals(certificate.Id))
+          .Count();
+
+        AddRow(data,
+          certificate.TypeText,
+          group,
+          certificate.Id,
+          certificate.FullName,
+          certificate.Language,
+          certificate.CreationDate,
+          certificate.Fingerprint,
+          certificate.SelfSignatureValid,
+          certificate.Validate(CertificateStorage, DateTime.Now),
+          responseStatus,
+          responseSignerId,
+          responseSignerName,
+          responseValid,
+          responseReason,
+          used);
+      }
+
+      return data.ToString();
+    }
+
+    private string GetVotingsStatistics()
+    {
+      var data = new StringBuilder();
+
+      var certificates = new List<VoterCertificate>();
+
+      foreach (var secureRequest in GetSignatureRequests())
+      {
+        var certificate = secureRequest.Certificate;
+        Signed<SignatureResponse> signedResponse = null;
+        var responseStatus = GetSignatureResponseStatus(secureRequest.Certificate.Id, out signedResponse);
+
+        if (signedResponse != null &&
+            signedResponse.Value.Signature != null)
+        {
+          certificate.AddSignature(signedResponse.Value.Signature);
+        }
+
+        if (certificate is VoterCertificate)
+        {
+          certificates.Add(certificate as VoterCertificate);
+        }
+      }
+
+      AddRow(
+          data,
+          "Id",
+          "Title",
+          "Status",
+          "VotingBeginDate",
+          "VotingEndDate",
+          "Group",
+          "Questions",
+          "Authority 1",
+          "Authority 2",
+          "Authority 3",
+          "Authority 4",
+          "Authority 5",
+          "Valid Certificates",
+          "Envelopes");
+
+      foreach (var voting in this.votings.Values)
+      {
+        var validCertificates = certificates
+          .Where(c => c.GroupId == voting.Parameters.GroupId && c.Validate(CertificateStorage, voting.Parameters.VotingBeginDate) == CertificateValidationResult.Valid)
+          .Count();
+
+        AddRow(
+          data,
+          voting.Id,
+          voting.Parameters.Title.Text,
+          voting.Status,
+          voting.Parameters.VotingBeginDate,
+          voting.Parameters.VotingEndDate,
+          GetGroups().Where(g => g.Id == voting.Parameters.GroupId).Single().Name.Text,
+          voting.Parameters.Questions.Count(),
+          voting.Authorities.First().Id,
+          voting.Authorities.Skip(1).First().Id,
+          voting.Authorities.Skip(2).First().Id,
+          voting.Authorities.Skip(3).First().Id,
+          voting.Authorities.Skip(4).First().Id,
+          validCertificates,
+          voting.GetAllEnvelopes().Count());
+      }
+
+      return data.ToString();
+    }
+
+    private string GetSignatureRequestFullStatistics()
+    {
+      var data = new StringBuilder();
+
+      AddRow(
+        data,
+        "Id",
+        "Value");
+
+      foreach (var secureRequest in GetSignatureRequests())
+      {
+        AddRow(
+          data,
+          secureRequest.Certificate.Id,
+          secureRequest.ToBinary().ToHexString());
+      }
+
+      return data.ToString();
+    }
+
+    private string GetSignatureResponseFullStatistics()
+    {
+      var data = new StringBuilder();
+
+      AddRow(
+        data,
+        "Id",
+        "Value");
+
+      foreach (var signedResponse in GetSignatureResponses())
+      {
+        AddRow(
+          data,
+          signedResponse.Certificate.Id,
+          signedResponse.ToBinary().ToHexString());
+      }
+
+      return data.ToString();
+    }
+
+    private string GetBallotsStatistics()
+    {
+      var data = new StringBuilder();
+
+      AddRow(
+            data,
+            "VotingId",
+            "CertificateId",
+            "CertificateFingerprint",
+            "Date",
+            "SignatureValid");
+
+      foreach (var voting in this.votings.Values)
+      {
+        foreach (var envelope in voting.GetAllEnvelopes())
+        {
+          AddRow(
+            data,
+            voting.Id,
+            envelope.Certificate.Id,
+            envelope.Certificate.Fingerprint,
+            envelope.Value.Date,
+            envelope.Verify(CertificateStorage, envelope.Value.Date));
+        }
+      }
+
+      return data.ToString();
+    }
+
+    private string GetTimelineStatistics()
+    {
+      var data = new StringBuilder();
+
+      var from = new DateTime(2010, 9, 1, 0, 0, 0).Date;
+      var until = DateTime.Now.Date;
+      var voterCertificates = new List<VoterCertificate>();
+
+      foreach (var secureRequest in GetSignatureRequests())
+      {
+        var certificate = secureRequest.Certificate;
+        Signed<SignatureResponse> signedResponse = null;
+        var responseStatus = GetSignatureResponseStatus(secureRequest.Certificate.Id, out signedResponse);
+
+        if (signedResponse != null &&
+            signedResponse.Value.Signature != null)
+        {
+          certificate.AddSignature(signedResponse.Value.Signature);
+        }
+
+        if (certificate is VoterCertificate)
+        {
+          voterCertificates.Add(certificate as VoterCertificate);
+        }
+      }
+
+      AddRow(
+        data,
+        new string[] { "Day", "ActiveVotings" }
+        .Concat(GetGroups().OrderBy(g => g.Id)
+        .Select(g => new string[] { "Total in " + g.Name.Text, "Valid in " + g.Name.Text })
+        .SelectMany(x => x)).ToArray());
+
+      for (DateTime day = from; day <= until; day = day.AddDays(1))
+      {
+        var activeVotings = this.votings
+          .Values.Where(v => v.Parameters.VotingBeginDate.Date >= day.Date && v.Parameters.VotingEndDate.Date <= day.Date)
+          .Count();
+
+        List<object> items = new List<object>();
+        items.Add(day.ToShortDateString());
+        items.Add(activeVotings);
+
+        foreach (var group in GetGroups().OrderBy(g => g.Id))
+        {
+          items.Add(voterCertificates
+            .Where(c => c.GroupId == group.Id && c.CreationDate.Date <= day)
+            .Count());
+          items.Add(voterCertificates
+            .Where(c => c.GroupId == group.Id && c.Validate(CertificateStorage, day) == CertificateValidationResult.Valid)
+            .Count());
+        }
+
+        AddRow(
+          data,
+          items.ToArray());
+      }
+
+      return data.ToString();
+    }
+
+    public string GetStatistics(StatisticsDataType type)
+    {
+      switch (type)
+      {
+        case StatisticsDataType.SignatureRequests:
+          return GetSignatureRequestStatistics();
+        case StatisticsDataType.SignatureRequestsFull:
+          return GetSignatureRequestFullStatistics();
+        case StatisticsDataType.SignatureResponsesFull:
+          return GetSignatureResponseFullStatistics();
+        case StatisticsDataType.Votings:
+          return GetVotingsStatistics();
+        case StatisticsDataType.Ballots:
+          return GetBallotsStatistics();
+        case StatisticsDataType.Timeline:
+          return GetTimelineStatistics();
+        default:
+          return "Unknown statistics type.";
+      }
+    }
+
     /// <summary>
     /// Gets a voting from an id.
     /// </summary>
@@ -532,6 +822,28 @@ namespace Pirate.PiVote.Rpc
       {
         byte[] signatureRequestData = reader.GetBlob(0);
         requests.Add( Serializable.FromBinary<Secure<SignatureRequest>>(signatureRequestData));
+      }
+
+      reader.Close();
+
+      return requests;
+    }
+
+    /// <summary>
+    /// Gets all signature responses.
+    /// </summary>
+    /// <returns>List of signed signature responses.</returns>
+    public IEnumerable<Signed<SignatureResponse>> GetSignatureResponses()
+    {
+      MySqlDataReader reader = DbConnection
+        .ExecuteReader("SELECT Value FROM signatureresponse");
+
+      List<Signed<SignatureResponse>> requests = new List<Signed<SignatureResponse>>();
+
+      while (reader.Read())
+      {
+        byte[] signatureRequestData = reader.GetBlob(0);
+        requests.Add(Serializable.FromBinary<Signed<SignatureResponse>>(signatureRequestData));
       }
 
       reader.Close();

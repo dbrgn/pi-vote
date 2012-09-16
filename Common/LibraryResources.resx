@@ -573,4 +573,7 @@
   <data name="RevokedForgotten" xml:space="preserve">
     <value>Person has forgotten her passphrase</value>
   </data>
+  <data name="ClientGetStats" xml:space="preserve">
+    <value>Getting statistics.</value>
+  </data>
 </root>

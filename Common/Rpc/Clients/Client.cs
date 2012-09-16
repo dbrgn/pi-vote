@@ -457,6 +457,19 @@ namespace Pirate.PiVote.Rpc
     }
 
     /// <summary>
+    /// Get signature requests from server.
+    /// </summary>
+    /// <param name="type">The type.</param>
+    /// <param name="callBack">Callback upon completion.</param>
+    public void GetStats(StatisticsDataType type, GetStatsCallBack callBack)
+    {
+      lock (this.operations)
+      {
+        this.operations.Enqueue(new GetStatsOperation(type, callBack));
+      }
+    }
+
+    /// <summary>
     /// Create a voting procedure.
     /// </summary>
     /// <param name="votingParameters">Parameters of voting procedure.</param>

@@ -41,6 +41,7 @@ namespace Pirate.PiVote.Circle
     private bool userCanceled;
     private IEnumerable<AuthorityCertificate> authorityCertificates;
     private byte[] encryptedCode;
+    private string statsData;
 
     public UserConfig Config { get; private set; }
 
@@ -896,6 +897,26 @@ namespace Pirate.PiVote.Circle
 
     private void GetSignatureRequestsComplete(Exception exception)
     {
+      this.exception = exception;
+      this.run = false;
+    }
+
+    public string DownloadStats(StatisticsDataType type)
+    {
+      Begin();
+      Status.VotingClient.GetStats(type, GetStatsComplete);
+
+      if (!WaitForCompletion())
+      {
+        throw this.exception;
+      }
+
+      return this.statsData;
+    }
+
+    private void GetStatsComplete(string data, Exception exception)
+    {
+      this.statsData = data;
       this.exception = exception;
       this.run = false;
     }
