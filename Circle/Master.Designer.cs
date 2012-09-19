@@ -293,7 +293,12 @@ namespace Pirate.PiVote.Circle
       this.Controls.Add(this.mainPanel);
       this.Controls.Add(this.mainMenu);
       this.Font = new System.Drawing.Font("Arial", 8.25F);
+
+            // This hack is necessary because the mono compiler/runtime seems to be broken when it comes to icons.
+#if !__MonoCS__
       this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+#endif
+
       this.KeyPreview = true;
       this.MainMenuStrip = this.mainMenu;
       this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
