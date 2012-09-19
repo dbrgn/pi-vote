@@ -564,4 +564,6 @@
   <data name="RevokedForgotten" xml:space="preserve">
     <value>Person hat ihre Passphrase vergessen</value>
   </data>
+  <data name="﻿&quot;CertificateFullNameNotAvailable&quot;">N/V</data>
+  <data name="﻿&quot;CertificateFullNameNotAvailable&quot;">N/V</data>
 </root>

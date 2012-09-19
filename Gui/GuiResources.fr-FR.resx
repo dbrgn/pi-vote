@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ButtonCancel">&amp;Annuler</data>
+  <data name="ButtonOk">&amp;Ok</data>
+  <data name="EncryptPrivateKeyCertificateId">ID de certificat:</data>
+  <data name="EncryptPrivateKeyCertificateType">Type de certificat:</data>
+  <data name="EncryptPrivateKeyChoose">Encrypter ma clé privée</data>
+  <data name="EncryptPrivateKeyEncrypted">Ta clé privée est encryptée. Tu dois entrer ta passphrase pour la décrypter.</data>
+  <data name="EncryptPrivateKeyInfo">Tu peux encrypter la clé privée de ton certificat pour le protéger contre toute utilisation non autorisée. Si tu le fais, il te sera demandé d'entrer ta passphrase lorsque ta clé privée est utilisée.</data>
+  <data name="EncryptPrivateKeyPassphrase">Passphrase:</data>
+  <data name="EncryptPrivateKeyRepeat">Répéter la passphrase:</data>
+  <data name="EncryptPrivateKeyTitle">Protection de clé privée de Pi-Vote</data>
+  <data name="EncryptPrivateKeyUnlockAction">Action:</data>
+  <data name="MessageBoxTitle">Pi-Vote</data>
+  <data name="ChangePassphraseMessageChange">Entrer l'ancienne et la nouvelle passphrase pour la changer.</data>
+  <data name="ChangePassphraseMessageWrong">L'ancienne passphrase est erronée.</data>
+  <data name="ChangePassphraseNewPassphrase">Nouvelle passphrase:</data>
+  <data name="ChangePassphraseOldPassphrase">Ancienne passphrase:</data>
+  <data name="EncryptPrivateKeyWrongPassphrase">La passphrrase est erronée</data>
+  <data name="ButtonAbort">&amp;Abandonner</data>
+  <data name="ButtonIgnore">&amp;Ignorer</data>
+  <data name="ButtonNo">&amp;Non</data>
+  <data name="ButtonRetry">&amp;Réessayer</data>
+  <data name="ButtonYes">&amp;Oui</data>
+  <data name="PiVoteClient">Client Pi-Vote</data>
+  <data name="UnlockActionAuthorityCheckShares">Décrypter les portions de clés et signer la portion de réponse</data>
+  <data name="UnlockActionAuthorityCreateShares">Signer les portions de clés nouvellement crées</data>
+  <data name="UnlockActionAuthorityDecipher">Signer les décryptions partielles</data>
+  <data name="UnlockActionCreateVoting">Signer les paramètres de vote</data>
+  <data name="UnlockActionSignRequest">Signer ta requête de certificat.</data>
+  <data name="UnlockActionVote">Singer le vote</data>
+  <data name="AskForPartiallyDecipher">Il y a {0} bulletins valides Si ce nombre semble trop bas, il peut y avoir un problème de sécurité. Dans ce cas, ne décrypte pas le résultat et contacte les autres autorités et administrateurs. Poursuivre avec le décryptage ?</data>
+  <data name="ButtonDone">&amp;Terminé</data>
+  <data name="ButtonNext">&amp;Suivant</data>
+  <data name="ButtonPrevious">&amp;Précédent</data>
+  <data name="ContextMenuAdd">&amp;Ajouter</data>
+  <data name="ContextMenuEdit">&amp;Éditer</data>
+  <data name="ContextMenuRemove">&amp;Supprimer</data>
+  <data name="ButtonClose">&amp;Fermer</data>
+  <data name="UnlockActionDelete">Signer la commande pour supprimer la votation</data>
+  <data name="CertificateFormCloseButton">&amp;Fermer</data>
+  <data name="CertificateFormTitle">Voir le certificat</data>
+  <data name="CertificateId">Id:</data>
+  <data name="CertificateInvalid">Invalide</data>
+  <data name="CertificateName">Nom:</data>
+  <data name="CertificateSignatureId">Id</data>
+  <data name="CertificateSignatureInvalid">Invalide</data>
+  <data name="CertificateSignatureName">Nom</data>
+  <data name="CertificateSignatures">Signatures:</data>
+  <data name="CertificateSignatureStatus">Statut</data>
+  <data name="CertificateSignatureUnknown">Inconnu</data>
+  <data name="CertificateSignatureValid">Valide</data>
+  <data name="CertificateSignatureValidFrom">Valide du</data>
+  <data name="CertificateSignatureValidUntil">Valide jusqu'au</data>
+  <data name="CertificateType">Type:</data>
+  <data name="CertificateValid">Valide</data>
+  <data name="CertificateCreationDate">Date de création:</data>
+  <data name="CertificateDetail">&amp;Détails...</data>
+  <data name="GenerateSignCheckDialogInfo">Scanne le QR code ci-dessous avec ton smartphone pour configurer un cookie d'authentification pour la vérification de signature. Tu peux aussi cliquer sur le lien pour configurer un cookie d'authentification sur ton ordinateur. A chaque fois que tu crées un nouveau cookie de vérification de signature, l'ancien sera invalidé.</data>
+  <data name="GenerateSignCheckDialogTitle">Générer une vérification de signature</data>
+  <data name="SigningRequestDocumentDontSend">Tu n'as pas besoin d'envoyer ce formulaire à l'autorité de certification.</data>
+  <data name="SigningRequestDocumentInfo">Lorsque tu auras collecté trois signatures de notaires ou d'autorités, et auras signé le formulaire toi-même, il doit être envoyé à l'autorité de certification.</data>
+  <data name="SigningRequestDocumentLeave">L'information située sous cette ligne est réservée au traitement par l'autorité de certification. Merci de la laisser vide.</data>
+  <data name="SigningRequestDocumentPpsAddress1">Parti Pirate Suisse</data>
+  <data name="SigningRequestDocumentPpsAddress2">CH-1337 Vallorbe</data>
+  <data name="SigningRequestDocumentSendTo">Envoyer à:</data>
+  <data name="UnlockActionGenerateSignCheck">Générer une vérification de signature</data>
+  <data name="GenerateSignCheckDialogSecret">Tu dois garder ce QR code et ce lien secrets.</data>
+  <data name="SigningRequestDocumentAccepted">□ Accepté, valide jusqu'à __________________________</data>
+  <data name="SigningRequestDocumentCertificateId">Identifiant:</data>
+  <data name="SigningRequestDocumentCertificateType">Type:</data>
+  <data name="SigningRequestDocumentEmailAddress">Adresse email:</data>
+  <data name="SigningRequestDocumentFamilyName">Nom de famille:</data>
+  <data name="SigningRequestDocumentFirstName">Prénom:</data>
+  <data name="SigningRequestDocumentGroup">Groupe:</data>
+  <data name="SigningRequestDocumentHeaderLeft">π-Vote</data>
+  <data name="SigningRequestDocumentHeaderRight">Parti Pirate Suisse</data>
+  <data name="SigningRequestDocumentParent">Basé sur le certificat</data>
+  <data name="SigningRequestDocumentRefusedFingerprintMismatch">□ Refusé, l'empreinte ne correspond pas</data>
+  <data name="SigningRequestDocumentRefusedForgotten">□ Refusé, passphrase oubliée</data>
+  <data name="SigningRequestDocumentRefusedHasCertificate">□ Refusé, dispose déjà d'un certificat valide</data>
+  <data name="SigningRequestDocumentRefusedLost">□ Refusé, présumé perdu</data>
+  <data name="SigningRequestDocumentRefusedNoMember">□ Refusé, aucun membre dans le groupe</data>
+  <data name="SigningRequestDocumentRefusedNotFx">□ Refusé, ne fait pas partie du bureau</data>
+  <data name="SigningRequestDocumentRefusedSignatureInvalid">□ Refusé, signature invalide</data>
+  <data name="SigningRequestDocumentRequest">Requête de signature de certificat</data>
+  <data name="SigningRequestDocumentRequestKey">Clé de requête:</data>
+  <data name="SigningRequestDocumentRevokedError">□ Révoqué, validé par erreur</data>
+  <data name="SigningRequestDocumentRevokedForgotten">□ Révoqué, passphrase oubliée</data>
+  <data name="SigningRequestDocumentRevokedLost">□ Révoqué, présumé perdu</data>
+  <data name="SigningRequestDocumentRevokedNoLonger">□ Révoqué, n'est plus membre</data>
+  <data name="SigningRequestDocumentRevokedNoMoreFx">□ Révoqué, ne fait plus partie du bureau</data>
+  <data name="SigningRequestDocumentRevokedStolen">□ Révoqué, présumé volé</data>
+  <data name="SigningRequestDocumentSignCA">Autorité de certification</data>
+  <data name="SigningRequestDocumentSignDate">Date</data>
+  <data name="SigningRequestDocumentSignFirstAuthority">Première autorité</data>
+  <data name="SigningRequestDocumentSignRequester">Demandeur</data>
+  <data name="SigningRequestDocumentSignSecondAuthority">Seconde autorité</data>
+  <data name="SigningRequestDocumentSignSignature">Signature</data>
+  <data name="SigningRequestDocumentSignThirdAuthority">Troisième autorité</data>
+  <data name="SaveDocumentDialogTitle">Sauvegarder le formulaire de requête</data>
+  <data name="SigningRequestDocumentFingerprint">Empreinte</data>
+</root>

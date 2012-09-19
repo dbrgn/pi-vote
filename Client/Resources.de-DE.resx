@@ -670,4 +670,5 @@ Zum schluss musst du die Zertifizierungsanfrage auf den Server hochladen, damit 
   <data name="GenerateSignCheckMenu" xml:space="preserve">
     <value>Unterschriftenprüfung &amp;generieren</value>
   </data>
+  <data name="﻿&quot;AddOptionDescription&quot;">Beschreibung</data>
 </root>

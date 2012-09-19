@@ -96,6 +96,11 @@
     <Compile Include="Controls\MultiLanguageTextBox.Designer.cs">
       <DependentUpon>MultiLanguageTextBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="GuiResources.fr-FR.Designer.cs">
+      <DependentUpon>GuiResources.fr-FR.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Help\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +168,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MultiLanguageTextBox.resx">
       <DependentUpon>MultiLanguageTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GuiResources.fr-FR.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GuiResources.fr-FR.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Help\AboutDialog.resx">
       <DependentUpon>AboutDialog.cs</DependentUpon>

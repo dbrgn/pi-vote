@@ -106,7 +106,8 @@ namespace Pirate.PiVote.ResourceManager
 
     public void ImportCsv(string fileName)
     {
-      string[] lines = File.ReadAllLines(fileName, Encoding.UTF8);
+      string text = File.ReadAllText(fileName, Encoding.UTF8);;
+      string[] lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
       foreach (string line in lines)
       {

@@ -148,7 +148,7 @@
     <value>&amp;Create Shares</value>
   </data>
   <data name="AuthorityCreateSharesDone" xml:space="preserve">
-    <value>Shares created and uploaded them to server.</value>
+    <value>Shares created and uploaded to server.</value>
   </data>
   <data name="AuthorityDecipher" xml:space="preserve">
     <value>&amp;Decipher</value>
@@ -446,7 +446,7 @@ Finally you need to upload your request for certificate signing to the server to
     <value>Id</value>
   </data>
   <data name="CreateCertificatePrintAndSend" xml:space="preserve">
-    <value>&amp;Save</value>
+    <value>&amp;Print and Save</value>
   </data>
   <data name="StartConnecting" xml:space="preserve">
     <value>Connecting to server...</value>
@@ -531,7 +531,7 @@ Finally you need to upload your request for certificate signing to the server to
     <value>Notify me by email, when an answer to my certificate signing request is available. This requires your email address to be stored on the PiVote server.</value>
   </data>
   <data name="AuthorityCreateSharesCanceled" xml:space="preserve">
-    <value>The creation of shared was canceled.</value>
+    <value>The creation of shares was canceled.</value>
   </data>
   <data name="AuthorityDecipherCanceled" xml:space="preserve">
     <value>The partial deciphering was canceled.</value>
@@ -603,7 +603,7 @@ Finally you need to upload your request for certificate signing to the server to
     <value>Backup Pi-Vote Files</value>
   </data>
   <data name="ChooseCertificateBackupFailed" xml:space="preserve">
-    <value>Backup failed: </value>
+    <value>Backup failed:</value>
   </data>
   <data name="ChooseCertificateBackupSuccess" xml:space="preserve">
     <value>Backup created.</value>
@@ -615,7 +615,7 @@ Finally you need to upload your request for certificate signing to the server to
     <value>Restore Pi-Vote Files</value>
   </data>
   <data name="ChooseCertificateRestoreFailed" xml:space="preserve">
-    <value>Restore failed: </value>
+    <value>Restore failed:</value>
   </data>
   <data name="ChooseCertificateRestoreSuccess" xml:space="preserve">
     <value>Backup restored.</value>
@@ -645,7 +645,7 @@ Finally you need to upload your request for certificate signing to the server to
     <value>Do you really want to delete voting id {0} title {1} ?</value>
   </data>
   <data name="AskToSignSignatureRequestWithParent" xml:space="preserve">
-    <value>You have a valid certificate with which you can sign your new certificate request. If you do so you not need to print out your request and get signatures from authorities but the new certificate will only be valid as long as the one you already have, that is {0:d}. Do you want to sign your signing request with your existing certificate?</value>
+    <value>You have a valid certificate with which you can sign your new certificate request. If you do so, you do not need to print out your request and get signatures from authorities but the new certificate will only be valid as long as the one you already have, that is {0:d}. Do you want to sign your signing request with your existing certificate?</value>
   </data>
   <data name="CheckCertificateNotYetValid" xml:space="preserve">
     <value>Your certificate is not yet valid. It will be valid from {0:d}.</value>
@@ -686,4 +686,5 @@ Finally you need to upload your request for certificate signing to the server to
   <data name="GenerateSignCheckMenu" xml:space="preserve">
     <value>&amp;Generate sign check</value>
   </data>
+  <data name="﻿&quot;AddOptionDescription&quot;">Description</data>
 </root>

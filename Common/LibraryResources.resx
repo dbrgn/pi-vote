@@ -325,7 +325,7 @@
     <value>Supplied maximum vote number out of range.</value>
   </data>
   <data name="ExceptionNoAuthorityWithCertificate" xml:space="preserve">
-    <value>No authority with supplied certificate known.</value>
+    <value>No know authority found with supplied certificate.</value>
   </data>
   <data name="ExceptionNoAuthorizedAdmin" xml:space="preserve">
     <value>You are no authorized administrator.</value>
@@ -385,7 +385,7 @@
     <value>Aborted</value>
   </data>
   <data name="VotingStatusDeciphering" xml:space="preserve">
-    <value>Fnishing (Deciphering)</value>
+    <value>Finishing (Deciphering)</value>
   </data>
   <data name="VotingStatusFinished" xml:space="preserve">
     <value>Finished and Tallying</value>
@@ -576,4 +576,6 @@
   <data name="ClientGetStats" xml:space="preserve">
     <value>Getting statistics.</value>
   </data>
+  <data name="﻿&quot;CertificateFullNameNotAvailable&quot;">N/A</data>
+  <data name="﻿&quot;CertificateFullNameNotAvailable&quot;">N/A</data>
 </root>

@@ -134,7 +134,7 @@
     <value>Id</value>
   </data>
   <data name="CertificateManagerColumnValidUntil" xml:space="preserve">
-    <value>Valide jusque'au</value>
+    <value>Valable jusqu’au</value>
   </data>
   <data name="CertificateManagerCreateNew" xml:space="preserve">
     <value>&amp;Créer nouveau...</value>
@@ -146,7 +146,7 @@
     <value>&amp;Importer</value>
   </data>
   <data name="CertificateManagerRefresh" xml:space="preserve">
-    <value>&amp;Actualiser</value>
+    <value>&amp;Mettre à jour</value>
   </data>
   <data name="CertificateManagerRemove" xml:space="preserve">
     <value>&amp;Supprimer</value>
@@ -155,13 +155,13 @@
     <value>&amp;Restaurer</value>
   </data>
   <data name="CertificateManagerSetPassword" xml:space="preserve">
-    <value>&amp;Definir mot de passe</value>
+    <value>&amp;Définir mot de passe</value>
   </data>
   <data name="CertificateManagerTitle" xml:space="preserve">
     <value>Circle – Gestionnaire de Certificat</value>
   </data>
   <data name="CertificateManagerValidIndefinite" xml:space="preserve">
-    <value>"ControllerLoadCertificatesAccepted"</value>
+    <value>Aléatoire</value>
   </data>
   <data name="MenuCertificatesCreateNew" xml:space="preserve">
     <value>&amp;Créer...</value>
@@ -206,13 +206,13 @@
     <value>Circle - Configuration</value>
   </data>
   <data name="CertificateManagerColumnValidFrom" xml:space="preserve">
-    <value>Valide depuis</value>
+    <value>Valable depuis</value>
   </data>
   <data name="CreateCertificateDataGroup" xml:space="preserve">
     <value>Groupe:</value>
   </data>
   <data name="CreateCertificateDataValidUntil" xml:space="preserve">
-    <value>Valide depuis:</value>
+    <value>Valable jusqu'au:</value>
   </data>
   <data name="MenuCertificates" xml:space="preserve">
     <value>&amp;Certificats</value>
@@ -227,7 +227,7 @@
     <value>&amp;Télécharger</value>
   </data>
   <data name="VotingActionTally" xml:space="preserve">
-    <value>&amp;Décompter</value>
+    <value>&amp;Dépouiller</value>
   </data>
   <data name="VotingListCurrent" xml:space="preserve">
     <value>Actuel</value>
@@ -242,15 +242,405 @@
     <value>&amp;Reprendre la création</value>
   </data>
   <data name="CertificateStatusValid" xml:space="preserve">
-    <value>Tu as un certificat qui est valide jusque'au {0}</value>
+    <value>Tu as un certificat qui est valide jusqu’au {0}</value>
   </data>
   <data name="ConfigProofCountInfo" xml:space="preserve">
-    <value>Effectuer {0} vérifications signifie ne détecter aucun bulletin suspect avec une probabilité de 1 sur {2}</value>
+    <value>Effectuer {0} vérifications signifie ne détecter aucun bulletin suspect avec une probabilité de 1 sur {1}</value>
   </data>
   <data name="MenuGenerateSignCheck" xml:space="preserve">
-    <value>&amp;Générer signe de vérification</value>
+    <value>Générer une vérification de signature</value>
   </data>
   <data name="VotingStatusGroupFromUnit" xml:space="preserve">
-    <value>{0} de {1} jusque'au {2}</value>
+    <value>{0} de {1} jusqu’au {2}</value>
+  </data>
+  <data name="CertificateManagerColumnStatus" xml:space="preserve">
+    <value>État</value>
+  </data>
+  <data name="CertificateManagerColumnType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="ControllerLoadCertificatesAccepted" xml:space="preserve">
+    <value>Ta demande pour le certificat {0} de type {1} a été acceptée. Tu peux utiliser ton certificat à partir de ce moment</value>
+  </data>
+  <data name="ControllerLoadCertificatesDeclined" xml:space="preserve">
+    <value>Ta demande pour le certificat {0} de type {1} a été rejetée. La raison donnée est: {2}</value>
+  </data>
+  <data name="ControllerSetSignatureRequestOk" xml:space="preserve">
+    <value>Ta demande a été enregistrée sur le serveur</value>
+  </data>
+  <data name="ControllerStatusWorking" xml:space="preserve">
+    <value>Traitement en cours ...</value>
+  </data>
+  <data name="ControllerVoteCast" xml:space="preserve">
+    <value>Ton vote a été pris en compte.</value>
+  </data>
+  <data name="CreateCertificateDataBaseCertificate" xml:space="preserve">
+    <value>Certificat de base :</value>
+  </data>
+  <data name="CreateCertificateDataEmailAddress" xml:space="preserve">
+    <value>Adresse email :</value>
+  </data>
+  <data name="CreateCertificateDataFamilyName" xml:space="preserve">
+    <value>Nom de famille :</value>
+  </data>
+  <data name="CreateCertificateDataFirstName" xml:space="preserve">
+    <value>Prénom :</value>
+  </data>
+  <data name="CreateCertificateDataFunction" xml:space="preserve">
+    <value>Fonction dans le parti :</value>
+  </data>
+  <data name="CreateCertificateDataNotify" xml:space="preserve">
+    <value>Je souhaite être informé quand ma demande a été traitée. Mon adresse email doit être enregistré sur le serveur.</value>
+  </data>
+  <data name="CreateCertificateDialogTitle" xml:space="preserve">
+    <value>Créer un certificat Circle</value>
+  </data>
+  <data name="CreateCertificateFinishInfo" xml:space="preserve">
+    <value>Tu dois transmettre ta requête de signature au serveur, puis l'enregistrer en format PDF et l'imprimer. Ensuite, il te faut obtenir 3 signatures de notaires ou d’autorités de vote pour valider ce formulaire. Tu dois enfin l’envoyer à l’autorité de certification. Une fois ta demande approuvée, tu pourras utiliser ton certificat pour voter.</value>
+  </data>
+  <data name="CreateCertificateSelectAuthority" xml:space="preserve">
+    <value>&amp;Autorité</value>
+  </data>
+  <data name="CreateCertificateSelectAuthorityInfo" xml:space="preserve">
+    <value>Créer un certificat d'autorité. Sélectionne cette option si tu as été élu(e) en tant que autorité.</value>
+  </data>
+  <data name="CreateCertificateSelectVoter" xml:space="preserve">
+    <value>&amp;Électeur</value>
+  </data>
+  <data name="CreateCertificateSelectVoterInfo" xml:space="preserve">
+    <value>Créer un certificat d’électeur. Sélectionne cette option si tu utilise Pi-Vote pour la première fois, ou si ton certificat n'est plus valable.</value>
+  </data>
+  <data name="CreateCertificateSelectVoterSubgroup" xml:space="preserve">
+    <value>&amp;Électeur pour &amp;Sous-Groupe</value>
+  </data>
+  <data name="CreateCertificateSelectVoterSubgroupInfo" xml:space="preserve">
+    <value>Créer un certificat pour un sous-groupe. Sélectionne cette option si tu veux participer aux votes régionaux ou locaux et si tu as déjà un certificat de base valable.</value>
+  </data>
+  <data name="CreateQuestionAbstentionAuto" xml:space="preserve">
+    <value>Abstention est ajouté automatiquement</value>
+  </data>
+  <data name="CreateVotingAnswers" xml:space="preserve">
+    <value>Réponses:</value>
+  </data>
+  <data name="CreateVotingAnswersPerVoter" xml:space="preserve">
+    <value>Réponses / Électeurs:</value>
+  </data>
+  <data name="CreateVotingAuthFileMissing" xml:space="preserve">
+    <value>Le fichier de l'autorité manque.</value>
+  </data>
+  <data name="CreateVotingAuthorities" xml:space="preserve">
+    <value>Autorités:</value>
+  </data>
+  <data name="CreateVotingButton" xml:space="preserve">
+    <value>&amp;Créer</value>
+  </data>
+  <data name="CreateVotingCanceled" xml:space="preserve">
+    <value>La création du vote a été annulée</value>
+  </data>
+  <data name="CreateVotingClearButton" xml:space="preserve">
+    <value>&amp;Annuler</value>
+  </data>
+  <data name="CreateVotingCreated" xml:space="preserve">
+    <value>Votation créée sur le serveur.</value>
+  </data>
+  <data name="CreateVotingCreating" xml:space="preserve">
+    <value>Création de votation en cours sur le serveur</value>
+  </data>
+  <data name="CreateVotingDescription" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="CreateVotingGroup" xml:space="preserve">
+    <value>Groupe:</value>
+  </data>
+  <data name="CreateVotingInvalidAuthorities" xml:space="preserve">
+    <value>Les autorités suivantes ne sont pas valables le premier jour de vote:</value>
+  </data>
+  <data name="CreateVotingOpenFrom" xml:space="preserve">
+    <value>Ouvert au vote du:</value>
+  </data>
+  <data name="CreateVotingOpenUntil" xml:space="preserve">
+    <value>Ouvert au vote jusqu'au:</value>
+  </data>
+  <data name="CreateVotingOptionDescription" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="CreateVotingOptionText" xml:space="preserve">
+    <value>Texte:</value>
+  </data>
+  <data name="CreateVotingOptionTitle" xml:space="preserve">
+    <value>Circle - Créer une votation - Option</value>
+  </data>
+  <data name="CreateVotingQuestion" xml:space="preserve">
+    <value>Circle - Créer une votation - Question</value>
+  </data>
+  <data name="CreateVotingQuestionDescription" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="CreateVotingQuestions" xml:space="preserve">
+    <value>Questions:</value>
+  </data>
+  <data name="CreateVotingQuestionText" xml:space="preserve">
+    <value>Texte:</value>
+  </data>
+  <data name="CreateVotingSearchPrime" xml:space="preserve">
+    <value>Création d'un nombre premier sûr pour la cryptographie</value>
+  </data>
+  <data name="CreateVotingTitle" xml:space="preserve">
+    <value>Titre:</value>
+  </data>
+  <data name="CreateVotingUrl" xml:space="preserve">
+    <value>URL:</value>
+  </data>
+  <data name="MenuCertificateResumeCreation" xml:space="preserve">
+    <value>&amp;Continuer la création</value>
+  </data>
+  <data name="MenuCertificateResumeCreationNothing" xml:space="preserve">
+    <value>Il n’y a aucune création de certificat pouvant être reprise.</value>
+  </data>
+  <data name="MenuVotingsRefresh" xml:space="preserve">
+    <value>&amp;Actualiser</value>
+  </data>
+  <data name="MessageBoxTitle" xml:space="preserve">
+    <value>Circle</value>
+  </data>
+  <data name="ResultDialogAbstain" xml:space="preserve">
+    <value>Abstention</value>
+  </data>
+  <data name="ResultDialogFoundBad" xml:space="preserve">
+    <value>Manipulé</value>
+  </data>
+  <data name="ResultDialogFoundOk" xml:space="preserve">
+    <value>Comptabilisé</value>
+  </data>
+  <data name="ResultDialogNotFound" xml:space="preserve">
+    <value>Non compté</value>
+  </data>
+  <data name="StatusDialogTitle" xml:space="preserve">
+    <value>État de Circle</value>
+  </data>
+  <data name="UpdateDialogText" xml:space="preserve">
+    <value>Une version plus récente de Circle est disponible. Désires-tu le mettre à jour de la version {0} à la version {1}? Si oui, le programme va se fermer et pointer ton navigateur vers le site de mise à jour.</value>
+  </data>
+  <data name="UpdateDialogTitle" xml:space="preserve">
+    <value>Mise à jour Circle</value>
+  </data>
+  <data name="VotingActionCheck" xml:space="preserve">
+    <value>&amp;Vérifier les portions</value>
+  </data>
+  <data name="VotingActionDecipher" xml:space="preserve">
+    <value>&amp;Décrypter</value>
+  </data>
+  <data name="VotingActionDelete" xml:space="preserve">
+    <value>&amp;Supprimer</value>
+  </data>
+  <data name="VotingActionShare" xml:space="preserve">
+    <value>&amp;Créer les portions</value>
+  </data>
+  <data name="VotingDialogMaxOptionMulti" xml:space="preserve">
+    <value>Tu peux sélectionner un maximum de {0} options.</value>
+  </data>
+  <data name="VotingDialogMaxOptionSingle" xml:space="preserve">
+    <value>Tu dois sélectionner exactement une option.</value>
+  </data>
+  <data name="VotingDialogQuestion" xml:space="preserve">
+    <value>Question n° {0}</value>
+  </data>
+  <data name="VotingDialogTile" xml:space="preserve">
+    <value>Circle – Soumettre un vote</value>
+  </data>
+  <data name="VotingDialogVote" xml:space="preserve">
+    <value>&amp;Voter</value>
+  </data>
+  <data name="VotingListScheduled" xml:space="preserve">
+    <value>Planifié</value>
+  </data>
+  <data name="VotingListStored" xml:space="preserve">
+    <value>Enregistré</value>
+  </data>
+  <data name="VotingStatusAborted" xml:space="preserve">
+    <value>Abandonné</value>
+  </data>
+  <data name="VotingStatusCheck" xml:space="preserve">
+    <value>Préparation, en attente de {0} sur {1} autorités pour vérifier les portions</value>
+  </data>
+  <data name="VotingStatusDecipher" xml:space="preserve">
+    <value>Vote terminé, en attente de {0} sur {1} autorités pour décrypter</value>
+  </data>
+  <data name="VotingStatusOffline" xml:space="preserve">
+    <value>Terminé et enregistré hors-ligne</value>
+  </data>
+  <data name="VotingStatusReady" xml:space="preserve">
+    <value>Prêt, le vote commence le {0}</value>
+  </data>
+  <data name="VotingStatusShare" xml:space="preserve">
+    <value>Préparation, en attente de {0} sur {1} autorités pour créer les portions</value>
+  </data>
+  <data name="VotingStatusVote" xml:space="preserve">
+    <value>Ouvert à la votation, {0} votes transmis</value>
+  </data>
+  <data name="CreateVotingDialogTitle" xml:space="preserve">
+    <value>Circle - Créer une votation</value>
+  </data>
+  <data name="CreateVotingGeneratePrime" xml:space="preserve">
+    <value>&amp;Générer un premier sûr</value>
+  </data>
+  <data name="CreateVotingGeneratingSafePrime" xml:space="preserve">
+    <value>Génération d'un premier sûr... (Testé {0} nombres et {1} premiers)</value>
+  </data>
+  <data name="CreateVotingNotReady" xml:space="preserve">
+    <value>Premier sûr nécessaire pour créer la votation.</value>
+  </data>
+  <data name="CreateVotingReady" xml:space="preserve">
+    <value>Premier sûr prêt pour créer la votation.</value>
+  </data>
+  <data name="CreateVotingStored" xml:space="preserve">
+    <value>Il y a {0} premiers sûrs en réserve.</value>
+  </data>
+  <data name="CreateVotingTakePrime" xml:space="preserve">
+    <value>&amp;Prendre et vérifier le premier sûr</value>
+  </data>
+  <data name="CreateVotingVerifyingSafePrime" xml:space="preserve">
+    <value>Vérification du premier sûr...</value>
+  </data>
+  <data name="ErrorDialogInfo" xml:space="preserve">
+    <value>Une erreur s'est produite dans le programme. Veuillez nous excuser pour le désagrément. Merci de nous aider à le résoudre en nous le communiquant. Merci à cette occasion de nous communiquer les données dans le champ de texte ci-dessous.</value>
+  </data>
+  <data name="ErrorDialogTitle" xml:space="preserve">
+    <value>Circle - Erreur</value>
+  </data>
+  <data name="DownloadSignatureRequestsDone" xml:space="preserve">
+    <value>Les requêtes de signature ont été téléchargées avec succès</value>
+  </data>
+  <data name="DownloadSignatureRequestsFileName" xml:space="preserve">
+    <value>n'a pas d'importance</value>
+  </data>
+  <data name="DownloadSignatureRequestsSaveDialogTitle" xml:space="preserve">
+    <value>Enregistrer les requêtes de signature</value>
+  </data>
+  <data name="UploadCertificateStorageDone" xml:space="preserve">
+    <value>Le conteneur de certificat a été transmis avec succès</value>
+  </data>
+  <data name="UploadCertificateStorageOpenDialogTitle" xml:space="preserve">
+    <value>Sélectionner le conteneur de certificat</value>
+  </data>
+  <data name="UploadSignatureResponsesDone" xml:space="preserve">
+    <value>Les réponses de signature ont été transmises avec succès</value>
+  </data>
+  <data name="UploadSignatureResponsesOpenDialogTitle" xml:space="preserve">
+    <value>Sélectionner les réponses de signature</value>
+  </data>
+  <data name="CreateCertificateResumeFail" xml:space="preserve">
+    <value>Les données de requête de signature pour ton certificat {0} de type {1} n'ont pas pu être trouvées. Tu dois créer un nouveau certificat.</value>
+  </data>
+  <data name="RestoreBackupDialogTitle" xml:space="preserve">
+    <value>Ouvrir la sauvegarde</value>
+  </data>
+  <data name="RestoreBackupDone" xml:space="preserve">
+    <value>La sauvegarde a été restaurée</value>
+  </data>
+  <data name="SaveBackupDialogTitle" xml:space="preserve">
+    <value>Enregistrer la sauvegarde</value>
+  </data>
+  <data name="SaveBackupDone" xml:space="preserve">
+    <value>La sauvegarde est enregistrée</value>
+  </data>
+  <data name="CertificateStatusCorrupt" xml:space="preserve">
+    <value>Ton certificat est corrompu. Son statut est {0}</value>
+  </data>
+  <data name="CertificateStatusCreateAction" xml:space="preserve">
+    <value>&amp;Créer un certificat</value>
+  </data>
+  <data name="CertificateStatusCrlMissing" xml:space="preserve">
+    <value>La liste de révocation de certificat est manquante</value>
+  </data>
+  <data name="CertificateStatusNoCertificate" xml:space="preserve">
+    <value>Tu ne disposes pas encore d'un certificat</value>
+  </data>
+  <data name="CertificateStatusNoSignature" xml:space="preserve">
+    <value>Ta requête de signature est toujours en attente.</value>
+  </data>
+  <data name="CertificateStatusNotYetValid" xml:space="preserve">
+    <value>Ton certificat deviendra valide le {0}</value>
+  </data>
+  <data name="CertificateStatusOutdated" xml:space="preserve">
+    <value>Ton certificat a expiré</value>
+  </data>
+  <data name="CertificateStatusRevoked" xml:space="preserve">
+    <value>Ton certificat a été révoqué par l'autorité de certification</value>
+  </data>
+  <data name="CannotConnectMessage" xml:space="preserve">
+    <value>Impossible de se connecter au serveur</value>
+  </data>
+  <data name="MenuDownloadSignatureRequests" xml:space="preserve">
+    <value>Téléchargement des requêtes de signature</value>
+  </data>
+  <data name="MenuUploadCertificateStorage" xml:space="preserve">
+    <value>Transmettre le conteneur de certificat...</value>
+  </data>
+  <data name="MenuUploadSignatureResponses" xml:space="preserve">
+    <value>Transmettre les réponses de signature...</value>
+  </data>
+  <data name="VoteAlreadyVote" xml:space="preserve">
+    <value>Tu as déjà voté.</value>
+  </data>
+  <data name="CreateCertificateServerCertificateInvalidMessage" xml:space="preserve">
+    <value>Le certificat serveur est invalide. Tu dois attendre la résolution du problème par l'Autorité de Certification avant de pouvoir transmettre ta requête.</value>
+  </data>
+  <data name="ConfigProofCountExplain" xml:space="preserve">
+    <value>Merci de choisir avec quelle rigueur les votes doivent être vérifiés</value>
+  </data>
+  <data name="ConfigProofCountFast" xml:space="preserve">
+    <value>Rapide</value>
+  </data>
+  <data name="MenuConfig" xml:space="preserve">
+    <value>&amp;Configurer</value>
+  </data>
+  <data name="MenuExtras" xml:space="preserve">
+    <value>E&amp;xtras</value>
+  </data>
+  <data name="BackupProgressTitle" xml:space="preserve">
+    <value>Sauvegarde en cours...</value>
+  </data>
+  <data name="ExportButton" xml:space="preserve">
+    <value>&amp;Exporter</value>
+  </data>
+  <data name="ResultExportDialogTitle" xml:space="preserve">
+    <value>Résultats d'exportation</value>
+  </data>
+  <data name="ResultExportMessage" xml:space="preserve">
+    <value>Résultats enregistrés dans le fichier.</value>
+  </data>
+  <data name="CreateCertificateSelectNotary" xml:space="preserve">
+    <value>&amp;Notaire</value>
+  </data>
+  <data name="CreateCertificateSelectNotaryInfo" xml:space="preserve">
+    <value>Créer un nouveau certificat pour notaire. Choisis cette option si tu as été élu en tant que notaire de vote.</value>
+  </data>
+  <data name="CreateCertificateNameAsInPhotoId" xml:space="preserve">
+    <value>Merci d'entrer ton nom complet comme il est écrit sur ta carte d'identité, en incluant tous les prénoms</value>
+  </data>
+  <data name="ControllerStatusConnecting" xml:space="preserve">
+    <value>Connexion au serveur...</value>
+  </data>
+  <data name="CreateCertificateFinishPrint" xml:space="preserve">
+    <value>&amp;Enregistrer en PDF</value>
+  </data>
+  <data name="CreateCertificateFinishUpload" xml:space="preserve">
+    <value>&amp;Transmettre</value>
+  </data>
+  <data name="CreateCertificateNotUploadeMessage" xml:space="preserve">
+    <value>Tu n'as pas encore transmis ton certificat. Tu ne peux pas être authentifié si tu ne transmets pas ton certificat. Veux-tu le faire maintenant ?</value>
+  </data>
+  <data name="CreateCertificateFinishInfoSubgroup" xml:space="preserve">
+    <value>Tu dois transmettre ta requête de signature. Tu n'as pas besoin d'imprimer ta requête de signature ou de collecter de signatures, car ta requête pourra être approuvée grâce aux données de ta requête d'origine.</value>
+  </data>
+  <data name="ConnectionLostErrorMessage" xml:space="preserve">
+    <value>La connexion au serveur a été perdue. Ce programme va maintenant s'arrêter.</value>
+  </data>
+  <data name="VotingDialogConfirm" xml:space="preserve">
+    <value>&amp;Confirmer</value>
+  </data>
+  <data name="VotingDialogTitleAuthority" xml:space="preserve">
+    <value>Circle – Vérifier les questions</value>
   </data>
 </root>
